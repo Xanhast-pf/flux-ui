@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "catalog:",
-    "@coding-bible/analyzer": "github:Xanhast-pf/coding-bible#8291564770ca1cfc9c0701ba8548d3a0acdcd37a&path:packages/analyzer",
+    "@coding-bible/analyzer": "github:Xanhast-pf/coding-bible#v0.28.1&path:packages/analyzer",
     "@eslint/js": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",
