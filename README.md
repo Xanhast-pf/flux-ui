@@ -24,6 +24,7 @@ Flux UI is an **alpha-stage React design system** built around a few hard promis
 Flux UI is under active development and is not yet a stable public package release. The current foundation includes:
 
 - `Button`
+- `Input`
 - `Grid` / `Grid.Item`
 - `Stack`
 - `Inline`

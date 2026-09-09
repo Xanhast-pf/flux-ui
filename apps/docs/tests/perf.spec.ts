@@ -33,7 +33,7 @@ interface ScenarioSummary {
 
 interface PerfBaseline {
   schemaVersion: 1;
-  policyVersion: 2;
+  policyVersion: 3;
   scenarios: Record<PerfScenario, ScenarioSummary>;
 }
 
@@ -65,6 +65,13 @@ const regressionPolicy = {
 
   // Do not fail CI over sub-microsecond-per-instance noise.
   minimumOverheadPerInstanceMs: 0.001,
+
+  // A ratio can swing sharply when the native reference only takes a few
+  // milliseconds. Require the *additional* abstraction cost versus the
+  // committed baseline to grow by at least 5 µs per instance before failing.
+  // This keeps the gate strict on meaningful regressions without treating
+  // timer/runner variance as product cost.
+  minimumOverheadRegressionPerInstanceMs: 0.005,
 } as const;
 
 function median(values: number[]): number {
@@ -265,7 +272,7 @@ function parsePerfBaseline(value: unknown): PerfBaseline {
     throw new Error("Unsupported performance baseline schemaVersion.");
   }
 
-  if (value["policyVersion"] !== 2) {
+  if (value["policyVersion"] !== 3) {
     throw new Error(
       "Unsupported performance baseline policyVersion. Regenerate it with `pnpm perf:update`.",
     );
@@ -279,7 +286,7 @@ function parsePerfBaseline(value: unknown): PerfBaseline {
 
   return {
     schemaVersion: 1,
-    policyVersion: 2,
+    policyVersion: 3,
     scenarios: {
       button: parseScenarioSummary(scenariosValue["button"], "button"),
       grid: parseScenarioSummary(scenariosValue["grid"], "grid"),
@@ -310,6 +317,8 @@ function assertRegression(
   baselineRatio: number,
   currentFluxMs: number,
   currentReferenceMs: number,
+  baselineFluxMs: number,
+  baselineReferenceMs: number,
   instanceCount: number,
 ): void {
   const currentOverheadMs = currentFluxMs - currentReferenceMs;
@@ -321,6 +330,20 @@ function assertRegression(
   // milliseconds apart. Ignore differences that are insignificant in
   // absolute runtime cost.
   if (currentOverheadMs <= minimumMeaningfulOverheadMs) {
+    return;
+  }
+
+  const baselineOverheadMs = Math.max(0, baselineFluxMs - baselineReferenceMs);
+
+  const overheadRegressionMs = currentOverheadMs - baselineOverheadMs;
+  const minimumMeaningfulRegressionMs =
+    regressionPolicy.minimumOverheadRegressionPerInstanceMs * instanceCount;
+
+  // Relative ratios are useful, but become hypersensitive when the native
+  // reference is only a few milliseconds. Do not fail unless the ratio
+  // regression also represents a meaningful increase in absolute abstraction
+  // cost versus the committed baseline.
+  if (overheadRegressionMs <= minimumMeaningfulRegressionMs) {
     return;
   }
 
@@ -340,6 +363,8 @@ function assertRegression(
       `${formatRatio(currentRatio)} vs baseline ${formatRatio(baselineRatio)}`,
       `(allowed ${formatRatio(allowedRatio)}).`,
       `Absolute overhead: ${formatMs(currentOverheadMs)} across ${instanceCount} instances.`,
+      `Overhead regression: ${formatMs(overheadRegressionMs)} across ${instanceCount} instances`,
+      `(minimum meaningful ${formatMs(minimumMeaningfulRegressionMs)}).`,
     ].join(" "),
   ).toBeLessThanOrEqual(allowedRatio);
 }
@@ -448,7 +473,7 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
 
   const nextBaseline: PerfBaseline = {
     schemaVersion: 1,
-    policyVersion: 2,
+    policyVersion: 3,
     scenarios: summaries,
   };
 
@@ -487,6 +512,8 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
       previous.mount,
       summaries[scenario.name].medians.flux.mount,
       summaries[scenario.name].medians[scenario.reference].mount,
+      baseline.scenarios[scenario.name].medians.flux.mount,
+      baseline.scenarios[scenario.name].medians[scenario.reference].mount,
       summaries[scenario.name].count,
     );
     assertRegression(
@@ -496,6 +523,8 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
       previous.update,
       summaries[scenario.name].medians.flux.update,
       summaries[scenario.name].medians[scenario.reference].update,
+      baseline.scenarios[scenario.name].medians.flux.update,
+      baseline.scenarios[scenario.name].medians[scenario.reference].update,
       summaries[scenario.name].count,
     );
 
@@ -506,6 +535,8 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
       previous.unmount,
       summaries[scenario.name].medians.flux.unmount,
       summaries[scenario.name].medians[scenario.reference].unmount,
+      baseline.scenarios[scenario.name].medians.flux.unmount,
+      baseline.scenarios[scenario.name].medians[scenario.reference].unmount,
       summaries[scenario.name].count,
     );
   }

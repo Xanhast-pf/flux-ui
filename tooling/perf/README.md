@@ -27,7 +27,7 @@ Each sample records:
 
 `requestAnimationFrame` fires before paint, so the diagnostic is deliberately called **to-frame**, not **to-paint**.
 
-The synchronous mount/update/unmount ratios are the historical regression contract. Frame metrics are stored and printed for context but are not hard CI gates because frame phase is naturally noisy.
+The synchronous mount/update/unmount metrics are the historical regression contract. CI evaluates both native-relative ratios and meaningful changes in absolute abstraction overhead. Frame metrics are stored and printed for context but are not hard CI gates because frame phase is naturally noisy.
 
 ## Noise reduction
 
@@ -38,6 +38,10 @@ For each iteration Flux is paired with the corresponding reference result. Ratio
 A ratio of `1.08` means Flux took 8% longer than its reference for that metric during the paired browser measurements.
 
 Always interpret ratios together with absolute cost. When a reference takes only a few milliseconds for 1,000 instances, a large-looking percentage can still mean only a few microseconds of overhead per component.
+
+CI therefore uses a two-axis regression gate: the native-relative ratio must exceed the allowed historical range **and** the additional Flux-minus-native overhead must have grown by a meaningful absolute amount versus the committed baseline. Currently that absolute regression floor is 5 µs per instance. This prevents tiny denominators from creating false failures while still rejecting regressions that materially increase abstraction cost.
+
+Native reference scenarios must also preserve behavior that Flux intentionally provides. For example, the Button reference explicitly renders `type="button"`, matching Flux's safe default instead of benchmarking against a semantically different native button.
 
 ## Commands
 

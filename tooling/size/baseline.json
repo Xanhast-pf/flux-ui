@@ -5,9 +5,9 @@
     "button": {
       "name": "Button",
       "sizeClass": "interactive",
-      "raw": 6773,
-      "gzip": 2583,
-      "brotli": 2218,
+      "raw": 6804,
+      "gzip": 2595,
+      "brotli": 2245,
       "fileCount": 4
     },
     "container": {
@@ -34,6 +34,14 @@
       "brotli": 1162,
       "fileCount": 5
     },
+    "input": {
+      "name": "Input",
+      "sizeClass": "primitive",
+      "raw": 1950,
+      "gzip": 1002,
+      "brotli": 842,
+      "fileCount": 4
+    },
     "stack": {
       "name": "Stack",
       "sizeClass": "primitive",
@@ -45,22 +53,22 @@
   },
   "aggregate": {
     "rootEntry": {
-      "raw": 359,
-      "gzip": 203,
-      "brotli": 179,
+      "raw": 424,
+      "gzip": 224,
+      "brotli": 198,
       "fileCount": 1
     },
     "runtime": {
-      "raw": 21579,
-      "gzip": 6858,
-      "brotli": 5979,
-      "fileCount": 18
+      "raw": 23442,
+      "gzip": 7728,
+      "brotli": 6738,
+      "fileCount": 21
     },
     "published": {
-      "raw": 78605,
-      "gzip": 28854,
-      "brotli": 25198,
-      "fileCount": 83
+      "raw": 86127,
+      "gzip": 32619,
+      "brotli": 28401,
+      "fileCount": 97
     }
   }
 }

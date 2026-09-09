@@ -11,6 +11,7 @@ export function Button({
   size = "md",
   startIcon,
   tone = "accent",
+  type = "button",
   variant = "solid",
   ...buttonProps
 }: ButtonProps) {
@@ -23,6 +24,7 @@ export function Button({
       className={joinClassNames(button({ size, tone, variant }), className)}
       data-loading={loading || undefined}
       disabled={isDisabled}
+      type={type}
     >
       {loading ? <span aria-hidden="true" className={spinner} /> : null}
       <span className={content}>

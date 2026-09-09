@@ -109,7 +109,7 @@ function ButtonScenario({
 
         if (variant === "native") {
           return (
-            <button className="perf-native-button" key={id}>
+            <button className="perf-native-button" key={id} type="button">
               <span className="perf-native-button-content">{label}</span>
             </button>
           );

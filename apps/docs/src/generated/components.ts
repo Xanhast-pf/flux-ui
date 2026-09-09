@@ -37,6 +37,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Input",
+    slug: "input",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Styled native text-entry control that preserves browser semantics, attributes, and refs.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Stack",
     slug: "stack",
     category: "Layout",
