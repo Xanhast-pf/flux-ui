@@ -7,7 +7,7 @@ describe("Stack", () => {
     render(<Stack gap={{ base: "sm", lg: "xl" }} data-testid="stack" />);
     expect(screen.getByTestId("stack")).toHaveStyle({
       "--flux-stack-gap-base": "var(--flux-space-2)",
-      "--flux-stack-gap-lg": "var(--flux-space-5)",
+      "--flux-stack-gap-lg": "var(--flux-space-8)",
     });
   });
 });

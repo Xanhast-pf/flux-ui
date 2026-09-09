@@ -150,6 +150,9 @@ If the answer points away from a prop, do not add the prop.
 - Use Vanilla Extract for component-local styles and recipes.
 - Do not add Emotion, styled-components or another runtime styling system to core packages.
 - Shared design decisions use semantic CSS variables from `@flux-ui/tokens`.
+- Reusable spatial values follow the Flux quarter-rem contract: explicit `rem` values, exact multiples of `0.25rem`, with `1rem` as the standard spacing and `0.25rem` as the standard radius.
+- Spatial token definitions must never use `calc()`, `clamp()`, `min()`, or `max()`. Responsive components switch between explicit token values instead of manufacturing fractional geometry.
+- Optical values such as hairline borders/focus strokes, percentages, transforms, and motion are exempt from the quarter-rem spatial grid when the rendering requirement genuinely demands it.
 - Hardcoded values are acceptable only for truly component-local implementation details. Repeated visual decisions must become tokens.
 - Prefer semantic naming (`surface`, `textMuted`, `danger`) over palette-position naming (`gray700`, `blue500`) in component code.
 - Global theme switching should update CSS variables without forcing React tree rerenders.

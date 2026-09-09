@@ -200,6 +200,7 @@ CONTRIBUTING.md           contributor expectations
 - [Developer setup and workflow](docs/development.md)
 - [Architecture](docs/architecture.md)
 - [Component API design](docs/component-api.md)
+- [Design tokens](docs/design-tokens.md)
 - [Performance](docs/performance.md)
 - [Contributing](CONTRIBUTING.md)
 - [Engineering contract](AGENTS.md)

@@ -9,7 +9,7 @@ const spin = keyframes({
 export const button = recipe({
   base: {
     appearance: "none",
-    border: "1px solid transparent",
+    border: "0.0625rem solid transparent",
     borderRadius: `var(--flux-button-radius, var(${cssVars.radius.md}))`,
     cursor: "pointer",
     display: "inline-flex",
@@ -29,8 +29,8 @@ export const button = recipe({
     ].join(", "),
     selectors: {
       "&:focus-visible": {
-        outline: `3px solid color-mix(in srgb, var(${cssVars.color.focus}) 55%, transparent)`,
-        outlineOffset: 2,
+        outline: `0.125rem solid var(${cssVars.color.focus})`,
+        outlineOffset: "0.125rem",
       },
       "&:active:not(:disabled)": { transform: "scale(0.985)" },
       "&:disabled": { cursor: "not-allowed", opacity: 0.52 },
@@ -41,12 +41,12 @@ export const button = recipe({
       sm: {
         minHeight: `var(${cssVars.control.sm})`,
         paddingInline: `var(${cssVars.space[3]})`,
-        fontSize: "0.8125rem",
+        fontSize: "0.75rem",
       },
       md: {
         minHeight: `var(${cssVars.control.md})`,
         paddingInline: `var(${cssVars.space[4]})`,
-        fontSize: "0.9375rem",
+        fontSize: "1rem",
       },
       lg: {
         minHeight: `var(${cssVars.control.lg})`,
@@ -99,9 +99,23 @@ export const button = recipe({
       },
     },
     {
-      variants: { variant: "soft" },
+      variants: { tone: "accent", variant: "soft" },
       style: {
-        background: "color-mix(in srgb, currentColor 10%, transparent)",
+        background: `var(${cssVars.color.accentSoft})`,
+        color: `var(${cssVars.color.accent})`,
+      },
+    },
+    {
+      variants: { tone: "danger", variant: "soft" },
+      style: {
+        background: `var(${cssVars.color.dangerSoft})`,
+        color: `var(${cssVars.color.danger})`,
+      },
+    },
+    {
+      variants: { tone: "neutral", variant: "soft" },
+      style: {
+        background: `var(${cssVars.color.surfaceSubtle})`,
         color: `var(${cssVars.color.text})`,
       },
     },
@@ -118,7 +132,7 @@ export const button = recipe({
         color: `var(${cssVars.color.text})`,
         selectors: {
           "&:hover:not(:disabled)": {
-            background: "color-mix(in srgb, currentColor 8%, transparent)",
+            background: `var(${cssVars.color.surfaceSubtle})`,
           },
         },
       },
@@ -137,11 +151,11 @@ export const content = style({
 });
 
 export const spinner = style({
-  width: "1em",
-  height: "1em",
-  border: "0.125em solid currentColor",
+  width: "1rem",
+  height: "1rem",
+  border: "0.125rem solid currentColor",
   borderRightColor: "transparent",
-  borderRadius: "999px",
+  borderRadius: "50%",
   animation: `${spin} 650ms linear infinite`,
   position: "absolute",
   "@media": {

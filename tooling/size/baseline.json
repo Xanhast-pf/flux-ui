@@ -5,61 +5,61 @@
     "button": {
       "name": "Button",
       "sizeClass": "interactive",
-      "raw": 6524,
-      "gzip": 2591,
-      "brotli": 2221,
+      "raw": 6773,
+      "gzip": 2583,
+      "brotli": 2218,
       "fileCount": 4
     },
     "container": {
       "name": "Container",
       "sizeClass": "primitive",
-      "raw": 1087,
-      "gzip": 741,
-      "brotli": 619,
+      "raw": 1086,
+      "gzip": 742,
+      "brotli": 634,
       "fileCount": 4
     },
     "grid": {
       "name": "Grid",
       "sizeClass": "interactive",
-      "raw": 10338,
-      "gzip": 2148,
-      "brotli": 1920,
+      "raw": 10335,
+      "gzip": 2152,
+      "brotli": 1909,
       "fileCount": 5
     },
     "inline": {
       "name": "Inline",
       "sizeClass": "primitive",
-      "raw": 2627,
-      "gzip": 1343,
-      "brotli": 1180,
+      "raw": 2624,
+      "gzip": 1347,
+      "brotli": 1162,
       "fileCount": 5
     },
     "stack": {
       "name": "Stack",
       "sizeClass": "primitive",
-      "raw": 2339,
-      "gzip": 1227,
-      "brotli": 1105,
+      "raw": 2336,
+      "gzip": 1231,
+      "brotli": 1079,
       "fileCount": 5
     }
   },
   "aggregate": {
     "rootEntry": {
       "raw": 359,
-      "gzip": 201,
+      "gzip": 203,
       "brotli": 179,
       "fileCount": 1
     },
     "runtime": {
-      "raw": 21334,
-      "gzip": 6859,
-      "brotli": 6008,
+      "raw": 21579,
+      "gzip": 6858,
+      "brotli": 5979,
       "fileCount": 18
     },
     "published": {
-      "raw": 77956,
-      "gzip": 28858,
-      "brotli": 25278,
+      "raw": 78605,
+      "gzip": 28854,
+      "brotli": 25198,
       "fileCount": 83
     }
   }
