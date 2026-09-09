@@ -107,7 +107,7 @@ importers:
         specifier: "catalog:"
         version: 3.0.2
       "@coding-bible/analyzer":
-        specifier: github:Xanhast-pf/coding-bible#v0.28.1&path:packages/analyzer
+        specifier: github:Xanhast-pf/coding-bible#801dd87920e99f63016636d39586fa1565c997d9&path:packages/analyzer
         version: https://codeload.github.com/Xanhast-pf/coding-bible/tar.gz/801dd87920e99f63016636d39586fa1565c997d9#path:packages/analyzer
       "@eslint/js":
         specifier: "catalog:"
@@ -649,7 +649,7 @@ packages:
     resolution:
       {
         gitHosted: true,
-        integrity: sha512-0vZTptc5CzfDTrC5G09X/iNl8IJD8xZ0cuql02Gy764UHG9vGIDQZduvqraDpJAGpatiN/79pjcs7nvJIYNntw==,
+        path: packages/analyzer,
         tarball: https://codeload.github.com/Xanhast-pf/coding-bible/tar.gz/801dd87920e99f63016636d39586fa1565c997d9,
       }
     version: 0.0.0
