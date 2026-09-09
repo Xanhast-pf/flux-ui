@@ -1,16 +1,16 @@
+import { joinClassNames } from "../../internal/joinClassNames.js";
 import { button, content, spinner } from "./Button.css.js";
 import type { ButtonProps } from "./Button.types.js";
-import { joinClassNames } from "../../internal/joinClassNames.js";
 
 export function Button({
   children,
   className,
   disabled,
-  intent = "accent",
-  leadingIcon,
+  endIcon,
   loading = false,
   size = "md",
-  trailingIcon,
+  startIcon,
+  tone = "accent",
   variant = "solid",
   ...buttonProps
 }: ButtonProps) {
@@ -20,15 +20,15 @@ export function Button({
     <button
       {...buttonProps}
       aria-busy={loading || undefined}
-      className={joinClassNames(button({ intent, size, variant }), className)}
+      className={joinClassNames(button({ size, tone, variant }), className)}
       data-loading={loading || undefined}
       disabled={isDisabled}
     >
       {loading ? <span aria-hidden="true" className={spinner} /> : null}
       <span className={content}>
-        {leadingIcon}
+        {startIcon}
         {children}
-        {trailingIcon}
+        {endIcon}
       </span>
     </button>
   );

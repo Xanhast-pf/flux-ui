@@ -37,7 +37,8 @@
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plugin-lib-inject-css": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "@storybook/react-vite": "catalog:"
   },
   "scripts": {
     "build": "node ../../scripts/clean.mjs packages/react/dist && vite build && tsc -p tsconfig.build.json",

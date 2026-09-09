@@ -48,3 +48,10 @@ export const primitiveTokens = {
     easing: "cubic-bezier(0.2, 0, 0, 1)",
   },
 } as const;
+export const breakpoints = {
+  sm: "40rem",
+  md: "48rem",
+  lg: "64rem",
+  xl: "80rem",
+  "2xl": "96rem",
+} as const;

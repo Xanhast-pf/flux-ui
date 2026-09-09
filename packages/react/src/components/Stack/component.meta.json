@@ -1,0 +1,8 @@
+{
+  "name": "Stack",
+  "slug": "stack",
+  "category": "Layout",
+  "status": "alpha",
+  "description": "Token-driven vertical layout with responsive spacing.",
+  "sizeClass": "primitive"
+}

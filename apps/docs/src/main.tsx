@@ -1,14 +1,24 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "@flux-ui/tokens/theme.css";
-import { App } from "./App.js";
-import "./styles.css";
 
-const root = document.getElementById("root");
-if (!root) throw new Error("#root is missing");
+const rootElement = document.getElementById("root");
+if (!rootElement) throw new Error("#root is missing");
 
-createRoot(root).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+const isPerfRoute = new URLSearchParams(window.location.search).has("perf");
+
+if (isPerfRoute) {
+  await import("./perf/perf.css");
+  const { runPerfHarness } = await import("./perf/PerfApp.js");
+  await runPerfHarness(rootElement);
+} else {
+  const [{ StrictMode }, { App }] = await Promise.all([
+    import("react"),
+    import("./App.js"),
+    import("./styles.css"),
+  ]);
+  createRoot(rootElement).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+}

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "policyVersion": 2,
+  "scenarios": {
+    "button": {
+      "count": 1000,
+      "reference": "native",
+      "medians": {
+        "raw": {
+          "mount": 2,
+          "mountToFrame": 18.600000023841858,
+          "update": 1.800000011920929,
+          "updateToFrame": 18.600000023841858,
+          "unmount": 1.100000023841858
+        },
+        "native": {
+          "mount": 3.5,
+          "mountToFrame": 16.69999998807907,
+          "update": 2.800000011920929,
+          "updateToFrame": 16.5,
+          "unmount": 2
+        },
+        "flux": {
+          "mount": 6.699999988079071,
+          "mountToFrame": 18.399999976158142,
+          "update": 6.199999988079071,
+          "updateToFrame": 16.899999976158142,
+          "unmount": 2.300000011920929
+        }
+      },
+      "ratios": {
+        "mount": 1.8787878683885377,
+        "mountToFrame": 1.0545454567128962,
+        "update": 2.2142857477373012,
+        "updateToFrame": 1.0119760471989123,
+        "unmount": 1.1904761769603982
+      }
+    },
+    "grid": {
+      "count": 1000,
+      "reference": "native",
+      "medians": {
+        "raw": {
+          "mount": 2.599999964237213,
+          "mountToFrame": 16.600000023841858,
+          "update": 2,
+          "updateToFrame": 16.900000035762787,
+          "unmount": 1.699999988079071
+        },
+        "native": {
+          "mount": 2.699999988079071,
+          "mountToFrame": 16.600000023841858,
+          "update": 2.199999988079071,
+          "updateToFrame": 16.69999998807907,
+          "unmount": 1.399999976158142
+        },
+        "flux": {
+          "mount": 2.600000023841858,
+          "mountToFrame": 16.5,
+          "update": 2.100000023841858,
+          "updateToFrame": 16.600000023841858,
+          "unmount": 1.399999976158142
+        }
+      },
+      "ratios": {
+        "mount": 1,
+        "mountToFrame": 0.9939393961068356,
+        "update": 0.9545454705549666,
+        "updateToFrame": 0.9939759021868535,
+        "unmount": 0.9473684094949445
+      }
+    }
+  }
+}

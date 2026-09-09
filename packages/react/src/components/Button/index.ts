@@ -1,7 +1,7 @@
 export { Button } from "./Button.js";
 export type {
-  ButtonIntent,
   ButtonProps,
   ButtonSize,
+  ButtonTone,
   ButtonVariant,
 } from "./Button.types.js";

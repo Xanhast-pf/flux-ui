@@ -1,0 +1,8 @@
+{
+  "name": "Container",
+  "slug": "container",
+  "category": "Layout",
+  "status": "alpha",
+  "description": "Centered page-width primitive with consistent responsive gutters.",
+  "sizeClass": "primitive"
+}

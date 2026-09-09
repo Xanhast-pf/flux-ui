@@ -36,8 +36,14 @@ pnpm check
 Run the browser-level accessibility/smoke gate too:
 
 ```bash
-pnpm exec playwright install chromium
+pnpm --filter @flux-ui/docs playwright:install
 pnpm check:full
+```
+
+Run the isolated component workbench:
+
+```bash
+pnpm storybook
 ```
 
 ## Add a component
@@ -47,7 +53,7 @@ pnpm component:new SegmentedControl Inputs interactive
 pnpm component:doctor SegmentedControl
 ```
 
-The generator creates the component, tests, docs stub, styles, metadata and public index, then regenerates the library/docs registries. Adding a component must not require unrelated manual registry edits.
+The generator creates the component, tests, Storybook story, SSR benchmark, styles, metadata and public index, then regenerates the library/docs registries. Adding a component must not require unrelated manual registry edits.
 
 ## Size contract
 
@@ -60,6 +66,18 @@ pnpm size:update
 ```
 
 Commit `tooling/size/baseline.json`, then the normal `pnpm check` gate enforces it. Use `pnpm size:changed` for fast local feedback and `pnpm size:release` for the strict release surface.
+
+## Runtime performance contract
+
+Flux benchmarks runtime overhead against native browser baselines rather than relying on raw milliseconds alone. The browser harness measures raw HTML, equivalent handwritten HTML/CSS, and Flux implementations on the same Chromium run, then gates on the Flux/reference ratio.
+
+```bash
+pnpm perf:smoke   # fast sanity check
+pnpm perf:update  # intentionally record a baseline
+pnpm perf         # full regression check
+```
+
+`Button` is compared directly with an unstyled native `<button>`. Layout primitives use an equivalent handwritten CSS reference when that produces a fairer measurement. See `tooling/perf/README.md`.
 
 ## Coding Bible
 
@@ -76,7 +94,8 @@ No Coding Bible rules are excluded by default. Flux should dogfood the full appl
 
 ```text
 apps/
-  docs/                 documentation + component playground
+  docs/                 public docs + dashboard dogfood app
+  storybook/            isolated component engineering workbench
 packages/
   react/                public React component package
   tokens/               semantic CSS variable names + default themes
@@ -86,6 +105,7 @@ scripts/
   component-doctor.mjs  component structure validation
 tooling/
   size/                  scalable bundle-size contract + baseline
+  perf/                  native-relative browser performance contract
 docs/
   architecture.md
   component-api.md
