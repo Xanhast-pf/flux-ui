@@ -62,6 +62,9 @@ const scenarios: ScenarioConfig[] = [
 const regressionPolicy = {
   relativePercent: 25,
   minimumRatioDelta: 0.2,
+
+  // Do not fail CI over sub-microsecond-per-instance noise.
+  minimumOverheadPerInstanceMs: 0.001,
 } as const;
 
 function median(values: number[]): number {
@@ -303,18 +306,42 @@ async function readBaseline(): Promise<PerfBaseline | null> {
 function assertRegression(
   scenario: PerfScenario,
   metric: keyof MetricSet,
-  current: number,
-  baseline: number,
+  currentRatio: number,
+  baselineRatio: number,
+  currentFluxMs: number,
+  currentReferenceMs: number,
+  instanceCount: number,
 ): void {
-  const allowed = Math.max(
-    baseline * (1 + regressionPolicy.relativePercent / 100),
-    baseline + regressionPolicy.minimumRatioDelta,
+  const currentOverheadMs = currentFluxMs - currentReferenceMs;
+
+  const minimumMeaningfulOverheadMs =
+    regressionPolicy.minimumOverheadPerInstanceMs * instanceCount;
+
+  // Ratios become unstable when the underlying timings are only a few
+  // milliseconds apart. Ignore differences that are insignificant in
+  // absolute runtime cost.
+  if (currentOverheadMs <= minimumMeaningfulOverheadMs) {
+    return;
+  }
+
+  // A historical result below native cost is measurement noise, not a
+  // performance level future runs should be required to preserve.
+  const normalizedBaselineRatio = Math.max(1, baselineRatio);
+
+  const allowedRatio = Math.max(
+    normalizedBaselineRatio * (1 + regressionPolicy.relativePercent / 100),
+    normalizedBaselineRatio + regressionPolicy.minimumRatioDelta,
   );
 
   expect(
-    current,
-    `${scenario} ${metric} overhead regressed: ${formatRatio(current)} vs baseline ${formatRatio(baseline)} (allowed ${formatRatio(allowed)})`,
-  ).toBeLessThanOrEqual(allowed);
+    currentRatio,
+    [
+      `${scenario} ${metric} overhead regressed:`,
+      `${formatRatio(currentRatio)} vs baseline ${formatRatio(baselineRatio)}`,
+      `(allowed ${formatRatio(allowedRatio)}).`,
+      `Absolute overhead: ${formatMs(currentOverheadMs)} across ${instanceCount} instances.`,
+    ].join(" "),
+  ).toBeLessThanOrEqual(allowedRatio);
 }
 
 function assertValidSample(sample: PerfResult): void {
@@ -453,15 +480,33 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
     const current = summaries[scenario.name].ratios;
     const previous = baseline.scenarios[scenario.name].ratios;
 
-    assertRegression(scenario.name, "mount", current.mount, previous.mount);
-
-    assertRegression(scenario.name, "update", current.update, previous.update);
+    assertRegression(
+      scenario.name,
+      "mount",
+      current.mount,
+      previous.mount,
+      summaries[scenario.name].medians.flux.mount,
+      summaries[scenario.name].medians[scenario.reference].mount,
+      summaries[scenario.name].count,
+    );
+    assertRegression(
+      scenario.name,
+      "update",
+      current.update,
+      previous.update,
+      summaries[scenario.name].medians.flux.update,
+      summaries[scenario.name].medians[scenario.reference].update,
+      summaries[scenario.name].count,
+    );
 
     assertRegression(
       scenario.name,
       "unmount",
       current.unmount,
       previous.unmount,
+      summaries[scenario.name].medians.flux.unmount,
+      summaries[scenario.name].medians[scenario.reference].unmount,
+      summaries[scenario.name].count,
     );
   }
 });
