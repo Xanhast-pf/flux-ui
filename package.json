@@ -38,14 +38,14 @@
     "prepare": "husky",
     "bible:changed": "node scripts/run-coding-bible.mjs check . --changed",
     "size:changed": "pnpm build:packages && node tooling/size/check.mjs --changed",
-    "size:update": "pnpm build:packages && node tooling/size/check.mjs --update-baseline",
+    "size:update": "pnpm build:packages && node tooling/size/check.mjs --update-baseline && pnpm generate",
     "size:release": "pnpm build:packages && node tooling/size/check.mjs --release",
     "size:test": "node --test tooling/size/*.test.mjs",
     "build:packages": "pnpm --filter @flux-ui/tokens build && pnpm --filter @flux-ui/react build",
     "storybook": "pnpm --filter @flux-ui/storybook dev",
     "storybook:build": "pnpm --filter @flux-ui/storybook build",
     "perf": "node tooling/perf/check.mjs",
-    "perf:update": "node tooling/perf/check.mjs --update-baseline",
+    "perf:update": "node tooling/perf/check.mjs --update-baseline && pnpm generate",
     "perf:smoke": "node tooling/perf/check.mjs --smoke"
   },
   "devDependencies": {
