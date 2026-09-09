@@ -1,31 +1,65 @@
 :root,
 [data-flux-theme="light"] {
   color-scheme: light;
-  --flux-color-canvas: #f6f7f9;
+
+  --flux-color-canvas: #f8fafc;
   --flux-color-surface: #ffffff;
+  --flux-color-surface-subtle: #f1f5f9;
   --flux-color-surface-elevated: #ffffff;
-  --flux-color-text: #13161b;
-  --flux-color-text-muted: #666d78;
-  --flux-color-border: #dfe3e8;
-  --flux-color-accent: #5b52f2;
-  --flux-color-accent-hover: #4940df;
+
+  --flux-color-text: #0f172a;
+  --flux-color-text-muted: #475569;
+  --flux-color-text-subtle: #64748b;
+
+  --flux-color-border: #dbe2ea;
+  --flux-color-border-strong: #8795aa;
+
+  --flux-color-accent: #4f46e5;
+  --flux-color-accent-hover: #4338ca;
+  --flux-color-accent-soft: #eef2ff;
   --flux-color-accent-foreground: #ffffff;
-  --flux-color-danger: #d92d45;
-  --flux-color-danger-hover: #b92339;
+
+  --flux-color-success: #15803d;
+  --flux-color-success-hover: #166534;
+  --flux-color-success-soft: #f0fdf4;
+  --flux-color-success-foreground: #ffffff;
+
+  --flux-color-warning: #a16207;
+  --flux-color-warning-hover: #854d0e;
+  --flux-color-warning-soft: #fffbeb;
+  --flux-color-warning-foreground: #ffffff;
+
+  --flux-color-danger: #dc2626;
+  --flux-color-danger-hover: #b91c1c;
+  --flux-color-danger-soft: #fff5f5;
   --flux-color-danger-foreground: #ffffff;
-  --flux-color-focus: #7a73ff;
+
+  --flux-color-info: #0369a1;
+  --flux-color-info-hover: #075985;
+  --flux-color-info-soft: #f0f9ff;
+  --flux-color-info-foreground: #ffffff;
+
+  --flux-color-focus: #6366f1;
 
   --flux-space-1: 0.25rem;
   --flux-space-2: 0.5rem;
   --flux-space-3: 0.75rem;
   --flux-space-4: 1rem;
-  --flux-space-5: 1.5rem;
-  --flux-radius-sm: 0.375rem;
-  --flux-radius-md: 0.625rem;
-  --flux-radius-lg: 0.875rem;
+  --flux-space-5: 1.25rem;
+  --flux-space-6: 1.5rem;
+  --flux-space-8: 2rem;
+  --flux-space-10: 2.5rem;
+  --flux-space-12: 3rem;
+  --flux-space-16: 4rem;
+
+  --flux-radius-sm: 0.25rem;
+  --flux-radius-md: 0.25rem;
+  --flux-radius-lg: 0.5rem;
+
   --flux-control-sm: 2rem;
   --flux-control-md: 2.5rem;
   --flux-control-lg: 3rem;
+
   --flux-motion-fast: 100ms;
   --flux-motion-normal: 180ms;
   --flux-motion-easing: cubic-bezier(0.2, 0, 0, 1);
@@ -33,19 +67,45 @@
 
 [data-flux-theme="dark"] {
   color-scheme: dark;
-  --flux-color-canvas: #0b0d10;
-  --flux-color-surface: #12151a;
-  --flux-color-surface-elevated: #191d23;
-  --flux-color-text: #f5f7fa;
-  --flux-color-text-muted: #9ca5b2;
-  --flux-color-border: #2a3038;
-  --flux-color-accent: #8d87ff;
-  --flux-color-accent-hover: #a09bff;
-  --flux-color-accent-foreground: #0d0e14;
-  --flux-color-danger: #ff6478;
-  --flux-color-danger-hover: #ff7d8d;
-  --flux-color-danger-foreground: #1b090d;
-  --flux-color-focus: #aaa6ff;
+
+  --flux-color-canvas: #0b0f14;
+  --flux-color-surface: #111720;
+  --flux-color-surface-subtle: #151d28;
+  --flux-color-surface-elevated: #18212d;
+
+  --flux-color-text: #f8fafc;
+  --flux-color-text-muted: #a8b3c2;
+  --flux-color-text-subtle: #7f8b9b;
+
+  --flux-color-border: #273241;
+  --flux-color-border-strong: #596d84;
+
+  --flux-color-accent: #818cf8;
+  --flux-color-accent-hover: #a5b4fc;
+  --flux-color-accent-soft: #1b2048;
+  --flux-color-accent-foreground: #0d1020;
+
+  --flux-color-success: #4ade80;
+  --flux-color-success-hover: #86efac;
+  --flux-color-success-soft: #0d2115;
+  --flux-color-success-foreground: #07150c;
+
+  --flux-color-warning: #fbbf24;
+  --flux-color-warning-hover: #fcd34d;
+  --flux-color-warning-soft: #261b05;
+  --flux-color-warning-foreground: #1b1200;
+
+  --flux-color-danger: #fb7185;
+  --flux-color-danger-hover: #fda4af;
+  --flux-color-danger-soft: #2a1118;
+  --flux-color-danger-foreground: #26080e;
+
+  --flux-color-info: #38bdf8;
+  --flux-color-info-hover: #7dd3fc;
+  --flux-color-info-soft: #08202b;
+  --flux-color-info-foreground: #06131a;
+
+  --flux-color-focus: #a5b4fc;
 }
 
 @media (prefers-reduced-motion: reduce) {

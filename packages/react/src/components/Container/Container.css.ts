@@ -1,10 +1,11 @@
+import { cssVars } from "@flux-ui/tokens";
 import { style, styleVariants } from "@vanilla-extract/css";
 
 export const container = style({
   inlineSize: "100%",
   minInlineSize: 0,
   marginInline: "auto",
-  paddingInline: "clamp(1rem, 3vw, 2rem)",
+  paddingInline: `var(${cssVars.space[4]})`,
 });
 
 export const sizes = styleVariants({

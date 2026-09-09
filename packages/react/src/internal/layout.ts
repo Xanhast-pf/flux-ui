@@ -10,12 +10,12 @@ export type CSSVariableStyle = CSSProperties &
   Record<`--${string}`, string | number>;
 
 const gapValues: Record<LayoutGap, string> = {
-  none: "0",
+  none: "0rem",
   xs: "var(--flux-space-1)",
   sm: "var(--flux-space-2)",
-  md: "var(--flux-space-3)",
-  lg: "var(--flux-space-4)",
-  xl: "var(--flux-space-5)",
+  md: "var(--flux-space-4)",
+  lg: "var(--flux-space-6)",
+  xl: "var(--flux-space-8)",
 };
 
 export function gapToCssValue(gap: LayoutGap): string {
