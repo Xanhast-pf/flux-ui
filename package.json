@@ -29,7 +29,7 @@
     "bible:check": "node scripts/run-coding-bible.mjs check .",
     "bible:staged": "node scripts/run-coding-bible.mjs check . --staged",
     "bible:pin": "node scripts/pin-coding-bible.mjs",
-    "check": "pnpm generate:check && pnpm format && pnpm lint && pnpm typecheck && pnpm knip && pnpm test && pnpm build && pnpm size && pnpm bible:check",
+    "check": "pnpm generate:check && pnpm format:check && pnpm lint && pnpm typecheck && pnpm knip && pnpm test && pnpm build && pnpm size && pnpm bible:check",
     "check:full": "pnpm check && node tooling/size/check.mjs --release && pnpm storybook:build && pnpm test:e2e && pnpm perf:smoke",
     "check:fix": "pnpm generate && pnpm lint:fix && pnpm format && pnpm check",
     "changeset": "changeset",
