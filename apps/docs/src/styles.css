@@ -3,6 +3,7 @@
 }
 
 html {
+  scroll-behavior: smooth;
   background: var(--flux-color-canvas);
   color: var(--flux-color-text);
   font-family:
@@ -28,16 +29,18 @@ select {
 }
 
 main {
-  max-width: 80rem;
-  margin-inline: auto;
-  padding: 1rem;
+  min-height: 100vh;
+}
+
+.page-shell {
+  padding-block: 1rem 3rem;
 }
 
 header,
 nav,
 section,
 footer {
-  padding-block: 2rem;
+  padding-block: 1rem;
 }
 
 section,
@@ -45,29 +48,158 @@ footer {
   border-top: 0.0625rem solid var(--flux-color-border);
 }
 
-nav ul {
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 52rem;
+  margin-bottom: 0.75rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h3 {
+  margin-bottom: 0.5rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.lede {
+  max-width: 52rem;
+  color: var(--flux-color-text-muted);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.eyebrow {
+  margin-bottom: 0;
+  color: var(--flux-color-accent);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.muted {
+  margin-bottom: 0;
+  color: var(--flux-color-text-muted);
+}
+
+.status-banner {
+  max-width: 54rem;
+  border: 0.0625rem solid var(--flux-color-border);
+  border-radius: var(--flux-radius-lg);
+  background: var(--flux-color-surface-subtle);
+  padding: 0.75rem 1rem;
+}
+
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: color-mix(in srgb, var(--flux-color-canvas) 94%, transparent);
+  backdrop-filter: blur(0.75rem);
+}
+
+.section-nav ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  padding-left: 1rem;
+  gap: 0.5rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 a {
   color: var(--flux-color-accent);
 }
 
-button {
-  border: 0.0625rem solid var(--flux-color-border-strong);
-  border-radius: var(--flux-radius-md);
-  background: var(--flux-color-surface);
-  color: var(--flux-color-text);
-  padding: 0.5rem 1rem;
-}
-
-button:focus-visible,
 a:focus-visible {
   outline: 0.125rem solid var(--flux-color-focus);
   outline-offset: 0.25rem;
+}
+
+.action-link {
+  display: inline-flex;
+  min-height: var(--flux-control-md);
+  align-items: center;
+  padding-inline: 0.25rem;
+}
+
+.ci-badge {
+  width: fit-content;
+}
+
+.metric-card,
+.showcase-card,
+.benchmark-card {
+  border: 0.0625rem solid var(--flux-color-border);
+  border-radius: var(--flux-radius-lg);
+  background: var(--flux-color-surface);
+}
+
+.metric-card {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 7rem;
+  align-content: center;
+  padding: 1rem;
+}
+
+.metric-card span,
+.metric-card small {
+  color: var(--flux-color-text-muted);
+}
+
+.metric-card strong {
+  font-size: 1.375rem;
+}
+
+.showcase-card,
+.benchmark-card {
+  padding: 1rem;
+}
+
+.component-demo {
+  min-width: 0;
+  border-top: 0.0625rem solid var(--flux-color-border);
+  padding-top: 1rem;
+}
+
+.demo-boundary {
+  min-height: 8rem;
+  border: 0.0625rem dashed var(--flux-color-border-strong);
+  border-radius: var(--flux-radius-md);
+  padding: 0.75rem;
+}
+
+.demo-block {
+  border-radius: var(--flux-radius-md);
+  background: var(--flux-color-accent-soft);
+  color: var(--flux-color-text);
+  padding: 0.75rem;
+}
+
+.container-demo-stage {
+  overflow: hidden;
+  border-radius: var(--flux-radius-md);
+  background: var(--flux-color-surface-subtle);
+  padding-block: 1rem;
+}
+
+.container-demo-stage .demo-boundary {
+  min-height: auto;
 }
 
 table {
@@ -76,8 +208,8 @@ table {
 }
 
 caption {
-  text-align: left;
   padding-block: 0.5rem;
+  text-align: left;
 }
 
 th,
@@ -90,6 +222,8 @@ td {
 
 pre {
   overflow: auto;
+  margin: 0;
+  border-radius: var(--flux-radius-md);
   background: var(--flux-color-surface-subtle);
   padding: 1rem;
 }
@@ -104,16 +238,20 @@ code {
 
 .palette {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
   gap: 0.5rem;
-  list-style: none;
+  margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .palette li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  min-width: 0;
+  border: 0.0625rem solid var(--flux-color-border);
+  border-radius: var(--flux-radius-md);
+  background: var(--flux-color-surface);
+  padding: 0.75rem;
+  overflow-wrap: anywhere;
 }
 
 .swatch {
@@ -122,6 +260,7 @@ code {
   height: 2rem;
   border: 0.0625rem solid var(--flux-color-border-strong);
   border-radius: var(--flux-radius-md);
+  vertical-align: middle;
 }
 
 meter {
@@ -131,4 +270,28 @@ meter {
 
 img {
   max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (min-width: 48rem) {
+  .page-shell {
+    padding-block: 2rem 4rem;
+  }
+
+  header,
+  nav,
+  section,
+  footer {
+    padding-block: 2rem;
+  }
+
+  .showcase-card,
+  .benchmark-card {
+    padding: 1.5rem;
+  }
 }

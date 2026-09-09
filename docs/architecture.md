@@ -37,7 +37,7 @@ Storybook is the component engineering workbench. Use it to develop isolated sta
 
 ### `apps/docs`
 
-The docs application is the public product surface and a real Flux consumer. It should dogfood Flux primitives instead of reproducing them with app-specific abstractions. GitHub Pages deploys the production build after a successful `main` CI run.
+The docs application is the public product surface and a real Flux consumer. It should dogfood Flux primitives instead of reproducing them with app-specific abstractions. Every public component should gain a representative live docs example as soon as practical so API, styling, responsiveness, and accessibility problems are exercised in a real application. GitHub Pages deploys the production build after a successful `main` CI run.
 
 ## Build and styling
 
