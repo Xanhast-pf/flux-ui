@@ -1,0 +1,3 @@
+pnpm lint-staged
+pnpm generate:check
+pnpm bible:staged

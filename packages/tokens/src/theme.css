@@ -1,0 +1,56 @@
+:root,
+[data-flux-theme="light"] {
+  color-scheme: light;
+  --flux-color-canvas: #f6f7f9;
+  --flux-color-surface: #ffffff;
+  --flux-color-surface-elevated: #ffffff;
+  --flux-color-text: #13161b;
+  --flux-color-text-muted: #666d78;
+  --flux-color-border: #dfe3e8;
+  --flux-color-accent: #5b52f2;
+  --flux-color-accent-hover: #4940df;
+  --flux-color-accent-foreground: #ffffff;
+  --flux-color-danger: #d92d45;
+  --flux-color-danger-hover: #b92339;
+  --flux-color-danger-foreground: #ffffff;
+  --flux-color-focus: #7a73ff;
+
+  --flux-space-1: 0.25rem;
+  --flux-space-2: 0.5rem;
+  --flux-space-3: 0.75rem;
+  --flux-space-4: 1rem;
+  --flux-space-5: 1.5rem;
+  --flux-radius-sm: 0.375rem;
+  --flux-radius-md: 0.625rem;
+  --flux-radius-lg: 0.875rem;
+  --flux-control-sm: 2rem;
+  --flux-control-md: 2.5rem;
+  --flux-control-lg: 3rem;
+  --flux-motion-fast: 100ms;
+  --flux-motion-normal: 180ms;
+  --flux-motion-easing: cubic-bezier(0.2, 0, 0, 1);
+}
+
+[data-flux-theme="dark"] {
+  color-scheme: dark;
+  --flux-color-canvas: #0b0d10;
+  --flux-color-surface: #12151a;
+  --flux-color-surface-elevated: #191d23;
+  --flux-color-text: #f5f7fa;
+  --flux-color-text-muted: #9ca5b2;
+  --flux-color-border: #2a3038;
+  --flux-color-accent: #8d87ff;
+  --flux-color-accent-hover: #a09bff;
+  --flux-color-accent-foreground: #0d0e14;
+  --flux-color-danger: #ff6478;
+  --flux-color-danger-hover: #ff7d8d;
+  --flux-color-danger-foreground: #1b090d;
+  --flux-color-focus: #aaa6ff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --flux-motion-fast: 0ms;
+    --flux-motion-normal: 0ms;
+  }
+}

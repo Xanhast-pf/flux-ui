@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "budgetsVersion": 1,
+  "components": {
+    "button": {
+      "name": "Button",
+      "sizeClass": "interactive",
+      "raw": 6419,
+      "gzip": 2438,
+      "brotli": 2109,
+      "fileCount": 3
+    }
+  },
+  "aggregate": {
+    "rootEntry": {
+      "raw": 78,
+      "gzip": 87,
+      "brotli": 82,
+      "fileCount": 1
+    },
+    "runtime": {
+      "raw": 6497,
+      "gzip": 2525,
+      "brotli": 2191,
+      "fileCount": 4
+    },
+    "published": {
+      "raw": 23164,
+      "gzip": 8992,
+      "brotli": 7824,
+      "fileCount": 19
+    }
+  }
+}

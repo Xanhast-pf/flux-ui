@@ -1,0 +1,8 @@
+{
+  "include": [
+    "apps/**/*.{ts,tsx,js,jsx,mjs,mts,css,graphql,gql}",
+    "packages/**/*.{ts,tsx,js,jsx,mjs,mts,css,graphql,gql}",
+    "scripts/**/*.{js,mjs,ts,mts}"
+  ],
+  "ignore": ["apps/docs/src/generated/**", "**/*.bench.tsx"]
+}

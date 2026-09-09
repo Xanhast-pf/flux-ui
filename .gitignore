@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.cache/
+.coding-bible/cache/
+.coding-bible/report.json
+.coding-bible/coding-bible.sarif
+.DS_Store
+*.log
+*.tsbuildinfo

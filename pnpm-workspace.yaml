@@ -1,0 +1,40 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+catalog:
+  react: ^19.2.8
+  react-dom: ^19.2.8
+  "@types/react": ^19.2.18
+  "@types/react-dom": ^19.2.5
+  "@types/node": ^24.13.3
+  typescript: ^5.9.2
+  vite: ^8.2.2
+  "@vitejs/plugin-react": ^6.1.1
+  vitest: ^4.1.10
+  jsdom: ^30.0.1
+  "@testing-library/react": ^16.3.2
+  "@testing-library/jest-dom": ^7.0.1
+  "@testing-library/user-event": ^14.6.7
+  "@playwright/test": ^1.62.1
+  "@axe-core/playwright": ^4.13.0
+  "@vanilla-extract/css": ^1.21.2
+  "@vanilla-extract/recipes": ^0.5.7
+  "@vanilla-extract/vite-plugin": ^5.2.6
+  "vite-plugin-lib-inject-css": ^2.2.2
+  "@base-ui/react": ^1.7.0 # Adopt when the first behavior-heavy primitive needs it.
+  eslint: ^9.39.5
+  "@eslint/js": ^9.39.5
+  typescript-eslint: ^8.68.0
+  eslint-plugin-react-hooks: ^7.1.1
+  eslint-plugin-jsx-a11y: ^6.10.2
+  eslint-config-prettier: ^10.1.8
+  globals: ^17.11.0
+  prettier: ^3.9.6
+  knip: ^6.34.0
+  husky: ^9.1.7
+  lint-staged: ^17.4.1
+  "@changesets/cli": ^3.0.1
+
+onlyBuiltDependencies:
+  - esbuild
