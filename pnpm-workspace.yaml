@@ -38,3 +38,4 @@ catalog:
 
 onlyBuiltDependencies:
   - esbuild
+  - coding-bible
