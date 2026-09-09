@@ -203,12 +203,6 @@ importers:
 
   apps/storybook:
     dependencies:
-      "@flux-ui/react":
-        specifier: workspace:*
-        version: link:../../packages/react
-      "@flux-ui/tokens":
-        specifier: workspace:*
-        version: link:../../packages/tokens
       react:
         specifier: "catalog:"
         version: 19.2.8
