@@ -1,16 +1,21 @@
 ## Summary
 
-<!-- What changed and why? -->
+<!-- What changed, why is it needed, and what consumer/developer problem does it solve? -->
 
 ## Validation
 
 - [ ] `pnpm check`
-- [ ] `pnpm storybook:build` when component behavior/visuals changed
-- [ ] `pnpm perf` when runtime-sensitive code changed
-- [ ] Browser/a11y behavior checked when interaction semantics changed
-- [ ] Size/performance baselines were updated only when the change is intentional
-- [ ] Changeset added when a published package needs a release note/version bump
+- [ ] `pnpm storybook:build` for component/visual changes
+- [ ] `pnpm check:full` for browser/accessibility-facing changes
+- [ ] `pnpm perf` for runtime-sensitive changes
+- [ ] Generated files and lockfile changes are intentional
+- [ ] Size/performance baselines changed only after reviewing the regression/cost
+- [ ] Changeset added when a published package contract changed
 
-## Screenshots / Storybook
+## UI / accessibility
 
-<!-- Add screenshots or Storybook context for visual changes when useful. -->
+<!-- For visual or interactive work: include screenshots/Storybook context, keyboard/focus behavior, and relevant a11y notes. Remove if not applicable. -->
+
+## Notes
+
+<!-- Migration notes, follow-up work, tradeoffs, or anything reviewers should know. -->

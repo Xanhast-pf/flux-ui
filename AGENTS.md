@@ -47,15 +47,15 @@ ComponentName/
 ├── ComponentName.types.ts
 ├── ComponentName.css.ts
 ├── ComponentName.test.tsx
-├── ComponentName.docs.tsx
+├── ComponentName.stories.tsx
+├── ComponentName.bench.tsx
 ├── component.meta.json
 └── index.ts
 ```
 
-Optional files are allowed when justified:
+Optional component-local structure is allowed when justified:
 
 ```text
-ComponentName.bench.tsx
 internal/
 useComponentName.ts
 ```
@@ -67,7 +67,7 @@ Component-specific logic stays inside its component directory. Helpers shared by
 Always start with:
 
 ```bash
-pnpm component:new ComponentName Category
+pnpm component:new ComponentName Category [sizeClass]
 pnpm component:doctor ComponentName
 ```
 
@@ -88,7 +88,7 @@ Preferred:
 
 ```tsx
 <Button>Save</Button>
-<Button intent="danger" loading>Delete</Button>
+<Button tone="danger" loading>Delete</Button>
 ```
 
 Avoid requiring configuration objects or providers for ordinary usage.
@@ -96,6 +96,10 @@ Avoid requiring configuration objects or providers for ordinary usage.
 ### Native props flow through
 
 DOM-backed components should inherit the appropriate native element props unless there is a concrete semantic conflict. Do not invent Flux aliases for established browser APIs.
+
+### Public types serve the consumer
+
+The repository enables `exactOptionalPropertyTypes`, but public React APIs must not force conditional spreads, casts, or other type-system workarounds for ordinary application values. When an optional consumer prop is commonly forwarded from state, explicitly allowing `| undefined` is intentional. Keep internal data contracts strict where absence has meaning; absorb type complexity inside Flux rather than exporting it to consumers.
 
 ### Controlled/uncontrolled naming is consistent
 
@@ -177,7 +181,9 @@ The default strategy is **do less work**:
 
 Bundle budgets are enforced by the dependency-free checker in `tooling/size/`. Every public component is discovered automatically and measured as an emitted runtime graph with raw, gzip and Brotli metrics. New components default to the strictest `primitive` class. Moving to a larger size class is an explicit architecture decision, never a convenient way to silence a failure.
 
-The checked-in size baseline is a regression contract, not a target to update reflexively. If a component becomes materially larger, first remove the regression; update the baseline only when the extra bytes are justified by equivalent user value. Benchmarks must be reproducible and never cherry-picked for marketing.
+The checked-in size baseline is a regression contract, not a target to update reflexively. If a component becomes materially larger, first remove the regression; update the baseline only when the extra bytes are justified by equivalent user value.
+
+Runtime performance is measured in Chromium against equivalent React/native references. Use paired native-relative synchronous mount/update/unmount ratios as regression signals; next-frame measurements are diagnostics because frame phase is naturally noisy. Always interpret relative ratios together with absolute cost. Benchmarks must be reproducible and never cherry-picked for marketing.
 
 ## Accessibility rules
 
@@ -266,6 +272,8 @@ Run `pnpm generate`. CI uses `pnpm generate:check` and fails on drift.
 
 ```bash
 pnpm dev
+pnpm storybook
+pnpm storybook:build
 pnpm component:new Name Category [sizeClass]
 pnpm component:doctor Name
 pnpm generate
@@ -274,6 +282,8 @@ pnpm bench
 pnpm size
 pnpm size:changed
 pnpm size:release
+pnpm perf:smoke
+pnpm perf
 pnpm bible:check
 pnpm check
 pnpm check:full
