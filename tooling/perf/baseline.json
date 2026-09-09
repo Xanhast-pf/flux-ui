@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "policyVersion": 2,
+  "policyVersion": 3,
   "scenarios": {
     "button": {
       "count": 1000,

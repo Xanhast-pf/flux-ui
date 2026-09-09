@@ -82,7 +82,7 @@ export const health = {
   },
   performance: {
     schemaVersion: 1,
-    policyVersion: 2,
+    policyVersion: 3,
     scenarios: [
       {
         name: "button",
