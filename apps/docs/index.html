@@ -5,9 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Flux UI — beautiful by default, fast by construction."
+      content="Flux UI project health, benchmarks, engineering rules, onboarding, and design tokens."
     />
-    <title>Flux UI</title>
+    <script>
+      (() => {
+        const key = "flux-ui-theme";
+        let theme = null;
+
+        try {
+          theme = localStorage.getItem(key);
+        } catch {
+          // Storage can be unavailable without blocking the page.
+        }
+
+        if (theme !== "light" && theme !== "dark") {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        document.documentElement.dataset.fluxTheme = theme;
+      })();
+    </script>
+    <title>Flux UI — Project health & docs</title>
   </head>
   <body>
     <div id="root"></div>
