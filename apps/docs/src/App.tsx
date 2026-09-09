@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Inline, Stack } from "@flux-ui/react";
+import { Button, Container, Grid, Inline, Input, Stack } from "@flux-ui/react";
 import { useState, type ReactNode } from "react";
 import { components } from "./generated/components.js";
 import { health } from "./generated/health.js";
@@ -440,6 +440,43 @@ export function App() {
                       <Button size="md">Medium</Button>
                       <Button size="lg">Large</Button>
                     </Inline>
+                  </Stack>
+                </ShowcaseCard>
+
+                <ShowcaseCard
+                  title="Input"
+                  description="Native text-entry semantics with Flux styling and validation states."
+                >
+                  <Stack gap="md">
+                    <label className="demo-field" htmlFor="input-demo-email">
+                      <span>Email address</span>
+                      <Input
+                        id="input-demo-email"
+                        type="email"
+                        placeholder="jo@example.com"
+                      />
+                    </label>
+                    <label className="demo-field" htmlFor="input-demo-invalid">
+                      <span>Invalid email</span>
+                      <Input
+                        id="input-demo-invalid"
+                        aria-describedby="input-demo-error"
+                        aria-invalid="true"
+                        defaultValue="not-an-email"
+                        type="email"
+                      />
+                      <small className="demo-error" id="input-demo-error">
+                        Enter a valid email address.
+                      </small>
+                    </label>
+                    <label className="demo-field" htmlFor="input-demo-disabled">
+                      <span>Disabled input</span>
+                      <Input
+                        id="input-demo-disabled"
+                        defaultValue="Unavailable"
+                        disabled
+                      />
+                    </label>
                   </Stack>
                 </ShowcaseCard>
 
