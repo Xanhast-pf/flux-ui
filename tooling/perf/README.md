@@ -1,31 +1,58 @@
 # Flux UI runtime performance contract
 
-Flux measures browser runtime cost relative to native browser baselines instead
-of treating raw milliseconds as portable truth.
+Flux measures browser runtime cost relative to React/native baselines instead of treating raw milliseconds from one machine as portable truth.
 
-Each scenario renders three variants when useful:
+## Variants
 
-1. **raw** — the lowest-cost unstyled semantic HTML baseline.
-2. **native** — equivalent behavior/layout written directly with HTML/CSS.
-3. **flux** — the Flux component API.
+A scenario may render three variants:
 
-`Button` uses raw `<button>` as its primary reference. `Grid` uses equivalent
-handwritten CSS Grid as its primary reference so the test measures Flux
-abstraction overhead rather than the cost of performing layout at all.
+1. **raw** — the simplest unstyled React + native element implementation. Despite the historical key name, this is not direct-DOM HTML outside React.
+2. **native** — equivalent behavior/layout written directly with React + HTML/CSS.
+3. **flux** — the Flux public component API.
 
-Samples alternate ordering between runs to reduce JIT, thermal, and runner-load
-bias. CI compares the median Flux/reference ratio to a committed historical
-baseline, which makes the contract substantially less sensitive to the absolute
-speed of a particular GitHub runner.
+The primary regression reference is `native` when an equivalent implementation exists. `raw` remains useful as a theoretical lower React/native floor.
 
-Commands:
+For example, Button compares Flux with a native button implementation that reproduces the equivalent structural/styling work, while Grid compares Flux with handwritten CSS Grid. This measures abstraction overhead rather than unfairly comparing "doing layout" with "doing nothing".
+
+## Metrics
+
+Each sample records:
+
+- synchronous mount time;
+- mount-to-next-frame time;
+- synchronous update time;
+- update-to-next-frame time;
+- synchronous unmount time;
+- DOM node count.
+
+`requestAnimationFrame` fires before paint, so the diagnostic is deliberately called **to-frame**, not **to-paint**.
+
+The synchronous mount/update/unmount ratios are the historical regression contract. Frame metrics are stored and printed for context but are not hard CI gates because frame phase is naturally noisy.
+
+## Noise reduction
+
+Runs alternate variant ordering so the same implementation is not consistently favored by JIT warmup, CPU state, or runner load.
+
+For each iteration Flux is paired with the corresponding reference result. Ratios are calculated **per pair first**, then the median ratio is taken. This is more stable than dividing two unrelated aggregate timings.
+
+A ratio of `1.08` means Flux took 8% longer than its reference for that metric during the paired browser measurements.
+
+Always interpret ratios together with absolute cost. When a reference takes only a few milliseconds for 1,000 instances, a large-looking percentage can still mean only a few microseconds of overhead per component.
+
+## Commands
 
 ```bash
 pnpm perf:smoke   # fast sanity run; no historical assertion
-pnpm perf:update  # record a new intentional baseline
-pnpm perf         # full benchmark + regression assertion
+pnpm perf         # full benchmark + synchronous regression assertion
+pnpm perf:update  # intentionally record a new baseline
 ```
 
-The baseline intentionally stores absolute medians too, but release gating uses
-the relative overhead ratios. A ratio of `1.08` means Flux took 8% longer than
-its native reference for that metric on the same browser/run.
+Playwright Chromium must be installed once:
+
+```bash
+pnpm --filter @flux-ui/docs exec playwright install chromium
+```
+
+The committed baseline lives at `tooling/perf/baseline.json`.
+
+Do not run `perf:update` simply because `perf` failed. Investigate the regression first; update the baseline only when the new cost is understood and intentionally accepted.

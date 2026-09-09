@@ -2,42 +2,74 @@
 
 **Beautiful by default. Fast by construction.**
 
-Flux UI is a React design-system project optimized around a small set of hard promises:
+[![CI](https://github.com/Xanhast-pf/flux-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Xanhast-pf/flux-ui/actions/workflows/ci.yml)
+[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-222)](https://xanhast-pf.github.io/flux-ui/)
 
-- static, zero-runtime styling;
-- simple public APIs with deep escape hatches;
-- accessibility as a tested behavior contract;
-- measurable bundle and render budgets;
-- convention-driven component authoring;
-- easy custom styling through `className`, native props, data attributes, and documented CSS variables;
-- Coding Bible on every meaningful code change.
+Flux UI is an **alpha-stage React design system** built around a few hard promises:
 
-## Requirements
+- simple, predictable public APIs;
+- native semantics and tested accessibility;
+- static, zero-runtime styling with Vanilla Extract and CSS variables;
+- measurable bundle-size and browser-runtime budgets;
+- convention-driven component authoring with no manual registry wiring;
+- strict TypeScript, ESLint, Knip, tests, and Coding Bible gates.
 
-- Node.js 24+
+> Easy until you need power. Powerful without becoming complicated.
+
+**Live docs:** https://xanhast-pf.github.io/flux-ui/  
+**Repository:** https://github.com/Xanhast-pf/flux-ui
+
+## Status
+
+Flux UI is under active development and is not yet a stable public package release. The current foundation includes:
+
+- `Button`
+- `Grid` / `Grid.Item`
+- `Stack`
+- `Inline`
+- `Container`
+
+The repository already enforces the same quality contracts intended for the mature library: generated exports, accessibility checks, bundle budgets, runtime-performance baselines, Storybook builds, and protected CI.
+
+## Clone and run
+
+### Requirements
+
+- Node.js 24 (`.nvmrc` is included)
 - pnpm 10.34.5
 
-## Start
-
 ```bash
+git clone https://github.com/Xanhast-pf/flux-ui.git
+cd flux-ui
+
+# If you use nvm; otherwise make sure `node --version` reports Node 24.
+nvm use
 corepack enable
-corepack prepare pnpm@10.34.5 --activate
 pnpm install
-pnpm generate
-pnpm dev
-```
-
-Run the normal quality gate:
-
-```bash
 pnpm check
 ```
 
-Run the browser-level accessibility/smoke gate too:
+`pnpm install` also installs the Git hooks through Husky.
+
+For browser, accessibility, and runtime-performance checks, install Playwright's Chromium once:
 
 ```bash
-pnpm --filter @flux-ui/docs playwright:install
+pnpm --filter @flux-ui/docs exec playwright install chromium
 pnpm check:full
+```
+
+On Linux, if Playwright reports missing system libraries, use:
+
+```bash
+pnpm --filter @flux-ui/docs exec playwright install --with-deps chromium
+```
+
+## Development
+
+Run the public docs/dogfood application:
+
+```bash
+pnpm dev
 ```
 
 Run the isolated component workbench:
@@ -46,73 +78,136 @@ Run the isolated component workbench:
 pnpm storybook
 ```
 
+Before pushing:
+
+```bash
+pnpm check
+```
+
+For changes involving browser behavior, accessibility, Storybook, or runtime performance:
+
+```bash
+pnpm check:full
+```
+
+See [`docs/development.md`](docs/development.md) for the complete local workflow, baseline rules, troubleshooting, and PR checklist.
+
 ## Add a component
+
+Always scaffold components through the generator:
 
 ```bash
 pnpm component:new SegmentedControl Inputs interactive
 pnpm component:doctor SegmentedControl
 ```
 
-The generator creates the component, tests, Storybook story, SSR benchmark, styles, metadata and public index, then regenerates the library/docs registries. Adding a component must not require unrelated manual registry edits.
+A generated public component includes:
 
-## Size contract
+```text
+SegmentedControl/
+├── SegmentedControl.tsx
+├── SegmentedControl.types.ts
+├── SegmentedControl.css.ts
+├── SegmentedControl.test.tsx
+├── SegmentedControl.stories.tsx
+├── SegmentedControl.bench.tsx
+├── component.meta.json
+└── index.ts
+```
 
-Flux treats consumer bytes as a release contract. The checker under `tooling/size/` automatically discovers every public component and enforces raw, gzip and Brotli budgets plus a checked-in regression baseline. There is no per-component size list in `package.json`.
+The generator also refreshes the committed public component and docs registries. Do not hand-edit generated registries.
 
-After the first build of a new checkout, initialize or intentionally refresh the baseline with:
+A new component intentionally has no size baseline. After reviewing its emitted cost:
 
 ```bash
 pnpm size:update
 ```
 
-Commit `tooling/size/baseline.json`, then the normal `pnpm check` gate enforces it. Use `pnpm size:changed` for fast local feedback and `pnpm size:release` for the strict release surface.
+Commit the resulting `tooling/size/baseline.json` change with the component. Do **not** run baseline-update commands as part of normal first-time setup.
 
-## Runtime performance contract
+## Quality contracts
 
-Flux benchmarks runtime overhead against native browser baselines rather than relying on raw milliseconds alone. The browser harness measures raw HTML, equivalent handwritten HTML/CSS, and Flux implementations on the same Chromium run, then gates on the Flux/reference ratio.
+### Bundle size
+
+Every public component is measured after the package build using raw, gzip, and Brotli sizes. Absolute limits come from the component's complexity class, while `tooling/size/baseline.json` prevents gradual regressions.
 
 ```bash
-pnpm perf:smoke   # fast sanity check
-pnpm perf:update  # intentionally record a baseline
-pnpm perf         # full regression check
+pnpm size:changed
+pnpm size
+pnpm size:release
 ```
 
-`Button` is compared directly with an unstyled native `<button>`. Layout primitives use an equivalent handwritten CSS reference when that produces a fairer measurement. See `tooling/perf/README.md`.
+See [`tooling/size/README.md`](tooling/size/README.md).
 
-## Coding Bible
+### Runtime performance
 
-The scaffold consumes the analyzer directly from the public Coding Bible GitHub monorepo because the analyzer is not yet published to npm. Flux is pinned to an immutable Coding Bible commit rather than a moving branch. To move the pin after a Canary-green Coding Bible change:
+The Playwright/Chromium harness compares Flux with equivalent React/native implementations on the same machine and browser run. It records synchronous mount/update/unmount cost and next-frame diagnostics, while CI gates on stable native-relative synchronous ratios.
+
+```bash
+pnpm perf:smoke
+pnpm perf
+pnpm perf:update   # only when intentionally accepting a new baseline
+```
+
+See [`tooling/perf/README.md`](tooling/perf/README.md).
+
+### Coding Bible
+
+Flux dogfoods the full applicable Coding Bible analyzer catalog. The analyzer is pinned to an immutable Git revision.
+
+```bash
+pnpm bible:check
+pnpm bible:staged
+```
+
+To intentionally move the analyzer pin:
 
 ```bash
 pnpm bible:pin <tag-or-sha>
 pnpm install
 ```
 
-No Coding Bible rules are excluded by default. Flux should dogfood the full applicable analyzer catalog.
+Do not exclude rules merely to make CI green.
 
 ## Repository map
 
 ```text
 apps/
-  docs/                 public docs + dashboard dogfood app
-  storybook/            isolated component engineering workbench
+  docs/                  public docs + real-app dogfood surface
+  storybook/             isolated component engineering workbench
 packages/
-  react/                public React component package
-  tokens/               semantic CSS variable names + default themes
-scripts/
-  new-component.mjs     component scaffolder
-  generate-components.mjs generated exports/docs registry
-  component-doctor.mjs  component structure validation
-tooling/
-  size/                  scalable bundle-size contract + baseline
-  perf/                  native-relative browser performance contract
+  react/                 public React components
+  tokens/                semantic tokens + default theme variables
 docs/
-  architecture.md
-  component-api.md
-  performance.md
-AGENTS.md                contributor/agent engineering contract
+  README.md              documentation index
+  development.md         clone/setup/daily contributor workflow
+  architecture.md        package and tooling architecture
+  component-api.md       public API conventions
+  performance.md         performance philosophy and contracts
+scripts/
+  new-component.mjs      component scaffolder
+  generate-components.mjs generated exports/docs registry
+  component-doctor.mjs   component structure validator
+tooling/
+  size/                  bundle-size contract + baseline
+  perf/                  native-relative runtime contract
+AGENTS.md                 authoritative engineering contract
+CONTRIBUTING.md           contributor expectations
 ```
+
+## Documentation
+
+- [Developer setup and workflow](docs/development.md)
+- [Architecture](docs/architecture.md)
+- [Component API design](docs/component-api.md)
+- [Performance](docs/performance.md)
+- [Contributing](CONTRIBUTING.md)
+- [Engineering contract](AGENTS.md)
 
 ## Philosophy
 
-Flux does not aim to win by having the most components. It aims to have the **highest-confidence components**: excellent defaults, deliberately small APIs, measurable performance, accessibility, customization, and boring upgrades.
+Flux does not aim to win by having the most components. It aims to publish the **highest-confidence components**: excellent defaults, small APIs, strong composition, measurable performance, accessibility, straightforward customization, and boring upgrades.
+
+## License
+
+[MIT](LICENSE)
