@@ -1,0 +1,8 @@
+{
+  "name": "Inline",
+  "slug": "inline",
+  "category": "Layout",
+  "status": "alpha",
+  "description": "Token-driven horizontal layout for toolbars, actions, and inline groups.",
+  "sizeClass": "primitive"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Grid",
+  "slug": "grid",
+  "category": "Layout",
+  "status": "alpha",
+  "description": "Native CSS Grid layout with responsive tracks, auto-fit sizing, placement, and subgrid support.",
+  "sizeClass": "interactive"
+}

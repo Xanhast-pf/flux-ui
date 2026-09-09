@@ -54,7 +54,7 @@ export const button = recipe({
         fontSize: "1rem",
       },
     },
-    intent: {
+    tone: {
       accent: {},
       neutral: {},
       danger: {},
@@ -68,7 +68,7 @@ export const button = recipe({
   },
   compoundVariants: [
     {
-      variants: { intent: "accent", variant: "solid" },
+      variants: { tone: "accent", variant: "solid" },
       style: {
         background: `var(--flux-button-bg, var(${cssVars.color.accent}))`,
         color: `var(--flux-button-fg, var(${cssVars.color.accentForeground}))`,
@@ -80,7 +80,7 @@ export const button = recipe({
       },
     },
     {
-      variants: { intent: "danger", variant: "solid" },
+      variants: { tone: "danger", variant: "solid" },
       style: {
         background: `var(--flux-button-bg, var(${cssVars.color.danger}))`,
         color: `var(--flux-button-fg, var(${cssVars.color.dangerForeground}))`,
@@ -92,7 +92,7 @@ export const button = recipe({
       },
     },
     {
-      variants: { intent: "neutral", variant: "solid" },
+      variants: { tone: "neutral", variant: "solid" },
       style: {
         background: `var(--flux-button-bg, var(${cssVars.color.text}))`,
         color: `var(--flux-button-fg, var(${cssVars.color.surface}))`,
@@ -124,7 +124,7 @@ export const button = recipe({
       },
     },
   ],
-  defaultVariants: { size: "md", intent: "accent", variant: "solid" },
+  defaultVariants: { size: "md", tone: "accent", variant: "solid" },
 });
 
 export const content = style({

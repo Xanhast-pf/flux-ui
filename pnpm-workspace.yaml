@@ -35,6 +35,10 @@ catalog:
   husky: ^9.1.7
   lint-staged: ^17.4.1
   "@changesets/cli": ^3.0.1
+  storybook: ^10.6.0
+  "@storybook/react-vite": ^10.6.0
+  "@storybook/addon-docs": ^10.6.0
+  "@storybook/addon-a11y": ^10.6.0
 
 onlyBuiltDependencies:
   - esbuild

@@ -23,13 +23,11 @@ textarea,
 select {
   font: inherit;
 }
-.shell {
-  width: min(1120px, calc(100% - 2rem));
-  margin: 0 auto;
-  padding: clamp(4rem, 10vw, 8rem) 0;
+.docs-shell {
+  padding-block: clamp(4rem, 10vw, 8rem);
 }
 .hero {
-  max-width: 800px;
+  max-width: 50rem;
 }
 .eyebrow {
   color: var(--flux-color-text-muted);
@@ -54,23 +52,14 @@ h2 {
   color: var(--flux-color-text-muted);
   font-size: clamp(1rem, 2vw, 1.35rem);
   line-height: 1.6;
-  max-width: 680px;
+  max-width: 42.5rem;
   margin: 2rem 0;
 }
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
 .metrics {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
   border: 1px solid var(--flux-color-border);
   background: var(--flux-color-border);
   border-radius: var(--flux-radius-lg);
   overflow: hidden;
-  margin: 6rem 0;
 }
 .metrics article {
   background: var(--flux-color-surface);
@@ -81,41 +70,42 @@ h2 {
 .metrics strong {
   font-size: 1.6rem;
 }
-.metrics span {
+.metrics span,
+.muted {
   color: var(--flux-color-text-muted);
   font-size: 0.85rem;
 }
 .showcase {
   border-top: 1px solid var(--flux-color-border);
   padding-top: 4rem;
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: 4rem;
-  align-items: center;
 }
 .showcase p {
   color: var(--flux-color-text-muted);
   line-height: 1.65;
 }
 .component-stage {
-  min-height: 320px;
+  min-height: 20rem;
   border: 1px solid var(--flux-color-border);
   border-radius: calc(var(--flux-radius-lg) * 1.4);
   background: var(--flux-color-surface);
-  display: flex;
-  flex-wrap: wrap;
   align-content: center;
-  justify-content: center;
-  gap: 0.75rem;
   padding: 2rem;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.08);
 }
-@media (max-width: 760px) {
-  .metrics {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .showcase {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
+.layout-demo {
+  margin-top: 2rem;
+}
+.layout-demo article {
+  min-height: 8rem;
+  padding: 1.25rem;
+  border: 1px solid var(--flux-color-border);
+  border-radius: var(--flux-radius-lg);
+  background: var(--flux-color-surface);
+}
+[data-flux-grid-debug="true"] {
+  outline: 1px dashed #d946ef;
+  outline-offset: 2px;
+}
+[data-flux-grid-debug="true"] > * {
+  outline: 1px dashed color-mix(in srgb, #d946ef 55%, transparent);
 }

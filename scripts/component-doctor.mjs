@@ -12,7 +12,8 @@ const required = [
   `${name}.types.ts`,
   `${name}.css.ts`,
   `${name}.test.tsx`,
-  `${name}.docs.tsx`,
+  `${name}.stories.tsx`,
+  `${name}.bench.tsx`,
   "component.meta.json",
   "index.ts",
 ];

@@ -48,7 +48,8 @@ const files = {
   [`${rawName}.tsx`]: `import { ${lower} } from "./${rawName}.css.js";\nimport type { ${rawName}Props } from "./${rawName}.types.js";\n\nexport function ${rawName}({ className, ...props }: ${rawName}Props) {\n  const classes = className ? \`${"${" + lower + "}"} ${"${className}"}\` : ${lower};\n  return <div className={classes} {...props} />;\n}\n`,
   [`${rawName}.css.ts`]: `import { style } from "@vanilla-extract/css";\n\nexport const ${lower} = style({});\n`,
   [`${rawName}.test.tsx`]: `import { render, screen } from "@testing-library/react";\nimport { describe, expect, it } from "vitest";\nimport { ${rawName} } from "./${rawName}.js";\n\ndescribe("${rawName}", () => {\n  it("renders its content", () => {\n    render(<${rawName}>Example</${rawName}>);\n    expect(screen.getByText("Example")).toBeInTheDocument();\n  });\n});\n`,
-  [`${rawName}.docs.tsx`]: `import { ${rawName} } from "./${rawName}.js";\n\nexport function ${rawName}Docs() {\n  return <${rawName}>${rawName}</${rawName}>;\n}\n`,
+  [`${rawName}.stories.tsx`]: `import type { Meta, StoryObj } from "@storybook/react-vite";\nimport { ${rawName} } from "./${rawName}.js";\n\nconst meta = {\n  title: "${category}/${rawName}",\n  component: ${rawName},\n} satisfies Meta<typeof ${rawName}>;\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nexport const Default: Story = {\n  args: { children: "${rawName}" },\n};\n`,
+  [`${rawName}.bench.tsx`]: `import { renderToString } from "react-dom/server";\nimport { bench, describe } from "vitest";\nimport { ${rawName} } from "./${rawName}.js";\n\ndescribe("${rawName} SSR", () => {\n  bench("render 1,000 instances", () => {\n    renderToString(\n      <div>\n        {Array.from({ length: 1_000 }, (_, index) => "${slug}-" + index).map((id) => (\n          <${rawName} key={id}>{id}</${rawName}>\n        ))}\n      </div>,\n    );\n  });\n});\n`,
   ["component.meta.json"]:
     JSON.stringify(
       {

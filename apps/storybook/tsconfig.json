@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["vite/client"],
+    "paths": {
+      "@flux-ui/react": ["../../packages/react/src/index.ts"],
+      "@flux-ui/tokens": ["../../packages/tokens/src/index.ts"],
+      "@flux-ui/tokens/*": ["../../packages/tokens/src/*"]
+    }
+  },
+  "include": [".storybook/**/*.ts", "../../packages/react/src/**/*.stories.tsx"]
+}

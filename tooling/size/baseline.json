@@ -5,30 +5,62 @@
     "button": {
       "name": "Button",
       "sizeClass": "interactive",
-      "raw": 6419,
-      "gzip": 2438,
-      "brotli": 2109,
-      "fileCount": 3
+      "raw": 6524,
+      "gzip": 2591,
+      "brotli": 2221,
+      "fileCount": 4
+    },
+    "container": {
+      "name": "Container",
+      "sizeClass": "primitive",
+      "raw": 1087,
+      "gzip": 741,
+      "brotli": 619,
+      "fileCount": 4
+    },
+    "grid": {
+      "name": "Grid",
+      "sizeClass": "interactive",
+      "raw": 10338,
+      "gzip": 2148,
+      "brotli": 1920,
+      "fileCount": 5
+    },
+    "inline": {
+      "name": "Inline",
+      "sizeClass": "primitive",
+      "raw": 2627,
+      "gzip": 1343,
+      "brotli": 1180,
+      "fileCount": 5
+    },
+    "stack": {
+      "name": "Stack",
+      "sizeClass": "primitive",
+      "raw": 2339,
+      "gzip": 1227,
+      "brotli": 1105,
+      "fileCount": 5
     }
   },
   "aggregate": {
     "rootEntry": {
-      "raw": 78,
-      "gzip": 87,
-      "brotli": 82,
+      "raw": 359,
+      "gzip": 201,
+      "brotli": 179,
       "fileCount": 1
     },
     "runtime": {
-      "raw": 6497,
-      "gzip": 2525,
-      "brotli": 2191,
-      "fileCount": 4
+      "raw": 21334,
+      "gzip": 6859,
+      "brotli": 6008,
+      "fileCount": 18
     },
     "published": {
-      "raw": 23164,
-      "gzip": 8992,
-      "brotli": 7824,
-      "fileCount": 19
+      "raw": 77956,
+      "gzip": 28858,
+      "brotli": 25278,
+      "fileCount": 83
     }
   }
 }

@@ -1,0 +1,27 @@
+html,
+body,
+#root {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.perf-native-button {
+  appearance: none;
+  min-height: var(--flux-control-md);
+  padding-inline: var(--flux-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--flux-radius-md);
+  background: var(--flux-color-accent);
+  color: var(--flux-color-accent-foreground);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  line-height: 1;
+}
+
+.perf-native-button-content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--flux-space-2);
+}
