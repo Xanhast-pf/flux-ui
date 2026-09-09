@@ -23,6 +23,7 @@ export default tseslint.config(
       "**/node_modules/**",
       "apps/docs/src/generated/**",
       "packages/react/src/index.ts",
+      "**/.cache/**",
     ],
   },
   eslint.configs.recommended,

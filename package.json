@@ -26,8 +26,8 @@
     "test:a11y": "pnpm --filter @flux-ui/docs test:a11y",
     "bench": "pnpm --filter @flux-ui/react bench",
     "size": "node tooling/size/check.mjs",
-    "bible:check": "coding-bible check .",
-    "bible:staged": "coding-bible check . --staged",
+    "bible:check": "node scripts/run-coding-bible.mjs check .",
+    "bible:staged": "node scripts/run-coding-bible.mjs check . --staged",
     "bible:pin": "node scripts/pin-coding-bible.mjs",
     "check": "pnpm generate:check && pnpm format && pnpm lint && pnpm typecheck && pnpm knip && pnpm test && pnpm build && pnpm size && pnpm bible:check",
     "check:full": "pnpm check && node tooling/size/check.mjs --release && pnpm test:e2e",
@@ -36,7 +36,7 @@
     "release:version": "changeset version",
     "release": "pnpm build && changeset publish",
     "prepare": "husky",
-    "bible:changed": "coding-bible check . --changed",
+    "bible:changed": "node scripts/run-coding-bible.mjs check . --changed",
     "size:changed": "pnpm build:packages && node tooling/size/check.mjs --changed",
     "size:update": "pnpm build:packages && node tooling/size/check.mjs --update-baseline",
     "size:release": "pnpm build:packages && node tooling/size/check.mjs --release",
@@ -67,6 +67,14 @@
     ],
     "*.{json,md,mdx,yaml,yml,css}": [
       "prettier --write"
+    ]
+  },
+  "knip": {
+    "ignoreDependencies": [
+      "@coding-bible/analyzer"
+    ],
+    "ignoreBinaries": [
+      "coding-bible"
     ]
   }
 }
