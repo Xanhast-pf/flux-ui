@@ -13,6 +13,7 @@ import {
 } from "@flux-ui/react";
 import { useState, type ReactNode } from "react";
 import { CheckboxDemo } from "./demos/CheckboxDemo.js";
+import { RadioGroupDemo } from "./demos/RadioGroupDemo.js";
 import { components } from "./generated/components.js";
 import { health } from "./generated/health.js";
 
@@ -576,6 +577,13 @@ export function App() {
                               description="Native checked and mixed states, keyboard behavior, and form submission."
                             >
                               <CheckboxDemo />
+                            </ShowcaseCard>
+
+                            <ShowcaseCard
+                              title="RadioGroup"
+                              description="Native mutually-exclusive selection with fieldset semantics, keyboard behavior, and form submission."
+                            >
+                              <RadioGroupDemo />
                             </ShowcaseCard>
 
                             <ShowcaseCard
