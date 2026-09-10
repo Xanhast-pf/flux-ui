@@ -177,21 +177,6 @@ a:focus-visible {
   padding-top: 1rem;
 }
 
-.demo-field {
-  display: grid;
-  gap: 0.5rem;
-  max-width: 24rem;
-}
-
-.demo-field > span {
-  font-weight: 600;
-}
-
-.demo-error {
-  color: var(--flux-color-danger);
-  font-size: 0.875rem;
-}
-
 .demo-boundary {
   min-height: 8rem;
   border: 0.0625rem dashed var(--flux-color-border-strong);

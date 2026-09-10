@@ -102,6 +102,12 @@ Examples:
 
 Avoid introducing aliases for native concepts merely to make Flux look different.
 
+## Compound glue should not tax standalone primitives
+
+When a compound abstraction needs to coordinate an otherwise independent native-style control, keep that coordination at the compound boundary when practical. For example, `Field.Control` may inject labeling and validation attributes into its child without making every standalone `Input` subscribe to Field context.
+
+This preserves the cheap standalone path while still making the composed path accessible by default. Compound glue that renders no semantic or layout value should not add DOM.
+
 ## Composition before configuration
 
 For complex structures, prefer meaningful compound parts over giant prop surfaces.
