@@ -718,6 +718,14 @@ meter {
   }
 }
 @media (width < 40rem) {
+  .component-category-root {
+    overflow: visible;
+    contain: none;
+  }
+  .component-category-tabs {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
   .header-inner {
     gap: 0.5rem;
   }
