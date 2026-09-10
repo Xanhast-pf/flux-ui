@@ -1,9 +1,11 @@
 /* The workshop theme is docs-only. Public component tokens stay unchanged. */
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 body {
   margin: 0;
+  overflow-x: clip;
   background: var(--flux-color-canvas);
   color: var(--flux-color-text);
   font-family:

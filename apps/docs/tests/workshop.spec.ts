@@ -278,9 +278,10 @@ async function expectNoHorizontalOverflow(
       return false;
     }
 
-    const offenders = Array.from(
-      document.body.querySelectorAll<HTMLElement>("*"),
-    )
+    const offenders = [
+      document.body,
+      ...Array.from(document.body.querySelectorAll<HTMLElement>("*")),
+    ]
       .map((element) => {
         const rect = element.getBoundingClientRect();
         return {
@@ -318,6 +319,10 @@ async function expectNoHorizontalOverflow(
     };
   });
 
+  expect(
+    report.offenders,
+    `#${route} has uncontained horizontal overflow at ${report.viewportWidth}px`,
+  ).toEqual([]);
   expect(
     report.rootScrollX,
     `#${route} can scroll ${report.rootScrollX}px horizontally at ${report.viewportWidth}px ` +
