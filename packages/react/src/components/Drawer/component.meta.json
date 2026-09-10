@@ -1,0 +1,8 @@
+{
+  "name": "Drawer",
+  "slug": "drawer",
+  "category": "Overlays",
+  "status": "alpha",
+  "description": "Edge-aligned modal panel for navigation and secondary workflows with native dialog semantics.",
+  "sizeClass": "overlay"
+}

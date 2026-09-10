@@ -112,7 +112,7 @@ This preserves the cheap standalone path while still making the composed path ac
 
 For complex structures, prefer meaningful compound parts over giant prop surfaces.
 
-A future Dialog should compose from pieces such as trigger/content/title/actions rather than collecting dozens of unrelated header/footer/alignment/icon props on one root object.
+Dialog and Drawer compose from meaningful parts such as Root, Trigger, Popup, Title, Description, and Close rather than collecting unrelated header/footer/alignment/icon props on one root object. Their first implementation deliberately uses the native `<dialog>` top layer instead of adding a behavior dependency; introduce another runtime only when a concrete platform gap justifies its size and complexity.
 
 Likewise, application-specific composites such as dashboard cards or filter bars should begin as recipes/examples and only become permanent library APIs after reuse proves the abstraction.
 
@@ -136,3 +136,13 @@ Before adding or approving a public API, ask:
 8. Is this common enough to deserve permanent API surface?
 
 If the implementation is complicated but the usage is boringly obvious, Flux is doing its job.
+
+## Navigation and overlay primitives
+
+Navigation controls should preserve their native or ARIA-defined interaction model rather than merely copying a visual pattern.
+
+- `Tabs` uses real buttons with `tablist` / `tab` / `tabpanel` relationships, roving focus, arrow-key navigation, and explicit controlled or uncontrolled selection.
+- `Dialog` uses the native `<dialog>` top layer for modal focus behavior, Escape dismissal, and focus restoration while Flux owns composition, accessible labeling, styling, and state control.
+- `Drawer` reuses the same native modal contract and changes spatial presentation instead of duplicating a second focus-management system.
+- `Drawer` v1 intentionally omits swipe gestures and snap points; add them only when a concrete product use case justifies the extra runtime and API surface.
+- Documentation or application navigation should remain semantic `<nav>` links. A Drawer may contain navigation on narrow screens, but Drawer is not itself a replacement for navigation landmarks.

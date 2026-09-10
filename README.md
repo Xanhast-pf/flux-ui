@@ -27,6 +27,9 @@ Flux UI is under active development and is not yet a stable public package relea
 - `Input`
 - `Field`
 - `Textarea`
+- `Dialog`
+- `Drawer`
+- `Tabs`
 - `Grid` / `Grid.Item`
 - `Stack`
 - `Inline`

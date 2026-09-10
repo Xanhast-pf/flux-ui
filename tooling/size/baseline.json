@@ -5,10 +5,10 @@
     "button": {
       "name": "Button",
       "sizeClass": "interactive",
-      "raw": 6804,
-      "gzip": 2595,
-      "brotli": 2245,
-      "fileCount": 4
+      "raw": 7021,
+      "gzip": 2801,
+      "brotli": 2407,
+      "fileCount": 5
     },
     "container": {
       "name": "Container",
@@ -17,6 +17,22 @@
       "gzip": 742,
       "brotli": 634,
       "fileCount": 4
+    },
+    "dialog": {
+      "name": "Dialog",
+      "sizeClass": "overlay",
+      "raw": 6857,
+      "gzip": 2854,
+      "brotli": 2450,
+      "fileCount": 5
+    },
+    "drawer": {
+      "name": "Drawer",
+      "sizeClass": "overlay",
+      "raw": 10438,
+      "gzip": 4163,
+      "brotli": 3603,
+      "fileCount": 6
     },
     "field": {
       "name": "Field",
@@ -58,6 +74,14 @@
       "brotli": 1079,
       "fileCount": 5
     },
+    "tabs": {
+      "name": "Tabs",
+      "sizeClass": "interactive",
+      "raw": 4518,
+      "gzip": 2056,
+      "brotli": 1724,
+      "fileCount": 4
+    },
     "textarea": {
       "name": "Textarea",
       "sizeClass": "primitive",
@@ -69,22 +93,22 @@
   },
   "aggregate": {
     "rootEntry": {
-      "raw": 565,
-      "gzip": 271,
-      "brotli": 239,
+      "raw": 762,
+      "gzip": 333,
+      "brotli": 291,
       "fileCount": 1
     },
     "runtime": {
-      "raw": 28694,
-      "gzip": 10052,
-      "brotli": 8756,
-      "fileCount": 27
+      "raw": 43826,
+      "gzip": 16247,
+      "brotli": 14037,
+      "fileCount": 38
     },
     "published": {
-      "raw": 110798,
-      "gzip": 43036,
-      "brotli": 37401,
-      "fileCount": 125
+      "raw": 179072,
+      "gzip": 68263,
+      "brotli": 59409,
+      "fileCount": 173
     }
   }
 }

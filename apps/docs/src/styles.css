@@ -36,15 +36,14 @@ main {
   padding-block: 1rem 3rem;
 }
 
-header,
-nav,
-section,
-footer {
+.page-header,
+.content-section,
+.page-footer {
   padding-block: 1rem;
 }
 
-section,
-footer {
+.content-section,
+.page-footer {
   border-top: 0.0625rem solid var(--flux-color-border);
 }
 
@@ -104,21 +103,56 @@ p:last-child {
   padding: 0.75rem 1rem;
 }
 
-.section-nav {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background: color-mix(in srgb, var(--flux-color-canvas) 94%, transparent);
-  backdrop-filter: blur(0.75rem);
+.docs-layout {
+  display: grid;
+  min-width: 0;
 }
 
-.section-nav ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+.docs-content {
+  min-width: 0;
+}
+
+.desktop-sidebar {
+  display: none;
+}
+
+.section-nav-list {
+  display: grid;
+  gap: 0.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.section-nav-list a {
+  display: block;
+  border-radius: var(--flux-radius-md);
+  color: var(--flux-color-text-muted);
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+}
+
+.section-nav-list a:hover {
+  background: var(--flux-color-surface-subtle);
+  color: var(--flux-color-text);
+}
+
+.mobile-nav-trigger {
+  display: inline-flex;
+}
+
+.mobile-nav-drawer[open] {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.mobile-nav-drawer .section-nav-list {
+  gap: 0.5rem;
+}
+
+.mobile-nav-close {
+  width: 100%;
 }
 
 a {
@@ -283,15 +317,38 @@ img {
     padding-block: 2rem 4rem;
   }
 
-  header,
-  nav,
-  section,
-  footer {
+  .page-header,
+  .content-section,
+  .page-footer {
     padding-block: 2rem;
   }
 
   .showcase-card,
   .benchmark-card {
     padding: 1.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .docs-layout {
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .desktop-sidebar {
+    display: block;
+  }
+
+  .sidebar-sticky {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100dvh - 2rem);
+    overflow: auto;
+    padding-block: 1rem;
+  }
+
+  .mobile-nav-trigger {
+    display: none;
   }
 }
