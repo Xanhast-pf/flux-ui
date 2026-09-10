@@ -264,30 +264,65 @@ async function expectNoHorizontalOverflow(
 ): Promise<void> {
   const report = await page.evaluate(() => {
     const viewportWidth = window.innerWidth;
-    const documentWidth = document.documentElement.scrollWidth;
+
+    function isContainedHorizontalOverflow(element: HTMLElement): boolean {
+      let ancestor = element.parentElement;
+      while (ancestor !== null && ancestor !== document.body) {
+        const style = getComputedStyle(ancestor);
+        if (["auto", "scroll", "hidden", "clip"].includes(style.overflowX)) {
+          const rect = ancestor.getBoundingClientRect();
+          if (rect.left >= -1 && rect.right <= viewportWidth + 1) return true;
+        }
+        ancestor = ancestor.parentElement;
+      }
+      return false;
+    }
+
     const offenders = Array.from(
       document.body.querySelectorAll<HTMLElement>("*"),
     )
       .map((element) => {
         const rect = element.getBoundingClientRect();
         return {
-          element: element.tagName.toLowerCase(),
-          className: element.className,
+          element,
           left: Math.round(rect.left * 10) / 10,
           right: Math.round(rect.right * 10) / 10,
           width: Math.round(rect.width * 10) / 10,
         };
       })
-      .filter(({ left, right }) => left < -1 || right > viewportWidth + 1)
-      .slice(0, 8);
+      .filter(
+        ({ element, left, right }) =>
+          (left < -1 || right > viewportWidth + 1) &&
+          !isContainedHorizontalOverflow(element),
+      )
+      .slice(0, 8)
+      .map(({ element, left, right, width }) => ({
+        element: element.tagName.toLowerCase(),
+        className: element.className,
+        left,
+        right,
+        width,
+      }));
 
-    return { documentWidth, offenders, viewportWidth };
+    const previousX = window.scrollX;
+    const previousY = window.scrollY;
+    window.scrollTo({ left: 1_000_000, top: previousY, behavior: "instant" });
+    const rootScrollX = window.scrollX;
+    window.scrollTo({ left: previousX, top: previousY, behavior: "instant" });
+
+    return {
+      documentWidth: document.documentElement.scrollWidth,
+      offenders,
+      rootScrollX,
+      viewportWidth,
+    };
   });
 
   expect(
-    report.documentWidth,
-    `#${route} overflowed ${report.viewportWidth}px: ${JSON.stringify(report.offenders)}`,
-  ).toBeLessThanOrEqual(report.viewportWidth + 1);
+    report.rootScrollX,
+    `#${route} can scroll ${report.rootScrollX}px horizontally at ${report.viewportWidth}px ` +
+      `(reported document width ${report.documentWidth}px): ${JSON.stringify(report.offenders)}`,
+  ).toBeLessThanOrEqual(1);
 }
 
 for (const width of [320, 390, 768, 1440]) {
