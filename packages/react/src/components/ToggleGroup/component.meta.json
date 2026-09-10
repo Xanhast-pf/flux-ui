@@ -1,0 +1,8 @@
+{
+  "name": "ToggleGroup",
+  "slug": "toggle-group",
+  "category": "Actions",
+  "status": "alpha",
+  "description": "Single or multiple toggle selection with scoped roving focus.",
+  "sizeClass": "interactive"
+}

@@ -44,6 +44,19 @@ try {
       console.error(`✗ component.meta.json missing ${key}`);
     }
   }
+  try {
+    await access(
+      resolve(
+        process.cwd(),
+        "apps/docs/src/examples",
+        `${meta.slug}.example.tsx`,
+      ),
+    );
+    console.log(`✓ ${meta.slug}.example.tsx`);
+  } catch {
+    failed = true;
+    console.error(`✗ missing live docs example for ${meta.slug}`);
+  }
   const validSizeClasses = [
     "primitive",
     "interactive",

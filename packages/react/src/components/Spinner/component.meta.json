@@ -1,0 +1,8 @@
+{
+  "name": "Spinner",
+  "slug": "spinner",
+  "category": "Feedback",
+  "status": "alpha",
+  "description": "An accessible loading status with reduced-motion-safe presentation.",
+  "sizeClass": "primitive"
+}

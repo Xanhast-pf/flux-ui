@@ -1,6 +1,47 @@
 // GENERATED FILE. Run `pnpm generate`; do not edit manually.
 export const components = [
   {
+    name: "Accordion",
+    slug: "accordion",
+    category: "Disclosure",
+    status: "alpha",
+    description: "Grouped native disclosures with automatic exclusive naming.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "AspectRatio",
+    slug: "aspect-ratio",
+    category: "Layout",
+    status: "alpha",
+    description:
+      "A responsive CSS aspect-ratio frame with no measurement code.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Avatar",
+    slug: "avatar",
+    category: "Data display",
+    status: "alpha",
+    description: "Identity images with a named, resilient fallback.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Badge",
+    slug: "badge",
+    category: "Display",
+    status: "alpha",
+    description: "Compact, non-interactive status labels with semantic tones.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Breadcrumbs",
+    slug: "breadcrumbs",
+    category: "Navigation",
+    status: "alpha",
+    description: "Semantic navigation trails with decorative separators.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Button",
     slug: "button",
     category: "Actions",
@@ -10,12 +51,37 @@ export const components = [
     sizeClass: "interactive",
   },
   {
+    name: "Callout",
+    slug: "callout",
+    category: "Feedback",
+    status: "alpha",
+    description: "Informational notes with optional status or alert semantics.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Card",
+    slug: "card",
+    category: "Layout",
+    status: "alpha",
+    description: "A token-styled surface for composable application content.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Checkbox",
     slug: "checkbox",
     category: "Inputs",
     status: "alpha",
     description:
       "Native checkbox with controlled mixed presentation, form semantics, and Field composition.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Collapsible",
+    slug: "collapsible",
+    category: "Disclosure",
+    status: "alpha",
+    description:
+      "Native details and summary disclosure with no custom keyboard engine.",
     sizeClass: "primitive",
   },
   {
@@ -64,6 +130,14 @@ export const components = [
     sizeClass: "interactive",
   },
   {
+    name: "IconButton",
+    slug: "icon-button",
+    category: "Actions",
+    status: "alpha",
+    description: "Compact icon actions with a required accessible name.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Inline",
     slug: "inline",
     category: "Layout",
@@ -82,6 +156,32 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Kbd",
+    slug: "kbd",
+    category: "Typography",
+    status: "alpha",
+    description:
+      "Semantic keyboard hints, styled without adding shortcut behavior.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Pagination",
+    slug: "pagination",
+    category: "Navigation",
+    status: "alpha",
+    description:
+      "Controlled paging controls with native buttons and explicit boundaries.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Progress",
+    slug: "progress",
+    category: "Feedback",
+    status: "alpha",
+    description: "Native determinate and indeterminate progress.",
+    sizeClass: "primitive",
+  },
+  {
     name: "RadioGroup",
     slug: "radio-group",
     category: "Inputs",
@@ -91,11 +191,70 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Select",
+    slug: "select",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Native select, option and optgroup behavior with Flux styling.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Separator",
+    slug: "separator",
+    category: "Layout",
+    status: "alpha",
+    description: "Semantic or decorative dividers in either orientation.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Skeleton",
+    slug: "skeleton",
+    category: "Feedback",
+    status: "alpha",
+    description: "Static decorative placeholders for loading layouts.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Slider",
+    slug: "slider",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Single-thumb native range input with form and keyboard semantics.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Spinner",
+    slug: "spinner",
+    category: "Feedback",
+    status: "alpha",
+    description:
+      "An accessible loading status with reduced-motion-safe presentation.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Stack",
     slug: "stack",
     category: "Layout",
     status: "alpha",
     description: "Token-driven vertical layout with responsive spacing.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Switch",
+    slug: "switch",
+    category: "Inputs",
+    status: "alpha",
+    description: "Native checkbox form behavior with binary switch semantics.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Table",
+    slug: "table",
+    category: "Data",
+    status: "alpha",
+    description: "Composable semantic tables without a data-grid runtime.",
     sizeClass: "primitive",
   },
   {
@@ -114,6 +273,40 @@ export const components = [
     status: "alpha",
     description:
       "Styled native multi-line text control that preserves browser semantics, attributes, and refs.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Toggle",
+    slug: "toggle",
+    category: "Actions",
+    status: "alpha",
+    description: "A native pressed-state button for reversible actions.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "ToggleGroup",
+    slug: "toggle-group",
+    category: "Actions",
+    status: "alpha",
+    description:
+      "Single or multiple toggle selection with scoped roving focus.",
+    sizeClass: "interactive",
+  },
+  {
+    name: "Toolbar",
+    slug: "toolbar",
+    category: "Actions",
+    status: "alpha",
+    description:
+      "Named action groups with one tab stop and arrow-key navigation.",
+    sizeClass: "interactive",
+  },
+  {
+    name: "VisuallyHidden",
+    slug: "visually-hidden",
+    category: "Accessibility",
+    status: "alpha",
+    description: "Screen-reader text without an extra visual box.",
     sizeClass: "primitive",
   },
 ] as const;

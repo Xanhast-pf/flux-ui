@@ -1,0 +1,8 @@
+{
+  "name": "Card",
+  "slug": "card",
+  "category": "Layout",
+  "status": "alpha",
+  "description": "A token-styled surface for composable application content.",
+  "sizeClass": "primitive"
+}

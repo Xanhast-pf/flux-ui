@@ -41,6 +41,14 @@ Do not copy folders or manually wire generated registries. If adding a component
 
 New components default to the strict `primitive` size class. Choose a larger class only when the implementation genuinely warrants it.
 
+## Documentation examples
+
+Component scaffolding creates `apps/docs/src/examples/{slug}.preview.tsx` and `{slug}.example.tsx` automatically. Use public `@flux-ui/react` exports in the preview. The metadata imports that exact TSX file with `?raw` for the copyable code tab, and supplies focused API and accessibility notes. New component pages and search links are discovered from metadata; do not edit a central catalog list.
+
+Run `pnpm docs:check` for coverage and `pnpm docs:test` for the dependency-free catalog contract tests. Both are included in the ordinary quality pipeline. A public component without an example, or an orphaned example without a public component, is an error.
+
+See [`docs/workshop.md`](docs/workshop.md) for the documentation shell and browser test expectations.
+
 ## Validation
 
 Before pushing ordinary changes:

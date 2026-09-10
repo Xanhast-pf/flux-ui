@@ -1,0 +1,8 @@
+{
+  "name": "Toolbar",
+  "slug": "toolbar",
+  "category": "Actions",
+  "status": "alpha",
+  "description": "Named action groups with one tab stop and arrow-key navigation.",
+  "sizeClass": "interactive"
+}

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Flux UI project health, benchmarks, engineering rules, onboarding, and design tokens."
+      content="Explore native-first React components, interactive playgrounds, live themes, and honest size and performance measurements."
     />
     <script>
       (() => {
@@ -25,9 +25,17 @@
         }
 
         document.documentElement.dataset.fluxTheme = theme;
+        let accent = "indigo";
+        try {
+          const stored = localStorage.getItem("flux-ui-docs-accent");
+          if (stored === "teal" || stored === "rose") accent = stored;
+        } catch {
+          // Accent selection is optional when browser storage is unavailable.
+        }
+        document.documentElement.dataset.docsAccent = accent;
       })();
     </script>
-    <title>Flux UI — Project health & docs</title>
+    <title>Flux UI — Small pieces. Serious possibilities.</title>
   </head>
   <body>
     <div id="root"></div>

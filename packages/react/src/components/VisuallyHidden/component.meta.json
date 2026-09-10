@@ -1,0 +1,8 @@
+{
+  "name": "VisuallyHidden",
+  "slug": "visually-hidden",
+  "category": "Accessibility",
+  "status": "alpha",
+  "description": "Screen-reader text without an extra visual box.",
+  "sizeClass": "primitive"
+}

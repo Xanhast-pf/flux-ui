@@ -1,0 +1,8 @@
+{
+  "name": "Progress",
+  "slug": "progress",
+  "category": "Feedback",
+  "status": "alpha",
+  "description": "Native determinate and indeterminate progress.",
+  "sizeClass": "primitive"
+}

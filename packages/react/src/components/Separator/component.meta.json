@@ -1,0 +1,8 @@
+{
+  "name": "Separator",
+  "slug": "separator",
+  "category": "Layout",
+  "status": "alpha",
+  "description": "Semantic or decorative dividers in either orientation.",
+  "sizeClass": "primitive"
+}

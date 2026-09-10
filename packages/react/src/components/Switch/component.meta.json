@@ -1,0 +1,8 @@
+{
+  "name": "Switch",
+  "slug": "switch",
+  "category": "Inputs",
+  "status": "alpha",
+  "description": "Native checkbox form behavior with binary switch semantics.",
+  "sizeClass": "primitive"
+}

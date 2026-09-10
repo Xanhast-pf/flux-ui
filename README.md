@@ -23,21 +23,27 @@ Flux UI is an **alpha-stage React design system** built around a few hard promis
 
 Flux UI is under active development and is not yet a stable public package release. The current foundation includes:
 
-- `Button`
-- `Input`
-- `Field`
-- `Textarea`
-- `Checkbox`
-- `RadioGroup`
-- `Dialog`
-- `Drawer`
-- `Tabs`
-- `Grid` / `Grid.Item`
-- `Stack`
-- `Inline`
-- `Container`
+| Area                     | Current components                                                       |
+| ------------------------ | ------------------------------------------------------------------------ |
+| Actions                  | Button, IconButton, Toggle, ToggleGroup, Toolbar                         |
+| Forms                    | Input, Field, Textarea, Checkbox, RadioGroup, Switch, Select, Slider     |
+| Layout and surfaces      | Container, Grid / Grid.Item, Stack, Inline, Card, Separator, AspectRatio |
+| Information and feedback | Badge, Callout, Progress, Table, Avatar, Skeleton, Spinner               |
+| Disclosure and overlays  | Collapsible, Accordion, Dialog, Drawer                                   |
+| Navigation               | Tabs, Breadcrumbs, Pagination                                            |
+| Accessibility and hints  | VisuallyHidden, Kbd                                                      |
 
 The repository already enforces the same quality contracts intended for the mature library: generated exports, accessibility checks, bundle budgets, runtime-performance baselines, Storybook builds, and protected CI.
+
+## Explore the workshop
+
+The GitHub Pages app is a real consumer of the public library, not just a health dashboard. Explore a local release-room demo, save/filter/page through the collection lab, customize a button, switch theme/accent presets, search with Ctrl/Cmd+K, and open dedicated component pages with live previews, copyable source, API notes and measured size information.
+
+The component catalog does not mount every demo. Individual examples load on demand; the displayed code is imported from the same TSX source as the rendered preview. Search and mobile navigation reuse Flux Dialog and Drawer. Component pages use Breadcrumbs, Toggle and IconButton; loading examples use Skeleton and Spinner, and search hints use Kbd. Existing health, size, performance, rules, install and token deep links remain available.
+
+Demos do not deploy anything or send messages. Only theme and accent preferences persist locally. Size figures are committed measurements, not live CI results; newly added components show **Pending baseline** until measured.
+
+See [`docs/workshop.md`](docs/workshop.md) for routes, source conventions, scope, and browser verification.
 
 ## Clone and run
 
@@ -123,7 +129,7 @@ SegmentedControl/
 └── index.ts
 ```
 
-The generator also refreshes the committed public component and docs registries. Do not hand-edit generated registries.
+The generator also creates `apps/docs/src/examples/{slug}.preview.tsx` and `{slug}.example.tsx`, then refreshes the committed public component and docs registries. Implement the preview and its API/accessibility notes alongside the component. `pnpm docs:check` rejects missing or orphaned docs examples. Do not hand-edit generated registries.
 
 A new component intentionally has no size baseline. After reviewing its emitted cost:
 

@@ -1,0 +1,8 @@
+{
+  "name": "Callout",
+  "slug": "callout",
+  "category": "Feedback",
+  "status": "alpha",
+  "description": "Informational notes with optional status or alert semantics.",
+  "sizeClass": "primitive"
+}
