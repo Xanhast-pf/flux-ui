@@ -32,7 +32,13 @@ test("renders the Flux health page, component categories, and overlay demos", as
   }
 
   await page.getByRole("tab", { name: "Forms" }).click();
-  for (const componentName of ["Checkbox", "Input", "Field", "Textarea"]) {
+  for (const componentName of [
+    "Checkbox",
+    "RadioGroup",
+    "Input",
+    "Field",
+    "Textarea",
+  ]) {
     await expect(
       page.getByRole("heading", { name: componentName, exact: true }),
     ).toBeVisible();
@@ -194,7 +200,7 @@ test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async
   await expect(terms).toHaveAttribute("aria-invalid", "true");
 });
 
-test("Checkbox keeps native rendering and keyboard behavior in forced colors", async ({
+test("Native selection controls keep browser rendering and keyboard behavior in forced colors", async ({
   page,
 }) => {
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
@@ -212,4 +218,75 @@ test("Checkbox keeps native rendering and keyboard behavior in forced colors", a
   await expect(
     page.getByRole("checkbox", { name: "All channels", exact: true }),
   ).toHaveJSProperty("indeterminate", true);
+
+  const stable = page.getByRole("radio", { name: "Stable", exact: true });
+  const beta = page.getByRole("radio", { name: "Beta", exact: true });
+  await expect(stable).toHaveCSS("appearance", "auto");
+  await stable.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(beta).toBeFocused();
+  await expect(beta).toBeChecked();
+});
+
+test("RadioGroup preserves native keyboard, form, controlled, and reset behavior", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("tab", { name: "Forms", exact: true }).click();
+  const form = page.getByRole("form", {
+    name: "Radio preferences",
+    exact: true,
+  });
+  const releaseGroup = form.getByRole("group", {
+    name: "Release channel",
+    exact: true,
+  });
+  const stable = releaseGroup.getByRole("radio", {
+    name: "Stable",
+    exact: true,
+  });
+  const beta = releaseGroup.getByRole("radio", {
+    name: "Beta",
+    exact: true,
+  });
+  const canary = releaseGroup.getByRole("radio", {
+    name: "Canary (unavailable)",
+    exact: true,
+  });
+
+  await expect(stable).toBeChecked();
+  await expect(stable).toHaveAttribute("required", "");
+  await expect(canary).toBeDisabled();
+
+  await stable.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(beta).toBeFocused();
+  await expect(beta).toBeChecked();
+  await expect(stable).not.toBeChecked();
+
+  const production = form.getByRole("radio", {
+    name: "Production",
+    exact: true,
+  });
+  await production.check();
+  await expect(production).toBeChecked();
+
+  const submitted = await form.evaluate((element) => {
+    if (!(element instanceof HTMLFormElement)) {
+      throw new Error("Expected a form.");
+    }
+    return [...new FormData(element).entries()];
+  });
+  expect(submitted).toEqual([
+    ["release-channel", "beta"],
+    ["environment", "production"],
+  ]);
+
+  await form
+    .getByRole("button", { name: "Reset radio groups", exact: true })
+    .click();
+  await expect(stable).toBeChecked();
+  await expect(
+    form.getByRole("radio", { name: "Staging", exact: true }),
+  ).toBeChecked();
 });

@@ -146,3 +146,12 @@ Navigation controls should preserve their native or ARIA-defined interaction mod
 - `Drawer` reuses the same native modal contract and changes spatial presentation instead of duplicating a second focus-management system.
 - `Drawer` v1 intentionally omits swipe gestures and snap points; add them only when a concrete product use case justifies the extra runtime and API surface.
 - Documentation or application navigation should remain semantic `<nav>` links. A Drawer may contain navigation on narrow screens, but Drawer is not itself a replacement for navigation landmarks.
+
+## Native selection controls
+
+Selection components should delegate browser behavior to native controls whenever the platform already provides the correct form and keyboard semantics.
+
+- `Checkbox` renders one native checkbox and only bridges the DOM-only indeterminate property.
+- `RadioGroup` renders a native fieldset/legend and same-name radio inputs. The browser owns exclusivity, arrow-key selection, form submission, constraint validation, and uncontrolled reset behavior.
+- Controlled selection uses Flux's standard `value` / `onValueChange` contract without replacing the underlying form controls.
+- Group-level coordination should not add hidden proxy inputs or duplicate form state.

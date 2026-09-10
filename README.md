@@ -28,6 +28,7 @@ Flux UI is under active development and is not yet a stable public package relea
 - `Field`
 - `Textarea`
 - `Checkbox`
+- `RadioGroup`
 - `Dialog`
 - `Drawer`
 - `Tabs`
@@ -177,6 +178,8 @@ pnpm install
 Do not exclude rules merely to make CI green.
 
 See [`docs/checkbox.md`](docs/checkbox.md) for Checkbox composition, controlled and mixed state, native reset behavior, and accessibility expectations.
+
+See [`docs/radio-group.md`](docs/radio-group.md) for RadioGroup fieldset semantics, controlled/uncontrolled selection, native keyboard behavior, form integration, and Field composition.
 
 ## Repository map
 

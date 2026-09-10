@@ -82,6 +82,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "RadioGroup",
+    slug: "radio-group",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Native radio group with fieldset semantics, controlled or uncontrolled selection, and Field-compatible options.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Stack",
     slug: "stack",
     category: "Layout",
