@@ -427,19 +427,21 @@ kbd {
 [role="tab"] {
   flex-shrink: 0;
 }
-.component-category-scroll {
+.component-category-root {
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow: hidden;
+  contain: inline-size;
+}
+.component-category-tabs {
   inline-size: 100%;
   min-inline-size: 0;
   max-inline-size: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
-}
-.component-category-tabs {
-  inline-size: max-content;
-  min-inline-size: 100%;
-  max-inline-size: none;
-  overflow: visible;
+  scrollbar-width: thin;
 }
 .preview-frame {
   border: 0.0625rem solid var(--flux-color-border);

@@ -40,20 +40,22 @@ export function ComponentsPage() {
         }}
         placeholder="Find a component, a behavior, a possibility…"
       />
-      <Tabs.Root value={category} onValueChange={setCategory}>
-        <div className="component-category-scroll">
-          <Tabs.List
-            aria-label="Component categories"
-            activateOnFocus
-            className="component-category-tabs"
-          >
-            {categories.map((name) => (
-              <Tabs.Tab key={name} value={name}>
-                {name}
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
-        </div>
+      <Tabs.Root
+        className="component-category-root"
+        value={category}
+        onValueChange={setCategory}
+      >
+        <Tabs.List
+          aria-label="Component categories"
+          activateOnFocus
+          className="component-category-tabs"
+        >
+          {categories.map((name) => (
+            <Tabs.Tab key={name} value={name}>
+              {name}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
         {categories.map((name) => (
           <Tabs.Panel value={name} key={name}>
             {category === name ? (
