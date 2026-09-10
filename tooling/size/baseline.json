@@ -18,6 +18,14 @@
       "brotli": 634,
       "fileCount": 4
     },
+    "field": {
+      "name": "Field",
+      "sizeClass": "primitive",
+      "raw": 3476,
+      "gzip": 1598,
+      "brotli": 1387,
+      "fileCount": 4
+    },
     "grid": {
       "name": "Grid",
       "sizeClass": "interactive",
@@ -53,22 +61,22 @@
   },
   "aggregate": {
     "rootEntry": {
-      "raw": 424,
-      "gzip": 224,
-      "brotli": 198,
+      "raw": 494,
+      "gzip": 247,
+      "brotli": 239,
       "fileCount": 1
     },
     "runtime": {
-      "raw": 23442,
-      "gzip": 7728,
-      "brotli": 6738,
-      "fileCount": 21
+      "raw": 26805,
+      "gzip": 9184,
+      "brotli": 8037,
+      "fileCount": 24
     },
     "published": {
-      "raw": 86127,
-      "gzip": 32619,
-      "brotli": 28401,
-      "fileCount": 97
+      "raw": 103617,
+      "gzip": 39482,
+      "brotli": 34411,
+      "fileCount": 111
     }
   }
 }

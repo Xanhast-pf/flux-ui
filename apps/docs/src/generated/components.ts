@@ -19,6 +19,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Field",
+    slug: "field",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Accessible form-field composition that wires labels, descriptions, errors, and shared control state.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Grid",
     slug: "grid",
     category: "Layout",

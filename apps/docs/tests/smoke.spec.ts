@@ -26,6 +26,7 @@ test("renders the Flux health page and persists theme selection", async ({
     "Stack",
     "Inline",
     "Input",
+    "Field",
     "Grid",
     "Container",
   ]) {
@@ -41,6 +42,10 @@ test("renders the Flux health page and persists theme selection", async ({
   await expect(
     page.getByRole("textbox", { name: "Email address", exact: true }),
   ).toBeVisible();
+
+  await expect(
+    page.getByRole("textbox", { name: "Work email", exact: true }),
+  ).toHaveAttribute("required", "");
 
   const themeButton = page.getByRole("button", {
     name: "Use dark theme",

@@ -1,4 +1,12 @@
-import { Button, Container, Grid, Inline, Input, Stack } from "@flux-ui/react";
+import {
+  Button,
+  Container,
+  Field,
+  Grid,
+  Inline,
+  Input,
+  Stack,
+} from "@flux-ui/react";
 import { useState, type ReactNode } from "react";
 import { components } from "./generated/components.js";
 import { health } from "./generated/health.js";
@@ -445,38 +453,49 @@ export function App() {
 
                 <ShowcaseCard
                   title="Input"
-                  description="Native text-entry semantics with Flux styling and validation states."
+                  description="Native text-entry semantics with Flux styling and native escape hatches."
                 >
                   <Stack gap="md">
-                    <label className="demo-field" htmlFor="input-demo-email">
-                      <span>Email address</span>
-                      <Input
-                        id="input-demo-email"
-                        type="email"
-                        placeholder="jo@example.com"
-                      />
-                    </label>
-                    <label className="demo-field" htmlFor="input-demo-invalid">
-                      <span>Invalid email</span>
-                      <Input
-                        id="input-demo-invalid"
-                        aria-describedby="input-demo-error"
-                        aria-invalid="true"
-                        defaultValue="not-an-email"
-                        type="email"
-                      />
-                      <small className="demo-error" id="input-demo-error">
-                        Enter a valid email address.
-                      </small>
-                    </label>
-                    <label className="demo-field" htmlFor="input-demo-disabled">
-                      <span>Disabled input</span>
-                      <Input
-                        id="input-demo-disabled"
-                        defaultValue="Unavailable"
-                        disabled
-                      />
-                    </label>
+                    <Input
+                      aria-label="Email address"
+                      type="email"
+                      placeholder="jo@example.com"
+                    />
+                    <Input
+                      aria-label="Read-only value"
+                      defaultValue="Read-only value"
+                      readOnly
+                    />
+                    <Input
+                      aria-label="Disabled input"
+                      defaultValue="Unavailable"
+                      disabled
+                    />
+                  </Stack>
+                </ShowcaseCard>
+
+                <ShowcaseCard
+                  title="Field"
+                  description="Accessible labels, descriptions, errors, and shared form-control state without manual id wiring."
+                >
+                  <Stack gap="lg">
+                    <Field.Root id="field-demo-email" required>
+                      <Field.Label>Work email</Field.Label>
+                      <Field.Control>
+                        <Input type="email" placeholder="jo@example.com" />
+                      </Field.Control>
+                      <Field.Description>
+                        Used for account and project notifications.
+                      </Field.Description>
+                    </Field.Root>
+
+                    <Field.Root id="field-demo-invalid" invalid>
+                      <Field.Label>Invalid email</Field.Label>
+                      <Field.Control>
+                        <Input defaultValue="not-an-email" type="email" />
+                      </Field.Control>
+                      <Field.Error>Enter a valid email address.</Field.Error>
+                    </Field.Root>
                   </Stack>
                 </ShowcaseCard>
 
