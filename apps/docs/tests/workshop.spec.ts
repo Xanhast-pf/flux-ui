@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { components } from "../src/generated/components.js";
 
 for (const component of components) {
@@ -258,6 +258,38 @@ test("native disclosures and range controls work without custom key handlers", a
   });
 });
 
+async function expectNoHorizontalOverflow(
+  page: Page,
+  route: string,
+): Promise<void> {
+  const report = await page.evaluate(() => {
+    const viewportWidth = window.innerWidth;
+    const documentWidth = document.documentElement.scrollWidth;
+    const offenders = Array.from(
+      document.body.querySelectorAll<HTMLElement>("*"),
+    )
+      .map((element) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          element: element.tagName.toLowerCase(),
+          className: element.className,
+          left: Math.round(rect.left * 10) / 10,
+          right: Math.round(rect.right * 10) / 10,
+          width: Math.round(rect.width * 10) / 10,
+        };
+      })
+      .filter(({ left, right }) => left < -1 || right > viewportWidth + 1)
+      .slice(0, 8);
+
+    return { documentWidth, offenders, viewportWidth };
+  });
+
+  expect(
+    report.documentWidth,
+    `#${route} overflowed ${report.viewportWidth}px: ${JSON.stringify(report.offenders)}`,
+  ).toBeLessThanOrEqual(report.viewportWidth + 1);
+}
+
 for (const width of [320, 390, 768, 1440]) {
   test(`docs fit a ${width}px viewport`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -273,11 +305,7 @@ for (const width of [320, 390, 768, 1440]) {
       await expect(page.locator("main h1")).toBeVisible();
       if (route.startsWith("components/"))
         await expect(page.locator(".preview-content")).toBeVisible();
-      expect(
-        await page.evaluate(
-          () => document.documentElement.scrollWidth <= window.innerWidth + 1,
-        ),
-      ).toBe(true);
+      await expectNoHorizontalOverflow(page, route);
     }
   });
 }

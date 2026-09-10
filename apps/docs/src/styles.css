@@ -157,6 +157,7 @@ img {
 }
 .header-search {
   margin-inline-start: auto;
+  min-inline-size: 0;
 }
 .search-trigger {
   display: inline-flex;
@@ -194,6 +195,9 @@ kbd {
   font-size: 0.75rem;
   color: var(--flux-color-text-muted);
   text-align: end;
+}
+.mobile-header-row > * {
+  min-inline-size: 0;
 }
 .workshop-shell {
   display: grid;
@@ -281,6 +285,9 @@ kbd {
   align-items: center;
   gap: 3rem;
 }
+.hero-grid > * {
+  min-inline-size: 0;
+}
 .hero-copy {
   padding-block: 1rem;
 }
@@ -327,6 +334,8 @@ kbd {
 }
 .release-room {
   padding: 1.5rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   box-shadow: 0 0.5rem 2rem -1rem var(--flux-color-border-strong);
   background: linear-gradient(
     145deg,
@@ -421,6 +430,8 @@ kbd {
 .preview-frame {
   border: 0.0625rem solid var(--flux-color-border);
   border-radius: 0.5rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   overflow: hidden;
 }
 .preview-toolbar {
@@ -432,6 +443,9 @@ kbd {
 .preview-stage,
 .button-stage {
   padding: 2rem 1rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-x: auto;
   background-color: var(--flux-color-surface-subtle);
   background-image: radial-gradient(
     var(--flux-color-border) 1px,
@@ -502,6 +516,8 @@ pre code {
 }
 .reference-page {
   max-width: 70rem;
+  min-inline-size: 0;
+  inline-size: 100%;
 }
 .metric-card {
   display: grid;
@@ -525,6 +541,8 @@ pre code {
   background: var(--flux-color-surface);
 }
 .table-scroll {
+  min-inline-size: 0;
+  inline-size: 100%;
   max-width: 100%;
   overflow-x: auto;
   border: 0.0625rem solid var(--flux-color-border);
@@ -697,6 +715,30 @@ meter {
   }
   .hero-copy h1 {
     font-size: 3rem;
+  }
+}
+@media (width < 24rem) {
+  .brand-ui {
+    display: none;
+  }
+  .search-trigger {
+    gap: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+  .release-room {
+    padding: 1rem;
+  }
+  .add-task-row {
+    flex-wrap: wrap;
+  }
+  .add-task-row > input,
+  .add-task-row > button {
+    flex-basis: 100%;
+    inline-size: 100%;
+  }
+  .preview-stage,
+  .button-stage {
+    padding-inline: 0.75rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
