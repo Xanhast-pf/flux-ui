@@ -427,6 +427,20 @@ kbd {
 [role="tab"] {
   flex-shrink: 0;
 }
+.component-category-scroll {
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+}
+.component-category-tabs {
+  inline-size: max-content;
+  min-inline-size: 100%;
+  max-inline-size: none;
+  overflow: visible;
+}
 .preview-frame {
   border: 0.0625rem solid var(--flux-color-border);
   border-radius: 0.5rem;
