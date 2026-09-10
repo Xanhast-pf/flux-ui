@@ -1,0 +1,8 @@
+{
+  "name": "Textarea",
+  "slug": "textarea",
+  "category": "Inputs",
+  "status": "alpha",
+  "description": "Styled native multi-line text control that preserves browser semantics, attributes, and refs.",
+  "sizeClass": "primitive"
+}

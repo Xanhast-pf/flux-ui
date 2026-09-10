@@ -6,6 +6,7 @@ import {
   Inline,
   Input,
   Stack,
+  Textarea,
 } from "@flux-ui/react";
 import { useState, type ReactNode } from "react";
 import { components } from "./generated/components.js";
@@ -495,6 +496,38 @@ export function App() {
                         <Input defaultValue="not-an-email" type="email" />
                       </Field.Control>
                       <Field.Error>Enter a valid email address.</Field.Error>
+                    </Field.Root>
+                  </Stack>
+                </ShowcaseCard>
+
+                <ShowcaseCard
+                  title="Textarea"
+                  description="Native multi-line text entry with Flux styling and Field composition."
+                >
+                  <Stack gap="lg">
+                    <Field.Root id="textarea-demo-notes">
+                      <Field.Label>Project notes</Field.Label>
+                      <Field.Control>
+                        <Textarea
+                          placeholder="Add context for the team..."
+                          rows={4}
+                        />
+                      </Field.Control>
+                      <Field.Description>
+                        Native rows, values, events, and vertical resizing stay
+                        available.
+                      </Field.Description>
+                    </Field.Root>
+
+                    <Field.Root id="textarea-demo-invalid" invalid>
+                      <Field.Label>Release notes</Field.Label>
+                      <Field.Control>
+                        <Textarea defaultValue="Too short" rows={3} />
+                      </Field.Control>
+                      <Field.Error>
+                        Add enough detail for consumers to understand the
+                        change.
+                      </Field.Error>
                     </Field.Root>
                   </Stack>
                 </ShowcaseCard>

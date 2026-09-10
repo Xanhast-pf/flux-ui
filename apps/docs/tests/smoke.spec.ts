@@ -24,6 +24,7 @@ test("renders the Flux health page and persists theme selection", async ({
   for (const componentName of [
     "Button",
     "Stack",
+    "Textarea",
     "Inline",
     "Input",
     "Field",
@@ -46,6 +47,10 @@ test("renders the Flux health page and persists theme selection", async ({
   await expect(
     page.getByRole("textbox", { name: "Work email", exact: true }),
   ).toHaveAttribute("required", "");
+
+  await expect(
+    page.getByRole("textbox", { name: "Project notes", exact: true }),
+  ).toHaveAttribute("rows", "4");
 
   const themeButton = page.getByRole("button", {
     name: "Use dark theme",

@@ -6,3 +6,4 @@ export * from "./components/Grid/index.js";
 export * from "./components/Inline/index.js";
 export * from "./components/Input/index.js";
 export * from "./components/Stack/index.js";
+export * from "./components/Textarea/index.js";
