@@ -10,6 +10,15 @@ export const components = [
     sizeClass: "interactive",
   },
   {
+    name: "Checkbox",
+    slug: "checkbox",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Native checkbox with controlled mixed presentation, form semantics, and Field composition.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Container",
     slug: "container",
     category: "Layout",

@@ -10,6 +10,14 @@
       "brotli": 2407,
       "fileCount": 5
     },
+    "checkbox": {
+      "name": "Checkbox",
+      "sizeClass": "primitive",
+      "raw": 2035,
+      "gzip": 1152,
+      "brotli": 970,
+      "fileCount": 4
+    },
     "container": {
       "name": "Container",
       "sizeClass": "primitive",
@@ -93,22 +101,22 @@
   },
   "aggregate": {
     "rootEntry": {
-      "raw": 762,
-      "gzip": 333,
-      "brotli": 291,
+      "raw": 833,
+      "gzip": 356,
+      "brotli": 314,
       "fileCount": 1
     },
     "runtime": {
-      "raw": 43826,
-      "gzip": 16247,
-      "brotli": 14037,
-      "fileCount": 38
+      "raw": 45749,
+      "gzip": 17257,
+      "brotli": 14901,
+      "fileCount": 41
     },
     "published": {
-      "raw": 179072,
-      "gzip": 68263,
-      "brotli": 59409,
-      "fileCount": 173
+      "raw": 188752,
+      "gzip": 73239,
+      "brotli": 63640,
+      "fileCount": 187
     }
   }
 }

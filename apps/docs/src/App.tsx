@@ -12,6 +12,7 @@ import {
   Textarea,
 } from "@flux-ui/react";
 import { useState, type ReactNode } from "react";
+import { CheckboxDemo } from "./demos/CheckboxDemo.js";
 import { components } from "./generated/components.js";
 import { health } from "./generated/health.js";
 
@@ -570,6 +571,13 @@ export function App() {
 
                         <Tabs.Panel value="forms">
                           <Grid minColumnWidth="20rem" gap="md">
+                            <ShowcaseCard
+                              title="Checkbox"
+                              description="Native checked and mixed states, keyboard behavior, and form submission."
+                            >
+                              <CheckboxDemo />
+                            </ShowcaseCard>
+
                             <ShowcaseCard
                               title="Input"
                               description="Native text-entry semantics with Flux styling and escape hatches."
