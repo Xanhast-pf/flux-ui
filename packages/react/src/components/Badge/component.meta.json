@@ -1,0 +1,8 @@
+{
+  "name": "Badge",
+  "slug": "badge",
+  "category": "Display",
+  "status": "alpha",
+  "description": "Compact, non-interactive status labels with semantic tones.",
+  "sizeClass": "primitive"
+}

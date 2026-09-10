@@ -1,0 +1,8 @@
+{
+  "name": "Breadcrumbs",
+  "slug": "breadcrumbs",
+  "category": "Navigation",
+  "status": "alpha",
+  "description": "Semantic navigation trails with decorative separators.",
+  "sizeClass": "primitive"
+}

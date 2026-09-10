@@ -78,6 +78,8 @@ pnpm generate
 pnpm check
 ```
 
+The scaffold also creates a live docs preview (`apps/docs/src/examples/{slug}.preview.tsx`) and its metadata (`{slug}.example.tsx`). The metadata imports the preview's actual source through Vite `?raw`; do not maintain an unrelated copy of example code. Every public slug needs one discoverable example with meaningful API notes, semantics and keyboard guidance. `pnpm docs:check` and component doctor enforce example coverage. Add browser checks for meaningful behavior, not just screenshots.
+
 Do not create or maintain unrelated central registries manually. If a new component requires editing multiple unrelated files simply to become discoverable, improve the generator instead.
 
 ## Public API rules

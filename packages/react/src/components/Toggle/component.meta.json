@@ -1,0 +1,8 @@
+{
+  "name": "Toggle",
+  "slug": "toggle",
+  "category": "Actions",
+  "status": "alpha",
+  "description": "A native pressed-state button for reversible actions.",
+  "sizeClass": "primitive"
+}

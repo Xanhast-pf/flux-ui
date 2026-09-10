@@ -1,0 +1,8 @@
+{
+  "name": "Avatar",
+  "slug": "avatar",
+  "category": "Data display",
+  "status": "alpha",
+  "description": "Identity images with a named, resilient fallback.",
+  "sizeClass": "primitive"
+}

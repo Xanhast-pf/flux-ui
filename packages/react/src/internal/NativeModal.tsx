@@ -60,7 +60,7 @@ type NativeModalContextValue = {
   hasTitle: boolean;
   open: boolean;
   requestClose: () => void;
-  requestOpen: () => void;
+  requestOpen: (returnFocusTarget?: HTMLElement) => void;
   styles: NativeModalStyles;
   titleId: string;
 };
@@ -161,6 +161,7 @@ function NativeModalRoot({
   const generatedId = useId();
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
   const [dialogNode, setDialogNode] = useState<HTMLDialogElement | null>(null);
+  const restoreFocusFrameRef = useRef<number | null>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const open = controlledOpen ?? uncontrolledOpen;
 
@@ -169,7 +170,14 @@ function NativeModalRoot({
     if (nextOpen !== open) onOpenChange?.(nextOpen);
   }
 
-  function requestOpen(): void {
+  function requestOpen(returnFocusTarget?: HTMLElement): void {
+    if (restoreFocusFrameRef.current !== null) {
+      window.cancelAnimationFrame(restoreFocusFrameRef.current);
+      restoreFocusFrameRef.current = null;
+    }
+    if (returnFocusTarget !== undefined) {
+      previousFocusRef.current = returnFocusTarget;
+    }
     setOpen(true);
   }
 
@@ -185,32 +193,61 @@ function NativeModalRoot({
       showModal?: () => void;
     };
 
-    if (open && !dialogNode.open) {
-      previousFocusRef.current =
-        document.activeElement instanceof HTMLElement
-          ? document.activeElement
-          : null;
+    if (open) {
+      if (restoreFocusFrameRef.current !== null) {
+        window.cancelAnimationFrame(restoreFocusFrameRef.current);
+        restoreFocusFrameRef.current = null;
+      }
+      if (!dialogNode.open) {
+        if (previousFocusRef.current === null) {
+          previousFocusRef.current =
+            document.activeElement instanceof HTMLElement
+              ? document.activeElement
+              : null;
+        }
 
-      if (typeof compatibleDialog.showModal === "function") {
-        compatibleDialog.showModal();
-      } else {
-        dialogNode.setAttribute("open", "");
+        if (typeof compatibleDialog.showModal === "function") {
+          compatibleDialog.showModal();
+        } else {
+          dialogNode.setAttribute("open", "");
+        }
       }
       return;
     }
 
-    if (!open && dialogNode.open) {
+    if (dialogNode.open) {
       if (typeof compatibleDialog.close === "function") {
         compatibleDialog.close();
       } else {
         dialogNode.removeAttribute("open");
       }
     }
+    const returnFocusTarget = previousFocusRef.current;
+    previousFocusRef.current = null;
+    if (returnFocusTarget === null) return;
 
-    if (!open && previousFocusRef.current !== null) {
-      previousFocusRef.current.focus();
-      previousFocusRef.current = null;
-    }
+    restoreFocusFrameRef.current = window.requestAnimationFrame(() => {
+      restoreFocusFrameRef.current = null;
+      if (!returnFocusTarget.isConnected) return;
+
+      const activeElement = document.activeElement;
+      const focusStillBelongsToModal =
+        activeElement === null ||
+        activeElement === document.body ||
+        activeElement === dialogNode ||
+        (activeElement instanceof Node && dialogNode.contains(activeElement));
+
+      if (focusStillBelongsToModal) {
+        returnFocusTarget.focus({ preventScroll: true });
+      }
+    });
+
+    return () => {
+      if (restoreFocusFrameRef.current !== null) {
+        window.cancelAnimationFrame(restoreFocusFrameRef.current);
+        restoreFocusFrameRef.current = null;
+      }
+    };
   }, [dialogNode, open]);
 
   const context: NativeModalContextValue = {
@@ -239,7 +276,7 @@ function NativeModalTrigger({
 
   function handleClick(event: MouseEvent<HTMLButtonElement>): void {
     onClick?.(event);
-    if (!event.defaultPrevented) context.requestOpen();
+    if (!event.defaultPrevented) context.requestOpen(event.currentTarget);
   }
 
   return (

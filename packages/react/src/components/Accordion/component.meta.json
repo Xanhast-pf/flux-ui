@@ -1,0 +1,8 @@
+{
+  "name": "Accordion",
+  "slug": "accordion",
+  "category": "Disclosure",
+  "status": "alpha",
+  "description": "Grouped native disclosures with automatic exclusive naming.",
+  "sizeClass": "primitive"
+}

@@ -1,95 +1,48 @@
 import { expect, test } from "@playwright/test";
 
-test("renders the Flux health page, component categories, and overlay demos", async ({
+test("renders the workshop, native form examples, and overlay demos", async ({
   page,
 }) => {
   await page.goto("/");
-
-  await page.evaluate(() => {
-    window.localStorage.setItem("flux-ui-theme", "light");
-  });
-  await page.reload();
-
-  await expect(
-    page.getByRole("heading", {
-      name: "Flux UI project health & documentation",
-    }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("complementary", { name: "Site status" }),
-  ).toContainText(/Under construction/i);
-
-  for (const componentName of [
-    "Button",
-    "Stack",
-    "Inline",
-    "Grid",
-    "Container",
-  ]) {
-    await expect(
-      page.getByRole("heading", { name: componentName, exact: true }),
-    ).toBeVisible();
-  }
-
-  await page.getByRole("tab", { name: "Forms" }).click();
-  for (const componentName of [
-    "Checkbox",
-    "RadioGroup",
-    "Input",
-    "Field",
-    "Textarea",
-  ]) {
-    await expect(
-      page.getByRole("heading", { name: componentName, exact: true }),
-    ).toBeVisible();
-  }
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "More possibility.",
+  );
+  await page.goto("/#components/input");
   await expect(
     page.getByRole("textbox", { name: "Email address", exact: true }),
   ).toBeVisible();
+  await page.goto("/#components/field");
   await expect(
     page.getByRole("textbox", { name: "Work email", exact: true }),
   ).toHaveAttribute("required", "");
+  await page.goto("/#components/textarea");
   await expect(
     page.getByRole("textbox", { name: "Project notes", exact: true }),
   ).toHaveAttribute("rows", "4");
-
-  await page.getByRole("tab", { name: "Interaction" }).click();
-  for (const componentName of ["Tabs", "Dialog", "Drawer"]) {
-    await expect(
-      page.getByRole("heading", { name: componentName, exact: true }),
-    ).toBeVisible();
-  }
-
-  const overviewTab = page.getByRole("tab", { name: "Overview", exact: true });
-  await overviewTab.focus();
+  await page.goto("/#components/tabs");
+  const overview = page.getByRole("tab", { name: "Overview", exact: true });
+  await overview.focus();
   await page.keyboard.press("ArrowRight");
-  const activityTab = page.getByRole("tab", { name: "Activity", exact: true });
-  await expect(activityTab).toBeFocused();
-  await expect(activityTab).toHaveAttribute("aria-selected", "true");
-
-  const dialogTrigger = page.getByRole("button", { name: "Open dialog" });
-  await dialogTrigger.click();
+  const activity = page.getByRole("tab", { name: "Activity", exact: true });
+  await expect(activity).toBeFocused();
+  await expect(activity).toHaveAttribute("aria-selected", "true");
+  await page.goto("/#components/dialog");
+  const trigger = page.getByRole("button", {
+    name: "Open dialog",
+    exact: true,
+  });
+  await trigger.click();
   const dialog = page.getByRole("dialog", { name: "Project settings" });
   await expect(dialog).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(dialog).not.toBeVisible();
-  await expect(dialogTrigger).toBeFocused();
-
-  await page.getByRole("button", { name: "Open drawer" }).click();
+  await expect(trigger).toBeFocused();
+  await page.goto("/#components/drawer");
+  await page.getByRole("button", { name: "Open drawer", exact: true }).click();
   await expect(
     page.getByRole("dialog", { name: "Project navigation" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Close drawer" }).click();
-
-  const themeButton = page.getByRole("button", { name: "Use dark theme" });
-  await themeButton.click();
-  await expect(page.locator("html")).toHaveAttribute("data-flux-theme", "dark");
-
-  await page.reload();
-  await expect(page.locator("html")).toHaveAttribute("data-flux-theme", "dark");
-  await expect(
-    page.getByRole("button", { name: "Use light theme" }),
-  ).toBeVisible();
+  await page.getByRole("button", { name: "Close drawer", exact: true }).click();
 });
 
 test("uses the Flux Drawer for mobile documentation navigation", async ({
@@ -112,8 +65,7 @@ test("uses the Flux Drawer for mobile documentation navigation", async ({
 test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async ({
   page,
 }) => {
-  await page.goto("/");
-  await page.getByRole("tab", { name: "Forms", exact: true }).click();
+  await page.goto("/#components/checkbox");
   const form = page.getByRole("form", {
     name: "Checkbox preferences",
     exact: true,
@@ -204,8 +156,7 @@ test("Native selection controls keep browser rendering and keyboard behavior in 
   page,
 }) => {
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
-  await page.goto("/");
-  await page.getByRole("tab", { name: "Forms", exact: true }).click();
+  await page.goto("/#components/checkbox");
   const updates = page.getByRole("checkbox", {
     name: "Release updates",
     exact: true,
@@ -219,6 +170,7 @@ test("Native selection controls keep browser rendering and keyboard behavior in 
     page.getByRole("checkbox", { name: "All channels", exact: true }),
   ).toHaveJSProperty("indeterminate", true);
 
+  await page.goto("/#components/radio-group");
   const stable = page.getByRole("radio", { name: "Stable", exact: true });
   const beta = page.getByRole("radio", { name: "Beta", exact: true });
   await expect(stable).toHaveCSS("appearance", "auto");
@@ -231,8 +183,7 @@ test("Native selection controls keep browser rendering and keyboard behavior in 
 test("RadioGroup preserves native keyboard, form, controlled, and reset behavior", async ({
   page,
 }) => {
-  await page.goto("/");
-  await page.getByRole("tab", { name: "Forms", exact: true }).click();
+  await page.goto("/#components/radio-group");
   const form = page.getByRole("form", {
     name: "Radio preferences",
     exact: true,

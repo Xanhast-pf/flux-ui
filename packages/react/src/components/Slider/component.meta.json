@@ -1,0 +1,8 @@
+{
+  "name": "Slider",
+  "slug": "slider",
+  "category": "Inputs",
+  "status": "alpha",
+  "description": "Single-thumb native range input with form and keyboard semantics.",
+  "sizeClass": "primitive"
+}

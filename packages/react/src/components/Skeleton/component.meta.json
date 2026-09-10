@@ -1,0 +1,8 @@
+{
+  "name": "Skeleton",
+  "slug": "skeleton",
+  "category": "Feedback",
+  "status": "alpha",
+  "description": "Static decorative placeholders for loading layouts.",
+  "sizeClass": "primitive"
+}

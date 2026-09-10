@@ -1,0 +1,8 @@
+{
+  "name": "Kbd",
+  "slug": "kbd",
+  "category": "Typography",
+  "status": "alpha",
+  "description": "Semantic keyboard hints, styled without adding shortcut behavior.",
+  "sizeClass": "primitive"
+}

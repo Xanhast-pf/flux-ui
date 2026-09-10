@@ -70,6 +70,27 @@ for (const [name, content] of Object.entries(files)) {
   await writeFile(resolve(dir, name), content, "utf8");
 }
 
+// A demo is discovered by filename, not registered in an unrelated app module.
+const exampleDir = resolve(root, "apps/docs/src/examples");
+await mkdir(exampleDir, { recursive: true });
+const previewCode = `import { ${rawName} } from "@flux-ui/react";\n\nexport default function Preview() {\n  return <${rawName}>Example</${rawName}>;\n}\n`;
+await writeFile(
+  resolve(exampleDir, `${slug}.preview.tsx`),
+  previewCode,
+  "utf8",
+);
+await writeFile(
+  resolve(exampleDir, `${slug}.example.tsx`),
+  [
+    `import Preview from "./${slug}.preview.js";`,
+    `import code from "./${slug}.preview.tsx?raw";`,
+    'import type { ComponentExample } from "../lib/examples.js";',
+    'export default { Preview, code, notes: ["Document semantics and keyboard behavior before promoting this component."], props: [["Native props", "Element attributes", "Customize this API summary alongside the component."]] } satisfies ComponentExample;',
+    "",
+  ].join("\n"),
+  "utf8",
+);
+
 const generated = spawnSync(
   process.execPath,
   [resolve(root, "scripts/generate-components.mjs")],
