@@ -62,6 +62,15 @@ export const components = [
     description: "Token-driven vertical layout with responsive spacing.",
     sizeClass: "primitive",
   },
+  {
+    name: "Textarea",
+    slug: "textarea",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Styled native multi-line text control that preserves browser semantics, attributes, and refs.",
+    sizeClass: "primitive",
+  },
 ] as const;
 
 export type ComponentMeta = (typeof components)[number];

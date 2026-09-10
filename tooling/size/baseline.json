@@ -57,26 +57,34 @@
       "gzip": 1231,
       "brotli": 1079,
       "fileCount": 5
+    },
+    "textarea": {
+      "name": "Textarea",
+      "sizeClass": "primitive",
+      "raw": 2001,
+      "gzip": 1009,
+      "brotli": 848,
+      "fileCount": 4
     }
   },
   "aggregate": {
     "rootEntry": {
-      "raw": 494,
-      "gzip": 247,
+      "raw": 565,
+      "gzip": 271,
       "brotli": 239,
       "fileCount": 1
     },
     "runtime": {
-      "raw": 26805,
-      "gzip": 9184,
-      "brotli": 8037,
-      "fileCount": 24
+      "raw": 28694,
+      "gzip": 10052,
+      "brotli": 8756,
+      "fileCount": 27
     },
     "published": {
-      "raw": 103617,
-      "gzip": 39482,
-      "brotli": 34411,
-      "fileCount": 111
+      "raw": 110798,
+      "gzip": 43036,
+      "brotli": 37401,
+      "fileCount": 125
     }
   }
 }
