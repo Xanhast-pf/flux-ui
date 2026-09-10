@@ -32,7 +32,7 @@ test("renders the Flux health page, component categories, and overlay demos", as
   }
 
   await page.getByRole("tab", { name: "Forms" }).click();
-  for (const componentName of ["Input", "Field", "Textarea"]) {
+  for (const componentName of ["Checkbox", "Input", "Field", "Textarea"]) {
     await expect(
       page.getByRole("heading", { name: componentName, exact: true }),
     ).toBeVisible();
@@ -101,4 +101,115 @@ test("uses the Flux Drawer for mobile documentation navigation", async ({
   await navigationDrawer.getByRole("link", { name: "Components" }).click();
   await expect(navigationDrawer).not.toBeVisible();
   await expect(page).toHaveURL(/#components$/);
+});
+
+test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("tab", { name: "Forms", exact: true }).click();
+  const form = page.getByRole("form", {
+    name: "Checkbox preferences",
+    exact: true,
+  });
+  const updates = form.getByRole("checkbox", {
+    name: "Release updates",
+    exact: true,
+  });
+  const all = form.getByRole("checkbox", {
+    name: "All channels",
+    exact: true,
+  });
+  const email = form.getByRole("checkbox", {
+    name: "Email notifications",
+    exact: true,
+  });
+  const push = form.getByRole("checkbox", {
+    name: "Push notifications",
+    exact: true,
+  });
+  const terms = form.getByRole("checkbox", {
+    name: "Accept the project terms",
+    exact: true,
+  });
+
+  await expect(updates).toBeChecked();
+  await form.getByText("Release updates", { exact: true }).click();
+  await expect(updates).not.toBeChecked();
+  await expect(updates).toBeFocused();
+  await page.keyboard.press("Space");
+  await expect(updates).toBeChecked();
+
+  await expect(all).toHaveJSProperty("indeterminate", true);
+  await all.focus();
+  await page.keyboard.press("Space");
+  await expect(all).toHaveJSProperty("indeterminate", false);
+  await expect(all).toBeChecked();
+  await expect(email).toBeChecked();
+  await expect(push).toBeChecked();
+
+  await email.uncheck();
+  await expect(all).toHaveJSProperty("indeterminate", true);
+  await expect(all).toHaveJSProperty("checked", false);
+  await all.click();
+  await expect(email).toBeChecked();
+  await expect(push).toBeChecked();
+
+  await expect(terms).toHaveAttribute("required", "");
+  await expect(terms).toHaveAttribute("aria-invalid", "true");
+  await terms.check();
+  await expect(terms).not.toHaveAttribute("aria-invalid", "true");
+  await expect(
+    form.getByText("Accept the terms to complete this example."),
+  ).toHaveCount(0);
+  await expect(
+    form.getByRole("checkbox", {
+      name: "Managed by your organization",
+      exact: true,
+    }),
+  ).toBeDisabled();
+
+  const submitted = await form.evaluate((element) => {
+    if (!(element instanceof HTMLFormElement)) {
+      throw new Error("Expected a form.");
+    }
+    return [...new FormData(element).entries()];
+  });
+  expect(submitted).toEqual([
+    ["updates", "yes"],
+    ["channel", "email"],
+    ["channel", "push"],
+    ["terms", "accepted"],
+  ]);
+
+  await updates.uncheck();
+  await form
+    .getByRole("button", { name: "Reset preferences", exact: true })
+    .click();
+  await expect(updates).toBeChecked();
+  await expect(email).toBeChecked();
+  await expect(push).not.toBeChecked();
+  await expect(all).toHaveJSProperty("indeterminate", true);
+  await expect(terms).not.toBeChecked();
+  await expect(terms).toHaveAttribute("aria-invalid", "true");
+});
+
+test("Checkbox keeps native rendering and keyboard behavior in forced colors", async ({
+  page,
+}) => {
+  await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
+  await page.goto("/");
+  await page.getByRole("tab", { name: "Forms", exact: true }).click();
+  const updates = page.getByRole("checkbox", {
+    name: "Release updates",
+    exact: true,
+  });
+  await expect(updates).toHaveCSS("appearance", "auto");
+  await updates.focus();
+  await expect(updates).toBeFocused();
+  await page.keyboard.press("Space");
+  await expect(updates).not.toBeChecked();
+  await expect(
+    page.getByRole("checkbox", { name: "All channels", exact: true }),
+  ).toHaveJSProperty("indeterminate", true);
 });

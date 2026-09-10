@@ -1,5 +1,6 @@
 // GENERATED FILE. Run `pnpm generate`; do not edit manually.
 export * from "./components/Button/index.js";
+export * from "./components/Checkbox/index.js";
 export * from "./components/Container/index.js";
 export * from "./components/Dialog/index.js";
 export * from "./components/Drawer/index.js";

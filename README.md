@@ -27,6 +27,7 @@ Flux UI is under active development and is not yet a stable public package relea
 - `Input`
 - `Field`
 - `Textarea`
+- `Checkbox`
 - `Dialog`
 - `Drawer`
 - `Tabs`
@@ -174,6 +175,8 @@ pnpm install
 ```
 
 Do not exclude rules merely to make CI green.
+
+See [`docs/checkbox.md`](docs/checkbox.md) for Checkbox composition, controlled and mixed state, native reset behavior, and accessibility expectations.
 
 ## Repository map
 

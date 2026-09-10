@@ -26,3 +26,22 @@ test("interactive component demos remain accessible when opened", async ({
   await page.getByRole("button", { name: "Open drawer" }).click();
   await expectNoViolations(page);
 });
+
+for (const theme of ["light", "dark"] as const) {
+  test(`form demos remain accessible in ${theme} theme`, async ({ page }) => {
+    await page.goto("/");
+    await page.evaluate((value) => {
+      window.localStorage.setItem("flux-ui-theme", value);
+    }, theme);
+    await page.reload();
+    await page.getByRole("tab", { name: "Forms", exact: true }).click();
+    await expectNoViolations(page);
+    await page
+      .getByRole("checkbox", { name: "All channels", exact: true })
+      .click();
+    await page
+      .getByRole("checkbox", { name: "Accept the project terms", exact: true })
+      .check();
+    await expectNoViolations(page);
+  });
+}
