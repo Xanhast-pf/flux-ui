@@ -1,0 +1,8 @@
+{
+  "name": "Tabs",
+  "slug": "tabs",
+  "category": "Navigation",
+  "status": "alpha",
+  "description": "Keyboard-accessible tabbed navigation for switching between related panels without leaving the page.",
+  "sizeClass": "interactive"
+}

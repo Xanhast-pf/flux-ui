@@ -1,0 +1,8 @@
+{
+  "name": "Dialog",
+  "slug": "dialog",
+  "category": "Overlays",
+  "status": "alpha",
+  "description": "Modal dialog composition built on the native top layer with automatic labeling and predictable dismissal.",
+  "sizeClass": "overlay"
+}

@@ -19,6 +19,24 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Dialog",
+    slug: "dialog",
+    category: "Overlays",
+    status: "alpha",
+    description:
+      "Modal dialog composition built on the native top layer with automatic labeling and predictable dismissal.",
+    sizeClass: "overlay",
+  },
+  {
+    name: "Drawer",
+    slug: "drawer",
+    category: "Overlays",
+    status: "alpha",
+    description:
+      "Edge-aligned modal panel for navigation and secondary workflows with native dialog semantics.",
+    sizeClass: "overlay",
+  },
+  {
     name: "Field",
     slug: "field",
     category: "Inputs",
@@ -61,6 +79,15 @@ export const components = [
     status: "alpha",
     description: "Token-driven vertical layout with responsive spacing.",
     sizeClass: "primitive",
+  },
+  {
+    name: "Tabs",
+    slug: "tabs",
+    category: "Navigation",
+    status: "alpha",
+    description:
+      "Keyboard-accessible tabbed navigation for switching between related panels without leaving the page.",
+    sizeClass: "interactive",
   },
   {
     name: "Textarea",
