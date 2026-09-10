@@ -866,3 +866,198 @@ meter {
     border-color: Highlight;
   }
 }
+
+/* Flux identity lab ------------------------------------------------------- */
+.header-github,
+.header-actions,
+.mobile-nav-trigger,
+.component-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.identity-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+  background:
+    linear-gradient(135deg, var(--flux-color-accent-soft), transparent 62%),
+    var(--flux-color-surface);
+}
+.identity-hero::after {
+  content: "";
+  position: absolute;
+  inline-size: 12rem;
+  block-size: 12rem;
+  inset-inline-end: -4rem;
+  inset-block-end: -6rem;
+  border: 0.0625rem solid var(--flux-color-accent);
+  border-radius: 50%;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.identity-mark-lockup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-inline-size: 0;
+  color: var(--flux-color-accent);
+}
+.identity-mark-lockup > svg:first-child {
+  flex: 0 0 auto;
+}
+.identity-wordmark {
+  display: block;
+  inline-size: 28rem;
+  max-inline-size: 100%;
+  color: var(--flux-color-text);
+}
+.identity-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+}
+.icon-size-options {
+  display: inline-flex;
+  inline-size: max-content;
+  max-inline-size: 100%;
+  padding: 0.25rem;
+  gap: 0.25rem;
+  border: 0.0625rem solid var(--flux-color-border);
+  border-radius: 0.25rem;
+  background: var(--flux-color-surface-subtle);
+}
+.identity-size-button {
+  min-inline-size: 2.25rem;
+  min-block-size: 2.25rem;
+  border: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--flux-color-text-muted);
+  cursor: pointer;
+}
+.identity-size-button[aria-pressed="true"] {
+  background: var(--flux-color-accent);
+  color: var(--flux-color-accent-foreground);
+}
+.identity-size-button:focus-visible,
+.icon-tile:focus-visible {
+  outline: 0.125rem solid var(--flux-color-focus);
+  outline-offset: 0.125rem;
+}
+.icon-tile {
+  display: grid;
+  grid-template-rows: 4rem auto auto;
+  gap: 0.5rem;
+  place-items: center;
+  min-inline-size: 0;
+  padding: 0.75rem;
+  border: 0.0625rem solid var(--flux-color-border);
+  border-radius: 0.25rem;
+  background: var(--flux-color-surface);
+  color: var(--flux-color-text);
+  cursor: pointer;
+}
+.icon-tile:hover,
+.icon-tile[aria-pressed="true"] {
+  border-color: var(--flux-color-accent);
+  background: var(--flux-color-accent-soft);
+}
+.icon-tile[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 0.0625rem var(--flux-color-accent);
+}
+.icon-tile-stage {
+  display: grid;
+  place-items: center;
+  inline-size: 4rem;
+  block-size: 4rem;
+  color: var(--flux-color-accent);
+}
+.icon-tile > span:not(.icon-tile-stage) {
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.icon-tile small {
+  color: var(--flux-color-text-muted);
+  text-transform: capitalize;
+}
+.display-lab {
+  padding: 1.5rem;
+}
+.display-stage {
+  display: grid;
+  align-items: center;
+  min-block-size: 12rem;
+  padding: 1.5rem;
+  overflow-x: auto;
+  border: 0.0625rem solid var(--flux-color-border);
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(var(--flux-color-border) 0.0625rem, transparent 0.0625rem),
+    linear-gradient(
+      90deg,
+      var(--flux-color-border) 0.0625rem,
+      transparent 0.0625rem
+    ),
+    var(--flux-color-surface-subtle);
+  background-size: 1rem 1rem;
+}
+.display-specimen {
+  display: block;
+  min-inline-size: max-content;
+  color: var(--flux-color-text);
+}
+.alphabet-specimen {
+  display: grid;
+  gap: 1rem;
+  padding-block: 1rem;
+  border-block-start: 0.0625rem solid var(--flux-color-border);
+}
+.alphabet-specimen svg {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  block-size: auto;
+  color: var(--flux-color-text-muted);
+}
+
+@media (min-width: 40rem) {
+  .identity-controls {
+    grid-template-columns: minmax(14rem, 1fr) minmax(10rem, 0.5fr) auto;
+  }
+}
+
+@media (width < 24rem) {
+  .identity-hero,
+  .display-lab {
+    padding: 1rem;
+  }
+  .identity-mark-lockup {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (forced-colors: active) {
+  .identity-hero,
+  .icon-tile,
+  .display-stage {
+    background: Canvas;
+  }
+  .identity-hero::after {
+    display: none;
+  }
+  .icon-tile[aria-pressed="true"] {
+    outline: 0.125rem solid Highlight;
+  }
+}
+.inline-icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}

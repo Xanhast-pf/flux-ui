@@ -1,3 +1,4 @@
+import { SearchIcon } from "@flux-ui/icons";
 import { Dialog, Input, Kbd, Stack } from "@flux-ui/react";
 import { useEffect, useState } from "react";
 import { components } from "../generated/components.js";
@@ -42,6 +43,7 @@ export function SearchDialog() {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger className="search-trigger">
+        <SearchIcon aria-hidden="true" size={16} />
         Search docs <Kbd aria-hidden="true">⌘ / Ctrl K</Kbd>
       </Dialog.Trigger>
       <Dialog.Popup className="search-popup">
@@ -64,7 +66,7 @@ export function SearchDialog() {
               event.stopPropagation();
               setOpen(false);
             }}
-            placeholder="Try switch, performance, or color…"
+            placeholder="Try switch, icons, or performance…"
           />
           <p className="result-count" role="status">
             {results.length} results

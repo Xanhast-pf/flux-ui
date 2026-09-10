@@ -5,14 +5,16 @@ Flux is a pnpm workspace with intentionally few layers. The architecture is desi
 ## Runtime package layers
 
 ```text
-@flux-ui/tokens
-      ↓ semantic CSS variables + themes
-@flux-ui/react
+@flux-ui/tokens          @flux-ui/icons
+      ↓                        ↓
+semantic CSS variables   tree-shakeable SVG iconography
+      ↓                        ↓
+@flux-ui/react ────────────────┘
       ↓ components + component-local static CSS
 consumer application
 ```
 
-`packages/tokens` owns shared semantic variables and default theme values. `packages/react` owns component behavior, composition, native semantics, and component-local Vanilla Extract styles.
+`packages/tokens` owns shared semantic variables and default theme values. `packages/react` owns component behavior, composition, native semantics, and component-local Vanilla Extract styles. `packages/icons` is a separate public package so consumers can use Flux iconography without importing the component runtime. `packages/identity` holds framework-agnostic vector design source such as the Flux Display prototype and is private until those assets are mature enough to publish.
 
 No runtime CSS-in-JS engine is part of the core architecture. Theme changes should flow through CSS custom properties without forcing React rerenders.
 
@@ -21,6 +23,8 @@ No runtime CSS-in-JS engine is part of the core architecture. Theme changes shou
 ```text
                     packages/react
                     packages/tokens
+                    packages/icons
+                   packages/identity
                          │
                ┌─────────┴─────────┐
                ▼                   ▼
@@ -47,7 +51,7 @@ Component CSS is generated statically. Vanilla Extract provides locally scoped s
 
 ### Vite library mode
 
-`@flux-ui/react` uses Vite/Rolldown multi-entry library output. Each public component has an emitted entry, allowing the size checker to measure the actual runtime graph a consumer pulls in.
+`@flux-ui/react` uses Vite/Rolldown multi-entry library output. Each public component has an emitted entry, allowing the size checker to measure the actual runtime graph a consumer pulls in. `@flux-ui/icons` uses the same multi-entry idea: every icon has its own public entry and is measured together with the shared SVG base so a one-icon import never silently pays for the whole set.
 
 `vite-plugin-lib-inject-css` associates emitted component chunks with static CSS imports rather than injecting styles into the DOM at runtime.
 
@@ -57,6 +61,9 @@ Component discovery is convention-driven. These committed files are generated:
 
 - `packages/react/src/index.ts`
 - `apps/docs/src/generated/components.ts`
+- `packages/icons/src/index.ts`
+- `packages/icons/src/catalog.ts`
+- `packages/icons/src/icons/*Icon.tsx`
 
 Run:
 

@@ -23,6 +23,20 @@ pnpm check`}
         />
 
         <div>
+          <h2>Package shape</h2>
+          <p>
+            Components and icons remain separate packages so icon-only usage
+            does not pull in the component runtime.
+          </p>
+          <CodeBlock
+            code={`pnpm add @flux-ui/react @flux-ui/icons
+
+import { SearchIcon } from "@flux-ui/icons";`}
+            label="Package install shape"
+          />
+        </div>
+
+        <div>
           <h2>Daily development</h2>
           <CodeBlock
             code={`pnpm dev

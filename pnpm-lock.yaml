@@ -163,6 +163,12 @@ importers:
 
   apps/docs:
     dependencies:
+      "@flux-ui/icons":
+        specifier: workspace:*
+        version: link:../../packages/icons
+      "@flux-ui/identity":
+        specifier: workspace:*
+        version: link:../../packages/identity
       "@flux-ui/react":
         specifier: workspace:*
         version: link:../../packages/react
@@ -237,6 +243,45 @@ importers:
       vite:
         specifier: "catalog:"
         version: 8.2.2(@types/node@26.5.0)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.0)
+
+  packages/icons:
+    devDependencies:
+      "@types/node":
+        specifier: "catalog:"
+        version: 24.13.3
+      "@types/react":
+        specifier: "catalog:"
+        version: 19.2.18
+      "@types/react-dom":
+        specifier: "catalog:"
+        version: 19.2.7(@types/react@19.2.18)
+      "@vitejs/plugin-react":
+        specifier: "catalog:"
+        version: 6.1.1(vite@8.2.2(@types/node@26.5.0)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.0))
+      react:
+        specifier: "catalog:"
+        version: 19.2.8
+      react-dom:
+        specifier: "catalog:"
+        version: 19.2.8(react@19.2.8)
+      typescript:
+        specifier: "catalog:"
+        version: 5.9.3
+      vite:
+        specifier: "catalog:"
+        version: 8.2.2(@types/node@26.5.0)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.0)
+      vitest:
+        specifier: "catalog:"
+        version: 4.1.11(@types/node@26.5.0)(jsdom@30.0.1)(vite@8.2.2(@types/node@26.5.0)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.0))
+
+  packages/identity:
+    devDependencies:
+      typescript:
+        specifier: "catalog:"
+        version: 5.9.3
+      vitest:
+        specifier: "catalog:"
+        version: 4.1.11(@types/node@26.5.0)(jsdom@30.0.1)(vite@8.2.2(@types/node@26.5.0)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.0))
 
   packages/react:
     dependencies:

@@ -1,5 +1,6 @@
+import { ArrowUpRightIcon, FluxMarkIcon } from "@flux-ui/icons";
 import { Badge, Container, Inline } from "@flux-ui/react";
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { useRoute } from "./lib/routing.js";
 import { REPOSITORY_URL } from "./lib/format.js";
 import { ThemeSwitch } from "./ui/AppearanceControls.js";
@@ -16,6 +17,12 @@ import { PerformancePage } from "./pages/PerformancePage.js";
 import { RulesPage } from "./pages/RulesPage.js";
 import { InstallPage } from "./pages/InstallPage.js";
 import { DocumentationPage } from "./pages/DocumentationPage.js";
+
+const IdentityPage = lazy(() =>
+  import("./pages/IdentityPage.js").then((module) => ({
+    default: module.IdentityPage,
+  })),
+);
 function RouteView({ route }: { route: string }) {
   if (route.startsWith("components/"))
     return (
@@ -28,6 +35,12 @@ function RouteView({ route }: { route: string }) {
       return <PlaygroundPage />;
     case "components":
       return <ComponentsPage />;
+    case "identity":
+      return (
+        <Suspense fallback={<p className="muted">Loading identity lab…</p>}>
+          <IdentityPage />
+        </Suspense>
+      );
     case "tokens":
       return <TokensPage />;
     case "health":
@@ -84,7 +97,7 @@ export function App() {
           <div className="header-inner">
             <a className="brand" href="#overview" aria-label="Flux UI home">
               <span className="brand-mark" aria-hidden="true">
-                f
+                <FluxMarkIcon size={20} />
               </span>
               <span>
                 flux<span className="brand-ui"> / ui</span>
@@ -98,10 +111,10 @@ export function App() {
               <ThemeSwitch />
             </div>
             <a className="header-github" href={REPOSITORY_URL}>
-              GitHub ↗
+              GitHub <ArrowUpRightIcon aria-hidden="true" size={14} />
             </a>
             <a className="header-actions" href={`${REPOSITORY_URL}/actions`}>
-              CI ↗
+              CI <ArrowUpRightIcon aria-hidden="true" size={14} />
             </a>
           </div>
           <div className="mobile-header-row">

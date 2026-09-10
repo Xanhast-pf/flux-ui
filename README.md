@@ -37,7 +37,7 @@ The repository already enforces the same quality contracts intended for the matu
 
 ## Explore the workshop
 
-The GitHub Pages app is a real consumer of the public library, not just a health dashboard. Explore a local release-room demo, save/filter/page through the collection lab, customize a button, switch theme/accent presets, search with Ctrl/Cmd+K, and open dedicated component pages with live previews, copyable source, API notes and measured size information.
+The GitHub Pages app is a real consumer of the public library, not just a health dashboard. It also contains an Identity lab for the original Flux icon set and the in-progress Flux Display vector alphabet. Explore a local release-room demo, save/filter/page through the collection lab, customize a button, switch theme/accent presets, search with Ctrl/Cmd+K, and open dedicated component pages with live previews, copyable source, API notes and measured size information.
 
 The component catalog does not mount every demo. Individual examples load on demand; the displayed code is imported from the same TSX source as the rendered preview. Search and mobile navigation reuse Flux Dialog and Drawer. Component pages use Breadcrumbs, Toggle and IconButton; loading examples use Skeleton and Spinner, and search hints use Kbd. Existing health, size, performance, rules, install and token deep links remain available.
 
@@ -187,6 +187,27 @@ See [`docs/checkbox.md`](docs/checkbox.md) for Checkbox composition, controlled 
 
 See [`docs/radio-group.md`](docs/radio-group.md) for RadioGroup fieldset semantics, controlled/uncontrolled selection, native keyboard behavior, form integration, and Field composition.
 
+## Flux identity
+
+Flux includes an original icon package alongside the React component package:
+
+```bash
+pnpm add @flux-ui/react @flux-ui/icons
+```
+
+```tsx
+import { SearchIcon, SparkIcon } from "@flux-ui/icons";
+
+<SearchIcon aria-label="Search" />
+<SparkIcon aria-hidden="true" size={24} />
+```
+
+Icons are generated from `packages/icons/icons.json`, use `currentColor`, and are decorative by default unless labelled. `pnpm icons:size` enforces a strict per-icon runtime budget.
+
+Flux Display currently lives as vector design source in `packages/identity/`; it is deliberately not shipped as a compiled font yet. The live `#identity` docs route renders the glyph geometry directly so the letterforms can be evaluated before font engineering.
+
+See [`docs/identity.md`](docs/identity.md).
+
 ## Repository map
 
 ```text
@@ -195,6 +216,8 @@ apps/
   storybook/             isolated component engineering workbench
 packages/
   react/                 public React components
+  icons/                 original tree-shakeable Flux iconography
+  identity/              private vector identity/type design source
   tokens/                semantic tokens + default theme variables
 docs/
   README.md              documentation index
@@ -205,9 +228,11 @@ docs/
 scripts/
   new-component.mjs      component scaffolder
   generate-components.mjs generated exports/docs registry
+  generate-icons.mjs     generated icon components + catalog
   component-doctor.mjs   component structure validator
 tooling/
-  size/                  bundle-size contract + baseline
+  icons/                 per-icon bundle-size contract
+  size/                  component bundle-size contract + baseline
   perf/                  native-relative runtime contract
 AGENTS.md                 authoritative engineering contract
 CONTRIBUTING.md           contributor expectations

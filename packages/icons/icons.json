@@ -1,0 +1,376 @@
+[
+  {
+    "name": "ArrowDown",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 4v11 M5.5 10.5 10 15l4.5-4.5"
+      }
+    ]
+  },
+  {
+    "name": "ArrowLeft",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M16 10H5 M9.5 5.5 5 10l4.5 4.5"
+      }
+    ]
+  },
+  {
+    "name": "ArrowRight",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 10h11 M10.5 5.5 15 10l-4.5 4.5"
+      }
+    ]
+  },
+  {
+    "name": "ArrowUp",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 16V5 M5.5 9.5 10 5l4.5 4.5"
+      }
+    ]
+  },
+  {
+    "name": "ArrowUpRight",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M6 14 14 6 M8 6h6v6"
+      }
+    ]
+  },
+  {
+    "name": "ChevronDown",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M5.5 7.5 10 12l4.5-4.5"
+      }
+    ]
+  },
+  {
+    "name": "ChevronLeft",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M12.5 5.5 8 10l4.5 4.5"
+      }
+    ]
+  },
+  {
+    "name": "ChevronRight",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7.5 5.5 12 10l-4.5 4.5"
+      }
+    ]
+  },
+  {
+    "name": "ChevronUp",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M5.5 12.5 10 8l4.5 4.5"
+      }
+    ]
+  },
+  {
+    "name": "Menu",
+    "category": "navigation",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 6h12 M4 10h12 M4 14h12"
+      }
+    ]
+  },
+  {
+    "name": "Close",
+    "category": "actions",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M5 5l10 10 M15 5 5 15"
+      }
+    ]
+  },
+  {
+    "name": "Check",
+    "category": "status",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4.5 10.5 8.5 14.5 15.5 6.5"
+      }
+    ]
+  },
+  {
+    "name": "Plus",
+    "category": "actions",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 4v12 M4 10h12"
+      }
+    ]
+  },
+  {
+    "name": "Copy",
+    "category": "actions",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7 6.5V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1.5 M5 7h6a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"
+      }
+    ]
+  },
+  {
+    "name": "Refresh",
+    "category": "actions",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M15.5 7A6 6 0 0 0 5 5.5L3.5 7 M4.5 13A6 6 0 0 0 15 14.5l1.5-1.5 M3.5 3.5V7H7 M16.5 16.5V13H13"
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "category": "actions",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M8.5 3.5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z M12.3 12.3 17 17"
+      }
+    ]
+  },
+  {
+    "name": "Command",
+    "category": "actions",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7 7H5a2 2 0 1 1 2-2v10a2 2 0 1 1-2-2h10a2 2 0 1 1-2 2V5a2 2 0 1 1 2 2H7Z"
+      }
+    ]
+  },
+  {
+    "name": "Spark",
+    "category": "status",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 2.5 11.5 8.5 17.5 10 11.5 11.5 10 17.5 8.5 11.5 2.5 10 8.5 8.5Z"
+      }
+    ]
+  },
+  {
+    "name": "Star",
+    "category": "status",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 2.5 12.1 7.3 17.3 7.8 13.4 11.2 14.6 16.3 10 13.6 5.4 16.3 6.6 11.2 2.7 7.8 7.9 7.3Z"
+      }
+    ]
+  },
+  {
+    "name": "Info",
+    "category": "status",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z M10 9v4 M10 6.5h.01"
+      }
+    ]
+  },
+  {
+    "name": "Warning",
+    "category": "status",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 2.8 18 17H2L10 2.8Z M10 7v4 M10 14h.01"
+      }
+    ]
+  },
+  {
+    "name": "ShieldCheck",
+    "category": "status",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 2.5 16 5v4.5c0 3.8-2.4 6.3-6 8-3.6-1.7-6-4.2-6-8V5l6-2.5Z M6.8 10.2 9 12.4l4.4-4.8"
+      }
+    ]
+  },
+  {
+    "name": "Sun",
+    "category": "theme",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 3V1.8 M10 18.2V17 M3 10H1.8 M18.2 10H17 M4.9 4.9 4 4 M16 16l-.9-.9 M15.1 4.9 16 4 M4 16l.9-.9 M10 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+      }
+    ]
+  },
+  {
+    "name": "Moon",
+    "category": "theme",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M15.8 13.2A6.8 6.8 0 0 1 6.8 4.2 7 7 0 1 0 15.8 13.2Z"
+      }
+    ]
+  },
+  {
+    "name": "Palette",
+    "category": "theme",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 2.8a7.2 7.2 0 1 0 0 14.4h1.2c1 0 1.4-1.2.7-1.9-.5-.5-.2-1.3.5-1.4h1.2A3.4 3.4 0 0 0 17 10.5 7.7 7.7 0 0 0 10 2.8Z M6.2 8h.01 M8 5.5h.01 M11.2 5.2h.01 M14 7h.01"
+      }
+    ]
+  },
+  {
+    "name": "Grid",
+    "category": "layout",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3 3h5v5H3V3Z M12 3h5v5h-5V3Z M3 12h5v5H3v-5Z M12 12h5v5h-5v-5Z"
+      }
+    ]
+  },
+  {
+    "name": "List",
+    "category": "layout",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M6.5 5H17 M6.5 10H17 M6.5 15H17 M3 5h.01 M3 10h.01 M3 15h.01"
+      }
+    ]
+  },
+  {
+    "name": "Layers",
+    "category": "layout",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 2.8 17 6.5 10 10.2 3 6.5 10 2.8Z M4 10l6 3.2 6-3.2 M4 13.5l6 3.2 6-3.2"
+      }
+    ]
+  },
+  {
+    "name": "Gauge",
+    "category": "layout",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3.5 14.5a7 7 0 1 1 13 0 M10 10l3.5-3.5 M6 14h8"
+      }
+    ]
+  },
+  {
+    "name": "Package",
+    "category": "developer",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 2.5 17 6v8l-7 3.5L3 14V6l7-3.5Z M3.5 6.3 10 9.5l6.5-3.2 M10 9.5v7.4 M6.5 4.3 13 7.6"
+      }
+    ]
+  },
+  {
+    "name": "Terminal",
+    "category": "developer",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3 4h14v12H3V4Z M5.5 7.5 8 10l-2.5 2.5 M10 12.5h4"
+      }
+    ]
+  },
+  {
+    "name": "Code",
+    "category": "developer",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7.5 5 3 10l4.5 5 M12.5 5 17 10l-4.5 5 M11.5 3.5 8.5 16.5"
+      }
+    ]
+  },
+  {
+    "name": "Branch",
+    "category": "developer",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M6 3.5v9a3.5 3.5 0 0 0 3.5 3.5H14 M6 7h5a3 3 0 0 0 3-3v-.5 M14 1.8v3.4 M14 14.3v3.4 M4.3 3.5h3.4"
+      }
+    ]
+  },
+  {
+    "name": "FluxMark",
+    "category": "brand",
+    "keywords": [],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3 4h9l-3 4h8l-6 8H4l3-4H3l4-8Z"
+      }
+    ]
+  }
+]

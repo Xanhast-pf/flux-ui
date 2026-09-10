@@ -241,3 +241,12 @@ test("RadioGroup preserves native keyboard, form, controlled, and reset behavior
     form.getByRole("radio", { name: "Staging", exact: true }),
   ).toBeChecked();
 });
+
+test("uses the Flux identity mark in the docs shell", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".brand svg")).toBeVisible();
+  await page.goto("/#identity");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Drawn for the system." }),
+  ).toBeVisible();
+});

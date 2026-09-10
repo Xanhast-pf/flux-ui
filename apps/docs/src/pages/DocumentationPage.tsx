@@ -35,6 +35,11 @@ export function DocumentationPage() {
             </a>
           </li>
           <li>
+            <a href={`${REPOSITORY_URL}/blob/main/docs/identity.md`}>
+              Flux identity and iconography
+            </a>
+          </li>
+          <li>
             <a href={`${REPOSITORY_URL}/blob/main/docs/performance.md`}>
               Performance philosophy
             </a>

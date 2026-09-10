@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "icons": {
+    "ArrowDownIcon": {
+      "raw": 1311,
+      "gzip": 798,
+      "brotli": 689,
+      "fileCount": 2
+    },
+    "ArrowLeftIcon": {
+      "raw": 1309,
+      "gzip": 798,
+      "brotli": 686,
+      "fileCount": 2
+    },
+    "ArrowRightIcon": {
+      "raw": 1315,
+      "gzip": 800,
+      "brotli": 700,
+      "fileCount": 2
+    },
+    "ArrowUpIcon": {
+      "raw": 1303,
+      "gzip": 796,
+      "brotli": 688,
+      "fileCount": 2
+    },
+    "ArrowUpRightIcon": {
+      "raw": 1307,
+      "gzip": 791,
+      "brotli": 677,
+      "fileCount": 2
+    },
+    "BranchIcon": {
+      "raw": 1366,
+      "gzip": 828,
+      "brotli": 721,
+      "fileCount": 2
+    },
+    "CheckIcon": {
+      "raw": 1294,
+      "gzip": 790,
+      "brotli": 674,
+      "fileCount": 2
+    },
+    "ChevronDownIcon": {
+      "raw": 1307,
+      "gzip": 793,
+      "brotli": 684,
+      "fileCount": 2
+    },
+    "ChevronLeftIcon": {
+      "raw": 1307,
+      "gzip": 792,
+      "brotli": 691,
+      "fileCount": 2
+    },
+    "ChevronRightIcon": {
+      "raw": 1311,
+      "gzip": 794,
+      "brotli": 683,
+      "fileCount": 2
+    },
+    "ChevronUpIcon": {
+      "raw": 1301,
+      "gzip": 791,
+      "brotli": 678,
+      "fileCount": 2
+    },
+    "CloseIcon": {
+      "raw": 1288,
+      "gzip": 785,
+      "brotli": 674,
+      "fileCount": 2
+    },
+    "CodeIcon": {
+      "raw": 1321,
+      "gzip": 806,
+      "brotli": 691,
+      "fileCount": 2
+    },
+    "CommandIcon": {
+      "raw": 1346,
+      "gzip": 807,
+      "brotli": 693,
+      "fileCount": 2
+    },
+    "CopyIcon": {
+      "raw": 1393,
+      "gzip": 820,
+      "brotli": 705,
+      "fileCount": 2
+    },
+    "FluxMarkIcon": {
+      "raw": 1307,
+      "gzip": 800,
+      "brotli": 687,
+      "fileCount": 2
+    },
+    "GaugeIcon": {
+      "raw": 1314,
+      "gzip": 804,
+      "brotli": 702,
+      "fileCount": 2
+    },
+    "GridIcon": {
+      "raw": 1327,
+      "gzip": 804,
+      "brotli": 688,
+      "fileCount": 2
+    },
+    "InfoIcon": {
+      "raw": 1321,
+      "gzip": 806,
+      "brotli": 690,
+      "fileCount": 2
+    },
+    "LayersIcon": {
+      "raw": 1344,
+      "gzip": 817,
+      "brotli": 699,
+      "fileCount": 2
+    },
+    "ListIcon": {
+      "raw": 1324,
+      "gzip": 798,
+      "brotli": 687,
+      "fileCount": 2
+    },
+    "MenuIcon": {
+      "raw": 1289,
+      "gzip": 786,
+      "brotli": 671,
+      "fileCount": 2
+    },
+    "MoonIcon": {
+      "raw": 1317,
+      "gzip": 801,
+      "brotli": 686,
+      "fileCount": 2
+    },
+    "PackageIcon": {
+      "raw": 1360,
+      "gzip": 837,
+      "brotli": 738,
+      "fileCount": 2
+    },
+    "PaletteIcon": {
+      "raw": 1436,
+      "gzip": 866,
+      "brotli": 782,
+      "fileCount": 2
+    },
+    "PlusIcon": {
+      "raw": 1281,
+      "gzip": 782,
+      "brotli": 675,
+      "fileCount": 2
+    },
+    "RefreshIcon": {
+      "raw": 1366,
+      "gzip": 832,
+      "brotli": 724,
+      "fileCount": 2
+    },
+    "SearchIcon": {
+      "raw": 1326,
+      "gzip": 807,
+      "brotli": 691,
+      "fileCount": 2
+    },
+    "ShieldCheckIcon": {
+      "raw": 1371,
+      "gzip": 842,
+      "brotli": 736,
+      "fileCount": 2
+    },
+    "SparkIcon": {
+      "raw": 1334,
+      "gzip": 803,
+      "brotli": 691,
+      "fileCount": 2
+    },
+    "StarIcon": {
+      "raw": 1352,
+      "gzip": 825,
+      "brotli": 718,
+      "fileCount": 2
+    },
+    "SunIcon": {
+      "raw": 1394,
+      "gzip": 846,
+      "brotli": 738,
+      "fileCount": 2
+    },
+    "TerminalIcon": {
+      "raw": 1325,
+      "gzip": 812,
+      "brotli": 694,
+      "fileCount": 2
+    },
+    "WarningIcon": {
+      "raw": 1315,
+      "gzip": 802,
+      "brotli": 686,
+      "fileCount": 2
+    }
+  }
+}

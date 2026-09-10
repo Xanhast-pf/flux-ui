@@ -337,6 +337,7 @@ for (const width of [320, 390, 768, 1440]) {
       "overview",
       "components",
       "components/table",
+      "identity",
       "playground",
       "tokens",
       "size",
@@ -356,6 +357,7 @@ for (const route of [
   "performance",
   "rules",
   "install",
+  "identity",
   "tokens",
   "documentation",
 ]) {
@@ -666,4 +668,32 @@ test("toolbar pressed styling survives hover and its native divider follows orie
     .getByRole("combobox", { name: "Toolbar orientation", exact: true })
     .selectOption("vertical");
   await expect(divider).toHaveAttribute("data-orientation", "horizontal");
+});
+
+test("identity lab filters icons and redraws the vector specimen", async ({
+  page,
+}) => {
+  await page.goto("/#identity");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Drawn for the system." }),
+  ).toBeVisible();
+  const filter = page.getByRole("searchbox", {
+    name: "Filter Flux icons",
+    exact: true,
+  });
+  await filter.fill("search");
+  await expect(
+    page.getByRole("button", { name: /Search actions/ }),
+  ).toBeVisible();
+  await expect(page.getByRole("status").first()).toContainText("1 icon");
+  await page.getByRole("button", { name: /Search actions/ }).click();
+  await expect(
+    page.getByRole("region", { name: "SearchIcon import" }),
+  ).toContainText("SearchIcon");
+  const specimen = page.getByLabel("Specimen", { exact: true });
+  await specimen.fill("Build lighter");
+  await expect(page.locator(".display-specimen")).toHaveAttribute(
+    "aria-label",
+    "BUILD LIGHTER",
+  );
 });

@@ -147,6 +147,17 @@ Before adding a public prop ask:
 
 If the answer points away from a prop, do not add the prop.
 
+## Iconography and identity
+
+- Flux icons live in `@flux-ui/icons`, not inside `@flux-ui/react`. Keep the package independently tree-shakeable.
+- `packages/icons/icons.json` is the canonical icon manifest. Run `pnpm generate` after editing it; do not hand-maintain generated icon exports.
+- Icons use the 20 × 20 Flux grid, `currentColor`, a 1.5 default stroke, and a consistent square/geometric visual grammar. Deviations require an optical reason, not convenience.
+- Icons are decorative by default. Add an accessible name only when the icon itself carries meaning; icon-only interactive controls still need their own accessible name.
+- Do not introduce an icon runtime, icon font, sprite registry, provider, or CSS-in-JS dependency. A consumer importing one icon should not pay for the catalog.
+- Per-icon emitted runtime cost is enforced by `pnpm icons:size`. Raise that budget only through an explicit architecture decision.
+- Flux Display is currently vector design source, not a production body font. Keep the source framework-agnostic under `packages/identity/` until the glyph set, spacing and optical corrections are mature enough for font engineering.
+- Do not generate or commit binary font files until the vector letterforms have been reviewed as a system.
+
 ## Styling and design tokens
 
 - Use Vanilla Extract for component-local styles and recipes.
