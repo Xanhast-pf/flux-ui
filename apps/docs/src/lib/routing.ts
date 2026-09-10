@@ -3,6 +3,7 @@ export const sections = [
   ["overview", "Overview"],
   ["playground", "Playground"],
   ["components", "Components"],
+  ["identity", "Identity"],
   ["tokens", "Design tokens"],
   ["health", "Repository health"],
   ["size", "Bundle size"],

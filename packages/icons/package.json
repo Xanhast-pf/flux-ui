@@ -1,0 +1,45 @@
+{
+  "name": "@flux-ui/icons",
+  "version": "0.0.0",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./catalog": {
+      "types": "./dist/catalog.d.ts",
+      "import": "./dist/catalog.js"
+    },
+    "./*Icon": {
+      "types": "./dist/icons/*Icon.d.ts",
+      "import": "./dist/*Icon.js"
+    }
+  },
+  "peerDependencies": {
+    "react": ">=19 <20"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react-dom": "catalog:"
+  },
+  "scripts": {
+    "build": "node ../../scripts/clean.mjs packages/icons/dist && vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

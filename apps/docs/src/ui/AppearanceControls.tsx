@@ -1,3 +1,4 @@
+import { MoonIcon, SunIcon } from "@flux-ui/icons";
 import { Field, Inline, RadioGroup, Stack, Switch } from "@flux-ui/react";
 import { useId } from "react";
 import {
@@ -12,6 +13,7 @@ export function ThemeSwitch() {
   const theme = useTheme();
   return (
     <Inline gap="sm">
+      <SunIcon aria-hidden="true" size={16} />
       <span className="muted">Dark theme</span>
       <Switch
         aria-label="Dark theme"
@@ -20,6 +22,7 @@ export function ThemeSwitch() {
           setTheme(checked ? "dark" : "light");
         }}
       />
+      <MoonIcon aria-hidden="true" size={16} />
     </Inline>
   );
 }

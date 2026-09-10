@@ -14,6 +14,7 @@ The desktop sidebar uses semantic navigation links; the mobile version uses Flux
 | `#playground`          | Release room, Button lab, Theme lab, Collection lab               |
 | `#components`          | Searchable/category-filtered summaries, not mounted demos         |
 | `#components/{slug}`   | Lazy-loaded preview, source, API and usage guidance               |
+| `#identity`            | Flux Icons gallery and Flux Display vector specimen               |
 | `#tokens`              | Token explorer with copyable variables and actual resolved colors |
 | `#health`              | Committed repository health snapshot                              |
 | `#size`                | Component and aggregate production-size measurements              |
@@ -110,7 +111,7 @@ results for placeholders; it does not run a fake request or keep hidden cards mo
 Removing the focused item in the saved-only view moves focus to the stable results
 region. Switching labs discards this demo's state.
 
-The shell also dogfoods Breadcrumbs, IconButton, Toggle, Kbd, Skeleton and Spinner.
+The shell also dogfoods Breadcrumbs, IconButton, Toggle, Kbd, Skeleton, Spinner and the separate `@flux-ui/icons` package. The Identity route exposes the icon catalog and Flux Display vector source without making either part of the React component registry.
 The documentation page uses Accordion for practical development questions. Every new
 family has an independently discovered lazy example with copyable source.
 

@@ -1,3 +1,4 @@
+import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@flux-ui/icons";
 import {
   Badge,
   Breadcrumbs,
@@ -109,7 +110,7 @@ function ComponentDetail({
                     setVersion((value) => value + 1);
                   }}
                 >
-                  <span aria-hidden="true">↺</span>
+                  <RefreshIcon aria-hidden="true" size={16} />
                 </IconButton>
               </Inline>
             </Inline>
@@ -182,8 +183,14 @@ function ComponentDetail({
         </ul>
       </section>
       <Inline gap="md" wrap>
-        <a href="#components">← All components</a>
-        <a href="#playground">Try components together →</a>
+        <a className="inline-icon-link" href="#components">
+          <ArrowLeftIcon aria-hidden="true" size={14} />
+          All components
+        </a>
+        <a className="inline-icon-link" href="#playground">
+          Try components together
+          <ArrowRightIcon aria-hidden="true" size={14} />
+        </a>
       </Inline>
     </Stack>
   );

@@ -1,3 +1,4 @@
+import { CopyIcon } from "@flux-ui/icons";
 import { Button, Inline } from "@flux-ui/react";
 import { useState } from "react";
 type CopyState = "idle" | "copied" | "failed";
@@ -30,6 +31,7 @@ export function CodeBlock({
           size="sm"
           variant="ghost"
           tone="neutral"
+          startIcon={<CopyIcon aria-hidden="true" size={14} />}
           onClick={() => {
             void copy();
           }}

@@ -37,6 +37,7 @@ for (const theme of ["light", "dark"] as const) {
   for (const route of [
     "overview",
     "components",
+    "identity",
     "playground",
     "tokens",
     "health",

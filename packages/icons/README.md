@@ -1,0 +1,23 @@
+# @flux-ui/icons
+
+Original Flux UI iconography built on a 20 × 20 grid.
+
+```tsx
+import { SearchIcon, SparkIcon } from "@flux-ui/icons";
+
+<SearchIcon aria-label="Search" />
+<SparkIcon aria-hidden="true" size={24} />
+```
+
+## Contract
+
+- 20 × 20 source grid
+- 1.5 px default stroke
+- `currentColor`
+- rounded joins and caps
+- decorative by default
+- normal SVG props and React 19 refs
+- no styling runtime
+- generated from `icons.json`
+
+Run `pnpm generate` after editing the manifest.

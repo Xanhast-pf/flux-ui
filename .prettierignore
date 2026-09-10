@@ -6,3 +6,6 @@ test-results
 .coding-bible
 apps/docs/src/generated/components.ts
 packages/react/src/index.ts
+packages/icons/src/icons/*.tsx
+packages/icons/src/index.ts
+packages/icons/src/catalog.ts

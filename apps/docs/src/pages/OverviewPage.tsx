@@ -1,3 +1,4 @@
+import { ArrowUpRightIcon, SparkIcon } from "@flux-ui/icons";
 import { Badge, Card, Collapsible, Grid, Inline, Stack } from "@flux-ui/react";
 import { components } from "../generated/components.js";
 import { ReleaseRoom } from "../demos/ReleaseRoom.js";
@@ -18,11 +19,12 @@ export function OverviewPage() {
           </p>
           <Inline gap="sm" wrap>
             <a className="primary-link" href="#components">
-              Explore {components.length} components{" "}
-              <span aria-hidden="true">↗</span>
+              Explore {components.length} components
+              <ArrowUpRightIcon aria-hidden="true" size={16} />
             </a>
-            <a className="secondary-link" href="#playground">
-              Open the playground
+            <a className="secondary-link" href="#identity">
+              <SparkIcon aria-hidden="true" size={16} />
+              Meet the Flux identity
             </a>
           </Inline>
           <p className="hero-note">React 19 · Static CSS · Keyboard-first</p>
@@ -77,7 +79,7 @@ export function OverviewPage() {
                 href={`#components/${slug}`}
               >
                 {slug}
-                <span aria-hidden="true"> ↗</span>
+                <ArrowUpRightIcon aria-hidden="true" size={14} />
               </a>
             ),
           )}

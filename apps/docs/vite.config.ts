@@ -9,6 +9,27 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        find: "@flux-ui/icons/catalog",
+        replacement: resolve(
+          import.meta.dirname,
+          "../../packages/icons/src/catalog.ts",
+        ),
+      },
+      {
+        find: "@flux-ui/icons",
+        replacement: resolve(
+          import.meta.dirname,
+          "../../packages/icons/src/index.ts",
+        ),
+      },
+      {
+        find: "@flux-ui/identity",
+        replacement: resolve(
+          import.meta.dirname,
+          "../../packages/identity/src/index.ts",
+        ),
+      },
+      {
         find: "@flux-ui/react",
         replacement: resolve(
           import.meta.dirname,

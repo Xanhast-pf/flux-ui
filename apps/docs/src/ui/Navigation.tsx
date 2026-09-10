@@ -1,3 +1,4 @@
+import { CloseIcon, MenuIcon } from "@flux-ui/icons";
 import { Collapsible, Drawer, Stack } from "@flux-ui/react";
 import { useState } from "react";
 import { ThemeSwitch } from "./AppearanceControls.js";
@@ -60,6 +61,7 @@ export function MobileNavigation({ route }: { route: string }) {
   return (
     <Drawer.Root open={open} onOpenChange={setOpen}>
       <Drawer.Trigger className="mobile-nav-trigger">
+        <MenuIcon aria-hidden="true" size={16} />
         Browse sections
       </Drawer.Trigger>
       <Drawer.Popup side="left" className="mobile-nav-drawer">
@@ -74,7 +76,10 @@ export function MobileNavigation({ route }: { route: string }) {
             setOpen(false);
           }}
         />
-        <Drawer.Close>Close navigation</Drawer.Close>
+        <Drawer.Close>
+          <CloseIcon aria-hidden="true" size={16} />
+          Close navigation
+        </Drawer.Close>
       </Drawer.Popup>
     </Drawer.Root>
   );
