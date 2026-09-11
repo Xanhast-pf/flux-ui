@@ -175,6 +175,9 @@ importers:
       "@flux-ui/tokens":
         specifier: workspace:*
         version: link:../../packages/tokens
+      axe-core:
+        specifier: 4.13.0
+        version: 4.13.0
       react:
         specifier: "catalog:"
         version: 19.2.8

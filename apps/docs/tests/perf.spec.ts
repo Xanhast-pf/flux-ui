@@ -404,6 +404,10 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
   test.setTimeout(isSmoke ? 90_000 : 180_000);
 
   const summaries = {} as Record<PerfScenario, ScenarioSummary>;
+  const rawSamples: {
+    scenario: PerfScenario;
+    samples: Record<PerfVariant, PerfResult[]>;
+  }[] = [];
 
   for (const scenario of scenarios) {
     const samples: Record<PerfVariant, PerfResult[]> = {
@@ -436,6 +440,8 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
         samples[variant].push(result);
       }
     }
+
+    rawSamples.push({ scenario: scenario.name, samples });
 
     const medians: Record<PerfVariant, MetricSet> = {
       raw: metricMedians(samples.raw),
@@ -476,6 +482,43 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
     policyVersion: 3,
     scenarios: summaries,
   };
+
+  if (process.env.FLUX_TRUST_JOB === "browser") {
+    if (isSmoke || shouldUpdate)
+      throw new Error("CI evidence requires the full performance run.");
+    const reportPath = resolve(
+      import.meta.dirname,
+      "../../../.cache/trust/browser/runtime.json",
+    );
+    await mkdir(dirname(reportPath), { recursive: true });
+    await writeFile(
+      reportPath,
+      `${JSON.stringify(
+        {
+          schemaVersion: 1,
+          measuredAt: new Date().toISOString(),
+          commit: process.env.GITHUB_SHA ?? null,
+          mode,
+          iterations,
+          count,
+          environment: {
+            browser: page.context().browser()?.version() ?? "unknown",
+            userAgent: await page.evaluate(() => navigator.userAgent),
+            viewport: page.viewportSize(),
+            node: process.version,
+            platform: process.platform,
+          },
+          methodology:
+            "Production build; alternating raw/native/Flux order; medians and per-iteration native ratios. This report contains measurements, not the check verdict; see the browser receipt.",
+          policy: regressionPolicy,
+          summaries,
+          rawSamples,
+        },
+        null,
+        2,
+      )}\n`,
+    );
+  }
 
   if (shouldUpdate) {
     await mkdir(dirname(baselinePath), { recursive: true });

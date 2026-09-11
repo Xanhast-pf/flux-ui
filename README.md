@@ -255,3 +255,47 @@ Flux does not aim to win by having the most components. It aims to publish the *
 ## License
 
 [MIT](LICENSE)
+
+## Explore the system and its evidence
+
+The docs homepage introduces the design language and live product examples. New
+routes make the engineering inspectable without shipping a charting library in
+the component package:
+
+| Route                    | What it shows                                                                                                                                      |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `#lab`                   | Opt-in Button/Grid native-React comparisons; bounded instance counts, alternating sample pairs, scaling sweeps, stop controls and raw JSON export. |
+| `#engineering`           | Token/component architecture, contribution conventions, API escape hatches, measurement scope and explicit limitations.                            |
+| `#trust`                 | Same-build CI receipts when available, raw reports, hashes, security workflow links and honest external-enrollment status.                         |
+| `#accessibility`         | On-demand, locally bundled axe scanning of a demo, an intentional missing-name defect, repair and real findings/export.                            |
+| `#size` / `#performance` | Searchable compression-aware bundle bars and native/Flux timing charts alongside the existing budgets and detailed tables.                         |
+
+Local measurements are not committed CI baselines. Baselines are not live
+measurements. Passing checks are not independent certification. Component graph
+sizes exclude externals and overlap; do not sum them into an application bundle.
+The live lab and axe engine load on demand; benchmark and scan results stay local.
+
+### Generated evidence
+
+`pnpm trust:quality` and `pnpm trust:browser` execute the fixed check commands and
+record exit-status receipts in `.cache/trust/`. Quality includes a clean tracked
+working-tree check, so commit intentional changes first. `pnpm trust:generate`
+combines executed receipts and complete reports; `--require-ci` refuses local or
+failed/mismatched inputs. CI publishes `evidence/index.json`, `quality.json`,
+`browser.json`, `size.json`, `runtime.json`, and `browser-tests.json` with Pages.
+Generated evidence is ignored by Git. No placeholder green reports are committed.
+
+Run the dependency-free evidence, statistics and release contract tests with
+`pnpm trust:test` (also included in `pnpm test`). New Chromium tests cover lab
+execution/cancellation, evidence failures, live axe detection/repair, mobile
+layout and the new routes' accessibility in both themes.
+
+### Activate external trust and publishing
+
+See [owner setup](docs/trust/SETUP.md), [security policy](SECURITY.md), and the
+[OpenSSF application worksheet](docs/trust/BEST-PRACTICES.md). Repository settings,
+npm package authorization and the OpenSSF application require maintainer action.
+The release workflow is manual, main-only and dry-run by default. It builds/packs
+once, creates package-scoped SPDX inventories in a read-only job, then verifies,
+attests and publishes the exact tarballs with OIDC in the protected `npm`
+environment. Local token-based `pnpm release` is intentionally disabled.

@@ -1,0 +1,180 @@
+name: Release packages
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Validate only; do not publish or attest
+        type: boolean
+        default: true
+        required: true
+      npm_tag:
+        description: alpha for prereleases; latest for stable versions
+        type: choice
+        options: [alpha, latest]
+        default: alpha
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: release-packages
+  cancel-in-progress: false
+jobs:
+  prepare:
+    name: Check and pack
+    if: github.repository == 'Xanhast-pf/flux-ui' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    outputs:
+      matrix: ${{ steps.pack.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+        with:
+          version: 10.34.5
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @flux-ui/docs exec playwright install --with-deps chromium
+      - name: Full quality and browser gates
+        run: |
+          node tooling/trust/run-checks.mjs quality
+          node tooling/trust/run-checks.mjs browser
+          node tooling/trust/generate.mjs --require-ci
+      - name: Fail on high or critical dependency advisories
+        run: pnpm audit --audit-level=high
+      - name: Pack public workspaces once
+        id: pack
+        env:
+          FLUX_RELEASE_TAG: ${{ inputs.npm_tag }}
+        run: node tooling/release/pack.mjs
+      - name: Upload immutable tarballs and manifest
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-packages-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .cache/release/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+      - name: Preserve executed check evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-checks-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .cache/trust/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 90
+
+  inventory:
+    name: Inventory (${{ matrix.package.name }})
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    # No publishing, signing or repository-write permissions in the scanner job.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Download prepared release (same run only)
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-packages-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .cache/release/
+      - name: Verify exact tarball identity and digest
+        env:
+          FLUX_RELEASE_FILE: ${{ matrix.package.file }}
+        run: node tooling/release/verify.mjs
+      - name: Generate SPDX from the actual npm tarball
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
+        with:
+          file: .cache/release/${{ matrix.package.file }}
+          format: spdx-json
+          output-file: .cache/release/${{ matrix.package.file }}.spdx.json
+          syft-version: v1.51.1
+          upload-artifact: false
+          upload-release-assets: false
+          dependency-snapshot: false
+      - name: Preserve package-scoped inventory
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sbom-${{ matrix.package.file }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .cache/release/${{ matrix.package.file }}.spdx.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+
+  publish:
+    name: ${{ inputs.dry_run && 'Dry run' || 'Publish' }} (${{ matrix.package.name }})
+    needs: [prepare, inventory]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Download prepared release (same run only)
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-packages-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .cache/release/
+      - name: Verify exact tarball identity and digest
+        env:
+          FLUX_RELEASE_FILE: ${{ matrix.package.file }}
+        run: node tooling/release/verify.mjs
+      - name: Download same-run inventory
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: sbom-${{ matrix.package.file }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .cache/release/
+      - name: Attest package provenance
+        id: provenance
+        if: ${{ !inputs.dry_run }}
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: .cache/release/${{ matrix.package.file }}
+      - name: Attest package inventory
+        id: inventory
+        if: ${{ !inputs.dry_run }}
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: .cache/release/${{ matrix.package.file }}
+          sbom-path: .cache/release/${{ matrix.package.file }}.spdx.json
+      - name: Publish verified tarball with npm OIDC (or dry run)
+        env:
+          FLUX_RELEASE_FILE: ${{ matrix.package.file }}
+          FLUX_RELEASE_DRY_RUN: ${{ inputs.dry_run }}
+        run: node tooling/release/publish.mjs
+      - name: Preserve verification bundles
+        if: ${{ !inputs.dry_run && always() && steps.provenance.outcome == 'success' && steps.inventory.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: attestations-${{ matrix.package.file }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ steps.provenance.outputs.bundle-path }}
+            ${{ steps.inventory.outputs.bundle-path }}
+          if-no-files-found: error
+          retention-days: 90

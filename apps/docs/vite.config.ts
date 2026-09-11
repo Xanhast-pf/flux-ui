@@ -5,6 +5,11 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   base: "./",
+  define: {
+    "import.meta.env.VITE_BUILD_COMMIT": JSON.stringify(
+      process.env.GITHUB_SHA ?? "",
+    ),
+  },
   plugins: [react(), vanillaExtractPlugin()],
   resolve: {
     alias: [

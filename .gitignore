@@ -10,3 +10,6 @@ test-results/
 .DS_Store
 *.log
 *.tsbuildinfo
+
+# Produced only from executed checks; never commit fabricated evidence.
+apps/docs/public/evidence/

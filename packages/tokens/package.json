@@ -26,6 +26,17 @@
     "vitest": "catalog:"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xanhast-pf/flux-ui.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://xanhast-pf.github.io/flux-ui/",
+  "bugs": {
+    "url": "https://github.com/Xanhast-pf/flux-ui/issues"
   }
 }

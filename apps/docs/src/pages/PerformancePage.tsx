@@ -1,6 +1,7 @@
 import { Collapsible, Stack, Table } from "@flux-ui/react";
 import { health } from "../generated/health.js";
 import { formatMs, formatRatio, MAX_PERF_RATIO_METER } from "../lib/format.js";
+import { ComparisonBars } from "../ui/ComparisonBars.js";
 export function PerformancePage() {
   return (
     <section className="reference-page">
@@ -14,6 +15,10 @@ export function PerformancePage() {
           </p>
         </div>
 
+        <p className="measurement-line">
+          Committed historical baselines, not measurements of the current page
+          or the latest CI run. <a href="#lab">Run your own experiment →</a>
+        </p>
         {health.performance.scenarios.map((scenario) => {
           const reference = scenario.medians[scenario.reference];
           const flux = scenario.medians.flux;
@@ -30,6 +35,16 @@ export function PerformancePage() {
                   </p>
                 </div>
 
+                <ComparisonBars
+                  label="Committed synchronous mount median"
+                  native={reference.mount}
+                  flux={flux.mount}
+                />
+                <ComparisonBars
+                  label="Committed synchronous update median"
+                  native={reference.update}
+                  flux={flux.update}
+                />
                 <div
                   className="table-scroll"
                   role="region"

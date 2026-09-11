@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "format": "flux-ui-internal-application-draft",
+  "status": "prepared-not-submitted",
+  "project": {
+    "name": "Flux UI",
+    "repository": "https://github.com/Xanhast-pf/flux-ui",
+    "website": "https://xanhast-pf.github.io/flux-ui/",
+    "license": "MIT"
+  },
+  "officialProjectId": null,
+  "applicant": null,
+  "criteriaAssessedAgainstCommit": null,
+  "evidenceWorksheet": "BEST-PRACTICES.md",
+  "ownerTasks": [
+    "Create or claim the official project.",
+    "Verify every current passing criterion and its evidence.",
+    "Supply applicant authorization and maintainer-specific answers.",
+    "Confirm security reporting and actual scan/release history.",
+    "Submit honestly, then record the real project ID and provider status."
+  ],
+  "claims": {
+    "badgeAwarded": false,
+    "independentSecurityAudit": false,
+    "wcagCertification": false,
+    "slsaLevel": null
+  }
+}
