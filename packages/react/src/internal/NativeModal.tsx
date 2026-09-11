@@ -48,7 +48,7 @@ export interface NativeModalPopupProps extends Omit<
 export type NativeModalStyles = {
   close?: string;
   description?: string;
-  popup: string | ((side: NativeModalSide) => string);
+  popup: string;
   title?: string;
   trigger?: string;
 };
@@ -70,10 +70,6 @@ type NativeModalInternalRootProps = NativeModalRootProps & {
   hasTitle: boolean;
   styles: NativeModalStyles;
 };
-
-interface NativeModalInternalPopupProps extends NativeModalPopupProps {
-  side?: NativeModalSide;
-}
 
 const NativeModalContext = createContext<NativeModalContextValue | null>(null);
 
@@ -326,15 +322,10 @@ function NativeModalPopup({
   onClose,
   onPointerDown,
   ref,
-  side = "right",
   ...props
-}: NativeModalInternalPopupProps) {
+}: NativeModalPopupProps) {
   const context = useNativeModalContext("Popup");
   const { setDialogNode } = context;
-  const popupClass =
-    typeof context.styles.popup === "function"
-      ? context.styles.popup(side)
-      : context.styles.popup;
 
   function handleCancel(event: SyntheticEvent<HTMLDialogElement>): void {
     onCancel?.(event);
@@ -384,7 +375,7 @@ function NativeModalPopup({
       aria-labelledby={
         ariaLabelledBy ?? (context.hasTitle ? context.titleId : undefined)
       }
-      className={joinClassNames(popupClass, className)}
+      className={joinClassNames(context.styles.popup, className)}
       data-state={context.open ? "open" : "closed"}
       onCancel={handleCancel}
       onClose={handleClose}

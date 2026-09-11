@@ -1,70 +1,95 @@
-import { Card, Grid, Stack } from "@flux-ui/react";
-import { health } from "../generated/health.js";
+import {
+  Box,
+  Card,
+  Grid,
+  Heading,
+  List,
+  PageHeader,
+  Stack,
+  Stat,
+  Text,
+} from "@flux-ui/react";
 import { components } from "../generated/components.js";
+import { health } from "../generated/health.js";
 import { formatBytes } from "../lib/format.js";
 import { MeasurementNotice } from "../ui/MeasurementNotice.js";
 export function HealthPage() {
   const runtimeBrotli = health.size.aggregate.runtime.brotli;
   const publishedBrotli = health.size.aggregate.published.brotli;
   return (
-    <section className="reference-page">
+    <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="md">
         <MeasurementNotice />
-        <div>
-          <h1>Repository health</h1>
-          <p>
+        <PageHeader title={<>Repository health</>}>
+          <Text as="p" variant="body">
             This page reads committed size and performance baselines generated
             from the repository. For the live CI result, use the CI link in the
             header.
-          </p>
-        </div>
+          </Text>
+        </PageHeader>
 
         <Grid minColumnWidth="13rem" gap="md">
-          <Card className="metric-card">
-            <span>Public component families</span>
-            <strong>{components.length}</strong>
+          <Card>
+            <Stat
+              label={<>Public component families</>}
+              value={<>{components.length}</>}
+            />
           </Card>
-          <Card className="metric-card">
-            <span>Last measured runtime Brotli</span>
-            <strong>{formatBytes(runtimeBrotli)}</strong>
+          <Card>
+            <Stat
+              label={<>Last measured runtime Brotli</>}
+              value={<>{formatBytes(runtimeBrotli)}</>}
+            />
           </Card>
-          <Card className="metric-card">
-            <span>Last measured package Brotli</span>
-            <strong>{formatBytes(publishedBrotli)}</strong>
+          <Card>
+            <Stat
+              label={<>Last measured package Brotli</>}
+              value={<>{formatBytes(publishedBrotli)}</>}
+            />
           </Card>
-          <Card className="metric-card">
-            <span>Size budget contract</span>
-            <strong>v{health.size.budgetsVersion}</strong>
+          <Card>
+            <Stat
+              label={<>Size budget contract</>}
+              value={<>v{health.size.budgetsVersion}</>}
+            />
           </Card>
-          <Card className="metric-card">
-            <span>Runtime performance policy</span>
-            <strong>v{health.performance.policyVersion}</strong>
+          <Card>
+            <Stat
+              label={<>Runtime performance policy</>}
+              value={<>v{health.performance.policyVersion}</>}
+            />
           </Card>
-          <Card className="metric-card">
-            <span>Runtime styling engine</span>
-            <strong>0 B</strong>
-            <small>Static CSS and CSS variables</small>
+          <Card>
+            <Stat
+              label={<>Runtime styling engine</>}
+              value={<>0 B</>}
+              note={<>Static CSS and CSS variables</>}
+            />
           </Card>
         </Grid>
 
-        <div>
-          <h2>Required quality gates</h2>
-          <ul>
-            <li>Generated registry is deterministic</li>
-            <li>Prettier formatting</li>
-            <li>ESLint</li>
-            <li>Strict TypeScript</li>
-            <li>Knip dependency/file analysis</li>
-            <li>Vitest component and token tests</li>
-            <li>Production package and docs builds</li>
-            <li>Per-component bundle-size contracts</li>
-            <li>Coding Bible automated rules</li>
-            <li>Storybook production build</li>
-            <li>Playwright accessibility and browser tests</li>
-            <li>Native-relative runtime performance regression checks</li>
-          </ul>
-        </div>
+        <Box>
+          <Heading level={2} size="lg">
+            Required quality gates
+          </Heading>
+          <List as="ul" variant="marker">
+            <List.Item>Generated registry is deterministic</List.Item>
+            <List.Item>Prettier formatting</List.Item>
+            <List.Item>ESLint</List.Item>
+            <List.Item>Strict TypeScript</List.Item>
+            <List.Item>Knip dependency/file analysis</List.Item>
+            <List.Item>Vitest component and token tests</List.Item>
+            <List.Item>Production package and docs builds</List.Item>
+            <List.Item>Per-component bundle-size contracts</List.Item>
+            <List.Item>Coding Bible automated rules</List.Item>
+            <List.Item>Storybook production build</List.Item>
+            <List.Item>Playwright accessibility and browser tests</List.Item>
+            <List.Item>
+              Native-relative runtime performance regression checks
+            </List.Item>
+          </List>
+        </Box>
       </Stack>
-    </section>
+    </Stack>
   );
 }

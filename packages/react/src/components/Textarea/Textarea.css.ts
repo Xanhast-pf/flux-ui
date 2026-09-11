@@ -13,7 +13,6 @@ export const textarea = style({
   paddingBlock: `var(${cssVars.space[2]})`,
   paddingInline: `var(${cssVars.space[3]})`,
   font: "inherit",
-  fontSize: "1rem",
   lineHeight: 1.5,
   resize: "vertical",
   transition: [

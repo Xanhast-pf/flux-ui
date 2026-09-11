@@ -1,0 +1,90 @@
+/* finance artwork and data geometry. UI uses public Flux primitives. */
+
+.cashflow-chart {
+  margin: 1.25rem 0;
+}
+.cashflow-chart svg {
+  inline-size: 100%;
+  display: block;
+  max-block-size: 12rem;
+  overflow: visible;
+}
+.chart-grid {
+  fill: none;
+  stroke: var(--flux-color-border);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+}
+.chart-area {
+  fill: var(--flux-color-accent);
+  opacity: 0.07;
+}
+.chart-line {
+  vector-effect: non-scaling-stroke;
+  fill: none;
+  stroke: var(--flux-color-accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cashflow-chart figcaption {
+  display: flex;
+  justify-content: space-between;
+  color: var(--flux-color-text-muted);
+  margin-block-start: 0.5rem;
+}
+.folio-card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 0.75rem;
+  background: var(--flux-color-accent);
+  color: var(--flux-color-accent-foreground);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  min-block-size: 12rem;
+}
+.folio-card > span:first-child {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.folio-card > strong {
+  font-size: 1.5rem;
+  font-weight: 450;
+  letter-spacing: 0.1em;
+}
+.folio-card > div:last-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.card-chip {
+  inline-size: 2rem;
+  block-size: 1.5rem;
+  border: 0.0625rem solid currentColor;
+  border-radius: 0.25rem;
+  opacity: 0.65;
+  background: linear-gradient(
+    90deg,
+    transparent 30%,
+    currentColor 31%,
+    transparent 34%,
+    transparent 65%,
+    currentColor 66%,
+    transparent 68%
+  );
+}
+.card-orbit {
+  position: absolute;
+  border: 0.0625rem solid currentColor;
+  border-radius: 50%;
+  inline-size: 15rem;
+  block-size: 15rem;
+  inset: -6rem -4rem auto auto;
+  opacity: 0.2;
+  box-shadow:
+    0 0 0 1.5rem #ffffff10,
+    0 0 0 3rem #ffffff08;
+  pointer-events: none;
+}

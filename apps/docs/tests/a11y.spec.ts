@@ -13,9 +13,13 @@ async function expectNoViolations(
   }
   const path = new URL(page.url()).hash.slice(1).split("?", 1)[0] ?? "";
   if (path === "" || path === "overview" || path === "playground") {
-    await expect(page.locator(".product-scene")).toBeVisible();
+    await expect(page.locator("[data-scene]")).toBeVisible();
   }
   const builder = new AxeBuilder({ page });
+  // The SkipLink component preview is embedded inside the docs page, so it
+  // cannot itself be the page's first skip link. The shell already provides
+  // the real first-focusable skip link; audit every other rule for the demo.
+  if (path === "components/skip-link") builder.disableRules(["skip-link"]);
   if (include !== undefined) {
     const surface = page.locator(include).first();
     await expect(surface).toBeVisible();

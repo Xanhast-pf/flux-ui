@@ -8,7 +8,22 @@ export default {
   description:
     "A campaign workspace with enough structure to ship and enough room to play.",
   prompt: "Rewrite the headline. Pick an audience. Launch your local campaign.",
-  components: ["button", "input", "select", "badge"],
+  components: [
+    "avatar",
+    "badge",
+    "box",
+    "button",
+    "card",
+    "field",
+    "grid",
+    "heading",
+    "inline",
+    "input",
+    "select",
+    "stack",
+    "stat",
+    "text",
+  ],
   custom:
     "The campaign canvas and audience summary are custom HTML/CSS compositions. Launching only changes local demo state; no campaign or message is sent.",
   Icon: SparkIcon,

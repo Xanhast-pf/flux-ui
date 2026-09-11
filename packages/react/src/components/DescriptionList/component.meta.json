@@ -1,0 +1,8 @@
+{
+  "name": "DescriptionList",
+  "slug": "description-list",
+  "category": "Typography",
+  "status": "alpha",
+  "description": "Semantic term/detail pairs with shared layout.",
+  "sizeClass": "primitive"
+}

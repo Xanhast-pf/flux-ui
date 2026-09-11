@@ -1,12 +1,33 @@
+import { CodeIcon, LinkIcon, RefreshIcon } from "@flux-ui/icons";
+import {
+  Box,
+  Button,
+  ColorSwatch,
+  Grid,
+  Heading,
+  Inline,
+  Link,
+  Spinner,
+  Stack,
+  Tabs,
+  Text,
+  ThemeScope,
+  ToggleGroup,
+} from "@flux-ui/react";
+import "@flux-ui/tokens/presets.css";
 import { lazy, Suspense, useId, useState } from "react";
-import { CheckIcon, CodeIcon, LinkIcon, RefreshIcon } from "@flux-ui/icons";
-import { Button, Tabs, ToggleGroup } from "@flux-ui/react";
 import { useRoute } from "../lib/routing.js";
 import { ExampleBoundary } from "../ui/ExampleBoundary.js";
 import { showcaseScenes } from "./catalog.js";
 import { isMood, moods, readShowcaseRoute, showcaseHash } from "./model.js";
 import "./showcase.css";
 const CompositionInspector = lazy(() => import("./CompositionInspector.js"));
+const moodColors = {
+  paper: "#f1eee4",
+  studio: "#383044",
+  bloom: "#f0c8dc",
+  terminal: "#173523",
+} as const;
 const sceneIds = showcaseScenes.map((scene) => scene.id);
 // Stable element identities let a mood update change CSS without rebuilding a scene.
 const views = new Map(
@@ -43,33 +64,46 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
     }
   }
   return (
-    <section
-      className="product-showcase"
+    <Stack
       aria-label="Interactive product showcase"
+      className="product-showcase"
+      as="section"
+      gap="lg"
     >
       <Tabs.Root
+        size="sm"
+        appearance="pill"
         value={active.id}
         onValueChange={(value) => {
           if (sceneIds.includes(value))
             window.location.hash = showcaseHash(page, value, selection.mood);
         }}
       >
-        <div className="world-controls">
-          <div className="world-selection">
-            <span className="control-caption">Choose a world</span>
-            <Tabs.List aria-label="Product worlds" className="world-tabs">
+        <Inline
+          className="world-controls"
+          justify="between"
+          align="end"
+          wrap
+          gap="lg"
+          paddingBlock={5}
+        >
+          <Stack gap={3}>
+            <Text variant="caption" tone="muted">
+              Choose a world
+            </Text>
+            <Tabs.List wrap aria-label="Product worlds">
               {showcaseScenes.map((scene) => (
                 <Tabs.Tab key={scene.id} value={scene.id}>
                   <scene.Icon size={18} />
-                  <span>{scene.label}</span>
+                  <Text>{scene.label}</Text>
                 </Tabs.Tab>
               ))}
             </Tabs.List>
-          </div>
-          <div className="mood-selection">
-            <span className="control-caption" id={`${id}-moods`}>
+          </Stack>
+          <Stack gap={3}>
+            <Text id={`${id}-moods`} variant="caption" tone="muted">
               Set the mood
-            </span>
+            </Text>
             <ToggleGroup.Root
               type="single"
               value={selection.mood}
@@ -78,7 +112,8 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
                   window.location.hash = showcaseHash(page, active.id, value);
               }}
               aria-labelledby={`${id}-moods`}
-              className="mood-switcher"
+              size="sm"
+              appearance="quiet"
             >
               {moods.map((mood) => (
                 <ToggleGroup.Item
@@ -86,54 +121,81 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
                   value={mood.id}
                   title={mood.description}
                 >
-                  <span
-                    className="mood-swatch"
-                    data-mood={mood.id}
-                    aria-hidden="true"
-                  >
-                    <CheckIcon size={12} />
-                  </span>
+                  <ColorSwatch
+                    color={moodColors[mood.id]}
+                    selected={mood.id === selection.mood}
+                    size="sm"
+                  />
                   {mood.label}
                 </ToggleGroup.Item>
               ))}
             </ToggleGroup.Root>
-          </div>
-        </div>
-        <div className="world-story">
-          <div>
-            <p className="eyebrow">
+          </Stack>
+        </Inline>
+        <Grid
+          templateColumns={{
+            base: "minmax(0, 1fr)",
+            md: "minmax(0, 1fr) minmax(0, 24rem)",
+          }}
+          align="end"
+          gap="xl"
+          paddingBlock="xl"
+        >
+          <Box>
+            <Text as="p" variant="eyebrow" tone="muted">
               {String(active.order + 1).padStart(2, "0")} / {active.label}
-            </p>
-            <h2>{active.headline}</h2>
-          </div>
-          <p>{active.description}</p>
-        </div>
+            </Text>
+            <Heading level={2} size="lg">
+              {active.headline}
+            </Heading>
+          </Box>
+          <Text as="p" variant="body">
+            {active.description}
+          </Text>
+        </Grid>
         {showcaseScenes.map((scene) => (
-          <Tabs.Panel key={scene.id} value={scene.id} className="world-panel">
+          <Tabs.Panel key={scene.id} value={scene.id} padding="none">
             {active.id === scene.id ? (
-              <div className="world-surface" data-mood={selection.mood}>
+              <ThemeScope
+                theme={selection.mood}
+                data-mood={selection.mood}
+                query
+                border="all"
+                radius="md"
+                surface="canvas"
+                className="world-surface"
+              >
                 <ExampleBoundary key={`${scene.id}-${revision}`}>
                   <Suspense
                     fallback={
-                      <div className="scene-loading" role="status">
+                      <Stack
+                        align="center"
+                        gap="md"
+                        role="status"
+                        className="scene-loading"
+                      >
+                        <Spinner aria-hidden="true" />
                         Opening {scene.brand}…
-                      </div>
+                      </Stack>
                     }
                   >
                     {views.get(scene.id)}
                   </Suspense>
                 </ExampleBoundary>
-              </div>
+              </ThemeScope>
             ) : null}
           </Tabs.Panel>
         ))}
       </Tabs.Root>
-      <div className="showcase-underbar">
-        <p>
-          <span className="try-dot" aria-hidden="true" />
-          <strong>Try it.</strong> {active.prompt}
-        </p>
-        <div className="showcase-actions">
+      <Inline wrap justify="between" gap="md" paddingBlock="md">
+        <Text as="p" variant="body">
+          <span aria-hidden="true" className="try-dot" />
+          <Text as="strong" weight="bold">
+            Try it.
+          </Text>{" "}
+          {active.prompt}
+        </Text>
+        <Inline wrap gap="xs">
           <Button
             size="sm"
             variant="ghost"
@@ -169,27 +231,31 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
           >
             Copy scene link
           </Button>
-        </div>
-      </div>
-      <div className="showcase-disclosure">
-        <p>
+        </Inline>
+      </Inline>
+      <Inline wrap gap="md">
+        <Text as="p" variant="body">
           Real Flux components. Fictional products. Custom charts and editors
           are demo compositions, not published component APIs.
-        </p>
-        <a href={shareHash}>Scene permalink ↗</a>
-        <span role="status">{copyMessage}</span>
-      </div>
-      <div id={`${id}-inspector`} hidden={!inspect}>
+        </Text>
+        <Link href={shareHash}>Scene permalink ↗</Link>
+        <Text role="status">{copyMessage}</Text>
+      </Inline>
+      <Box id={`${id}-inspector`} hidden={!inspect}>
         {inspect ? (
           <ExampleBoundary key={active.id}>
             <Suspense
-              fallback={<p role="status">Loading composition details…</p>}
+              fallback={
+                <Text role="status" as="p" variant="body">
+                  Loading composition details…
+                </Text>
+              }
             >
               <CompositionInspector scene={active} />
             </Suspense>
           </ExampleBoundary>
         ) : null}
-      </div>
-    </section>
+      </Box>
+    </Stack>
   );
 }

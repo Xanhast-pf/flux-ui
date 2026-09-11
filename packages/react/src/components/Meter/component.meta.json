@@ -1,0 +1,8 @@
+{
+  "name": "Meter",
+  "slug": "meter",
+  "category": "Feedback",
+  "status": "alpha",
+  "description": "Native bounded measurement; unknown data is never presented as zero.",
+  "sizeClass": "primitive"
+}

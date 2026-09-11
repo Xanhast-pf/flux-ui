@@ -13,3 +13,4 @@ test-results/
 
 # Produced only from executed checks; never commit fabricated evidence.
 apps/docs/public/evidence/
+flux-ui.zip

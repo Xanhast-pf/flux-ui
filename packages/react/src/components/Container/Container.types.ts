@@ -1,7 +1,14 @@
-import type { ComponentPropsWithRef } from "react";
-
+import type {
+  LayoutElement,
+  SemanticProps,
+} from "../../internal/semantic.types.js";
 export type ContainerSize = "sm" | "md" | "lg" | "xl" | "full";
-
-export interface ContainerProps extends ComponentPropsWithRef<"div"> {
-  size?: ContainerSize;
-}
+export type ContainerProps = SemanticProps<
+  LayoutElement,
+  "div",
+  {
+    size?: ContainerSize | undefined;
+    /** Establishes the named container used by responsiveTo="container" children. */
+    query?: boolean | undefined;
+  }
+>;

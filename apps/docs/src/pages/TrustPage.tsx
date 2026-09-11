@@ -1,8 +1,20 @@
-import { Badge, Callout, Card, Grid, Stack } from "@flux-ui/react";
+import {
+  Badge,
+  Box,
+  Callout,
+  Card,
+  Code,
+  Collapsible,
+  Grid,
+  Heading,
+  Link,
+  PageHeader,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 import { useEffect, useState } from "react";
 import { parseEvidence, type Evidence } from "../lib/evidence.js";
 import { REPOSITORY_URL, formatBytes } from "../lib/format.js";
-
 const controls = [
   {
     title: "OpenSSF Scorecard",
@@ -56,7 +68,7 @@ export function TrustPage() {
     const timeout = window.setTimeout(() => {
       setMessage("Evidence request timed out. No CI result has been verified.");
       controller.abort();
-    }, 10_000);
+    }, 10000);
     async function load(): Promise<void> {
       try {
         const response = await fetch(
@@ -68,7 +80,7 @@ export function TrustPage() {
             "No generated evidence is available for this build. Local previews do not imply CI passed.",
           );
         const body = await response.text();
-        if (body.length > 128_000)
+        if (body.length > 128000)
           throw new Error("Evidence exceeded its size limit.");
         const contentType = response.headers.get("content-type") ?? "";
         if (
@@ -113,17 +125,18 @@ export function TrustPage() {
     evidence.source.commit === import.meta.env.VITE_BUILD_COMMIT;
   const historical =
     evidence !== null &&
-    viewedAt - Date.parse(evidence.generatedAt) > 7 * 24 * 60 * 60 * 1_000;
+    viewedAt - Date.parse(evidence.generatedAt) > 7 * 24 * 60 * 60 * 1000;
   return (
-    <section className="reference-page">
+    <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="lg">
-        <header className="page-intro">
-          <p className="eyebrow">Trust is inspectable</p>
-          <h1>Evidence, not badges.</h1>
-          <p className="lede">
+        <PageHeader
+          title={<>Evidence, not badges.</>}
+          eyebrow={<>Trust is inspectable</>}
+        >
+          <Text as="p" variant="lead" tone="muted">
             What we check. What we can prove. What still needs work.
-          </p>
-        </header>
+          </Text>
+        </PageHeader>
         <Callout tone="warning">
           Flux UI is alpha. No independent security certification, audit,
           OpenSSF badge or blanket accessibility guarantee is claimed.
@@ -132,8 +145,14 @@ export function TrustPage() {
         </Callout>
         <Card>
           <Stack gap="md">
-            <h2>Build evidence</h2>
-            {message !== "" && <p role="status">{message}</p>}
+            <Heading level={2} size="lg">
+              Build evidence
+            </Heading>
+            {message !== "" && (
+              <Text role="status" as="p" variant="body">
+                {message}
+              </Text>
+            )}
             {evidence !== null && (
               <>
                 <Badge
@@ -160,85 +179,105 @@ export function TrustPage() {
                     It describes that revision, not the latest repository state.
                   </Callout>
                 )}
-                <p>
+                <Text as="p" variant="body">
                   Recorded {new Date(evidence.generatedAt).toLocaleString()} ·
-                  commit <code>{evidence.source.commit ?? "local"}</code>
-                </p>
+                  commit <Code>{evidence.source.commit ?? "local"}</Code>
+                </Text>
                 {evidence.source.kind === "github-actions" && (
-                  <a
+                  <Link
                     href={`${REPOSITORY_URL}/actions/runs/${evidence.source.runId}/attempts/${evidence.source.runAttempt}`}
                   >
                     Inspect the exact workflow run →
-                  </a>
+                  </Link>
                 )}
-                <div className="trust-checks">
+                <Grid minColumnWidth="17rem" gap="md">
                   {evidence.jobs.map((job) => (
-                    <div key={job.job}>
-                      <h3>{job.job === "quality" ? "Quality" : "Browser"}</h3>
+                    <Box key={job.job}>
+                      <Heading level={3} size="md">
+                        {job.job === "quality" ? "Quality" : "Browser"}
+                      </Heading>
                       {job.checks.map((check) => (
-                        <p key={check.id}>
-                          <strong>{check.status}</strong> · {check.label}
-                        </p>
+                        <Text key={check.id} as="p" variant="body">
+                          <Text as="strong" weight="bold">
+                            {check.status}
+                          </Text>{" "}
+                          · {check.label}
+                        </Text>
                       ))}
-                    </div>
+                    </Box>
                   ))}
-                </div>
-                <details>
-                  <summary>Raw reports and SHA-256 digests</summary>
-                  <p>
+                </Grid>
+                <Collapsible.Root>
+                  <Collapsible.Trigger>
+                    Raw reports and SHA-256 digests
+                  </Collapsible.Trigger>
+                  <Text as="p" variant="body">
                     Hashes detect altered report bytes when compared with a
                     trusted manifest. This page does not cryptographically
                     verify signatures.
-                  </p>
+                  </Text>
                   {evidence.files.map((file) => (
-                    <p className="evidence-file" key={file.name}>
-                      <a href={`evidence/${file.name}`} download>
+                    <Text
+                      key={file.name}
+                      className="evidence-file"
+                      as="p"
+                      variant="body"
+                    >
+                      <Link href={`evidence/${file.name}`} download>
                         {file.name}
-                      </a>{" "}
+                      </Link>{" "}
                       · {formatBytes(file.bytes)}
                       <br />
-                      <code>{file.sha256}</code>
-                    </p>
+                      <Code>{file.sha256}</Code>
+                    </Text>
                   ))}
-                  <a href="evidence/index.json" download>
+                  <Link href="evidence/index.json" download>
                     Evidence manifest JSON
-                  </a>
-                </details>
+                  </Link>
+                </Collapsible.Root>
               </>
             )}
-            <p className="muted">
+            <Text as="p" variant="body" tone="muted">
               Only quality and Chromium checks from the same commit, workflow
               run and attempt are combined. Independent security workflows have
               their own results below.
-            </p>
+            </Text>
           </Stack>
         </Card>
         <Grid minColumnWidth="17rem" gap="md">
           {controls.map((control) => (
             <Card key={control.title}>
               <Stack gap="sm">
-                <p className="eyebrow">{control.status}</p>
-                <h2>{control.title}</h2>
-                <p>{control.detail}</p>
-                <a href={control.href}>Inspect source evidence →</a>
+                <Text as="p" variant="eyebrow" tone="muted">
+                  {control.status}
+                </Text>
+                <Heading level={2} size="lg">
+                  {control.title}
+                </Heading>
+                <Text as="p" variant="body">
+                  {control.detail}
+                </Text>
+                <Link href={control.href}>Inspect source evidence →</Link>
               </Stack>
             </Card>
           ))}
         </Grid>
-        <section>
-          <h2>Report a vulnerability privately.</h2>
-          <p>
+        <Stack as="section" gap="lg">
+          <Heading level={2} size="lg">
+            Report a vulnerability privately.
+          </Heading>
+          <Text as="p" variant="body">
             Do not post exploit details in a public issue. Use GitHub’s private
             vulnerability reporting when enabled, or contact the maintainer to
             arrange a private channel as described in the security policy.
-          </p>
-          <p>
-            <a href={`${REPOSITORY_URL}/security/policy`}>
+          </Text>
+          <Text as="p" variant="body">
+            <Link href={`${REPOSITORY_URL}/security/policy`}>
               Security policy and reporting route →
-            </a>
-          </p>
-        </section>
+            </Link>
+          </Text>
+        </Stack>
       </Stack>
-    </section>
+    </Stack>
   );
 }

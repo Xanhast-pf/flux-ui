@@ -1,6 +1,10 @@
 import type { ComponentPropsWithRef } from "react";
-export type TableRootProps = ComponentPropsWithRef<"table">;
-export type TableCaptionProps = ComponentPropsWithRef<"caption">;
+export type TableRootProps = ComponentPropsWithRef<"table"> & {
+  density?: "comfortable" | "compact" | undefined;
+};
+export type TableCaptionProps = ComponentPropsWithRef<"caption"> & {
+  visuallyHidden?: boolean | undefined;
+};
 export type TableHeaderProps = ComponentPropsWithRef<"thead">;
 export type TableBodyProps = ComponentPropsWithRef<"tbody">;
 export type TableFooterProps = ComponentPropsWithRef<"tfoot">;

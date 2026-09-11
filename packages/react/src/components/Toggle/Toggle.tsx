@@ -3,6 +3,8 @@ import { joinClassNames } from "../../internal/joinClassNames.js";
 import { toggle } from "./Toggle.css.js";
 import type { ToggleProps } from "./Toggle.types.js";
 export function Toggle({
+  size,
+  appearance = "outline",
   className,
   defaultPressed = false,
   disabled,
@@ -27,7 +29,8 @@ export function Toggle({
       type={type}
       disabled={disabled}
       aria-pressed={pressed}
-      data-pressed={pressed || undefined}
+      data-s={size}
+      data-a={appearance === "outline" ? undefined : appearance}
       onClick={handleClick}
     />
   );

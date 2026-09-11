@@ -1,0 +1,179 @@
+/* music artwork and data geometry. UI uses public Flux primitives. */
+
+.music-time {
+  font-family: monospace;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  padding-inline: 0.75rem;
+}
+.music-time > span {
+  color: var(--flux-color-text-muted);
+}
+.music-signature {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: monospace;
+}
+.music-signature > span {
+  color: var(--flux-color-text-muted);
+}
+.sequencer {
+  position: relative;
+  border-inline: 0.0625rem solid var(--flux-color-border);
+  border-block-end: 0.0625rem solid var(--flux-color-border);
+  background: var(--flux-color-surface);
+  border-radius: 0 0 0.25rem 0.25rem;
+  overflow: clip;
+}
+.sequencer-ruler {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--flux-color-text-muted);
+  font-size: 0.75rem;
+}
+.sequencer-ruler > div {
+  display: flex;
+  justify-content: space-between;
+  padding-inline-end: 1rem;
+  font-family: monospace;
+}
+.track-row {
+  border-block-start: 0.0625rem solid var(--flux-color-border);
+}
+.track-row[data-channel="one"] {
+  --track-color: var(--channel-one);
+}
+.track-row[data-channel="two"] {
+  --track-color: var(--channel-two);
+}
+.track-row[data-channel="three"] {
+  --track-color: var(--channel-three);
+}
+.track-row[data-channel="four"] {
+  --track-color: var(--channel-four);
+}
+.track-info strong {
+  display: block;
+  font-weight: 550;
+}
+.track-info small {
+  color: var(--flux-color-text-muted);
+  font-size: 0.75rem;
+}
+.track-color {
+  inline-size: 0.25rem;
+  block-size: 2rem;
+  background: var(--track-color);
+  border-radius: 0.25rem;
+}
+.track-toggles {
+  margin-inline-start: auto;
+}
+.track-lane {
+  padding-block: 0.5rem;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--flux-color-border) 0 1px,
+    transparent 1px 25%
+  );
+  min-inline-size: 0;
+}
+.audio-clip {
+  background: color-mix(
+    in srgb,
+    var(--track-color),
+    var(--flux-color-surface) 82%
+  );
+  color: var(--flux-color-text);
+  border: 0.0625rem solid var(--track-color);
+  border-radius: 0.25rem;
+  min-block-size: 4rem;
+  padding: 0.5rem 0.75rem;
+  overflow: hidden;
+}
+.audio-clip > span {
+  white-space: nowrap;
+  font-size: 0.75rem;
+}
+.audio-clip svg {
+  inline-size: 100%;
+  block-size: 1.75rem;
+  display: block;
+  margin-block-start: 0.25rem;
+  fill: var(--track-color);
+}
+.track-row[data-muted="true"] .audio-clip {
+  background: var(--flux-color-surface-subtle);
+  border-style: dashed;
+}
+.track-row[data-muted="true"] .audio-clip svg {
+  opacity: 0.2;
+}
+.sequencer-playhead {
+  position: absolute;
+  inset: 3.75rem 0 0;
+  pointer-events: none;
+  overflow: clip;
+}
+.sequencer-playhead > span {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  transform: translateX(0);
+  border-inline-start: 0.125rem solid var(--flux-color-accent);
+}
+.sequencer[data-playing="true"] .sequencer-playhead > span {
+  animation: visual-loop var(--loop-duration) linear infinite;
+}
+@keyframes visual-loop {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+.reduced-motion-note {
+  display: none;
+  color: var(--flux-color-text-muted);
+}
+@container flux-layout (min-width: 48rem) {
+  .track-row {
+    display: grid;
+    grid-template-columns: 17rem minmax(0, 1fr);
+  }
+}
+@container flux-layout (min-width: 48rem) {
+  .sequencer-ruler {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: 0;
+  }
+}
+@container flux-layout (min-width: 48rem) {
+  .track-lane {
+    padding-inline-end: 1rem;
+  }
+}
+@container flux-layout (min-width: 48rem) {
+  .sequencer-playhead {
+    inset-block-start: 2.5rem;
+    inset-inline-start: 17rem;
+  }
+}
+@container flux-layout (max-width: 30rem) {
+  .music-time {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sequencer[data-playing="true"] .sequencer-playhead > span {
+    animation: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reduced-motion-note {
+    display: block;
+  }
+}

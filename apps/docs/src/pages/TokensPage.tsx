@@ -1,4 +1,16 @@
-import { Badge, Button, Card, Grid, Inline, Stack } from "@flux-ui/react";
+import {
+  Badge,
+  Button,
+  Card,
+  Code,
+  ColorSwatch,
+  Grid,
+  Heading,
+  Inline,
+  PageHeader,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 import { cssVars, primitiveTokens } from "@flux-ui/tokens";
 import { useState } from "react";
 import { useColorValue } from "../lib/appearance.js";
@@ -15,33 +27,31 @@ function ColorToken({ variable }: { variable: string }) {
     }
   }
   return (
-    <Card className="token-card">
-      <span
-        className="token-color"
-        style={{ background: `var(${variable})` }}
-        aria-hidden="true"
-      />
+    <Card>
       <Stack gap="sm">
-        <Inline justify="between" wrap>
-          <strong>
-            {variable.replace("--flux-color-", "").replaceAll("-", " ")}
-          </strong>
-          <Badge>{value}</Badge>
-        </Inline>
-        <code>{variable}</code>
-        <Button
-          size="sm"
-          variant="ghost"
-          tone="neutral"
-          onClick={() => {
-            void copy();
-          }}
-        >
-          Copy {variable.replace("--flux-color-", "")}
-        </Button>
-        <span className="copy-status" role="status">
-          {status}
-        </span>
+        <ColorSwatch color={`var(${variable})`} size="lg" />
+        <Stack gap="sm">
+          <Inline justify="between" wrap>
+            <Text as="strong" weight="bold">
+              {variable.replace("--flux-color-", "").replaceAll("-", " ")}
+            </Text>
+            <Badge>{value}</Badge>
+          </Inline>
+          <Code>{variable}</Code>
+          <Button
+            size="sm"
+            variant="ghost"
+            tone="neutral"
+            onClick={() => {
+              void copy();
+            }}
+          >
+            Copy {variable.replace("--flux-color-", "")}
+          </Button>
+          <Text role="status" variant="caption" tone="muted">
+            {status}
+          </Text>
+        </Stack>
       </Stack>
     </Card>
   );
@@ -49,54 +59,61 @@ function ColorToken({ variable }: { variable: string }) {
 export function TokensPage() {
   return (
     <Stack gap="lg">
-      <div>
-        <p className="eyebrow">One language, many moods</p>
-        <h1>Design tokens</h1>
-        <p className="lede">
+      <PageHeader
+        title={<>Design tokens</>}
+        eyebrow={<>One language, many moods</>}
+      >
+        <Text as="p" variant="lead" tone="muted">
           Change the accent. Flip the lights. Watch the entire workshop respond.
-        </p>
-      </div>
+        </Text>
+      </PageHeader>
       <Card>
         <AppearanceControls />
       </Card>
-      <section>
+      <Stack as="section" gap="lg">
         <Stack gap="md">
-          <h2>Semantic color palette</h2>
-          <p>
+          <Heading level={2} size="lg">
+            Semantic color palette
+          </Heading>
+          <Text as="p" variant="body">
             The values below are read from the active CSS variables. Click to
             copy a variable reference, not a hard-coded color.
-          </p>
+          </Text>
           <Grid minColumnWidth="15rem" gap="md">
             {Object.values(cssVars.color).map((variable) => (
               <ColorToken key={variable} variable={variable} />
             ))}
           </Grid>
         </Stack>
-      </section>
-      <section>
+      </Stack>
+      <Stack as="section" gap="lg">
         <Stack gap="md">
-          <h2>Spatial rhythm</h2>
-          <p>
+          <Heading level={2} size="lg">
+            Spatial rhythm
+          </Heading>
+          <Text as="p" variant="body">
             Explicit quarter-rem steps. A 1rem default gap. A 0.25rem default
             radius. No mystery geometry.
-          </p>
+          </Text>
           <Grid minColumnWidth="14rem" gap="md">
             {Object.entries(primitiveTokens.space).map(([step, value]) => (
               <Card key={step}>
                 <Inline justify="between">
-                  <code>space.{step}</code>
-                  <strong>{value}</strong>
+                  <Code>space.{step}</Code>
+                  <Text as="strong" weight="bold">
+                    {value}
+                  </Text>
                 </Inline>
                 <div
-                  className="space-sample"
                   style={{ width: value }}
                   aria-hidden="true"
+                  className="space-sample"
                 />
               </Card>
             ))}
           </Grid>
         </Stack>
-      </section>
+      </Stack>
     </Stack>
   );
 }

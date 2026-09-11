@@ -5,7 +5,7 @@ export const select = style({
   boxSizing: "border-box",
   inlineSize: "100%",
   minInlineSize: 0,
-  minBlockSize: `var(${cssVars.control.md})`,
+  minBlockSize: `var(--f-f-h, var(${cssVars.control.md}))`,
   border: `0.0625rem solid var(${cssVars.color.borderStrong})`,
   borderRadius: `var(${cssVars.radius.md})`,
   padding: `var(${cssVars.space[2]}) var(${cssVars.space[3]})`,

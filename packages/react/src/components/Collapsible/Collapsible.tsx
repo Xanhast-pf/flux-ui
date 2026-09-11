@@ -1,12 +1,24 @@
 import { joinClassNames } from "../../internal/joinClassNames.js";
-import { root, trigger, content } from "./Collapsible.css.js";
+import { content, root, trigger } from "./Collapsible.css.js";
 import type {
+  CollapsibleContentProps,
   CollapsibleRootProps,
   CollapsibleTriggerProps,
-  CollapsibleContentProps,
 } from "./Collapsible.types.js";
-function CollapsibleRoot({ className, ...props }: CollapsibleRootProps) {
-  return <details {...props} className={joinClassNames(root, className)} />;
+function CollapsibleRoot({
+  appearance = "surface",
+  density = "comfortable",
+  className,
+  ...props
+}: CollapsibleRootProps) {
+  return (
+    <details
+      {...props}
+      data-a={appearance === "surface" ? undefined : appearance}
+      data-d={density === "comfortable" ? undefined : density}
+      className={joinClassNames(root, className)}
+    />
+  );
 }
 function CollapsibleTrigger({
   className,
@@ -19,8 +31,18 @@ function CollapsibleTrigger({
     </summary>
   );
 }
-function CollapsibleContent({ className, ...props }: CollapsibleContentProps) {
-  return <div {...props} className={joinClassNames(content, className)} />;
+function CollapsibleContent({
+  padding = "md",
+  className,
+  ...props
+}: CollapsibleContentProps) {
+  return (
+    <div
+      {...props}
+      data-p={padding === "md" ? undefined : padding}
+      className={joinClassNames(content, className)}
+    />
+  );
 }
 export const Collapsible = {
   Root: CollapsibleRoot,

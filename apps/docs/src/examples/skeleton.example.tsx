@@ -3,6 +3,7 @@ import code from "./skeleton.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 export default {
   Preview,
+  previewLayout: "fill",
   code,
   props: [
     ["shape", "line | block | circle", "Default loading silhouettes."],

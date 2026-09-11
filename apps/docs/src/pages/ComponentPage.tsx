@@ -1,22 +1,30 @@
 import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@flux-ui/icons";
 import {
   Badge,
+  Box,
   Breadcrumbs,
-  IconButton,
-  Toggle,
   Callout,
+  Code,
+  Heading,
+  IconButton,
   Inline,
+  Link,
+  List,
+  PageHeader,
+  ScrollArea,
   Stack,
   Table,
   Tabs,
+  Text,
+  Toggle,
 } from "@flux-ui/react";
 import { lazy, Suspense, useState, type ReactElement } from "react";
-import { catalog, type ComponentExample } from "../lib/examples.js";
-import { ExampleLoading } from "../ui/ExampleLoading.js";
-import { ExampleBoundary } from "../ui/ExampleBoundary.js";
-import { formatBytes, REPOSITORY_URL } from "../lib/format.js";
 import { health } from "../generated/health.js";
+import { catalog, type ComponentExample } from "../lib/examples.js";
+import { formatBytes, REPOSITORY_URL } from "../lib/format.js";
 import { CodeBlock } from "../ui/CodeBlock.js";
+import { ExampleBoundary } from "../ui/ExampleBoundary.js";
+import { ExampleLoading } from "../ui/ExampleLoading.js";
 // Declare lazy views once, not during render, so state survives parent updates.
 const examplePages = new Map<string, ReactElement>(
   catalog.map((entry) => {
@@ -28,19 +36,21 @@ const examplePages = new Map<string, ReactElement>(
         },
       };
     });
-
     return [entry.slug, <Example />] as const;
   }),
 );
-
 export function ComponentPage({ slug }: { slug: string }) {
   const examplePage = examplePages.get(slug);
   if (examplePage === undefined)
     return (
       <Stack gap="md">
-        <h1>Component not found</h1>
-        <p>This URL does not match the current catalog.</p>
-        <a href="#components">Browse components</a>
+        <Heading level={1} size="xl">
+          Component not found
+        </Heading>
+        <Text as="p" variant="body">
+          This URL does not match the current catalog.
+        </Text>
+        <Link href="#components">Browse components</Link>
       </Stack>
     );
   return (
@@ -49,7 +59,6 @@ export function ComponentPage({ slug }: { slug: string }) {
     </ExampleBoundary>
   );
 }
-
 function ComponentDetail({
   entry,
   example,
@@ -61,7 +70,7 @@ function ComponentDetail({
   const [compact, setCompact] = useState(false);
   const slug = entry.slug;
   const measurement = health.size.components.find((item) => item.slug === slug);
-  const { Preview, code, props, notes } = example;
+  const { Preview, code, props, notes, previewLayout = "center" } = example;
   return (
     <Stack gap="lg">
       <Breadcrumbs.Root>
@@ -74,55 +83,68 @@ function ComponentDetail({
           </Breadcrumbs.Item>
         </Breadcrumbs.List>
       </Breadcrumbs.Root>
-      <div>
+      <PageHeader title={<>{entry.name}</>}>
         <Inline gap="sm" wrap>
           <Badge>{entry.category}</Badge>
           <Badge tone="accent">{entry.status}</Badge>
         </Inline>
-        <h1>{entry.name}</h1>
-        <p className="lede">{entry.description}</p>
-        <p className="measurement-line">
-          Brotli: <strong>{formatBytes(measurement?.brotli ?? null)}</strong> ·{" "}
-          {entry.sizeClass} budget:{" "}
+
+        <Text as="p" variant="lead" tone="muted">
+          {entry.description}
+        </Text>
+        <Text as="p" variant="caption" tone="muted">
+          Brotli:{" "}
+          <Text as="strong" weight="bold">
+            {formatBytes(measurement?.brotli ?? null)}
+          </Text>{" "}
+          · {entry.sizeClass} budget:{" "}
           {formatBytes(measurement?.budgetBrotli ?? null)}
-        </p>
-      </div>
+        </Text>
+      </PageHeader>
       <Tabs.Root defaultValue="preview">
         <Tabs.List aria-label={`${entry.name} example views`}>
           <Tabs.Tab value="preview">Preview</Tabs.Tab>
           <Tabs.Tab value="code">Code</Tabs.Tab>
         </Tabs.List>
         <Tabs.Panel value="preview">
-          <div className="preview-frame">
-            <Inline justify="between" wrap className="preview-toolbar">
-              <span>Live {entry.name}</span>
-              <Inline gap="sm" wrap>
-                <Toggle pressed={compact} onPressedChange={setCompact}>
-                  Compact preview
-                </Toggle>
-                <IconButton
-                  size="sm"
-                  variant="ghost"
-                  tone="neutral"
-                  aria-label="Reset example"
-                  title="Reset example"
-                  onClick={() => {
-                    setVersion((value) => value + 1);
-                  }}
-                >
-                  <RefreshIcon aria-hidden="true" size={16} />
-                </IconButton>
+          <Box border="all" radius="lg" className="preview-frame">
+            <Box
+              surface="default"
+              border="bottom"
+              paddingInline={4}
+              paddingBlock={3}
+            >
+              <Inline justify="between" wrap>
+                <Text>Live {entry.name}</Text>
+                <Inline gap="sm" wrap>
+                  <Toggle pressed={compact} onPressedChange={setCompact}>
+                    Compact preview
+                  </Toggle>
+                  <IconButton
+                    size="sm"
+                    variant="ghost"
+                    tone="neutral"
+                    aria-label="Reset example"
+                    title="Reset example"
+                    onClick={() => {
+                      setVersion((value) => value + 1);
+                    }}
+                  >
+                    <RefreshIcon aria-hidden="true" size={16} />
+                  </IconButton>
+                </Inline>
               </Inline>
-            </Inline>
-            <div className="preview-stage">
-              <div
-                className="preview-content"
+            </Box>
+            <Stack className="preview-stage" align="center">
+              <Stack
+                align={previewLayout === "fill" ? "stretch" : "center"}
                 data-compact={compact || undefined}
+                className="preview-content"
               >
                 <Preview key={version} />
-              </div>
-            </div>
-          </div>
+              </Stack>
+            </Stack>
+          </Box>
         </Tabs.Panel>
         <Tabs.Panel value="code">
           <CodeBlock code={code} label={`${entry.name} example`} />
@@ -132,14 +154,12 @@ function ComponentDetail({
         This preview uses the same public Flux exports as your app. Reset
         remounts only this example; it does not change your theme.
       </Callout>
-      <section>
+      <Stack as="section" gap="lg">
         <Stack gap="md">
-          <h2>API at a glance</h2>
-          <div
-            className="table-scroll"
-            role="region"
-            aria-label={`${entry.name} props`}
-          >
+          <Heading level={2} size="lg">
+            API at a glance
+          </Heading>
+          <ScrollArea aria-label={`${entry.name} props`} axis="horizontal">
             <Table.Root>
               <Table.Caption>
                 Common props and composition points; native element props remain
@@ -156,41 +176,43 @@ function ComponentDetail({
                 {props.map(([name, type, description]) => (
                   <Table.Row key={name}>
                     <Table.RowHeader>
-                      <code>{name}</code>
+                      <Code>{name}</Code>
                     </Table.RowHeader>
                     <Table.Cell>
-                      <code>{type}</code>
+                      <Code>{type}</Code>
                     </Table.Cell>
                     <Table.Cell>{description}</Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>
             </Table.Root>
-          </div>
-          <a
+          </ScrollArea>
+          <Link
             href={`${REPOSITORY_URL}/blob/main/packages/react/src/components/${entry.name}/${entry.name}.types.ts`}
           >
             Read the full TypeScript API ↗
-          </a>
+          </Link>
         </Stack>
-      </section>
-      <section>
-        <h2>Usage & accessibility</h2>
-        <ul className="usage-notes">
+      </Stack>
+      <Stack as="section" gap="lg">
+        <Heading level={2} size="lg">
+          Usage & accessibility
+        </Heading>
+        <List variant="marker" gap={3}>
           {notes.map((note) => (
-            <li key={note}>{note}</li>
+            <List.Item key={note}>{note}</List.Item>
           ))}
-        </ul>
-      </section>
+        </List>
+      </Stack>
       <Inline gap="md" wrap>
-        <a className="inline-icon-link" href="#components">
+        <Link href="#components" className="inline-icon-link">
           <ArrowLeftIcon aria-hidden="true" size={14} />
           All components
-        </a>
-        <a className="inline-icon-link" href="#playground">
+        </Link>
+        <Link href="#playground" className="inline-icon-link">
           Try components together
           <ArrowRightIcon aria-hidden="true" size={14} />
-        </a>
+        </Link>
       </Inline>
     </Stack>
   );

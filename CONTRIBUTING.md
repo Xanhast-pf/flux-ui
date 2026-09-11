@@ -67,6 +67,21 @@ pnpm perf
 
 Keep Coding Bible enabled. Do not hide findings with exclusions merely to make CI green.
 
+To collect the complete local result when an early gate fails, use:
+
+```bash
+pnpm generate
+pnpm format
+pnpm verify:all
+```
+
+`verify:all` runs the commands already defined by `check` and `check:full`, but
+continues independent checks after a failure. A failed build blocks size checks
+so stale output cannot be reported as a new measurement. Any failed or blocked
+check keeps the final exit code nonzero. The local receipt is written to
+`.cache/verify-all/receipt.json`; it is not published CI evidence. This command
+does not regenerate size/performance baselines or weaken any acceptance gate.
+
 ## Baselines
 
 Size and runtime baselines are reviewed contracts, not snapshots to regenerate whenever a test fails.

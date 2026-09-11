@@ -1,5 +1,13 @@
 import { MoonIcon, SunIcon } from "@flux-ui/icons";
-import { Field, Inline, RadioGroup, Stack, Switch } from "@flux-ui/react";
+import {
+  ColorSwatch,
+  Field,
+  Inline,
+  RadioGroup,
+  Stack,
+  Switch,
+  Text,
+} from "@flux-ui/react";
 import { useId } from "react";
 import {
   isAccent,
@@ -8,13 +16,18 @@ import {
   useAccent,
   useTheme,
 } from "../lib/appearance.js";
+const accentColors = {
+  indigo: "#4f46e5",
+  teal: "#0f766e",
+  rose: "#be185d",
+} as const;
 const accents = ["indigo", "teal", "rose"] as const;
 export function ThemeSwitch() {
   const theme = useTheme();
   return (
     <Inline gap="sm">
       <SunIcon aria-hidden="true" size={16} />
-      <span className="muted">Dark theme</span>
+      <Text tone="muted">Dark theme</Text>
       <Switch
         aria-label="Dark theme"
         checked={theme === "dark"}
@@ -48,11 +61,7 @@ export function AppearanceControls() {
                   <RadioGroup.Item value={value} />
                 </Field.Control>
                 <Field.Label>
-                  <span
-                    className="accent-dot"
-                    data-accent={value}
-                    aria-hidden="true"
-                  />
+                  <ColorSwatch color={accentColors[value]} size="sm" />
                   {value}
                 </Field.Label>
               </Inline>
@@ -60,10 +69,10 @@ export function AppearanceControls() {
           ))}
         </Inline>
       </RadioGroup.Root>
-      <p className="demo-help">
+      <Text as="p" variant="caption" tone="muted">
         Saved locally. These docs presets change semantic CSS variables, not
         component APIs.
-      </p>
+      </Text>
     </Stack>
   );
 }

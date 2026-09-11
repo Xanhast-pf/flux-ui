@@ -4,6 +4,7 @@ import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
+  previewLayout: "fill",
   code,
   notes: [
     "The default horizontal hr is a semantic separator.",

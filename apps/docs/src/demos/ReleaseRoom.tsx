@@ -1,5 +1,6 @@
 import {
   Badge,
+  Box,
   Button,
   Callout,
   Card,
@@ -7,6 +8,8 @@ import {
   Collapsible,
   Dialog,
   Field,
+  Grid,
+  Heading,
   Inline,
   Input,
   Progress,
@@ -15,6 +18,7 @@ import {
   Slider,
   Stack,
   Switch,
+  Text,
 } from "@flux-ui/react";
 import { useId, useRef, useState, type FormEvent } from "react";
 const initialTasks = [
@@ -71,38 +75,44 @@ export function ReleaseRoom() {
       <Card className="release-room">
         <Stack gap="lg">
           <Inline justify="between" wrap>
-            <div>
-              <p className="eyebrow">Your next good idea</p>
-              <h2>Release room</h2>
-            </div>
+            <Box>
+              <Text as="p" variant="eyebrow" tone="muted">
+                Your next good idea
+              </Text>
+              <Heading level={2} size="lg">
+                Release room
+              </Heading>
+            </Box>
             <Badge tone={receipt ? "success" : "accent"}>
               {receipt ? "Demo complete" : "Interactive demo"}
             </Badge>
           </Inline>
-          <p className="muted">
+          <Text as="p" variant="body" tone="muted">
             A tiny workspace made entirely from Flux pieces. Check things off.
             Turn things on. Ship a pretend release.
-          </p>
-          <div className="release-progress">
+          </Text>
+          <Stack gap={3}>
             <Inline justify="between">
-              <strong>Ready when you are</strong>
-              <span>
+              <Text as="strong" weight="bold">
+                Ready when you are
+              </Text>
+              <Text>
                 {complete} / {tasks.length}
-              </span>
+              </Text>
             </Inline>
             <Progress
               aria-label="Demo release checklist"
               value={complete}
               max={tasks.length}
             />
-          </div>
+          </Stack>
           <Stack gap="sm">
             {tasks.map((task) => (
               <Field.Root key={task.id} controlId={`${id}-${task.id}`}>
                 <Inline
                   gap="sm"
-                  className="task-row"
                   data-done={task.done || undefined}
+                  className="task-row"
                 >
                   <Field.Control>
                     <Checkbox
@@ -122,10 +132,11 @@ export function ReleaseRoom() {
               </Field.Root>
             ))}
           </Stack>
-          <form
+          <Box
             ref={taskFormRef}
             aria-label="Add a demo task"
             onSubmit={addTask}
+            as="form"
           >
             <Inline gap="sm" className="add-task-row">
               <Input
@@ -139,9 +150,9 @@ export function ReleaseRoom() {
                 Add task
               </Button>
             </Inline>
-          </form>
+          </Box>
           <Separator decorative />
-          <div className="control-grid">
+          <Grid columns={{ base: 1, md: 2 }} gap="md">
             <Field.Root>
               <Field.Label>Demo environment</Field.Label>
               <Field.Control>
@@ -173,7 +184,7 @@ export function ReleaseRoom() {
                 />
               </Field.Control>
             </Field.Root>
-          </div>
+          </Grid>
           <Field.Root>
             <Inline justify="between" gap="md">
               <Field.Label>Release notifications</Field.Label>
@@ -201,21 +212,28 @@ export function ReleaseRoom() {
               Reset demo
             </Button>
           </Inline>
-          <p className="demo-help">
+          <Text as="p" variant="caption" tone="muted">
             Finish the checklist to enable the release action. These are demo
             tasks, not real CI results.
-          </p>
-          <p className="demo-receipt" role="status">
+          </Text>
+          <Text
+            role="status"
+            className="demo-receipt"
+            as="p"
+            variant="body"
+            tone="success"
+            weight="medium"
+          >
             {receipt}
-          </p>
+          </Text>
           <Collapsible.Root>
             <Collapsible.Trigger>What is this built with?</Collapsible.Trigger>
             <Collapsible.Content>
-              <p>
+              <Text as="p" variant="body">
                 Card, Badge, Checkbox, Field, Input, Select, Slider, Switch,
                 Progress, Separator, Button, Collapsible and Dialog. No
                 application backend or external UI library.
-              </p>
+              </Text>
             </Collapsible.Content>
           </Collapsible.Root>
         </Stack>

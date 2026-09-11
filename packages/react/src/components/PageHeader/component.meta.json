@@ -1,0 +1,8 @@
+{
+  "name": "PageHeader",
+  "slug": "page-header",
+  "category": "Layout",
+  "status": "alpha",
+  "description": "A public recipe for consistent page introductions.",
+  "sizeClass": "composite"
+}

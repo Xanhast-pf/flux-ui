@@ -146,6 +146,7 @@ function FieldError({ className, ...errorProps }: FieldErrorProps) {
 }
 
 function FieldRoot({
+  density = "comfortable",
   children,
   className,
   controlId,
@@ -173,9 +174,8 @@ function FieldRoot({
       <div
         {...rootProps}
         className={joinClassNames(root, className)}
-        data-disabled={disabled || undefined}
-        data-invalid={invalid || undefined}
-        data-required={required || undefined}
+        data-d={density === "comfortable" ? undefined : density}
+        data-x={disabled || undefined}
         id={id}
       >
         {children}

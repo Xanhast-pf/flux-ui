@@ -3,6 +3,7 @@ import code from "./aspect-ratio.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 export default {
   Preview,
+  previewLayout: "fill",
   code,
   props: [
     ["ratio", "number", "A finite positive width / height ratio, default 1."],

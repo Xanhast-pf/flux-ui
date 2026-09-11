@@ -4,6 +4,7 @@ import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
+  previewLayout: "fill",
   code,
   notes: [
     "Table preserves table semantics. It is not a data grid, virtualizer, sorting engine or selection model.",

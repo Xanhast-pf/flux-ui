@@ -26,8 +26,16 @@ export default {
 ```
 
 Export a default React component from the preview. Use public Flux exports for
-controls; custom layouts and SVG/CSS artwork are welcome. Keep helpers shared and
-small; add scoped styles to `showcase.css`. No registry/import list edit is needed.
+controls, layout, typography, surfaces, fields, and overflow. Compose `Stack`,
+`Inline`, `Grid`, `Box`, and `Card` instead of creating a second layout system in
+scene CSS. Use `Text` and `Heading` for ordinary typography, and use
+`responsiveTo="container"` for layouts inside the gallery canvas.
+
+Keep genuinely scene-specific SVG/CSS artwork small and isolated. Import its
+stylesheet from the lazy preview module, not the application entry or shared
+gallery. Declare its precise ownership in `tooling/dogfood/ownership.json`; a
+visual-art exception must not hide an ordinary raw control. No registry/import
+list edit is needed.
 Metadata must stay lightweight because it is eagerly loaded. Do not import the
 preview or media assets from the metadata module.
 
@@ -43,7 +51,7 @@ the preview. Mood changes do not. Do not add persistence, network calls, media
 permissions, polling, automatic playback, or unbounded lists without designing and
 documenting that behavior explicitly.
 
-Use real labels, accessible names, native controls, text alternatives for important
+Use `Field` labels, accessible names, public native-backed controls, text alternatives for important
 graphics, and visible status feedback. Keep meaningful text readable in all four
 moods and in active/hover/disabled states. Motion must be opt-in and respect
 reduced motion. Do not rely on clipping to hide unusable controls.
@@ -53,3 +61,8 @@ loads the actual preview source only on request and identifies custom pieces.
 Update the list and disclosure when replacing a prototype with a real component.
 
 Source audit and validation limits: [`docs/showcase-audit.md`](../../../../docs/showcase-audit.md).
+
+Current composition and ownership contracts: [`docs/dogfooding.md`](../../../../docs/dogfooding.md).
+
+Run both `pnpm docs:check` and `pnpm dogfood:check`. Catalog coverage alone does
+not prove that the surrounding page is using public components.

@@ -1,7 +1,18 @@
+import {
+  Box,
+  Card,
+  Field,
+  Heading,
+  Inline,
+  Input,
+  Link,
+  Select,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 import { useState } from "react";
 import { health } from "../generated/health.js";
 import { formatBytes } from "../lib/format.js";
-
 interface BundleEntry {
   name: string;
   slug: string;
@@ -10,7 +21,6 @@ interface BundleEntry {
   brotli: number | null;
 }
 const recordedEntries: readonly BundleEntry[] = health.size.components;
-
 type Compression = "raw" | "gzip" | "brotli";
 export function BundleExplorer() {
   const [search, setSearch] = useState("");
@@ -27,65 +37,77 @@ export function BundleExplorer() {
     ...entries.map((entry) => entry[compression] ?? 0),
   );
   return (
-    <section className="bundle-explorer" aria-label="Bundle-size visualization">
-      <div className="explorer-heading">
-        <div>
-          <p className="eyebrow">Anatomy of a lightweight system</p>
-          <h2>Every component, in perspective.</h2>
-        </div>
-        <div className="explorer-controls">
-          <label>
-            Find a component
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => {
-                setSearch(event.target.value);
-              }}
-            />
-          </label>
-          <label>
-            Compression
-            <select
-              value={compression}
-              onChange={(event) => {
-                const value = event.target.value;
-                setCompression(
-                  value === "raw" || value === "gzip" ? value : "brotli",
-                );
-              }}
-            >
-              <option value="brotli">Brotli</option>
-              <option value="gzip">Gzip</option>
-              <option value="raw">Raw bytes</option>
-            </select>
-          </label>
-        </div>
-      </div>
-      <p className="muted">
-        Committed emitted runtime graphs · largest first · shared modules can
-        overlap. React and external packages are excluded. These values are not
-        additive application bundle sizes.
-      </p>
-      <p role="status" className="result-count">
-        {entries.length} matching components
-      </p>
-      <div className="bundle-bars">
-        {entries.map((entry) => (
-          <div className="bundle-row" key={entry.slug}>
-            <a href={`#components/${entry.slug}`}>{entry.name}</a>
-            <span className="bar-track" aria-hidden="true">
-              <span
-                className="bar-flux"
-                style={{
-                  width: `${((entry[compression] ?? 0) / maximum) * 100}%`,
-                }}
-              />
-            </span>
-            <strong>{formatBytes(entry[compression])}</strong>
-          </div>
-        ))}
-      </div>
-    </section>
+    <Card aria-label="Bundle-size visualization" as="section" padding={6}>
+      <Stack gap="lg">
+        <Inline wrap justify="between" gap="lg">
+          <Box>
+            <Text as="p" variant="eyebrow" tone="muted">
+              Anatomy of a lightweight system
+            </Text>
+            <Heading level={2} size="lg">
+              Every component, in perspective.
+            </Heading>
+          </Box>
+          <Inline wrap gap="md">
+            <Field.Root>
+              <Field.Label>Find a component</Field.Label>
+              <Field.Control>
+                <Input
+                  type="search"
+                  value={search}
+                  onChange={(event) => {
+                    setSearch(event.target.value);
+                  }}
+                />
+              </Field.Control>
+            </Field.Root>
+            <Field.Root>
+              <Field.Label>Compression</Field.Label>
+              <Field.Control>
+                <Select
+                  value={compression}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    setCompression(
+                      value === "raw" || value === "gzip" ? value : "brotli",
+                    );
+                  }}
+                >
+                  <option value="brotli">Brotli</option>
+                  <option value="gzip">Gzip</option>
+                  <option value="raw">Raw bytes</option>
+                </Select>
+              </Field.Control>
+            </Field.Root>
+          </Inline>
+        </Inline>
+        <Text as="p" variant="body" tone="muted">
+          Committed emitted runtime graphs · largest first · shared modules can
+          overlap. React and external packages are excluded. These values are
+          not additive application bundle sizes.
+        </Text>
+        <Text role="status" as="p" variant="caption" tone="muted">
+          {entries.length} matching components
+        </Text>
+        <Box className="bundle-bars">
+          {entries.map((entry) => (
+            <Box key={entry.slug} className="bundle-row">
+              <Link href={`#components/${entry.slug}`}>{entry.name}</Link>
+              <span aria-hidden="true" className="bar-track">
+                <span
+                  style={{
+                    width: `${((entry[compression] ?? 0) / maximum) * 100}%`,
+                  }}
+                  className="bar-flux"
+                />
+              </span>
+              <Text as="strong" weight="bold">
+                {formatBytes(entry[compression])}
+              </Text>
+            </Box>
+          ))}
+        </Box>
+      </Stack>
+    </Card>
   );
 }

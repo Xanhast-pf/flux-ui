@@ -44,6 +44,7 @@ export function Avatar({
   className,
   fallback = "?",
   size = "md",
+  shape = "circle",
   src,
   ...props
 }: AvatarProps) {
@@ -51,7 +52,8 @@ export function Avatar({
     <span
       {...props}
       className={joinClassNames(avatar, className)}
-      data-size={size}
+      data-s={size === "md" ? undefined : size}
+      data-h={shape === "circle" ? undefined : shape}
       role={alt ? "img" : undefined}
       aria-label={alt || undefined}
       aria-hidden={alt ? props["aria-hidden"] : true}

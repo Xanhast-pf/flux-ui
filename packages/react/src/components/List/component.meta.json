@@ -1,0 +1,8 @@
+{
+  "name": "List",
+  "slug": "list",
+  "category": "Typography",
+  "status": "alpha",
+  "description": "Styled native content lists, not an ARIA menu.",
+  "sizeClass": "primitive"
+}

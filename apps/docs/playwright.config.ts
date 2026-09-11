@@ -3,6 +3,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
+  testIgnore: process.env.FLUX_PERF_MODE === undefined ? "**/perf.spec.ts" : [],
   reporter:
     process.env.FLUX_TRUST_JOB === "browser"
       ? [

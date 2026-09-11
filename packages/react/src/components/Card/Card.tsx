@@ -1,7 +1,27 @@
+import { createElement } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
+import { surfaceStyle } from "../../internal/surface.js";
 import { card } from "./Card.css.js";
 import type { CardProps } from "./Card.types.js";
-/** A surface, not an implicit button or landmark. Compose semantic content inside. */
-export function Card({ className, ...props }: CardProps) {
-  return <div {...props} className={joinClassNames(card, className)} />;
+
+export function Card({
+  as = "div",
+  padding,
+  surface = "default",
+  border = "all",
+  radius = "lg",
+  paddingBlock,
+  paddingInline,
+  className,
+  style,
+  ...props
+}: CardProps) {
+  return createElement(as, {
+    ...props,
+    className: joinClassNames(card, className),
+    "data-fs": surface,
+    "data-fb": border,
+    "data-fr": radius,
+    style: surfaceStyle(padding, paddingBlock, paddingInline, style),
+  });
 }

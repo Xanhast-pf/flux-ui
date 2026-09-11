@@ -19,7 +19,7 @@ const sceneIds = sceneFiles
   .filter((name) => name.endsWith(".scene.ts"))
   .map((name) => name.replace(/\.scene\.ts$/u, ""));
 const css = await readFile(
-  new URL("../../apps/docs/src/showcase/showcase.css", import.meta.url),
+  new URL("../../packages/tokens/src/presets.css", import.meta.url),
   "utf8",
 );
 test("every scene is a convention-based metadata/preview pair", () => {
@@ -131,7 +131,7 @@ function contrast(first, second) {
 for (const mood of moods) {
   test(`${mood.label} text token pairs meet 4.5:1 before rendering`, () => {
     const body = new RegExp(
-      `\\.world-surface\\[data-mood="${mood.id}"\\]\\s*\\{([^}]+)\\}`,
+      `\\[data-flux-theme="${mood.id}"\\]\\s*\\{([^}]+)\\}`,
       "u",
     ).exec(css)?.[1];
     assert.ok(body);

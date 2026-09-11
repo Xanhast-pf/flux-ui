@@ -1,0 +1,163 @@
+/* video artwork and data geometry. UI uses public Flux primitives. */
+
+.video-frame {
+  position: relative;
+  overflow: hidden;
+  max-inline-size: 100%;
+  block-size: 17rem;
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+  color: #ffffff;
+  isolation: isolate;
+}
+.video-landscape {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #34747d;
+  overflow: hidden;
+}
+.landscape-sun {
+  position: absolute;
+  inline-size: 4.5rem;
+  block-size: 4.5rem;
+  border-radius: 50%;
+  inset: 14% auto auto 58%;
+  background: #ffe0ac;
+}
+.landscape-back,
+.landscape-front {
+  position: absolute;
+  inset: 36% -30% -50%;
+  background: #164f60;
+  border-radius: 50% 50% 0 0;
+  transform: rotate(-18deg);
+}
+.landscape-front {
+  background: #163d49;
+  inset: 58% -10% -45%;
+  transform: rotate(18deg);
+}
+[data-art="dunes"] .video-landscape {
+  background: #a57d61;
+}
+[data-art="dunes"] .landscape-back {
+  background: #755238;
+  transform: rotate(22deg);
+}
+[data-art="dunes"] .landscape-front {
+  background: #543b2c;
+  transform: rotate(-18deg);
+}
+[data-art="night"] .video-landscape {
+  background: #343153;
+}
+[data-art="night"] .landscape-sun {
+  background: #e2cfe9;
+}
+[data-art="night"] .landscape-back {
+  background: #282540;
+}
+[data-art="night"] .landscape-front {
+  background: #1b2032;
+}
+.video-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #00000048;
+  pointer-events: none;
+}
+.video-frame h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  max-inline-size: 10ch;
+  text-shadow: 0 0.125rem 1rem #00000050;
+}
+.video-frame-label {
+  position: absolute;
+  inset: 1rem 1rem auto;
+  letter-spacing: 0.125em;
+  font-size: 0.75rem;
+}
+.video-frame-footer {
+  position: absolute;
+  inset: auto 1rem 1rem;
+  font-size: 0.75rem;
+}
+.video-clip {
+  min-inline-size: 0;
+  justify-content: start;
+  text-align: start;
+  padding: 0.5rem;
+  font-weight: 500;
+}
+.clip-thumbnail {
+  inline-size: 3rem;
+  block-size: 2.5rem;
+  flex-shrink: 0;
+  border-radius: 0.25rem;
+  background: linear-gradient(
+    160deg,
+    #689a9c 45%,
+    #346d77 45% 65%,
+    #234f5f 65%
+  );
+}
+[data-art="dunes"] .clip-thumbnail {
+  background: linear-gradient(
+    150deg,
+    #ccaf8b 45%,
+    #9a7552 45% 65%,
+    #6c4d33 65%
+  );
+}
+[data-art="night"] .clip-thumbnail {
+  background: linear-gradient(
+    160deg,
+    #777394 45%,
+    #474364 45% 65%,
+    #252c45 65%
+  );
+}
+.video-clip small {
+  display: block;
+  color: var(--flux-color-text-muted);
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+@container flux-layout (min-width: 48rem) {
+  .video-frame {
+    block-size: 19rem;
+  }
+}
+@container flux-layout (max-width: 30rem) {
+  .video-frame {
+    block-size: 9rem;
+    padding: 0.5rem;
+  }
+}
+@container flux-layout (max-width: 30rem) {
+  .video-frame h3 {
+    font-size: 1.5rem;
+  }
+}
+@container flux-layout (max-width: 30rem) {
+  .video-frame-label {
+    inset: 0.5rem 0.5rem auto;
+    font-size: 0.75rem;
+    letter-spacing: 0;
+  }
+}
+@container flux-layout (max-width: 30rem) {
+  .video-frame-footer {
+    display: none;
+  }
+}

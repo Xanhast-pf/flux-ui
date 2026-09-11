@@ -8,7 +8,22 @@ export default {
   description:
     "Balances, cash flow, and the little details that make money feel manageable.",
   prompt: "Change the date range. Freeze the card. Record a demo payout.",
-  components: ["button", "toggle", "toggle-group", "table"],
+  components: [
+    "avatar",
+    "box",
+    "button",
+    "card",
+    "grid",
+    "heading",
+    "inline",
+    "scroll-area",
+    "stack",
+    "stat",
+    "table",
+    "text",
+    "toggle",
+    "toggle-group",
+  ],
   custom:
     "The cash-flow chart and payment-card artwork are docs-only compositions, not public Chart or PaymentCard APIs. All amounts and transactions are fictional.",
   Icon: GaugeIcon,

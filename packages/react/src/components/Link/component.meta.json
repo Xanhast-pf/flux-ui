@@ -1,0 +1,8 @@
+{
+  "name": "Link",
+  "slug": "link",
+  "category": "Navigation",
+  "status": "alpha",
+  "description": "Native navigation with text, navigation and action treatments.",
+  "sizeClass": "primitive"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Stat",
+  "slug": "stat",
+  "category": "Display",
+  "status": "alpha",
+  "description": "A semantic label, value and supporting-note recipe.",
+  "sizeClass": "composite"
+}

@@ -8,7 +8,20 @@ export default {
   description:
     "A compact music workspace for the moment an idea becomes a track.",
   prompt: "Start the visual loop. Mute a track. Change the tempo.",
-  components: ["button", "slider", "toggle"],
+  components: [
+    "box",
+    "button",
+    "card",
+    "field",
+    "grid",
+    "heading",
+    "inline",
+    "meter",
+    "slider",
+    "stack",
+    "text",
+    "toggle",
+  ],
   custom:
     "The sequencer, clips, playhead, and meters are custom visual prototypes. This is not an audio engine: playback is silent, and no microphone or audio file is accessed.",
   Icon: SlidersIcon,

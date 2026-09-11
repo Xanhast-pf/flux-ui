@@ -28,7 +28,7 @@ describe("Toggle", () => {
     const user = userEvent.setup();
     const { unmount } = render(<Controlled />);
     await user.click(screen.getByRole("button"));
-    expect(screen.getByRole("button")).toHaveAttribute("data-pressed", "true");
+    expect(screen.getByRole("button")).toHaveAttribute("aria-pressed", "true");
     unmount();
     render(<Toggle defaultPressed>Pin</Toggle>);
     expect(screen.getByRole("button")).toHaveAttribute("aria-pressed", "true");

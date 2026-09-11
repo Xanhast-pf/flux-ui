@@ -1,10 +1,29 @@
-import { useId, useState } from "react";
 import { ArrowRightIcon, PackageIcon } from "@flux-ui/icons";
-import { Button, Select, ToggleGroup } from "@flux-ui/react";
-import { SceneHeader, SceneStatus } from "../SceneParts.js";
+import {
+  Box,
+  Button,
+  Card,
+  ColorSwatch,
+  Field,
+  Grid,
+  Heading,
+  Inline,
+  Select,
+  Stack,
+  Text,
+  ToggleGroup,
+} from "@flux-ui/react";
+import { useId, useState } from "react";
+import { artworkInkStyle, SceneHeader, SceneStatus } from "../SceneParts.js";
 import { formatMoney } from "../model.js";
+import "./commerce.css";
 const finishes = ["Chalk", "Ink", "Clay"] as const;
 type Finish = (typeof finishes)[number];
+const finishColors: Record<Finish, string> = {
+  Chalk: "#eee9df",
+  Ink: "#302f35",
+  Clay: "#c5967a",
+};
 const price = 12900;
 const bagLimit = 9;
 export default function CommerceScene() {
@@ -12,7 +31,10 @@ export default function CommerceScene() {
   const [finish, setFinish] = useState<Finish>("Chalk");
   const [quantity, setQuantity] = useState(1);
   const [bag, setBag] = useState<
-    ReadonlyArray<{ finish: Finish; quantity: number }>
+    ReadonlyArray<{
+      finish: Finish;
+      quantity: number;
+    }>
   >([]);
   const [status, setStatus] = useState(
     "A fictional storefront. No payment, no order, no surprises.",
@@ -36,15 +58,32 @@ export default function CommerceScene() {
     );
   }
   return (
-    <div className="product-scene commerce-scene" data-scene="commerce">
+    <Stack data-scene="commerce" gap={5} padding={5}>
       <SceneHeader brand="objects" context="Fewer things. Better things.">
-        <span className="scene-bag">
-          <PackageIcon size={16} /> Demo bag <strong>{count}</strong>
-        </span>
+        <Inline as="span" gap="sm">
+          <PackageIcon size={16} /> Demo bag{" "}
+          <Text as="strong" weight="bold" variant="caption">
+            {count}
+          </Text>
+        </Inline>
       </SceneHeader>
-      <div className="commerce-layout">
-        <figure className="product-art" data-finish={finish.toLowerCase()}>
-          <span className="scene-kicker">Form follows feeling.</span>
+      <Grid
+        templateColumns={{
+          base: "minmax(0, 1fr)",
+          md: "minmax(0, 1.1fr) minmax(0, 1fr)",
+        }}
+        responsiveTo="container"
+        gap="md"
+      >
+        <Box
+          data-finish={finish.toLowerCase()}
+          className="product-art"
+          style={artworkInkStyle}
+          as="figure"
+        >
+          <Text variant="caption" tone="muted">
+            Form follows feeling.
+          </Text>
           <svg
             viewBox="0 0 440 330"
             role="img"
@@ -87,114 +126,143 @@ export default function CommerceScene() {
               className="speaker-controls"
             />
           </svg>
-          <figcaption>
-            <span>THE EVERYDAY SPEAKER</span>
-            <span>Designed for wherever.</span>
-          </figcaption>
-        </figure>
-        <section
-          className="scene-panel product-details"
-          aria-label="Product options"
-        >
-          <p className="scene-kicker">01 / Sound, simplified</p>
-          <h3>
-            Good sound.
-            <br />
-            Great company.
-          </h3>
-          <p className="scene-muted">
-            A little speaker for the big and small moments. An original,
-            fictional product concept.
-          </p>
-          <strong className="product-price">
-            {formatMoney(price)} <span>sample USD</span>
-          </strong>
-          <p id={`${id}-finish`}>
-            The finish <strong>{finish}</strong>
-          </p>
-          <ToggleGroup.Root
-            type="single"
-            value={finish}
-            onValueChange={(value) => {
-              if (value === "Chalk" || value === "Ink" || value === "Clay")
-                setFinish(value);
-            }}
-            aria-labelledby={`${id}-finish`}
-            className="finish-options"
+          <Box as="figcaption">
+            <Text variant="caption">THE EVERYDAY SPEAKER</Text>
+            <Text variant="caption">Designed for wherever.</Text>
+          </Box>
+        </Box>
+        <Card aria-label="Product options" as="section" padding={6} radius="sm">
+          <Stack gap={3}>
+            <Text as="p" variant="caption" tone="muted">
+              01 / Sound, simplified
+            </Text>
+            <Heading level={3} size="md">
+              Good sound.
+              <br />
+              Great company.
+            </Heading>
+            <Text as="p" variant="caption" tone="muted">
+              A little speaker for the big and small moments. An original,
+              fictional product concept.
+            </Text>
+            <Text
+              className="product-price"
+              as="strong"
+              weight="bold"
+              variant="caption"
+            >
+              {formatMoney(price)} <Text>sample USD</Text>
+            </Text>
+            <Text id={`${id}-finish`} as="p" variant="caption">
+              The finish{" "}
+              <Text as="strong" weight="bold">
+                {finish}
+              </Text>
+            </Text>
+            <ToggleGroup.Root
+              type="single"
+              value={finish}
+              onValueChange={(value) => {
+                if (value === "Chalk" || value === "Ink" || value === "Clay")
+                  setFinish(value);
+              }}
+              aria-labelledby={`${id}-finish`}
+              size="sm"
+            >
+              {finishes.map((value) => (
+                <ToggleGroup.Item key={value} value={value}>
+                  <ColorSwatch
+                    color={finishColors[value]}
+                    selected={value === finish}
+                  />
+                  {value}
+                </ToggleGroup.Item>
+              ))}
+            </ToggleGroup.Root>
+            <Grid
+              templateColumns="minmax(0, 6rem) minmax(0, 1fr)"
+              align="end"
+              gap={3}
+            >
+              <Box>
+                <Field.Root density="compact" controlId={`${id}-quantity`}>
+                  <Field.Label>Quantity</Field.Label>
+                  <Field.Control>
+                    <Select
+                      value={quantity}
+                      onChange={(event) => {
+                        setQuantity(Number(event.currentTarget.value));
+                      }}
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </Select>
+                  </Field.Control>
+                </Field.Root>
+              </Box>
+              <Button
+                onClick={addToBag}
+                disabled={full}
+                endIcon={<ArrowRightIcon size={16} />}
+                size="sm"
+              >
+                Add to demo bag · {formatMoney(price * quantity)}
+              </Button>
+            </Grid>
+            <SceneStatus>
+              {full
+                ? "The demo bag holds up to 9 items. Clear the bag or reduce the quantity."
+                : status}
+            </SceneStatus>
+          </Stack>
+        </Card>
+        <Grid.Item colSpan="full">
+          <Inline
+            aria-label="Demo bag summary"
+            as="section"
+            wrap
+            justify="between"
+            gap="md"
+            padding={5}
           >
-            {finishes.map((value) => (
-              <ToggleGroup.Item key={value} value={value}>
-                <span
-                  className="finish-dot"
-                  data-finish={value.toLowerCase()}
-                  aria-hidden="true"
-                />
-                {value}
-              </ToggleGroup.Item>
-            ))}
-          </ToggleGroup.Root>
-          <div className="product-order">
-            <div>
-              <label htmlFor={`${id}-quantity`}>Quantity</label>
-              <Select
-                id={`${id}-quantity`}
-                value={quantity}
-                onChange={(event) => {
-                  setQuantity(Number(event.currentTarget.value));
+            <Box>
+              <Text as="p" variant="caption" tone="muted">
+                Your small collection
+              </Text>
+              <Heading level={3} size="md">
+                {count === 0
+                  ? "Room for something good."
+                  : `${count} ${count === 1 ? "object" : "objects"}. All yours to imagine.`}
+              </Heading>
+              <Text as="p" variant="caption" tone="muted">
+                {bag.length === 0
+                  ? "Try adding a speaker. This bag lives only in your browser tab."
+                  : bag
+                      .map((item) => `${item.finish} × ${item.quantity}`)
+                      .join(" · ")}
+              </Text>
+            </Box>
+            <Box>
+              <Text as="strong" variant="metric" numeric>
+                {formatMoney(count * price)}
+              </Text>
+              <Button
+                size="sm"
+                tone="neutral"
+                variant="outline"
+                disabled={count === 0}
+                onClick={() => {
+                  setBag([]);
+                  setStatus("Your demo bag is empty again.");
                 }}
               >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </Select>
-            </div>
-            <Button
-              onClick={addToBag}
-              disabled={full}
-              endIcon={<ArrowRightIcon size={16} />}
-            >
-              Add to demo bag · {formatMoney(price * quantity)}
-            </Button>
-          </div>
-          <SceneStatus>
-            {full
-              ? "The demo bag holds up to 9 items. Clear the bag or reduce the quantity."
-              : status}
-          </SceneStatus>
-        </section>
-        <section className="commerce-bag" aria-label="Demo bag summary">
-          <div>
-            <p className="scene-kicker">Your small collection</p>
-            <h3>
-              {count === 0
-                ? "Room for something good."
-                : `${count} ${count === 1 ? "object" : "objects"}. All yours to imagine.`}
-            </h3>
-            <p className="scene-muted">
-              {bag.length === 0
-                ? "Try adding a speaker. This bag lives only in your browser tab."
-                : bag
-                    .map((item) => `${item.finish} × ${item.quantity}`)
-                    .join(" · ")}
-            </p>
-          </div>
-          <div>
-            <strong>{formatMoney(count * price)}</strong>
-            <Button
-              size="sm"
-              tone="neutral"
-              variant="outline"
-              disabled={count === 0}
-              onClick={() => {
-                setBag([]);
-                setStatus("Your demo bag is empty again.");
-              }}
-            >
-              Clear demo bag
-            </Button>
-          </div>
-        </section>
-      </div>
-    </div>
+                Clear demo bag
+              </Button>
+            </Box>
+          </Inline>
+        </Grid.Item>
+      </Grid>
+    </Stack>
   );
 }

@@ -1,22 +1,26 @@
-import { useRef, useState } from "react";
 import {
   Accordion,
   AspectRatio,
   Avatar,
   Badge,
+  Box,
   Card,
   Grid,
+  Heading,
   Inline,
   Input,
   Kbd,
+  Link,
   Pagination,
   Skeleton,
   Spinner,
   Stack,
+  Text,
   Toggle,
   ToggleGroup,
   Toolbar,
 } from "@flux-ui/react";
+import { useRef, useState } from "react";
 const projects = [
   {
     id: "orbit",
@@ -102,7 +106,6 @@ const projects = [
 ] as const;
 const pageSize = 3;
 const placeholderIds = ["first", "second", "third"] as const;
-
 export function CollectionLab() {
   const [query, setQuery] = useState("");
   const [saved, setSaved] = useState<readonly string[]>(["orbit"]);
@@ -150,17 +153,21 @@ export function CollectionLab() {
   return (
     <Stack gap="lg">
       <Inline justify="between" wrap>
-        <div>
-          <p className="eyebrow">A little shelf of possibilities</p>
-          <h2>Collection lab</h2>
-        </div>
+        <Box>
+          <Text as="p" variant="eyebrow" tone="muted">
+            A little shelf of possibilities
+          </Text>
+          <Heading level={2} size="lg">
+            Collection lab
+          </Heading>
+        </Box>
         <Badge tone="accent">{saved.length} saved this session</Badge>
       </Inline>
-      <p className="muted">
+      <Text as="p" variant="body" tone="muted">
         Search, save, change the layout, and explore another page. This is
         sample content in memory—not a backend or a real loading request.
-      </p>
-      <div className="collection-controls">
+      </Text>
+      <Inline wrap gap="md">
         <Input
           type="search"
           aria-label="Search the collection"
@@ -182,7 +189,7 @@ export function CollectionLab() {
           <ToggleGroup.Item value="grid">Grid</ToggleGroup.Item>
           <ToggleGroup.Item value="list">List</ToggleGroup.Item>
         </ToggleGroup.Root>
-      </div>
+      </Inline>
       <Toolbar.Root aria-label="Collection actions">
         <Toolbar.Button
           aria-pressed={savedOnly}
@@ -215,20 +222,21 @@ export function CollectionLab() {
       </Toolbar.Root>
       <Inline gap="sm" wrap>
         {loadingPreview ? <Spinner label={null} size="sm" /> : null}
-        <p className="result-count" role="status">
+        <Text role="status" as="p" variant="caption" tone="muted">
           {loadingPreview
             ? "Loading-state preview. Turn off Preview loading to show the collection."
             : `${ordered.length} projects · Page ${currentPage} of ${pageCount} · ${saved.length} saved`}
-        </p>
+        </Text>
       </Inline>
-      <div
+      <Grid
         ref={resultsRef}
         role="region"
         aria-label="Collection results"
         aria-busy={loadingPreview}
         tabIndex={-1}
         data-view={view}
-        className="collection-results"
+        minColumnWidth="15rem"
+        gap="md"
       >
         <Grid
           columns={view === "list" ? 1 : { base: 1, md: 2, xl: 3 }}
@@ -249,15 +257,15 @@ export function CollectionLab() {
                 </Card>
               ))
             : visible.map((project) => (
-                <Card key={project.id} className="collection-card">
+                <Card key={project.id} padding="none">
                   <AspectRatio
                     ratio={view === "list" ? 6 : 16 / 9}
-                    className="collection-art"
                     aria-hidden="true"
+                    className="collection-art"
                   >
-                    <span>{project.initials}</span>
+                    <Text>{project.initials}</Text>
                   </AspectRatio>
-                  <Stack gap="md">
+                  <Stack gap="md" padding="md">
                     <Inline justify="between" wrap>
                       <Badge>{project.category}</Badge>
                       <Toggle
@@ -267,20 +275,24 @@ export function CollectionLab() {
                           save(project.id, pressed);
                         }}
                       >
-                        <span aria-hidden="true">☆</span> Save
+                        <Text aria-hidden="true">☆</Text> Save
                       </Toggle>
                     </Inline>
-                    <div>
-                      <h3>
-                        <a href={`#components/${project.component}`}>
+                    <Box>
+                      <Heading level={3} size="md">
+                        <Link href={`#components/${project.component}`}>
                           {project.title}
-                        </a>
-                      </h3>
-                      <p className="muted">{project.detail}</p>
-                    </div>
+                        </Link>
+                      </Heading>
+                      <Text as="p" variant="body" tone="muted">
+                        {project.detail}
+                      </Text>
+                    </Box>
                     <Inline gap="sm">
                       <Avatar alt="" fallback={project.initials} size="sm" />
-                      <span className="collection-team">{project.team}</span>
+                      <Inline as="span" gap="sm">
+                        {project.team}
+                      </Inline>
                     </Inline>
                   </Stack>
                 </Card>
@@ -288,14 +300,16 @@ export function CollectionLab() {
         </Grid>
         {!loadingPreview && ordered.length === 0 ? (
           <Card>
-            <h3>No projects on this shelf.</h3>
-            <p>
+            <Heading level={3} size="md">
+              No projects on this shelf.
+            </Heading>
+            <Text as="p" variant="body">
               Try another search or turn off Saved only. Reset collection brings
               back the starting state.
-            </p>
+            </Text>
           </Card>
         ) : null}
-      </div>
+      </Grid>
       {!loadingPreview && ordered.length > 0 ? (
         <Pagination.Root
           page={currentPage}
@@ -312,10 +326,10 @@ export function CollectionLab() {
           <Pagination.Next />
         </Pagination.Root>
       ) : null}
-      <p className="demo-help">
+      <Text as="p" variant="caption" tone="muted">
         <Kbd>Tab</Kbd> enters an action group. <Kbd>←</Kbd> / <Kbd>→</Kbd> moves
         through it. <Kbd>Enter</Kbd> activates the focused action.
-      </p>
+      </Text>
       <Accordion.Root>
         <Accordion.Item>
           <Accordion.Trigger>Is anything saved remotely?</Accordion.Trigger>

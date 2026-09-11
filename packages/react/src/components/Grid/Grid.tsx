@@ -1,101 +1,70 @@
+import { createElement, type ReactElement } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
+import { setResponsiveCssVariable } from "../../internal/responsiveValue.js";
 import {
   gapToCssValue,
-  setResponsiveCssVariable,
+  setSpacing,
   type CSSVariableStyle,
-} from "../../internal/layout.js";
-import {
-  autoFitMode,
-  countMode,
-  grid,
-  item,
-  subgridColumns,
-  subgridRows,
-  templateMode,
-} from "./Grid.css.js";
+} from "../../internal/spacing.js";
+import { grid, item, subgridColumns, subgridRows } from "./Grid.css.js";
 import type { GridItemProps, GridProps } from "./Grid.types.js";
 
 export function Grid({
+  as = "div",
+  responsiveTo,
   align,
   autoRows,
   className,
   columnGap,
+  columns,
+  minColumnWidth,
+  templateColumns,
   gap,
   justify,
   rowGap,
   style,
+  padding,
+  paddingBlock,
+  paddingInline,
   templateRows,
   ...props
-}: GridProps) {
-  const cssVariables: CSSVariableStyle = { ...style };
+}: GridProps): ReactElement {
+  const cssVariables: CSSVariableStyle = {};
+  setSpacing(cssVariables, padding, paddingBlock, paddingInline, style);
+  setResponsiveCssVariable(cssVariables, "f-g", gap, gapToCssValue);
+  setResponsiveCssVariable(cssVariables, "f-r", rowGap, gapToCssValue);
+  setResponsiveCssVariable(cssVariables, "f-c", columnGap, gapToCssValue);
+  setResponsiveCssVariable(cssVariables, "f-t", templateRows, String);
 
-  setResponsiveCssVariable(cssVariables, "flux-grid-gap", gap, gapToCssValue);
-  setResponsiveCssVariable(
-    cssVariables,
-    "flux-grid-row-gap",
-    rowGap,
-    gapToCssValue,
-  );
-  setResponsiveCssVariable(
-    cssVariables,
-    "flux-grid-column-gap",
-    columnGap,
-    gapToCssValue,
-  );
-  setResponsiveCssVariable(
-    cssVariables,
-    "flux-grid-template-rows",
-    templateRows,
-    String,
-  );
+  if (align !== undefined) cssVariables.alignItems = align;
+  if (justify !== undefined) cssVariables.justifyItems = justify;
+  if (autoRows !== undefined) cssVariables.gridAutoRows = autoRows;
 
-  if (align !== undefined) cssVariables["--flux-grid-align"] = align;
-  if (justify !== undefined) cssVariables["--flux-grid-justify"] = justify;
-  if (autoRows !== undefined) cssVariables["--flux-grid-auto-rows"] = autoRows;
-
-  if ("minColumnWidth" in props && props.minColumnWidth !== undefined) {
-    cssVariables["--flux-grid-min-column"] = props.minColumnWidth;
-    const { minColumnWidth: _minColumnWidth, ...divProps } = props;
-    return (
-      <div
-        {...divProps}
-        className={joinClassNames(grid, autoFitMode, className)}
-        style={cssVariables}
-      />
-    );
-  }
-
-  if ("templateColumns" in props && props.templateColumns !== undefined) {
+  if (minColumnWidth !== undefined) {
+    cssVariables["--f-k-b"] =
+      `repeat(auto-fit, minmax(min(100%, ${minColumnWidth}), 1fr))`;
+  } else if (templateColumns !== undefined) {
+    setResponsiveCssVariable(cssVariables, "f-k", templateColumns, String);
+  } else {
     setResponsiveCssVariable(
       cssVariables,
-      "flux-grid-template-columns",
-      props.templateColumns,
-      String,
-    );
-    const { templateColumns: _templateColumns, ...divProps } = props;
-    return (
-      <div
-        {...divProps}
-        className={joinClassNames(grid, templateMode, className)}
-        style={cssVariables}
-      />
+      "f-k",
+      columns,
+      (count) => `repeat(${count}, minmax(0, 1fr))`,
     );
   }
 
-  const columns = "columns" in props ? props.columns : undefined;
-  setResponsiveCssVariable(cssVariables, "flux-grid-columns", columns, String);
-  const { columns: _columns, ...divProps } = props;
-
-  return (
-    <div
-      {...divProps}
-      className={joinClassNames(grid, countMode, className)}
-      style={cssVariables}
-    />
-  );
+  return createElement(as, {
+    ...props,
+    className: joinClassNames(grid, className),
+    style: { ...cssVariables, ...style },
+    "data-r": responsiveTo === "container" ? "container" : undefined,
+  });
 }
 
 export function GridItem({
+  as = "div",
+  responsiveTo,
   alignSelf,
   className,
   colSpan,
@@ -104,18 +73,15 @@ export function GridItem({
   style,
   subgrid,
   ...props
-}: GridItemProps) {
-  const cssVariables: CSSVariableStyle = { ...style };
+}: GridItemProps): ReactElement {
+  const cssVariables: CSSVariableStyle = {};
 
-  setResponsiveCssVariable(
-    cssVariables,
-    "flux-grid-item-column",
-    colSpan,
-    (span) => (span === "full" ? "1 / -1" : `span ${span} / span ${span}`),
+  setResponsiveCssVariable(cssVariables, "f-i", colSpan, (span) =>
+    span === "full" ? "1 / -1" : `span ${span} / span ${span}`,
   );
   setResponsiveCssVariable(
     cssVariables,
-    "flux-grid-item-row",
+    "f-j",
     rowSpan,
     (span) => `span ${span} / span ${span}`,
   );
@@ -123,18 +89,17 @@ export function GridItem({
   if (alignSelf !== undefined) cssVariables.alignSelf = alignSelf;
   if (justifySelf !== undefined) cssVariables.justifySelf = justifySelf;
 
-  return (
-    <div
-      {...props}
-      className={joinClassNames(
-        item,
-        (subgrid === "columns" || subgrid === "both") && subgridColumns,
-        (subgrid === "rows" || subgrid === "both") && subgridRows,
-        className,
-      )}
-      style={cssVariables}
-    />
-  );
+  return createElement(as, {
+    ...props,
+    className: joinClassNames(
+      item,
+      (subgrid === "columns" || subgrid === "both") && subgridColumns,
+      (subgrid === "rows" || subgrid === "both") && subgridRows,
+      className,
+    ),
+    style: { ...cssVariables, ...style },
+    "data-r": responsiveTo === "container" ? "container" : undefined,
+  });
 }
 
 Grid.Item = GridItem;

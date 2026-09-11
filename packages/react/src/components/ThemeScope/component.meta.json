@@ -1,0 +1,8 @@
+{
+  "name": "ThemeScope",
+  "slug": "theme-scope",
+  "category": "Layout",
+  "status": "alpha",
+  "description": "Scoped semantic theme application with optional container queries.",
+  "sizeClass": "primitive"
+}

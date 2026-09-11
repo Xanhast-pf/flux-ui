@@ -1,0 +1,84 @@
+/* commerce artwork and data geometry. UI uses public Flux primitives. */
+
+.product-art {
+  margin: 0;
+  display: grid;
+  align-content: space-between;
+  padding: 1.5rem;
+  border-radius: 0.25rem;
+  background: var(--art-canvas);
+  color: var(--art-ink);
+  --speaker-body: #eae6dd;
+  --speaker-grille: #d6d0c4;
+  --speaker-line: #b3a997;
+}
+.product-art > svg {
+  inline-size: 100%;
+  max-block-size: 25rem;
+}
+.product-art figcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+}
+.product-art figcaption > span:first-child {
+  letter-spacing: 0.1em;
+}
+.product-art[data-finish="ink"] {
+  --speaker-body: #393a3d;
+  --speaker-grille: #2d2e30;
+  --speaker-line: #62615f;
+}
+.product-art[data-finish="clay"] {
+  --speaker-body: #af6d53;
+  --speaker-grille: #945842;
+  --speaker-line: #693e31;
+}
+.speaker-shadow {
+  fill: var(--art-ink);
+  opacity: 0.15;
+}
+.speaker-handle {
+  stroke: var(--speaker-body);
+  stroke-width: 14;
+  fill: none;
+}
+.speaker-body {
+  fill: var(--speaker-body);
+  stroke: var(--speaker-line);
+  stroke-width: 1;
+}
+.speaker-grille {
+  fill: var(--speaker-grille);
+}
+.speaker-lines {
+  stroke: var(--speaker-line);
+  stroke-width: 3;
+  stroke-dasharray: 1 4;
+  fill: none;
+}
+.speaker-led {
+  fill: #427965;
+}
+.speaker-controls {
+  stroke: var(--speaker-line);
+  stroke-width: 2;
+}
+.product-price {
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+.product-price > span {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--flux-color-text-muted);
+  letter-spacing: normal;
+}
+@container flux-layout (max-width: 30rem) {
+  .product-art {
+    padding: 1rem;
+  }
+}

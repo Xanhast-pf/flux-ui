@@ -16,47 +16,52 @@ import {
 } from "@flux-ui/identity";
 import {
   Badge,
+  Box,
   Card,
+  Field,
   Grid,
+  Heading,
   Inline,
   Input,
+  Link,
+  PageHeader,
   Slider,
   Stack,
+  Stat,
+  Text,
 } from "@flux-ui/react";
 import { useState } from "react";
 import { FluxDisplay } from "../identity/FluxDisplay.js";
-
 const drawnGlyphCount = Object.values(fluxDisplayGlyphs).filter(
   (glyph) => glyph.path.length > 0,
 ).length;
-
 export function IdentityPage() {
   const [specimen, setSpecimen] = useState("FLUX UI");
   const [displaySize, setDisplaySize] = useState(88);
   const unsupported = getUnsupportedFluxDisplayCharacters(specimen);
-
   return (
     <Stack gap="xl">
-      <div>
-        <p className="eyebrow">Flux identity lab</p>
-        <h1>Drawn for the system.</h1>
-        <p className="lede">
+      <PageHeader
+        title={<>Drawn for the system.</>}
+        eyebrow={<>Flux identity lab</>}
+      >
+        <Text as="p" variant="lead" tone="muted">
           Flux Icons and Flux Display share a geometric vocabulary: compact
           grids, deliberate gaps, technical terminals, and enough personality to
           feel like one system without becoming decoration for its own sake.
-        </p>
-      </div>
+        </Text>
+      </PageHeader>
 
       <Card className="identity-hero">
         <Stack gap="lg">
-          <div className="identity-mark-lockup">
+          <Box className="identity-mark-lockup">
             <FluxMarkIcon size={56} />
             <FluxDisplay
               text="FLUX UI"
               size={84}
               className="identity-wordmark"
             />
-          </div>
+          </Box>
           <Inline gap="sm" wrap>
             <Badge tone="accent">64 original icons</Badge>
             <Badge>20 × 20 icon grid</Badge>
@@ -66,20 +71,24 @@ export function IdentityPage() {
         </Stack>
       </Card>
 
-      <section aria-labelledby="icons-heading">
+      <Stack aria-labelledby="icons-heading" as="section" gap="lg">
         <Stack gap="md">
-          <div>
-            <p className="eyebrow">Flux Icons</p>
-            <h2 id="icons-heading">One grammar, more vocabulary.</h2>
-            <p className="lede">
+          <Box>
+            <Text as="p" variant="eyebrow" tone="muted">
+              Flux Icons
+            </Text>
+            <Heading id="icons-heading" level={2} size="lg">
+              One grammar, more vocabulary.
+            </Heading>
+            <Text as="p" variant="lead" tone="muted">
               The icon set is a publishable package with per-icon size budgets,
               real accessibility defaults, and search metadata. The full browser
               now lives on its own page so this lab can stay focused on the
               identity system itself.
-            </p>
-          </div>
+            </Text>
+          </Box>
           <Card className="identity-icon-teaser">
-            <div className="identity-icon-teaser-grid" aria-hidden="true">
+            <Box aria-hidden="true" className="identity-icon-teaser-grid">
               <SearchIcon size={26} />
               <CommandIcon size={26} />
               <SparkIcon size={26} />
@@ -87,112 +96,129 @@ export function IdentityPage() {
               <GridIcon size={26} />
               <PaletteIcon size={26} />
               <ShieldCheckIcon size={26} />
-            </div>
-            <a className="primary-link" href="#icons">
+            </Box>
+            <Link href="#icons" variant="solid">
               Browse all 64 icons
               <ArrowUpRightIcon aria-hidden="true" size={16} />
-            </a>
+            </Link>
           </Card>
         </Stack>
-      </section>
+      </Stack>
 
-      <section aria-labelledby="display-heading">
+      <Stack aria-labelledby="display-heading" as="section" gap="lg">
         <Stack gap="md">
-          <div>
-            <p className="eyebrow">Flux Display</p>
-            <h2 id="display-heading">
+          <Box>
+            <Text as="p" variant="eyebrow" tone="muted">
+              Flux Display
+            </Text>
+            <Heading id="display-heading" level={2} size="lg">
               A typeface starts as shapes, not files.
-            </h2>
-            <p className="lede">
+            </Heading>
+            <Text as="p" variant="lead" tone="muted">
               This uppercase prototype is rendered directly from Flux vector
               glyph source. It is not a production font yet: lowercase,
               diacritics, spacing pairs, and kerning still need a dedicated
               type-design pass before font engineering begins.
-            </p>
-          </div>
+            </Text>
+          </Box>
           <Card className="display-lab">
             <Stack gap="lg">
-              <div className="display-stage">
+              <Box className="display-stage">
                 <FluxDisplay
-                  className="display-specimen"
                   size={displaySize}
                   text={specimen || "FLUX UI"}
+                  className="display-specimen"
                 />
-              </div>
+              </Box>
               <Grid minColumnWidth="16rem" gap="md">
                 <Stack gap="sm">
-                  <label htmlFor="flux-display-text">Specimen</label>
-                  <Input
-                    id="flux-display-text"
-                    value={specimen}
-                    onChange={(event) => {
-                      setSpecimen(event.currentTarget.value.toUpperCase());
-                    }}
-                    maxLength={30}
-                  />
-                  <p className="muted" role="status">
+                  <Field.Root controlId="flux-display-text">
+                    <Field.Label>Specimen</Field.Label>
+                    <Field.Control>
+                      <Input
+                        value={specimen}
+                        onChange={(event) => {
+                          setSpecimen(event.currentTarget.value.toUpperCase());
+                        }}
+                        maxLength={30}
+                      />
+                    </Field.Control>
+                  </Field.Root>
+                  <Text role="status" as="p" variant="body" tone="muted">
                     {unsupported.length === 0
                       ? "Every character in this specimen is covered by the current prototype."
                       : `Not drawn yet: ${unsupported.join(" ")}. Unsupported characters render as spaces.`}
-                  </p>
+                  </Text>
                 </Stack>
                 <Stack gap="sm">
-                  <label htmlFor="flux-display-size">Display size</label>
-                  <Slider
-                    id="flux-display-size"
-                    aria-label="Flux Display size"
-                    min={48}
-                    max={140}
-                    step={4}
-                    value={displaySize}
-                    onValueChange={setDisplaySize}
-                  />
-                  <span className="muted">{displaySize}px specimen height</span>
+                  <Field.Root controlId="flux-display-size">
+                    <Field.Label>Display size</Field.Label>
+                    <Field.Control>
+                      <Slider
+                        aria-label="Flux Display size"
+                        min={48}
+                        max={140}
+                        step={4}
+                        value={displaySize}
+                        onValueChange={setDisplaySize}
+                      />
+                    </Field.Control>
+                  </Field.Root>
+                  <Text tone="muted">{displaySize}px specimen height</Text>
                 </Stack>
               </Grid>
-              <div
-                className="alphabet-specimen"
+              <Box
                 role="group"
                 aria-label="Flux Display alphabet specimen"
+                className="alphabet-specimen"
               >
                 <FluxDisplay text="ABCDEFGHIJKLMNOPQRSTUVWXYZ" size={58} />
                 <FluxDisplay text="0123456789 / - . : +" size={58} />
-              </div>
+              </Box>
             </Stack>
           </Card>
           <Grid minColumnWidth="12rem" gap="sm">
-            <Card className="metric-card">
-              <span className="muted">Units / em target</span>
-              <strong>{fluxDisplayMetrics.unitsPerEm}</strong>
+            <Card>
+              <Stat
+                label={<>Units / em target</>}
+                value={<>{fluxDisplayMetrics.unitsPerEm}</>}
+              />
             </Card>
-            <Card className="metric-card">
-              <span className="muted">Cap height target</span>
-              <strong>{fluxDisplayMetrics.capHeight}</strong>
+            <Card>
+              <Stat
+                label={<>Cap height target</>}
+                value={<>{fluxDisplayMetrics.capHeight}</>}
+              />
             </Card>
-            <Card className="metric-card">
-              <span className="muted">Target stem</span>
-              <strong>~{fluxDisplayMetrics.stem}</strong>
+            <Card>
+              <Stat
+                label={<>Target stem</>}
+                value={<>~{fluxDisplayMetrics.stem}</>}
+              />
             </Card>
-            <Card className="metric-card">
-              <span className="muted">Current status</span>
-              <strong>Prototype</strong>
+            <Card>
+              <Stat label={<>Current status</>} value={<>Prototype</>} />
             </Card>
           </Grid>
           <Card>
             <Stack gap="sm">
-              <p className="eyebrow">Audit note</p>
-              <h3>The source is healthy, but the font is not finished.</h3>
-              <p>
+              <Text as="p" variant="eyebrow" tone="muted">
+                Audit note
+              </Text>
+              <Heading level={3} size="md">
+                The source is healthy, but the font is not finished.
+              </Heading>
+              <Text as="p" variant="body">
                 The SVG renderer now reserves a full design-grid unit around the
                 glyph run so sharp mitered corners and Q/R tails cannot be
                 clipped. The next typography milestone is optical spacing,
                 kerning, lowercase, and Latin diacritics—not a premature font
                 binary.
-              </p>
+              </Text>
             </Stack>
           </Card>
         </Stack>
-      </section>
+      </Stack>
     </Stack>
   );
 }

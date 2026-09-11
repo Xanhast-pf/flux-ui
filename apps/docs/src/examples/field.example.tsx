@@ -4,6 +4,7 @@ import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
+  previewLayout: "fill",
   code,
   notes: [
     "Accessible labels, descriptions, errors, and shared form-control state.",

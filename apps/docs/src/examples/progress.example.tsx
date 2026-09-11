@@ -4,6 +4,7 @@ import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
+  previewLayout: "fill",
   code,
   notes: [
     "A progressbar requires an accessible name. Text placed inside a native progress element is not a substitute for labeling it.",

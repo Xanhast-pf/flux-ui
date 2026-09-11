@@ -1,5 +1,14 @@
+import {
+  Box,
+  Button,
+  Card,
+  Grid,
+  Heading,
+  Inline,
+  Link,
+  Text,
+} from "@flux-ui/react";
 import { lazy, Suspense, useState } from "react";
-import { Button } from "@flux-ui/react";
 import { components } from "../generated/components.js";
 import { REPOSITORY_URL } from "../lib/format.js";
 import { CodeBlock } from "../ui/CodeBlock.js";
@@ -29,50 +38,67 @@ export default function CompositionInspector({
 }) {
   const [source, setSource] = useState(false);
   return (
-    <section className="composition-inspector" aria-label="Composition details">
-      <div>
-        <p className="eyebrow">Built with the real thing</p>
-        <h3>The ingredients, not the illusion.</h3>
-        <div className="ingredient-links">
-          {scene.components.map((slug) => (
-            <a key={slug} href={`#components/${slug}`}>
-              {components.find((entry) => entry.slug === slug)?.name ?? slug} ↗
-            </a>
-          ))}
-        </div>
-      </div>
-      <div>
-        <p className="eyebrow">What is custom here?</p>
-        <p>{scene.custom}</p>
-        <p className="demo-help">
-          Source below imports shared scene helpers. Styling and helpers live
-          alongside the preview; this is composition source, not a standalone
-          package.
-        </p>
-        <div className="scene-button-row">
-          <Button
-            size="sm"
-            variant="outline"
-            tone="neutral"
-            onClick={() => {
-              setSource((value) => !value);
-            }}
-            aria-expanded={source}
-          >
-            {source ? "Hide source" : "View source"}
-          </Button>
-          <a href={`${REPOSITORY_URL}/tree/main/apps/docs/src/showcase`}>
-            Browse the showcase source ↗
-          </a>
-        </div>
-      </div>
-      {source ? (
-        <div className="composition-source">
-          <Suspense fallback={<p role="status">Loading source…</p>}>
-            {sources.get(scene.id)}
-          </Suspense>
-        </div>
-      ) : null}
-    </section>
+    <Card aria-label="Composition details" as="section" padding={6}>
+      <Grid columns={{ base: 1, md: 2 }} gap="lg">
+        <Box>
+          <Text as="p" variant="eyebrow" tone="muted">
+            Built with the real thing
+          </Text>
+          <Heading level={3} size="md">
+            The ingredients, not the illusion.
+          </Heading>
+          <Inline wrap gap="sm">
+            {scene.components.map((slug) => (
+              <Link key={slug} href={`#components/${slug}`}>
+                {components.find((entry) => entry.slug === slug)?.name ?? slug}{" "}
+                ↗
+              </Link>
+            ))}
+          </Inline>
+        </Box>
+        <Box>
+          <Text as="p" variant="eyebrow" tone="muted">
+            What is custom here?
+          </Text>
+          <Text as="p" variant="body">
+            {scene.custom}
+          </Text>
+          <Text as="p" variant="caption" tone="muted">
+            Source below imports shared scene helpers. Styling and helpers live
+            alongside the preview; this is composition source, not a standalone
+            package.
+          </Text>
+          <Inline wrap gap="sm">
+            <Button
+              size="sm"
+              variant="outline"
+              tone="neutral"
+              onClick={() => {
+                setSource((value) => !value);
+              }}
+              aria-expanded={source}
+            >
+              {source ? "Hide source" : "View source"}
+            </Button>
+            <Link href={`${REPOSITORY_URL}/tree/main/apps/docs/src/showcase`}>
+              Browse the showcase source ↗
+            </Link>
+          </Inline>
+        </Box>
+        {source ? (
+          <Grid.Item colSpan="full">
+            <Suspense
+              fallback={
+                <Text role="status" as="p" variant="body">
+                  Loading source…
+                </Text>
+              }
+            >
+              {sources.get(scene.id)}
+            </Suspense>
+          </Grid.Item>
+        ) : null}
+      </Grid>
+    </Card>
   );
 }

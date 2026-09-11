@@ -1,16 +1,15 @@
-import { Stack } from "@flux-ui/react";
+import { Box, Heading, PageHeader, Stack, Text } from "@flux-ui/react";
 import { CodeBlock } from "../ui/CodeBlock.js";
 export function InstallPage() {
   return (
-    <section className="reference-page">
+    <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="md">
-        <div>
-          <h1>Install & onboarding</h1>
-          <p>
+        <PageHeader title={<>Install & onboarding</>}>
+          <Text as="p" variant="body">
             Flux UI is still alpha and not yet presented as a stable public
             package. To work on the repository:
-          </p>
-        </div>
+          </Text>
+        </PageHeader>
 
         <CodeBlock
           code={`git clone https://github.com/Xanhast-pf/flux-ui.git
@@ -22,22 +21,26 @@ pnpm check`}
           label="Repository setup commands"
         />
 
-        <div>
-          <h2>Package shape</h2>
-          <p>
+        <Box>
+          <Heading level={2} size="lg">
+            Package shape
+          </Heading>
+          <Text as="p" variant="body">
             Components and icons remain separate packages so icon-only usage
             does not pull in the component runtime.
-          </p>
+          </Text>
           <CodeBlock
             code={`pnpm add @flux-ui/react @flux-ui/icons
 
 import { SearchIcon } from "@flux-ui/icons";`}
             label="Package install shape"
           />
-        </div>
+        </Box>
 
-        <div>
-          <h2>Daily development</h2>
+        <Box>
+          <Heading level={2} size="lg">
+            Daily development
+          </Heading>
           <CodeBlock
             code={`pnpm dev
 pnpm storybook
@@ -49,18 +52,20 @@ pnpm check
 pnpm check:full`}
             label="Daily development commands"
           />
-        </div>
+        </Box>
 
-        <div>
-          <h2>Add a component</h2>
+        <Box>
+          <Heading level={2} size="lg">
+            Add a component
+          </Heading>
           <CodeBlock
             code={`pnpm component:new SegmentedControl Inputs interactive
 pnpm component:doctor SegmentedControl
 pnpm size:update`}
             label="Component scaffolding commands"
           />
-        </div>
+        </Box>
       </Stack>
-    </section>
+    </Stack>
   );
 }

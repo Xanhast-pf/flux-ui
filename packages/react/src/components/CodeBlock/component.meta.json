@@ -1,0 +1,8 @@
+{
+  "name": "CodeBlock",
+  "slug": "code-block",
+  "category": "Typography",
+  "status": "alpha",
+  "description": "Literal code, optional copy action and accessible clipboard feedback.",
+  "sizeClass": "composite"
+}

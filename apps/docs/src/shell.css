@@ -1,0 +1,61 @@
+/* App shell geometry; no component internals. */
+
+:root {
+  --gallery-canvas: #fbfaf8;
+}
+[data-flux-theme="dark"] {
+  --gallery-canvas: #0e1015;
+}
+body:has(.gallery-shell) {
+  background: var(--gallery-canvas);
+}
+.site-header[data-gallery="true"] {
+  background: var(--gallery-canvas);
+}
+.site-header[data-gallery="true"] .header-inner {
+  max-inline-size: 85rem;
+  margin-inline: auto;
+}
+.header-links {
+  display: none;
+  gap: 1.5rem;
+  margin-inline-start: 2rem;
+}
+.header-links a {
+  font-size: 0.75rem;
+  color: var(--flux-color-text-muted);
+  text-decoration: none;
+  padding-block: 0.75rem;
+}
+.header-links a[aria-current="page"] {
+  color: var(--flux-color-text);
+  text-decoration: underline;
+}
+.workshop-shell.gallery-shell {
+  display: block;
+  max-inline-size: 88rem;
+  padding-inline: 2.5rem;
+}
+.gallery-shell #main-content {
+  padding-block-start: 0;
+}
+@media (min-width: 80rem) {
+  .header-links {
+    display: flex;
+  }
+}
+@media (min-width: 64rem) and (max-width: 79.99rem) {
+  .site-header[data-gallery="true"] .mobile-header-row {
+    display: flex;
+  }
+}
+@media (max-width: 63.99rem) {
+  .workshop-shell.gallery-shell {
+    padding-inline: 1.5rem;
+  }
+}
+@media (max-width: 39.99rem) {
+  .workshop-shell.gallery-shell {
+    padding-inline: 1rem;
+  }
+}

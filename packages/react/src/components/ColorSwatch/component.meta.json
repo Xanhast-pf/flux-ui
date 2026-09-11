@@ -1,0 +1,8 @@
+{
+  "name": "ColorSwatch",
+  "slug": "color-swatch",
+  "category": "Display",
+  "status": "alpha",
+  "description": "Decorative color sample for composition inside named selection controls.",
+  "sizeClass": "primitive"
+}

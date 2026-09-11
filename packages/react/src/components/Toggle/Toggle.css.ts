@@ -15,7 +15,29 @@ export const toggle = style({
   fontWeight: 600,
   cursor: "pointer",
   selectors: {
-    "&:hover:not(:disabled)": {
+    "&[data-s='sm']": {
+      minBlockSize: "var(--flux-control-sm)",
+      fontSize: "var(--flux-font-caption)",
+    },
+    "&[data-s='md']": {
+      minBlockSize: "var(--flux-control-md)",
+      fontSize: "var(--flux-font-body-size)",
+    },
+    "&[data-s='lg']": {
+      minBlockSize: "var(--flux-control-lg)",
+      fontSize: "var(--flux-font-lead)",
+    },
+    "&[data-a='quiet']:not([aria-pressed='true'])": {
+      borderColor: "transparent",
+      background: "transparent",
+    },
+    "&[data-a='tile']": {
+      display: "grid",
+      minBlockSize: "6rem",
+      inlineSize: "100%",
+      padding: "var(--flux-space-3)",
+    },
+    "&:hover:not(:disabled):not([aria-pressed='true'])": {
       background: `var(${cssVars.color.surfaceSubtle})`,
     },
     "&[aria-pressed='true']": {

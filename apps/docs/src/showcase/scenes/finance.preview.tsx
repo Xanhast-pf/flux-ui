@@ -1,8 +1,23 @@
-import { useState } from "react";
 import { ArrowUpRightIcon, LockIcon, UnlockIcon } from "@flux-ui/icons";
-import { Button, Table, Toggle, ToggleGroup } from "@flux-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Grid,
+  Heading,
+  Inline,
+  ScrollArea,
+  Stack,
+  Table,
+  Text,
+  Toggle,
+  ToggleGroup,
+} from "@flux-ui/react";
+import { useState } from "react";
 import { Metric, SceneHeader, SceneStatus } from "../SceneParts.js";
 import { formatMoney } from "../model.js";
+import "./finance.css";
 const periods = {
   week: {
     label: "This week",
@@ -50,175 +65,242 @@ export default function FinanceScene() {
   const [paid, setPaid] = useState(false);
   const data = periods[period];
   return (
-    <div className="product-scene finance-scene" data-scene="finance">
+    <Stack data-scene="finance" gap={5} padding={5}>
       <SceneHeader brand="folio" context="Your business, in balance">
-        <span className="scene-session">Personal workspace</span>
-        <span
-          className="scene-avatar"
-          role="img"
-          aria-label="Demo account: Alex"
-        >
-          A
-        </span>
+        <Text variant="caption" tone="muted">
+          Personal workspace
+        </Text>
+        <Avatar alt="Demo account: Alex" fallback="A" size="sm" />
       </SceneHeader>
-      <div className="finance-layout">
-        <section
-          className="scene-panel finance-cashflow"
+      <Grid
+        templateColumns={{
+          base: "minmax(0, 1fr)",
+          md: "minmax(0, 1.75fr) minmax(0, 1fr)",
+        }}
+        responsiveTo="container"
+        gap="md"
+      >
+        <Card
           aria-label="Cash flow overview"
+          as="section"
+          padding={6}
+          radius="sm"
         >
-          <div className="scene-heading-row">
-            <div>
-              <p className="scene-kicker">The bigger picture</p>
-              <h3>Money in motion.</h3>
-            </div>
-            <ToggleGroup.Root
-              type="single"
-              value={period}
-              onValueChange={(value) => {
-                if (value === "week" || value === "month") setPeriod(value);
-              }}
-              aria-label="Cash flow period"
-            >
-              <ToggleGroup.Item value="week">Week</ToggleGroup.Item>
-              <ToggleGroup.Item value="month">Month</ToggleGroup.Item>
-            </ToggleGroup.Root>
-          </div>
-          <div className="finance-amount">
-            <strong>{data.total}</strong>
-            <span className="scene-positive">
-              <ArrowUpRightIcon size={14} /> {data.change}
-            </span>
-          </div>
-          <p className="scene-muted">
-            Income · {data.label.toLowerCase()} · fictional USD
-          </p>
-          <figure className="cashflow-chart">
-            <svg
-              viewBox="0 0 440 175"
-              preserveAspectRatio="none"
-              role="img"
-              aria-label={`${data.label} sample cash flow: ${data.total}, ${data.change} versus the previous period.`}
-            >
-              <path
-                className="chart-grid"
-                d="M0 20H440 M0 70H440 M0 120H440 M0 170H440"
-              />
-              <polygon
-                points={`0,175 ${data.points} 440,175`}
-                className="chart-area"
-              />
-              <polyline points={data.points} className="chart-line" />
-            </svg>
-            <figcaption>
-              {data.ticks.map((tick) => (
-                <span key={tick}>{tick}</span>
-              ))}
-            </figcaption>
-          </figure>
-          <div className="finance-metrics">
-            <Metric label="Money in" value={data.total} note="Sample income" />
-            <Metric
-              label="Money out"
-              value={period === "month" ? "$18,420" : "$4,620"}
-              note="Sample expenses"
-            />
-            <Metric
-              label="Your runway"
-              value="8.4 months"
-              note="Illustrative estimate"
-            />
-          </div>
-        </section>
-        <div className="finance-side">
-          <section className="folio-card" aria-label="Demo payment card">
-            <span>folio / business</span>
-            <div className="card-orbit" aria-hidden="true" />
-            <span className="card-chip" aria-hidden="true" />
-            <strong>•••• &nbsp; 4242</strong>
-            <div>
-              <span>Alex Morgan</span>
-              <span>{frozen ? "Frozen" : "Active"}</span>
-            </div>
-          </section>
-          <section className="scene-panel finance-balance">
-            <p className="scene-kicker">Available balance</p>
-            <strong>{formatMoney(12458000 - (paid ? 220000 : 0))}</strong>
-            <p className="scene-muted">Sample account · USD</p>
-            <div className="scene-button-row">
-              <Button
-                size="sm"
-                onClick={() => {
-                  setPaid(true);
+          <Stack gap={3}>
+            <Inline justify="between" wrap gap={3}>
+              <Box>
+                <Text as="p" variant="caption" tone="muted">
+                  The bigger picture
+                </Text>
+                <Heading level={3} size="md">
+                  Money in motion.
+                </Heading>
+              </Box>
+              <ToggleGroup.Root
+                type="single"
+                value={period}
+                onValueChange={(value) => {
+                  if (value === "week" || value === "month") setPeriod(value);
                 }}
-                disabled={paid}
+                aria-label="Cash flow period"
+                size="sm"
               >
-                {paid ? "Payout recorded" : "Record demo payout"}
-              </Button>
-              <Toggle
-                pressed={frozen}
-                onPressedChange={setFrozen}
-                aria-label="Freeze demo card"
+                <ToggleGroup.Item value="week">Week</ToggleGroup.Item>
+                <ToggleGroup.Item value="month">Month</ToggleGroup.Item>
+              </ToggleGroup.Root>
+            </Inline>
+            <Inline gap={3} wrap>
+              <Text
+                as="strong"
+                variant="display"
+                numeric
+                data-testid="finance-amount"
               >
-                {frozen ? <LockIcon size={14} /> : <UnlockIcon size={14} />}{" "}
-                {frozen ? "Frozen" : "Freeze"}
-              </Toggle>
-            </div>
-            <SceneStatus>
-              {paid
-                ? "Demo payout of $2,200 recorded locally. No money moved."
-                : "Try the controls. This is a fictional account."}
-            </SceneStatus>
-          </section>
-        </div>
-        <section
-          className="scene-panel finance-activity"
-          aria-label="Recent demo activity"
-        >
-          <div className="scene-heading-row">
-            <h3>Recent activity</h3>
-            <span className="scene-muted">Sample transactions</span>
-          </div>
-          <div
-            className="scene-table-scroll"
-            role="region"
-            aria-label="Fictional transactions"
-          >
-            <Table.Root>
-              <Table.Caption className="showcase-sr-only">
-                Recent fictional transactions in USD
-              </Table.Caption>
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeader>Transaction</Table.ColumnHeader>
-                  <Table.ColumnHeader>Date</Table.ColumnHeader>
-                  <Table.ColumnHeader>Amount</Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {activity.map((row) => (
-                  <Table.Row key={row.name}>
-                    <Table.RowHeader>
-                      <span className="transaction-name">
-                        <span className="transaction-avatar" aria-hidden="true">
-                          {row.initials}
-                        </span>
-                        <span>
-                          {row.name}
-                          <small>{row.detail}</small>
-                        </span>
-                      </span>
-                    </Table.RowHeader>
-                    <Table.Cell>{row.date}</Table.Cell>
-                    <Table.Cell className="transaction-amount">
-                      {row.amount}
-                    </Table.Cell>
-                  </Table.Row>
+                {data.total}
+              </Text>
+              <Inline as="span" gap="xs">
+                <ArrowUpRightIcon size={14} /> {data.change}
+              </Inline>
+            </Inline>
+            <Text as="p" variant="caption" tone="muted">
+              Income · {data.label.toLowerCase()} · fictional USD
+            </Text>
+            <Box className="cashflow-chart" as="figure">
+              <svg
+                viewBox="0 0 440 175"
+                preserveAspectRatio="none"
+                role="img"
+                aria-label={`${data.label} sample cash flow: ${data.total}, ${data.change} versus the previous period.`}
+              >
+                <path
+                  d="M0 20H440 M0 70H440 M0 120H440 M0 170H440"
+                  className="chart-grid"
+                />
+                <polygon
+                  points={`0,175 ${data.points} 440,175`}
+                  className="chart-area"
+                />
+                <polyline points={data.points} className="chart-line" />
+              </svg>
+              <Inline as="figcaption" justify="between" gap="sm">
+                {data.ticks.map((tick) => (
+                  <Text key={tick} variant="caption">
+                    {tick}
+                  </Text>
                 ))}
-              </Table.Body>
-            </Table.Root>
-          </div>
-        </section>
-      </div>
-    </div>
+              </Inline>
+            </Box>
+            <Grid
+              columns={{ base: 1, sm: 3 }}
+              responsiveTo="container"
+              gap={3}
+              paddingBlock={5}
+            >
+              <Metric
+                label="Money in"
+                value={data.total}
+                note="Sample income"
+              />
+              <Metric
+                label="Money out"
+                value={period === "month" ? "$18,420" : "$4,620"}
+                note="Sample expenses"
+              />
+              <Metric
+                label="Your runway"
+                value="8.4 months"
+                note="Illustrative estimate"
+              />
+            </Grid>
+          </Stack>
+        </Card>
+        <Stack gap="md">
+          <Stack
+            aria-label="Demo payment card"
+            className="folio-card"
+            as="section"
+            gap="lg"
+          >
+            <Text variant="caption">folio / business</Text>
+            <div aria-hidden="true" className="card-orbit" />
+            <span aria-hidden="true" className="card-chip" />
+            <Text as="strong" weight="bold" variant="caption">
+              •••• &nbsp; 4242
+            </Text>
+            <Box>
+              <Text variant="caption">Alex Morgan</Text>
+              <Text variant="caption">{frozen ? "Frozen" : "Active"}</Text>
+            </Box>
+          </Stack>
+          <Card as="section" padding={6} radius="sm">
+            <Stack gap={3}>
+              <Text as="p" variant="caption" tone="muted">
+                Available balance
+              </Text>
+              <Text
+                as="strong"
+                variant="metric"
+                numeric
+                data-testid="finance-balance"
+              >
+                {formatMoney(12458000 - (paid ? 220000 : 0))}
+              </Text>
+              <Text as="p" variant="caption" tone="muted">
+                Sample account · USD
+              </Text>
+              <Inline wrap gap="sm">
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setPaid(true);
+                  }}
+                  disabled={paid}
+                >
+                  {paid ? "Payout recorded" : "Record demo payout"}
+                </Button>
+                <Toggle
+                  pressed={frozen}
+                  onPressedChange={setFrozen}
+                  aria-label="Freeze demo card"
+                  size="sm"
+                >
+                  {frozen ? <LockIcon size={14} /> : <UnlockIcon size={14} />}{" "}
+                  {frozen ? "Frozen" : "Freeze"}
+                </Toggle>
+              </Inline>
+              <SceneStatus>
+                {paid
+                  ? "Demo payout of $2,200 recorded locally. No money moved."
+                  : "Try the controls. This is a fictional account."}
+              </SceneStatus>
+            </Stack>
+          </Card>
+        </Stack>
+        <Grid.Item colSpan="full">
+          <Card
+            aria-label="Recent demo activity"
+            as="section"
+            padding={6}
+            radius="sm"
+          >
+            <Stack gap={3}>
+              <Inline justify="between" wrap gap={3}>
+                <Heading level={3} size="md">
+                  Recent activity
+                </Heading>
+                <Text variant="caption" tone="muted">
+                  Sample transactions
+                </Text>
+              </Inline>
+              <ScrollArea aria-label="Fictional transactions" axis="horizontal">
+                <Table.Root
+                  density="compact"
+                  style={{ minInlineSize: "28rem" }}
+                >
+                  <Table.Caption visuallyHidden>
+                    Recent fictional transactions in USD
+                  </Table.Caption>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.ColumnHeader>Transaction</Table.ColumnHeader>
+                      <Table.ColumnHeader>Date</Table.ColumnHeader>
+                      <Table.ColumnHeader>Amount</Table.ColumnHeader>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {activity.map((row) => (
+                      <Table.Row key={row.name}>
+                        <Table.RowHeader>
+                          <Inline as="span" gap={3}>
+                            <Avatar
+                              alt=""
+                              fallback={row.initials}
+                              size="sm"
+                              shape="square"
+                            />
+                            <Text variant="caption">
+                              {row.name}
+                              <Text as="small" variant="caption">
+                                {row.detail}
+                              </Text>
+                            </Text>
+                          </Inline>
+                        </Table.RowHeader>
+                        <Table.Cell>{row.date}</Table.Cell>
+                        <Table.Cell>
+                          <Text as="strong" variant="caption" numeric>
+                            {row.amount}
+                          </Text>
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table.Root>
+              </ScrollArea>
+            </Stack>
+          </Card>
+        </Grid.Item>
+      </Grid>
+    </Stack>
   );
 }
