@@ -1,53 +1,58 @@
-import { useState } from "react";
-import { Card, Stack, Tabs } from "@flux-ui/react";
-import { CollectionLab } from "../demos/CollectionLab.js";
-import { ReleaseRoom } from "../demos/ReleaseRoom.js";
-import { ButtonLab } from "../demos/ButtonLab.js";
-import { AppearanceControls } from "../ui/AppearanceControls.js";
+import { lazy, Suspense, useId, useState } from "react";
+import { ArrowUpRightIcon } from "@flux-ui/icons";
+import { ProductShowcase } from "../showcase/ProductShowcase.js";
+import { ExampleBoundary } from "../ui/ExampleBoundary.js";
+const ComponentWorkbench = lazy(
+  () => import("../showcase/ComponentWorkbench.js"),
+);
 export function PlaygroundPage() {
-  const [mode, setMode] = useState("workspace");
+  const [workbench, setWorkbench] = useState(false);
+  const id = useId();
   return (
-    <Stack gap="lg">
-      <div>
-        <p className="eyebrow">Touch everything</p>
-        <h1>The playground.</h1>
-        <p className="lede">Real components. Local state. Zero consequences.</p>
-        <p className="demo-help">
-          Switching labs starts a fresh demo. Theme and accent preferences stay
-          with you.
-        </p>
-      </div>
-      <Tabs.Root value={mode} onValueChange={setMode}>
-        <Tabs.List aria-label="Playground modes" activateOnFocus>
-          <Tabs.Tab value="workspace">Release room</Tabs.Tab>
-          <Tabs.Tab value="button">Button lab</Tabs.Tab>
-          <Tabs.Tab value="theme">Theme lab</Tabs.Tab>
-          <Tabs.Tab value="collection">Collection lab</Tabs.Tab>
-        </Tabs.List>
-        <Tabs.Panel value="workspace">
-          {mode === "workspace" ? <ReleaseRoom /> : null}
-        </Tabs.Panel>
-        <Tabs.Panel value="button">
-          {mode === "button" ? <ButtonLab /> : null}
-        </Tabs.Panel>
-        <Tabs.Panel value="collection">
-          {mode === "collection" ? <CollectionLab /> : null}
-        </Tabs.Panel>
-        <Tabs.Panel value="theme">
-          {mode === "theme" ? (
-            <div className="lab-grid">
-              <Card>
-                <Stack gap="lg">
-                  <h2>Set the mood.</h2>
-                  <AppearanceControls />
-                  <a href="#tokens">Inspect every token →</a>
-                </Stack>
-              </Card>
-              <ReleaseRoom />
-            </div>
-          ) : null}
-        </Tabs.Panel>
-      </Tabs.Root>
-    </Stack>
+    <div className="landing-page playground-page">
+      <section className="playground-intro">
+        <div>
+          <p className="eyebrow">A small space for big ideas</p>
+          <h1>Your ideas look good here.</h1>
+          <p className="lede">
+            Choose a world. Change the mood. Touch everything.
+          </p>
+        </div>
+        <a href="#components" className="landing-text-link">
+          Meet the ingredients <ArrowUpRightIcon size={16} />
+        </a>
+      </section>
+      <ProductShowcase page="playground" />
+      <section className="workbench-section">
+        <div>
+          <p className="eyebrow">Prefer to tinker with the parts?</p>
+          <h2>Go a little deeper.</h2>
+          <p>
+            The original Release Room, Button, Theme, and Collection labs are
+            still here.
+          </p>
+        </div>
+        <details
+          onToggle={(event) => {
+            setWorkbench(event.currentTarget.open);
+          }}
+        >
+          <summary aria-controls={`${id}-workbench`}>
+            Component workbench
+          </summary>
+          <div id={`${id}-workbench`}>
+            {workbench ? (
+              <ExampleBoundary>
+                <Suspense
+                  fallback={<p role="status">Opening the workbench…</p>}
+                >
+                  <ComponentWorkbench />
+                </Suspense>
+              </ExampleBoundary>
+            ) : null}
+          </div>
+        </details>
+      </section>
+    </div>
   );
 }

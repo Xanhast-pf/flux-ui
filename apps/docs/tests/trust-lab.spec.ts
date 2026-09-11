@@ -5,7 +5,7 @@ test("the homepage offers design, engineering and verification paths", async ({
 }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Build beautifully.",
+    "One system.",
   );
   for (const route of ["lab", "engineering", "trust", "accessibility"]) {
     await expect(

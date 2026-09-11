@@ -88,6 +88,7 @@ test("preferences persist and previews reset without resetting the theme", async
   page,
 }) => {
   await page.goto("/#playground");
+  await page.locator(".workbench-section summary").click();
   await page.getByRole("tab", { name: "Theme lab", exact: true }).click();
   await page.getByRole("radio", { name: "teal", exact: true }).check();
   await page
@@ -122,6 +123,7 @@ test("release room has a real local checklist, form and confirmation flow", asyn
   page,
 }) => {
   await page.goto("/#playground");
+  await page.locator(".workbench-section summary").click();
   await expect(
     page.getByRole("button", { name: "Review demo release", exact: true }),
   ).toBeDisabled();
@@ -150,9 +152,9 @@ test("release room has a real local checklist, form and confirmation flow", asyn
   await page
     .getByRole("button", { name: "Confirm demo release", exact: true })
     .click();
-  await expect(page.getByRole("status")).toContainText(
-    "Demo release recorded for staging",
-  );
+  await expect(
+    page.locator(".workbench-section").getByRole("status"),
+  ).toContainText("Demo release recorded for staging");
   await page.getByRole("button", { name: "Reset demo", exact: true }).click();
   await expect(
     page.getByRole("progressbar", { name: "Demo release checklist" }),
@@ -163,6 +165,7 @@ test("button lab changes the actual control and generated example", async ({
   page,
 }) => {
   await page.goto("/#playground");
+  await page.locator(".workbench-section summary").click();
   await page.getByRole("tab", { name: "Button lab", exact: true }).click();
   await page
     .getByRole("combobox", { name: "Variant", exact: true })
@@ -347,6 +350,8 @@ for (const width of [320, 390, 768, 1440]) {
       await expect(page.locator("main h1")).toBeVisible();
       if (route.startsWith("components/"))
         await expect(page.locator(".preview-content")).toBeVisible();
+      if (route === "overview" || route === "playground")
+        await expect(page.locator(".product-scene")).toBeVisible();
       await expectNoHorizontalOverflow(page, route);
     }
   });
@@ -380,6 +385,7 @@ test("collection lab saves, filters, pages and resets real local state", async (
   page,
 }) => {
   await page.goto("/#playground");
+  await page.locator(".workbench-section summary").click();
   await page.getByRole("tab", { name: "Collection lab", exact: true }).click();
   const results = page.getByRole("region", {
     name: "Collection results",
@@ -437,6 +443,7 @@ test("loading preview unmounts content, announces once and has no timer", async 
   page,
 }) => {
   await page.goto("/#playground");
+  await page.locator(".workbench-section summary").click();
   await page.getByRole("tab", { name: "Collection lab", exact: true }).click();
   const action = page
     .getByRole("toolbar", { name: "Collection actions", exact: true })
@@ -449,7 +456,9 @@ test("loading preview unmounts content, announces once and has no timer", async 
   await expect(results).toHaveAttribute("aria-busy", "true");
   await expect(results.getByRole("button")).toHaveCount(0);
   await expect(results.getByRole("link")).toHaveCount(0);
-  await expect(page.getByRole("status")).toHaveText(
+  await expect(
+    page.locator(".workbench-section").getByRole("status"),
+  ).toHaveText(
     "Loading-state preview. Turn off Preview loading to show the collection.",
   );
   await action.click();
@@ -580,6 +589,7 @@ for (const width of [320, 390, 768, 1440]) {
   }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/#playground");
+    await page.locator(".workbench-section summary").click();
     await page
       .getByRole("tab", { name: "Collection lab", exact: true })
       .click();

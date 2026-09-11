@@ -1,0 +1,396 @@
+/* Presentation pages have a canvas; reference pages retain the documentation rail. */
+:root {
+  --gallery-canvas: #fbfaf8;
+}
+[data-flux-theme="dark"] {
+  --gallery-canvas: #0e1015;
+}
+body:has(.gallery-shell) {
+  background: var(--gallery-canvas);
+}
+.site-header[data-gallery="true"] {
+  background: var(--gallery-canvas);
+}
+.site-header[data-gallery="true"] .header-inner {
+  max-inline-size: 85rem;
+  margin-inline: auto;
+}
+.header-links {
+  display: none;
+  gap: 1.5rem;
+  margin-inline-start: 2rem;
+}
+.header-links a {
+  font-size: 0.75rem;
+  color: var(--flux-color-text-muted);
+  text-decoration: none;
+  padding-block: 0.75rem;
+}
+.header-links a[aria-current="page"] {
+  color: var(--flux-color-text);
+  text-decoration: underline;
+}
+.workshop-shell.gallery-shell {
+  display: block;
+  max-inline-size: 88rem;
+  padding-inline: 2.5rem;
+}
+.gallery-shell #main-content {
+  padding-block-start: 0;
+}
+.landing-page {
+  min-inline-size: 0;
+}
+.landing-hero {
+  display: grid;
+  gap: 2rem;
+  padding-block: 3.5rem 3rem;
+  align-items: center;
+}
+.landing-hero h1 {
+  font-size: 4.5rem;
+  letter-spacing: -0.065em;
+  font-weight: 600;
+  line-height: 1.02;
+  margin-block: 1rem 0;
+}
+.landing-hero h1 > span {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.065em;
+}
+.hero-signal {
+  display: inline-block;
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-radius: 50%;
+  background: var(--flux-color-accent);
+  margin-inline-end: 0.5rem;
+}
+.landing-intro {
+  display: grid;
+  gap: 1rem;
+  max-inline-size: 28rem;
+}
+.landing-intro > p:first-child {
+  font-size: 1.25rem;
+  color: var(--flux-color-text);
+  font-weight: 500;
+}
+.landing-intro > p {
+  color: var(--flux-color-text-muted);
+  font-size: 1rem;
+}
+.landing-intro > span {
+  font-size: 0.75rem;
+  color: var(--flux-color-text-muted);
+}
+.landing-hero-actions {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-block: 0.25rem;
+}
+.landing-hero-actions .primary-link {
+  font-size: 0.75rem;
+}
+.landing-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--flux-color-text);
+  font-size: 0.75rem;
+  text-decoration: none;
+  padding-block: 0.75rem;
+}
+.landing-text-link:hover {
+  text-decoration: underline;
+}
+.system-story {
+  padding-block: 5rem;
+}
+.system-story-heading {
+  max-inline-size: 45rem;
+}
+.system-story-heading h2 {
+  font-size: 2.75rem;
+  font-weight: 550;
+  line-height: 1.1;
+  margin-block: 1rem 1.5rem;
+}
+.system-story-heading h2 > span {
+  color: var(--flux-color-text-muted);
+}
+.system-story-heading > p:last-child {
+  color: var(--flux-color-text-muted);
+  max-inline-size: 36rem;
+}
+.system-principles {
+  display: grid;
+  gap: 2rem;
+  margin-block-start: 3rem;
+}
+.system-principles > a {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-block-start: 1.5rem;
+  border-block-start: 0.0625rem solid var(--flux-color-border-strong);
+  text-decoration: none;
+  color: var(--flux-color-text);
+}
+.system-principles > a:hover .principle-link {
+  text-decoration: underline;
+}
+.principle-number {
+  font-size: 0.75rem;
+  color: var(--flux-color-text-muted);
+}
+.system-principles h3 {
+  font-size: 1.5rem;
+  font-weight: 550;
+}
+.system-principles p {
+  font-size: 1rem;
+  color: var(--flux-color-text-muted);
+}
+.principle-link {
+  margin-block-start: auto;
+  padding-block-start: 0.5rem;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--flux-color-accent);
+}
+.evidence-story {
+  display: grid;
+  gap: 2.5rem;
+  padding: 2.5rem;
+  background: var(--flux-color-surface-subtle);
+  border-radius: 0.5rem;
+}
+.evidence-story-intro h2 {
+  font-size: 2.5rem;
+  font-weight: 550;
+  line-height: 1.1;
+  margin-block: 1rem 1.5rem;
+}
+.evidence-story-intro > p:last-child {
+  max-inline-size: 27rem;
+  color: var(--flux-color-text-muted);
+}
+.evidence-story-links {
+  display: grid;
+}
+.evidence-story-links > a {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-block: 1.25rem;
+  border-block-end: 0.0625rem solid var(--flux-color-border);
+  color: var(--flux-color-text);
+  text-decoration: none;
+}
+.evidence-story-links > a:first-child {
+  padding-block-start: 0;
+}
+.evidence-story-links > a:last-child {
+  border: 0;
+  padding-block-end: 0;
+}
+.evidence-story-links > a > svg {
+  flex-shrink: 0;
+  color: var(--flux-color-accent);
+}
+.evidence-story-links > a > svg:last-child {
+  margin-inline-start: auto;
+}
+.evidence-story-links strong {
+  font-size: 1rem;
+  font-weight: 600;
+  display: block;
+}
+.evidence-story-links small {
+  font-size: 0.75rem;
+  color: var(--flux-color-text-muted);
+  display: block;
+  margin-block-start: 0.25rem;
+}
+.evidence-story-links > a:hover strong {
+  text-decoration: underline;
+}
+.evidence-axe-mark {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--flux-color-accent);
+}
+.landing-faq {
+  display: grid;
+  gap: 2rem;
+  padding-block: 5rem;
+}
+.landing-faq > div:first-child h2 {
+  font-size: 2rem;
+  font-weight: 550;
+  margin-block: 1rem;
+}
+.landing-faq > div:first-child p:last-child {
+  color: var(--flux-color-text-muted);
+}
+.landing-faq > div:last-child {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+.landing-outro {
+  text-align: center;
+  padding-block: 3rem 4rem;
+  border-block-start: 0.0625rem solid var(--flux-color-border);
+}
+.landing-outro h2 {
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  margin-block: 1rem 2rem;
+}
+.playground-intro {
+  padding-block: 3rem 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.playground-intro h1 {
+  font-size: 3rem;
+  font-weight: 550;
+  letter-spacing: -0.05em;
+  margin-block: 0.75rem;
+}
+.playground-intro .lede {
+  font-size: 1rem;
+}
+.workbench-section {
+  margin-block-start: 4rem;
+  border-block-start: 0.0625rem solid var(--flux-color-border);
+  padding-block: 2rem;
+}
+.workbench-section h2 {
+  margin-block: 0.75rem;
+  font-size: 2rem;
+  font-weight: 550;
+}
+.workbench-section p {
+  color: var(--flux-color-text-muted);
+}
+.workbench-section > details {
+  margin-block-start: 1.5rem;
+  border: 0.0625rem solid var(--flux-color-border);
+  border-radius: 0.25rem;
+  background: var(--flux-color-surface);
+}
+.workbench-section > details > summary {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  font-weight: 550;
+}
+.workbench-section > details > summary:focus-visible {
+  outline: 0.125rem solid var(--flux-color-focus);
+  outline-offset: 0.25rem;
+}
+.workbench-section > details > div {
+  padding: 1.5rem;
+  border-block-start: 0.0625rem solid var(--flux-color-border);
+}
+@media (min-width: 64rem) {
+  .landing-hero {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 4rem;
+  }
+  .system-principles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .evidence-story {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  }
+  .landing-faq {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  }
+}
+@media (min-width: 80rem) {
+  .header-links {
+    display: flex;
+  }
+}
+@media (min-width: 64rem) and (max-width: 79.99rem) {
+  .site-header[data-gallery="true"] .mobile-header-row {
+    display: flex;
+  }
+}
+@media (max-width: 63.99rem) {
+  .workshop-shell.gallery-shell {
+    padding-inline: 1.5rem;
+  }
+  .landing-hero {
+    padding-block: 2.5rem 2rem;
+    gap: 1.5rem;
+  }
+  .landing-hero h1 {
+    font-size: 4rem;
+  }
+  .landing-intro {
+    max-inline-size: 38rem;
+  }
+  .system-story {
+    padding-block: 3rem;
+  }
+  .system-story-heading h2 {
+    font-size: 2.25rem;
+  }
+  .landing-faq {
+    padding-block: 3rem;
+  }
+}
+@media (max-width: 39.99rem) {
+  .workshop-shell.gallery-shell {
+    padding-inline: 1rem;
+  }
+  .landing-hero {
+    padding-block: 2rem;
+  }
+  .landing-hero h1 {
+    font-size: 3rem;
+  }
+  .landing-intro > p:first-child {
+    font-size: 1rem;
+  }
+  .landing-hero-actions {
+    gap: 0.75rem;
+  }
+  .system-story-heading h2,
+  .evidence-story-intro h2 {
+    font-size: 2rem;
+  }
+  .evidence-story {
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+  .evidence-story-links > a {
+    gap: 0.75rem;
+  }
+  .landing-outro h2 {
+    font-size: 2.25rem;
+  }
+  .playground-intro {
+    padding-block: 2rem;
+  }
+  .playground-intro h1 {
+    font-size: 2.5rem;
+  }
+  .workbench-section > details > div {
+    padding: 1rem;
+  }
+}
