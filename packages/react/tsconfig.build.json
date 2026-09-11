@@ -10,5 +10,14 @@
     "paths": {}
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["src/**/*.test.tsx", "src/**/*.bench.tsx", "src/**/*.docs.tsx"]
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.bench.ts",
+    "src/**/*.bench.tsx",
+    "src/**/*.stories.tsx",
+    "src/**/*.docs.tsx",
+    "src/**/*.example.tsx",
+    "src/test/**"
+  ]
 }

@@ -1,8 +1,14 @@
-import { Button, Field, Inline, RadioGroup, Stack } from "@flux-ui/react";
+import {
+  Box,
+  Button,
+  Field,
+  Inline,
+  RadioGroup,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 import { useState } from "react";
-
 const initialEnvironment = "staging";
-
 function RadioOption({
   controlId,
   description,
@@ -30,16 +36,15 @@ function RadioOption({
     </Field.Root>
   );
 }
-
 export function RadioGroupDemo() {
   const [environment, setEnvironment] = useState(initialEnvironment);
-
   return (
-    <form
+    <Box
       aria-label="Radio preferences"
       onReset={() => {
         setEnvironment(initialEnvironment);
       }}
+      as="form"
     >
       <Stack gap="lg">
         <RadioGroup.Root
@@ -50,9 +55,14 @@ export function RadioGroupDemo() {
         >
           <RadioGroup.Legend>Release channel</RadioGroup.Legend>
           <Stack gap="md">
-            <p className="demo-help" id="radio-demo-channel-help">
+            <Text
+              id="radio-demo-channel-help"
+              as="p"
+              variant="caption"
+              tone="muted"
+            >
               Native arrow-key navigation moves the selected option.
-            </p>
+            </Text>
             <Stack gap="sm">
               <RadioOption
                 controlId="radio-demo-stable"
@@ -102,6 +112,6 @@ export function RadioGroupDemo() {
           </Button>
         </Inline>
       </Stack>
-    </form>
+    </Box>
   );
 }

@@ -1,6 +1,20 @@
+import {
+  Box,
+  Button,
+  Card,
+  Field,
+  Grid,
+  Heading,
+  Inline,
+  Meter,
+  Slider,
+  Stack,
+  Text,
+  Toggle,
+} from "@flux-ui/react";
 import { useId, useState, type CSSProperties } from "react";
-import { Button, Slider, Toggle } from "@flux-ui/react";
 import { SceneHeader, SceneStatus } from "../SceneParts.js";
+import "./music.css";
 const tracks = [
   {
     id: "drums",
@@ -58,12 +72,14 @@ export default function MusicScene() {
   const [muted, setMuted] = useState<readonly string[]>([]);
   const [solo, setSolo] = useState<string | null>(null);
   return (
-    <div className="product-scene music-scene" data-scene="music">
+    <Stack data-scene="music" gap={5} padding={5}>
       <SceneHeader brand="afterhours" context="Somewhere, after midnight">
-        <span className="scene-session">Session 004 / visual prototype</span>
+        <Text variant="caption" tone="muted">
+          Session 004 / visual prototype
+        </Text>
       </SceneHeader>
-      <div className="music-transport">
-        <div className="scene-button-row">
+      <Inline wrap justify="between" gap="md" paddingBlock="md">
+        <Inline wrap gap="sm">
           <Button
             size="sm"
             onClick={() => {
@@ -71,49 +87,57 @@ export default function MusicScene() {
             }}
             aria-pressed={playing}
           >
-            <span aria-hidden="true">{playing ? "Ⅱ" : "▶"}</span>
+            <Text aria-hidden="true" variant="caption">
+              {playing ? "Ⅱ" : "▶"}
+            </Text>
             {playing ? "Pause visual loop" : "Play visual loop"}
           </Button>
-          <span className="music-time">
-            LOOP 01 <span>/</span> 16 BEATS
-          </span>
-        </div>
-        <span className="music-signature">
-          {tempo} BPM <span>4 / 4</span>
-          <span>A minor</span>
-        </span>
-      </div>
-      <section
-        className="sequencer"
+          <Text className="music-time" variant="caption">
+            LOOP 01 <Text>/</Text> 16 BEATS
+          </Text>
+        </Inline>
+        <Text className="music-signature" variant="caption">
+          {tempo} BPM <Text>4 / 4</Text>
+          <Text>A minor</Text>
+        </Text>
+      </Inline>
+      <Stack
         aria-label="Four-track visual sequencer"
         data-playing={playing}
         style={{ "--loop-duration": `${960 / tempo}s` } as CSSProperties}
+        className="sequencer"
+        as="section"
+        gap="lg"
       >
-        <div className="sequencer-ruler">
-          <span>TRACK / INSTRUMENT</span>
-          <div>
-            <span>01</span>
-            <span>02</span>
-            <span>03</span>
-            <span>04</span>
-          </div>
-        </div>
+        <Box className="sequencer-ruler">
+          <Text variant="caption">TRACK / INSTRUMENT</Text>
+          <Box>
+            <Text variant="caption">01</Text>
+            <Text variant="caption">02</Text>
+            <Text variant="caption">03</Text>
+            <Text variant="caption">04</Text>
+          </Box>
+        </Box>
         {tracks.map((track) => (
-          <div
-            className="track-row"
+          <Box
             key={track.id}
             data-channel={track.channel}
             data-muted={
               muted.includes(track.id) || (solo !== null && solo !== track.id)
             }
+            className="track-row"
           >
-            <div className="track-info">
-              <span className="track-color" aria-hidden="true" />
-              <div>
-                <strong>{track.name}</strong>
-                <small>{track.instrument}</small>
-              </div>
-              <div className="track-toggles">
+            <Inline className="track-info" gap="sm" padding={3}>
+              <span aria-hidden="true" className="track-color" />
+              <Box>
+                <Text as="strong" weight="bold" variant="caption">
+                  {track.name}
+                </Text>
+                <Text as="small" variant="caption">
+                  {track.instrument}
+                </Text>
+              </Box>
+              <Inline className="track-toggles" gap="xs">
                 <Toggle
                   aria-label={`Mute ${track.name}`}
                   pressed={muted.includes(track.id)}
@@ -124,6 +148,7 @@ export default function MusicScene() {
                         : current.filter((entry) => entry !== track.id),
                     );
                   }}
+                  size="sm"
                 >
                   M
                 </Toggle>
@@ -133,18 +158,19 @@ export default function MusicScene() {
                   onPressedChange={(pressed) => {
                     setSolo(pressed ? track.id : null);
                   }}
+                  size="sm"
                 >
                   S
                 </Toggle>
-              </div>
-            </div>
+              </Inline>
+            </Inline>
             <div className="track-lane">
               <div
-                className="audio-clip"
                 style={{
                   marginInlineStart: `${track.start}%`,
                   inlineSize: `${track.length}%`,
                 }}
+                className="audio-clip"
               >
                 <span>{track.clip}</span>
                 <svg
@@ -165,63 +191,93 @@ export default function MusicScene() {
                 </svg>
               </div>
             </div>
-          </div>
+          </Box>
         ))}
-        <div className="sequencer-playhead" aria-hidden="true">
+        <div aria-hidden="true" className="sequencer-playhead">
           <span />
         </div>
-      </section>
-      <div className="music-bottom">
-        <section className="scene-panel music-session">
-          <p className="scene-kicker">A place for your next idea</p>
-          <h3>Stay in the groove.</h3>
-          <p className="scene-muted">
-            Four layers. A little space. Something entirely yours.
-          </p>
-          <SceneStatus>
-            {playing
-              ? "Visual loop playing. This prototype produces no sound."
-              : "Silent visual prototype. Press play to move the playhead."}
-          </SceneStatus>
-          <p className="reduced-motion-note">
-            Reduced motion is enabled: the playhead stays still.
-          </p>
-        </section>
-        <section
-          className="scene-panel music-mixer"
+      </Stack>
+      <Grid
+        templateColumns={{
+          base: "minmax(0, 1fr)",
+          md: "minmax(0, 1.3fr) minmax(0, 1fr)",
+        }}
+        responsiveTo="container"
+        gap="md"
+        paddingBlock="md"
+      >
+        <Card as="section" padding={6} radius="sm">
+          <Stack gap={3}>
+            <Text as="p" variant="caption" tone="muted">
+              A place for your next idea
+            </Text>
+            <Heading level={3} size="md">
+              Stay in the groove.
+            </Heading>
+            <Text as="p" variant="caption" tone="muted">
+              Four layers. A little space. Something entirely yours.
+            </Text>
+            <SceneStatus>
+              {playing
+                ? "Visual loop playing. This prototype produces no sound."
+                : "Silent visual prototype. Press play to move the playhead."}
+            </SceneStatus>
+            <Text className="reduced-motion-note" as="p" variant="caption">
+              Reduced motion is enabled: the playhead stays still.
+            </Text>
+          </Stack>
+        </Card>
+        <Card
           aria-label="Session controls"
+          as="section"
+          padding={6}
+          radius="sm"
         >
-          <div>
-            <label htmlFor={`${id}-tempo`}>
-              Tempo <strong>{tempo} BPM</strong>
-            </label>
-            <Slider
-              id={`${id}-tempo`}
-              min={60}
-              max={180}
-              step={1}
-              value={tempo}
-              onValueChange={setTempo}
-            />
-          </div>
-          <div>
-            <label htmlFor={`${id}-volume`}>
-              Master level <strong>{volume}%</strong>
-            </label>
-            <Slider
-              id={`${id}-volume`}
-              min={0}
-              max={100}
-              value={volume}
-              onValueChange={setVolume}
-            />
-          </div>
-          <div className="master-meter" aria-hidden="true">
-            <span style={{ inlineSize: `${volume}%` }} />
-          </div>
-          <p className="scene-muted">Visual level only · no audio processing</p>
-        </section>
-      </div>
-    </div>
+          <Stack gap={3}>
+            <Box>
+              <Field.Root density="compact" controlId={`${id}-tempo`}>
+                <Field.Label>
+                  Tempo{" "}
+                  <Text as="strong" weight="bold" variant="caption">
+                    {tempo} BPM
+                  </Text>
+                </Field.Label>
+                <Field.Control>
+                  <Slider
+                    min={60}
+                    max={180}
+                    step={1}
+                    value={tempo}
+                    onValueChange={setTempo}
+                  />
+                </Field.Control>
+              </Field.Root>
+            </Box>
+            <Box>
+              <Field.Root density="compact" controlId={`${id}-volume`}>
+                <Field.Label>
+                  Master level{" "}
+                  <Text as="strong" weight="bold" variant="caption">
+                    {volume}%
+                  </Text>
+                </Field.Label>
+                <Field.Control>
+                  <Slider
+                    min={0}
+                    max={100}
+                    value={volume}
+                    onValueChange={setVolume}
+                  />
+                </Field.Control>
+              </Field.Root>
+            </Box>
+            <Meter value={volume} min={0} max={100} aria-hidden="true" />
+            <Text as="p" variant="caption" tone="muted">
+              Visual level only · no audio processing
+            </Text>
+          </Stack>
+        </Card>
+      </Grid>
+    </Stack>
   );
 }

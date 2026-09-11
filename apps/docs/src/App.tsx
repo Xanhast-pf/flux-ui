@@ -1,24 +1,78 @@
 import { ArrowUpRightIcon, FluxMarkIcon } from "@flux-ui/icons";
-import { Badge, Container, Inline } from "@flux-ui/react";
+import {
+  Badge,
+  Box,
+  Container,
+  Heading,
+  Inline,
+  Link,
+  SkipLink,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 import { lazy, Suspense, useEffect, useRef } from "react";
-import { routePath, useRoute } from "./lib/routing.js";
 import { REPOSITORY_URL } from "./lib/format.js";
+import { routePath, useRoute } from "./lib/routing.js";
+import "./shell.css";
 import { ThemeSwitch } from "./ui/AppearanceControls.js";
-import { Navigation, MobileNavigation } from "./ui/Navigation.js";
+import { ExampleLoading } from "./ui/ExampleLoading.js";
+import { DocumentationNavigation } from "./ui/Navigation.js";
 import { SearchDialog } from "./ui/SearchDialog.js";
-import { OverviewPage } from "./pages/OverviewPage.js";
-import { PlaygroundPage } from "./pages/PlaygroundPage.js";
-import { ComponentsPage } from "./pages/ComponentsPage.js";
-import { ComponentPage } from "./pages/ComponentPage.js";
-import { TokensPage } from "./pages/TokensPage.js";
-import { HealthPage } from "./pages/HealthPage.js";
-import { SizePage } from "./pages/SizePage.js";
-import { PerformancePage } from "./pages/PerformancePage.js";
-import { RulesPage } from "./pages/RulesPage.js";
-import { InstallPage } from "./pages/InstallPage.js";
-import { DocumentationPage } from "./pages/DocumentationPage.js";
-import "./pages/landing.css";
-
+const OverviewPage = lazy(() =>
+  import("./pages/OverviewPage.js").then((module) => ({
+    default: module.OverviewPage,
+  })),
+);
+const PlaygroundPage = lazy(() =>
+  import("./pages/PlaygroundPage.js").then((module) => ({
+    default: module.PlaygroundPage,
+  })),
+);
+const ComponentsPage = lazy(() =>
+  import("./pages/ComponentsPage.js").then((module) => ({
+    default: module.ComponentsPage,
+  })),
+);
+const ComponentPage = lazy(() =>
+  import("./pages/ComponentPage.js").then((module) => ({
+    default: module.ComponentPage,
+  })),
+);
+const TokensPage = lazy(() =>
+  import("./pages/TokensPage.js").then((module) => ({
+    default: module.TokensPage,
+  })),
+);
+const HealthPage = lazy(() =>
+  import("./pages/HealthPage.js").then((module) => ({
+    default: module.HealthPage,
+  })),
+);
+const SizePage = lazy(() =>
+  import("./pages/SizePage.js").then((module) => ({
+    default: module.SizePage,
+  })),
+);
+const PerformancePage = lazy(() =>
+  import("./pages/PerformancePage.js").then((module) => ({
+    default: module.PerformancePage,
+  })),
+);
+const RulesPage = lazy(() =>
+  import("./pages/RulesPage.js").then((module) => ({
+    default: module.RulesPage,
+  })),
+);
+const InstallPage = lazy(() =>
+  import("./pages/InstallPage.js").then((module) => ({
+    default: module.InstallPage,
+  })),
+);
+const DocumentationPage = lazy(() =>
+  import("./pages/DocumentationPage.js").then((module) => ({
+    default: module.DocumentationPage,
+  })),
+);
 const LabPage = lazy(() =>
   import("./pages/LabPage.js").then((module) => ({ default: module.LabPage })),
 );
@@ -37,7 +91,6 @@ const AccessibilityPage = lazy(() =>
     default: module.AccessibilityPage,
   })),
 );
-
 const IconsPage = lazy(() =>
   import("./pages/IconsPage.js").then((module) => ({
     default: module.IconsPage,
@@ -56,25 +109,49 @@ function RouteView({ route }: { route: string }) {
   switch (route) {
     case "lab":
       return (
-        <Suspense fallback={<p className="muted">Loading lab…</p>}>
+        <Suspense
+          fallback={
+            <Text as="p" variant="body" tone="muted">
+              Loading lab…
+            </Text>
+          }
+        >
           <LabPage />
         </Suspense>
       );
     case "engineering":
       return (
-        <Suspense fallback={<p className="muted">Loading engineering…</p>}>
+        <Suspense
+          fallback={
+            <Text as="p" variant="body" tone="muted">
+              Loading engineering…
+            </Text>
+          }
+        >
           <EngineeringPage />
         </Suspense>
       );
     case "trust":
       return (
-        <Suspense fallback={<p className="muted">Loading trust…</p>}>
+        <Suspense
+          fallback={
+            <Text as="p" variant="body" tone="muted">
+              Loading trust…
+            </Text>
+          }
+        >
           <TrustPage />
         </Suspense>
       );
     case "accessibility":
       return (
-        <Suspense fallback={<p className="muted">Loading accessibility…</p>}>
+        <Suspense
+          fallback={
+            <Text as="p" variant="body" tone="muted">
+              Loading accessibility…
+            </Text>
+          }
+        >
           <AccessibilityPage />
         </Suspense>
       );
@@ -86,13 +163,25 @@ function RouteView({ route }: { route: string }) {
       return <ComponentsPage />;
     case "icons":
       return (
-        <Suspense fallback={<p className="muted">Loading icon browser…</p>}>
+        <Suspense
+          fallback={
+            <Text as="p" variant="body" tone="muted">
+              Loading icon browser…
+            </Text>
+          }
+        >
           <IconsPage />
         </Suspense>
       );
     case "identity":
       return (
-        <Suspense fallback={<p className="muted">Loading identity lab…</p>}>
+        <Suspense
+          fallback={
+            <Text as="p" variant="body" tone="muted">
+              Loading identity lab…
+            </Text>
+          }
+        >
           <IdentityPage />
         </Suspense>
       );
@@ -112,11 +201,15 @@ function RouteView({ route }: { route: string }) {
       return <DocumentationPage />;
     default:
       return (
-        <section>
-          <h1>That page wandered off.</h1>
-          <p>The URL does not match a page in this version of the docs.</p>
-          <a href="#overview">Back to the workshop →</a>
-        </section>
+        <Stack as="section" gap="lg">
+          <Heading level={1} size="xl">
+            That page wandered off.
+          </Heading>
+          <Text as="p" variant="body">
+            The URL does not match a page in this version of the docs.
+          </Text>
+          <Link href="#overview">Back to the workshop →</Link>
+        </Stack>
       );
   }
 }
@@ -138,8 +231,7 @@ export function App() {
   }, [route]);
   return (
     <>
-      <a
-        className="skip-link"
+      <SkipLink
         href="#main-content"
         onClick={(event) => {
           event.preventDefault();
@@ -147,88 +239,102 @@ export function App() {
         }}
       >
         Skip to content
-      </a>
-      <header className="site-header" data-gallery={gallery || undefined}>
-        <Container size="full">
-          <div className="header-inner">
-            <a className="brand" href="#overview" aria-label="Flux UI home">
-              <span className="brand-mark" aria-hidden="true">
+      </SkipLink>
+      <Box
+        data-gallery={gallery || undefined}
+        className="site-header"
+        as="header"
+        surface="default"
+        border="bottom"
+      >
+        <Container size="xl">
+          <Inline className="header-inner" gap="md">
+            <Link href="#overview" aria-label="Flux UI home" className="brand">
+              <span aria-hidden="true" className="brand-mark">
                 <FluxMarkIcon size={20} />
               </span>
-              <span>
-                flux<span className="brand-ui"> / ui</span>
-              </span>
-            </a>
+              <Text>
+                flux<Text className="brand-ui"> / ui</Text>
+              </Text>
+            </Link>
             <Badge tone="accent">alpha</Badge>
-            <nav className="header-links" aria-label="Primary navigation">
-              <a
+            <Box
+              aria-label="Primary navigation"
+              className="header-links"
+              as="nav"
+            >
+              <Link
                 href="#playground"
                 aria-current={route === "playground" ? "page" : undefined}
+                variant="navigation"
               >
                 Playground
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#components"
                 aria-current={
                   route === "components" || route.startsWith("components/")
                     ? "page"
                     : undefined
                 }
+                variant="navigation"
               >
                 Components
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#engineering"
                 aria-current={route === "engineering" ? "page" : undefined}
+                variant="navigation"
               >
                 Engineering
-              </a>
-            </nav>
-            <div className="header-search">
+              </Link>
+            </Box>
+            <Box className="header-search">
               <SearchDialog />
-            </div>
-            <div className="header-theme">
+            </Box>
+            <Box className="header-theme">
               <ThemeSwitch />
-            </div>
-            <a className="header-github" href={REPOSITORY_URL}>
+            </Box>
+            <Link href={REPOSITORY_URL} className="header-github">
               GitHub <ArrowUpRightIcon aria-hidden="true" size={14} />
-            </a>
-            <a className="header-actions" href={`${REPOSITORY_URL}/actions`}>
+            </Link>
+            <Link href={`${REPOSITORY_URL}/actions`} className="header-actions">
               CI <ArrowUpRightIcon aria-hidden="true" size={14} />
-            </a>
-          </div>
-          <div className="mobile-header-row">
-            <MobileNavigation route={route} />
-            <span>Native at heart. Yours by design.</span>
-          </div>
+            </Link>
+          </Inline>
+          <Inline className="mobile-header-row" justify="between" gap="md">
+            <DocumentationNavigation route={route} />
+            <Text variant="caption" tone="muted" align="end">
+              Native at heart. Yours by design.
+            </Text>
+          </Inline>
         </Container>
-      </header>
+      </Box>
       <Container
-        size="full"
+        size="xl"
         className={gallery ? "workshop-shell gallery-shell" : "workshop-shell"}
       >
-        {!gallery ? (
-          <aside className="desktop-sidebar">
-            <div className="sidebar-sticky">
-              <Navigation route={route} />
-            </div>
-          </aside>
-        ) : null}
-        <main id="main-content" tabIndex={-1} ref={mainRef}>
-          <RouteView route={route} />
-          <footer className="site-footer">
-            <Inline justify="between" wrap>
-              <p>Built with Flux. Still becoming.</p>
+        <Box id="main-content" tabIndex={-1} ref={mainRef} as="main">
+          <Suspense fallback={<ExampleLoading />}>
+            <RouteView route={route} />
+          </Suspense>
+          <Box className="site-footer" as="footer">
+            <Inline justify="between" gap="md" wrap>
+              <Text as="p" variant="body">
+                Built with Flux. Still becoming.
+              </Text>
               <Inline gap="md" wrap>
-                <a href="#trust">Trust Center</a>
-                <a href="#engineering">Engineering</a>
-                <a href="#health">Project health</a>
-                <a href="#install">Contribute</a>
-                <a href={`${REPOSITORY_URL}/blob/main/LICENSE`}>MIT license</a>
+                <Link href="#trust">Trust Center</Link>
+                <Link href="#engineering">Engineering</Link>
+                <Link href="#health">Project health</Link>
+                <Link href="#install">Contribute</Link>
+                <Link href={`${REPOSITORY_URL}/blob/main/LICENSE`}>
+                  MIT license
+                </Link>
               </Inline>
             </Inline>
-          </footer>
-        </main>
+          </Box>
+        </Box>
       </Container>
     </>
   );

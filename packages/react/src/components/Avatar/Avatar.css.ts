@@ -1,5 +1,9 @@
 import { cssVars } from "@flux-ui/tokens";
 import { style } from "@vanilla-extract/css";
+export const group = style({
+  display: "inline-flex",
+  paddingInlineStart: "var(--flux-space-2)",
+});
 export const avatar = style({
   position: "relative",
   display: "inline-flex",
@@ -16,12 +20,17 @@ export const avatar = style({
   fontSize: "1rem",
   verticalAlign: "middle",
   selectors: {
-    "&[data-size='sm']": {
+    [`${group} > &`]: {
+      marginInlineStart: "calc(-1 * var(--flux-space-2))",
+      outline: "0.125rem solid var(--flux-color-surface)",
+    },
+    "&[data-h='square']": { borderRadius: "var(--flux-radius-md)" },
+    "&[data-s='sm']": {
       inlineSize: "2rem",
       blockSize: "2rem",
       fontSize: "0.75rem",
     },
-    "&[data-size='lg']": {
+    "&[data-s='lg']": {
       inlineSize: "3.5rem",
       blockSize: "3.5rem",
       fontSize: "1.25rem",

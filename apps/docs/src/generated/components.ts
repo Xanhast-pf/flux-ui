@@ -34,6 +34,14 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Box",
+    slug: "box",
+    category: "Layout",
+    status: "alpha",
+    description: "Single-element semantic spacing and surface primitive.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Breadcrumbs",
     slug: "breadcrumbs",
     category: "Navigation",
@@ -76,6 +84,23 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Code",
+    slug: "code",
+    category: "Typography",
+    status: "alpha",
+    description: "Literal inline code with shared monospace styling.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "CodeBlock",
+    slug: "code-block",
+    category: "Typography",
+    status: "alpha",
+    description:
+      "Literal code, optional copy action and accessible clipboard feedback.",
+    sizeClass: "composite",
+  },
+  {
     name: "Collapsible",
     slug: "collapsible",
     category: "Disclosure",
@@ -85,12 +110,29 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "ColorSwatch",
+    slug: "color-swatch",
+    category: "Display",
+    status: "alpha",
+    description:
+      "Decorative color sample for composition inside named selection controls.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Container",
     slug: "container",
     category: "Layout",
     status: "alpha",
     description:
       "Centered page-width primitive with consistent responsive gutters.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "DescriptionList",
+    slug: "description-list",
+    category: "Typography",
+    status: "alpha",
+    description: "Semantic term/detail pairs with shared layout.",
     sizeClass: "primitive",
   },
   {
@@ -112,12 +154,29 @@ export const components = [
     sizeClass: "overlay",
   },
   {
+    name: "EmptyState",
+    slug: "empty-state",
+    category: "Feedback",
+    status: "alpha",
+    description: "Quiet no-results content with no implied alert behavior.",
+    sizeClass: "composite",
+  },
+  {
     name: "Field",
     slug: "field",
     category: "Inputs",
     status: "alpha",
     description:
       "Accessible form-field composition that wires labels, descriptions, errors, and shared control state.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Fieldset",
+    slug: "fieldset",
+    category: "Forms",
+    status: "alpha",
+    description:
+      "Native grouped controls and legend; browser-owned group disabling.",
     sizeClass: "primitive",
   },
   {
@@ -128,6 +187,14 @@ export const components = [
     description:
       "Native CSS Grid layout with responsive tracks, auto-fit sizing, placement, and subgrid support.",
     sizeClass: "interactive",
+  },
+  {
+    name: "Heading",
+    slug: "heading",
+    category: "Typography",
+    status: "alpha",
+    description: "Explicit heading hierarchy with independent visual size.",
+    sizeClass: "primitive",
   },
   {
     name: "IconButton",
@@ -165,6 +232,40 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Link",
+    slug: "link",
+    category: "Navigation",
+    status: "alpha",
+    description:
+      "Native navigation with text, navigation and action treatments.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "List",
+    slug: "list",
+    category: "Typography",
+    status: "alpha",
+    description: "Styled native content lists, not an ARIA menu.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Meter",
+    slug: "meter",
+    category: "Feedback",
+    status: "alpha",
+    description:
+      "Native bounded measurement; unknown data is never presented as zero.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "PageHeader",
+    slug: "page-header",
+    category: "Layout",
+    status: "alpha",
+    description: "A public recipe for consistent page introductions.",
+    sizeClass: "composite",
+  },
+  {
     name: "Pagination",
     slug: "pagination",
     category: "Navigation",
@@ -191,6 +292,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "ScrollArea",
+    slug: "scroll-area",
+    category: "Layout",
+    status: "alpha",
+    description:
+      "Named native overflow region with overflow-aware keyboard focus.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Select",
     slug: "select",
     category: "Inputs",
@@ -213,6 +323,14 @@ export const components = [
     category: "Feedback",
     status: "alpha",
     description: "Static decorative placeholders for loading layouts.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "SkipLink",
+    slug: "skip-link",
+    category: "Navigation",
+    status: "alpha",
+    description: "Focus-revealed native skip navigation.",
     sizeClass: "primitive",
   },
   {
@@ -242,6 +360,14 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Stat",
+    slug: "stat",
+    category: "Display",
+    status: "alpha",
+    description: "A semantic label, value and supporting-note recipe.",
+    sizeClass: "composite",
+  },
+  {
     name: "Switch",
     slug: "switch",
     category: "Inputs",
@@ -267,12 +393,29 @@ export const components = [
     sizeClass: "interactive",
   },
   {
+    name: "Text",
+    slug: "text",
+    category: "Typography",
+    status: "alpha",
+    description: "Tokenized text roles independent from native semantics.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Textarea",
     slug: "textarea",
     category: "Inputs",
     status: "alpha",
     description:
       "Styled native multi-line text control that preserves browser semantics, attributes, and refs.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "ThemeScope",
+    slug: "theme-scope",
+    category: "Layout",
+    status: "alpha",
+    description:
+      "Scoped semantic theme application with optional container queries.",
     sizeClass: "primitive",
   },
   {

@@ -8,7 +8,22 @@ export default {
   description:
     "A focused editing surface that gives the picture room to breathe.",
   prompt: "Select a clip. Scrub the storyboard. Export the edit notes.",
-  components: ["button", "select", "slider", "switch", "toggle-group"],
+  components: [
+    "aspect-ratio",
+    "box",
+    "button",
+    "card",
+    "field",
+    "grid",
+    "heading",
+    "inline",
+    "select",
+    "slider",
+    "stack",
+    "switch",
+    "text",
+    "toggle-group",
+  ],
   custom:
     "The preview frames and timeline are illustrated, docs-only prototypes. There is no video decoder or rendering engine. Export downloads JSON edit notes, never a rendered video.",
   Icon: LayersIcon,

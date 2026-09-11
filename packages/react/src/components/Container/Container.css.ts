@@ -1,17 +1,20 @@
 import { cssVars } from "@flux-ui/tokens";
-import { style, styleVariants } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 export const container = style({
   inlineSize: "100%",
   minInlineSize: 0,
+  maxInlineSize: "90rem",
   marginInline: "auto",
   paddingInline: `var(${cssVars.space[4]})`,
-});
-
-export const sizes = styleVariants({
-  sm: { maxInlineSize: "40rem" },
-  md: { maxInlineSize: "56rem" },
-  lg: { maxInlineSize: "72rem" },
-  xl: { maxInlineSize: "90rem" },
-  full: { maxInlineSize: "none" },
+  selectors: {
+    "&[data-query]": {
+      containerType: "inline-size",
+      containerName: "flux-layout",
+    },
+    "&[data-size='sm']": { maxInlineSize: "40rem" },
+    "&[data-size='md']": { maxInlineSize: "56rem" },
+    "&[data-size='lg']": { maxInlineSize: "72rem" },
+    "&[data-size='full']": { maxInlineSize: "none" },
+  },
 });

@@ -1,12 +1,16 @@
 import {
+  Box,
   Button,
   Card,
   Field,
+  Grid,
+  Heading,
   Inline,
   Input,
   Select,
   Stack,
   Switch,
+  Text,
   type ButtonSize,
   type ButtonTone,
   type ButtonVariant,
@@ -39,10 +43,12 @@ export function ButtonLab() {
     setClicks(0);
   }
   return (
-    <div className="lab-grid">
+    <Grid columns={{ base: 1, lg: 2 }} gap="lg">
       <Card>
         <Stack gap="md">
-          <h2>Make a button your button.</h2>
+          <Heading level={2} size="lg">
+            Make a button your button.
+          </Heading>
           <Field.Root>
             <Field.Label>Button label</Field.Label>
             <Field.Control>
@@ -131,7 +137,7 @@ export function ButtonLab() {
         </Stack>
       </Card>
       <Stack gap="md">
-        <div className="button-stage">
+        <Box className="button-stage">
           <Button
             variant={variant}
             tone={tone}
@@ -144,14 +150,14 @@ export function ButtonLab() {
           >
             {label || "Button"}
           </Button>
-          <p className="demo-help" role="status">
+          <Text role="status" as="p" variant="caption" tone="muted">
             {clicks === 0
               ? "Go on. Give it a click."
               : `${clicks} clicks. Still satisfying.`}
-          </p>
-        </div>
+          </Text>
+        </Box>
         <CodeBlock key={code} code={code} label="Your button" />
       </Stack>
-    </div>
+    </Grid>
   );
 }

@@ -1,6 +1,7 @@
 import type { ComponentPropsWithRef, ReactElement } from "react";
 
 export interface FieldRootProps extends ComponentPropsWithRef<"div"> {
+  density?: "comfortable" | "compact" | undefined;
   /** Stable id for the form control associated with this field. */
   controlId?: string | undefined;
   disabled?: boolean | undefined;

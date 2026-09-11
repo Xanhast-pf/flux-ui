@@ -1,14 +1,25 @@
-import { Badge, Card, Grid, Inline, Input, Stack, Tabs } from "@flux-ui/react";
+import {
+  Badge,
+  Card,
+  EmptyState,
+  Grid,
+  Heading,
+  Inline,
+  Input,
+  Link,
+  PageHeader,
+  Stack,
+  Tabs,
+  Text,
+} from "@flux-ui/react";
 import { useState } from "react";
 import { catalog } from "../lib/examples.js";
-
 const categories = [
   "All",
   ...Array.from(new Set(catalog.map((item) => item.category))).sort(
     (left, right) => left.localeCompare(right),
   ),
 ];
-
 export function ComponentsPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
@@ -20,17 +31,14 @@ export function ComponentsPage() {
         .toLowerCase()
         .includes(search),
   );
-
   return (
     <Stack gap="lg">
-      <div>
-        <p className="eyebrow">The building blocks</p>
-        <h1>Components</h1>
-        <p className="lede">
+      <PageHeader title={<>Components</>} eyebrow={<>The building blocks</>}>
+        <Text as="p" variant="lead" tone="muted">
           {catalog.length} families. A preview, example, API notes, and size
           contract for every one.
-        </p>
-      </div>
+        </Text>
+      </PageHeader>
       <Input
         aria-label="Filter components"
         type="search"
@@ -40,16 +48,8 @@ export function ComponentsPage() {
         }}
         placeholder="Find a component, a behavior, a possibility…"
       />
-      <Tabs.Root
-        className="component-category-root"
-        value={category}
-        onValueChange={setCategory}
-      >
-        <Tabs.List
-          aria-label="Component categories"
-          activateOnFocus
-          className="component-category-tabs"
-        >
+      <Tabs.Root value={category} onValueChange={setCategory}>
+        <Tabs.List aria-label="Component categories" activateOnFocus>
           {categories.map((name) => (
             <Tabs.Tab key={name} value={name}>
               {name}
@@ -60,31 +60,38 @@ export function ComponentsPage() {
           <Tabs.Panel value={name} key={name}>
             {category === name ? (
               <>
-                <p className="result-count" role="status">
+                <Text role="status" as="p" variant="caption" tone="muted">
                   {visible.length}{" "}
                   {visible.length === 1 ? "component" : "components"}
-                </p>
+                </Text>
                 <Grid minColumnWidth="14rem" gap="md">
                   {visible.map((item) => (
-                    <Card key={item.slug} className="catalog-card">
-                      <Inline justify="between" wrap>
-                        <Badge>{item.category}</Badge>
-                        <span className="muted">{item.status}</span>
-                      </Inline>
-                      <h2>
-                        <a href={`#components/${item.slug}`}>
-                          {item.name}
-                          <span aria-hidden="true"> ↗</span>
-                        </a>
-                      </h2>
-                      <p>{item.description}</p>
+                    <Card key={item.slug}>
+                      <Stack gap="md">
+                        <Inline justify="between" wrap>
+                          <Badge>{item.category}</Badge>
+                          <Text tone="muted">{item.status}</Text>
+                        </Inline>
+                        <Heading level={2} size="lg">
+                          <Link href={`#components/${item.slug}`}>
+                            {item.name}
+                            <Text aria-hidden="true"> ↗</Text>
+                          </Link>
+                        </Heading>
+                        <Text as="p" variant="body" tone="muted">
+                          {item.description}
+                        </Text>
+                      </Stack>
                     </Card>
                   ))}
                 </Grid>
                 {visible.length === 0 ? (
                   <Card>
-                    <h2>No matching components.</h2>
-                    <p>Try a different name or select All categories.</p>
+                    <EmptyState
+                      title="No matching components."
+                      headingLevel={2}
+                      description="Try a different name or select All categories."
+                    />
                   </Card>
                 ) : null}
               </>

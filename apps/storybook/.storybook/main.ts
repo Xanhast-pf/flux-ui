@@ -1,6 +1,6 @@
-import { resolve } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
+import { resolve } from "node:path";
 import { mergeConfig } from "vite";
 
 const config: StorybookConfig = {
@@ -15,6 +15,13 @@ const config: StorybookConfig = {
       plugins: [vanillaExtractPlugin()],
       resolve: {
         alias: [
+          {
+            find: "@flux-ui/tokens/presets.css",
+            replacement: resolve(
+              import.meta.dirname,
+              "../../../packages/tokens/src/presets.css",
+            ),
+          },
           {
             find: "@flux-ui/tokens/theme.css",
             replacement: resolve(

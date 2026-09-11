@@ -7,5 +7,6 @@ export interface AvatarProps extends Omit<
   alt: string;
   src?: string | undefined;
   fallback?: ReactNode;
+  shape?: "circle" | "square" | undefined;
   size?: "sm" | "md" | "lg" | undefined;
 }

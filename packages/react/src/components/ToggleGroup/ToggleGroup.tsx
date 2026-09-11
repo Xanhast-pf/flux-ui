@@ -1,14 +1,20 @@
 import { createContext, useContext, useState, type MouseEvent } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { RovingFocus, useRovingItem } from "../../internal/RovingFocus.js";
-import { root, item } from "./ToggleGroup.css.js";
 import type {
-  ToggleGroupRootProps,
+  SelectionAppearance,
+  SelectionSize,
+} from "../../internal/selection.types.js";
+import { item, root } from "./ToggleGroup.css.js";
+import type {
   ToggleGroupItemProps,
+  ToggleGroupRootProps,
 } from "./ToggleGroup.types.js";
 type Selection = string | null | readonly string[];
 const ToggleGroupContext = createContext<{
   selected: Selection;
+  size: SelectionSize | undefined;
+  appearance: SelectionAppearance;
   disabled: boolean;
   toggle: (value: string) => void;
 } | null>(null);
@@ -18,6 +24,8 @@ function includes(selected: Selection, value: string): boolean {
     : selected !== null && selected.includes(value);
 }
 function ToggleGroupRoot({
+  size,
+  appearance = "outline",
   className,
   children,
   defaultValue,
@@ -50,15 +58,16 @@ function ToggleGroupRoot({
     }
   }
   return (
-    <ToggleGroupContext value={{ selected, disabled, toggle }}>
+    <ToggleGroupContext
+      value={{ selected, disabled, toggle, size, appearance }}
+    >
       <RovingFocus orientation={orientation} loopFocus={loopFocus}>
         <div
           {...props}
           data-flux-roving-root=""
           role="group"
           className={joinClassNames(root, className)}
-          data-orientation={orientation}
-          data-disabled={disabled || undefined}
+          data-o={orientation === "horizontal" ? undefined : orientation}
         >
           {children}
         </div>
@@ -108,7 +117,8 @@ function ToggleGroupItem({
       type={type}
       disabled={isDisabled}
       aria-pressed={pressed}
-      data-pressed={pressed || undefined}
+      data-s={context.size}
+      data-a={context.appearance === "outline" ? undefined : context.appearance}
       data-flux-roving-preferred={pressed || undefined}
       onClick={handleClick}
     />

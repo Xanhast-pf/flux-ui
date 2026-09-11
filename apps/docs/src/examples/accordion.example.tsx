@@ -3,6 +3,7 @@ import code from "./accordion.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 export default {
   Preview,
+  previewLayout: "fill",
   code,
   props: [
     [

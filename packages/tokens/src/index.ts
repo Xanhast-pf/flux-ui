@@ -1,4 +1,23 @@
 export const cssVars = {
+  font: {
+    body: "--flux-font-body",
+    mono: "--flux-font-mono",
+    caption: "--flux-font-caption",
+    bodySize: "--flux-font-body-size",
+    lead: "--flux-font-lead",
+    headingSm: "--flux-font-heading-sm",
+    headingMd: "--flux-font-heading-md",
+    headingLg: "--flux-font-heading-lg",
+    headingXl: "--flux-font-heading-xl",
+    display: "--flux-font-display",
+    metric: "--flux-font-metric",
+    regular: "--flux-font-regular",
+    medium: "--flux-font-medium",
+    bold: "--flux-font-bold",
+    leading: "--flux-font-leading",
+    tight: "--flux-font-tight",
+  },
+
   color: {
     canvas: "--flux-color-canvas",
     surface: "--flux-color-surface",
@@ -61,6 +80,25 @@ export const cssVars = {
 } as const;
 
 export const primitiveTokens = {
+  font: {
+    body: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    mono: '"SFMono-Regular", Consolas, "Liberation Mono", monospace',
+    caption: "0.75rem",
+    bodySize: "1rem",
+    lead: "1.25rem",
+    headingSm: "1.25rem",
+    headingMd: "1.5rem",
+    headingLg: "2rem",
+    headingXl: "2.5rem",
+    display: "4rem",
+    metric: "1.75rem",
+    regular: "400",
+    medium: "600",
+    bold: "700",
+    leading: "1.6",
+    tight: "1.15",
+  },
+
   space: {
     1: "0.25rem",
     2: "0.5rem",

@@ -1,22 +1,28 @@
-import { Button, Checkbox, Field, Inline, Stack } from "@flux-ui/react";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Field,
+  Fieldset,
+  Inline,
+  Stack,
+} from "@flux-ui/react";
 import { useState } from "react";
-
 const initialChannels = { email: true, push: false };
-
 export function CheckboxDemo() {
   const [channels, setChannels] = useState(initialChannels);
   const [accepted, setAccepted] = useState(false);
   const allSelected = channels.email && channels.push;
   const someSelected = channels.email !== channels.push;
-
   return (
-    <form
+    <Box
       aria-label="Checkbox preferences"
       onReset={() => {
         // The browser resets defaultChecked; the demo owns controlled state.
         setChannels(initialChannels);
         setAccepted(false);
       }}
+      as="form"
     >
       <Stack gap="lg">
         <Field.Root controlId="checkbox-demo-updates">
@@ -31,8 +37,8 @@ export function CheckboxDemo() {
           </Field.Description>
         </Field.Root>
 
-        <fieldset className="checkbox-demo-group">
-          <legend>Delivery channels</legend>
+        <Fieldset>
+          <Fieldset.Legend>Delivery channels</Fieldset.Legend>
           <Stack gap="md">
             <Field.Root controlId="checkbox-demo-all">
               <Inline gap="sm">
@@ -85,7 +91,7 @@ export function CheckboxDemo() {
               </Inline>
             </Field.Root>
           </Stack>
-        </fieldset>
+        </Fieldset>
 
         <Field.Root
           controlId="checkbox-demo-terms"
@@ -121,6 +127,6 @@ export function CheckboxDemo() {
           </Button>
         </Inline>
       </Stack>
-    </form>
+    </Box>
   );
 }

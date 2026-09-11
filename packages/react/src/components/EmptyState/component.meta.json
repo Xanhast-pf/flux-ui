@@ -1,0 +1,8 @@
+{
+  "name": "EmptyState",
+  "slug": "empty-state",
+  "category": "Feedback",
+  "status": "alpha",
+  "description": "Quiet no-results content with no implied alert behavior.",
+  "sizeClass": "composite"
+}

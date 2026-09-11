@@ -1,7 +1,20 @@
-import type { ComponentPropsWithRef } from "react";
-import type { LayoutGap, ResponsiveValue } from "../../internal/layout.js";
+import type {
+  LayoutGap,
+  LayoutSpacing,
+  ResponsiveScope,
+  ResponsiveValue,
+} from "../../internal/layout.js";
+import type {
+  LayoutElement,
+  SemanticProps,
+} from "../../internal/semantic.types.js";
 
-export interface StackProps extends ComponentPropsWithRef<"div"> {
-  gap?: ResponsiveValue<LayoutGap>;
-  align?: "start" | "center" | "end" | "stretch";
-}
+export type StackProps = SemanticProps<
+  LayoutElement,
+  "div",
+  LayoutSpacing & {
+    responsiveTo?: ResponsiveScope | undefined;
+    gap?: ResponsiveValue<LayoutGap> | undefined;
+    align?: "start" | "center" | "end" | "stretch";
+  }
+>;

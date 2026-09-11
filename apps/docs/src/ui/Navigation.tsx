@@ -1,10 +1,19 @@
 import { CloseIcon, MenuIcon } from "@flux-ui/icons";
-import { Collapsible, Drawer, Stack } from "@flux-ui/react";
+import {
+  Box,
+  Collapsible,
+  Drawer,
+  Link,
+  List,
+  ScrollArea,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 import { useState } from "react";
-import { ThemeSwitch } from "./AppearanceControls.js";
 import { components } from "../generated/components.js";
 import { sections } from "../lib/routing.js";
-export function Navigation({
+import { ThemeSwitch } from "./AppearanceControls.js";
+function Navigation({
   route,
   onNavigate,
 }: {
@@ -12,51 +21,55 @@ export function Navigation({
   onNavigate?: () => void;
 }) {
   return (
-    <nav aria-label="Documentation sections">
+    <Box aria-label="Documentation sections" as="nav">
       <Stack gap="md">
-        <div>
-          <p className="nav-label">Explore Flux</p>
-          <ul className="nav-links">
+        <Box>
+          <Text as="p" variant="eyebrow" tone="muted">
+            Explore Flux
+          </Text>
+          <List as="ul" variant="plain">
             {sections.map(([id, label]) => (
-              <li key={id}>
-                <a
+              <List.Item key={id}>
+                <Link
                   href={`#${id}`}
                   aria-current={route === id ? "page" : undefined}
                   onClick={onNavigate}
+                  variant="navigation"
                 >
                   {label}
-                </a>
-              </li>
+                </Link>
+              </List.Item>
             ))}
-          </ul>
-        </div>
-        <Collapsible.Root open className="nav-catalog">
+          </List>
+        </Box>
+        <Collapsible.Root open appearance="plain" density="compact">
           <Collapsible.Trigger>
-            All components <span className="muted">{components.length}</span>
+            All components <Text tone="muted">{components.length}</Text>
           </Collapsible.Trigger>
-          <Collapsible.Content>
-            <ul className="nav-links">
+          <Collapsible.Content padding="none">
+            <List as="ul" variant="plain">
               {components.map((entry) => (
-                <li key={entry.slug}>
-                  <a
+                <List.Item key={entry.slug}>
+                  <Link
                     href={`#components/${entry.slug}`}
                     aria-current={
                       route === `components/${entry.slug}` ? "page" : undefined
                     }
                     onClick={onNavigate}
+                    variant="navigation"
                   >
                     {entry.name}
-                  </a>
-                </li>
+                  </Link>
+                </List.Item>
               ))}
-            </ul>
+            </List>
           </Collapsible.Content>
         </Collapsible.Root>
       </Stack>
-    </nav>
+    </Box>
   );
 }
-export function MobileNavigation({ route }: { route: string }) {
+export function DocumentationNavigation({ route }: { route: string }) {
   const [open, setOpen] = useState(false);
   return (
     <Drawer.Root open={open} onOpenChange={setOpen}>
@@ -66,20 +79,26 @@ export function MobileNavigation({ route }: { route: string }) {
       </Drawer.Trigger>
       <Drawer.Popup side="left" className="mobile-nav-drawer">
         <Drawer.Title>Flux UI documentation</Drawer.Title>
-        <Drawer.Description>
+        <Drawer.Close aria-label="Close navigation" title="Close navigation">
+          <CloseIcon aria-hidden="true" size={16} />
+        </Drawer.Close>
+        <Drawer.Description style={{ gridColumn: "1 / -1", margin: 0 }}>
           Find a component, experiment, or inspect the project.
         </Drawer.Description>
-        <ThemeSwitch />
-        <Navigation
-          route={route}
-          onNavigate={() => {
-            setOpen(false);
-          }}
-        />
-        <Drawer.Close>
-          <CloseIcon aria-hidden="true" size={16} />
-          Close navigation
-        </Drawer.Close>
+        <Box style={{ gridColumn: "1 / -1" }}>
+          <ThemeSwitch />
+        </Box>
+        <ScrollArea
+          aria-label="Documentation navigation"
+          className="navigation-scroll"
+        >
+          <Navigation
+            route={route}
+            onNavigate={() => {
+              setOpen(false);
+            }}
+          />
+        </ScrollArea>
       </Drawer.Popup>
     </Drawer.Root>
   );

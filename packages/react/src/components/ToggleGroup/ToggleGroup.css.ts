@@ -6,10 +6,10 @@ export const root = style({
   flexWrap: "wrap",
   gap: `var(${cssVars.space[1]})`,
   selectors: {
-    "&[data-orientation='vertical']": {
+    "&[data-o='vertical']": {
       flexDirection: "column",
       alignItems: "stretch",
     },
   },
 });
-export const item = style([toggle]);
+export const item = toggle;

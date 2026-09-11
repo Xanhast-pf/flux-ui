@@ -1,5 +1,6 @@
-import type { ReactNode } from "react";
 import { FluxMarkIcon } from "@flux-ui/icons";
+import { Inline, Stat, Text } from "@flux-ui/react";
+import type { CSSProperties, ReactNode } from "react";
 export function SceneHeader({
   brand,
   context,
@@ -10,37 +11,32 @@ export function SceneHeader({
   children?: ReactNode;
 }) {
   return (
-    <header className="scene-header">
-      <div className="scene-brand">
+    <Inline as="header" justify="between" wrap gap="md">
+      <Inline wrap gap={3}>
         <FluxMarkIcon size={20} />
-        <strong>{brand}</strong>
-        <span>{context}</span>
-      </div>
-      <div className="scene-header-actions">{children}</div>
-    </header>
+        <Text as="strong" variant="lead" weight="bold">
+          {brand}
+        </Text>
+        <Text variant="caption" tone="muted">
+          {context}
+        </Text>
+      </Inline>
+      <Inline gap="md" wrap>
+        {children}
+      </Inline>
+    </Inline>
   );
 }
 export function SceneStatus({ children }: { children: ReactNode }) {
   return (
-    <p className="scene-status" role="status">
+    <Text as="p" variant="caption" tone="muted" role="status">
       {children}
-    </p>
+    </Text>
   );
 }
-export function Metric({
-  label,
-  value,
-  note,
-}: {
-  label: string;
-  value: string;
-  note: string;
-}) {
-  return (
-    <div className="scene-metric">
-      <span>{label}</span>
-      <strong>{value}</strong>
-      <small>{note}</small>
-    </div>
-  );
-}
+export const artworkInkStyle = {
+  "--flux-color-text": "var(--art-ink)",
+  "--flux-color-text-muted": "var(--art-ink)",
+  "--flux-color-text-subtle": "var(--art-ink)",
+} as CSSProperties;
+export const Metric = Stat;

@@ -1,0 +1,8 @@
+{
+  "name": "Heading",
+  "slug": "heading",
+  "category": "Typography",
+  "status": "alpha",
+  "description": "Explicit heading hierarchy with independent visual size.",
+  "sizeClass": "primitive"
+}

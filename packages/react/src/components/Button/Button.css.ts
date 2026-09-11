@@ -1,144 +1,22 @@
 import { cssVars } from "@flux-ui/tokens";
 import { keyframes, style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
 
 const spin = keyframes({
   to: { transform: "rotate(360deg)" },
 });
 
-export const button = recipe({
-  base: {
-    appearance: "none",
-    border: "0.0625rem solid transparent",
-    borderRadius: `var(--flux-button-radius, var(${cssVars.radius.md}))`,
-    cursor: "pointer",
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: `var(${cssVars.space[2]})`,
-    font: "inherit",
-    fontWeight: 650,
-    lineHeight: 1,
-    position: "relative",
-    userSelect: "none",
-    transition: [
-      `background-color var(${cssVars.motion.fast}) var(${cssVars.motion.easing})`,
-      `border-color var(${cssVars.motion.fast}) var(${cssVars.motion.easing})`,
-      `color var(${cssVars.motion.fast}) var(${cssVars.motion.easing})`,
-      `transform var(${cssVars.motion.fast}) var(${cssVars.motion.easing})`,
-    ].join(", "),
-    selectors: {
-      "&:focus-visible": {
-        outline: `0.125rem solid var(${cssVars.color.focus})`,
-        outlineOffset: "0.125rem",
-      },
-      "&:active:not(:disabled)": { transform: "scale(0.985)" },
-      "&:disabled": { cursor: "not-allowed", opacity: 0.52 },
+export const button = style({
+  appearance: "none",
+  position: "relative",
+  cursor: "pointer",
+  userSelect: "none",
+  selectors: {
+    "&:focus-visible": {
+      outline: `0.125rem solid var(${cssVars.color.focus})`,
+      outlineOffset: "0.125rem",
     },
+    "&:disabled": { cursor: "not-allowed", opacity: 0.52 },
   },
-  variants: {
-    size: {
-      sm: {
-        minHeight: `var(${cssVars.control.sm})`,
-        paddingInline: `var(${cssVars.space[3]})`,
-        fontSize: "0.75rem",
-      },
-      md: {
-        minHeight: `var(${cssVars.control.md})`,
-        paddingInline: `var(${cssVars.space[4]})`,
-        fontSize: "1rem",
-      },
-      lg: {
-        minHeight: `var(${cssVars.control.lg})`,
-        paddingInline: `var(${cssVars.space[5]})`,
-        fontSize: "1rem",
-      },
-    },
-    tone: {
-      accent: {},
-      neutral: {},
-      danger: {},
-    },
-    variant: {
-      solid: {},
-      soft: {},
-      outline: { background: "transparent" },
-      ghost: { background: "transparent", borderColor: "transparent" },
-    },
-  },
-  compoundVariants: [
-    {
-      variants: { tone: "accent", variant: "solid" },
-      style: {
-        background: `var(--flux-button-bg, var(${cssVars.color.accent}))`,
-        color: `var(--flux-button-fg, var(${cssVars.color.accentForeground}))`,
-        selectors: {
-          "&:hover:not(:disabled)": {
-            background: `var(${cssVars.color.accentHover})`,
-          },
-        },
-      },
-    },
-    {
-      variants: { tone: "danger", variant: "solid" },
-      style: {
-        background: `var(--flux-button-bg, var(${cssVars.color.danger}))`,
-        color: `var(--flux-button-fg, var(${cssVars.color.dangerForeground}))`,
-        selectors: {
-          "&:hover:not(:disabled)": {
-            background: `var(${cssVars.color.dangerHover})`,
-          },
-        },
-      },
-    },
-    {
-      variants: { tone: "neutral", variant: "solid" },
-      style: {
-        background: `var(--flux-button-bg, var(${cssVars.color.text}))`,
-        color: `var(--flux-button-fg, var(${cssVars.color.surface}))`,
-      },
-    },
-    {
-      variants: { tone: "accent", variant: "soft" },
-      style: {
-        background: `var(${cssVars.color.accentSoft})`,
-        color: `var(${cssVars.color.accent})`,
-      },
-    },
-    {
-      variants: { tone: "danger", variant: "soft" },
-      style: {
-        background: `var(${cssVars.color.dangerSoft})`,
-        color: `var(${cssVars.color.danger})`,
-      },
-    },
-    {
-      variants: { tone: "neutral", variant: "soft" },
-      style: {
-        background: `var(${cssVars.color.surfaceSubtle})`,
-        color: `var(${cssVars.color.text})`,
-      },
-    },
-    {
-      variants: { variant: "outline" },
-      style: {
-        borderColor: `var(${cssVars.color.border})`,
-        color: `var(${cssVars.color.text})`,
-      },
-    },
-    {
-      variants: { variant: "ghost" },
-      style: {
-        color: `var(${cssVars.color.text})`,
-        selectors: {
-          "&:hover:not(:disabled)": {
-            background: `var(${cssVars.color.surfaceSubtle})`,
-          },
-        },
-      },
-    },
-  ],
-  defaultVariants: { size: "md", tone: "accent", variant: "solid" },
 });
 
 export const content = style({

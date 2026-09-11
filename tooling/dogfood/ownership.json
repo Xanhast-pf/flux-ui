@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "sourceExceptions": [
+    {
+      "prefix": "apps/docs/src/perf/",
+      "reason": "Native browser and React reference implementations are the measured performance baseline, not production UI."
+    }
+  ],
+  "artwork": [
+    {
+      "file": "apps/docs/src/App.tsx",
+      "className": "brand-mark",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/pages/OverviewPage.tsx",
+      "className": "hero-signal",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/pages/TokensPage.tsx",
+      "className": "space-sample",
+      "reason": "Token-size geometry sample; width is the value being illustrated."
+    },
+    {
+      "file": "apps/docs/src/showcase/ProductShowcase.tsx",
+      "className": "try-dot",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/finance.preview.tsx",
+      "className": "card-orbit",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/finance.preview.tsx",
+      "className": "card-chip",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/marketing.preview.tsx",
+      "className": "poster-sculpture",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/music.preview.tsx",
+      "className": "track-color",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/music.preview.tsx",
+      "className": "track-lane",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/music.preview.tsx",
+      "className": "sequencer-playhead",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/social.preview.tsx",
+      "className": "gather-flower",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/social.preview.tsx",
+      "className": "creator-portrait",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/video.preview.tsx",
+      "className": "video-landscape",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/video.preview.tsx",
+      "className": "clip-thumbnail",
+      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
+    },
+    {
+      "file": "apps/docs/src/ui/BundleExplorer.tsx",
+      "className": "bar-track",
+      "reason": "Decorative data geometry; the numeric value and label are provided as readable text."
+    },
+    {
+      "file": "apps/docs/src/ui/ComparisonBars.tsx",
+      "className": "bar-track",
+      "reason": "Decorative data geometry; the numeric value and label are provided as readable text."
+    }
+  ],
+  "stylesheets": {
+    "apps/docs/src/pages/landing.css": {
+      "owner": "documentation-shell",
+      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
+      "maxDeclarations": 103
+    },
+    "apps/docs/src/perf/perf.css": {
+      "owner": "documentation-shell",
+      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
+      "maxDeclarations": 17
+    },
+    "apps/docs/src/shell.css": {
+      "owner": "documentation-shell",
+      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
+      "maxDeclarations": 23
+    },
+    "apps/docs/src/showcase/scenes/commerce.css": {
+      "owner": "scene-art",
+      "reason": "Domain illustration geometry, not a public control theme.",
+      "maxDeclarations": 48
+    },
+    "apps/docs/src/showcase/scenes/finance.css": {
+      "owner": "scene-art",
+      "reason": "Domain illustration geometry, not a public control theme.",
+      "maxDeclarations": 54
+    },
+    "apps/docs/src/showcase/scenes/marketing.css": {
+      "owner": "scene-art",
+      "reason": "Domain illustration geometry, not a public control theme.",
+      "maxDeclarations": 46
+    },
+    "apps/docs/src/showcase/scenes/music.css": {
+      "owner": "scene-art",
+      "reason": "Domain illustration geometry, not a public control theme.",
+      "maxDeclarations": 83
+    },
+    "apps/docs/src/showcase/scenes/social.css": {
+      "owner": "scene-art",
+      "reason": "Domain illustration geometry, not a public control theme.",
+      "maxDeclarations": 50
+    },
+    "apps/docs/src/showcase/scenes/video.css": {
+      "owner": "scene-art",
+      "reason": "Domain illustration geometry, not a public control theme.",
+      "maxDeclarations": 83
+    },
+    "apps/docs/src/showcase/showcase.css": {
+      "owner": "showcase-staging",
+      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
+      "maxDeclarations": 29
+    },
+    "apps/docs/src/styles.css": {
+      "owner": "documentation-shell",
+      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
+      "maxDeclarations": 347
+    }
+  },
+  "teachingFixtures": [
+    {
+      "prefix": "apps/docs/src/examples/",
+      "reason": "Native wrapper markup in teaching fixtures demonstrates interoperability; ordinary raw controls remain forbidden, and code strings are not rendered JSX."
+    }
+  ]
+}

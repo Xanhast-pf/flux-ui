@@ -1,7 +1,16 @@
-import type { ComponentPropsWithRef, ComponentPropsWithoutRef } from "react";
-import type { LayoutGap, ResponsiveValue } from "../../internal/layout.js";
+import type {
+  LayoutGap,
+  LayoutSpacing,
+  ResponsiveScope,
+  ResponsiveValue,
+} from "../../internal/layout.js";
+import type {
+  LayoutElement,
+  SemanticProps,
+} from "../../internal/semantic.types.js";
 
-type GridSharedProps = {
+type GridSharedProps = LayoutSpacing & {
+  responsiveTo?: ResponsiveScope | undefined;
   gap?: ResponsiveValue<LayoutGap> | undefined;
   rowGap?: ResponsiveValue<LayoutGap> | undefined;
   columnGap?: ResponsiveValue<LayoutGap> | undefined;
@@ -29,14 +38,21 @@ type GridTemplateMode = {
   minColumnWidth?: undefined;
 };
 
-export type GridProps = ComponentPropsWithRef<"div"> &
-  GridSharedProps &
-  (GridCountMode | GridAutoFitMode | GridTemplateMode);
+export type GridProps = SemanticProps<
+  LayoutElement,
+  "div",
+  GridSharedProps & (GridCountMode | GridAutoFitMode | GridTemplateMode)
+>;
 
-export type GridItemProps = ComponentPropsWithoutRef<"div"> & {
-  colSpan?: ResponsiveValue<number | "full"> | undefined;
-  rowSpan?: ResponsiveValue<number> | undefined;
-  alignSelf?: "auto" | "start" | "center" | "end" | "stretch" | undefined;
-  justifySelf?: "auto" | "start" | "center" | "end" | "stretch" | undefined;
-  subgrid?: "columns" | "rows" | "both" | undefined;
-};
+export type GridItemProps = SemanticProps<
+  LayoutElement,
+  "div",
+  {
+    responsiveTo?: ResponsiveScope | undefined;
+    colSpan?: ResponsiveValue<number | "full"> | undefined;
+    rowSpan?: ResponsiveValue<number> | undefined;
+    alignSelf?: "auto" | "start" | "center" | "end" | "stretch" | undefined;
+    justifySelf?: "auto" | "start" | "center" | "end" | "stretch" | undefined;
+    subgrid?: "columns" | "rows" | "both" | undefined;
+  }
+>;

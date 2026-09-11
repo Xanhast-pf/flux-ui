@@ -1,30 +1,32 @@
-import { Stack, Table } from "@flux-ui/react";
+import {
+  Meter,
+  PageHeader,
+  ScrollArea,
+  Stack,
+  Table,
+  Text,
+} from "@flux-ui/react";
 import { health } from "../generated/health.js";
-import { formatBytes, budgetUsage } from "../lib/format.js";
-import { MeasurementNotice } from "../ui/MeasurementNotice.js";
+import { budgetUsage, formatBytes } from "../lib/format.js";
 import { BundleExplorer } from "../ui/BundleExplorer.js";
+import { MeasurementNotice } from "../ui/MeasurementNotice.js";
 export function SizePage() {
   const runtimeBrotli = health.size.aggregate.runtime.brotli;
   const publishedBrotli = health.size.aggregate.published.brotli;
   return (
-    <section className="reference-page">
+    <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="md">
         <MeasurementNotice />
-        <div>
-          <h1>Bundle-size health</h1>
-          <p>
+        <PageHeader title={<>Bundle-size health</>}>
+          <Text as="p" variant="body">
             Every public component has an absolute complexity-class budget and a
             historical regression baseline. The meters below show Brotli size
             against each component&apos;s absolute budget.
-          </p>
-        </div>
+          </Text>
+        </PageHeader>
 
         <BundleExplorer />
-        <div
-          className="table-scroll"
-          role="region"
-          aria-label="Measurement table"
-        >
+        <ScrollArea aria-label="Measurement table" axis="horizontal">
           <Table.Root>
             <Table.Caption>
               Committed measurements (new entries stay pending until measured)
@@ -45,7 +47,6 @@ export function SizePage() {
                   component.brotli,
                   component.budgetBrotli,
                 );
-
                 return (
                   <Table.Row key={component.slug}>
                     <Table.RowHeader>{component.name}</Table.RowHeader>
@@ -54,12 +55,14 @@ export function SizePage() {
                     <Table.Cell>{formatBytes(component.gzip)}</Table.Cell>
                     <Table.Cell>{formatBytes(component.brotli)}</Table.Cell>
                     <Table.Cell>
-                      <meter
-                        min={0}
-                        max={1}
-                        value={usage ?? 0}
-                        aria-label={`${component.name} Brotli budget usage`}
-                      />{" "}
+                      {usage === null ? null : (
+                        <Meter
+                          min={0}
+                          max={1}
+                          value={usage}
+                          aria-label={`${component.name} Brotli budget usage`}
+                        />
+                      )}{" "}
                       {usage === null
                         ? "Pending baseline"
                         : `${(usage * 100).toFixed(1)}%`}
@@ -69,14 +72,20 @@ export function SizePage() {
               })}
             </Table.Body>
           </Table.Root>
-        </div>
+        </ScrollArea>
 
-        <p>
+        <Text as="p" variant="body">
           Last measured aggregate runtime:{" "}
-          <strong>{formatBytes(runtimeBrotli)}</strong>. Published package:{" "}
-          <strong>{formatBytes(publishedBrotli)}</strong>.
-        </p>
+          <Text as="strong" weight="bold">
+            {formatBytes(runtimeBrotli)}
+          </Text>
+          . Published package:{" "}
+          <Text as="strong" weight="bold">
+            {formatBytes(publishedBrotli)}
+          </Text>
+          .
+        </Text>
       </Stack>
-    </section>
+    </Stack>
   );
 }

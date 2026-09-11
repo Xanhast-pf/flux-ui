@@ -6,7 +6,7 @@ The public docs site is both a component reference and a working consumer of Flu
 
 The overview combines a product introduction with a local release-room demo. The playground provides four labs: release room, button configuration, theme/accent exploration, and an interactive collection. All actions are local and explicitly labeled as demos. There is no backend, deployment action, email delivery, fake CI result, or arbitrary code evaluation.
 
-The desktop sidebar uses semantic navigation links; the mobile version uses Flux Drawer. Search uses Flux Dialog, opens from its button or Ctrl/Cmd+K, filters component/reference links, supports normal Tab navigation, and closes with Escape. It deliberately is not labeled as a combobox or custom command widget.
+Documentation sections use one Flux Drawer at every viewport width; there is no persistent desktop sidebar. The drawer has a visible Close button above its independently scrolling semantic navigation links. Search uses Flux Dialog, opens from its button or Ctrl/Cmd+K, filters component/reference links, supports normal Tab navigation, and closes with Escape. It deliberately is not labeled as a combobox or custom command widget.
 
 | Hash                   | View                                                              |
 | ---------------------- | ----------------------------------------------------------------- |
@@ -48,6 +48,11 @@ export default {
 } satisfies ComponentExample;
 ```
 
+Previews default to a centered control layout. Set `previewLayout: "fill"` in
+an example's metadata for a layout-oriented example such as Card, Grid, or Table.
+Both layouts use a centered, bounded canvas; Compact preview narrows that canvas
+without remounting the example. No central preview-layout registry is required.
+
 The existing Checkbox and RadioGroup compositions import their maintained demo modules in the same way. Layout examples use a small amount of docs-only scaffolding CSS (such as `demo-boundary`) to make spacing visible; the controls themselves use public Flux exports.
 
 Vite discovers metadata modules by filename with `import.meta.glob`. Metadata is loaded on demand through module-scoped React lazy views when an individual component route is visited; the catalog and search use only generated public metadata. Example components are not eagerly mounted or loaded merely to build the summary catalog. The source code shown is the source used to compile the preview, not a manually maintained duplicate and not user-supplied JavaScript.
@@ -85,13 +90,12 @@ On the repository's pinned Node 24 / pnpm toolchain:
 
 ```bash
 pnpm generate
-pnpm size:update
-pnpm check:fix
-pnpm check:full
+pnpm format
+pnpm verify:all
 pnpm perf
 ```
 
-Review size-baseline changes, rather than accepting growth blindly. New baselines are warranted by new components; runtime baselines should not be regenerated merely because documentation has changed.
+Run `pnpm size:update` only after reviewing the actual emitted sizes and accepting a new or changed baseline. Do not use it to clear unexplained regressions. `verify:all` keeps running independent checks even if a size baseline is missing; its overall result remains failed. Review size-baseline changes, rather than accepting growth blindly. New baselines are warranted by new components; runtime baselines should not be regenerated merely because documentation has changed.
 
 New coverage includes component-level semantics, form/reset/ref behavior, catalog-contract tests, route discovery, search/keyboard focus, clipboard success/failure, persisted preferences, preview reset, real release-room interactions, narrow viewports, and light/dark/overlay accessibility scans. Tests being included is not evidence that they have passed: run the exact dependency-backed pipeline before merging.
 

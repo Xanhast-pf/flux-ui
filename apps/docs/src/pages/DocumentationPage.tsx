@@ -1,68 +1,74 @@
-import { Accordion, Stack } from "@flux-ui/react";
+import { Accordion, Code, Heading, Link, List, Stack } from "@flux-ui/react";
 import { REPOSITORY_URL } from "../lib/format.js";
 export function DocumentationPage() {
   return (
-    <section className="reference-page">
+    <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="md">
-        <h1>Documentation</h1>
-        <ul>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/docs/workshop.md`}>
+        <Heading level={1} size="xl">
+          Documentation
+        </Heading>
+        <List as="ul" variant="marker">
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/docs/workshop.md`}>
               Workshop architecture and examples
-            </a>
-          </li>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/README.md`}>Project README</a>
-          </li>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/docs/development.md`}>
+            </Link>
+          </List.Item>
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/README.md`}>
+              Project README
+            </Link>
+          </List.Item>
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/docs/development.md`}>
               Development workflow
-            </a>
-          </li>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/docs/architecture.md`}>
+            </Link>
+          </List.Item>
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/docs/architecture.md`}>
               Architecture
-            </a>
-          </li>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/docs/component-api.md`}>
+            </Link>
+          </List.Item>
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/docs/component-api.md`}>
               Component API rules
-            </a>
-          </li>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/docs/design-tokens.md`}>
+            </Link>
+          </List.Item>
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/docs/design-tokens.md`}>
               Design tokens
-            </a>
-          </li>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/docs/identity.md`}>
+            </Link>
+          </List.Item>
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/docs/identity.md`}>
               Flux identity and iconography
-            </a>
-          </li>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/docs/performance.md`}>
+            </Link>
+          </List.Item>
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/docs/performance.md`}>
               Performance philosophy
-            </a>
-          </li>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/CONTRIBUTING.md`}>
+            </Link>
+          </List.Item>
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/CONTRIBUTING.md`}>
               Contributing
-            </a>
-          </li>
-          <li>
-            <a href={`${REPOSITORY_URL}/blob/main/AGENTS.md`}>
+            </Link>
+          </List.Item>
+          <List.Item>
+            <Link href={`${REPOSITORY_URL}/blob/main/AGENTS.md`}>
               Engineering contract
-            </a>
-          </li>
-        </ul>
-        <h2>Good questions, small answers.</h2>
+            </Link>
+          </List.Item>
+        </List>
+        <Heading level={2} size="lg">
+          Good questions, small answers.
+        </Heading>
         <Accordion.Root>
           <Accordion.Item>
             <Accordion.Trigger>
               How do I add a component without manual wiring?
             </Accordion.Trigger>
             <Accordion.Content>
-              Run <code>pnpm component:new Name Category</code>, implement its
+              Run <Code>pnpm component:new Name Category</Code>, implement its
               API and preview, then run the generator and quality checks. The
               catalog discovers examples by convention.
             </Accordion.Content>
@@ -83,12 +89,12 @@ export function DocumentationPage() {
             </Accordion.Trigger>
             <Accordion.Content>
               New components need a real production measurement. Run{" "}
-              <code>pnpm size:update</code> and review the result; budgets do
+              <Code>pnpm size:update</Code> and review the result; budgets do
               not increase automatically.
             </Accordion.Content>
           </Accordion.Item>
         </Accordion.Root>
       </Stack>
-    </section>
+    </Stack>
   );
 }

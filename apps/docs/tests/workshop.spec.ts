@@ -351,7 +351,7 @@ for (const width of [320, 390, 768, 1440]) {
       if (route.startsWith("components/"))
         await expect(page.locator(".preview-content")).toBeVisible();
       if (route === "overview" || route === "playground")
-        await expect(page.locator(".product-scene")).toBeVisible();
+        await expect(page.locator("[data-scene]")).toBeVisible();
       await expectNoHorizontalOverflow(page, route);
     }
   });

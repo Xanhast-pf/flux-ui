@@ -1,0 +1,87 @@
+/* marketing artwork and data geometry. UI uses public Flux primitives. */
+
+.campaign-poster {
+  position: relative;
+  overflow: hidden;
+  background: var(--art-canvas);
+  color: var(--art-ink);
+  min-block-size: 32rem;
+  border-radius: 0.25rem;
+}
+.poster-topline,
+.poster-bottomline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 1;
+}
+.poster-topline {
+  letter-spacing: 0.125em;
+  font-size: 0.75rem;
+}
+.campaign-poster h3 {
+  font-size: 3.5rem;
+  max-inline-size: 9ch;
+  line-height: 0.98;
+  font-weight: 500;
+  margin-block-start: 1rem;
+  position: relative;
+  z-index: 1;
+  font-family: Georgia, "Times New Roman", serif;
+}
+.campaign-poster > p {
+  max-inline-size: 17rem;
+  position: relative;
+  z-index: 1;
+}
+.poster-sculpture {
+  position: absolute;
+  inline-size: 19rem;
+  block-size: 19rem;
+  inset: auto -3rem 2rem auto;
+  transform: rotate(-25deg);
+}
+.poster-sculpture > div {
+  position: absolute;
+  inset: 0;
+  border: 2rem solid currentColor;
+  border-radius: 50%;
+  opacity: 0.12;
+}
+.poster-sculpture > div:nth-child(2) {
+  transform: translate(-15%, -5%) scale(0.72);
+  opacity: 0.15;
+}
+.poster-sculpture > div:nth-child(3) {
+  transform: translate(-25%, -8%) scale(0.45);
+  opacity: 0.18;
+}
+@container flux-layout (min-width: 48rem) {
+  .campaign-poster h3 {
+    font-size: 4.5rem;
+  }
+}
+@container flux-layout (min-width: 48rem) {
+  .poster-sculpture {
+    inline-size: 23rem;
+    block-size: 23rem;
+    inset-inline-end: -2rem;
+  }
+}
+@container flux-layout (max-width: 30rem) {
+  .campaign-poster {
+    min-block-size: 27rem;
+  }
+}
+@container flux-layout (max-width: 30rem) {
+  .campaign-poster h3 {
+    font-size: 3rem;
+  }
+}
+@container flux-layout (max-width: 30rem) {
+  .poster-sculpture {
+    inline-size: 16rem;
+    block-size: 16rem;
+  }
+}

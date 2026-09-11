@@ -1,22 +1,37 @@
+import {
+  Box,
+  Card,
+  Grid,
+  Heading,
+  Link,
+  Stack,
+  Tabs,
+  Text,
+} from "@flux-ui/react";
 import { useState } from "react";
-import { Card, Stack, Tabs } from "@flux-ui/react";
+import { ButtonLab } from "../demos/ButtonLab.js";
 import { CollectionLab } from "../demos/CollectionLab.js";
 import { ReleaseRoom } from "../demos/ReleaseRoom.js";
-import { ButtonLab } from "../demos/ButtonLab.js";
 import { AppearanceControls } from "../ui/AppearanceControls.js";
 export default function ComponentWorkbench() {
   const [mode, setMode] = useState("workspace");
   return (
     <Stack gap="lg">
-      <div>
-        <p className="eyebrow">Component workbench</p>
-        <h2>Inside the components.</h2>
-        <p className="lede">Real components. Local state. Zero consequences.</p>
-        <p className="demo-help">
+      <Box>
+        <Text as="p" variant="eyebrow" tone="muted">
+          Component workbench
+        </Text>
+        <Heading level={2} size="lg">
+          Inside the components.
+        </Heading>
+        <Text as="p" variant="lead" tone="muted">
+          Real components. Local state. Zero consequences.
+        </Text>
+        <Text as="p" variant="caption" tone="muted">
           Switching labs starts a fresh demo. Theme and accent preferences stay
           with you.
-        </p>
-      </div>
+        </Text>
+      </Box>
       <Tabs.Root value={mode} onValueChange={setMode}>
         <Tabs.List aria-label="Playground modes" activateOnFocus>
           <Tabs.Tab value="workspace">Release room</Tabs.Tab>
@@ -35,16 +50,18 @@ export default function ComponentWorkbench() {
         </Tabs.Panel>
         <Tabs.Panel value="theme">
           {mode === "theme" ? (
-            <div className="lab-grid">
+            <Grid columns={{ base: 1, lg: 2 }} gap="lg">
               <Card>
                 <Stack gap="lg">
-                  <h2>Set the mood.</h2>
+                  <Heading level={2} size="lg">
+                    Set the mood.
+                  </Heading>
                   <AppearanceControls />
-                  <a href="#tokens">Inspect every token →</a>
+                  <Link href="#tokens">Inspect every token →</Link>
                 </Stack>
               </Card>
               <ReleaseRoom />
-            </div>
+            </Grid>
           ) : null}
         </Tabs.Panel>
       </Tabs.Root>

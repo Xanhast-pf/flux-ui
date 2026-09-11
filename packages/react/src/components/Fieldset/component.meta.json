@@ -1,0 +1,8 @@
+{
+  "name": "Fieldset",
+  "slug": "fieldset",
+  "category": "Forms",
+  "status": "alpha",
+  "description": "Native grouped controls and legend; browser-owned group disabling.",
+  "sizeClass": "primitive"
+}

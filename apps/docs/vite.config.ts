@@ -1,6 +1,6 @@
-import { resolve } from "node:path";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
+import { resolve } from "node:path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -39,6 +39,13 @@ export default defineConfig({
         replacement: resolve(
           import.meta.dirname,
           "../../packages/react/src/index.ts",
+        ),
+      },
+      {
+        find: "@flux-ui/tokens/presets.css",
+        replacement: resolve(
+          import.meta.dirname,
+          "../../packages/tokens/src/presets.css",
         ),
       },
       {

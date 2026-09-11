@@ -1,0 +1,8 @@
+{
+  "name": "Text",
+  "slug": "text",
+  "category": "Typography",
+  "status": "alpha",
+  "description": "Tokenized text roles independent from native semantics.",
+  "sizeClass": "primitive"
+}

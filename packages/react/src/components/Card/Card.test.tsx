@@ -27,6 +27,22 @@ describe("Card", () => {
     expect(screen.getByText("Example")).not.toHaveAttribute("role");
     expect(screen.getByText("Example")).not.toHaveAttribute("tabindex");
   });
+  it("leaves default padding in CSS so a consumer class can override it", () => {
+    render(<Card className="consumer-card">Padded by CSS</Card>);
+    const element = screen.getByText("Padded by CSS");
+    expect(element.style.padding).toBe("");
+    expect(element.style.paddingInline).toBe("");
+  });
+  it("lets a consumer shorthand override explicit spacing axes", () => {
+    render(
+      <Card padding="md" paddingInline="lg" style={{ padding: "3rem" }}>
+        Consumer spacing
+      </Card>,
+    );
+    const element = screen.getByText("Consumer spacing");
+    expect(element.style.padding).toBe("3rem");
+    expect(element.style.paddingInline).toBe("");
+  });
   it("renders on the server", () => {
     expect(renderToString(<Card>Server content</Card>)).toContain(
       "Server content",

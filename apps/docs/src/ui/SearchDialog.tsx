@@ -1,5 +1,15 @@
 import { SearchIcon } from "@flux-ui/icons";
-import { Dialog, Input, Kbd, Stack } from "@flux-ui/react";
+import {
+  Dialog,
+  EmptyState,
+  Input,
+  Kbd,
+  Link,
+  List,
+  ScrollArea,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 import { useEffect, useState } from "react";
 import { components } from "../generated/components.js";
 import { sections } from "../lib/routing.js";
@@ -68,26 +78,42 @@ export function SearchDialog() {
             }}
             placeholder="Try switch, icons, or performance…"
           />
-          <p className="result-count" role="status">
+          <Text role="status" as="p" variant="caption" tone="muted">
             {results.length} results
-          </p>
-          <ul className="search-results">
-            {results.map((entry) => (
-              <li key={entry.href}>
-                <a
-                  href={entry.href}
-                  onClick={() => {
-                    setOpen(false);
-                  }}
-                >
-                  <strong>{entry.title}</strong>
-                  <span>{entry.detail}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          </Text>
+          <ScrollArea
+            axis="vertical"
+            aria-label="Search results"
+            style={{ maxBlockSize: "24rem" }}
+          >
+            <List as="ul" variant="plain" gap="xs">
+              {results.map((entry) => (
+                <List.Item key={entry.href}>
+                  <Link
+                    variant="navigation"
+                    href={entry.href}
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <Stack gap="xs">
+                      <Text as="strong" weight="bold">
+                        {entry.title}
+                      </Text>
+                      <Text variant="caption" tone="muted">
+                        {entry.detail}
+                      </Text>
+                    </Stack>
+                  </Link>
+                </List.Item>
+              ))}
+            </List>
+          </ScrollArea>
           {results.length === 0 ? (
-            <p>No matches. Try a shorter search.</p>
+            <EmptyState
+              title="No matches."
+              description="Try a shorter search."
+            />
           ) : null}
         </Stack>
         <Dialog.Close>Close search</Dialog.Close>

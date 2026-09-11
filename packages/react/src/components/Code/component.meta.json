@@ -1,0 +1,8 @@
+{
+  "name": "Code",
+  "slug": "code",
+  "category": "Typography",
+  "status": "alpha",
+  "description": "Literal inline code with shared monospace styling.",
+  "sizeClass": "primitive"
+}

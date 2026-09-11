@@ -1,5 +1,5 @@
+import { Box, Text } from "@flux-ui/react";
 import { formatMs } from "../lib/format.js";
-
 export function ComparisonBars({
   label,
   native,
@@ -11,23 +11,27 @@ export function ComparisonBars({
 }) {
   const maximum = Math.max(native, flux, 0.01);
   return (
-    <div className="comparison-bars" role="group" aria-label={label}>
-      <p className="chart-label">{label}</p>
+    <Box role="group" aria-label={label} className="comparison-bars">
+      <Text className="chart-label" as="p" variant="body">
+        {label}
+      </Text>
       {[
         { name: "Native React", value: native, className: "bar-native" },
         { name: "Flux UI", value: flux, className: "bar-flux" },
       ].map((entry) => (
-        <div className="comparison-row" key={entry.name}>
-          <span>{entry.name}</span>
-          <span className="bar-track" aria-hidden="true">
+        <Box key={entry.name} className="comparison-row">
+          <Text>{entry.name}</Text>
+          <span aria-hidden="true" className="bar-track">
             <span
               className={entry.className}
               style={{ width: `${(entry.value / maximum) * 100}%` }}
             />
           </span>
-          <strong>{formatMs(entry.value)}</strong>
-        </div>
+          <Text as="strong" weight="bold">
+            {formatMs(entry.value)}
+          </Text>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 }

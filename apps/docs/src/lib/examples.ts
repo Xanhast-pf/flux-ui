@@ -2,6 +2,8 @@ import type { ComponentType } from "react";
 import { components } from "../generated/components.js";
 export interface ComponentExample {
   Preview: ComponentType;
+  /** Controls center naturally; layout examples fill the centered preview canvas. */
+  previewLayout?: "center" | "fill";
   code: string;
   notes: readonly string[];
   props: ReadonlyArray<

@@ -1,16 +1,22 @@
 import {
+  Box,
   Button,
   Callout,
   Card,
+  Checkbox,
+  Code,
   Field,
-  Input,
+  Heading,
   Inline,
+  Input,
+  Link,
+  PageHeader,
   Stack,
+  Text,
 } from "@flux-ui/react";
-import { useEffect, useRef, useState } from "react";
 import type { AxeResults } from "axe-core";
+import { useEffect, useRef, useState } from "react";
 import { downloadJson } from "../lib/download.js";
-
 export function AccessibilityPage() {
   const sample = useRef<HTMLElement>(null);
   const active = useRef(false);
@@ -70,15 +76,16 @@ export function AccessibilityPage() {
     }
   }
   return (
-    <section className="reference-page">
+    <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="lg">
-        <header className="page-intro">
-          <p className="eyebrow">Accessibility you can inspect</p>
-          <h1>Run a real accessibility scan.</h1>
-          <p className="lede">
+        <PageHeader
+          title={<>Run a real accessibility scan.</>}
+          eyebrow={<>Accessibility you can inspect</>}
+        >
+          <Text as="p" variant="lead" tone="muted">
             A working demo. A real axe engine. Findings you can reproduce.
-          </p>
-        </header>
+          </Text>
+        </PageHeader>
         <Callout>
           Scans run locally on the sample below, not the whole site or your
           application. Zero detected violations is not WCAG compliance. Manual
@@ -86,49 +93,57 @@ export function AccessibilityPage() {
         </Callout>
         <Card>
           <Stack gap="md">
-            <section
+            <Card
               ref={sample}
-              className="axe-sample"
               aria-labelledby="axe-sample-title"
+              as="section"
+              padding={6}
             >
-              <Stack gap="md">
-                <h2 id="axe-sample-title">A small settings panel</h2>
-                <Field.Root id="axe-demo-name">
-                  <Field.Label>Display name</Field.Label>
-                  <Field.Control>
-                    <Input defaultValue="Alex" />
-                  </Field.Control>
-                  <Field.Description>
-                    Visible to your teammates.
-                  </Field.Description>
-                </Field.Root>
-                <Inline gap="sm" wrap>
-                  <Button>Save preferences</Button>
-                  <Button
-                    variant="outline"
-                    tone="neutral"
-                    aria-label={broken ? undefined : "Add to favourites"}
-                  >
-                    <span aria-hidden="true">+</span>
-                  </Button>
-                </Inline>
+              <Stack gap="lg">
+                <Stack gap="md">
+                  <Heading id="axe-sample-title" level={2} size="lg">
+                    A small settings panel
+                  </Heading>
+                  <Field.Root id="axe-demo-name">
+                    <Field.Label>Display name</Field.Label>
+                    <Field.Control>
+                      <Input defaultValue="Alex" />
+                    </Field.Control>
+                    <Field.Description>
+                      Visible to your teammates.
+                    </Field.Description>
+                  </Field.Root>
+                  <Inline gap="sm" wrap>
+                    <Button>Save preferences</Button>
+                    <Button
+                      variant="outline"
+                      tone="neutral"
+                      aria-label={broken ? undefined : "Add to favourites"}
+                    >
+                      <Text aria-hidden="true">+</Text>
+                    </Button>
+                  </Inline>
+                </Stack>
               </Stack>
-            </section>
-            <label className="lab-check">
-              <input
-                type="checkbox"
-                checked={broken}
-                disabled={running}
-                onChange={(event) => {
-                  setBroken(event.target.checked);
-                  setResult(null);
-                  setMessage(
-                    "Demo changed. Run another scan for current results.",
-                  );
-                }}
-              />
-              Introduce an intentional missing button name
-            </label>
+            </Card>
+            <Field.Root>
+              <Field.Label>
+                Introduce an intentional missing button name
+              </Field.Label>
+              <Field.Control>
+                <Checkbox
+                  checked={broken}
+                  disabled={running}
+                  onChange={(event) => {
+                    setBroken(event.target.checked);
+                    setResult(null);
+                    setMessage(
+                      "Demo changed. Run another scan for current results.",
+                    );
+                  }}
+                />
+              </Field.Control>
+            </Field.Root>
             {broken && (
               <Callout tone="warning">
                 Intentional teaching defect: the icon-only button above now has
@@ -156,19 +171,23 @@ export function AccessibilityPage() {
                 </Button>
               )}
             </Inline>
-            <p role="status">{message}</p>
+            <Text role="status" as="p" variant="body">
+              {message}
+            </Text>
           </Stack>
         </Card>
         {result !== null && (
-          <section aria-label="Accessibility scan results">
+          <Stack aria-label="Accessibility scan results" as="section" gap="lg">
             <Stack gap="md">
-              <h2>What axe found</h2>
-              <p>
+              <Heading level={2} size="lg">
+                What axe found
+              </Heading>
+              <Text as="p" variant="body">
                 axe-core {result.testEngine.version} ·{" "}
                 {new Date(result.timestamp).toLocaleString()} ·{" "}
                 {result.passes.length} passing rules ·{" "}
                 {result.inapplicable.length} inapplicable rules.
-              </p>
+              </Text>
               {result.violations.length === 0 && (
                 <Callout>
                   No violations detected in this sample under these rules.
@@ -187,38 +206,44 @@ export function AccessibilityPage() {
               ].map(({ finding, kind }) => (
                 <Card key={`${kind}-${finding.id}`}>
                   <Stack gap="sm">
-                    <h3>{finding.help}</h3>
-                    <p>
+                    <Heading level={3} size="md">
+                      {finding.help}
+                    </Heading>
+                    <Text as="p" variant="body">
                       {kind} · {finding.impact ?? "No impact rating"} ·{" "}
-                      <code>{finding.id}</code>
-                    </p>
-                    <p>{finding.description}</p>
+                      <Code>{finding.id}</Code>
+                    </Text>
+                    <Text as="p" variant="body">
+                      {finding.description}
+                    </Text>
                     {finding.nodes.map((node) => (
-                      <div key={JSON.stringify(node.target)}>
-                        <code>{JSON.stringify(node.target)}</code>
-                        <p>
+                      <Box key={JSON.stringify(node.target)}>
+                        <Code>{JSON.stringify(node.target)}</Code>
+                        <Text as="p" variant="body">
                           {node.failureSummary ?? "Review this node manually."}
-                        </p>
-                      </div>
+                        </Text>
+                      </Box>
                     ))}
-                    <a href={finding.helpUrl}>axe rule documentation →</a>
+                    <Link href={finding.helpUrl}>axe rule documentation →</Link>
                   </Stack>
                 </Card>
               ))}
             </Stack>
-          </section>
+          </Stack>
         )}
-        <section>
-          <h2>Continue with a keyboard.</h2>
-          <p>
+        <Stack as="section" gap="lg">
+          <Heading level={2} size="lg">
+            Continue with a keyboard.
+          </Heading>
+          <Text as="p" variant="body">
             Tab through the panel, identify every control’s name, check the
             visible focus ring, operate controls without a pointer, then repeat
             in your screen reader. Test zoom, high contrast, reduced motion and
             the actual interaction states your product uses. Accessibility is a
             user experience, not a score.
-          </p>
-        </section>
+          </Text>
+        </Stack>
       </Stack>
-    </section>
+    </Stack>
   );
 }

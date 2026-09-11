@@ -1,0 +1,8 @@
+{
+  "name": "SkipLink",
+  "slug": "skip-link",
+  "category": "Navigation",
+  "status": "alpha",
+  "description": "Focus-revealed native skip navigation.",
+  "sizeClass": "primitive"
+}

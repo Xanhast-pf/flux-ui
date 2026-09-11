@@ -1,0 +1,8 @@
+{
+  "name": "Box",
+  "slug": "box",
+  "category": "Layout",
+  "status": "alpha",
+  "description": "Single-element semantic spacing and surface primitive.",
+  "sizeClass": "primitive"
+}

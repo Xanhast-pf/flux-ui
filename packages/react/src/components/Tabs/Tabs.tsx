@@ -37,6 +37,8 @@ function valueSuffix(value: string): string {
 }
 
 function TabsRoot({
+  size = "md",
+  appearance = "underline",
   className,
   defaultValue,
   onValueChange,
@@ -57,17 +59,27 @@ function TabsRoot({
   }
 
   return (
-    <TabsContext value={{ id: generatedId, orientation, setValue, value }}>
+    <TabsContext
+      value={{
+        id: generatedId,
+        orientation,
+        setValue,
+        value,
+      }}
+    >
       <div
         {...props}
         className={joinClassNames(root, className)}
-        data-orientation={orientation}
+        data-a={appearance === "underline" ? undefined : appearance}
+        data-o={orientation === "horizontal" ? undefined : orientation}
+        data-s={size === "md" ? undefined : size}
       />
     </TabsContext>
   );
 }
 
 function TabsList({
+  wrap = false,
   activateOnFocus = false,
   className,
   loopFocus = true,
@@ -128,6 +140,7 @@ function TabsList({
   return (
     <div
       {...props}
+      data-w={wrap || undefined}
       aria-orientation={context.orientation}
       className={joinClassNames(list, className)}
       onKeyDown={handleKeyDown}
@@ -161,7 +174,6 @@ function TabsTab({
       aria-selected={selected}
       className={joinClassNames(tab, className)}
       data-flux-tab-value={value}
-      data-orientation={context.orientation}
       disabled={disabled}
       id={`${context.id}-tab-${suffix}`}
       onClick={handleClick}
@@ -172,7 +184,12 @@ function TabsTab({
   );
 }
 
-function TabsPanel({ className, value, ...props }: TabsPanelProps) {
+function TabsPanel({
+  padding = "md",
+  className,
+  value,
+  ...props
+}: TabsPanelProps) {
   const context = useTabsContext("Panel");
   const selected = context.value === value;
   const suffix = valueSuffix(value);
@@ -182,6 +199,7 @@ function TabsPanel({ className, value, ...props }: TabsPanelProps) {
       {...props}
       aria-labelledby={`${context.id}-tab-${suffix}`}
       className={joinClassNames(panel, className)}
+      data-p={padding === "md" ? undefined : padding}
       hidden={!selected}
       id={`${context.id}-panel-${suffix}`}
       role="tabpanel"

@@ -8,7 +8,20 @@ export default {
   description:
     "A home for good work, unfinished ideas, and the people making them.",
   prompt: "Like a post. Follow a creator. Add your own note to the demo feed.",
-  components: ["avatar", "button", "textarea", "toggle"],
+  components: [
+    "avatar",
+    "box",
+    "button",
+    "card",
+    "field",
+    "grid",
+    "heading",
+    "inline",
+    "stack",
+    "text",
+    "textarea",
+    "toggle",
+  ],
   custom:
     "The feed and editorial artwork are docs-only layouts, not a public Feed component. All profiles are fictional. Posts stay in memory and are discarded when the scene changes.",
   Icon: UsersIcon,

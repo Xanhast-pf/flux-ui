@@ -4,6 +4,7 @@ import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
+  previewLayout: "fill",
   code,
   notes: [
     "Native mutually-exclusive selection with fieldset semantics, keyboard behavior, and form submission.",
