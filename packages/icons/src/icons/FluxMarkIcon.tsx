@@ -3,7 +3,7 @@ import { IconBase, type IconProps } from "../IconBase.js";
 export function FluxMarkIcon(props: IconProps) {
   return (
     <IconBase {...props}>
-      <path d="M3 4h9l-3 4h8l-6 8H4l3-4H3l4-8Z" />
+      <path d="M4 16V4h7l5 4-5 4H7 M4 10h7" />
     </IconBase>
   );
 }

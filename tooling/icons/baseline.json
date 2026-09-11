@@ -40,7 +40,7 @@
     "BellOffIcon": {
       "raw": 1460,
       "gzip": 884,
-      "brotli": 775,
+      "brotli": 769,
       "fileCount": 2
     },
     "BranchIcon": {
@@ -182,9 +182,9 @@
       "fileCount": 2
     },
     "FluxMarkIcon": {
-      "raw": 1435,
-      "gzip": 866,
-      "brotli": 747,
+      "raw": 1431,
+      "gzip": 861,
+      "brotli": 742,
       "fileCount": 2
     },
     "FolderIcon": {

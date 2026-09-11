@@ -3,7 +3,7 @@ import { IconBase, type IconProps } from "../IconBase.js";
 export function BellOffIcon(props: IconProps) {
   return (
     <IconBase {...props}>
-      <path d="M3 3l14 14 M6 6.5A5 5 0 0 1 15 9v4l1.5 2H13 M4 15h5 M8 17h4" />
+      <path d="M5 13V9a5 5 0 0 1 10 0v4l1.5 2h-13L5 13Z M8 17h4 M3 3l14 14" />
     </IconBase>
   );
 }

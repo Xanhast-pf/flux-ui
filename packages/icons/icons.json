@@ -365,11 +365,19 @@
   {
     "name": "FluxMark",
     "category": "brand",
-    "keywords": ["brand", "logo", "flux", "identity"],
+    "keywords": [
+      "brand",
+      "logo",
+      "flux",
+      "identity",
+      "flow",
+      "forward",
+      "monogram"
+    ],
     "elements": [
       {
         "tag": "path",
-        "d": "M3 4h9l-3 4h8l-6 8H4l3-4H3l4-8Z"
+        "d": "M4 16V4h7l5 4-5 4H7 M4 10h7"
       }
     ]
   },
@@ -589,7 +597,7 @@
     "elements": [
       {
         "tag": "path",
-        "d": "M3 3l14 14 M6 6.5A5 5 0 0 1 15 9v4l1.5 2H13 M4 15h5 M8 17h4"
+        "d": "M5 13V9a5 5 0 0 1 10 0v4l1.5 2h-13L5 13Z M8 17h4 M3 3l14 14"
       }
     ]
   },
