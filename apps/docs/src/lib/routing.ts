@@ -29,3 +29,7 @@ function snapshot(): string {
 export function useRoute(): string {
   return useSyncExternalStore(subscribe, snapshot, () => "overview");
 }
+
+export function routePath(route: string): string {
+  return route.split("?", 1)[0] || "overview";
+}

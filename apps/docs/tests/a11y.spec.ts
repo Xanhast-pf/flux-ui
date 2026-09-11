@@ -11,6 +11,10 @@ async function expectNoViolations(
   if (page.url().includes("#components/")) {
     await expect(page.locator(".preview-content")).toBeVisible();
   }
+  const path = new URL(page.url()).hash.slice(1).split("?", 1)[0] ?? "";
+  if (path === "" || path === "overview" || path === "playground") {
+    await expect(page.locator(".product-scene")).toBeVisible();
+  }
   const builder = new AxeBuilder({ page });
   if (include !== undefined) {
     const surface = page.locator(include).first();
@@ -113,6 +117,7 @@ for (const theme of ["light", "dark"] as const) {
       window.localStorage.setItem("flux-ui-theme", value);
     }, theme);
     await page.goto("/#playground");
+    await page.locator(".workbench-section summary").click();
     await page
       .getByRole("tab", { name: "Collection lab", exact: true })
       .click();

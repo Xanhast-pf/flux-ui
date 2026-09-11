@@ -5,7 +5,7 @@ test("renders the workshop, native form examples, and overlay demos", async ({
 }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Build beautifully.",
+    "One system.",
   );
   await page.goto("/#components/input");
   await expect(

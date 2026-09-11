@@ -1,7 +1,7 @@
 import { ArrowUpRightIcon, FluxMarkIcon } from "@flux-ui/icons";
 import { Badge, Container, Inline } from "@flux-ui/react";
 import { lazy, Suspense, useEffect, useRef } from "react";
-import { useRoute } from "./lib/routing.js";
+import { routePath, useRoute } from "./lib/routing.js";
 import { REPOSITORY_URL } from "./lib/format.js";
 import { ThemeSwitch } from "./ui/AppearanceControls.js";
 import { Navigation, MobileNavigation } from "./ui/Navigation.js";
@@ -17,6 +17,7 @@ import { PerformancePage } from "./pages/PerformancePage.js";
 import { RulesPage } from "./pages/RulesPage.js";
 import { InstallPage } from "./pages/InstallPage.js";
 import { DocumentationPage } from "./pages/DocumentationPage.js";
+import "./pages/landing.css";
 
 const LabPage = lazy(() =>
   import("./pages/LabPage.js").then((module) => ({ default: module.LabPage })),
@@ -120,7 +121,8 @@ function RouteView({ route }: { route: string }) {
   }
 }
 export function App() {
-  const route = useRoute();
+  const route = routePath(useRoute());
+  const gallery = route === "overview" || route === "playground";
   const mainRef = useRef<HTMLElement>(null);
   const previousRoute = useRef(route);
   useEffect(() => {
@@ -146,7 +148,7 @@ export function App() {
       >
         Skip to content
       </a>
-      <header className="site-header">
+      <header className="site-header" data-gallery={gallery || undefined}>
         <Container size="full">
           <div className="header-inner">
             <a className="brand" href="#overview" aria-label="Flux UI home">
@@ -158,6 +160,30 @@ export function App() {
               </span>
             </a>
             <Badge tone="accent">alpha</Badge>
+            <nav className="header-links" aria-label="Primary navigation">
+              <a
+                href="#playground"
+                aria-current={route === "playground" ? "page" : undefined}
+              >
+                Playground
+              </a>
+              <a
+                href="#components"
+                aria-current={
+                  route === "components" || route.startsWith("components/")
+                    ? "page"
+                    : undefined
+                }
+              >
+                Components
+              </a>
+              <a
+                href="#engineering"
+                aria-current={route === "engineering" ? "page" : undefined}
+              >
+                Engineering
+              </a>
+            </nav>
             <div className="header-search">
               <SearchDialog />
             </div>
@@ -177,12 +203,17 @@ export function App() {
           </div>
         </Container>
       </header>
-      <Container size="full" className="workshop-shell">
-        <aside className="desktop-sidebar">
-          <div className="sidebar-sticky">
-            <Navigation route={route} />
-          </div>
-        </aside>
+      <Container
+        size="full"
+        className={gallery ? "workshop-shell gallery-shell" : "workshop-shell"}
+      >
+        {!gallery ? (
+          <aside className="desktop-sidebar">
+            <div className="sidebar-sticky">
+              <Navigation route={route} />
+            </div>
+          </aside>
+        ) : null}
         <main id="main-content" tabIndex={-1} ref={mainRef}>
           <RouteView route={route} />
           <footer className="site-footer">

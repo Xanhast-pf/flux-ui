@@ -48,7 +48,7 @@
     "perf:update": "node tooling/perf/check.mjs --update-baseline && pnpm generate",
     "perf:smoke": "node tooling/perf/check.mjs --smoke",
     "docs:check": "node scripts/check-docs.mjs",
-    "docs:test": "node --test scripts/test/docs-catalog.test.mjs",
+    "docs:test": "node --test scripts/test/docs-catalog.test.mjs scripts/test/showcase.test.mjs",
     "icons:size": "node tooling/icons/check.mjs",
     "icons:test": "node --test tooling/icons/*.test.mjs",
     "icons:size:update": "node tooling/icons/check.mjs --update-baseline",

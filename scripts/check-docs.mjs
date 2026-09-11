@@ -1,6 +1,9 @@
 import { readdir, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { validateExampleFiles } from "./docs-catalog.mjs";
+import {
+  validateExampleFiles,
+  validateShowcaseFiles,
+} from "./docs-catalog.mjs";
 const root = process.cwd();
 const componentRoot = resolve(root, "packages/react/src/components");
 const dirs = (await readdir(componentRoot, { withFileTypes: true })).filter(
@@ -21,10 +24,14 @@ const errors = validateExampleFiles(
   metadata.map((entry) => entry.slug),
   filenames,
 );
+const showcaseFiles = await readdir(
+  resolve(root, "apps/docs/src/showcase/scenes"),
+);
+errors.push(...validateShowcaseFiles(showcaseFiles));
 if (errors.length > 0) {
   console.error(errors.join("\n"));
   process.exitCode = 1;
 } else
   console.log(
-    `Docs coverage: ${metadata.length} public families, one example each.`,
+    `Docs coverage: ${metadata.length} public families, one example each; ${showcaseFiles.filter((name) => name.endsWith(".scene.ts")).length} paired product scenes.`,
   );
