@@ -1,9 +1,9 @@
 import { IconBase, type IconProps } from "../IconBase.js";
 
-export function FluxMarkIcon(props: IconProps) {
+export function ExpandIcon(props: IconProps) {
   return (
     <IconBase {...props}>
-      <path d="M4 16V4h7l5 4-5 4H7 M4 10h7" />
+      <path d="M8 4H4v4 M12 4h4v4 M8 16H4v-4 M12 16h4v-4" />
     </IconBase>
   );
 }

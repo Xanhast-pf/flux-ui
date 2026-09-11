@@ -1,6 +1,6 @@
 # @flux-ui/icons
 
-Original Flux UI iconography built on a 20 × 20 grid.
+Original Flux UI iconography built on a 20 × 20 grid. The current set contains 64 icons across navigation, actions, status, theme, layout, content, communication, developer tooling, and brand.
 
 ```tsx
 import { SearchIcon, SparkIcon } from "@flux-ui/icons";
@@ -19,5 +19,7 @@ import { SearchIcon, SparkIcon } from "@flux-ui/icons";
 - normal SVG props and React 19 refs
 - no styling runtime
 - generated from `icons.json`
+- searchable intent keywords on every manifest entry
+- no duplicate geometry aliases; use keywords instead
 
 Run `pnpm generate` after editing the manifest.

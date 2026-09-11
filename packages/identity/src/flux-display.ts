@@ -15,6 +15,8 @@ export const fluxDisplayMetrics = {
   designGridHeight: 7,
   strokeWidth: 0.58,
   letterGap: 1.15,
+  /** Extra design-grid padding that protects sharp mitered corners and tails. */
+  renderPadding: 1,
 } as const;
 
 export const fluxDisplayGlyphs: Readonly<Record<string, FluxDisplayGlyph>> = {
@@ -67,6 +69,18 @@ export const fluxDisplayGlyphs: Readonly<Record<string, FluxDisplayGlyph>> = {
   ":": { advance: 2, path: "M1 2h.01 M1 6h.01" },
   "+": { advance: 5, path: "M2.5 1V6 M0 3.5H5" },
 } as const;
+
+export function getUnsupportedFluxDisplayCharacters(
+  value: string,
+): readonly string[] {
+  return [
+    ...new Set(
+      [...value.toUpperCase()].filter(
+        (character) => !(character in fluxDisplayGlyphs),
+      ),
+    ),
+  ];
+}
 
 export function normalizeFluxDisplayText(value: string): string {
   return [...value.toUpperCase()]

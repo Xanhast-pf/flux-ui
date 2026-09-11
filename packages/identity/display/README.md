@@ -19,5 +19,6 @@ Design targets:
 - square terminals
 - open technical geometry
 - economical curves and counters
+- one design-grid unit of render padding around mitered outlines
 
-The next type pass should add optical corrections, wider punctuation, lowercase, spacing pairs, then kerning. Only after the forms are approved should the source be compiled into font binaries.
+Unsupported specimen characters are reported by the docs and currently render as spaces. The next type pass should add optical corrections, wider punctuation, Latin diacritics, lowercase, spacing pairs, then kerning. Only after the forms are approved should the source be compiled into font binaries.

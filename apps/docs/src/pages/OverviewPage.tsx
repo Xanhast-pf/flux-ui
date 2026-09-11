@@ -22,9 +22,9 @@ export function OverviewPage() {
               Explore {components.length} components
               <ArrowUpRightIcon aria-hidden="true" size={16} />
             </a>
-            <a className="secondary-link" href="#identity">
+            <a className="secondary-link" href="#icons">
               <SparkIcon aria-hidden="true" size={16} />
-              Meet the Flux identity
+              Browse Flux Icons
             </a>
           </Inline>
           <p className="hero-note">React 19 · Static CSS · Keyboard-first</p>

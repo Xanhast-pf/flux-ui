@@ -1,58 +1,49 @@
-import { FluxMarkIcon } from "@flux-ui/icons";
-import { iconCatalog } from "@flux-ui/icons/catalog";
+import {
+  ArrowUpRightIcon,
+  BranchIcon,
+  CommandIcon,
+  FluxMarkIcon,
+  GridIcon,
+  PaletteIcon,
+  SearchIcon,
+  ShieldCheckIcon,
+  SparkIcon,
+} from "@flux-ui/icons";
+import {
+  fluxDisplayGlyphs,
+  fluxDisplayMetrics,
+  getUnsupportedFluxDisplayCharacters,
+} from "@flux-ui/identity";
 import {
   Badge,
   Card,
   Grid,
   Inline,
   Input,
-  Select,
   Slider,
   Stack,
 } from "@flux-ui/react";
-import { createElement, useMemo, useState } from "react";
+import { useState } from "react";
 import { FluxDisplay } from "../identity/FluxDisplay.js";
-import { CodeBlock } from "../ui/CodeBlock.js";
 
-const iconSizes = [16, 20, 24, 32] as const;
-const categories = [
-  "all",
-  ...Array.from(new Set(iconCatalog.map((entry) => entry.category))).sort(
-    (left, right) => left.localeCompare(right),
-  ),
-];
+const drawnGlyphCount = Object.values(fluxDisplayGlyphs).filter(
+  (glyph) => glyph.path.length > 0,
+).length;
 
 export function IdentityPage() {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("all");
-  const [iconSize, setIconSize] = useState<number>(20);
-  const [selected, setSelected] = useState("FluxMarkIcon");
   const [specimen, setSpecimen] = useState("FLUX UI");
   const [displaySize, setDisplaySize] = useState(88);
-  const normalizedQuery = query.trim().toLowerCase();
-  const visibleIcons = useMemo(
-    () =>
-      iconCatalog.filter(
-        (entry) =>
-          (category === "all" || entry.category === category) &&
-          `${entry.name} ${entry.category} ${entry.keywords.join(" ")}`
-            .toLowerCase()
-            .includes(normalizedQuery),
-      ),
-    [category, normalizedQuery],
-  );
-  const selectedEntry =
-    iconCatalog.find((entry) => entry.name === selected) ?? iconCatalog[0];
+  const unsupported = getUnsupportedFluxDisplayCharacters(specimen);
 
   return (
-    <Stack gap="lg">
+    <Stack gap="xl">
       <div>
         <p className="eyebrow">Flux identity lab</p>
         <h1>Drawn for the system.</h1>
         <p className="lede">
-          Original iconography and a vector display alphabet built from the same
-          geometric rules. This is the place to pressure-test the visual
-          language before it becomes permanent.
+          Flux Icons and Flux Display share a geometric vocabulary: compact
+          grids, deliberate gaps, technical terminals, and enough personality to
+          feel like one system without becoming decoration for its own sake.
         </p>
       </div>
 
@@ -67,10 +58,10 @@ export function IdentityPage() {
             />
           </div>
           <Inline gap="sm" wrap>
-            <Badge tone="accent">34 original icons</Badge>
-            <Badge>20 × 20 grid</Badge>
-            <Badge>1.5 stroke</Badge>
-            <Badge>vector display source</Badge>
+            <Badge tone="accent">64 original icons</Badge>
+            <Badge>20 × 20 icon grid</Badge>
+            <Badge>{drawnGlyphCount} display glyphs</Badge>
+            <Badge>vector design source</Badge>
           </Inline>
         </Stack>
       </Card>
@@ -79,86 +70,29 @@ export function IdentityPage() {
         <Stack gap="md">
           <div>
             <p className="eyebrow">Flux Icons</p>
-            <h2 id="icons-heading">Small marks, one visual grammar.</h2>
+            <h2 id="icons-heading">One grammar, more vocabulary.</h2>
             <p className="lede">
-              Decorative by default, accessible when labelled, and driven by
-              currentColor. Filter the set, change its optical size, then pick a
-              glyph to inspect the public import.
+              The icon set is a publishable package with per-icon size budgets,
+              real accessibility defaults, and search metadata. The full browser
+              now lives on its own page so this lab can stay focused on the
+              identity system itself.
             </p>
           </div>
-          <div className="identity-controls">
-            <Input
-              aria-label="Filter Flux icons"
-              type="search"
-              value={query}
-              onChange={(event) => {
-                setQuery(event.currentTarget.value);
-              }}
-              placeholder="Search icons…"
-            />
-            <Select
-              aria-label="Icon category"
-              value={category}
-              onChange={(event) => {
-                setCategory(event.currentTarget.value);
-              }}
-            >
-              {categories.map((value) => (
-                <option key={value} value={value}>
-                  {value === "all" ? "All categories" : value}
-                </option>
-              ))}
-            </Select>
-            <div
-              className="icon-size-options"
-              role="group"
-              aria-label="Icon preview size"
-            >
-              {iconSizes.map((value) => (
-                <button
-                  aria-pressed={iconSize === value}
-                  className="identity-size-button"
-                  key={value}
-                  onClick={() => {
-                    setIconSize(value);
-                  }}
-                  type="button"
-                >
-                  {value}
-                </button>
-              ))}
+          <Card className="identity-icon-teaser">
+            <div className="identity-icon-teaser-grid" aria-hidden="true">
+              <SearchIcon size={26} />
+              <CommandIcon size={26} />
+              <SparkIcon size={26} />
+              <BranchIcon size={26} />
+              <GridIcon size={26} />
+              <PaletteIcon size={26} />
+              <ShieldCheckIcon size={26} />
             </div>
-          </div>
-          <p className="result-count" role="status">
-            {visibleIcons.length} {visibleIcons.length === 1 ? "icon" : "icons"}
-          </p>
-          <Grid minColumnWidth="8rem" gap="sm" className="icon-gallery">
-            {visibleIcons.map((entry) => {
-              return (
-                <button
-                  aria-pressed={selected === entry.name}
-                  className="icon-tile"
-                  key={entry.name}
-                  onClick={() => {
-                    setSelected(entry.name);
-                  }}
-                  type="button"
-                >
-                  <span className="icon-tile-stage" aria-hidden="true">
-                    {createElement(entry.component, { size: iconSize })}
-                  </span>
-                  <span>{entry.name.replace(/Icon$/u, "")}</span>
-                  <small>{entry.category}</small>
-                </button>
-              );
-            })}
-          </Grid>
-          {selectedEntry === undefined ? null : (
-            <CodeBlock
-              label={`${selectedEntry.name} import`}
-              code={`import { ${selectedEntry.name} } from "@flux-ui/icons";\n\n<${selectedEntry.name} aria-label="…" />`}
-            />
-          )}
+            <a className="primary-link" href="#icons">
+              Browse all 64 icons
+              <ArrowUpRightIcon aria-hidden="true" size={16} />
+            </a>
+          </Card>
         </Stack>
       </section>
 
@@ -171,8 +105,9 @@ export function IdentityPage() {
             </h2>
             <p className="lede">
               This uppercase prototype is rendered directly from Flux vector
-              glyph source. No font binary is being shipped yet; first we make
-              the letterforms earn it.
+              glyph source. It is not a production font yet: lowercase,
+              diacritics, spacing pairs, and kerning still need a dedicated
+              type-design pass before font engineering begins.
             </p>
           </div>
           <Card className="display-lab">
@@ -195,6 +130,11 @@ export function IdentityPage() {
                     }}
                     maxLength={30}
                   />
+                  <p className="muted" role="status">
+                    {unsupported.length === 0
+                      ? "Every character in this specimen is covered by the current prototype."
+                      : `Not drawn yet: ${unsupported.join(" ")}. Unsupported characters render as spaces.`}
+                  </p>
                 </Stack>
                 <Stack gap="sm">
                   <label htmlFor="flux-display-size">Display size</label>
@@ -222,22 +162,35 @@ export function IdentityPage() {
           </Card>
           <Grid minColumnWidth="12rem" gap="sm">
             <Card className="metric-card">
-              <span className="muted">Units / em</span>
-              <strong>1000</strong>
+              <span className="muted">Units / em target</span>
+              <strong>{fluxDisplayMetrics.unitsPerEm}</strong>
             </Card>
             <Card className="metric-card">
-              <span className="muted">Cap height</span>
-              <strong>700</strong>
+              <span className="muted">Cap height target</span>
+              <strong>{fluxDisplayMetrics.capHeight}</strong>
             </Card>
             <Card className="metric-card">
               <span className="muted">Target stem</span>
-              <strong>~82</strong>
+              <strong>~{fluxDisplayMetrics.stem}</strong>
             </Card>
             <Card className="metric-card">
-              <span className="muted">Current scope</span>
-              <strong>A–Z / 0–9</strong>
+              <span className="muted">Current status</span>
+              <strong>Prototype</strong>
             </Card>
           </Grid>
+          <Card>
+            <Stack gap="sm">
+              <p className="eyebrow">Audit note</p>
+              <h3>The source is healthy, but the font is not finished.</h3>
+              <p>
+                The SVG renderer now reserves a full design-grid unit around the
+                glyph run so sharp mitered corners and Q/R tails cannot be
+                clipped. The next typography milestone is optical spacing,
+                kerning, lowercase, and Latin diacritics—not a premature font
+                binary.
+              </p>
+            </Stack>
+          </Card>
         </Stack>
       </section>
     </Stack>

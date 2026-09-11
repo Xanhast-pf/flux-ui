@@ -8,6 +8,17 @@ const indexPath = resolve(root, "packages/icons/src/index.ts");
 const catalogPath = resolve(root, "packages/icons/src/catalog.ts");
 const checkOnly = process.argv.includes("--check");
 const icons = JSON.parse(await readFile(manifestPath, "utf8"));
+const allowedCategories = new Set([
+  "actions",
+  "brand",
+  "communication",
+  "content",
+  "developer",
+  "layout",
+  "navigation",
+  "status",
+  "theme",
+]);
 
 function componentName(name) {
   return `${name}Icon`;
@@ -49,6 +60,9 @@ function indexSource() {
 }
 
 function catalogSource() {
+  const categories = [...new Set(icons.map((icon) => icon.category))].sort(
+    (left, right) => left.localeCompare(right),
+  );
   const imports = icons.map((icon) => {
     const name = componentName(icon.name);
     return `import { ${name} } from "./icons/${name}.js";`;
@@ -70,9 +84,11 @@ function catalogSource() {
     'import type { IconProps } from "./IconBase.js";',
     ...imports,
     "",
+    `export type IconCategory = ${categories.map((category) => JSON.stringify(category)).join(" | ")};`,
+    "",
     "export interface IconCatalogEntry {",
     "  name: string;",
-    "  category: string;",
+    "  category: IconCategory;",
     "  keywords: readonly string[];",
     "  component: ComponentType<IconProps>;",
     "}",
@@ -109,15 +125,56 @@ async function ensure(path, expected) {
 }
 
 const names = new Set();
+const geometries = new Map();
 for (const icon of icons) {
   if (!/^[A-Z][A-Za-z0-9]*$/u.test(icon.name)) {
     throw new Error(`Invalid icon name: ${icon.name}`);
   }
   if (names.has(icon.name))
     throw new Error(`Duplicate icon name: ${icon.name}`);
+  if (!allowedCategories.has(icon.category)) {
+    throw new Error(`Invalid category for ${icon.name}: ${icon.category}`);
+  }
+  if (!Array.isArray(icon.keywords) || icon.keywords.length === 0) {
+    throw new Error(`${icon.name} must define at least one search keyword.`);
+  }
+  const keywordSet = new Set();
+  for (const keyword of icon.keywords) {
+    if (
+      typeof keyword !== "string" ||
+      keyword.trim() !== keyword ||
+      keyword.length === 0
+    ) {
+      throw new Error(`${icon.name} has an invalid search keyword.`);
+    }
+    if (keyword !== keyword.toLowerCase()) {
+      throw new Error(`${icon.name} keyword must be lowercase: ${keyword}`);
+    }
+    if (keywordSet.has(keyword)) {
+      throw new Error(`${icon.name} repeats search keyword: ${keyword}`);
+    }
+    keywordSet.add(keyword);
+  }
   if (!Array.isArray(icon.elements) || icon.elements.length === 0) {
     throw new Error(`${icon.name} must define at least one SVG element.`);
   }
+  for (const element of icon.elements) {
+    if (
+      element.tag !== "path" ||
+      typeof element.d !== "string" ||
+      element.d.trim().length === 0
+    ) {
+      throw new Error(`${icon.name} contains invalid SVG path geometry.`);
+    }
+  }
+  const geometry = JSON.stringify(icon.elements);
+  const duplicateGeometry = geometries.get(geometry);
+  if (duplicateGeometry !== undefined) {
+    throw new Error(
+      `${icon.name} duplicates ${duplicateGeometry} geometry; prefer keywords over aliases.`,
+    );
+  }
+  geometries.set(geometry, icon.name);
   names.add(icon.name);
 }
 

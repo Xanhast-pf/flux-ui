@@ -202,11 +202,11 @@ import { SearchIcon, SparkIcon } from "@flux-ui/icons";
 <SparkIcon aria-hidden="true" size={24} />
 ```
 
-Icons are generated from `packages/icons/icons.json`, use `currentColor`, and are decorative by default unless labelled. `pnpm icons:size` enforces a strict per-icon runtime budget.
+Icons are generated from `packages/icons/icons.json`, use `currentColor`, and are decorative by default unless labelled. The dedicated `#icons` docs route browses all 64 icons by name, category, or intent metadata. `pnpm icons:size` enforces a strict per-icon runtime budget.
 
-Flux Display currently lives as vector design source in `packages/identity/`; it is deliberately not shipped as a compiled font yet. The live `#identity` docs route renders the glyph geometry directly so the letterforms can be evaluated before font engineering.
+Flux Display currently lives as vector design source in `packages/identity/`; it is deliberately not shipped as a compiled font yet. The live `#identity` docs route renders the glyph geometry directly so the letterforms can be evaluated before font engineering. The renderer reserves optical padding around mitered glyph geometry and reports unsupported specimen characters instead of silently presenting the prototype as complete.
 
-See [`docs/identity.md`](docs/identity.md).
+See [`docs/identity.md`](docs/identity.md) and [`docs/icons.md`](docs/icons.md).
 
 ## Repository map
 
