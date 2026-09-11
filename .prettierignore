@@ -9,3 +9,6 @@ packages/react/src/index.ts
 packages/icons/src/icons/*.tsx
 packages/icons/src/index.ts
 packages/icons/src/catalog.ts
+
+# Produced only from executed checks; never commit fabricated evidence.
+apps/docs/public/evidence/

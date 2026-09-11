@@ -2,6 +2,7 @@ import { Stack, Table } from "@flux-ui/react";
 import { health } from "../generated/health.js";
 import { formatBytes, budgetUsage } from "../lib/format.js";
 import { MeasurementNotice } from "../ui/MeasurementNotice.js";
+import { BundleExplorer } from "../ui/BundleExplorer.js";
 export function SizePage() {
   const runtimeBrotli = health.size.aggregate.runtime.brotli;
   const publishedBrotli = health.size.aggregate.published.brotli;
@@ -18,6 +19,7 @@ export function SizePage() {
           </p>
         </div>
 
+        <BundleExplorer />
         <div
           className="table-scroll"
           role="region"

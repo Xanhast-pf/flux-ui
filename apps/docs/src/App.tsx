@@ -18,6 +18,25 @@ import { RulesPage } from "./pages/RulesPage.js";
 import { InstallPage } from "./pages/InstallPage.js";
 import { DocumentationPage } from "./pages/DocumentationPage.js";
 
+const LabPage = lazy(() =>
+  import("./pages/LabPage.js").then((module) => ({ default: module.LabPage })),
+);
+const EngineeringPage = lazy(() =>
+  import("./pages/EngineeringPage.js").then((module) => ({
+    default: module.EngineeringPage,
+  })),
+);
+const TrustPage = lazy(() =>
+  import("./pages/TrustPage.js").then((module) => ({
+    default: module.TrustPage,
+  })),
+);
+const AccessibilityPage = lazy(() =>
+  import("./pages/AccessibilityPage.js").then((module) => ({
+    default: module.AccessibilityPage,
+  })),
+);
+
 const IconsPage = lazy(() =>
   import("./pages/IconsPage.js").then((module) => ({
     default: module.IconsPage,
@@ -34,6 +53,30 @@ function RouteView({ route }: { route: string }) {
       <ComponentPage key={route} slug={route.slice("components/".length)} />
     );
   switch (route) {
+    case "lab":
+      return (
+        <Suspense fallback={<p className="muted">Loading lab…</p>}>
+          <LabPage />
+        </Suspense>
+      );
+    case "engineering":
+      return (
+        <Suspense fallback={<p className="muted">Loading engineering…</p>}>
+          <EngineeringPage />
+        </Suspense>
+      );
+    case "trust":
+      return (
+        <Suspense fallback={<p className="muted">Loading trust…</p>}>
+          <TrustPage />
+        </Suspense>
+      );
+    case "accessibility":
+      return (
+        <Suspense fallback={<p className="muted">Loading accessibility…</p>}>
+          <AccessibilityPage />
+        </Suspense>
+      );
     case "overview":
       return <OverviewPage />;
     case "playground":
@@ -146,6 +189,8 @@ export function App() {
             <Inline justify="between" wrap>
               <p>Built with Flux. Still becoming.</p>
               <Inline gap="md" wrap>
+                <a href="#trust">Trust Center</a>
+                <a href="#engineering">Engineering</a>
                 <a href="#health">Project health</a>
                 <a href="#install">Contribute</a>
                 <a href={`${REPOSITORY_URL}/blob/main/LICENSE`}>MIT license</a>

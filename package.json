@@ -1,6 +1,6 @@
 {
   "name": "flux-ui",
-  "version": "0.0.0",
+  "version": "0.1.15",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.34.5",
@@ -21,7 +21,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "knip": "knip --include files,dependencies,unlisted,binaries,unresolved --use-tsconfig-files",
-    "test": "pnpm -r --if-present test && pnpm size:test && pnpm icons:test && pnpm docs:test",
+    "test": "pnpm -r --if-present test && pnpm size:test && pnpm icons:test && pnpm docs:test && pnpm trust:test",
     "test:e2e": "pnpm --filter @flux-ui/docs test:e2e",
     "test:a11y": "pnpm --filter @flux-ui/docs test:a11y",
     "bench": "pnpm --filter @flux-ui/react bench",
@@ -34,7 +34,7 @@
     "check:fix": "pnpm generate && pnpm lint:fix && pnpm format && pnpm check",
     "changeset": "changeset",
     "release:version": "changeset version",
-    "release": "pnpm build && changeset publish",
+    "release": "node tooling/release/instructions.mjs",
     "prepare": "husky",
     "bible:changed": "node scripts/run-coding-bible.mjs check . --changed",
     "size:changed": "pnpm build:packages && node tooling/size/check.mjs --changed && pnpm icons:size",
@@ -51,7 +51,12 @@
     "docs:test": "node --test scripts/test/docs-catalog.test.mjs",
     "icons:size": "node tooling/icons/check.mjs",
     "icons:test": "node --test tooling/icons/*.test.mjs",
-    "icons:size:update": "node tooling/icons/check.mjs --update-baseline"
+    "icons:size:update": "node tooling/icons/check.mjs --update-baseline",
+    "trust:test": "node --test tooling/trust/*.test.mjs tooling/release/*.test.mjs",
+    "trust:quality": "node tooling/trust/run-checks.mjs quality",
+    "trust:browser": "node tooling/trust/run-checks.mjs browser",
+    "trust:generate": "node tooling/trust/generate.mjs",
+    "release:pack": "node tooling/release/pack.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "catalog:",
