@@ -337,6 +337,7 @@ for (const width of [320, 390, 768, 1440]) {
       "overview",
       "components",
       "components/table",
+      "icons",
       "identity",
       "playground",
       "tokens",
@@ -357,6 +358,7 @@ for (const route of [
   "performance",
   "rules",
   "install",
+  "icons",
   "identity",
   "tokens",
   "documentation",
@@ -670,30 +672,58 @@ test("toolbar pressed styling survives hover and its native divider follows orie
   await expect(divider).toHaveAttribute("data-orientation", "horizontal");
 });
 
-test("identity lab filters icons and redraws the vector specimen", async ({
+test("icons browser searches intent metadata and changes its presentation", async ({
+  page,
+}) => {
+  await page.goto("/#icons");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Icons that speak Flux." }),
+  ).toBeVisible();
+  const filter = page.getByRole("searchbox", {
+    name: "Filter Flux icons",
+    exact: true,
+  });
+  await page.keyboard.press("/");
+  await expect(filter).toBeFocused();
+  await filter.fill("settings");
+  await expect(
+    page.getByRole("button", { name: /Sliders actions/ }),
+  ).toBeVisible();
+  await expect(page.getByRole("status").first()).toContainText("1 icon");
+  await page.getByRole("button", { name: /Sliders actions/ }).click();
+  await expect(
+    page.getByRole("region", { name: "SlidersIcon import" }),
+  ).toContainText("SlidersIcon");
+  await page
+    .getByRole("group", { name: "Icon preview size", exact: true })
+    .getByRole("button", { name: "32", exact: true })
+    .click();
+  await page
+    .getByRole("group", { name: "Icon gallery view", exact: true })
+    .getByRole("button", { name: "List", exact: true })
+    .click();
+  await expect(page.locator(".icon-gallery")).toHaveAttribute(
+    "data-view",
+    "list",
+  );
+});
+
+test("identity lab redraws Flux Display and reports unsupported glyphs", async ({
   page,
 }) => {
   await page.goto("/#identity");
   await expect(
     page.getByRole("heading", { level: 1, name: "Drawn for the system." }),
   ).toBeVisible();
-  const filter = page.getByRole("searchbox", {
-    name: "Filter Flux icons",
-    exact: true,
-  });
-  await filter.fill("search");
-  await expect(
-    page.getByRole("button", { name: /Search actions/ }),
-  ).toBeVisible();
-  await expect(page.getByRole("status").first()).toContainText("1 icon");
-  await page.getByRole("button", { name: /Search actions/ }).click();
-  await expect(
-    page.getByRole("region", { name: "SearchIcon import" }),
-  ).toContainText("SearchIcon");
   const specimen = page.getByLabel("Specimen", { exact: true });
   await specimen.fill("Build lighter");
   await expect(page.locator(".display-specimen")).toHaveAttribute(
     "aria-label",
     "BUILD LIGHTER",
   );
+  await specimen.fill("Café");
+  await expect(page.getByRole("status")).toContainText("Not drawn yet: É");
+  await expect(
+    page.getByRole("link", { name: /Browse all 64 icons/ }),
+  ).toHaveAttribute("href", "#icons");
 });

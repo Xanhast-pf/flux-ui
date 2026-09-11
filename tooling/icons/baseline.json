@@ -2,207 +2,387 @@
   "schemaVersion": 1,
   "icons": {
     "ArrowDownIcon": {
-      "raw": 1311,
-      "gzip": 798,
-      "brotli": 689,
+      "raw": 1439,
+      "gzip": 864,
+      "brotli": 758,
       "fileCount": 2
     },
     "ArrowLeftIcon": {
-      "raw": 1309,
-      "gzip": 798,
-      "brotli": 686,
+      "raw": 1437,
+      "gzip": 863,
+      "brotli": 754,
       "fileCount": 2
     },
     "ArrowRightIcon": {
-      "raw": 1315,
-      "gzip": 800,
-      "brotli": 700,
+      "raw": 1443,
+      "gzip": 865,
+      "brotli": 750,
       "fileCount": 2
     },
     "ArrowUpIcon": {
-      "raw": 1303,
-      "gzip": 796,
-      "brotli": 688,
+      "raw": 1431,
+      "gzip": 861,
+      "brotli": 746,
       "fileCount": 2
     },
     "ArrowUpRightIcon": {
-      "raw": 1307,
-      "gzip": 791,
-      "brotli": 677,
+      "raw": 1435,
+      "gzip": 855,
+      "brotli": 739,
+      "fileCount": 2
+    },
+    "BellIcon": {
+      "raw": 1440,
+      "gzip": 872,
+      "brotli": 753,
+      "fileCount": 2
+    },
+    "BellOffIcon": {
+      "raw": 1460,
+      "gzip": 884,
+      "brotli": 775,
       "fileCount": 2
     },
     "BranchIcon": {
-      "raw": 1366,
-      "gzip": 828,
-      "brotli": 721,
+      "raw": 1494,
+      "gzip": 894,
+      "brotli": 778,
+      "fileCount": 2
+    },
+    "CalendarIcon": {
+      "raw": 1442,
+      "gzip": 871,
+      "brotli": 748,
       "fileCount": 2
     },
     "CheckIcon": {
-      "raw": 1294,
-      "gzip": 790,
-      "brotli": 674,
+      "raw": 1422,
+      "gzip": 855,
+      "brotli": 735,
       "fileCount": 2
     },
     "ChevronDownIcon": {
-      "raw": 1307,
-      "gzip": 793,
-      "brotli": 684,
+      "raw": 1435,
+      "gzip": 859,
+      "brotli": 741,
       "fileCount": 2
     },
     "ChevronLeftIcon": {
-      "raw": 1307,
-      "gzip": 792,
-      "brotli": 691,
+      "raw": 1435,
+      "gzip": 858,
+      "brotli": 750,
       "fileCount": 2
     },
     "ChevronRightIcon": {
-      "raw": 1311,
-      "gzip": 794,
-      "brotli": 683,
+      "raw": 1439,
+      "gzip": 860,
+      "brotli": 743,
       "fileCount": 2
     },
     "ChevronUpIcon": {
-      "raw": 1301,
-      "gzip": 791,
-      "brotli": 678,
+      "raw": 1429,
+      "gzip": 857,
+      "brotli": 738,
+      "fileCount": 2
+    },
+    "CircleCheckIcon": {
+      "raw": 1473,
+      "gzip": 885,
+      "brotli": 771,
+      "fileCount": 2
+    },
+    "CircleHelpIcon": {
+      "raw": 1493,
+      "gzip": 896,
+      "brotli": 776,
+      "fileCount": 2
+    },
+    "CircleXIcon": {
+      "raw": 1466,
+      "gzip": 880,
+      "brotli": 759,
+      "fileCount": 2
+    },
+    "ClockIcon": {
+      "raw": 1444,
+      "gzip": 869,
+      "brotli": 749,
       "fileCount": 2
     },
     "CloseIcon": {
-      "raw": 1288,
-      "gzip": 785,
-      "brotli": 674,
+      "raw": 1416,
+      "gzip": 851,
+      "brotli": 734,
       "fileCount": 2
     },
     "CodeIcon": {
-      "raw": 1321,
-      "gzip": 806,
-      "brotli": 691,
+      "raw": 1449,
+      "gzip": 871,
+      "brotli": 758,
       "fileCount": 2
     },
     "CommandIcon": {
-      "raw": 1346,
-      "gzip": 807,
-      "brotli": 693,
+      "raw": 1474,
+      "gzip": 874,
+      "brotli": 753,
       "fileCount": 2
     },
     "CopyIcon": {
-      "raw": 1393,
-      "gzip": 820,
-      "brotli": 705,
+      "raw": 1521,
+      "gzip": 887,
+      "brotli": 767,
+      "fileCount": 2
+    },
+    "DatabaseIcon": {
+      "raw": 1523,
+      "gzip": 900,
+      "brotli": 776,
+      "fileCount": 2
+    },
+    "DownloadIcon": {
+      "raw": 1433,
+      "gzip": 862,
+      "brotli": 743,
+      "fileCount": 2
+    },
+    "EditIcon": {
+      "raw": 1445,
+      "gzip": 871,
+      "brotli": 756,
+      "fileCount": 2
+    },
+    "ExpandIcon": {
+      "raw": 1439,
+      "gzip": 865,
+      "brotli": 756,
+      "fileCount": 2
+    },
+    "EyeIcon": {
+      "raw": 1482,
+      "gzip": 888,
+      "brotli": 772,
+      "fileCount": 2
+    },
+    "EyeOffIcon": {
+      "raw": 1558,
+      "gzip": 932,
+      "brotli": 824,
+      "fileCount": 2
+    },
+    "FileIcon": {
+      "raw": 1420,
+      "gzip": 859,
+      "brotli": 744,
+      "fileCount": 2
+    },
+    "FilterIcon": {
+      "raw": 1434,
+      "gzip": 867,
+      "brotli": 748,
       "fileCount": 2
     },
     "FluxMarkIcon": {
-      "raw": 1307,
-      "gzip": 800,
-      "brotli": 687,
+      "raw": 1435,
+      "gzip": 866,
+      "brotli": 747,
+      "fileCount": 2
+    },
+    "FolderIcon": {
+      "raw": 1420,
+      "gzip": 858,
+      "brotli": 738,
       "fileCount": 2
     },
     "GaugeIcon": {
-      "raw": 1314,
-      "gzip": 804,
-      "brotli": 702,
+      "raw": 1442,
+      "gzip": 869,
+      "brotli": 759,
       "fileCount": 2
     },
     "GridIcon": {
-      "raw": 1327,
-      "gzip": 804,
-      "brotli": 688,
+      "raw": 1455,
+      "gzip": 871,
+      "brotli": 748,
+      "fileCount": 2
+    },
+    "HomeIcon": {
+      "raw": 1422,
+      "gzip": 861,
+      "brotli": 744,
       "fileCount": 2
     },
     "InfoIcon": {
-      "raw": 1321,
-      "gzip": 806,
-      "brotli": 690,
+      "raw": 1449,
+      "gzip": 873,
+      "brotli": 750,
       "fileCount": 2
     },
     "LayersIcon": {
-      "raw": 1344,
-      "gzip": 817,
-      "brotli": 699,
+      "raw": 1472,
+      "gzip": 884,
+      "brotli": 766,
+      "fileCount": 2
+    },
+    "LinkIcon": {
+      "raw": 1512,
+      "gzip": 900,
+      "brotli": 777,
       "fileCount": 2
     },
     "ListIcon": {
-      "raw": 1324,
-      "gzip": 798,
-      "brotli": 687,
+      "raw": 1452,
+      "gzip": 863,
+      "brotli": 753,
+      "fileCount": 2
+    },
+    "LockIcon": {
+      "raw": 1429,
+      "gzip": 865,
+      "brotli": 749,
+      "fileCount": 2
+    },
+    "MailIcon": {
+      "raw": 1420,
+      "gzip": 858,
+      "brotli": 744,
       "fileCount": 2
     },
     "MenuIcon": {
-      "raw": 1289,
-      "gzip": 786,
-      "brotli": 671,
+      "raw": 1417,
+      "gzip": 850,
+      "brotli": 732,
+      "fileCount": 2
+    },
+    "MinusIcon": {
+      "raw": 1403,
+      "gzip": 840,
+      "brotli": 726,
       "fileCount": 2
     },
     "MoonIcon": {
-      "raw": 1317,
-      "gzip": 801,
-      "brotli": 686,
+      "raw": 1445,
+      "gzip": 869,
+      "brotli": 755,
+      "fileCount": 2
+    },
+    "MoreHorizontalIcon": {
+      "raw": 1453,
+      "gzip": 857,
+      "brotli": 739,
+      "fileCount": 2
+    },
+    "MoreVerticalIcon": {
+      "raw": 1447,
+      "gzip": 856,
+      "brotli": 747,
       "fileCount": 2
     },
     "PackageIcon": {
-      "raw": 1360,
-      "gzip": 837,
-      "brotli": 738,
+      "raw": 1488,
+      "gzip": 904,
+      "brotli": 812,
       "fileCount": 2
     },
     "PaletteIcon": {
-      "raw": 1436,
-      "gzip": 866,
-      "brotli": 782,
+      "raw": 1564,
+      "gzip": 933,
+      "brotli": 816,
       "fileCount": 2
     },
     "PlusIcon": {
-      "raw": 1281,
-      "gzip": 782,
-      "brotli": 675,
+      "raw": 1409,
+      "gzip": 847,
+      "brotli": 734,
       "fileCount": 2
     },
     "RefreshIcon": {
-      "raw": 1366,
-      "gzip": 832,
-      "brotli": 724,
+      "raw": 1494,
+      "gzip": 897,
+      "brotli": 783,
       "fileCount": 2
     },
     "SearchIcon": {
-      "raw": 1326,
-      "gzip": 807,
-      "brotli": 691,
+      "raw": 1454,
+      "gzip": 874,
+      "brotli": 751,
       "fileCount": 2
     },
     "ShieldCheckIcon": {
-      "raw": 1371,
-      "gzip": 842,
-      "brotli": 736,
+      "raw": 1499,
+      "gzip": 909,
+      "brotli": 795,
+      "fileCount": 2
+    },
+    "ShrinkIcon": {
+      "raw": 1439,
+      "gzip": 867,
+      "brotli": 756,
+      "fileCount": 2
+    },
+    "SlidersIcon": {
+      "raw": 1472,
+      "gzip": 885,
+      "brotli": 768,
       "fileCount": 2
     },
     "SparkIcon": {
-      "raw": 1334,
-      "gzip": 803,
-      "brotli": 691,
+      "raw": 1462,
+      "gzip": 870,
+      "brotli": 758,
       "fileCount": 2
     },
     "StarIcon": {
-      "raw": 1352,
-      "gzip": 825,
-      "brotli": 718,
+      "raw": 1480,
+      "gzip": 891,
+      "brotli": 776,
       "fileCount": 2
     },
     "SunIcon": {
-      "raw": 1394,
-      "gzip": 846,
-      "brotli": 738,
+      "raw": 1522,
+      "gzip": 914,
+      "brotli": 798,
       "fileCount": 2
     },
     "TerminalIcon": {
-      "raw": 1325,
-      "gzip": 812,
-      "brotli": 694,
+      "raw": 1453,
+      "gzip": 878,
+      "brotli": 756,
+      "fileCount": 2
+    },
+    "TrashIcon": {
+      "raw": 1452,
+      "gzip": 879,
+      "brotli": 770,
+      "fileCount": 2
+    },
+    "UnlockIcon": {
+      "raw": 1437,
+      "gzip": 870,
+      "brotli": 753,
+      "fileCount": 2
+    },
+    "UploadIcon": {
+      "raw": 1428,
+      "gzip": 860,
+      "brotli": 742,
+      "fileCount": 2
+    },
+    "UserIcon": {
+      "raw": 1447,
+      "gzip": 871,
+      "brotli": 751,
+      "fileCount": 2
+    },
+    "UsersIcon": {
+      "raw": 1500,
+      "gzip": 899,
+      "brotli": 786,
       "fileCount": 2
     },
     "WarningIcon": {
-      "raw": 1315,
-      "gzip": 802,
-      "brotli": 686,
+      "raw": 1443,
+      "gzip": 868,
+      "brotli": 746,
       "fileCount": 2
     }
   }

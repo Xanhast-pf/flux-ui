@@ -29,12 +29,13 @@ export function IconBase({
   "aria-labelledby": ariaLabelledBy,
   ...props
 }: IconBaseProps) {
-  const explicitlyVisible = ariaHidden === false || ariaHidden === "false";
+  const hidden = ariaHidden === true || ariaHidden === "true";
+  const meaningfulTitle = title?.trim() ? title : undefined;
   const hasAccessibleName =
-    title !== undefined ||
-    ariaLabel !== undefined ||
-    ariaLabelledBy !== undefined;
-  const decorative = !hasAccessibleName && !explicitlyVisible;
+    meaningfulTitle !== undefined ||
+    (typeof ariaLabel === "string" && ariaLabel.trim().length > 0) ||
+    (typeof ariaLabelledBy === "string" && ariaLabelledBy.trim().length > 0);
+  const decorative = ariaHidden === undefined && !hasAccessibleName;
 
   return (
     <svg
@@ -45,7 +46,9 @@ export function IconBase({
       fill={fill}
       focusable="false"
       height={size}
-      role={role ?? (decorative ? undefined : "img")}
+      role={
+        hidden ? undefined : (role ?? (hasAccessibleName ? "img" : undefined))
+      }
       stroke={stroke}
       strokeLinecap={strokeLinecap}
       strokeLinejoin={strokeLinejoin}
@@ -54,7 +57,7 @@ export function IconBase({
       width={size}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {title === undefined ? null : <title>{title}</title>}
+      {meaningfulTitle === undefined ? null : <title>{meaningfulTitle}</title>}
       {children}
     </svg>
   );

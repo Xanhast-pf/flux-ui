@@ -18,6 +18,11 @@ import { RulesPage } from "./pages/RulesPage.js";
 import { InstallPage } from "./pages/InstallPage.js";
 import { DocumentationPage } from "./pages/DocumentationPage.js";
 
+const IconsPage = lazy(() =>
+  import("./pages/IconsPage.js").then((module) => ({
+    default: module.IconsPage,
+  })),
+);
 const IdentityPage = lazy(() =>
   import("./pages/IdentityPage.js").then((module) => ({
     default: module.IdentityPage,
@@ -35,6 +40,12 @@ function RouteView({ route }: { route: string }) {
       return <PlaygroundPage />;
     case "components":
       return <ComponentsPage />;
+    case "icons":
+      return (
+        <Suspense fallback={<p className="muted">Loading icon browser…</p>}>
+          <IconsPage />
+        </Suspense>
+      );
     case "identity":
       return (
         <Suspense fallback={<p className="muted">Loading identity lab…</p>}>

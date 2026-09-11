@@ -24,7 +24,7 @@ export function CodeBlock({
     }
   }
   return (
-    <div className="code-block">
+    <div className="code-block" role="region" aria-label={label}>
       <Inline justify="between" wrap className="code-toolbar">
         <span>{label}</span>
         <Button
@@ -39,7 +39,7 @@ export function CodeBlock({
           Copy code
         </Button>
       </Inline>
-      <pre role="region" aria-label={label}>
+      <pre>
         <code>{code}</code>
       </pre>
       <p className="copy-status" role="status">

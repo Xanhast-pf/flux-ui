@@ -494,13 +494,22 @@ kbd {
   grid-template-columns: minmax(0, 1fr);
 }
 .code-block {
+  min-inline-size: 0;
+  max-inline-size: 100%;
   border: 0.0625rem solid var(--flux-color-border);
   border-radius: 0.5rem;
-  overflow: hidden;
+  overflow: auto;
+  max-block-size: 36rem;
   background: var(--flux-color-surface);
 }
 .code-toolbar {
+  position: sticky;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 1;
+  min-inline-size: 100%;
   padding: 0.5rem 1rem;
+  background: var(--flux-color-surface);
   border-bottom: 0.0625rem solid var(--flux-color-border);
   color: var(--flux-color-text-muted);
   font-size: 0.75rem;
@@ -508,8 +517,8 @@ kbd {
 pre {
   margin: 0;
   padding: 1.5rem;
-  overflow: auto;
-  max-height: 32rem;
+  overflow: visible;
+  max-height: none;
   font-size: 0.75rem;
   line-height: 1.8;
   tab-size: 2;
@@ -520,7 +529,10 @@ pre code {
   overflow-wrap: normal;
 }
 .copy-status {
+  position: sticky;
+  inset-inline-start: 0;
   display: block;
+  min-inline-size: 100%;
   min-height: 1.5rem;
   padding-inline: 1rem;
   font-size: 0.75rem;
@@ -994,7 +1006,6 @@ meter {
   align-items: center;
   min-block-size: 12rem;
   padding: 1.5rem;
-  overflow-x: auto;
   border: 0.0625rem solid var(--flux-color-border);
   border-radius: 0.25rem;
   background:
@@ -1009,7 +1020,8 @@ meter {
 }
 .display-specimen {
   display: block;
-  min-inline-size: max-content;
+  inline-size: 100%;
+  max-inline-size: 100%;
   color: var(--flux-color-text);
 }
 .alphabet-specimen {
@@ -1060,4 +1072,139 @@ meter {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.icons-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: center;
+}
+.icons-hero-mark {
+  display: grid;
+  place-items: center;
+  inline-size: 6rem;
+  block-size: 6rem;
+  border: 0.0625rem solid var(--flux-color-border);
+  border-radius: 0.5rem;
+  background: var(--flux-color-accent-soft);
+  color: var(--flux-color-accent);
+}
+.icon-browser-panel {
+  padding: 1rem;
+}
+.icon-browser-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+.icon-search-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.icon-search-control > svg {
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  z-index: 1;
+  color: var(--flux-color-text-muted);
+  pointer-events: none;
+}
+.icon-search-control input {
+  padding-inline-start: 2.25rem;
+  padding-inline-end: 3rem;
+}
+.icon-search-control kbd {
+  position: absolute;
+  inset-inline-end: 0.5rem;
+  pointer-events: none;
+}
+.icon-browser-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+.icon-gallery[data-view="list"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.icon-gallery[data-view="list"] .icon-tile {
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  grid-template-rows: auto;
+  justify-items: start;
+  text-align: start;
+}
+.icon-gallery[data-view="list"] .icon-tile-stage {
+  inline-size: 3rem;
+  block-size: 3rem;
+}
+.icon-inspector {
+  min-inline-size: 0;
+}
+.icon-inspector > * {
+  padding: 1rem;
+}
+.icon-inspector-stage {
+  display: grid;
+  place-items: center;
+  min-block-size: 10rem;
+  border: 0.0625rem solid var(--flux-color-border);
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(var(--flux-color-border) 0.0625rem, transparent 0.0625rem),
+    linear-gradient(
+      90deg,
+      var(--flux-color-border) 0.0625rem,
+      transparent 0.0625rem
+    ),
+    var(--flux-color-surface-subtle);
+  background-size: 1rem 1rem;
+  color: var(--flux-color-accent);
+}
+.identity-icon-teaser {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+.identity-icon-teaser-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.identity-icon-teaser-grid > svg {
+  justify-self: center;
+  color: var(--flux-color-accent);
+}
+
+@media (min-width: 48rem) {
+  .icon-browser-controls {
+    grid-template-columns: minmax(16rem, 1fr) minmax(10rem, 14rem);
+  }
+  .icon-browser-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+  }
+  .icon-inspector {
+    position: sticky;
+    inset-block-start: 6rem;
+  }
+}
+
+@media (width < 30rem) {
+  .icons-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .icons-hero-mark {
+    inline-size: 4rem;
+    block-size: 4rem;
+  }
+  .identity-icon-teaser-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (forced-colors: active) {
+  .icons-hero-mark,
+  .icon-inspector-stage {
+    background: Canvas;
+  }
 }

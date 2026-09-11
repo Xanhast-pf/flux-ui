@@ -1,5 +1,6 @@
 export {
   fluxDisplayGlyphs,
+  getUnsupportedFluxDisplayCharacters,
   fluxDisplayMetrics,
   normalizeFluxDisplayText,
   type FluxDisplayGlyph,

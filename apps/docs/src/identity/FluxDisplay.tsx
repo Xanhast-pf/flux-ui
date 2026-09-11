@@ -25,6 +25,9 @@ export function FluxDisplay({
     return { character, glyph, x };
   });
   const width = Math.max(cursor - fluxDisplayMetrics.letterGap, 1);
+  const padding = fluxDisplayMetrics.renderPadding;
+  const viewBoxWidth = width + padding * 2;
+  const viewBoxHeight = fluxDisplayMetrics.designGridHeight + padding * 2;
 
   return (
     <svg
@@ -39,7 +42,8 @@ export function FluxDisplay({
       strokeLinecap="square"
       strokeLinejoin="miter"
       strokeWidth={fluxDisplayMetrics.strokeWidth}
-      viewBox={`-0.5 -0.5 ${width + 1} 8`}
+      viewBox={`${-padding} ${-padding} ${viewBoxWidth} ${viewBoxHeight}`}
+      width="100%"
       xmlns="http://www.w3.org/2000/svg"
     >
       {glyphs.map(({ character, glyph, x }) =>

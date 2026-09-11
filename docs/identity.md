@@ -4,7 +4,7 @@ Flux UI owns its visual identity in the same monorepo as the component system.
 
 ## Flux Icons
 
-`@flux-ui/icons` is the public icon package. The initial set covers navigation, actions, status, theme, layout, developer tooling and the Flux mark.
+`@flux-ui/icons` is the public icon package. The current 64-icon set covers navigation, actions, status, theme, layout, content, communication, developer tooling and the Flux mark.
 
 Design contract:
 
@@ -16,7 +16,7 @@ Design contract:
 - regular SVG props and React 19 refs
 - no provider, sprite sheet, icon font or styling runtime
 
-The canonical source is `packages/icons/icons.json`. `pnpm generate` creates the public icon components, root exports and docs catalog.
+The canonical source is `packages/icons/icons.json`. Every entry carries lowercase intent/search keywords; geometry aliases are rejected so discoverability does not create duplicate runtime glyphs. `pnpm generate` creates the public icon components, root exports and docs catalog. Browse the full set on the dedicated `#icons` docs route.
 
 Use an icon as decoration when adjacent text already communicates the meaning:
 
@@ -42,7 +42,7 @@ For icon-only controls, label the control rather than relying on the SVG:
 
 Flux Display is currently an uppercase vector-lettering prototype, not a compiled font package.
 
-The source lives in `packages/identity/src/flux-display.ts` and currently includes A–Z, 0–9 and a small punctuation set. The docs render those vector paths directly on the `#identity` route.
+The source lives in `packages/identity/src/flux-display.ts` and currently includes A–Z, 0–9 and a small punctuation set. The docs render those vector paths directly on the `#identity` route. The prototype renderer includes a full design-grid unit of optical padding so sharp mitered corners and Q/R tails are not clipped.
 
 Current design targets:
 

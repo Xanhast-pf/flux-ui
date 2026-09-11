@@ -2,7 +2,7 @@
   {
     "name": "ArrowDown",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["down", "south", "move", "direction", "scroll"],
     "elements": [
       {
         "tag": "path",
@@ -13,7 +13,7 @@
   {
     "name": "ArrowLeft",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["left", "west", "back", "previous", "direction"],
     "elements": [
       {
         "tag": "path",
@@ -24,7 +24,7 @@
   {
     "name": "ArrowRight",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["right", "east", "forward", "next", "direction"],
     "elements": [
       {
         "tag": "path",
@@ -35,7 +35,7 @@
   {
     "name": "ArrowUp",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["up", "north", "move", "direction", "scroll"],
     "elements": [
       {
         "tag": "path",
@@ -46,7 +46,7 @@
   {
     "name": "ArrowUpRight",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["external", "open", "new window", "diagonal", "northeast"],
     "elements": [
       {
         "tag": "path",
@@ -57,7 +57,7 @@
   {
     "name": "ChevronDown",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["down", "expand", "disclosure", "select"],
     "elements": [
       {
         "tag": "path",
@@ -68,7 +68,7 @@
   {
     "name": "ChevronLeft",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["left", "previous", "back", "pagination"],
     "elements": [
       {
         "tag": "path",
@@ -79,7 +79,7 @@
   {
     "name": "ChevronRight",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["right", "next", "forward", "pagination"],
     "elements": [
       {
         "tag": "path",
@@ -90,7 +90,7 @@
   {
     "name": "ChevronUp",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["up", "collapse", "disclosure"],
     "elements": [
       {
         "tag": "path",
@@ -101,7 +101,7 @@
   {
     "name": "Menu",
     "category": "navigation",
-    "keywords": [],
+    "keywords": ["navigation", "hamburger", "drawer", "sidebar"],
     "elements": [
       {
         "tag": "path",
@@ -112,7 +112,7 @@
   {
     "name": "Close",
     "category": "actions",
-    "keywords": [],
+    "keywords": ["x", "dismiss", "cancel", "remove"],
     "elements": [
       {
         "tag": "path",
@@ -123,7 +123,7 @@
   {
     "name": "Check",
     "category": "status",
-    "keywords": [],
+    "keywords": ["done", "success", "confirm", "selected"],
     "elements": [
       {
         "tag": "path",
@@ -134,7 +134,7 @@
   {
     "name": "Plus",
     "category": "actions",
-    "keywords": [],
+    "keywords": ["add", "new", "create", "positive"],
     "elements": [
       {
         "tag": "path",
@@ -145,7 +145,7 @@
   {
     "name": "Copy",
     "category": "actions",
-    "keywords": [],
+    "keywords": ["duplicate", "clipboard", "clone"],
     "elements": [
       {
         "tag": "path",
@@ -156,7 +156,7 @@
   {
     "name": "Refresh",
     "category": "actions",
-    "keywords": [],
+    "keywords": ["reload", "sync", "retry", "restart"],
     "elements": [
       {
         "tag": "path",
@@ -167,7 +167,7 @@
   {
     "name": "Search",
     "category": "actions",
-    "keywords": [],
+    "keywords": ["find", "filter", "magnifier", "lookup"],
     "elements": [
       {
         "tag": "path",
@@ -178,7 +178,7 @@
   {
     "name": "Command",
     "category": "actions",
-    "keywords": [],
+    "keywords": ["keyboard", "shortcut", "cmd", "meta"],
     "elements": [
       {
         "tag": "path",
@@ -189,7 +189,7 @@
   {
     "name": "Spark",
     "category": "status",
-    "keywords": [],
+    "keywords": ["new", "magic", "feature", "highlight"],
     "elements": [
       {
         "tag": "path",
@@ -200,7 +200,7 @@
   {
     "name": "Star",
     "category": "status",
-    "keywords": [],
+    "keywords": ["favorite", "rating", "save", "featured"],
     "elements": [
       {
         "tag": "path",
@@ -211,7 +211,7 @@
   {
     "name": "Info",
     "category": "status",
-    "keywords": [],
+    "keywords": ["information", "help", "notice", "details"],
     "elements": [
       {
         "tag": "path",
@@ -222,7 +222,7 @@
   {
     "name": "Warning",
     "category": "status",
-    "keywords": [],
+    "keywords": ["alert", "caution", "danger", "attention"],
     "elements": [
       {
         "tag": "path",
@@ -233,7 +233,7 @@
   {
     "name": "ShieldCheck",
     "category": "status",
-    "keywords": [],
+    "keywords": ["secure", "verified", "protected", "success"],
     "elements": [
       {
         "tag": "path",
@@ -244,7 +244,7 @@
   {
     "name": "Sun",
     "category": "theme",
-    "keywords": [],
+    "keywords": ["light", "theme", "day", "brightness"],
     "elements": [
       {
         "tag": "path",
@@ -255,7 +255,7 @@
   {
     "name": "Moon",
     "category": "theme",
-    "keywords": [],
+    "keywords": ["dark", "theme", "night"],
     "elements": [
       {
         "tag": "path",
@@ -266,7 +266,7 @@
   {
     "name": "Palette",
     "category": "theme",
-    "keywords": [],
+    "keywords": ["theme", "color", "appearance", "design"],
     "elements": [
       {
         "tag": "path",
@@ -277,7 +277,7 @@
   {
     "name": "Grid",
     "category": "layout",
-    "keywords": [],
+    "keywords": ["layout", "tiles", "gallery", "apps"],
     "elements": [
       {
         "tag": "path",
@@ -288,7 +288,7 @@
   {
     "name": "List",
     "category": "layout",
-    "keywords": [],
+    "keywords": ["layout", "rows", "menu", "items"],
     "elements": [
       {
         "tag": "path",
@@ -299,7 +299,7 @@
   {
     "name": "Layers",
     "category": "layout",
-    "keywords": [],
+    "keywords": ["stack", "layout", "depth", "collection"],
     "elements": [
       {
         "tag": "path",
@@ -310,7 +310,7 @@
   {
     "name": "Gauge",
     "category": "layout",
-    "keywords": [],
+    "keywords": ["performance", "speed", "metric", "dashboard"],
     "elements": [
       {
         "tag": "path",
@@ -321,7 +321,7 @@
   {
     "name": "Package",
     "category": "developer",
-    "keywords": [],
+    "keywords": ["npm", "module", "dependency", "bundle"],
     "elements": [
       {
         "tag": "path",
@@ -332,7 +332,7 @@
   {
     "name": "Terminal",
     "category": "developer",
-    "keywords": [],
+    "keywords": ["cli", "shell", "console", "command line"],
     "elements": [
       {
         "tag": "path",
@@ -343,7 +343,7 @@
   {
     "name": "Code",
     "category": "developer",
-    "keywords": [],
+    "keywords": ["source", "developer", "markup", "brackets"],
     "elements": [
       {
         "tag": "path",
@@ -354,7 +354,7 @@
   {
     "name": "Branch",
     "category": "developer",
-    "keywords": [],
+    "keywords": ["git", "version control", "fork", "source control"],
     "elements": [
       {
         "tag": "path",
@@ -365,11 +365,341 @@
   {
     "name": "FluxMark",
     "category": "brand",
-    "keywords": [],
+    "keywords": ["brand", "logo", "flux", "identity"],
     "elements": [
       {
         "tag": "path",
         "d": "M3 4h9l-3 4h8l-6 8H4l3-4H3l4-8Z"
+      }
+    ]
+  },
+  {
+    "name": "Minus",
+    "category": "actions",
+    "keywords": ["remove", "subtract", "collapse", "negative"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 10h12"
+      }
+    ]
+  },
+  {
+    "name": "Edit",
+    "category": "actions",
+    "keywords": ["pencil", "write", "rename", "modify"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 13.5 13.5 4l2.5 2.5L6.5 16H4v-2.5Z M11.5 6l2.5 2.5"
+      }
+    ]
+  },
+  {
+    "name": "Trash",
+    "category": "actions",
+    "keywords": ["delete", "remove", "bin", "discard"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 6h12 M7 6V4h6v2 M6 6l.7 11h6.6L14 6 M8.5 9v5 M11.5 9v5"
+      }
+    ]
+  },
+  {
+    "name": "Download",
+    "category": "actions",
+    "keywords": ["save", "export", "arrow down", "receive"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 3v9 M6 8l4 4 4-4 M4 16h12"
+      }
+    ]
+  },
+  {
+    "name": "Upload",
+    "category": "actions",
+    "keywords": ["import", "publish", "arrow up", "send"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 17V8 M6 12l4-4 4 4 M4 4h12"
+      }
+    ]
+  },
+  {
+    "name": "Filter",
+    "category": "actions",
+    "keywords": ["funnel", "refine", "query", "search"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3 4h14l-5.5 6.2V15l-3 1.5v-6.3L3 4Z"
+      }
+    ]
+  },
+  {
+    "name": "Sliders",
+    "category": "actions",
+    "keywords": ["settings", "controls", "adjust", "preferences"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 5h4 M12 5h4 M4 10h7 M15 10h1 M4 15h2 M10 15h6 M8 3v4 M11 8v4 M6 13v4"
+      }
+    ]
+  },
+  {
+    "name": "MoreHorizontal",
+    "category": "actions",
+    "keywords": ["ellipsis", "more", "options", "menu"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M5 10h.01 M10 10h.01 M15 10h.01"
+      }
+    ]
+  },
+  {
+    "name": "MoreVertical",
+    "category": "actions",
+    "keywords": ["ellipsis", "more", "options", "kebab"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 5h.01 M10 10h.01 M10 15h.01"
+      }
+    ]
+  },
+  {
+    "name": "Eye",
+    "category": "actions",
+    "keywords": ["view", "show", "visible", "preview"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M2.5 10s2.8-5 7.5-5 7.5 5 7.5 5-2.8 5-7.5 5S2.5 10 2.5 10Z M10 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"
+      }
+    ]
+  },
+  {
+    "name": "EyeOff",
+    "category": "actions",
+    "keywords": ["hide", "hidden", "visibility", "private"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3 3l14 14 M8.2 5.3A8 8 0 0 1 10 5c4.7 0 7.5 5 7.5 5a11.5 11.5 0 0 1-2 2.6 M6.3 6.4A12 12 0 0 0 2.5 10s2.8 5 7.5 5c.7 0 1.3-.1 1.9-.3 M8.6 8.6a2 2 0 0 0 2.8 2.8"
+      }
+    ]
+  },
+  {
+    "name": "Home",
+    "category": "navigation",
+    "keywords": ["house", "start", "root", "overview"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3 9 10 3l7 6v8h-5v-5H8v5H3V9Z"
+      }
+    ]
+  },
+  {
+    "name": "Expand",
+    "category": "navigation",
+    "keywords": ["fullscreen", "maximize", "grow", "open"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M8 4H4v4 M12 4h4v4 M8 16H4v-4 M12 16h4v-4"
+      }
+    ]
+  },
+  {
+    "name": "Shrink",
+    "category": "navigation",
+    "keywords": ["minimize", "collapse", "contract", "inset"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 8h4V4 M16 8h-4V4 M4 12h4v4 M16 12h-4v4"
+      }
+    ]
+  },
+  {
+    "name": "CircleCheck",
+    "category": "status",
+    "keywords": ["success", "complete", "valid", "approved"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z M6.5 10.2 9 12.7l4.5-5"
+      }
+    ]
+  },
+  {
+    "name": "CircleX",
+    "category": "status",
+    "keywords": ["error", "failed", "invalid", "cancel"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z M7.5 7.5l5 5 M12.5 7.5l-5 5"
+      }
+    ]
+  },
+  {
+    "name": "CircleHelp",
+    "category": "status",
+    "keywords": ["help", "question", "support", "unknown"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z M8 8a2 2 0 0 1 4 0c0 1.5-2 1.8-2 3 M10 14h.01"
+      }
+    ]
+  },
+  {
+    "name": "Clock",
+    "category": "status",
+    "keywords": ["time", "history", "schedule", "recent"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z M10 6v4l3 2"
+      }
+    ]
+  },
+  {
+    "name": "Bell",
+    "category": "status",
+    "keywords": ["notification", "alert", "reminder", "subscribe"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M5 13V9a5 5 0 0 1 10 0v4l1.5 2h-13L5 13Z M8 17h4"
+      }
+    ]
+  },
+  {
+    "name": "BellOff",
+    "category": "status",
+    "keywords": ["notifications off", "mute", "silent", "unsubscribe"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3 3l14 14 M6 6.5A5 5 0 0 1 15 9v4l1.5 2H13 M4 15h5 M8 17h4"
+      }
+    ]
+  },
+  {
+    "name": "Lock",
+    "category": "status",
+    "keywords": ["secure", "private", "locked", "permission"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M5 9h10v8H5V9Z M7 9V6a3 3 0 0 1 6 0v3"
+      }
+    ]
+  },
+  {
+    "name": "Unlock",
+    "category": "status",
+    "keywords": ["open", "public", "unlocked", "permission"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M5 9h10v8H5V9Z M7 9V6a3 3 0 0 1 5.7-1.3"
+      }
+    ]
+  },
+  {
+    "name": "File",
+    "category": "content",
+    "keywords": ["document", "page", "source", "attachment"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M5 3h6l4 4v10H5V3Z M11 3v4h4"
+      }
+    ]
+  },
+  {
+    "name": "Folder",
+    "category": "content",
+    "keywords": ["directory", "files", "project", "open"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3 6h6l1.5 2H17v8H3V6Z"
+      }
+    ]
+  },
+  {
+    "name": "Link",
+    "category": "content",
+    "keywords": ["url", "chain", "hyperlink", "attach"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M8 12l-1.5 1.5a3 3 0 0 1-4.2-4.2L5 6.6a3 3 0 0 1 4.2 0 M12 8l1.5-1.5a3 3 0 0 1 4.2 4.2L15 13.4a3 3 0 0 1-4.2 0 M7 13l6-6"
+      }
+    ]
+  },
+  {
+    "name": "Calendar",
+    "category": "content",
+    "keywords": ["date", "schedule", "event", "month"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 5h12v12H4V5Z M7 3v4 M13 3v4 M4 8h12"
+      }
+    ]
+  },
+  {
+    "name": "Mail",
+    "category": "communication",
+    "keywords": ["email", "message", "inbox", "envelope"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M3 5h14v10H3V5Z M3 6l7 5 7-5"
+      }
+    ]
+  },
+  {
+    "name": "User",
+    "category": "communication",
+    "keywords": ["person", "profile", "account", "member"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M4 17a6 6 0 0 1 12 0"
+      }
+    ]
+  },
+  {
+    "name": "Users",
+    "category": "communication",
+    "keywords": ["people", "team", "group", "members"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7.5 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M2.5 17a5 5 0 0 1 10 0 M14 9a2.5 2.5 0 0 0 0-5 M13 13a4 4 0 0 1 4.5 4"
+      }
+    ]
+  },
+  {
+    "name": "Database",
+    "category": "developer",
+    "keywords": ["data", "storage", "sql", "server"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 5c0-1.1 2.7-2 6-2s6 .9 6 2-2.7 2-6 2-6-.9-6-2Z M4 5v5c0 1.1 2.7 2 6 2s6-.9 6-2V5 M4 10v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"
       }
     ]
   }

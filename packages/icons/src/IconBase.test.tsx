@@ -34,4 +34,23 @@ describe("Flux icons", () => {
     expect(markup).toContain('class="custom"');
     expect(markup).toContain('data-project="flux"');
   });
+  it("does not synthesize an image role from aria-hidden=false alone", () => {
+    const markup = renderToStaticMarkup(<SearchIcon aria-hidden={false} />);
+    expect(markup).toContain('aria-hidden="false"');
+    expect(markup).not.toContain('role="img"');
+  });
+
+  it("lets explicit hidden state win even when a title is present", () => {
+    const markup = renderToStaticMarkup(
+      <SearchIcon aria-hidden="true" title="Search" />,
+    );
+    expect(markup).toContain('aria-hidden="true"');
+    expect(markup).not.toContain('role="img"');
+  });
+
+  it("does not treat a blank title as an accessible name", () => {
+    const markup = renderToStaticMarkup(<SearchIcon title="   " />);
+    expect(markup).toContain('aria-hidden="true"');
+    expect(markup).not.toContain("<title>");
+  });
 });
