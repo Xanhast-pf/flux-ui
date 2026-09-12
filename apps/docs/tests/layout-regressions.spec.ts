@@ -219,7 +219,7 @@ test("surface defaults do not erase footer spacing or header auto alignment", as
   await expect(page.locator(".preview-stage")).toHaveCSS("padding-top", "32px");
   await expect(page.locator(".site-footer")).toHaveCSS("margin-top", "64px");
   await expect(page.locator(".site-footer")).toHaveCSS("padding-top", "32px");
-  await expect(page.locator(".header-inner")).toHaveCSS("gap", "16px");
+  await expect(page.locator(".header-inner")).toHaveCSS("gap", "8px");
   const margin = await page
     .locator(".header-search")
     .evaluate((element) =>

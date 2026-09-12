@@ -4,7 +4,8 @@
   position: relative;
   overflow: hidden;
   max-inline-size: 100%;
-  block-size: 17rem;
+  inline-size: 100%;
+  block-size: auto;
   border-radius: 0.25rem;
   display: flex;
   flex-direction: column;
@@ -127,20 +128,8 @@
     #252c45 65%
   );
 }
-.video-clip small {
-  display: block;
-  color: var(--flux-color-text-muted);
-  font-weight: 400;
-  font-size: 0.75rem;
-}
-@container flux-layout (min-width: 48rem) {
-  .video-frame {
-    block-size: 19rem;
-  }
-}
 @container flux-layout (max-width: 30rem) {
   .video-frame {
-    block-size: 9rem;
     padding: 0.5rem;
   }
 }

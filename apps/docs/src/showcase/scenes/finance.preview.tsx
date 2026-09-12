@@ -187,10 +187,10 @@ export default function FinanceScene() {
             <Text as="strong" weight="bold" variant="caption">
               •••• &nbsp; 4242
             </Text>
-            <Box>
+            <Inline justify="between" gap="sm" wrap>
               <Text variant="caption">Alex Morgan</Text>
               <Text variant="caption">{frozen ? "Frozen" : "Active"}</Text>
-            </Box>
+            </Inline>
           </Stack>
           <Card as="section" padding={6} radius="sm">
             <Stack gap={3}>
@@ -264,7 +264,9 @@ export default function FinanceScene() {
                     <Table.Row>
                       <Table.ColumnHeader>Transaction</Table.ColumnHeader>
                       <Table.ColumnHeader>Date</Table.ColumnHeader>
-                      <Table.ColumnHeader>Amount</Table.ColumnHeader>
+                      <Table.ColumnHeader style={{ textAlign: "end" }}>
+                        Amount
+                      </Table.ColumnHeader>
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
@@ -278,16 +280,26 @@ export default function FinanceScene() {
                               size="sm"
                               shape="square"
                             />
-                            <Text variant="caption">
-                              {row.name}
-                              <Text as="small" variant="caption">
+                            <Stack as="span" gap="xs">
+                              <Text
+                                as="strong"
+                                variant="caption"
+                                weight="medium"
+                              >
+                                {row.name}
+                              </Text>
+                              <Text
+                                variant="caption"
+                                tone="muted"
+                                weight="regular"
+                              >
                                 {row.detail}
                               </Text>
-                            </Text>
+                            </Stack>
                           </Inline>
                         </Table.RowHeader>
                         <Table.Cell>{row.date}</Table.Cell>
-                        <Table.Cell>
+                        <Table.Cell style={{ textAlign: "end" }}>
                           <Text as="strong" variant="caption" numeric>
                             {row.amount}
                           </Text>

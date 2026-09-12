@@ -1,6 +1,7 @@
 import {
   Box,
   Callout,
+  Collapsible,
   Card,
   Grid,
   Heading,
@@ -14,15 +15,15 @@ import { CodeBlock } from "../ui/CodeBlock.js";
 const contracts = [
   {
     title: "Native first",
-    body: "HTML semantics, native props and browser behavior before custom abstractions. Accessibility belongs in the structure—not in a last-minute ARIA layer.",
+    body: "Native semantics, keyboard behavior, and accessible names before custom abstractions.",
   },
   {
     title: "Static by design",
-    body: "Component styles are emitted as CSS. Semantic custom properties carry themes and accents. No runtime CSS-in-JS engine is added to consumer components.",
+    body: "Emitted CSS and semantic theme variables. No runtime CSS-in-JS engine.",
   },
   {
     title: "Convention over registration",
-    body: "A component owns its behavior, styles, tests, stories, benchmark and metadata. Generators discover public surfaces; catalog growth does not require project-wide wiring.",
+    body: "Component-local behavior, styles, tests, and metadata. Generators discover the public catalog.",
   },
   {
     title: "Small API, real escape hatches",
@@ -102,19 +103,33 @@ export function EngineeringPage() {
             The measurement contract
           </Heading>
           <Text as="p" variant="body">
-            Per-component emitted runtime graphs have raw, gzip and Brotli
-            budgets, plus historical regression checks. Shared graphs overlap:
-            adding every component’s compressed size is not an application
-            bundle estimate. React and external packages are outside these graph
-            measurements.
+            Bundle budgets and native-relative benchmarks gate regressions.
+            Neither is a universal claim about application size or speed.
           </Text>
-          <Text as="p" variant="body">
-            Runtime checks compare synchronous mount, update and unmount against
-            equivalent native React implementations. Paired medians reduce order
-            bias; absolute cost accompanies ratios. Next-frame diagnostics are
-            not paint or input-latency measurements. The live lab is an
-            experiment, not a claim to be the fastest library.
-          </Text>
+          <Collapsible.Root appearance="plain">
+            <Collapsible.Trigger>
+              Measurement scope and limitations
+            </Collapsible.Trigger>
+            <Collapsible.Content>
+              <Stack gap="md">
+                <Text as="p" variant="body">
+                  Per-component emitted runtime graphs have raw, gzip and Brotli
+                  budgets, plus historical regression checks. Shared graphs
+                  overlap: adding every component’s compressed size is not an
+                  application bundle estimate. React and external packages are
+                  outside these graph measurements.
+                </Text>
+                <Text as="p" variant="body">
+                  Runtime checks compare synchronous mount, update and unmount
+                  against equivalent native React implementations. Paired
+                  medians reduce order bias; absolute cost accompanies ratios.
+                  Next-frame diagnostics are not paint or input-latency
+                  measurements. The live lab is an experiment, not a claim to be
+                  the fastest library.
+                </Text>
+              </Stack>
+            </Collapsible.Content>
+          </Collapsible.Root>
           <Text as="p" variant="body">
             <Link href="#size">Explore bundle budgets</Link> ·{" "}
             <Link href="#lab">Run the lab</Link>

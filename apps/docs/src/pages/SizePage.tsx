@@ -16,7 +16,6 @@ export function SizePage() {
   return (
     <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="md">
-        <MeasurementNotice />
         <PageHeader title={<>Bundle-size health</>}>
           <Text as="p" variant="body">
             Every public component has an absolute complexity-class budget and a
@@ -24,6 +23,7 @@ export function SizePage() {
             against each component&apos;s absolute budget.
           </Text>
         </PageHeader>
+        <MeasurementNotice />
 
         <BundleExplorer />
         <ScrollArea aria-label="Measurement table" axis="horizontal">

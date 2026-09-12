@@ -12,3 +12,7 @@ packages/icons/src/catalog.ts
 
 # Produced only from executed checks; never commit fabricated evidence.
 apps/docs/public/evidence/
+
+# Generated from the canonical FluxMark paths and brand palette.
+apps/docs/public/flux-*.svg
+packages/identity/brand/*.svg

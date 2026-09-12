@@ -1,5 +1,6 @@
-import { Callout } from "@flux-ui/react";
+import { Callout, Link } from "@flux-ui/react";
 import { health } from "../generated/health.js";
+import { REPOSITORY_URL } from "../lib/format.js";
 function isPending(value: number | null): boolean {
   return value === null;
 }
@@ -11,7 +12,8 @@ export function MeasurementNotice() {
     <Callout tone={pending > 0 ? "warning" : "info"}>
       {pending > 0
         ? `${pending} components await their first production measurement. Aggregate numbers still describe the last measured build, not the expanded catalog.`
-        : "These are committed build measurements, not a live CI result. The Actions link shows the current workflow status."}
+        : "Committed build measurements, not a live CI result."}{" "}
+      <Link href={`${REPOSITORY_URL}/actions`}>View CI runs</Link>
     </Callout>
   );
 }

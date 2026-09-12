@@ -33,13 +33,24 @@ function renderElement(element) {
 
 function iconSource(icon) {
   const name = componentName(icon.name);
+  const elements =
+    icon.name === "FluxMark"
+      ? [
+          renderElement({
+            tag: "path",
+            d: icon.elements.map((element) => element.d).join(""),
+          }),
+        ]
+      : icon.elements.map(renderElement);
   return [
     'import { IconBase, type IconProps } from "../IconBase.js";',
     "",
     `export function ${name}(props: IconProps) {`,
     "  return (",
-    "    <IconBase {...props}>",
-    ...icon.elements.map(renderElement),
+    icon.fill === "currentColor"
+      ? '    <IconBase fill="currentColor" stroke="none" {...props}>'
+      : "    <IconBase {...props}>",
+    ...elements,
     "    </IconBase>",
     "  );",
     "}",
@@ -166,6 +177,9 @@ for (const icon of icons) {
     ) {
       throw new Error(`${icon.name} contains invalid SVG path geometry.`);
     }
+  }
+  if (icon.fill !== undefined && icon.fill !== "currentColor") {
+    throw new Error(`Unsupported icon fill for ${icon.name}: ${icon.fill}`);
   }
   const geometry = JSON.stringify(icon.elements);
   const duplicateGeometry = geometries.get(geometry);

@@ -46,21 +46,24 @@ export function IdentityPage() {
         eyebrow={<>Flux identity lab</>}
       >
         <Text as="p" variant="lead" tone="muted">
-          Flux Icons and Flux Display share a geometric vocabulary: compact
-          grids, deliberate gaps, technical terminals, and enough personality to
-          feel like one system without becoming decoration for its own sake.
+          The ribbon F is the Flux mark. Use the gradient for branding and the
+          currentColor icon beside controls. Flux Display remains a separate
+          type-design experiment.
         </Text>
       </PageHeader>
 
       <Card className="identity-hero">
         <Stack gap="lg">
           <Box className="identity-mark-lockup">
-            <FluxMarkIcon size={56} />
-            <FluxDisplay
-              text="FLUX UI"
-              size={84}
-              className="identity-wordmark"
+            <img
+              src={`${import.meta.env.BASE_URL}flux-mark.svg`}
+              alt="Flux UI ribbon F"
+              width={80}
+              height={80}
             />
+            <Text variant="display" weight="bold">
+              fluxUI
+            </Text>
           </Box>
           <Inline gap="sm" wrap>
             <Badge tone="accent">64 original icons</Badge>
@@ -70,6 +73,69 @@ export function IdentityPage() {
           </Inline>
         </Stack>
       </Card>
+
+      <Stack aria-labelledby="brand-heading" as="section" gap="lg">
+        <Heading id="brand-heading" level={2} size="lg">
+          The ribbon F.
+        </Heading>
+        <Text as="p" variant="body" tone="muted">
+          Three editable paths. No raster images, fonts, filters, or background.
+          The app icon adds a dark tile; the interface icon inherits its color.
+        </Text>
+        <Grid columns={{ base: 1, sm: 2 }} gap="md">
+          <Card>
+            <Stack gap="md">
+              <Inline gap="lg" align="center">
+                <img
+                  src={`${import.meta.env.BASE_URL}flux-mark.svg`}
+                  alt=""
+                  width={64}
+                  height={64}
+                />
+                <Text as="strong" weight="medium">
+                  Brand gradient
+                </Text>
+              </Inline>
+              <Inline gap="md" wrap>
+                <Link
+                  href={`${import.meta.env.BASE_URL}flux-mark.svg`}
+                  download="flux-mark.svg"
+                >
+                  Download SVG
+                </Link>
+                <Link
+                  href={`${import.meta.env.BASE_URL}flux-app-icon.svg`}
+                  download="flux-app-icon.svg"
+                >
+                  App icon SVG
+                </Link>
+              </Inline>
+            </Stack>
+          </Card>
+          <Card>
+            <Stack gap="md">
+              <Inline
+                gap="lg"
+                role="group"
+                aria-label="Monochrome Flux marks at 16, 24, and 32 pixels"
+              >
+                <FluxMarkIcon size={16} />
+                <FluxMarkIcon size={24} />
+                <FluxMarkIcon size={32} />
+              </Inline>
+              <Text as="p" variant="caption" tone="muted">
+                FluxMarkIcon · 16 / 24 / 32px · currentColor
+              </Text>
+              <Link
+                href={`${import.meta.env.BASE_URL}flux-mark-mono.svg`}
+                download="flux-mark-mono.svg"
+              >
+                Monochrome SVG
+              </Link>
+            </Stack>
+          </Card>
+        </Grid>
+      </Stack>
 
       <Stack aria-labelledby="icons-heading" as="section" gap="lg">
         <Stack gap="md">
@@ -81,10 +147,8 @@ export function IdentityPage() {
               One grammar, more vocabulary.
             </Heading>
             <Text as="p" variant="lead" tone="muted">
-              The icon set is a publishable package with per-icon size budgets,
-              real accessibility defaults, and search metadata. The full browser
-              now lives on its own page so this lab can stay focused on the
-              identity system itself.
+              Browse 64 tree-shakeable icons with search, copyable imports,
+              accessible naming, and per-icon size budgets.
             </Text>
           </Box>
           <Card className="identity-icon-teaser">
@@ -115,10 +179,8 @@ export function IdentityPage() {
               A typeface starts as shapes, not files.
             </Heading>
             <Text as="p" variant="lead" tone="muted">
-              This uppercase prototype is rendered directly from Flux vector
-              glyph source. It is not a production font yet: lowercase,
-              diacritics, spacing pairs, and kerning still need a dedicated
-              type-design pass before font engineering begins.
+              An uppercase vector prototype, not a production font. Lowercase,
+              diacritics, and kerning are still in progress.
             </Text>
           </Box>
           <Card className="display-lab">
@@ -209,11 +271,9 @@ export function IdentityPage() {
                 The source is healthy, but the font is not finished.
               </Heading>
               <Text as="p" variant="body">
-                The SVG renderer now reserves a full design-grid unit around the
-                glyph run so sharp mitered corners and Q/R tails cannot be
-                clipped. The next typography milestone is optical spacing,
-                kerning, lowercase, and Latin diacritics—not a premature font
-                binary.
+                Glyphs include render padding to avoid clipping. Optical
+                spacing, kerning, lowercase, and Latin diacritics need review
+                before a font binary is released.
               </Text>
             </Stack>
           </Card>

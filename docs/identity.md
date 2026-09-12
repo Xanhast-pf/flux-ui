@@ -65,3 +65,30 @@ The sequence before compiling a real font is:
 7. only then perform font engineering.
 
 Body copy and ordinary application UI continue to use highly readable system typography. Flux Display is intended for branding, headings and large metrics first.
+
+## Ribbon F brand mark
+
+`FluxMarkIcon` is the filled, monochrome ribbon F on the same 20 × 20 grid.
+It inherits `currentColor`, remains decorative by default, and accepts the
+same `IconProps` as every other icon. Its solid silhouette is the intentional
+exception to the set's line-icon treatment. The wordmark in the app bar is
+real text; Flux Display remains a separate type-design prototype.
+
+The three Bézier paths in `packages/icons/icons.json` are the geometry source
+for both the generated React icon and the full-color brand assets. Colors and
+gradient coordinates live in `packages/identity/brand/flux-mark.json`.
+Run `pnpm generate` after changing either source; `pnpm generate:check` checks
+both the icon and the SVG copies served by the docs app.
+
+Generated SVG variants:
+
+- `flux-mark.svg`: transparent gradient mark for branding.
+- `flux-mark-mono.svg`: standalone currentColor silhouette for vector editors.
+- `flux-app-icon.svg`: gradient mark on a dark rounded tile for the favicon.
+
+These are real vector paths and linear gradients, not embedded images. They
+have no font, script, filter, or network dependencies. Each uses a square
+viewBox so the symbol scales consistently at 16, 24, 32, and larger sizes.
+Use the colored files through `<img>` (as the app bar does); inline copies need
+unique gradient/title IDs. For inline React use, prefer `FluxMarkIcon`, which
+needs no IDs. The `#identity` page offers the standalone SVG downloads.

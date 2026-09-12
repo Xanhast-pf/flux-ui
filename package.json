@@ -1,6 +1,6 @@
 {
   "name": "flux-ui",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.34.5",
@@ -9,8 +9,8 @@
   },
   "scripts": {
     "dev": "pnpm --filter @flux-ui/docs dev",
-    "generate": "node scripts/generate-icons.mjs && node scripts/generate-components.mjs",
-    "generate:check": "node scripts/generate-icons.mjs --check && node scripts/generate-components.mjs --check",
+    "generate": "node scripts/generate-icons.mjs && node scripts/generate-brand.mjs && node scripts/generate-components.mjs",
+    "generate:check": "node scripts/generate-icons.mjs --check && node scripts/generate-brand.mjs --check && node scripts/generate-components.mjs --check",
     "component:new": "node scripts/new-component.mjs",
     "component:doctor": "node scripts/component-doctor.mjs",
     "clean": "node scripts/clean.mjs .cache && node scripts/clean.mjs packages/react/dist && node scripts/clean.mjs packages/tokens/dist && node scripts/clean.mjs packages/icons/dist && node scripts/clean.mjs packages/identity/dist && node scripts/clean.mjs apps/docs/dist && node scripts/clean.mjs apps/storybook/dist",

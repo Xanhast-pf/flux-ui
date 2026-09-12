@@ -19,7 +19,7 @@ body:has(.gallery-shell) {
 .header-links {
   display: none;
   gap: 1.5rem;
-  margin-inline-start: 2rem;
+  margin-inline-start: 1rem;
 }
 .header-links a {
   font-size: 0.75rem;
@@ -41,11 +41,6 @@ body:has(.gallery-shell) {
 }
 @media (min-width: 80rem) {
   .header-links {
-    display: flex;
-  }
-}
-@media (min-width: 64rem) and (max-width: 79.99rem) {
-  .site-header[data-gallery="true"] .mobile-header-row {
     display: flex;
   }
 }

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" role="img" aria-labelledby="flux-title">
+  <title id="flux-title">Flux UI</title>
+  <defs>
+    <linearGradient id="flux-tail" gradientUnits="userSpaceOnUse" x1="4" y1="14.8" x2="8.8" y2="18.8">
+      <stop offset="0" stop-color="#0632E8"/>
+      <stop offset="0.55" stop-color="#008CF1"/>
+      <stop offset="1" stop-color="#00D9D9"/>
+    </linearGradient>
+    <linearGradient id="flux-middle" gradientUnits="userSpaceOnUse" x1="3.8" y1="15.8" x2="13.6" y2="7.3">
+      <stop offset="0" stop-color="#00D9E8"/>
+      <stop offset="0.42" stop-color="#237CFF"/>
+      <stop offset="0.72" stop-color="#7950F5"/>
+      <stop offset="1" stop-color="#D987F4"/>
+    </linearGradient>
+    <linearGradient id="flux-top" gradientUnits="userSpaceOnUse" x1="3.8" y1="10.8" x2="16.2" y2="1.1">
+      <stop offset="0" stop-color="#087CFF"/>
+      <stop offset="0.45" stop-color="#493CFF"/>
+      <stop offset="0.74" stop-color="#9C4BFF"/>
+      <stop offset="1" stop-color="#DF71F4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#flux-tail)" d="M4 11V8Q4 5.5 7 4.3L16 1v1.5q0 2.8-3 4L7 8.8Q5 9.5 4 11Z"/>
+  <path fill="url(#flux-middle)" d="M4 16v-2.5q0-2 2.5-3l7-2.6v1.5q0 2-2.5 3L7 14q-2 .8-3 2Z"/>
+  <path fill="url(#flux-top)" d="M4 16q0 1 1.2 1.7L8.5 19v-6.2Q4 14 4 16Z"/>
+</svg>

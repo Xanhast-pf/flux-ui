@@ -11,7 +11,7 @@ import {
 } from "@flux-ui/react";
 import { useState } from "react";
 import { components } from "../generated/components.js";
-import { sections } from "../lib/routing.js";
+import { navigationGroups } from "../lib/routing.js";
 import { ThemeSwitch } from "./AppearanceControls.js";
 function Navigation({
   route,
@@ -23,25 +23,27 @@ function Navigation({
   return (
     <Box aria-label="Documentation sections" as="nav">
       <Stack gap="md">
-        <Box>
-          <Text as="p" variant="eyebrow" tone="muted">
-            Explore Flux
-          </Text>
-          <List as="ul" variant="plain">
-            {sections.map(([id, label]) => (
-              <List.Item key={id}>
-                <Link
-                  href={`#${id}`}
-                  aria-current={route === id ? "page" : undefined}
-                  onClick={onNavigate}
-                  variant="navigation"
-                >
-                  {label}
-                </Link>
-              </List.Item>
-            ))}
-          </List>
-        </Box>
+        {navigationGroups.map((group) => (
+          <Stack key={group.label} gap="sm">
+            <Text as="p" variant="eyebrow" tone="muted">
+              {group.label}
+            </Text>
+            <List as="ul" variant="plain">
+              {group.items.map(([id, label]) => (
+                <List.Item key={id}>
+                  <Link
+                    href={`#${id}`}
+                    aria-current={route === id ? "page" : undefined}
+                    onClick={onNavigate}
+                    variant="navigation"
+                  >
+                    {label}
+                  </Link>
+                </List.Item>
+              ))}
+            </List>
+          </Stack>
+        ))}
         <Collapsible.Root open appearance="plain" density="compact">
           <Collapsible.Trigger>
             All components <Text tone="muted">{components.length}</Text>
@@ -73,9 +75,12 @@ export function DocumentationNavigation({ route }: { route: string }) {
   const [open, setOpen] = useState(false);
   return (
     <Drawer.Root open={open} onOpenChange={setOpen}>
-      <Drawer.Trigger className="mobile-nav-trigger">
-        <MenuIcon aria-hidden="true" size={16} />
-        Browse sections
+      <Drawer.Trigger
+        className="navigation-trigger"
+        aria-label="Browse sections"
+        title="Browse sections"
+      >
+        <MenuIcon aria-hidden="true" size={20} />
       </Drawer.Trigger>
       <Drawer.Popup side="left" className="mobile-nav-drawer">
         <Drawer.Title>Flux UI documentation</Drawer.Title>
@@ -83,7 +88,7 @@ export function DocumentationNavigation({ route }: { route: string }) {
           <CloseIcon aria-hidden="true" size={16} />
         </Drawer.Close>
         <Drawer.Description style={{ gridColumn: "1 / -1", margin: 0 }}>
-          Find a component, experiment, or inspect the project.
+          Components, examples, and the engineering behind them.
         </Drawer.Description>
         <Box style={{ gridColumn: "1 / -1" }}>
           <ThemeSwitch />

@@ -54,14 +54,6 @@
 .track-row[data-channel="four"] {
   --track-color: var(--channel-four);
 }
-.track-info strong {
-  display: block;
-  font-weight: 550;
-}
-.track-info small {
-  color: var(--flux-color-text-muted);
-  font-size: 0.75rem;
-}
 .track-color {
   inline-size: 0.25rem;
   block-size: 2rem;
@@ -111,9 +103,12 @@
 .track-row[data-muted="true"] .audio-clip svg {
   opacity: 0.2;
 }
+.sequencer-tracks {
+  position: relative;
+}
 .sequencer-playhead {
   position: absolute;
-  inset: 3.75rem 0 0;
+  inset: 0;
   pointer-events: none;
   overflow: clip;
 }
@@ -158,7 +153,6 @@
 }
 @container flux-layout (min-width: 48rem) {
   .sequencer-playhead {
-    inset-block-start: 2.5rem;
     inset-inline-start: 17rem;
   }
 }

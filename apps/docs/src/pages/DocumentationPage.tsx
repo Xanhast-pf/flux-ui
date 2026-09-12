@@ -1,86 +1,101 @@
-import { Accordion, Code, Heading, Link, List, Stack } from "@flux-ui/react";
+import {
+  Accordion,
+  Card,
+  Code,
+  Grid,
+  Heading,
+  Link,
+  List,
+  PageHeader,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 import { REPOSITORY_URL } from "../lib/format.js";
+const guides = [
+  {
+    title: "Start building",
+    description: "Run the workspace and find the right building block.",
+    links: [
+      ["#install", "Local setup"],
+      ["#components", "Component APIs"],
+      ["#playground", "Interactive examples"],
+    ],
+  },
+  {
+    title: "Make it yours",
+    description: "Shape the theme without forking the components.",
+    links: [
+      ["#tokens", "Tokens and themes"],
+      ["#icons", "Icon browser"],
+      ["#identity", "Brand assets and display prototype"],
+    ],
+  },
+  {
+    title: "Contribute",
+    description: "Understand the architecture and its review contracts.",
+    links: [
+      [
+        `${REPOSITORY_URL}/blob/main/docs/development.md`,
+        "Development workflow",
+      ],
+      [
+        `${REPOSITORY_URL}/blob/main/docs/component-api.md`,
+        "Component API rules",
+      ],
+      [`${REPOSITORY_URL}/blob/main/CONTRIBUTING.md`, "Contribution guide"],
+    ],
+  },
+] as const;
 export function DocumentationPage() {
   return (
     <Stack className="reference-page" as="section" gap="lg">
-      <Stack gap="md">
-        <Heading level={1} size="xl">
-          Documentation
-        </Heading>
-        <List as="ul" variant="marker">
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/docs/workshop.md`}>
-              Workshop architecture and examples
-            </Link>
-          </List.Item>
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/README.md`}>
-              Project README
-            </Link>
-          </List.Item>
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/docs/development.md`}>
-              Development workflow
-            </Link>
-          </List.Item>
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/docs/architecture.md`}>
-              Architecture
-            </Link>
-          </List.Item>
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/docs/component-api.md`}>
-              Component API rules
-            </Link>
-          </List.Item>
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/docs/design-tokens.md`}>
-              Design tokens
-            </Link>
-          </List.Item>
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/docs/identity.md`}>
-              Flux identity and iconography
-            </Link>
-          </List.Item>
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/docs/performance.md`}>
-              Performance philosophy
-            </Link>
-          </List.Item>
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/CONTRIBUTING.md`}>
-              Contributing
-            </Link>
-          </List.Item>
-          <List.Item>
-            <Link href={`${REPOSITORY_URL}/blob/main/AGENTS.md`}>
-              Engineering contract
-            </Link>
-          </List.Item>
-        </List>
+      <PageHeader title={<>Guides & FAQ</>}>
+        <Text as="p" variant="lead" tone="muted">
+          Start with a task. Keep the reference close.
+        </Text>
+      </PageHeader>
+      <Grid minColumnWidth="17rem" gap="md">
+        {guides.map((guide) => (
+          <Card key={guide.title}>
+            <Stack gap="md">
+              <Heading level={2} size="md">
+                {guide.title}
+              </Heading>
+              <Text as="p" variant="body" tone="muted">
+                {guide.description}
+              </Text>
+              <List as="ul" variant="plain" gap="sm">
+                {guide.links.map(([href, label]) => (
+                  <List.Item key={href}>
+                    <Link href={href}>{label}</Link>
+                  </List.Item>
+                ))}
+              </List>
+            </Stack>
+          </Card>
+        ))}
+      </Grid>
+      <Stack as="section" gap="md">
         <Heading level={2} size="lg">
-          Good questions, small answers.
+          Common questions
         </Heading>
         <Accordion.Root>
           <Accordion.Item>
-            <Accordion.Trigger>
-              How do I add a component without manual wiring?
-            </Accordion.Trigger>
+            <Accordion.Trigger>How do I add a component?</Accordion.Trigger>
             <Accordion.Content>
               Run <Code>pnpm component:new Name Category</Code>, implement its
-              API and preview, then run the generator and quality checks. The
-              catalog discovers examples by convention.
+              API and preview, then run the generator and quality checks.
+              Registration is convention-based.
             </Accordion.Content>
           </Accordion.Item>
           <Accordion.Item>
             <Accordion.Trigger>
-              Does a green demo mean the component is production-ready?
+              Does a green demo mean production-ready?
             </Accordion.Trigger>
             <Accordion.Content>
-              No. The alpha catalog still needs the full lint, types, unit,
-              browser, accessibility, build and size pipeline. A preview is one
-              integration check, not certification.
+              No. Flux is alpha. A preview is one integration check, not
+              certification. Review the <Link href="#trust">Trust Center</Link>{" "}
+              for evidence and known limits.
             </Accordion.Content>
           </Accordion.Item>
           <Accordion.Item>
@@ -88,13 +103,16 @@ export function DocumentationPage() {
               Why does a size entry say Pending baseline?
             </Accordion.Trigger>
             <Accordion.Content>
-              New components need a real production measurement. Run{" "}
-              <Code>pnpm size:update</Code> and review the result; budgets do
-              not increase automatically.
+              No reviewed production baseline is committed for that entry. Run{" "}
+              <Code>pnpm size:update</Code> only after reviewing the
+              implementation. Absolute budgets remain enforced.
             </Accordion.Content>
           </Accordion.Item>
         </Accordion.Root>
       </Stack>
+      <Link href={`${REPOSITORY_URL}/tree/main/docs`}>
+        All repository guides →
+      </Link>
     </Stack>
   );
 }

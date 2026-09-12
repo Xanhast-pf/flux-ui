@@ -1,4 +1,4 @@
-import { Box, Heading, PageHeader, Stack, Text } from "@flux-ui/react";
+import { Box, Callout, Heading, PageHeader, Stack, Text } from "@flux-ui/react";
 import { CodeBlock } from "../ui/CodeBlock.js";
 export function InstallPage() {
   return (
@@ -6,11 +6,15 @@ export function InstallPage() {
       <Stack gap="md">
         <PageHeader title={<>Install & onboarding</>}>
           <Text as="p" variant="body">
-            Flux UI is still alpha and not yet presented as a stable public
-            package. To work on the repository:
+            Run the source locally, explore the examples, and contribute a
+            component.
           </Text>
         </PageHeader>
 
+        <Callout tone="warning">
+          Flux UI is alpha. The source workflow below is supported; do not
+          assume stable npm packages are available until a release is announced.
+        </Callout>
         <CodeBlock
           code={`git clone https://github.com/Xanhast-pf/flux-ui.git
 cd flux-ui
@@ -30,10 +34,10 @@ pnpm check`}
             does not pull in the component runtime.
           </Text>
           <CodeBlock
-            code={`pnpm add @flux-ui/react @flux-ui/icons
-
+            code={`// Inside the workspace
+import { Button } from "@flux-ui/react";
 import { SearchIcon } from "@flux-ui/icons";`}
-            label="Package install shape"
+            label="Workspace package imports"
           />
         </Box>
 
@@ -61,7 +65,8 @@ pnpm check:full`}
           <CodeBlock
             code={`pnpm component:new SegmentedControl Inputs interactive
 pnpm component:doctor SegmentedControl
-pnpm size:update`}
+pnpm generate
+pnpm verify:all`}
             label="Component scaffolding commands"
           />
         </Box>
