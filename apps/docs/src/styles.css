@@ -60,7 +60,7 @@ body {
   z-index: 10;
 }
 .header-inner {
-  min-height: 4.5rem;
+  min-height: 4rem;
 }
 .brand {
   display: inline-flex;
@@ -74,15 +74,10 @@ body {
   white-space: nowrap;
 }
 .brand-mark {
-  display: inline-grid;
-  place-items: center;
+  display: block;
   width: 2rem;
   height: 2rem;
-  background: var(--flux-color-accent);
-  color: var(--flux-color-accent-foreground);
-  border-radius: 0.25rem;
-  font-size: 1.5rem;
-  font-style: italic;
+  flex-shrink: 0;
 }
 .brand-ui {
   color: var(--flux-color-text-muted);
@@ -97,8 +92,7 @@ body {
   align-items: center;
   gap: 2rem;
 }
-.header-github,
-.header-actions {
+.header-github {
   color: var(--flux-color-text-muted);
   font-size: 0.75rem;
   text-decoration: none;
@@ -107,11 +101,15 @@ body {
 .header-theme {
   display: none;
 }
-.header-actions {
-  display: none;
-}
-.mobile-header-row > * {
-  min-inline-size: 0;
+.navigation-trigger {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  padding: 0;
+  background: transparent;
+  border-color: transparent;
 }
 #main-content {
   min-width: 0;
@@ -200,6 +198,7 @@ body {
   gap: 2rem;
 }
 .reference-page {
+  margin-inline: auto;
   max-width: 70rem;
   min-inline-size: 0;
   inline-size: 100%;
@@ -238,8 +237,7 @@ body {
   padding-block: 1rem;
   background: var(--flux-color-surface);
 }
-.header-github,
-.mobile-nav-trigger {
+.header-github {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -251,11 +249,6 @@ body {
   }
 }
 @media (min-width: 64rem) {
-  .header-actions {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
   #main-content {
     padding-block-start: 3rem;
   }
@@ -263,6 +256,7 @@ body {
 @media (width < 40rem) {
   .header-github,
   .header-inner > [data-tone],
+  .search-label,
   .search-trigger kbd {
     display: none;
   }
@@ -271,12 +265,11 @@ body {
   }
 }
 @media (width < 24rem) {
-  .brand-ui {
-    display: none;
-  }
   .search-trigger {
-    gap: 0.5rem;
-    padding-inline: 0.75rem;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    padding: 0;
+    justify-content: center;
   }
   .release-room {
     padding: 1rem;
@@ -381,14 +374,8 @@ body {
   min-inline-size: 0;
   color: var(--flux-color-accent);
 }
-.identity-mark-lockup > svg:first-child {
+.identity-mark-lockup > img:first-child {
   flex: 0 0 auto;
-}
-.identity-wordmark {
-  display: block;
-  inline-size: 28rem;
-  max-inline-size: 100%;
-  color: var(--flux-color-text);
 }
 .icon-tile-stage {
   display: grid;

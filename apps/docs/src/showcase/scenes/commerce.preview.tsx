@@ -243,7 +243,7 @@ export default function CommerceScene() {
                       .join(" · ")}
               </Text>
             </Box>
-            <Box>
+            <Inline gap="md" wrap>
               <Text as="strong" variant="metric" numeric>
                 {formatMoney(count * price)}
               </Text>
@@ -259,7 +259,7 @@ export default function CommerceScene() {
               >
                 Clear demo bag
               </Button>
-            </Box>
+            </Inline>
           </Inline>
         </Grid.Item>
       </Grid>

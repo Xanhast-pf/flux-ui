@@ -52,9 +52,10 @@ export function SearchDialog() {
   }, [open]);
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className="search-trigger">
-        <SearchIcon aria-hidden="true" size={16} />
-        Search docs <Kbd aria-hidden="true">⌘ / Ctrl K</Kbd>
+      <Dialog.Trigger className="search-trigger" aria-label="Search docs">
+        <SearchIcon aria-hidden="true" size={18} />
+        <Text className="search-label">Search docs</Text>
+        <Kbd aria-hidden="true">⌘ / Ctrl K</Kbd>
       </Dialog.Trigger>
       <Dialog.Popup className="search-popup">
         <Dialog.Title>Find your next building block.</Dialog.Title>

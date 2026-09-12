@@ -244,7 +244,11 @@ test("RadioGroup preserves native keyboard, form, controlled, and reset behavior
 
 test("uses the Flux identity mark in the docs shell", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator(".brand svg")).toBeVisible();
+  await expect(page.locator(".brand img")).toBeVisible();
+  await expect(page.locator(".brand img")).toHaveAttribute(
+    "src",
+    /flux-mark\.svg$/u,
+  );
   await page.goto("/#identity");
   await expect(
     page.getByRole("heading", { level: 1, name: "Drawn for the system." }),

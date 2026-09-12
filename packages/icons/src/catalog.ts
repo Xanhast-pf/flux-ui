@@ -277,7 +277,7 @@ export const iconCatalog: readonly IconCatalogEntry[] = [
   {
     name: "FluxMarkIcon",
     category: "brand",
-    keywords: ["brand","logo","flux","identity","flow","forward","monogram"],
+    keywords: ["brand","logo","flux","identity","flow","forward","monogram","ribbon","f"],
     component: FluxMarkIcon,
   },
   {

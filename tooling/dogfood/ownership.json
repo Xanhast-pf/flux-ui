@@ -8,11 +8,6 @@
   ],
   "artwork": [
     {
-      "file": "apps/docs/src/App.tsx",
-      "className": "brand-mark",
-      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
-    },
-    {
       "file": "apps/docs/src/pages/OverviewPage.tsx",
       "className": "hero-signal",
       "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."

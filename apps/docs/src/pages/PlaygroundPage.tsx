@@ -30,11 +30,11 @@ export function PlaygroundPage() {
         paddingBlock={12}
       >
         <PageHeader
-          title={<>Your ideas look good here.</>}
+          title={<>Playground</>}
           eyebrow={<>A small space for big ideas</>}
         >
           <Text as="p" variant="lead" tone="muted">
-            Choose a world. Change the mood. Touch everything.
+            Try a scene, switch its theme, then inspect the code.
           </Text>
         </PageHeader>
         <Link href="#components" className="landing-text-link">
@@ -53,11 +53,11 @@ export function PlaygroundPage() {
             Prefer to tinker with the parts?
           </Text>
           <Heading level={2} size="lg">
-            Go a little deeper.
+            Try individual components.
           </Heading>
           <Text as="p" variant="body">
-            The original Release Room, Button, Theme, and Collection labs are
-            still here.
+            Open a focused lab for buttons, themes, collections, or a release
+            workflow.
           </Text>
         </Box>
         <Collapsible.Root

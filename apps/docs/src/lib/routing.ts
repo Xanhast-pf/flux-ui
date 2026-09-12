@@ -1,22 +1,40 @@
 import { useSyncExternalStore } from "react";
-export const sections = [
-  ["overview", "Overview"],
-  ["playground", "Playground"],
-  ["components", "Components"],
-  ["icons", "Icons"],
-  ["identity", "Identity"],
-  ["tokens", "Design tokens"],
-  ["lab", "Live Stress Lab"],
-  ["engineering", "Engineering"],
-  ["trust", "Trust Center"],
-  ["accessibility", "Live accessibility"],
-  ["health", "Repository health"],
-  ["size", "Bundle size"],
-  ["performance", "Runtime performance"],
-  ["rules", "Engineering rules"],
-  ["install", "Getting started"],
-  ["documentation", "Documentation"],
+export const navigationGroups = [
+  {
+    label: "Build",
+    items: [
+      ["overview", "Overview"],
+      ["install", "Getting started"],
+      ["playground", "Playground"],
+      ["components", "Components"],
+      ["documentation", "Guides & FAQ"],
+    ],
+  },
+  {
+    label: "Design",
+    items: [
+      ["tokens", "Design tokens"],
+      ["icons", "Icons"],
+      ["identity", "Brand & identity"],
+    ],
+  },
+  {
+    label: "Inspect",
+    items: [
+      ["engineering", "Engineering"],
+      ["lab", "Live Stress Lab"],
+      ["size", "Bundle size"],
+      ["performance", "Runtime performance"],
+      ["accessibility", "Live accessibility"],
+      ["trust", "Trust Center"],
+      ["health", "Repository health"],
+      ["rules", "Engineering rules"],
+    ],
+  },
 ] as const;
+export const sections = navigationGroups.flatMap<readonly [string, string]>(
+  (group) => group.items,
+);
 function subscribe(listener: () => void): () => void {
   window.addEventListener("hashchange", listener);
   return () => {

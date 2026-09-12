@@ -5,13 +5,15 @@
   "type": "module",
   "files": [
     "dist",
-    "display"
+    "display",
+    "brand"
   ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./brand/*.svg": "./brand/*.svg"
   },
   "scripts": {
     "build": "node ../../scripts/clean.mjs packages/identity/dist && tsc -p tsconfig.build.json",

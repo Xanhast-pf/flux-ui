@@ -99,12 +99,26 @@ export default function VideoScene() {
         }}
         responsiveTo="container"
         gap="md"
+        align="start"
       >
-        <Stack aria-label="Storyboard preview" as="section" gap={3}>
+        <Stack
+          aria-label="Storyboard preview"
+          as="section"
+          gap={3}
+          align="center"
+        >
           <AspectRatio
             data-art={clip.art}
             ratio={aspectRatios[aspect]}
             className="video-frame"
+            style={{
+              maxInlineSize:
+                aspect === "9 / 16"
+                  ? "18rem"
+                  : aspect === "1 / 1"
+                    ? "28rem"
+                    : "100%",
+            }}
           >
             <div
               role="img"
@@ -119,7 +133,7 @@ export default function VideoScene() {
               FIELD NOTES / 003
             </Text>
             {titles ? (
-              <Heading level={3} size="md">
+              <Heading level={3} size="md" style={{ color: "inherit" }}>
                 {clip.title}
               </Heading>
             ) : null}
@@ -127,7 +141,12 @@ export default function VideoScene() {
               An invitation to go a little further.
             </Text>
           </AspectRatio>
-          <Inline justify="between" wrap gap="sm">
+          <Inline
+            justify="between"
+            wrap
+            gap="sm"
+            style={{ inlineSize: "100%" }}
+          >
             <Text variant="caption">
               {formatTime(seconds)}{" "}
               <Text variant="caption" tone="muted">
@@ -243,13 +262,13 @@ export default function VideoScene() {
               className="video-clip"
             >
               <span aria-hidden="true" className="clip-thumbnail" />
-              <Text variant="caption">
-                {entry.label}
-                <Text as="small" variant="caption">
+              <Stack as="span" gap="xs" align="start">
+                <Text variant="caption">{entry.label}</Text>
+                <Text variant="caption" tone="muted" weight="regular">
                   {entry.duration}s ·{" "}
                   {selected === entry.id ? "Selected" : "Select clip"}
                 </Text>
-              </Text>
+              </Stack>
             </ToggleGroup.Item>
           ))}
         </ToggleGroup.Root>

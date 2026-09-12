@@ -23,3 +23,7 @@ import { SearchIcon, SparkIcon } from "@flux-ui/icons";
 - no duplicate geometry aliases; use keywords instead
 
 Run `pnpm generate` after editing the manifest.
+
+`FluxMarkIcon` uses the approved filled ribbon silhouette instead of a stroke.
+It still inherits `currentColor`; the color-gradient branding asset is an SVG
+in `@flux-ui/identity/brand/flux-mark.svg`, not extra runtime in the icon package.

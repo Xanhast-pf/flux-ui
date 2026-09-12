@@ -152,6 +152,7 @@ If the answer points away from a prop, do not add the prop.
 - Flux icons live in `@flux-ui/icons`, not inside `@flux-ui/react`. Keep the package independently tree-shakeable.
 - `packages/icons/icons.json` is the canonical icon manifest. Run `pnpm generate` after editing it; do not hand-maintain generated icon exports. Every icon must include useful lowercase search keywords, and aliases should be represented as keywords rather than duplicate SVG geometry.
 - Icons use the 20 × 20 Flux grid, `currentColor`, a 1.5 default stroke, and a consistent square/geometric visual grammar. Deviations require an optical reason, not convenience.
+- `FluxMarkIcon` intentionally uses a filled ribbon silhouette on the same grid. Its paths in `icons.json` also generate the color SVGs via `scripts/generate-brand.mjs`; normal icons keep the stroke contract.
 - Icons are decorative by default. Add an accessible name only when the icon itself carries meaning; icon-only interactive controls still need their own accessible name.
 - Do not introduce an icon runtime, icon font, sprite registry, provider, or CSS-in-JS dependency. A consumer importing one icon should not pay for the catalog.
 - Per-icon emitted runtime cost is enforced by `pnpm icons:size`. Raise that budget only through an explicit architecture decision.

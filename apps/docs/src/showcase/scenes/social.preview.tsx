@@ -157,22 +157,23 @@ export default function SocialScene() {
                 <Stack gap={3}>
                   <Inline gap={3}>
                     <Avatar alt="" fallback={post.initials} size="sm" />
-                    <Box>
+                    <Stack gap="xs">
                       <Text as="strong" weight="bold" variant="caption">
                         {post.name}
                       </Text>
-                      <Text variant="caption">
+                      <Text variant="caption" tone="muted">
                         {post.name === "You"
                           ? "Just now · local demo"
                           : "Designer · fictional profile"}
                       </Text>
-                    </Box>
+                    </Stack>
                   </Inline>
                   <Text as="p" variant="caption">
                     {post.text}
                   </Text>
                   <Toggle
                     aria-label={`Like post ${post.id}`}
+                    style={{ alignSelf: "start" }}
                     pressed={post.liked}
                     onPressedChange={(liked) => {
                       setPosts((current) =>

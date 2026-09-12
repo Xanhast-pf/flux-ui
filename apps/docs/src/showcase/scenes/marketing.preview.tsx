@@ -122,12 +122,14 @@ export default function MarketingScene() {
                 <Avatar alt="Mira" fallback="M" size="sm" />
                 <Avatar alt="Jules" fallback="J" size="sm" />
               </AvatarGroup>
-              <Text as="p" variant="caption">
-                Made for your people.
-                <Text as="small" variant="caption">
+              <Stack gap="xs">
+                <Text as="p" variant="caption">
+                  Made for your people.
+                </Text>
+                <Text as="p" variant="caption" tone="muted">
                   Fictional audience preview
                 </Text>
-              </Text>
+              </Stack>
             </Inline>
             <Button
               onClick={() => {

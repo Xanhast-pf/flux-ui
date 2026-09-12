@@ -19,14 +19,14 @@ export function HealthPage() {
   return (
     <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="md">
-        <MeasurementNotice />
         <PageHeader title={<>Repository health</>}>
           <Text as="p" variant="body">
-            This page reads committed size and performance baselines generated
-            from the repository. For the live CI result, use the CI link in the
-            header.
+            A snapshot of catalog coverage, package weight, and quality gates.
+            Explore individual bundle and runtime measurements from the Inspect
+            menu.
           </Text>
         </PageHeader>
+        <MeasurementNotice />
 
         <Grid minColumnWidth="13rem" gap="md">
           <Card>

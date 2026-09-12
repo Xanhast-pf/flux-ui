@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, FluxMarkIcon } from "@flux-ui/icons";
+import { ArrowUpRightIcon } from "@flux-ui/icons";
 import {
   Badge,
   Box,
@@ -248,13 +248,18 @@ export function App() {
         border="bottom"
       >
         <Container size="xl">
-          <Inline className="header-inner" gap="md">
+          <Inline className="header-inner" gap="sm">
+            <DocumentationNavigation route={route} />
             <Link href="#overview" aria-label="Flux UI home" className="brand">
-              <span aria-hidden="true" className="brand-mark">
-                <FluxMarkIcon size={20} />
-              </span>
+              <img
+                src={`${import.meta.env.BASE_URL}flux-mark.svg`}
+                alt=""
+                width={32}
+                height={32}
+                className="brand-mark"
+              />
               <Text>
-                flux<Text className="brand-ui"> / ui</Text>
+                flux<Text className="brand-ui">UI</Text>
               </Text>
             </Link>
             <Badge tone="accent">alpha</Badge>
@@ -298,15 +303,6 @@ export function App() {
             <Link href={REPOSITORY_URL} className="header-github">
               GitHub <ArrowUpRightIcon aria-hidden="true" size={14} />
             </Link>
-            <Link href={`${REPOSITORY_URL}/actions`} className="header-actions">
-              CI <ArrowUpRightIcon aria-hidden="true" size={14} />
-            </Link>
-          </Inline>
-          <Inline className="mobile-header-row" justify="between" gap="md">
-            <DocumentationNavigation route={route} />
-            <Text variant="caption" tone="muted" align="end">
-              Native at heart. Yours by design.
-            </Text>
           </Inline>
         </Container>
       </Box>
@@ -327,7 +323,9 @@ export function App() {
                 <Link href="#trust">Trust Center</Link>
                 <Link href="#engineering">Engineering</Link>
                 <Link href="#health">Project health</Link>
-                <Link href="#install">Contribute</Link>
+                <Link href={`${REPOSITORY_URL}/blob/main/CONTRIBUTING.md`}>
+                  Contribute
+                </Link>
                 <Link href={`${REPOSITORY_URL}/blob/main/LICENSE`}>
                   MIT license
                 </Link>

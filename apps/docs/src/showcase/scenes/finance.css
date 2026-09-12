@@ -54,11 +54,6 @@
   font-weight: 450;
   letter-spacing: 0.1em;
 }
-.folio-card > div:last-child {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
 .card-chip {
   inline-size: 2rem;
   block-size: 1.5rem;
