@@ -11,7 +11,6 @@ export const colorSwatch = style({
   border: "0.0625rem solid var(--flux-color-border-strong)",
   verticalAlign: "middle",
   selectors: {
-    "&[hidden]": { display: "none" },
     "&[data-size='sm']": { vars: { "--flux-swatch-size": "1rem" } },
     "&[data-size='lg']": { vars: { "--flux-swatch-size": "2rem" } },
   },
@@ -23,7 +22,7 @@ export const colorSwatch = style({
   },
 });
 export const check = style({
-  selectors: { "&[hidden]": { display: "none" } },
+  selectors: {},
   display: "inline-grid",
   placeItems: "center",
   fontSize: "var(--flux-font-caption)",

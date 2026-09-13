@@ -1,4 +1,4 @@
-import { Button, Inline, VisuallyHidden } from "@flux-ui/react";
+import { Button, Inline, Text, VisuallyHidden } from "@flux-ui/react";
 import { useState } from "react";
 export default function Example() {
   const [count, setCount] = useState(0);
@@ -9,12 +9,12 @@ export default function Example() {
           setCount((value) => value + 1);
         }}
       >
-        <span aria-hidden="true">+</span>
+        <Text aria-hidden="true">+</Text>
         <VisuallyHidden>Add a hidden-label spark</VisuallyHidden>
       </Button>
-      <p role="status">
+      <Text as="p" variant="body" role="status">
         {count} sparks. The plus button has a full screen-reader name.
-      </p>
+      </Text>
     </Inline>
   );
 }

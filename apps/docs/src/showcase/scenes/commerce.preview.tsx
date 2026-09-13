@@ -14,7 +14,7 @@ import {
   ToggleGroup,
 } from "@flux-ui/react";
 import { useId, useState } from "react";
-import { artworkInkStyle, SceneHeader, SceneStatus } from "../SceneParts.js";
+import { SceneHeader, SceneStatus } from "../SceneParts.js";
 import { formatMoney } from "../model.js";
 import "./commerce.css";
 const finishes = ["Chalk", "Ink", "Clay"] as const;
@@ -75,10 +75,13 @@ export default function CommerceScene() {
         responsiveTo="container"
         gap="md"
       >
-        <Box
+        <Stack
+          padding={6}
+          responsiveTo="container"
+          gap="lg"
           data-finish={finish.toLowerCase()}
           className="product-art"
-          style={artworkInkStyle}
+          data-artwork-ink=""
           as="figure"
         >
           <Text variant="caption" tone="muted">
@@ -126,11 +129,11 @@ export default function CommerceScene() {
               className="speaker-controls"
             />
           </svg>
-          <Box as="figcaption">
+          <Inline as="figcaption" justify="between" wrap gap="sm">
             <Text variant="caption">THE EVERYDAY SPEAKER</Text>
             <Text variant="caption">Designed for wherever.</Text>
-          </Box>
-        </Box>
+          </Inline>
+        </Stack>
         <Card aria-label="Product options" as="section" padding={6} radius="sm">
           <Stack gap={3}>
             <Text as="p" variant="caption" tone="muted">
@@ -145,13 +148,11 @@ export default function CommerceScene() {
               A little speaker for the big and small moments. An original,
               fictional product concept.
             </Text>
-            <Text
-              className="product-price"
-              as="strong"
-              weight="bold"
-              variant="caption"
-            >
-              {formatMoney(price)} <Text>sample USD</Text>
+            <Text as="strong" weight="bold" variant="metric" numeric>
+              {formatMoney(price)}{" "}
+              <Text variant="caption" tone="muted" weight="regular">
+                sample USD
+              </Text>
             </Text>
             <Text id={`${id}-finish`} as="p" variant="caption">
               The finish{" "}
@@ -226,7 +227,7 @@ export default function CommerceScene() {
             gap="md"
             padding={5}
           >
-            <Box>
+            <Stack gap="sm">
               <Text as="p" variant="caption" tone="muted">
                 Your small collection
               </Text>
@@ -242,7 +243,7 @@ export default function CommerceScene() {
                       .map((item) => `${item.finish} × ${item.quantity}`)
                       .join(" · ")}
               </Text>
-            </Box>
+            </Stack>
             <Inline gap="md" wrap>
               <Text as="strong" variant="metric" numeric>
                 {formatMoney(count * price)}

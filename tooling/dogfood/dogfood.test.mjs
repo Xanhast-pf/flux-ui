@@ -72,7 +72,7 @@ test("allows only named file-local artwork and never waives raw controls", () =>
   );
   assert.equal(
     auditSource(
-      'const view = <div className="poster-art"><button>Hidden mistake</button></div>;',
+      'const view = <div className="poster-art" aria-hidden="true"><button>Hidden mistake</button></div>;',
       file,
       owned,
     ).length,
@@ -96,7 +96,10 @@ test("keeps performance reference exceptions explicit", () => {
   const owned = {
     ...policy,
     sourceExceptions: [
-      { prefix: "apps/docs/src/perf/", reason: "Native benchmark reference" },
+      {
+        file: "apps/docs/src/perf/reference.tsx",
+        reason: "Native benchmark reference",
+      },
     ],
   };
   assert.equal(
@@ -120,7 +123,11 @@ test("CSS scanner handles nested conditions, comments, strings and keyframes", (
   assert.equal(result.declarations, 4);
 });
 test("CSS rejects ownership gaps, budget creep and public-control restyling", () => {
-  const owner = { reason: "Site staging only", maxDeclarations: 1 };
+  const owner = {
+    reason: "Site staging only",
+    maxDeclarations: 1,
+    rules: { ".art": ["color", "display"], ".button-art": ["color"] },
+  };
   assert.equal(
     auditCss(".art { color: red; }", "art.css", undefined).length,
     1,
@@ -143,4 +150,134 @@ test("CSS rejects ownership gaps, budget creep and public-control restyling", ()
     auditCss(".button-art { color: red; }", "art.css", owner).length,
     0,
   );
+});
+
+test("default examples are not a blanket native exception", () => {
+  const broad = {
+    ...policy,
+    sourceExceptions: [
+      { prefix: "apps/docs/src/examples/", reason: "Teaching" },
+    ],
+  };
+  assert.ok(
+    auditSource(
+      "const example = <button>Bad default</button>;",
+      "apps/docs/src/examples/button.preview.tsx",
+      broad,
+    ).length,
+  );
+});
+test("rejects aliased element factories, native aliases and unlisted controls", () => {
+  for (const source of [
+    'import { createElement as make } from "react"; make("button", null, "Save");',
+    'import * as R from "react"; const make = R["createElement"]; make("progress");',
+    'const tag = "form"; const make = React.createElement; make(tag);',
+    'const Native = "input"; const view = <Native />;',
+    'import { jsx as render } from "react/jsx-runtime"; render("meter", {});',
+    "const view = <><progress/><form/><output/></>;",
+  ])
+    assert.ok(auditSource(source, file, policy).length, source);
+});
+test("rejects foreign libraries, CSS-in-TS and dynamic dependency escapes", () => {
+  for (const source of [
+    'import { Button } from "other-ui"; const view = <Button/>;',
+    'const lib = import("other-ui");',
+    "const lib = import(name);",
+    'import "./parallel.css.ts";',
+    'export { Button } from "other-ui";',
+  ])
+    assert.ok(auditSource(source, file, policy).length, source);
+});
+test("rejects inline skins through aliases, spreads and factories", () => {
+  for (const source of [
+    'const style = { color: "red" }; const view = <Button style={style}/>;',
+    "const a = { padding: 0 }; const style = { ...a }; const view = <Box style={style}/>;",
+    'const props = { style: { display: "grid" } }; const view = <Box {...props}/>;',
+    'const view = <Button sx={{ color: "red" }}/>;',
+    "React.createElement(Button, { style: { fontSize: 16 } });",
+    "const view = <Box style={unknownStyle}/>;",
+    "const view = <Box {...unknownProps}/>;",
+  ])
+    assert.ok(auditSource(source, file, policy).length, source);
+});
+test("geometry approvals stay file- and component-local", () => {
+  const owner = {
+    ...policy,
+    inlineGeometry: [
+      {
+        file,
+        components: ["Meter"],
+        properties: ["width"],
+        reason: "Measured data geometry",
+      },
+    ],
+  };
+  assert.equal(
+    auditSource(
+      "const view = <Meter style={{ width: measuredWidth }}/>;",
+      file,
+      owner,
+    ).length,
+    0,
+  );
+  assert.ok(
+    auditSource(
+      "const view = <Button style={{ width: measuredWidth }}/>;",
+      file,
+      owner,
+    ).length,
+  );
+  assert.ok(
+    auditSource(
+      'const view = <Meter style={{ width: measuredWidth, color: "red" }}/>;',
+      file,
+      owner,
+    ).length,
+  );
+});
+test("imperative CSS and HTML cannot become a second docs styling engine", () => {
+  for (const source of [
+    'node.style.color = "red";',
+    'node.style.setProperty("color", "red");',
+    'sheet.insertRule("button {color:red}");',
+    "node.innerHTML = html;",
+    'node.insertAdjacentHTML("beforeend", html);',
+    'node.setAttribute("style", css);',
+  ])
+    assert.ok(auditSource(source, file, policy).length, source);
+});
+test("artwork does not excuse controls, typography, foreign HTML or arbitrary token adapters", () => {
+  const owner = {
+    ...policy,
+    artwork: [
+      { file, className: "art", reason: "Original geometric illustration" },
+    ],
+  };
+  for (const source of [
+    '<div className="art" aria-hidden="true"><button>Save</button></div>;',
+    '<div className="art" aria-hidden="true">A paragraph</div>;',
+    "<svg><foreignObject><div>Ordinary UI</div></foreignObject></svg>;",
+    '<Box data-artwork-ink=""/>;',
+  ])
+    assert.ok(auditSource(source, file, owner).length, source);
+});
+test("new CSS properties and selectors fail even below the declaration ceiling", () => {
+  const owner = {
+    reason: "Illustration",
+    maxDeclarations: 20,
+    rules: { ".shape": ["transform"] },
+  };
+  assert.deepEqual(
+    auditCss(".shape{transform:rotate(12deg)}", "art.css", owner),
+    [],
+  );
+  for (const source of [
+    ".shape{padding:16px}",
+    ".other{transform:rotate(12deg)}",
+    ".scene a{color:red}",
+    ".scene th{padding:0}",
+    ".shape{font-size:16px}",
+    "@import 'skin.css';",
+  ])
+    assert.ok(auditCss(source, "art.css", owner).length, source);
 });

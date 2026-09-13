@@ -47,7 +47,7 @@ The docs application is the public product surface and a real Flux consumer. It 
 
 ### Vanilla Extract
 
-Component CSS is generated statically. Vanilla Extract provides locally scoped styles and recipes while preserving CSS custom properties for themes and consumer customization.
+Component CSS is generated statically. Vanilla Extract provides build-time, locally scoped styles while preserving CSS custom properties for themes and consumer customization. Simple variants do not introduce a recipe runtime.
 
 ### Vite library mode
 

@@ -1,5 +1,6 @@
 import { ArrowUpRightIcon, PlusIcon, StarIcon } from "@flux-ui/icons";
 import {
+  AspectRatio,
   Avatar,
   Box,
   Button,
@@ -14,7 +15,7 @@ import {
   Toggle,
 } from "@flux-ui/react";
 import { useId, useRef, useState } from "react";
-import { artworkInkStyle, SceneHeader, SceneStatus } from "../SceneParts.js";
+import { SceneHeader, SceneStatus } from "../SceneParts.js";
 import "./social.css";
 interface Post {
   id: string;
@@ -79,23 +80,27 @@ export default function SocialScene() {
           <Stack
             aria-label="Community spotlight"
             className="gather-editorial"
-            style={artworkInkStyle}
+            data-artwork-ink=""
             as="section"
             gap="lg"
+            padding={6}
+            responsiveTo="container"
           >
-            <Box>
+            <Stack gap="md" className="editorial-foreground">
               <Text as="p" variant="caption" tone="muted">
                 The weekly prompt / 024
               </Text>
-              <Heading level={3} size="md">
+              <Heading level={3} size="xl">
                 Make something
                 <br />
-                <Text as="em">just because.</Text>
+                <Text as="em" italic>
+                  just because.
+                </Text>
               </Heading>
               <Text as="p" variant="caption">
                 No brief. No deadline. Just a little curiosity.
               </Text>
-            </Box>
+            </Stack>
             <div aria-hidden="true" className="gather-flower">
               <span />
               <span />
@@ -171,25 +176,26 @@ export default function SocialScene() {
                   <Text as="p" variant="caption">
                     {post.text}
                   </Text>
-                  <Toggle
-                    aria-label={`Like post ${post.id}`}
-                    style={{ alignSelf: "start" }}
-                    pressed={post.liked}
-                    onPressedChange={(liked) => {
-                      setPosts((current) =>
-                        current.map((entry) =>
-                          entry.id === post.id ? { ...entry, liked } : entry,
-                        ),
-                      );
-                    }}
-                    size="sm"
-                  >
-                    <StarIcon size={16} />
-                    {post.likes + (post.liked ? 1 : 0)}{" "}
-                    <Text variant="caption">
-                      {post.liked ? "Liked" : "Like"}
-                    </Text>
-                  </Toggle>
+                  <Inline gap="none">
+                    <Toggle
+                      aria-label={`Like post ${post.id}`}
+                      pressed={post.liked}
+                      onPressedChange={(liked) => {
+                        setPosts((current) =>
+                          current.map((entry) =>
+                            entry.id === post.id ? { ...entry, liked } : entry,
+                          ),
+                        );
+                      }}
+                      size="sm"
+                    >
+                      <StarIcon size={16} />
+                      {post.likes + (post.liked ? 1 : 0)}{" "}
+                      <Text variant="caption">
+                        {post.liked ? "Liked" : "Like"}
+                      </Text>
+                    </Toggle>
+                  </Inline>
                 </Stack>
               </Card>
             ))}
@@ -200,9 +206,13 @@ export default function SocialScene() {
             <Text as="p" variant="caption" tone="muted">
               Your kind of people
             </Text>
-            <div aria-hidden="true" className="creator-portrait">
-              <span>m.</span>
-            </div>
+            <Box surface="subtle" radius="sm" aria-hidden="true">
+              <AspectRatio ratio={4 / 3} align="center">
+                <Text variant="display" italic tone="accent">
+                  m.
+                </Text>
+              </AspectRatio>
+            </Box>
             <Heading level={3} size="md">
               Mira Chen
             </Heading>

@@ -9,41 +9,44 @@ async function expectNoOverflow(page: Page): Promise<void> {
 }
 
 for (const width of [320, 390, 768, 1440]) {
-  test(`one navigation drawer, usable focus and no overflow at ${width}px`, async ({
+  test(`persistent non-modal navigation and no overflow at ${width}px`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/#components/card");
     await expect(page.locator(".preview-content")).toBeVisible();
-    await expect(page.locator(".desktop-sidebar")).toHaveCount(0);
     const trigger = page.getByRole("button", {
-      name: "Browse sections",
+      name: "Toggle navigation",
       exact: true,
     });
     await trigger.click();
-    const drawer = page.getByRole("dialog", {
-      name: "Flux UI documentation",
-      exact: true,
+    const sidebar = page.getByRole("complementary", {
+      name: "Documentation sidebar",
     });
-    await expect(drawer).toBeVisible();
+    await expect(sidebar).toBeVisible();
+    await expect(page.locator("dialog[open], [inert]")).toHaveCount(0);
     await expect(
-      drawer.getByRole("navigation", { name: "Documentation sections" }),
+      sidebar.getByRole("navigation", { name: "Documentation sections" }),
     ).toHaveCount(1);
-    await expect(
-      drawer.getByRole("button", { name: "Close navigation" }),
-    ).toBeVisible();
-    const bounds = await drawer.boundingBox();
+    const bounds = await sidebar.boundingBox();
     expect(bounds).not.toBeNull();
-    if (bounds === null) throw new Error("Drawer geometry is unavailable.");
+    if (bounds === null) throw new Error("Sidebar geometry is unavailable.");
     expect(bounds.width).toBeLessThanOrEqual(width + 1);
     await page.keyboard.press("Escape");
-    await expect(drawer).not.toBeVisible();
-    await expect(trigger).toBeFocused();
-    await trigger.click();
-    await drawer.getByRole("link", { name: "Box", exact: true }).click();
-    await expect(drawer).not.toBeVisible();
+    await expect(sidebar).toBeVisible();
+    await sidebar.getByRole("link", { name: "Box", exact: true }).click();
     await expect(page).toHaveURL(/#components\/box$/u);
     await expect(page.locator("main")).toBeFocused();
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    await expect(sidebar).toBeVisible();
+    await page.goBack();
+    await expect(page).toHaveURL(/#components\/card$/u);
+    await expect(sidebar).toBeVisible();
+    await sidebar
+      .getByRole("button", { name: "Close navigation", exact: true })
+      .click();
+    await expect(sidebar).not.toBeVisible();
+    await expect(trigger).toBeFocused();
     await expectNoOverflow(page);
   });
 }
@@ -70,7 +73,7 @@ for (const slug of ["badge", "card", "input", "link", "grid", "skip-link"]) {
       expect(
         Math.abs(rect.x + rect.width / 2 - stage.x - stage.width / 2),
       ).toBeLessThan(1);
-      expect(rect.width).toBeLessThanOrEqual(compact ? 353 : 705);
+      expect(rect.width).toBeLessThanOrEqual(compact ? 385 : 705);
       if (slug === "badge" || slug === "input" || slug === "link") {
         const child = await preview.locator(":scope > *").first().boundingBox();
         if (child === null) throw new Error("Demo geometry is unavailable.");
@@ -111,7 +114,7 @@ test("sparse layout CSS cascades without viewport leakage or inherited instance 
   page,
 }) => {
   await page.goto("/#components/stack");
-  const stack = page.locator(".preview-content .demo-boundary").first();
+  const stack = page.getByTestId("example-stack");
   await expect(stack).toBeVisible();
   // Unit tests cover prop-to-variable mapping. This tests the real emitted CSS protocol.
   await stack.evaluate((element) => {
@@ -119,6 +122,7 @@ test("sparse layout CSS cascades without viewport leakage or inherited instance 
     element.style.setProperty("--f-l-l", "32px");
     const nested = element.cloneNode(true) as HTMLElement;
     nested.id = "nested-layout-regression";
+    nested.removeAttribute("data-testid");
     nested.removeAttribute("style");
     element.append(nested);
   });
@@ -157,7 +161,7 @@ test("grid modes, axis gaps and placements keep their breakpoint semantics", asy
   page,
 }) => {
   await page.goto("/#components/grid");
-  const grid = page.locator(".preview-content .demo-boundary");
+  const grid = page.getByTestId("example-grid");
   await expect(grid).toBeVisible();
   await grid.evaluate((element) => {
     element.style.setProperty("--f-k-b", "repeat(1, minmax(0, 1fr))");
@@ -217,42 +221,57 @@ test("surface defaults do not erase footer spacing or header auto alignment", as
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/#components/card");
   await expect(page.locator(".preview-stage")).toHaveCSS("padding-top", "32px");
-  await expect(page.locator(".site-footer")).toHaveCSS("margin-top", "64px");
+  await expect(page.locator("main")).toHaveCSS("gap", "64px");
   await expect(page.locator(".site-footer")).toHaveCSS("padding-top", "32px");
   await expect(page.locator(".header-inner")).toHaveCSS("gap", "8px");
-  const margin = await page
-    .locator(".header-search")
-    .evaluate((element) =>
-      Number.parseFloat(getComputedStyle(element).marginInlineStart),
-    );
-  expect(margin).toBeGreaterThan(0);
+  await expect(page.locator(".header-inner")).toHaveCSS(
+    "justify-content",
+    "space-between",
+  );
+  const search = await page
+    .getByRole("banner")
+    .getByRole("button", { name: "Search docs", exact: true })
+    .boundingBox();
+  const brand = await page
+    .getByRole("link", { name: "Flux UI home" })
+    .boundingBox();
+  if (search === null || brand === null)
+    throw new Error("Header geometry unavailable.");
+  expect(search.x).toBeGreaterThan(brand.x + brand.width);
 });
 
-test("drawer navigation scrolls independently while Close stays visible", async ({
+test("sidebar preserves its own scroll position through routing and its toggle stays reachable", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 390, height: 520 });
+  await page.setViewportSize({ width: 1440, height: 600 });
   await page.goto("/#components/card");
-  await page
-    .getByRole("button", { name: "Browse sections", exact: true })
-    .click();
-  const drawer = page.getByRole("dialog", {
-    name: "Flux UI documentation",
+  const toggle = page.getByRole("button", {
+    name: "Toggle navigation",
     exact: true,
   });
-  const close = drawer.getByRole("button", {
-    name: "Close navigation",
-    exact: true,
+  await toggle.click();
+  const sidebar = page.getByRole("complementary", {
+    name: "Documentation sidebar",
   });
-  const lastLink = drawer.getByRole("link", {
+  const lastLink = sidebar.getByRole("link", {
     name: "VisuallyHidden",
     exact: true,
   });
   await lastLink.scrollIntoViewIfNeeded();
-  await expect(lastLink).toBeInViewport();
-  await expect(close).toBeInViewport();
-  await close.click();
-  await expect(drawer).not.toBeVisible();
+  const scroll = await sidebar.evaluate((element) => element.scrollTop);
+  expect(scroll).toBeGreaterThan(0);
+  await lastLink.click();
+  await expect(page).toHaveURL(/#components\/visually-hidden$/u);
+  expect(
+    Math.abs((await sidebar.evaluate((element) => element.scrollTop)) - scroll),
+  ).toBeLessThanOrEqual(1);
+  await expect(toggle).toBeInViewport();
+  await toggle.click();
+  await expect(sidebar).not.toBeVisible();
+  await toggle.click();
+  expect(
+    Math.abs((await sidebar.evaluate((element) => element.scrollTop)) - scroll),
+  ).toBeLessThanOrEqual(1);
 });
 
 for (const theme of ["light", "dark"]) {

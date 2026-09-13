@@ -6,13 +6,14 @@ import {
   ShieldCheckIcon,
 } from "@flux-ui/icons";
 import {
-  Box,
+  Card,
   Collapsible,
   Grid,
   Heading,
   Inline,
   Link,
   PageHeader,
+  Separator,
   Stack,
   Text,
 } from "@flux-ui/react";
@@ -20,15 +21,65 @@ import { components } from "../generated/components.js";
 import { health } from "../generated/health.js";
 import { formatBytes } from "../lib/format.js";
 import { ProductShowcase } from "../showcase/ProductShowcase.js";
-import "./landing.css";
+
 export function OverviewPage() {
   const button = health.size.components.find(
     (entry) => entry.slug === "button",
   );
+  const principles = [
+    {
+      id: "tokens",
+      label: "01 / Shape the feeling",
+      title: "A mood, not just a color.",
+      description:
+        "Semantic surfaces, readable contrast, measured space. Change the atmosphere without changing the components.",
+      action: "Explore the tokens",
+    },
+    {
+      id: "components",
+      label: "02 / Find your building blocks",
+      title: "Small pieces. Real possibilities.",
+      description: `${components.length} discoverable component families. Native props, composition, and escape hatches when your idea needs more.`,
+      action: "Open the catalog",
+    },
+    {
+      id: "engineering",
+      label: "03 / Keep your freedom",
+      title: "Yours, beyond the demo.",
+      description:
+        "Static styling and simple APIs. The docs compose the same public components available to your application.",
+      action: "Read the engineering",
+    },
+  ];
+  const evidence = [
+    {
+      id: "lab",
+      Icon: GaugeIcon,
+      title: "Put it under pressure.",
+      description: "Run the opt-in, native-relative Stress Lab.",
+    },
+    {
+      id: "size",
+      Icon: CodeIcon,
+      title: `${formatBytes(button?.brotli ?? null)} · Button runtime graph`,
+      description: "Committed Brotli baseline. Not an app-bundle claim.",
+    },
+    {
+      id: "trust",
+      Icon: ShieldCheckIcon,
+      title: "Follow the evidence.",
+      description: "Build receipts, security workflows, and their limits.",
+    },
+    {
+      id: "accessibility",
+      Icon: ShieldCheckIcon,
+      title: "Don’t just read about accessibility.",
+      description: "Introduce a defect. Run axe. Inspect the repair.",
+    },
+  ];
   return (
-    <Stack gap="none">
+    <Stack gap={16}>
       <Grid
-        className="landing-hero"
         as="section"
         templateColumns={{
           base: "minmax(0, 1fr)",
@@ -36,225 +87,142 @@ export function OverviewPage() {
         }}
         gap={{ base: 6, lg: 16 }}
         align="center"
-        paddingBlock={12}
+        paddingBlock={8}
       >
         <PageHeader
           title={
             <>
               One system.
               <br />
-              <Text>Different worlds.</Text>
+              <Text tone="muted">Different worlds.</Text>
             </>
           }
-          eyebrow={
-            <>
-              <span aria-hidden="true" className="hero-signal" />
-              Flux UI / a React design system
-            </>
-          }
-        ></PageHeader>
-        <Stack className="landing-intro" gap="md">
-          <Text as="p" variant="body">
+          eyebrow="Flux UI / a React design system"
+        />
+        <Stack gap="md">
+          <Text as="p" variant="lead">
             For everything you haven’t built yet.
           </Text>
-          <Text as="p" variant="body">
+          <Text as="p" tone="muted">
             From your next big launch to your next great track. Thoughtful
             components, with room for your point of view.
           </Text>
-          <Inline wrap gap={5}>
+          <Inline wrap gap="md">
             <Link href="#install" variant="solid">
               Start building <ArrowUpRightIcon size={16} />
             </Link>
-            <Link href="#components" className="landing-text-link">
+            <Link href="#components" variant="ghost">
               Meet the components <ArrowRightIcon size={16} />
             </Link>
           </Inline>
-          <Text>Open source · React 19 · Static CSS · Alpha</Text>
+          <Text variant="caption" tone="muted">
+            Open source · React 19 · Static CSS · Alpha
+          </Text>
         </Stack>
       </Grid>
       <ProductShowcase page="overview" />
-      <Stack
-        aria-labelledby="system-story-title"
-        as="section"
-        gap={12}
-        paddingBlock={16}
-      >
-        <Stack className="system-story-heading" gap="lg">
+      <Stack aria-labelledby="system-story-title" as="section" gap="xl">
+        <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
             A point of view. Not a straitjacket.
           </Text>
           <Heading id="system-story-title" level={2} size="lg">
-            Expressive on the surface.
-            <br />
-            <Text>Considered underneath.</Text>
+            Expressive on the surface. Considered underneath.
           </Heading>
-          <Text as="p" variant="body">
+          <Text as="p" tone="muted">
             The examples change. The foundations don’t. Build with the same
             primitives, then make the result unmistakably yours.
           </Text>
         </Stack>
-        <Grid
-          className="system-principles"
-          columns={{ base: 1, lg: 3 }}
-          gap="xl"
-        >
-          <Link href="#tokens">
-            <Text variant="caption" tone="muted">
-              01 / Shape the feeling
-            </Text>
-            <Heading level={3} size="md">
-              A mood, not just a color.
-            </Heading>
-            <Text as="p" variant="body">
-              Semantic surfaces, readable contrast, measured space. Change the
-              atmosphere without changing the components.
-            </Text>
-            <Text className="principle-link">
-              Explore the tokens <ArrowUpRightIcon size={16} />
-            </Text>
-          </Link>
-          <Link href="#components">
-            <Text variant="caption" tone="muted">
-              02 / Find your building blocks
-            </Text>
-            <Heading level={3} size="md">
-              Small pieces. Real possibilities.
-            </Heading>
-            <Text as="p" variant="body">
-              {components.length} discoverable component families. Native props,
-              composition, and escape hatches when your idea needs more.
-            </Text>
-            <Text className="principle-link">
-              Open the catalog <ArrowUpRightIcon size={16} />
-            </Text>
-          </Link>
-          <Link href="#engineering">
-            <Text variant="caption" tone="muted">
-              03 / Keep your freedom
-            </Text>
-            <Heading level={3} size="md">
-              Yours, beyond the demo.
-            </Heading>
-            <Text as="p" variant="body">
-              Static styling and simple APIs. No special showcase component
-              library hiding behind these examples.
-            </Text>
-            <Text className="principle-link">
-              Read the engineering <ArrowUpRightIcon size={16} />
-            </Text>
-          </Link>
+        <Grid columns={{ base: 1, lg: 3 }} gap="lg">
+          {principles.map((item) => (
+            <Card key={item.id}>
+              <Stack gap="md">
+                <Text variant="caption" tone="muted">
+                  {item.label}
+                </Text>
+                <Heading level={3} size="md">
+                  {item.title}
+                </Heading>
+                <Text as="p" tone="muted">
+                  {item.description}
+                </Text>
+                <Link href={`#${item.id}`}>
+                  {item.action} <ArrowUpRightIcon size={16} />
+                </Link>
+              </Stack>
+            </Card>
+          ))}
         </Grid>
       </Stack>
-      <Grid
-        aria-label="Inspect the evidence"
-        className="evidence-story"
+      <Card
         as="section"
-        templateColumns={{
-          base: "minmax(0, 1fr)",
-          lg: "minmax(0, 1fr) minmax(0, 1.2fr)",
-        }}
-        gap={10}
-        padding={6}
+        aria-label="Inspect the evidence"
+        surface="subtle"
+        padding="lg"
       >
-        <Stack gap="lg">
-          <Text as="p" variant="eyebrow" tone="muted">
-            Nothing up our sleeves
-          </Text>
-          <Heading level={2} size="lg">
-            Looks good.
-            <br />
-            Show your work.
-          </Heading>
-          <Text as="p" variant="body">
-            Nice interfaces deserve honest engineering. Inspect what’s measured,
-            what’s tested, and what still needs work.
-          </Text>
-        </Stack>
-        <Stack className="evidence-story-links" gap="none">
-          <Link href="#lab">
-            <GaugeIcon size={24} />
-            <Text>
-              <Text as="strong" weight="bold">
-                Put it under pressure.
-              </Text>
-              <Text as="small" variant="caption">
-                Run the opt-in, native-relative Stress Lab.
-              </Text>
+        <Grid
+          templateColumns={{
+            base: "minmax(0, 1fr)",
+            lg: "minmax(0, 1fr) minmax(0, 1.2fr)",
+          }}
+          gap="xl"
+        >
+          <Stack gap="md">
+            <Text as="p" variant="eyebrow" tone="muted">
+              Nothing up our sleeves
             </Text>
-            <ArrowUpRightIcon size={16} />
-          </Link>
-          <Link href="#size">
-            <CodeIcon size={24} />
-            <Text>
-              <Text as="strong" weight="bold">
-                {formatBytes(button?.brotli ?? null)} · Button runtime graph
-              </Text>
-              <Text as="small" variant="caption">
-                Committed Brotli baseline. Not an app-bundle claim.
-              </Text>
+            <Heading level={2} size="lg">
+              Looks good. Show your work.
+            </Heading>
+            <Text as="p" tone="muted">
+              Inspect what’s measured, what’s tested, and what still needs work.
             </Text>
-            <ArrowUpRightIcon size={16} />
-          </Link>
-          <Link href="#trust">
-            <ShieldCheckIcon size={24} />
-            <Text>
-              <Text as="strong" weight="bold">
-                Follow the evidence.
-              </Text>
-              <Text as="small" variant="caption">
-                Build receipts, security workflows, and their limits.
-              </Text>
-            </Text>
-            <ArrowUpRightIcon size={16} />
-          </Link>
-          <Link href="#accessibility">
-            <Text aria-hidden="true" className="evidence-axe-mark">
-              a11y
-            </Text>
-            <Text>
-              <Text as="strong" weight="bold">
-                Don’t just read about accessibility.
-              </Text>
-              <Text as="small" variant="caption">
-                Introduce a defect. Run axe. Inspect the repair.
-              </Text>
-            </Text>
-            <ArrowUpRightIcon size={16} />
-          </Link>
-        </Stack>
-      </Grid>
+          </Stack>
+          <Stack gap="lg">
+            {evidence.map((item) => (
+              <Stack gap="xs" key={item.id}>
+                <Link href={`#${item.id}`}>
+                  <item.Icon size={20} />
+                  {item.title}
+                  <ArrowUpRightIcon size={16} />
+                </Link>
+                <Text as="p" variant="caption" tone="muted">
+                  {item.description}
+                </Text>
+              </Stack>
+            ))}
+          </Stack>
+        </Grid>
+      </Card>
       <Grid
         aria-label="A few honest answers"
         as="section"
-        templateColumns={{
-          base: "minmax(0, 1fr)",
-          lg: "minmax(0, 1fr) minmax(0, 1.2fr)",
-        }}
+        columns={{ base: 1, lg: 2 }}
         gap="xl"
-        paddingBlock={16}
       >
-        <Box>
+        <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
             Still becoming
           </Text>
           <Heading level={2} size="lg">
             A few honest answers.
           </Heading>
-          <Text as="p" variant="body">
+          <Text as="p" tone="muted">
             Open source. Open about the details.
           </Text>
-        </Box>
-        <Box>
+        </Stack>
+        <Stack gap="sm">
           <Collapsible.Root>
             <Collapsible.Trigger>
               Is everything in the showcase a Flux component?
             </Collapsible.Trigger>
             <Collapsible.Content>
-              <Text as="p" variant="body">
-                The controls use public Flux exports. Charts, artwork,
-                timelines, and product layouts are custom demo compositions.
-                Every scene’s inspector lists the ingredients and the gaps.
-                These examples can evolve as the component library grows.
+              <Text as="p">
+                Reusable controls, typography, surfaces, and layout use public
+                Flux exports. Original illustrations and data geometry are
+                authored for each scene. Inspect the scene’s ingredients and the
+                ownership policy in Engineering.
               </Text>
             </Collapsible.Content>
           </Collapsible.Root>
@@ -263,12 +231,14 @@ export function OverviewPage() {
               Is Flux ready for production?
             </Collapsible.Trigger>
             <Collapsible.Content>
-              <Text as="p" variant="body">
-                Flux is alpha. APIs are evolving. Passing checks and measured
-                components are useful evidence, not a blanket
-                production-readiness guarantee.
-              </Text>
-              <Link href="#trust">Review the actual trust evidence →</Link>
+              <Stack gap="md">
+                <Text as="p">
+                  Flux is alpha. APIs are evolving. Passing checks and measured
+                  components are evidence, not a blanket production-readiness
+                  guarantee.
+                </Text>
+                <Link href="#trust">Review the actual trust evidence →</Link>
+              </Stack>
             </Collapsible.Content>
           </Collapsible.Root>
           <Collapsible.Root>
@@ -276,12 +246,11 @@ export function OverviewPage() {
               Are the demos connected to real services?
             </Collapsible.Trigger>
             <Collapsible.Content>
-              <Text as="p" variant="body">
-                No. Products, people, and figures are fictional. Demo actions
-                update in-memory state; music playback is visual and silent, and
-                the video editor uses illustrated frames. Switching scenes or
-                reloading resets the demo. Scene and mood are shareable in the
-                URL. Appearance preferences remain local to your browser.
+              <Text as="p">
+                No. Products, people, and figures are fictional. Actions use
+                in-memory state. Music is visual and silent; the video editor
+                uses illustrated frames. Changing scenes or reloading resets the
+                demo. Scene and mood are shareable in the URL.
               </Text>
             </Collapsible.Content>
           </Collapsible.Root>
@@ -290,26 +259,18 @@ export function OverviewPage() {
               Is Flux the fastest or smallest design system?
             </Collapsible.Trigger>
             <Collapsible.Content>
-              <Text as="p" variant="body">
-                No universal claim is made. Component behavior, application
-                context, and measurement method matter. The benchmarks publish
-                native-relative timings and explicit size scopes.
+              <Text as="p">
+                We do not claim a universal ranking. Published size snapshots,
+                native-relative benchmarks, and a local Stress Lab expose what
+                we can measure, with their limitations.
               </Text>
-              <Link href="#performance">
-                Read the measurement methodology →
-              </Link>
             </Collapsible.Content>
           </Collapsible.Root>
-        </Box>
+        </Stack>
       </Grid>
-      <Stack
-        className="landing-outro"
-        as="section"
-        gap="xl"
-        paddingBlock={12}
-        align="center"
-      >
-        <Text as="p" variant="eyebrow" tone="muted">
+      <Separator />
+      <Stack align="center" gap="md" paddingBlock="xl">
+        <Text variant="eyebrow" tone="muted">
           The next world is yours
         </Text>
         <Heading level={2} size="lg">

@@ -4,6 +4,7 @@ import {
   Box,
   Breadcrumbs,
   Callout,
+  Container,
   Code,
   Heading,
   IconButton,
@@ -135,15 +136,22 @@ function ComponentDetail({
                 </Inline>
               </Inline>
             </Box>
-            <Stack className="preview-stage" align="center">
-              <Stack
-                align={previewLayout === "fill" ? "stretch" : "center"}
-                data-compact={compact || undefined}
-                className="preview-content"
-              >
-                <Preview key={version} />
-              </Stack>
-            </Stack>
+            <Box
+              surface="subtle"
+              paddingBlock="xl"
+              paddingInline="md"
+              className="preview-stage"
+            >
+              <Container size={compact ? "xs" : "sm"}>
+                <Stack
+                  align={previewLayout === "fill" ? "stretch" : "center"}
+                  data-compact={compact || undefined}
+                  className="preview-content"
+                >
+                  <Preview key={version} />
+                </Stack>
+              </Container>
+            </Box>
           </Box>
         </Tabs.Panel>
         <Tabs.Panel value="code">
@@ -205,11 +213,11 @@ function ComponentDetail({
         </List>
       </Stack>
       <Inline gap="md" wrap>
-        <Link href="#components" className="inline-icon-link">
+        <Link href="#components" variant="ghost" tone="neutral" size="sm">
           <ArrowLeftIcon aria-hidden="true" size={14} />
           All components
         </Link>
-        <Link href="#playground" className="inline-icon-link">
+        <Link href="#playground" variant="ghost" tone="neutral" size="sm">
           Try components together
           <ArrowRightIcon aria-hidden="true" size={14} />
         </Link>

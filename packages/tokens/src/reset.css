@@ -1,0 +1,19 @@
+/* Opt-in document foundations. Import after theme.css in a full-page application.
+   No headings, controls or component internals are restyled here. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--flux-color-canvas);
+  color: var(--flux-color-text);
+  font-family: var(--flux-font-body);
+  font-size: var(--flux-font-body-size);
+  line-height: var(--flux-font-leading);
+}
+::selection {
+  background: var(--flux-color-accent-soft);
+  color: var(--flux-color-text);
+}

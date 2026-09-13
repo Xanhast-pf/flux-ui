@@ -42,6 +42,11 @@ export const grid = style(
     gridTemplateRows: "var(--f-t-b, none)",
     rowGap: axisGap("r"),
     columnGap: axisGap("c"),
+    selectors: {
+      "&[hidden]:not([hidden='until-found' i])": {
+        display: "none !important",
+      },
+    },
     "@media": {
       [`(min-width: ${breakpoints.sm})`]: {
         gridTemplateColumns: templateColumns("s"),

@@ -9,6 +9,11 @@ export const flexLayout = style(
     minInlineSize: 0,
     boxSizing: "border-box",
     gap: "var(--f-l-b, 0)",
+    selectors: {
+      "&[hidden]:not([hidden='until-found' i])": {
+        display: "none !important",
+      },
+    },
     "@media": {
       [`(min-width: ${breakpoints.sm})`]: { gap: "var(--f-l-s, 0)" },
       [`(min-width: ${breakpoints.md})`]: { gap: "var(--f-l-m, 0)" },

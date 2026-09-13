@@ -59,6 +59,7 @@ function containsPart(children: ReactNode, part: unknown): boolean {
   return Children.toArray(children).some((child) => {
     if (!isValidElement(child)) return false;
     if (child.type === part) return true;
+    if (child.type === FieldRoot) return false;
 
     const childProps = child.props as { children?: ReactNode | undefined };
     return childProps.children !== undefined

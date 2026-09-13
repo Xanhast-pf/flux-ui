@@ -36,6 +36,7 @@ export * from "./components/RadioGroup/index.js";
 export * from "./components/ScrollArea/index.js";
 export * from "./components/Select/index.js";
 export * from "./components/Separator/index.js";
+export * from "./components/Sidebar/index.js";
 export * from "./components/Skeleton/index.js";
 export * from "./components/SkipLink/index.js";
 export * from "./components/Slider/index.js";

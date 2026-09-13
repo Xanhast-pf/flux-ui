@@ -1,4 +1,12 @@
-import { Field, Inline, Select, Stack, Switch, Toolbar } from "@flux-ui/react";
+import {
+  Field,
+  Inline,
+  Select,
+  Stack,
+  Switch,
+  Text,
+  Toolbar,
+} from "@flux-ui/react";
 import { useState } from "react";
 export default function Example() {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
@@ -67,14 +75,14 @@ export default function Example() {
         </Toolbar.Button>
         <Toolbar.Link href="#components/toggle">Toggle docs</Toolbar.Link>
       </Toolbar.Root>
-      <p
-        style={{
-          fontWeight: bold ? 700 : 400,
-          fontStyle: italic ? "italic" : "normal",
-        }}
+      <Text
+        as="p"
+        variant="body"
+        weight={bold ? "bold" : "regular"}
+        italic={italic}
       >
         Small controls. Big possibilities.
-      </p>
+      </Text>
     </Stack>
   );
 }

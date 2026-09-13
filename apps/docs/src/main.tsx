@@ -11,6 +11,7 @@ if (isPerfRoute) {
   const [{ StrictMode }, { App }] = await Promise.all([
     import("react"),
     import("./App.js"),
+    import("@flux-ui/tokens/reset.css"),
     import("./styles.css"),
   ]);
   createRoot(rootElement).render(

@@ -3,7 +3,6 @@ import {
   AspectRatio,
   Avatar,
   Badge,
-  Box,
   Card,
   Grid,
   Heading,
@@ -153,14 +152,14 @@ export function CollectionLab() {
   return (
     <Stack gap="lg">
       <Inline justify="between" wrap>
-        <Box>
+        <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
             A little shelf of possibilities
           </Text>
           <Heading level={2} size="lg">
             Collection lab
           </Heading>
-        </Box>
+        </Stack>
         <Badge tone="accent">{saved.length} saved this session</Badge>
       </Inline>
       <Text as="p" variant="body" tone="muted">
@@ -262,8 +261,9 @@ export function CollectionLab() {
                     ratio={view === "list" ? 6 : 16 / 9}
                     aria-hidden="true"
                     className="collection-art"
+                    align="center"
                   >
-                    <Text>{project.initials}</Text>
+                    <Text variant="metric">{project.initials}</Text>
                   </AspectRatio>
                   <Stack gap="md" padding="md">
                     <Inline justify="between" wrap>
@@ -278,7 +278,7 @@ export function CollectionLab() {
                         <Text aria-hidden="true">☆</Text> Save
                       </Toggle>
                     </Inline>
-                    <Box>
+                    <Stack gap="md">
                       <Heading level={3} size="md">
                         <Link href={`#components/${project.component}`}>
                           {project.title}
@@ -287,7 +287,7 @@ export function CollectionLab() {
                       <Text as="p" variant="body" tone="muted">
                         {project.detail}
                       </Text>
-                    </Box>
+                    </Stack>
                     <Inline gap="sm">
                       <Avatar alt="" fallback={project.initials} size="sm" />
                       <Inline as="span" gap="sm">
@@ -300,13 +300,15 @@ export function CollectionLab() {
         </Grid>
         {!loadingPreview && ordered.length === 0 ? (
           <Card>
-            <Heading level={3} size="md">
-              No projects on this shelf.
-            </Heading>
-            <Text as="p" variant="body">
-              Try another search or turn off Saved only. Reset collection brings
-              back the starting state.
-            </Text>
+            <Stack gap="md">
+              <Heading level={3} size="md">
+                No projects on this shelf.
+              </Heading>
+              <Text as="p" variant="body">
+                Try another search or turn off Saved only. Reset collection
+                brings back the starting state.
+              </Text>
+            </Stack>
           </Card>
         ) : null}
       </Grid>

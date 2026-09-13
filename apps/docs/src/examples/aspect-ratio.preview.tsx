@@ -1,4 +1,4 @@
-import { AspectRatio, Field, Select, Stack } from "@flux-ui/react";
+import { AspectRatio, Card, Field, Select, Stack, Text } from "@flux-ui/react";
 import { useState } from "react";
 export default function Example() {
   const [ratio, setRatio] = useState(16 / 9);
@@ -19,9 +19,11 @@ export default function Example() {
           </Select>
         </Field.Control>
       </Field.Root>
-      <AspectRatio ratio={ratio} className="ratio-demo">
-        <span>Room for your next idea.</span>
-      </AspectRatio>
+      <Card surface="subtle">
+        <AspectRatio ratio={ratio} align="center">
+          <Text>Room for your next idea.</Text>
+        </AspectRatio>
+      </Card>
     </Stack>
   );
 }

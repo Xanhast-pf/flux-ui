@@ -4,6 +4,7 @@ import type { AspectRatioProps } from "./AspectRatio.types.js";
 export function AspectRatio({
   className,
   ratio = 1,
+  align,
   style,
   ...props
 }: AspectRatioProps) {
@@ -15,7 +16,12 @@ export function AspectRatio({
     <div
       {...props}
       className={joinClassNames(frame, className)}
-      style={{ aspectRatio: ratio, ...style }}
+      style={{
+        aspectRatio: ratio,
+        display: align === undefined ? undefined : "grid",
+        placeItems: align,
+        ...style,
+      }}
     />
   );
 }

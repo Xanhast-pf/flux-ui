@@ -11,7 +11,6 @@ export const list = style({
       listStyle: "revert",
       paddingInlineStart: "var(--flux-space-6)",
     },
-    "&[hidden]": { display: "none" },
   },
 });
 export const item = style({ minInlineSize: 0 });

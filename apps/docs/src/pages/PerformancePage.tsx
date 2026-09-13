@@ -1,5 +1,4 @@
 import {
-  Box,
   Card,
   Collapsible,
   DescriptionList,
@@ -40,7 +39,7 @@ export function PerformancePage() {
             <Card key={scenario.name} as="article" padding={6}>
               <Stack gap="lg">
                 <Stack gap="md">
-                  <Box>
+                  <Stack gap="md">
                     <Heading level={2} size="lg">
                       {scenario.name} × {scenario.count}
                     </Heading>
@@ -50,7 +49,7 @@ export function PerformancePage() {
                         {scenario.reference}
                       </Text>
                     </Text>
-                  </Box>
+                  </Stack>
 
                   <ComparisonBars
                     label="Committed synchronous mount median"

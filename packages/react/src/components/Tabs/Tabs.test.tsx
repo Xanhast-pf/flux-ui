@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { Tabs } from "./Tabs.js";
@@ -55,5 +55,47 @@ describe("Tabs", () => {
     expect(second).toHaveFocus();
     expect(second).toHaveAttribute("aria-selected", "true");
     expect(screen.getByText("Two panel")).toBeVisible();
+  });
+  it("keeps nested orientation, size, appearance and keyboard state local", async () => {
+    const user = userEvent.setup();
+    render(
+      <Tabs.Root
+        defaultValue="outer"
+        orientation="vertical"
+        size="sm"
+        appearance="pill"
+      >
+        <Tabs.List aria-label="Outer tabs" activateOnFocus>
+          <Tabs.Tab value="outer">Outer</Tabs.Tab>
+          <Tabs.Tab value="other">Other</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="outer">
+          <Tabs.Root defaultValue="first">
+            <Tabs.List aria-label="Inner tabs" activateOnFocus>
+              <Tabs.Tab value="first">First</Tabs.Tab>
+              <Tabs.Tab value="second">Second</Tabs.Tab>
+            </Tabs.List>
+            <Tabs.Panel value="first">First content</Tabs.Panel>
+            <Tabs.Panel value="second">Second content</Tabs.Panel>
+          </Tabs.Root>
+        </Tabs.Panel>
+        <Tabs.Panel value="other">Other content</Tabs.Panel>
+      </Tabs.Root>,
+    );
+    const inner = screen.getByRole("tablist", { name: "Inner tabs" });
+    expect(inner).toHaveAttribute("aria-orientation", "horizontal");
+    const first = within(inner).getByRole("tab", { name: "First" });
+    expect(first).not.toHaveAttribute("data-s", "sm");
+    expect(first).not.toHaveAttribute("data-a", "pill");
+    first.focus();
+    await user.keyboard("{ArrowDown}");
+    expect(first).toHaveFocus();
+    await user.keyboard("{ArrowRight}");
+    expect(within(inner).getByRole("tab", { name: "Second" })).toHaveFocus();
+    expect(screen.getByRole("tab", { name: "Outer" })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    expect(screen.getByText("Second content")).toBeVisible();
   });
 });

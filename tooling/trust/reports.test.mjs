@@ -89,3 +89,26 @@ test("runtime evidence requires every current full-run sample", () => {
   report.rawSamples[0].samples.flux.pop();
   assert.throws(() => validateReport("runtime.json", report, source));
 });
+
+test("consumer browser reports must be executed, clean and non-flaky", () => {
+  const report = {
+    stats: { expected: 6, unexpected: 0, flaky: 0 },
+    errors: [],
+  };
+  assert.equal(validateReport("consumer-tests.json", report, source), report);
+  for (const key of ["unexpected", "flaky"])
+    assert.throws(() =>
+      validateReport(
+        "consumer-tests.json",
+        { ...report, stats: { ...report.stats, [key]: 1 } },
+        source,
+      ),
+    );
+  assert.throws(() =>
+    validateReport(
+      "consumer-tests.json",
+      { ...report, stats: { ...report.stats, expected: 0 } },
+      source,
+    ),
+  );
+});

@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 export const fieldset = style({
-  selectors: { "&[hidden]": { display: "none" } },
+  selectors: {},
   display: "grid",
   gap: "var(--flux-space-4)",
   padding: 0,

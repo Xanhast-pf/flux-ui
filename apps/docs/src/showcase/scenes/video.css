@@ -1,20 +1,12 @@
-/* video artwork and data geometry. UI uses public Flux primitives. */
-
+/* Original illustrated landscapes and crop geometry, not UI skins. */
 .video-frame {
   position: relative;
   overflow: hidden;
-  max-inline-size: 100%;
   inline-size: 100%;
   block-size: auto;
-  border-radius: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  text-align: center;
-  color: #ffffff;
   isolation: isolate;
+  --flux-color-text: #ffffff;
+  --flux-color-text-muted: #ffffff;
 }
 .video-landscape {
   position: absolute;
@@ -75,30 +67,13 @@
   background: #00000048;
   pointer-events: none;
 }
-.video-frame h3 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 2.5rem;
-  font-weight: 400;
-  max-inline-size: 10ch;
-  text-shadow: 0 0.125rem 1rem #00000050;
-}
 .video-frame-label {
   position: absolute;
   inset: 1rem 1rem auto;
-  letter-spacing: 0.125em;
-  font-size: 0.75rem;
 }
 .video-frame-footer {
   position: absolute;
   inset: auto 1rem 1rem;
-  font-size: 0.75rem;
-}
-.video-clip {
-  min-inline-size: 0;
-  justify-content: start;
-  text-align: start;
-  padding: 0.5rem;
-  font-weight: 500;
 }
 .clip-thumbnail {
   inline-size: 3rem;
@@ -129,23 +104,9 @@
   );
 }
 @container flux-layout (max-width: 30rem) {
-  .video-frame {
-    padding: 0.5rem;
-  }
-}
-@container flux-layout (max-width: 30rem) {
-  .video-frame h3 {
-    font-size: 1.5rem;
-  }
-}
-@container flux-layout (max-width: 30rem) {
   .video-frame-label {
     inset: 0.5rem 0.5rem auto;
-    font-size: 0.75rem;
-    letter-spacing: 0;
   }
-}
-@container flux-layout (max-width: 30rem) {
   .video-frame-footer {
     display: none;
   }

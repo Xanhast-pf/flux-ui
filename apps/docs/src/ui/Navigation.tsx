@@ -1,25 +1,19 @@
-import { CloseIcon, MenuIcon } from "@flux-ui/icons";
+import { CloseIcon } from "@flux-ui/icons";
 import {
   Box,
   Collapsible,
-  Drawer,
+  Sidebar,
+  Heading,
+  Inline,
   Link,
   List,
-  ScrollArea,
   Stack,
   Text,
 } from "@flux-ui/react";
-import { useState } from "react";
 import { components } from "../generated/components.js";
 import { navigationGroups } from "../lib/routing.js";
 import { ThemeSwitch } from "./AppearanceControls.js";
-function Navigation({
-  route,
-  onNavigate,
-}: {
-  route: string;
-  onNavigate?: () => void;
-}) {
+function Navigation({ route }: { route: string }) {
   return (
     <Box aria-label="Documentation sections" as="nav">
       <Stack gap="md">
@@ -34,7 +28,6 @@ function Navigation({
                   <Link
                     href={`#${id}`}
                     aria-current={route === id ? "page" : undefined}
-                    onClick={onNavigate}
                     variant="navigation"
                   >
                     {label}
@@ -57,7 +50,6 @@ function Navigation({
                     aria-current={
                       route === `components/${entry.slug}` ? "page" : undefined
                     }
-                    onClick={onNavigate}
                     variant="navigation"
                   >
                     {entry.name}
@@ -72,39 +64,32 @@ function Navigation({
   );
 }
 export function DocumentationNavigation({ route }: { route: string }) {
-  const [open, setOpen] = useState(false);
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen}>
-      <Drawer.Trigger
-        className="navigation-trigger"
-        aria-label="Browse sections"
-        title="Browse sections"
-      >
-        <MenuIcon aria-hidden="true" size={20} />
-      </Drawer.Trigger>
-      <Drawer.Popup side="left" className="mobile-nav-drawer">
-        <Drawer.Title>Flux UI documentation</Drawer.Title>
-        <Drawer.Close aria-label="Close navigation" title="Close navigation">
-          <CloseIcon aria-hidden="true" size={16} />
-        </Drawer.Close>
-        <Drawer.Description style={{ gridColumn: "1 / -1", margin: 0 }}>
-          Components, examples, and the engineering behind them.
-        </Drawer.Description>
-        <Box style={{ gridColumn: "1 / -1" }}>
-          <ThemeSwitch />
-        </Box>
-        <ScrollArea
-          aria-label="Documentation navigation"
-          className="navigation-scroll"
-        >
-          <Navigation
-            route={route}
-            onNavigate={() => {
-              setOpen(false);
-            }}
-          />
-        </ScrollArea>
-      </Drawer.Popup>
-    </Drawer.Root>
+    <Sidebar.Panel
+      aria-label="Documentation sidebar"
+      className="documentation-sidebar"
+    >
+      <Stack gap="lg">
+        <Inline justify="between" gap="sm">
+          <Heading level={2} size="sm">
+            Documentation
+          </Heading>
+          <Sidebar.Close
+            variant="ghost"
+            size="sm"
+            tone="neutral"
+            aria-label="Close navigation"
+            title="Close navigation"
+          >
+            <CloseIcon aria-hidden="true" size={16} />
+          </Sidebar.Close>
+        </Inline>
+        <Navigation route={route} />
+        <ThemeSwitch />
+        <Link href="https://github.com/Xanhast-pf/flux-ui">
+          Flux UI on GitHub
+        </Link>
+      </Stack>
+    </Sidebar.Panel>
   );
 }

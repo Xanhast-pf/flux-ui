@@ -1,6 +1,12 @@
 import { style, styleVariants } from "@vanilla-extract/css";
 
 export const textBase = style({
+  selectors: {
+    "&[data-italic]": { fontStyle: "italic" },
+    "&[data-decoration='none']": { textDecoration: "none" },
+    "&[data-decoration='underline']": { textDecoration: "underline" },
+    "&[data-decoration='line-through']": { textDecoration: "line-through" },
+  },
   margin: 0,
   fontFamily: "inherit",
   fontSize: "inherit",

@@ -1,5 +1,5 @@
+import { EngineeringRules } from "../ui/EngineeringRules.js";
 import {
-  Box,
   Callout,
   Collapsible,
   Card,
@@ -46,43 +46,45 @@ export function EngineeringPage() {
         <Grid
           role="group"
           aria-label="Architecture: tokens feed React components, which feed documentation"
-          className="system-flow"
           columns={{ base: 1, md: 3 }}
-          gap="none"
+          gap="md"
         >
-          <Box>
-            <Text>01</Text>
-            <Heading level={2} size="lg">
-              Tokens
-            </Heading>
-            <Text as="p" variant="body">
-              Semantic variables
-              <br />
-              Light · dark · reduced motion
-            </Text>
-          </Box>
-          <Box>
-            <Text>02</Text>
-            <Heading level={2} size="lg">
-              Components
-            </Heading>
-            <Text as="p" variant="body">
-              Native React composition
-              <br />
-              Static component CSS
-            </Text>
-          </Box>
-          <Box>
-            <Text>03</Text>
-            <Heading level={2} size="lg">
-              Real interfaces
-            </Heading>
-            <Text as="p" variant="body">
-              Docs consume Flux
-              <br />
-              Same source in every demo
-            </Text>
-          </Box>
+          {[
+            [
+              "01",
+              "Tokens",
+              "Semantic variables",
+              "Light, dark and reduced motion",
+            ],
+            [
+              "02",
+              "Components",
+              "Native React composition",
+              "Static component CSS",
+            ],
+            [
+              "03",
+              "Real interfaces",
+              "Docs consume Flux",
+              "The public API in every example",
+            ],
+          ].map(([step, title, description, detail]) => (
+            <Card key={step}>
+              <Stack gap="md">
+                <Text variant="eyebrow" tone="accent">
+                  {step}
+                </Text>
+                <Heading level={2} size="md">
+                  {title}
+                </Heading>
+                <Text as="p" tone="muted">
+                  {description}
+                  <br />
+                  {detail}
+                </Text>
+              </Stack>
+            </Card>
+          ))}
         </Grid>
         <Grid minColumnWidth="17rem" gap="md">
           {contracts.map((entry) => (
@@ -160,6 +162,7 @@ export function EngineeringPage() {
             </Link>
           </Text>
         </Stack>
+        <EngineeringRules />
         <Callout>
           Current limits: alpha APIs, two runtime benchmark scenarios, and
           Chromium-focused browser automation. Manual assistive-technology

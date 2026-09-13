@@ -79,59 +79,54 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
             window.location.hash = showcaseHash(page, value, selection.mood);
         }}
       >
-        <Inline
-          className="world-controls"
-          justify="between"
-          align="end"
-          wrap
-          gap="lg"
-          paddingBlock={5}
-        >
-          <Stack gap={3}>
-            <Text variant="caption" tone="muted">
-              Choose a world
-            </Text>
-            <Tabs.List wrap aria-label="Product worlds">
-              {showcaseScenes.map((scene) => (
-                <Tabs.Tab key={scene.id} value={scene.id}>
-                  <scene.Icon size={18} />
-                  <Text>{scene.label}</Text>
-                </Tabs.Tab>
-              ))}
-            </Tabs.List>
-          </Stack>
-          <Stack gap={3}>
-            <Text id={`${id}-moods`} variant="caption" tone="muted">
-              Set the mood
-            </Text>
-            <ToggleGroup.Root
-              type="single"
-              value={selection.mood}
-              onValueChange={(value) => {
-                if (value !== null && isMood(value))
-                  window.location.hash = showcaseHash(page, active.id, value);
-              }}
-              aria-labelledby={`${id}-moods`}
-              size="sm"
-              appearance="quiet"
-            >
-              {moods.map((mood) => (
-                <ToggleGroup.Item
-                  key={mood.id}
-                  value={mood.id}
-                  title={mood.description}
-                >
-                  <ColorSwatch
-                    color={moodColors[mood.id]}
-                    selected={mood.id === selection.mood}
-                    size="sm"
-                  />
-                  {mood.label}
-                </ToggleGroup.Item>
-              ))}
-            </ToggleGroup.Root>
-          </Stack>
-        </Inline>
+        <Box border="block">
+          <Inline justify="between" align="end" wrap gap="lg" paddingBlock={5}>
+            <Stack gap={3}>
+              <Text variant="caption" tone="muted">
+                Choose a world
+              </Text>
+              <Tabs.List wrap aria-label="Product worlds">
+                {showcaseScenes.map((scene) => (
+                  <Tabs.Tab key={scene.id} value={scene.id}>
+                    <scene.Icon size={18} />
+                    <Text>{scene.label}</Text>
+                  </Tabs.Tab>
+                ))}
+              </Tabs.List>
+            </Stack>
+            <Stack gap={3}>
+              <Text id={`${id}-moods`} variant="caption" tone="muted">
+                Set the mood
+              </Text>
+              <ToggleGroup.Root
+                type="single"
+                value={selection.mood}
+                onValueChange={(value) => {
+                  if (value !== null && isMood(value))
+                    window.location.hash = showcaseHash(page, active.id, value);
+                }}
+                aria-labelledby={`${id}-moods`}
+                size="sm"
+                appearance="quiet"
+              >
+                {moods.map((mood) => (
+                  <ToggleGroup.Item
+                    key={mood.id}
+                    value={mood.id}
+                    title={mood.description}
+                  >
+                    <ColorSwatch
+                      color={moodColors[mood.id]}
+                      selected={mood.id === selection.mood}
+                      size="sm"
+                    />
+                    {mood.label}
+                  </ToggleGroup.Item>
+                ))}
+              </ToggleGroup.Root>
+            </Stack>
+          </Inline>
+        </Box>
         <Grid
           templateColumns={{
             base: "minmax(0, 1fr)",
@@ -141,14 +136,14 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
           gap="xl"
           paddingBlock="xl"
         >
-          <Box>
+          <Stack gap="sm">
             <Text as="p" variant="eyebrow" tone="muted">
               {String(active.order + 1).padStart(2, "0")} / {active.label}
             </Text>
             <Heading level={2} size="lg">
               {active.headline}
             </Heading>
-          </Box>
+          </Stack>
           <Text as="p" variant="body">
             {active.description}
           </Text>
@@ -168,12 +163,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
                 <ExampleBoundary key={`${scene.id}-${revision}`}>
                   <Suspense
                     fallback={
-                      <Stack
-                        align="center"
-                        gap="md"
-                        role="status"
-                        className="scene-loading"
-                      >
+                      <Stack align="center" gap="md" role="status" padding={16}>
                         <Spinner aria-hidden="true" />
                         Opening {scene.brand}…
                       </Stack>
@@ -189,7 +179,6 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
       </Tabs.Root>
       <Inline wrap justify="between" gap="md" paddingBlock="md">
         <Text as="p" variant="body">
-          <span aria-hidden="true" className="try-dot" />
           <Text as="strong" weight="bold">
             Try it.
           </Text>{" "}

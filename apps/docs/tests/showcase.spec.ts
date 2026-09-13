@@ -14,10 +14,10 @@ test("the landing page leads with a live product, not a documentation rail", asy
   await page.goto("/#components");
   await expect(page.locator(".desktop-sidebar")).toHaveCount(0);
   await page
-    .getByRole("button", { name: "Browse sections", exact: true })
+    .getByRole("button", { name: "Toggle navigation", exact: true })
     .click();
-  const navigation = page.getByRole("dialog", {
-    name: "Flux UI documentation",
+  const navigation = page.getByRole("complementary", {
+    name: "Documentation sidebar",
     exact: true,
   });
   await expect(navigation).toBeVisible();
@@ -231,11 +231,16 @@ test("music is opt-in, keyboard-operable, silent, and honors reduced motion", as
     "data-playing",
     "true",
   );
-  await expect(scene.locator(".sequencer-playhead > span")).toHaveCSS(
-    "animation-name",
-    "none",
-  );
-  await expect(scene.locator(".reduced-motion-note")).toBeVisible();
+  await expect(scene.locator(".sequencer-playhead > span")).toHaveCount(4);
+  for (const playhead of await scene
+    .locator(".sequencer-playhead > span")
+    .all())
+    await expect(playhead).toHaveCSS("animation-name", "none");
+  await expect(
+    scene.getByText(
+      "When reduced motion is enabled, the playhead stays still.",
+    ),
+  ).toBeVisible();
   await scene
     .getByRole("button", { name: "Mute Drum machine", exact: true })
     .click();

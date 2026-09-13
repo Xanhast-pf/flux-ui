@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Callout,
   Card,
@@ -217,12 +216,12 @@ export function AccessibilityPage() {
                       {finding.description}
                     </Text>
                     {finding.nodes.map((node) => (
-                      <Box key={JSON.stringify(node.target)}>
+                      <Stack key={JSON.stringify(node.target)} gap="md">
                         <Code>{JSON.stringify(node.target)}</Code>
                         <Text as="p" variant="body">
                           {node.failureSummary ?? "Review this node manually."}
                         </Text>
-                      </Box>
+                      </Stack>
                     ))}
                     <Link href={finding.helpUrl}>axe rule documentation →</Link>
                   </Stack>

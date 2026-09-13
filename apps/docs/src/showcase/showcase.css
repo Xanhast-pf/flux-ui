@@ -1,13 +1,6 @@
-/* Showcase staging and scene artwork only. Public tokens own control appearance. */
-.product-showcase {
-  min-inline-size: 0;
-}
-.world-controls {
-  border-block: 0.0625rem solid var(--flux-color-border);
-}
+/* Original scene palettes, applied to semantic tokens only within artwork. */
 .world-surface {
   overflow: clip;
-  box-shadow: 0 1.5rem 3rem -2.5rem #17151d70;
   --art-canvas: #eddfcf;
   --art-ink: #382c24;
   --channel-one: #936cc4;
@@ -32,24 +25,9 @@
   --art-canvas: #b6d5b8;
   --art-ink: #243829;
 }
-.try-dot {
-  display: inline-block;
-  inline-size: 0.5rem;
-  block-size: 0.5rem;
-  border-radius: 50%;
-  background: var(--flux-color-accent);
-  margin-inline-end: 0.5rem;
+
+[data-artwork-ink] {
+  --flux-color-text: var(--art-ink);
+  --flux-color-text-muted: var(--art-ink);
+  --flux-color-text-subtle: var(--art-ink);
 }
-.scene-loading {
-  display: grid;
-  min-block-size: 30rem;
-  place-content: center;
-}
-/* Shared composition grammar, not another public component API. */
-/* folio / financial workspace */
-/* signal / campaign canvas */
-/* gather / community editorial */
-/* afterhours / silent visual sequencer */
-/* cutroom / an illustrated editing surface */
-/* objects / small-store commerce */
-/* Composition breakpoints follow the available canvas, not the window. */

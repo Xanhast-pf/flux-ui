@@ -17,6 +17,8 @@ import type {
 
 type TabsContextValue = {
   id: string;
+  size: "sm" | "md" | "lg";
+  appearance: "underline" | "pill";
   orientation: "horizontal" | "vertical";
   setValue: (value: string) => void;
   value: string;
@@ -62,18 +64,14 @@ function TabsRoot({
     <TabsContext
       value={{
         id: generatedId,
+        size,
+        appearance,
         orientation,
         setValue,
         value,
       }}
     >
-      <div
-        {...props}
-        className={joinClassNames(root, className)}
-        data-a={appearance === "underline" ? undefined : appearance}
-        data-o={orientation === "horizontal" ? undefined : orientation}
-        data-s={size === "md" ? undefined : size}
-      />
+      <div {...props} className={joinClassNames(root, className)} />
     </TabsContext>
   );
 }
@@ -109,6 +107,8 @@ function TabsList({
       event.currentTarget.querySelectorAll<HTMLButtonElement>(
         '[role="tab"]:not(:disabled)',
       ),
+    ).filter(
+      (element) => element.closest('[role="tablist"]') === event.currentTarget,
     );
     if (tabs.length === 0) return;
 
@@ -140,6 +140,7 @@ function TabsList({
   return (
     <div
       {...props}
+      data-a={context.appearance}
       data-w={wrap || undefined}
       aria-orientation={context.orientation}
       className={joinClassNames(list, className)}
@@ -173,6 +174,9 @@ function TabsTab({
       aria-controls={`${context.id}-panel-${suffix}`}
       aria-selected={selected}
       className={joinClassNames(tab, className)}
+      data-a={context.appearance}
+      data-o={context.orientation}
+      data-s={context.size}
       data-flux-tab-value={value}
       disabled={disabled}
       id={`${context.id}-tab-${suffix}`}

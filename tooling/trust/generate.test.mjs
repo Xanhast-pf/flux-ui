@@ -56,6 +56,13 @@ async function fixture(callback) {
       }),
     );
     await writeFile(
+      join(root, ".cache/trust/browser/consumer-tests.json"),
+      JSON.stringify({
+        stats: { expected: 6, unexpected: 0, flaky: 0 },
+        errors: [],
+      }),
+    );
+    await writeFile(
       join(root, ".cache/trust/browser/runtime.json"),
       JSON.stringify({
         schemaVersion: 1,
@@ -126,6 +133,22 @@ test("evidence CLI refuses missing reports and local publication", async () => {
     assert.notEqual(local.status, 0);
     assert.match(local.stderr, /local run/u);
     await rm(join(root, ".cache/trust/browser/runtime.json"));
+    assert.notEqual(generate(root).status, 0);
+  });
+});
+
+test("evidence publication requires the built-consumer report and successful receipt", async () => {
+  await fixture(async (root) => {
+    await rm(join(root, ".cache/trust/browser/consumer-tests.json"));
+    assert.notEqual(generate(root).status, 0);
+  });
+  await fixture(async (root) => {
+    const path = join(root, ".cache/trust/browser/receipt.json");
+    const receipt = JSON.parse(await readFile(path, "utf8"));
+    const consumer = receipt.checks.find((check) => check.id === "consumer");
+    consumer.status = "failed";
+    consumer.exitCode = 1;
+    await writeFile(path, JSON.stringify(receipt));
     assert.notEqual(generate(root).status, 0);
   });
 });

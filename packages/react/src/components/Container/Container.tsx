@@ -1,4 +1,4 @@
-import { createElement } from "react";
+import { createElement, type ReactElement } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { container } from "./Container.css.js";
 import type { ContainerProps } from "./Container.types.js";
@@ -9,7 +9,7 @@ export function Container({
   className,
   size = "xl",
   ...props
-}: ContainerProps) {
+}: ContainerProps): ReactElement {
   return createElement(as, {
     ...props,
     className: joinClassNames(container, className),

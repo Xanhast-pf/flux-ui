@@ -17,11 +17,11 @@ export const list = style({
   borderBottom: `0.0625rem solid var(${cssVars.color.border})`,
   selectors: {
     "&[data-w]": { flexWrap: "wrap" },
-    [`${root}[data-a='pill'] &`]: { border: 0 },
-    [`${root}[data-o='vertical'] &`]: {
+    "&[data-a='pill']": { border: 0 },
+    "&[aria-orientation='vertical']": {
       flexDirection: "column",
       borderBottom: 0,
-      borderRight: `0.0625rem solid var(${cssVars.color.border})`,
+      borderInlineEnd: `0.0625rem solid var(${cssVars.color.border})`,
     },
   },
 });
@@ -45,19 +45,19 @@ export const tab = style({
   transitionDuration: `var(${cssVars.motion.fast})`,
   transitionTimingFunction: `var(${cssVars.motion.easing})`,
   selectors: {
-    [`${root}[data-s='sm'] &`]: {
+    "&[data-s='sm']": {
       minHeight: "var(--flux-control-sm)",
       fontSize: "var(--flux-font-caption)",
     },
-    [`${root}[data-s='lg'] &`]: {
+    "&[data-s='lg']": {
       minHeight: "var(--flux-control-lg)",
       fontSize: "var(--flux-font-lead)",
     },
-    [`${root}[data-a='pill'] &`]: {
+    "&[data-a='pill']": {
       borderRadius: "var(--flux-radius-md)",
       border: 0,
     },
-    [`${root}[data-a='pill'] &[aria-selected='true']`]: {
+    "&[data-a='pill'][aria-selected='true']": {
       background: "var(--flux-color-text)",
       color: "var(--flux-color-surface)",
     },
@@ -74,14 +74,14 @@ export const tab = style({
       outlineOffset: "-0.125rem",
     },
     "&:disabled": { cursor: "not-allowed", opacity: 0.5 },
-    [`${root}[data-o='vertical'] &`]: {
+    "&[data-o='vertical']": {
       justifyContent: "flex-start",
-      borderRight: "0.125rem solid transparent",
+      borderInlineEnd: "0.125rem solid transparent",
       borderBottom: 0,
-      textAlign: "left",
+      textAlign: "start",
     },
-    [`${root}[data-o='vertical'] &[aria-selected='true']`]: {
-      borderRightColor: `var(${cssVars.color.accent})`,
+    "&[data-o='vertical'][aria-selected='true']": {
+      borderInlineEndColor: `var(${cssVars.color.accent})`,
     },
   },
   "@media": {

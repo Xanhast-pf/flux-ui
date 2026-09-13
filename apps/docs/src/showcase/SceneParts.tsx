@@ -1,6 +1,6 @@
 import { FluxMarkIcon } from "@flux-ui/icons";
 import { Inline, Stat, Text } from "@flux-ui/react";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 export function SceneHeader({
   brand,
   context,
@@ -34,9 +34,4 @@ export function SceneStatus({ children }: { children: ReactNode }) {
     </Text>
   );
 }
-export const artworkInkStyle = {
-  "--flux-color-text": "var(--art-ink)",
-  "--flux-color-text-muted": "var(--art-ink)",
-  "--flux-color-text-subtle": "var(--art-ink)",
-} as CSSProperties;
 export const Metric = Stat;

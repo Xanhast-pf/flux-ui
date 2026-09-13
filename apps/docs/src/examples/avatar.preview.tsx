@@ -1,4 +1,4 @@
-import { Avatar, Button, Inline, Stack } from "@flux-ui/react";
+import { Avatar, Button, Inline, Stack, Text } from "@flux-ui/react";
 import { useState } from "react";
 const illustration =
   "data:image/svg+xml," +
@@ -18,7 +18,7 @@ export default function Example() {
         />
         <Avatar alt="Design team" fallback="DS" />
         <Avatar alt="" fallback="QA" size="sm" />
-        <span>QA team (named by this text)</span>
+        <Text>QA team (named by this text)</Text>
       </Inline>
       <Button
         variant="outline"

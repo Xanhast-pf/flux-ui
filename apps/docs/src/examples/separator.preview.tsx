@@ -1,16 +1,18 @@
-import { Inline, Separator, Stack } from "@flux-ui/react";
+import { Inline, Separator, Stack, Text } from "@flux-ui/react";
 
 export default function Example() {
   return (
     <Stack gap="md">
-      <p>A semantic break between ideas.</p>
+      <Text as="p" variant="body">
+        A semantic break between ideas.
+      </Text>
       <Separator />
       <Inline gap="md">
-        <span>Compose</span>
+        <Text>Compose</Text>
         <Separator decorative orientation="vertical" />
-        <span>Customize</span>
+        <Text>Customize</Text>
         <Separator decorative orientation="vertical" />
-        <span>Ship</span>
+        <Text>Ship</Text>
       </Inline>
     </Stack>
   );

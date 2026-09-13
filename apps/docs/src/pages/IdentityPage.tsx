@@ -26,6 +26,7 @@ import {
   Link,
   PageHeader,
   Slider,
+  Separator,
   Stack,
   Stat,
   Text,
@@ -52,9 +53,9 @@ export function IdentityPage() {
         </Text>
       </PageHeader>
 
-      <Card className="identity-hero">
+      <Card className="identity-hero" padding="lg">
         <Stack gap="lg">
-          <Box className="identity-mark-lockup">
+          <Inline gap="md" wrap>
             <img
               src={`${import.meta.env.BASE_URL}flux-mark.svg`}
               alt="Flux UI ribbon F"
@@ -64,7 +65,7 @@ export function IdentityPage() {
             <Text variant="display" weight="bold">
               fluxUI
             </Text>
-          </Box>
+          </Inline>
           <Inline gap="sm" wrap>
             <Badge tone="accent">64 original icons</Badge>
             <Badge>20 × 20 icon grid</Badge>
@@ -139,7 +140,7 @@ export function IdentityPage() {
 
       <Stack aria-labelledby="icons-heading" as="section" gap="lg">
         <Stack gap="md">
-          <Box>
+          <Stack gap="md">
             <Text as="p" variant="eyebrow" tone="muted">
               Flux Icons
             </Text>
@@ -150,28 +151,30 @@ export function IdentityPage() {
               Browse 64 tree-shakeable icons with search, copyable imports,
               accessible naming, and per-icon size budgets.
             </Text>
-          </Box>
-          <Card className="identity-icon-teaser">
-            <Box aria-hidden="true" className="identity-icon-teaser-grid">
-              <SearchIcon size={26} />
-              <CommandIcon size={26} />
-              <SparkIcon size={26} />
-              <BranchIcon size={26} />
-              <GridIcon size={26} />
-              <PaletteIcon size={26} />
-              <ShieldCheckIcon size={26} />
-            </Box>
-            <Link href="#icons" variant="solid">
-              Browse all 64 icons
-              <ArrowUpRightIcon aria-hidden="true" size={16} />
-            </Link>
+          </Stack>
+          <Card>
+            <Stack gap="md">
+              <Inline aria-hidden="true" gap="lg" justify="center" wrap>
+                <SearchIcon size={26} />
+                <CommandIcon size={26} />
+                <SparkIcon size={26} />
+                <BranchIcon size={26} />
+                <GridIcon size={26} />
+                <PaletteIcon size={26} />
+                <ShieldCheckIcon size={26} />
+              </Inline>
+              <Link href="#icons" variant="solid">
+                Browse all 64 icons
+                <ArrowUpRightIcon aria-hidden="true" size={16} />
+              </Link>
+            </Stack>
           </Card>
         </Stack>
       </Stack>
 
       <Stack aria-labelledby="display-heading" as="section" gap="lg">
         <Stack gap="md">
-          <Box>
+          <Stack gap="md">
             <Text as="p" variant="eyebrow" tone="muted">
               Flux Display
             </Text>
@@ -182,10 +185,16 @@ export function IdentityPage() {
               An uppercase vector prototype, not a production font. Lowercase,
               diacritics, and kerning are still in progress.
             </Text>
-          </Box>
-          <Card className="display-lab">
+          </Stack>
+          <Card padding="lg">
             <Stack gap="lg">
-              <Box className="display-stage">
+              <Box
+                surface="subtle"
+                border="all"
+                radius="sm"
+                padding="lg"
+                className="display-stage"
+              >
                 <FluxDisplay
                   size={displaySize}
                   text={specimen || "FLUX UI"}
@@ -229,14 +238,16 @@ export function IdentityPage() {
                   <Text tone="muted">{displaySize}px specimen height</Text>
                 </Stack>
               </Grid>
-              <Box
+              <Stack
+                gap="md"
                 role="group"
                 aria-label="Flux Display alphabet specimen"
                 className="alphabet-specimen"
               >
+                <Separator />
                 <FluxDisplay text="ABCDEFGHIJKLMNOPQRSTUVWXYZ" size={58} />
                 <FluxDisplay text="0123456789 / - . : +" size={58} />
-              </Box>
+              </Stack>
             </Stack>
           </Card>
           <Grid minColumnWidth="12rem" gap="sm">

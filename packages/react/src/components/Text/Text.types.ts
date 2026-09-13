@@ -27,5 +27,7 @@ export type TextProps = SemanticProps<
     weight?: "regular" | "medium" | "bold" | undefined;
     align?: "start" | "center" | "end" | undefined;
     numeric?: boolean | undefined;
+    italic?: boolean | undefined;
+    decoration?: "none" | "underline" | "line-through" | undefined;
   }
 >;

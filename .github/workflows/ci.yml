@@ -104,6 +104,7 @@ jobs:
           path: |
             apps/docs/test-results
             apps/docs/playwright-report
+            .cache/consumer-results
           if-no-files-found: ignore
           retention-days: 7
 

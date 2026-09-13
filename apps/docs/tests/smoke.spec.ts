@@ -45,21 +45,27 @@ test("renders the workshop, native form examples, and overlay demos", async ({
   await page.getByRole("button", { name: "Close drawer", exact: true }).click();
 });
 
-test("uses the Flux Drawer for mobile documentation navigation", async ({
+test("keeps the non-modal Sidebar open after mobile navigation", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  await page.getByRole("button", { name: "Browse sections" }).click();
-  const navigationDrawer = page.getByRole("dialog", {
-    name: "Flux UI documentation",
+  await page.getByRole("button", { name: "Toggle navigation" }).click();
+  const navigationDrawer = page.getByRole("complementary", {
+    name: "Documentation sidebar",
   });
   await expect(navigationDrawer).toBeVisible();
 
-  await navigationDrawer.getByRole("link", { name: "Components" }).click();
+  await navigationDrawer
+    .getByRole("link", { name: "Components", exact: true })
+    .click();
+  await expect(navigationDrawer).toBeVisible();
+  await expect(page).toHaveURL(/#components$/u);
+  await page
+    .getByRole("button", { name: "Toggle navigation", exact: true })
+    .click();
   await expect(navigationDrawer).not.toBeVisible();
-  await expect(page).toHaveURL(/#components$/);
 });
 
 test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async ({

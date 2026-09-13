@@ -1,5 +1,6 @@
 import {
   Badge,
+  Box,
   Button,
   Card,
   Code,
@@ -98,17 +99,21 @@ export function TokensPage() {
           <Grid minColumnWidth="14rem" gap="md">
             {Object.entries(primitiveTokens.space).map(([step, value]) => (
               <Card key={step}>
-                <Inline justify="between">
-                  <Code>space.{step}</Code>
-                  <Text as="strong" weight="bold">
-                    {value}
-                  </Text>
-                </Inline>
-                <div
-                  style={{ width: value }}
-                  aria-hidden="true"
-                  className="space-sample"
-                />
+                <Stack gap="md">
+                  <Inline justify="between">
+                    <Code>space.{step}</Code>
+                    <Text as="strong" weight="bold">
+                      {value}
+                    </Text>
+                  </Inline>
+                  <Box
+                    surface="subtle"
+                    border="all"
+                    radius="sm"
+                    style={{ inlineSize: value, blockSize: "1rem" }}
+                    aria-hidden="true"
+                  />
+                </Stack>
               </Card>
             ))}
           </Grid>

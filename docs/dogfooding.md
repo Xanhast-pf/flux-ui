@@ -43,7 +43,7 @@ export function Summary() {
 ```
 
 Use a normal anchor `Link` for navigation. Its `solid`, `soft`, `outline`, and `ghost` variants share the
-button action recipe without changing browser navigation, download, ref, or
+static button action styles without changing browser navigation, download, ref, or
 modifier-key behavior. It does not invent a disabled-anchor interaction model.
 Native `className`, `style`, `ref`, and appropriate DOM attributes remain escape
 hatches. Escape hatches do not justify duplicating a public control's styles in
@@ -85,7 +85,7 @@ exclusive. Component-local CSS custom properties reset between nested layout
 instances so an outer responsive value is not accidentally inherited.
 
 `Box` is neutral by default; `Card` retains its ordinary surface treatment.
-Their shared recipe exposes finite padding, semantic surface, border, and radius
+Their shared surface contract exposes finite padding, semantic surface, border, and radius
 choices. A surface is not a button merely because it has a click handler.
 
 ## Themes and density
@@ -141,14 +141,18 @@ Run `pnpm dogfood:check` in addition to `pnpm docs:check`.
 The TypeScript AST check visits rendered source rather than counting strings in
 examples. It rejects ordinary raw controls, typography, and layout that should
 use Flux; private React-package subpaths; and source escapes without a declared
-reason. Native performance references and narrow teaching fixtures are explicit
-exceptions. An artwork exception cannot authorize a raw control nested inside it.
+reason. Default live examples have **no blanket teaching exemption**. Only exact
+performance-reference files and small non-UI DOM adapters are exempt. An artwork
+exception cannot authorize an interactive control or ordinary HTML text inside it.
 
 `tooling/dogfood/ownership.json` records file-local artwork classes and stylesheet
-owners with finite declaration budgets. Per-scene artwork CSS must be imported by
+owners with finite declaration budgets **and exact selector/property contracts**. Per-scene artwork CSS must be imported by
 the lazy preview module. Shared gallery CSS must not acquire another world's
 entire design system. The CSS ownership scanner rejects common native-control,
-selected-state, and global typography overrides. It is a deliberately bounded
+selected-state, and global typography overrides, including descendant links and
+table headers. The source checker rejects foreign UI imports, aliased native
+factories, inline skins (including constant-object spreads), CSS-in-TS files,
+unsafe HTML and imperative stylesheet injection. It is a deliberately bounded
 ownership check, not a CSS parser, specificity proof, or security certification.
 
 When adding a legitimate new illustration, record its exact file/class and
@@ -179,6 +183,100 @@ costs before accepting a baseline update; never run an update solely to silence
 a failure.
 
 The optional chart/sparkline/timeline extractions in the audit remain a separate
-follow-on. Existing cash-flow SVG, creative-tool geometry, and bundle/performance
-bars stay explicitly docs-owned. They are not a public charting library, audio
+follow-on. Existing cash-flow SVG and creative-tool geometry stay explicitly docs-owned.
+Bundle/performance rows use public Grid, Text, Card, Meter and ScrollArea. They are not a public charting library, audio
 engine, video player, or evidence of real financial/media operations.
+
+## Persistent Sidebar, not a modal Drawer
+
+`Sidebar.Root` owns controlled (`open`/`onOpenChange`) or uncontrolled
+(`defaultOpen`) state. Compose `Sidebar.Toggle`, `Sidebar.Layout`,
+`Sidebar.Panel`, `Sidebar.Content`, and an optional `Sidebar.Close`.
+The panel requires `aria-label` or `aria-labelledby`. Put a named `Box as="nav"`
+inside it for navigation links; this is not an ARIA menu.
+
+```tsx
+<Sidebar.Root>
+  <Sidebar.Toggle>Toggle navigation</Sidebar.Toggle>
+  <Sidebar.Layout>
+    <Sidebar.Panel aria-label="Workspace navigation">
+      <Stack gap="md">
+        <Sidebar.Close>Close navigation</Sidebar.Close>
+        <Box as="nav" aria-label="Workspace sections">
+          <Link href="#overview">Overview</Link>
+        </Box>
+      </Stack>
+    </Sidebar.Panel>
+    <Sidebar.Content>{routeContent}</Sidebar.Content>
+  </Sidebar.Layout>
+</Sidebar.Root>
+```
+
+Keep Root, Panel and Layout **outside** the keyed route/Suspense content.
+Open state, child state, and panel scrolling then survive route transitions.
+The closed panel stays mounted but is hidden and not keyboard-reachable.
+There is no backdrop, modal role, focus trap, body scroll lock, or automatic
+close on Escape/navigation. Closing while focus is inside returns focus to an
+external toggle; opening never takes focus away from the user.
+
+At `48rem` and above, the panel occupies a column and pushes content sideways.
+Below `48rem` it stacks in flow above the content, with a bounded native scroll
+area. It does **not** become an overlay or leave the content a few pixels wide.
+`--flux-sidebar-width` and `--flux-sidebar-offset` on Layout are optional public
+integration hooks. The component owns no router or storage. The docs keep the
+state for the current session; a full reload starts closed.
+
+`Drawer` remains a native modal dialog for temporary workflows. Its Escape,
+focus containment, backdrop and focus restoration contracts are unchanged.
+
+## Defaults, rhythm, and instance boundaries
+
+Use `Stack gap="md"` for a heading followed by a code block, list or paragraph.
+A neutral Box does not create sibling spacing, and headings do not carry global
+margins. Card padding and section rhythm are separate responsibilities.
+`Text italic` and `Text decoration` provide finite text treatments; `Container
+size="xs"` and `AspectRatio align="center"` replace hidden preview-only styles.
+
+Components that author a display mode guard the normal HTML `hidden` state,
+including against inline display overrides. The guard explicitly excludes
+`hidden="until-found"`, allowing the browser's find/fragment reveal behavior.
+Tabs use local part state rather than ancestor styling selectors; nested Tabs
+keep their own orientation, size, appearance and keyboard navigation. Fields
+reset their own label/description colors and do not claim a nested field's
+help or error IDs.
+
+The SkipLink preview is hosted in a hash-routed app. Its click adapter prevents
+hash navigation and focuses its native target; the public SkipLink component
+retains ordinary anchor behavior in a normal document. No axe rule is disabled
+for the hosted preview.
+
+## What "100% Flux" means here
+
+All **ordinary reusable UI** in the live pages and default examples must be
+expressible using public Flux components and props. A `Box` surrounding an
+app-owned control skin does not qualify. Custom SVG drawings, plotted values,
+brand assets, native options, and deliberately isolated native benchmarks are
+not alternate UI libraries; their ownership is explicit and narrowly bounded.
+
+This remains a reviewed architectural requirement, not a claim that an AST
+checker can prove arbitrary JavaScript correct. Unknown new styling/imports fail
+closed where the check can analyze them. Do not move a forbidden stylesheet into
+an inline object to satisfy a count. Reassess any exception when it starts owning
+ordinary control, layout, typography or surface behavior.
+
+## Built-package consumer acceptance
+
+`pnpm consumer:check` rebuilds the packages, typechecks a standalone consumer,
+and runs its Chromium suite. The fixture in `apps/docs/consumer` imports only
+public exports and the optional public `theme.css` / `reset.css` foundations.
+Its Vite build has **no source aliases or Vanilla Extract plugin**, and rejects
+runtime modules imported from a package's `src` tree or the docs implementation.
+Public token CSS export paths are intentionally allowed. No docs stylesheet is
+loaded. This tests emitted exports/declarations/CSS integration, not registry
+availability or an npm-published release.
+
+The full check, `verify:all`, and the required CI Browser job include that gate.
+The Trust Center receives its executed `consumer-tests.json` report; missing or
+failed consumer evidence blocks publication. Size and ownership budgets are
+not widened by it. Standalone `icons:size` and `icons:size:update` rebuild icons
+first, so old `dist` output cannot masquerade as a new measurement.

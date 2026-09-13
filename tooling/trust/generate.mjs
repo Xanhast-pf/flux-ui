@@ -18,6 +18,7 @@ for (const [job, name] of [
   ["quality", "size.json"],
   ["browser", "runtime.json"],
   ["browser", "browser-tests.json"],
+  ["browser", "consumer-tests.json"],
 ]) {
   const bytes = await readFile(resolve(".cache/trust", job, name));
   validateReport(name, JSON.parse(bytes.toString("utf8")), source);
