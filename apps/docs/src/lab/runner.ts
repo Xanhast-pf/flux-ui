@@ -1,8 +1,14 @@
-import type { PerfResult, PerfScenario, PerfVariant } from "../perf/PerfApp.js";
+import { getScenario } from "../perf/registry.js";
+import type { ScenarioDefinition } from "../perf/scenario.types.js";
+import type { PerfResult, PerfVariant } from "../perf/PerfApp.js";
+import type { PerfScenario } from "../perf/scenario.types.js";
 import {
   INSTANCE_COUNTS,
+  assertReferenceEquivalence,
   summarize,
   validateConfig,
+  summarizeWorkload,
+  type WorkloadSummary,
   type LabSummary,
   type SamplePair,
 } from "./statistics.js";
@@ -14,7 +20,9 @@ export interface LabConfig {
   sweep: boolean;
 }
 export interface LabReport {
-  schemaVersion: 1;
+  schemaVersion: 2;
+  definition: ScenarioDefinition;
+  workloads: WorkloadSummary[];
   measuredAt: string;
   buildCommit: string | null;
   environment: {
@@ -77,7 +85,9 @@ function measure(
         if (
           result.scenario !== config.scenario ||
           result.variant !== variant ||
-          result.count !== count
+          result.count !== count ||
+          result.fixtureRevision !==
+            getScenario(config.scenario).fixtureRevision
         )
           throw new Error("Unexpected benchmark result.");
         for (const key of [
@@ -117,20 +127,38 @@ export async function runLab(
   progress: (message: string) => void,
 ): Promise<LabReport> {
   validateConfig(config.count, config.iterations);
+  const definition = getScenario(config.scenario);
+  if (config.count > definition.maxCount)
+    throw new Error("Scenario workload limit exceeded.");
+  const workloads: WorkloadSummary[] = [];
   const counts = config.sweep
     ? INSTANCE_COUNTS.filter((count) => count <= config.count)
     : [config.count];
   const summaries: LabSummary[] = [];
   let renderViewport = { width: 0, height: 0 };
   for (const count of counts) {
-    progress(`Warm-up · ${count.toLocaleString()} instances`);
+    if (definition.kind === "workload") {
+      progress(`Warm-up · ${count.toLocaleString()} ${definition.unit}`);
+      const warmup = await measure(container, config, count, "flux", signal);
+      renderViewport = warmup.viewport;
+      const samples: PerfResult[] = [];
+      for (let i = 0; i < config.iterations; i += 1) {
+        progress(
+          `${count.toLocaleString()} ${definition.unit} · sample ${i + 1} of ${config.iterations}`,
+        );
+        samples.push(await measure(container, config, count, "flux", signal));
+      }
+      workloads.push(summarizeWorkload(config.scenario, count, samples));
+      continue;
+    }
+    progress(`Warm-up · ${count.toLocaleString()} ${definition.unit}`);
     const warmup = await measure(container, config, count, "native", signal);
     renderViewport = warmup.viewport;
     await measure(container, config, count, "flux", signal);
     const pairs: SamplePair[] = [];
     for (let iteration = 0; iteration < config.iterations; iteration += 1) {
       progress(
-        `${count.toLocaleString()} instances · pair ${iteration + 1} of ${config.iterations}`,
+        `${count.toLocaleString()} ${definition.unit} · pair ${iteration + 1} of ${config.iterations}`,
       );
       if (iteration % 2 === 0) {
         const native = await measure(
@@ -154,10 +182,14 @@ export async function runLab(
         pairs.push({ native, flux });
       }
     }
+    for (const pair of pairs)
+      assertReferenceEquivalence(pair.native, pair.flux);
     summaries.push(summarize(config.scenario, count, pairs));
   }
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
+    definition,
+    workloads,
     measuredAt: new Date().toISOString(),
     buildCommit: import.meta.env.VITE_BUILD_COMMIT || null,
     environment: {
@@ -166,7 +198,9 @@ export async function runLab(
       production: import.meta.env.PROD,
     },
     methodology:
-      "Equivalent native React reference; one discarded warm-up per variant/count; alternating paired order; medians of paired ratios and deltas. Synchronous React/DOM work, not paint. Same production harness as CI, but a different sample count and render viewport. Device-local diagnostics, not cross-library or certified results.",
+      definition.kind === "workload"
+        ? "Flux-only workload. No equivalent native reference and no slowdown/speedup claim. One discarded warm-up, independent samples, observed medians/ranges. Source generation and transformations described in the scenario are included. Next-frame timing is not paint. Device-local, not cross-library or certified results."
+        : "Layout-matched native React reference; one discarded warm-up per variant/count; alternating paired order; medians of paired ratios and deltas. Synchronous React/DOM work, not paint. Same production harness as CI, but a different sample count and render viewport. Device-local diagnostics, not cross-library or certified results.",
     config,
     summaries,
   };

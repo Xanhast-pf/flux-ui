@@ -13,6 +13,7 @@ export const badge = style({
   background: `var(${cssVars.color.surfaceSubtle})`,
   color: `var(${cssVars.color.text})`,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-tone='accent']": {
       background: `var(${cssVars.color.accentSoft})`,
     },

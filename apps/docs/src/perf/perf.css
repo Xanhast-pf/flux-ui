@@ -1,7 +1,6 @@
 html,
 body,
 #root {
-  min-width: 0;
   margin: 0;
   padding: 0;
 }
@@ -14,10 +13,11 @@ body,
   border-radius: var(--flux-radius-md);
   background: var(--flux-color-accent);
   color: var(--flux-color-accent-foreground);
-  font: inherit;
-  font-size: 0.9375rem;
-  font-weight: 650;
-  line-height: 1;
+  font: 650 1rem/1 var(--flux-font-body);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--flux-space-2);
 }
 
 .perf-native-button-content {

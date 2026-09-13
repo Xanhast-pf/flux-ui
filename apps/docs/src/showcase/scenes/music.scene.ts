@@ -16,13 +16,16 @@ export default {
     "grid",
     "heading",
     "inline",
-    "meter",
+    "fader",
+    "knob",
+    "level-meter",
+    "number-field",
     "slider",
     "stack",
     "text",
     "toggle",
   ],
   custom:
-    "The sequencer, clips, playhead, and meters are custom visual prototypes. This is not an audio engine: playback is silent, and no microphone or audio file is accessed.",
+    "Knob, Fader, NumberField and LevelMeter are public controls. The sequencer, clip waveforms and playhead remain original visual artwork. This is not an audio engine: playback is silent, and no microphone or audio file is accessed.",
   Icon: SlidersIcon,
 } satisfies SceneDefinition;

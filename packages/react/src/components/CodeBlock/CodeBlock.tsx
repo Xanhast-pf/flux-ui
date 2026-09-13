@@ -1,20 +1,22 @@
 import { useState } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
-import { Box } from "../Box/Box.js";
-import { Button } from "../Button/Button.js";
-import { Code } from "../Code/Code.js";
-import { Inline } from "../Inline/Inline.js";
 import { ScrollArea } from "../ScrollArea/ScrollArea.js";
-import { Text } from "../Text/Text.js";
-import { codeBlock, pre } from "./CodeBlock.css.js";
+import { Button } from "../Button/Button.js";
+import { codeBlock, header, pre, status, token } from "./CodeBlock.css.js";
+import { codeSegments } from "./codeSegments.js";
+import { useCodeTokens } from "./useCodeTokens.js";
 import type { CodeBlockProps } from "./CodeBlock.types.js";
 export function CodeBlock({
   code,
   label = "Example code",
   copyable = true,
+  language = "text",
+  tokens,
+  highlight,
   className,
   ...props
 }: CodeBlockProps) {
+  const resolvedTokens = useCodeTokens(code, language, tokens, highlight);
   const [result, setResult] = useState<{
     code: string;
     success: boolean;
@@ -34,44 +36,46 @@ export function CodeBlock({
     }
   }
   return (
-    <Box
-      {...props}
-      surface="subtle"
-      border="all"
-      radius="lg"
-      className={joinClassNames(codeBlock, className)}
-    >
-      <Box paddingInline="md" paddingBlock="sm" border="bottom">
-        <Inline justify="between" gap="sm" wrap>
-          <Text variant="caption" weight="medium">
-            {label}
-          </Text>
-          {copyable ? (
-            <Button
-              size="sm"
-              variant="ghost"
-              tone="neutral"
-              onClick={() => {
-                void copy();
-              }}
-            >
-              Copy code
-            </Button>
-          ) : null}
-        </Inline>
-      </Box>
-      <ScrollArea axis="horizontal" aria-label={label}>
+    <div {...props} className={joinClassNames(codeBlock, className)}>
+      <div className={header}>
+        <span>{label}</span>
+        {copyable ? (
+          <Button
+            size="sm"
+            variant="ghost"
+            tone="neutral"
+            onClick={() => {
+              void copy();
+            }}
+          >
+            Copy code
+          </Button>
+        ) : null}
+      </div>
+      <ScrollArea aria-label={label} axis="horizontal">
         <pre className={pre}>
-          <Code>{code}</Code>
+          <code data-language={language}>
+            {codeSegments(code, resolvedTokens).map((segment) =>
+              segment.kind ? (
+                <span
+                  className={token}
+                  data-token={segment.kind}
+                  key={segment.start}
+                >
+                  {segment.content}
+                </span>
+              ) : (
+                segment.content
+              ),
+            )}
+          </code>
         </pre>
       </ScrollArea>
       {copyable ? (
-        <Box paddingInline="md" paddingBlock="xs">
-          <Text as="p" role="status" variant="caption" tone="muted">
-            {feedback}
-          </Text>
-        </Box>
+        <p className={status} role="status">
+          {feedback}
+        </p>
       ) : null}
-    </Box>
+    </div>
   );
 }

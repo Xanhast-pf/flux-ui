@@ -20,7 +20,11 @@ export function Link({
   return (
     <a
       {...props}
-      className={joinClassNames(link, actionLike && action, className)}
+      className={joinClassNames(
+        !props.hidden && link,
+        !props.hidden && actionLike && action,
+        className,
+      )}
       data-size={actionLike ? size : undefined}
       data-tone={actionLike ? tone : undefined}
       data-variant={variant === "text" ? undefined : variant}

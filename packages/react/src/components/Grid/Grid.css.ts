@@ -113,9 +113,21 @@ export const item = style(
 );
 
 export const subgridColumns = style(
-  responsiveStyle({ display: "grid", gridTemplateColumns: "subgrid" }),
+  responsiveStyle({
+    selectors: {
+      "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+    },
+    display: "grid",
+    gridTemplateColumns: "subgrid",
+  }),
 );
 
 export const subgridRows = style(
-  responsiveStyle({ display: "grid", gridTemplateRows: "subgrid" }),
+  responsiveStyle({
+    selectors: {
+      "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+    },
+    display: "grid",
+    gridTemplateRows: "subgrid",
+  }),
 );

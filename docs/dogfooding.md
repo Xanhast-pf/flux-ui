@@ -118,7 +118,7 @@ selectors. Preserve visible focus, disabled behavior, and meaningful names.
 - `Meter` represents a known finite value with finite ordered bounds. Render an
   explicit unknown/pending state instead of passing `null` or converting an
   unknown measurement to zero. It is not a task-progress replacement.
-- `Code` renders literal source. `CodeBlock` composes it with native overflow and
+- `Code` renders literal inline source. `CodeBlock` uses escaped code text, public ScrollArea overflow, and
   an optional copy action; clipboard denial gets honest manual-copy feedback.
 - `ColorSwatch` is decorative. Its enclosing control/text owns the accessible
   name and selection state. `Avatar` owns native image/fallback behavior;

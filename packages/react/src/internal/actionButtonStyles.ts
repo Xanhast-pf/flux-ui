@@ -45,6 +45,7 @@ export function actionButtonStyles(): {
       )
       .join(", "),
     selectors: {
+      "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
       "&:where([data-tone='neutral'])": {
         vars: {
           [background]: `var(${cssVars.color.text})`,

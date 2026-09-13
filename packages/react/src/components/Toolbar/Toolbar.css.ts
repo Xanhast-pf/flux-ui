@@ -11,6 +11,7 @@ export const root = style({
   border: `0.0625rem solid var(${cssVars.color.border})`,
   background: `var(${cssVars.color.surfaceSubtle})`,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-orientation='vertical']": {
       flexDirection: "column",
       alignItems: "stretch",
@@ -30,6 +31,7 @@ const control = style({
   fontSize: "0.875rem",
   color: `var(${cssVars.color.text})`,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&:focus-visible": {
       outline: `0.125rem solid var(${cssVars.color.focus})`,
       outlineOffset: "0.125rem",

@@ -1,0 +1,9 @@
+{
+  "id": "text",
+  "label": "Text",
+  "unit": "text elements",
+  "kind": "workload",
+  "maxCount": 5000,
+  "fixtureRevision": 1,
+  "description": "Mount N text elements and update their content."
+}

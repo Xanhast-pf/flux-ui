@@ -1,14 +1,13 @@
 import { rm } from "node:fs/promises";
-import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { confinedPath, isBuildOutput } from "./lib/safe-paths.mjs";
 
 const target = process.argv[2];
-if (!target) {
-  throw new Error("Usage: node scripts/clean.mjs <relative-path>");
+if (process.argv.length !== 3 || !target || !isBuildOutput(target)) {
+  throw new Error(
+    "Usage: node scripts/clean.mjs <.cache|packages/name/dist|apps/name/dist>",
+  );
 }
-
-const root = process.cwd();
-const absolute = resolve(root, target);
-if (!absolute.startsWith(root)) {
-  throw new Error("Refusing to clean outside the repository.");
-}
-await rm(absolute, { recursive: true, force: true });
+// Package scripts run from their package directory, not necessarily the root.
+const root = fileURLToPath(new URL("../", import.meta.url));
+await rm(await confinedPath(root, target), { recursive: true, force: true });

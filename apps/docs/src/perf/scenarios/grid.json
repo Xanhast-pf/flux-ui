@@ -1,0 +1,9 @@
+{
+  "id": "grid",
+  "label": "Grid",
+  "unit": "child cells",
+  "kind": "comparison",
+  "maxCount": 20000,
+  "fixtureRevision": 2,
+  "description": "One Grid, N cells; native and Flux both use a 24px gap. Column count updates."
+}

@@ -6,7 +6,10 @@ import {
   Grid,
   Heading,
   Inline,
-  Meter,
+  Fader,
+  Knob,
+  LevelMeter,
+  NumberField,
   Slider,
   Stack,
   Text,
@@ -68,6 +71,7 @@ export default function MusicScene() {
   const id = useId();
   const [playing, setPlaying] = useState(false);
   const [tempo, setTempo] = useState(108);
+  const [cutoff, setCutoff] = useState(1000);
   const [volume, setVolume] = useState(72);
   const [muted, setMuted] = useState<readonly string[]>([]);
   const [solo, setSolo] = useState<string | null>(null);
@@ -307,7 +311,7 @@ export default function MusicScene() {
                   </Text>
                 </Field.Label>
                 <Field.Control>
-                  <Slider
+                  <Fader
                     min={0}
                     max={100}
                     value={volume}
@@ -316,7 +320,45 @@ export default function MusicScene() {
                 </Field.Control>
               </Field.Root>
             </Box>
-            <Meter value={volume} min={0} max={100} aria-hidden="true" />
+            <LevelMeter
+              value={volume}
+              min={0}
+              max={100}
+              peak={90}
+              aria-label="Illustrative master level"
+              orientation="horizontal"
+            />
+            <Field.Root density="compact">
+              <Field.Label>Exact tempo (BPM)</Field.Label>
+              <Field.Control>
+                <NumberField
+                  min={60}
+                  max={180}
+                  step={1}
+                  value={tempo}
+                  onValueChange={(value) => {
+                    if (value !== null)
+                      setTempo(Math.max(60, Math.min(180, value)));
+                  }}
+                />
+              </Field.Control>
+            </Field.Root>
+            <Inline gap="md" align="center" wrap>
+              <Knob
+                aria-label="Visual filter cutoff"
+                min={20}
+                max={20000}
+                step={10}
+                scale="log"
+                value={cutoff}
+                onValueChange={setCutoff}
+                formatValue={(value) => `${value.toLocaleString()} Hz`}
+              />
+              <Text variant="caption" tone="muted">
+                Filter control · silent prototype. Drag vertically or use arrow
+                keys; Shift makes fine changes.
+              </Text>
+            </Inline>
             <Text as="p" variant="caption" tone="muted">
               Visual level only · no audio processing
             </Text>

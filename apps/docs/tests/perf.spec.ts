@@ -1,11 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { expect, test } from "@playwright/test";
-import type {
-  PerfResult,
-  PerfScenario,
-  PerfVariant,
-} from "../src/perf/PerfApp.js";
+import type { PerfResult, PerfVariant } from "../src/perf/PerfApp.js";
+import type { PerfScenario } from "../src/perf/scenario.types.js";
 
 type PerfReference = Extract<PerfVariant, "raw" | "native">;
 
@@ -18,6 +15,7 @@ interface MetricSet {
 }
 
 interface ScenarioSummary {
+  fixtureRevision: number;
   count: number;
   reference: PerfReference;
   medians: Record<PerfVariant, MetricSet>;
@@ -34,7 +32,7 @@ interface ScenarioSummary {
 interface PerfBaseline {
   schemaVersion: 1;
   policyVersion: 3;
-  scenarios: Record<PerfScenario, ScenarioSummary>;
+  scenarios: Partial<Record<PerfScenario, ScenarioSummary>>;
 }
 
 interface ScenarioConfig {
@@ -252,6 +250,10 @@ function parseScenarioSummary(
   }
 
   return {
+    fixtureRevision:
+      typeof value["fixtureRevision"] === "number"
+        ? value["fixtureRevision"]
+        : 0,
     count: countValue,
     reference,
     medians: {
@@ -362,8 +364,8 @@ function assertRegression(
       `${scenario} ${metric} overhead regressed:`,
       `${formatRatio(currentRatio)} vs baseline ${formatRatio(baselineRatio)}`,
       `(allowed ${formatRatio(allowedRatio)}).`,
-      `Absolute overhead: ${formatMs(currentOverheadMs)} across ${instanceCount} instances.`,
-      `Overhead regression: ${formatMs(overheadRegressionMs)} across ${instanceCount} instances`,
+      `Absolute overhead: ${formatMs(currentOverheadMs)} across ${instanceCount} work units.`,
+      `Overhead regression: ${formatMs(overheadRegressionMs)} across ${instanceCount} work units`,
       `(minimum meaningful ${formatMs(minimumMeaningfulRegressionMs)}).`,
     ].join(" "),
   ).toBeLessThanOrEqual(allowedRatio);
@@ -441,6 +443,19 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
       }
     }
 
+    for (let i = 0; i < iterations; i += 1) {
+      const native = samples.native[i];
+      const flux = samples.flux[i];
+      expect(
+        native?.layout,
+        "Native layout fingerprint is missing",
+      ).toBeDefined();
+      expect(flux?.layout, "Flux layout fingerprint is missing").toEqual(
+        native?.layout,
+      );
+      expect(flux?.unit).toBe(native?.unit);
+      expect(flux?.fixtureRevision).toBe(native?.fixtureRevision);
+    }
     rawSamples.push({ scenario: scenario.name, samples });
 
     const medians: Record<PerfVariant, MetricSet> = {
@@ -455,6 +470,7 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
     );
 
     summaries[scenario.name] = {
+      fixtureRevision: samples.flux[0]?.fixtureRevision ?? 0,
       count,
       reference: scenario.reference,
       medians,
@@ -545,30 +561,38 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
   }
 
   for (const scenario of scenarios) {
-    const current = summaries[scenario.name].ratios;
-    const previous = baseline.scenarios[scenario.name].ratios;
+    const summary = summaries[scenario.name];
+    const previousSummary = baseline.scenarios[scenario.name];
+    if (previousSummary === undefined)
+      throw new Error(`Missing scenario baseline: ${scenario.name}`);
+    expect(
+      previousSummary.fixtureRevision,
+      "Performance fixture changed. Review the equivalent reference, run pnpm perf:update and commit the measured baseline; old timings are not comparable.",
+    ).toBe(summary.fixtureRevision);
+    const current = summary.ratios;
+    const previous = previousSummary.ratios;
 
     assertRegression(
       scenario.name,
       "mount",
       current.mount,
       previous.mount,
-      summaries[scenario.name].medians.flux.mount,
-      summaries[scenario.name].medians[scenario.reference].mount,
-      baseline.scenarios[scenario.name].medians.flux.mount,
-      baseline.scenarios[scenario.name].medians[scenario.reference].mount,
-      summaries[scenario.name].count,
+      summary.medians.flux.mount,
+      summary.medians[scenario.reference].mount,
+      previousSummary.medians.flux.mount,
+      previousSummary.medians[scenario.reference].mount,
+      summary.count,
     );
     assertRegression(
       scenario.name,
       "update",
       current.update,
       previous.update,
-      summaries[scenario.name].medians.flux.update,
-      summaries[scenario.name].medians[scenario.reference].update,
-      baseline.scenarios[scenario.name].medians.flux.update,
-      baseline.scenarios[scenario.name].medians[scenario.reference].update,
-      summaries[scenario.name].count,
+      summary.medians.flux.update,
+      summary.medians[scenario.reference].update,
+      previousSummary.medians.flux.update,
+      previousSummary.medians[scenario.reference].update,
+      summary.count,
     );
 
     assertRegression(
@@ -576,11 +600,11 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
       "unmount",
       current.unmount,
       previous.unmount,
-      summaries[scenario.name].medians.flux.unmount,
-      summaries[scenario.name].medians[scenario.reference].unmount,
-      baseline.scenarios[scenario.name].medians.flux.unmount,
-      baseline.scenarios[scenario.name].medians[scenario.reference].unmount,
-      summaries[scenario.name].count,
+      summary.medians.flux.unmount,
+      summary.medians[scenario.reference].unmount,
+      previousSummary.medians.flux.unmount,
+      previousSummary.medians[scenario.reference].unmount,
+      summary.count,
     );
   }
 });

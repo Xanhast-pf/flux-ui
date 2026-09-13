@@ -1,0 +1,8 @@
+{
+  "name": "Knob",
+  "slug": "knob",
+  "category": "Audio",
+  "status": "alpha",
+  "description": "A labelled single-value slider with linear or positive logarithmic mapping.",
+  "sizeClass": "interactive"
+}

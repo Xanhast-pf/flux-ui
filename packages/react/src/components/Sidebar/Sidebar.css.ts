@@ -1,6 +1,9 @@
 import { style } from "@vanilla-extract/css";
 
 export const layout = style({
+  selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+  },
   display: "grid",
   gridTemplateColumns: "auto minmax(0, 1fr)",
   alignItems: "start",

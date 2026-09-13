@@ -143,3 +143,118 @@ test("Sidebar stacks in a narrow container even on a wide screen", async ({
     panelBounds.y + panelBounds.height - 1,
   );
 });
+
+test("display-authoring public roots preserve hidden, including interactive controls", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const roots = page.locator("[data-hidden-contract]");
+  expect(await roots.count()).toBeGreaterThanOrEqual(12);
+  for (const target of await roots.all()) {
+    await expect(target).toHaveCSS("display", "none");
+    await target.evaluate((element) => {
+      if (element instanceof HTMLElement) element.focus();
+      element.querySelector<HTMLElement>("button, input, [tabindex]")?.focus();
+    });
+    expect(
+      await target.evaluate(
+        (element) =>
+          element === document.activeElement ||
+          element.contains(document.activeElement),
+      ),
+    ).toBe(false);
+    await target.evaluate((element) => element.removeAttribute("hidden"));
+    await expect(target).not.toHaveCSS("display", "none");
+    await target.evaluate((element) => element.setAttribute("hidden", ""));
+  }
+});
+for (const kind of ["dialog", "drawer"]) {
+  test(`built ${kind} is named through public wrappers and restores focus`, async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const trigger = page.getByRole("button", { name: `Open wrapped ${kind}` });
+    await trigger.click();
+    const popup = page.getByRole("dialog", { name: `Wrapped public ${kind}` });
+    await expect(popup).toBeVisible();
+    await expect(popup).toHaveAccessibleDescription(
+      "Its description survives Flux wrappers.",
+    );
+    await popup.getByRole("button", { name: `Close wrapped ${kind}` }).click();
+    await expect(popup).not.toBeVisible();
+    await expect(trigger).toBeFocused();
+  });
+}
+test("built advanced exports preserve numeric control, chart and resize semantics", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const knob = page.getByRole("slider", { name: "Consumer gain" });
+  await knob.focus();
+  await page.keyboard.press("ArrowUp");
+  await expect(knob).toHaveAttribute("aria-valuenow", "51");
+  await expect(
+    page.getByRole("spinbutton", { name: "Consumer exact gain" }),
+  ).toHaveValue("51");
+  const fader = page.getByRole("slider", { name: "Consumer fader" });
+  await fader.focus();
+  await page.keyboard.press("ArrowUp");
+  await expect(knob).toHaveAttribute("aria-valuenow", "52");
+  const bounds = await fader.boundingBox();
+  if (!bounds) throw new Error("Fader has no visible geometry.");
+  expect(bounds.height).toBeGreaterThan(bounds.width);
+  const cursor = page.getByRole("slider", {
+    name: "Consumer chart data cursor",
+  });
+  await cursor.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(cursor).toHaveAttribute("aria-valuetext", /No value/);
+  await page.keyboard.press("End");
+  await expect(cursor).toHaveAttribute("aria-valuetext", /30/);
+  const separator = page.getByRole("separator", {
+    name: "Consumer pane sizes",
+  });
+  await separator.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(separator).toHaveAttribute("aria-valuenow", "55");
+  const source = page.getByRole("region", { name: "Safe highlighted source" });
+  await expect(source.locator("code")).toHaveText(
+    'const literal = "<img src=x onerror=alert(1)>";',
+  );
+  await expect(source.locator("img, script")).toHaveCount(0);
+  expect(await source.locator("[data-token]").count()).toBeGreaterThan(0);
+});
+test("built DataTable windows actual rows, preserves selection and pins focused input", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const table = page.getByRole("table", { name: /Consumer dataset/ });
+  await expect(table).toHaveAttribute("aria-rowcount", "10001");
+  expect(await table.locator("[data-row-id]").count()).toBeLessThan(30);
+  const selection = table.getByRole("checkbox", {
+    name: "Select row item-0",
+    exact: true,
+  });
+  await selection.check();
+  const scrollport = page.getByRole("region", {
+    name: "Consumer dataset scrollable rows",
+  });
+  await scrollport.evaluate((element) => {
+    element.scrollTop = 40_000;
+  });
+  await expect(table.locator('[data-row-id="item-1000"]')).toHaveCount(1);
+  await expect(selection).toBeFocused();
+  expect(await table.locator("[data-row-id]").count()).toBeLessThan(31);
+  await scrollport.evaluate((element) => {
+    element.scrollTop = 0;
+  });
+  await table.getByRole("button", { name: /Value/ }).click();
+  await expect(selection).toBeChecked();
+});
+test("built Tabs uses RTL horizontal keyboard direction", async ({ page }) => {
+  await page.goto("/");
+  const list = page.getByRole("tablist", { name: "RTL tabs" });
+  await list.getByRole("tab", { name: "RTL one" }).focus();
+  await page.keyboard.press("ArrowLeft");
+  await expect(list.getByRole("tab", { name: "RTL two" })).toBeFocused();
+});

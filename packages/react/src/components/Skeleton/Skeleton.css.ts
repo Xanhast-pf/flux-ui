@@ -7,6 +7,7 @@ export const skeleton = style({
   borderRadius: `var(${cssVars.radius.md})`,
   background: `var(${cssVars.color.border})`,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-shape='block']": { blockSize: "6rem" },
     "&[data-shape='circle']": {
       inlineSize: "3rem",

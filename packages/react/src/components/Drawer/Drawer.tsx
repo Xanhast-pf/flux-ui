@@ -1,6 +1,5 @@
 import {
   NativeModal,
-  containsNativeModalPart,
   type NativeModalStyles,
 } from "../../internal/NativeModal.js";
 import { close, description, popup, title, trigger } from "./Drawer.css.js";
@@ -19,25 +18,7 @@ function DrawerPopup({ side = "right", ...props }: DrawerPopupProps) {
 }
 
 function DrawerRoot(props: DrawerRootProps) {
-  const hasDescription = containsNativeModalPart(
-    props.children,
-    NativeModal.Description,
-    DrawerPopup,
-  );
-  const hasTitle = containsNativeModalPart(
-    props.children,
-    NativeModal.Title,
-    DrawerPopup,
-  );
-
-  return (
-    <NativeModal.Root
-      {...props}
-      hasDescription={hasDescription}
-      hasTitle={hasTitle}
-      styles={drawerStyles}
-    />
-  );
+  return <NativeModal.Root {...props} styles={drawerStyles} />;
 }
 
 export const Drawer = {

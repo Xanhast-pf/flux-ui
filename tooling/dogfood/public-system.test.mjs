@@ -7,6 +7,14 @@ const source = (file) => readFile(new URL(file, root), "utf8");
 test("display-owning primitives preserve hidden and until-found locally", async () => {
   for (const file of [
     "packages/react/src/internal/flexLayout.css.ts",
+    "packages/react/src/internal/actionButtonStyles.ts",
+    "packages/react/src/components/AspectRatio/AspectRatio.css.ts",
+    "packages/react/src/components/Badge/Badge.css.ts",
+    "packages/react/src/components/Breadcrumbs/Breadcrumbs.css.ts",
+    "packages/react/src/components/Kbd/Kbd.css.ts",
+    "packages/react/src/components/Skeleton/Skeleton.css.ts",
+    "packages/react/src/components/Toggle/Toggle.css.ts",
+    "packages/react/src/components/Toolbar/Toolbar.css.ts",
     "packages/react/src/components/Grid/Grid.css.ts",
     "packages/react/src/components/Field/Field.css.ts",
     "packages/react/src/components/Avatar/Avatar.css.ts",
@@ -20,6 +28,14 @@ test("display-owning primitives preserve hidden and until-found locally", async 
     );
     assert.match(css, /display:\s*["']none !important["']/u);
   }
+
+  const button = await source(
+    "packages/react/src/components/Button/Button.tsx",
+  );
+  const link = await source("packages/react/src/components/Link/Link.tsx");
+  assert.match(button, /!buttonProps\.hidden && action/u);
+  assert.match(link, /!props\.hidden && link/u);
+  assert.match(link, /!props\.hidden && actionLike && action/u);
   const index = await source("packages/react/src/index.ts");
   assert.doesNotMatch(index, /global\.css/u);
 });

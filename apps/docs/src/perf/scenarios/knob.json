@@ -1,0 +1,9 @@
+{
+  "id": "knob",
+  "label": "Knob",
+  "unit": "knobs",
+  "kind": "workload",
+  "maxCount": 1000,
+  "fixtureRevision": 1,
+  "description": "Render N numeric sliders and update controlled values; not a drag-latency benchmark."
+}

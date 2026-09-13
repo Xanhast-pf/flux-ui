@@ -1,0 +1,9 @@
+{
+  "id": "level-meter",
+  "label": "LevelMeter",
+  "unit": "meters",
+  "kind": "workload",
+  "maxCount": 2000,
+  "fixtureRevision": 1,
+  "description": "Render and update N passive meters; no animation loop or audio processing."
+}

@@ -2,8 +2,12 @@
   "schemaVersion": 2,
   "sourceExceptions": [
     {
-      "file": "apps/docs/src/perf/PerfApp.tsx",
-      "reason": "The isolated native/raw performance references are deliberately not Flux components. They are never regular route UI."
+      "file": "apps/docs/src/perf/scenarios/button.fixture.tsx",
+      "reason": "Isolated matched native/raw benchmark reference. Never regular docs UI."
+    },
+    {
+      "file": "apps/docs/src/perf/scenarios/grid.fixture.tsx",
+      "reason": "Isolated matched native/raw benchmark reference. Never regular docs UI."
     }
   ],
   "artwork": [
@@ -54,7 +58,7 @@
       "reason": "Native performance reference styling, isolated from normal documentation routes.",
       "maxDeclarations": 17,
       "rules": {
-        "html, body, #root": ["min-width", "margin", "padding"],
+        "html, body, #root": ["margin", "padding"],
         ".perf-native-button": [
           "appearance",
           "min-height",
@@ -64,9 +68,10 @@
           "background",
           "color",
           "font",
-          "font-size",
-          "font-weight",
-          "line-height"
+          "display",
+          "align-items",
+          "justify-content",
+          "gap"
         ],
         ".perf-native-button-content": ["display", "align-items", "gap"]
       }
@@ -113,22 +118,6 @@
       "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
       "maxDeclarations": 54,
       "rules": {
-        ".cashflow-chart svg": [
-          "inline-size",
-          "display",
-          "max-block-size",
-          "overflow"
-        ],
-        ".chart-grid": ["fill", "stroke", "stroke-width", "stroke-dasharray"],
-        ".chart-area": ["fill", "opacity"],
-        ".chart-line": [
-          "vector-effect",
-          "fill",
-          "stroke",
-          "stroke-width",
-          "stroke-linecap",
-          "stroke-linejoin"
-        ],
         ".folio-card": [
           "position",
           "overflow",

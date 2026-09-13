@@ -1,0 +1,9 @@
+{
+  "id": "code-block",
+  "label": "CodeBlock",
+  "unit": "source lines",
+  "kind": "workload",
+  "maxCount": 5000,
+  "fixtureRevision": 1,
+  "description": "Generate, lexically color and render N lines, then update source."
+}

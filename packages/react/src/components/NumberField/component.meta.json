@@ -1,0 +1,8 @@
+{
+  "name": "NumberField",
+  "slug": "number-field",
+  "category": "Forms",
+  "status": "alpha",
+  "description": "A native number input: form participation, min/max validity and steppers stay with the platform.",
+  "sizeClass": "primitive"
+}

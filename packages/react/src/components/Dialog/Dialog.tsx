@@ -1,6 +1,5 @@
 import {
   NativeModal,
-  containsNativeModalPart,
   type NativeModalStyles,
 } from "../../internal/NativeModal.js";
 import { close, description, popup, title, trigger } from "./Dialog.css.js";
@@ -19,25 +18,7 @@ function DialogPopup(props: DialogPopupProps) {
 }
 
 function DialogRoot(props: DialogRootProps) {
-  const hasDescription = containsNativeModalPart(
-    props.children,
-    NativeModal.Description,
-    DialogPopup,
-  );
-  const hasTitle = containsNativeModalPart(
-    props.children,
-    NativeModal.Title,
-    DialogPopup,
-  );
-
-  return (
-    <NativeModal.Root
-      {...props}
-      hasDescription={hasDescription}
-      hasTitle={hasTitle}
-      styles={dialogStyles}
-    />
-  );
+  return <NativeModal.Root {...props} styles={dialogStyles} />;
 }
 
 export const Dialog = {

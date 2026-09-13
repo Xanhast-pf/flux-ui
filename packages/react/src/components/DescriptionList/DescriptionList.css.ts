@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 export const descriptionList = style({
-  selectors: {},
+  selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+  },
   margin: 0,
   display: "grid",
   gridTemplateColumns: "minmax(0, 1fr)",

@@ -24,7 +24,7 @@ test("the lab is opt-in and produces finite local paired results", async ({
     page.getByRole("heading", { name: "Live Stress Lab" }),
   ).toBeVisible();
   await expect(page.locator(".lab-surface iframe")).toHaveCount(0);
-  await page.getByLabel("Instances", { exact: true }).selectOption("100");
+  await page.getByLabel("Work units", { exact: true }).selectOption("100");
   await page.getByLabel("Paired samples", { exact: true }).selectOption("3");
   await page
     .getByRole("button", { name: "Start benchmark", exact: true })

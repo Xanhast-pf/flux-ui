@@ -1,0 +1,9 @@
+{
+  "id": "button",
+  "label": "Button",
+  "unit": "buttons",
+  "kind": "comparison",
+  "maxCount": 20000,
+  "fixtureRevision": 2,
+  "description": "Matched native markup and computed layout; label update."
+}

@@ -3,6 +3,7 @@ import {
   Avatar,
   Button,
   Card,
+  Chart,
   Grid,
   Heading,
   Inline,
@@ -13,7 +14,7 @@ import {
   Toggle,
   ToggleGroup,
 } from "@flux-ui/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Metric, SceneHeader, SceneStatus } from "../SceneParts.js";
 import { formatMoney } from "../model.js";
 import "./finance.css";
@@ -22,17 +23,15 @@ const periods = {
     label: "This week",
     total: "$12,480",
     change: "+8.2%",
-    points:
-      "0,135 40,127 80,144 120,95 160,108 200,66 240,81 280,38 320,51 360,28 400,44 440,12",
-    ticks: ["Mon", "Wed", "Fri", "Sun"],
+    weights: [40, 48, 31, 80, 67, 109, 94, 137, 124, 147, 131, 163],
+    income: 12480,
   },
   month: {
     label: "This month",
     total: "$48,290",
     change: "+12.8%",
-    points:
-      "0,143 40,132 80,147 120,105 160,112 200,76 240,88 280,48 320,62 360,23 400,39 440,8",
-    ticks: ["Sep 01", "Sep 10", "Sep 20", "Sep 30"],
+    weights: [32, 43, 28, 70, 63, 99, 87, 127, 113, 152, 136, 167],
+    income: 48290,
   },
 } as const;
 const activity = [
@@ -63,6 +62,19 @@ export default function FinanceScene() {
   const [frozen, setFrozen] = useState(false);
   const [paid, setPaid] = useState(false);
   const data = periods[period];
+  const series = useMemo(() => {
+    const total = data.weights.reduce((sum, value) => sum + value, 0);
+    return [
+      {
+        id: "income",
+        label: "Illustrative income distribution",
+        data: data.weights.map((weight, x) => ({
+          x,
+          y: (weight / total) * data.income,
+        })),
+      },
+    ];
+  }, [data]);
   return (
     <Stack data-scene="finance" gap={5} padding={5}>
       <SceneHeader brand="folio" context="Your business, in balance">
@@ -124,36 +136,14 @@ export default function FinanceScene() {
             <Text as="p" variant="caption" tone="muted">
               Income · {data.label.toLowerCase()} · fictional USD
             </Text>
-            <Stack
-              className="cashflow-chart"
-              as="figure"
-              gap="sm"
-              paddingBlock={5}
-            >
-              <svg
-                viewBox="0 0 440 175"
-                preserveAspectRatio="none"
-                role="img"
-                aria-label={`${data.label} sample cash flow: ${data.total}, ${data.change} versus the previous period.`}
-              >
-                <path
-                  d="M0 20H440 M0 70H440 M0 120H440 M0 170H440"
-                  className="chart-grid"
-                />
-                <polygon
-                  points={`0,175 ${data.points} 440,175`}
-                  className="chart-area"
-                />
-                <polyline points={data.points} className="chart-line" />
-              </svg>
-              <Inline as="figcaption" justify="between" gap="sm">
-                {data.ticks.map((tick) => (
-                  <Text key={tick} variant="caption">
-                    {tick}
-                  </Text>
-                ))}
-              </Inline>
-            </Stack>
+            <Chart
+              label={`${data.label} sample cash flow`}
+              description="Twelve illustrative samples, not a live ledger or forecast."
+              series={series}
+              type="area"
+              formatX={(value) => `Sample ${value + 1}`}
+              formatY={(value) => formatMoney(Math.round(value * 100))}
+            />
             <Grid
               columns={{ base: 1, sm: 3 }}
               responsiveTo="container"

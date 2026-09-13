@@ -101,11 +101,13 @@ if (baseline.budgetsVersion !== BUDGETS_VERSION && !updateBaseline) {
 
 const selected = selectedComponents(components);
 const measured = {};
+const externalPeers = new Set();
 let failed = false;
 
 for (const component of components) {
   const entryPath = resolve(distDir, `${component.slug}.js`);
   const metrics = await measureEntry(entryPath, distDir);
+  for (const peer of metrics.externalImports) externalPeers.add(peer);
   measured[component.slug] = {
     name: component.name,
     sizeClass: component.sizeClass,
@@ -123,7 +125,7 @@ for (const component of components) {
     failed = true;
     console.error(
       `✖ ${component.name} exceeds ${component.sizeClass} ${failure.metric} budget: ` +
-        `${formatBytes(failure.actual)} > ${formatBytes(failure.limit)}`,
+        `${formatBytes(failure.actual)} (${failure.actual} B) > ${formatBytes(failure.limit)} (${failure.limit} B)`,
     );
   }
 
@@ -139,7 +141,7 @@ for (const component of components) {
       } else {
         console.error(
           `✖ ${component.name} ${regression.metric} regression: ` +
-            `${formatBytes(regression.actual)} > ${formatBytes(regression.limit)} ` +
+            `${formatBytes(regression.actual)} (${regression.actual} B) > ${formatBytes(regression.limit)} (${regression.limit} B) ` +
             `(baseline ${formatBytes(regression.previous)})`,
         );
       }
@@ -170,7 +172,7 @@ for (const failure of aggregates) {
   failed = true;
   console.error(
     `✖ ${failure.name} exceeds ${failure.metric} budget: ` +
-      `${formatBytes(failure.actual)} > ${formatBytes(failure.limit)}`,
+      `${formatBytes(failure.actual)} (${failure.actual} B) > ${formatBytes(failure.limit)} (${failure.limit} B)`,
   );
 }
 
@@ -190,7 +192,7 @@ if (!updateBaseline) {
         failed = true;
         console.error(
           `✖ aggregate ${name} ${regression.metric} regression: ` +
-            `${formatBytes(regression.actual)} > ${formatBytes(regression.limit)} ` +
+            `${formatBytes(regression.actual)} (${regression.actual} B) > ${formatBytes(regression.limit)} (${regression.limit} B) ` +
             `(baseline ${formatBytes(regression.previous)})`,
         );
       }
@@ -216,6 +218,7 @@ const report = {
   componentCount: components.length,
   checkedComponentCount: changedOnly ? selected.length : components.length,
   components: measured,
+  externalPeersNotIncluded: [...externalPeers].sort(),
   aggregate: {
     rootEntry,
     runtime,
@@ -252,6 +255,9 @@ if (updateBaseline) {
 if (jsonMode) {
   console.log(JSON.stringify(report, null, 2));
 } else {
+  console.log(
+    `\nExternal peers (excluded, not free): ${[...externalPeers].sort().join(", ") || "none"}`,
+  );
   console.log("\nAggregate");
   console.log(`  components       ${components.length}`);
   console.log(`  runtime brotli   ${formatBytes(runtime.brotli)}`);

@@ -8,6 +8,7 @@ export const code = style({
   borderRadius: "var(--flux-radius-sm)",
   paddingInline: "var(--flux-space-1)",
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "pre > &": { display: "block", background: "transparent", padding: 0 },
   },
 });

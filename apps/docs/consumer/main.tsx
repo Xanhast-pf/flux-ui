@@ -4,6 +4,25 @@ import "@flux-ui/tokens/reset.css";
 import { FluxMarkIcon } from "@flux-ui/icons";
 import {
   Avatar,
+  AspectRatio,
+  Badge,
+  CodeBlock,
+  Chart,
+  DataTable,
+  Dialog,
+  Drawer,
+  Fader,
+  IconButton,
+  Kbd,
+  Knob,
+  LevelMeter,
+  Link,
+  NumberField,
+  Skeleton,
+  Sparkline,
+  SplitPane,
+  Toggle,
+  tokenizeCode,
   Box,
   Button,
   Card,
@@ -18,8 +37,132 @@ import {
   Tabs,
   Text,
 } from "@flux-ui/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
+
+interface ConsumerRow {
+  id: string;
+  value: number;
+}
+const columns = [
+  { id: "value", header: "Value", value: (row: ConsumerRow) => row.value },
+];
+const rowId = (row: ConsumerRow) => row.id;
+function ConsumerExtensions() {
+  const rows = useMemo(
+    () =>
+      Array.from({ length: 10_000 }, (_, index) => ({
+        id: `item-${index}`,
+        value: index,
+      })),
+    [],
+  );
+  const [gain, setGain] = useState(50);
+  const [split, setSplit] = useState(50);
+  const code = 'const literal = "<img src=x onerror=alert(1)>";';
+  return (
+    <Stack as="section" gap="lg" aria-label="Advanced public components">
+      <Heading level={2}>Advanced public components</Heading>
+      <CodeBlock
+        code={code}
+        tokens={tokenizeCode(code, "typescript")}
+        language="typescript"
+        label="Safe highlighted source"
+      />
+      <Chart
+        label="Consumer chart"
+        series={[
+          {
+            id: "one",
+            label: "Sample series",
+            data: [
+              { x: 0, y: 10 },
+              { x: 1, y: null },
+              { x: 2, y: 30 },
+            ],
+          },
+        ]}
+      />
+      <Sparkline label="Consumer trend" values={[0, 1, null, 3, 2]} />
+      <Inline gap="lg" align="center">
+        <Knob aria-label="Consumer gain" value={gain} onValueChange={setGain} />
+        <Fader
+          aria-label="Consumer fader"
+          value={gain}
+          onChange={(event) => setGain(event.currentTarget.valueAsNumber)}
+        />
+        <NumberField
+          aria-label="Consumer exact gain"
+          min={0}
+          max={100}
+          value={gain}
+          onValueChange={(value) => {
+            if (value !== null) setGain(Math.max(0, Math.min(100, value)));
+          }}
+        />
+        <LevelMeter
+          aria-label="Consumer level"
+          min={0}
+          max={100}
+          value={gain}
+          peak={80}
+        />
+      </Inline>
+      <SplitPane
+        label="Consumer pane sizes"
+        value={split}
+        onValueChange={setSplit}
+        first={<Text>First pane</Text>}
+        second={<Text>Second pane</Text>}
+      />
+      <DataTable
+        label="Consumer dataset"
+        rows={rows}
+        columns={columns}
+        getRowId={rowId}
+        selectable
+      />
+      <Dialog.Root>
+        <Dialog.Trigger>Open wrapped dialog</Dialog.Trigger>
+        <Dialog.Popup>
+          <Stack gap="md">
+            <Dialog.Title>Wrapped public dialog</Dialog.Title>
+            <Box>
+              <Dialog.Description>
+                Its description survives Flux wrappers.
+              </Dialog.Description>
+            </Box>
+            <Dialog.Close>Close wrapped dialog</Dialog.Close>
+          </Stack>
+        </Dialog.Popup>
+      </Dialog.Root>
+      <Drawer.Root>
+        <Drawer.Trigger>Open wrapped drawer</Drawer.Trigger>
+        <Drawer.Popup>
+          <Stack gap="md">
+            <Drawer.Title>Wrapped public drawer</Drawer.Title>
+            <Box>
+              <Drawer.Description>
+                Its description survives Flux wrappers.
+              </Drawer.Description>
+            </Box>
+            <Drawer.Close>Close wrapped drawer</Drawer.Close>
+          </Stack>
+        </Drawer.Popup>
+      </Drawer.Root>
+      <Box dir="rtl">
+        <Tabs.Root defaultValue="rtl-one">
+          <Tabs.List aria-label="RTL tabs" activateOnFocus>
+            <Tabs.Tab value="rtl-one">RTL one</Tabs.Tab>
+            <Tabs.Tab value="rtl-two">RTL two</Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="rtl-one">RTL first</Tabs.Panel>
+          <Tabs.Panel value="rtl-two">RTL second</Tabs.Panel>
+        </Tabs.Root>
+      </Box>
+    </Stack>
+  );
+}
 
 function Consumer() {
   const [page, setPage] = useState("Overview");
@@ -123,9 +266,64 @@ function Consumer() {
               <Box hidden data-testid="hidden-box">
                 <Button>Hidden box action</Button>
               </Box>
+              <Button hidden data-hidden-contract="button">
+                Hidden direct button
+              </Button>
+              <IconButton
+                hidden
+                data-hidden-contract="icon-button"
+                aria-label="Hidden icon action"
+              >
+                <FluxMarkIcon />
+              </IconButton>
+              <Link
+                hidden
+                href="#unused"
+                variant="navigation"
+                data-hidden-contract="link"
+              >
+                Hidden navigation
+              </Link>
+              <Toggle hidden data-hidden-contract="toggle">
+                Hidden toggle
+              </Toggle>
+              <Badge hidden data-hidden-contract="badge">
+                <Button>Hidden badge child</Button>
+              </Badge>
+              <Kbd hidden data-hidden-contract="kbd">
+                <Button>Hidden keyboard child</Button>
+              </Kbd>
+              <AspectRatio hidden align="center" data-hidden-contract="aspect">
+                <Button>Hidden frame child</Button>
+              </AspectRatio>
+              <Skeleton hidden data-hidden-contract="skeleton" />
+              <Knob
+                hidden
+                aria-label="Hidden knob"
+                data-hidden-contract="knob"
+              />
+              <Fader
+                hidden
+                aria-label="Hidden fader"
+                data-hidden-contract="fader"
+              />
+              <LevelMeter
+                hidden
+                value={-20}
+                aria-label="Hidden level"
+                data-hidden-contract="level"
+              />
+              <SplitPane
+                hidden
+                label="Hidden panes"
+                first="First"
+                second="Second"
+                data-hidden-contract="split"
+              />
               <Stack id="findable">
                 <Text>Findable hidden content</Text>
               </Stack>
+              <ConsumerExtensions />
             </Stack>
           </Container>
         </Sidebar.Content>

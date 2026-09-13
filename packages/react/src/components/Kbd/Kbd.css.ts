@@ -1,6 +1,9 @@
 import { cssVars } from "@flux-ui/tokens";
 import { style } from "@vanilla-extract/css";
 export const kbd = style({
+  selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+  },
   display: "inline-block",
   paddingInline: `var(${cssVars.space[2]})`,
   border: `0.0625rem solid var(${cssVars.color.borderStrong})`,

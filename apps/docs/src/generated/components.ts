@@ -75,6 +75,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Chart",
+    slug: "chart",
+    category: "Data",
+    status: "alpha",
+    description:
+      "Line, area and grouped bar renderers share semantic Flux tones and bounded paths per series rather than per-point DOM nodes.",
+    sizeClass: "data-heavy",
+  },
+  {
     name: "Checkbox",
     slug: "checkbox",
     category: "Inputs",
@@ -128,6 +137,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "DataTable",
+    slug: "data-table",
+    category: "Data",
+    status: "alpha",
+    description:
+      "Windowed, fixed-row-height native table; not an editable spreadsheet or ARIA grid.",
+    sizeClass: "data-heavy",
+  },
+  {
     name: "DescriptionList",
     slug: "description-list",
     category: "Typography",
@@ -160,6 +178,15 @@ export const components = [
     status: "alpha",
     description: "Quiet no-results content with no implied alert behavior.",
     sizeClass: "composite",
+  },
+  {
+    name: "Fader",
+    slug: "fader",
+    category: "Audio",
+    status: "alpha",
+    description:
+      "Vertical single native range input, not a multi-thumb widget.",
+    sizeClass: "primitive",
   },
   {
     name: "Field",
@@ -232,6 +259,24 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Knob",
+    slug: "knob",
+    category: "Audio",
+    status: "alpha",
+    description:
+      "A labelled single-value slider with linear or positive logarithmic mapping.",
+    sizeClass: "interactive",
+  },
+  {
+    name: "LevelMeter",
+    slug: "level-meter",
+    category: "Audio",
+    status: "alpha",
+    description:
+      "A passive labelled meter, not a slider. The application owns updates, peak hold and clip reset.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Link",
     slug: "link",
     category: "Navigation",
@@ -255,6 +300,15 @@ export const components = [
     status: "alpha",
     description:
       "Native bounded measurement; unknown data is never presented as zero.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "NumberField",
+    slug: "number-field",
+    category: "Forms",
+    status: "alpha",
+    description:
+      "A native number input: form participation, min/max validity and steppers stay with the platform.",
     sizeClass: "primitive",
   },
   {
@@ -352,6 +406,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Sparkline",
+    slug: "sparkline",
+    category: "Data",
+    status: "alpha",
+    description:
+      "Decorative trend rendering is not a replacement for data access. Supply a meaningful accessible label or an equivalent nearby summary.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Spinner",
     slug: "spinner",
     category: "Feedback",
@@ -359,6 +422,15 @@ export const components = [
     description:
       "An accessible loading status with reduced-motion-safe presentation.",
     sizeClass: "primitive",
+  },
+  {
+    name: "SplitPane",
+    slug: "split-pane",
+    category: "Layout",
+    status: "alpha",
+    description:
+      "An in-flow two-pane layout, separate from Sidebar and Drawer.",
+    sizeClass: "interactive",
   },
   {
     name: "Stack",

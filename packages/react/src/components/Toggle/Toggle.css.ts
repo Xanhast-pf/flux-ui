@@ -15,6 +15,7 @@ export const toggle = style({
   fontWeight: 600,
   cursor: "pointer",
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-s='sm']": {
       minBlockSize: "var(--flux-control-sm)",
       fontSize: "var(--flux-font-caption)",

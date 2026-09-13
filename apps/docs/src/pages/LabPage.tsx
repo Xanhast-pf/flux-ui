@@ -25,10 +25,12 @@ import {
 } from "../lab/statistics.js";
 import { downloadJson } from "../lib/download.js";
 import { formatMs, formatRatio } from "../lib/format.js";
-import type { PerfScenario } from "../perf/PerfApp.js";
+import type { PerfScenario } from "../perf/scenario.types.js";
+import { getScenario, scenarioCatalog } from "../perf/registry.js";
 import { ComparisonBars } from "../ui/ComparisonBars.js";
 export function LabPage() {
   const [scenario, setScenario] = useState<PerfScenario>("button");
+  const definition = getScenario(scenario);
   const [count, setCount] = useState(1000);
   const [iterations, setIterations] = useState(5);
   const [sweep, setSweep] = useState(false);
@@ -94,11 +96,12 @@ export function LabPage() {
           eyebrow={<>Measure, don’t assume</>}
         >
           <Text as="p" variant="lead" tone="muted">
-            Your device. Real components. An honest native baseline.
+            Your device. Real components. Matched comparisons and clearly
+            labelled workloads.
           </Text>
         </PageHeader>
         <Callout>
-          Opt-in CPU work, capped at 5,000 instances and a 60-second run budget.
+          Opt-in CPU work, capped by each scenario and a 60-second run budget.
           Stop works between synchronous render tasks; a busy task cannot be
           interrupted. Leaving this page or hiding this tab stops the run. No
           results are uploaded.
@@ -119,20 +122,29 @@ export function LabPage() {
                   <Select
                     value={scenario}
                     onChange={(event) => {
-                      setScenario(
-                        event.target.value === "grid" ? "grid" : "button",
-                      );
+                      const next = getScenario(event.currentTarget.value);
+                      setScenario(next.id);
+                      setCount((current) => Math.min(current, next.maxCount));
                     }}
                   >
-                    <option value="button">
-                      Button — interactive primitive
-                    </option>
-                    <option value="grid">Grid — layout primitive</option>
+                    {scenarioCatalog.map((entry) => (
+                      <option key={entry.id} value={entry.id}>
+                        {entry.label} —{" "}
+                        {entry.kind === "comparison"
+                          ? "matched reference"
+                          : "Flux workload"}
+                      </option>
+                    ))}
                   </Select>
                 </Field.Control>
               </Field.Root>
+              <Text tone="muted">
+                {definition.description} Count means {definition.unit}, not
+                necessarily component instances. Fixture revision{" "}
+                {definition.fixtureRevision}.
+              </Text>
               <Field.Root controlId="lab-instances">
-                <Field.Label>Instances</Field.Label>
+                <Field.Label>Work units</Field.Label>
                 <Field.Control>
                   <Select
                     value={count}
@@ -140,7 +152,9 @@ export function LabPage() {
                       setCount(Number(event.target.value));
                     }}
                   >
-                    {INSTANCE_COUNTS.map((value) => (
+                    {INSTANCE_COUNTS.filter(
+                      (value) => value <= definition.maxCount,
+                    ).map((value) => (
                       <option value={value} key={value}>
                         {value.toLocaleString()}
                       </option>
@@ -149,7 +163,11 @@ export function LabPage() {
                 </Field.Control>
               </Field.Root>
               <Field.Root controlId="lab-samples">
-                <Field.Label>Paired samples</Field.Label>
+                <Field.Label>
+                  {definition.kind === "comparison"
+                    ? "Paired samples"
+                    : "Samples"}
+                </Field.Label>
                 <Field.Control>
                   <Select
                     value={iterations}
@@ -159,7 +177,8 @@ export function LabPage() {
                   >
                     {ITERATION_COUNTS.map((value) => (
                       <option value={value} key={value}>
-                        {value} pairs
+                        {value}{" "}
+                        {definition.kind === "comparison" ? "pairs" : "samples"}
                       </option>
                     ))}
                   </Select>
@@ -229,11 +248,56 @@ export function LabPage() {
                 {report.methodology} Measured{" "}
                 {new Date(report.measuredAt).toLocaleString()}.
               </Text>
+              {report.workloads.map((summary) => (
+                <Card key={summary.count}>
+                  <Stack gap="md">
+                    <Heading level={3} size="md">
+                      {summary.scenario} × {summary.count.toLocaleString()}{" "}
+                      {report.definition.unit}
+                    </Heading>
+                    <Text tone="muted">
+                      Flux-only. {summary.domNodes.toLocaleString()} mounted
+                      descendants. No native comparison.
+                    </Text>
+                    <Table.Root>
+                      <Table.Caption>
+                        Observed synchronous work, not paint or input latency
+                      </Table.Caption>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.ColumnHeader>Work</Table.ColumnHeader>
+                          <Table.ColumnHeader>Median</Table.ColumnHeader>
+                          <Table.ColumnHeader>
+                            Observed range
+                          </Table.ColumnHeader>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                        {METRICS.map((metric) => (
+                          <Table.Row key={metric}>
+                            <Table.RowHeader>
+                              {metric.replace("Ms", "")}
+                            </Table.RowHeader>
+                            <Table.Cell>
+                              {formatMs(summary.metrics[metric].median)}
+                            </Table.Cell>
+                            <Table.Cell>
+                              {formatMs(summary.metrics[metric].minimum)}–
+                              {formatMs(summary.metrics[metric].maximum)}
+                            </Table.Cell>
+                          </Table.Row>
+                        ))}
+                      </Table.Body>
+                    </Table.Root>
+                  </Stack>
+                </Card>
+              ))}
               {report.summaries.map((summary) => (
                 <Card key={summary.count}>
                   <Stack gap="md">
                     <Heading level={3} size="md">
-                      {summary.scenario} × {summary.count.toLocaleString()}
+                      {summary.scenario} × {summary.count.toLocaleString()}{" "}
+                      {report.definition.unit}
                     </Heading>
                     <ComparisonBars
                       label="Median synchronous mount · lower is less work"
@@ -241,7 +305,7 @@ export function LabPage() {
                       flux={summary.metrics.mountMs.flux}
                     />
                     <ScrollArea
-                      aria-label={`Results at ${summary.count} instances`}
+                      aria-label={`Results at ${summary.count} ${report.definition.unit}`}
                       axis="horizontal"
                     >
                       <Table.Root>
@@ -302,13 +366,14 @@ export function LabPage() {
             What the lab does—and doesn’t—measure.
           </Heading>
           <Text as="p" variant="body">
-            One warm-up is discarded for each variant and count. Fresh frames
-            run the same production harness as CI, alternating native-first and
-            Flux-first pairs. React performs both implementations. Button
-            matches the styled native wrapper; Grid matches native layout. Two
-            scenarios are not the whole library. Next-frame timing is not paint
-            time. Power saving, other tabs, extensions, temperature, viewport
-            and browser all affect results.
+            One warm-up is discarded for each variant and count. Button and Grid
+            use layout-matched native references and alternating pairs. The
+            other scenarios are Flux-only workloads, not claims against simpler
+            native elements. Code, chart and table transformations are included
+            where stated; input latency, streaming and memory are separate
+            measurements. Next-frame timing is not paint. Power saving, other
+            tabs, extensions, temperature, viewport and browser all affect
+            results.
           </Text>
           <Text as="p" variant="body">
             <Link href="#performance">Inspect the committed CI baseline →</Link>

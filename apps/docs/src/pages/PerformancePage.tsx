@@ -1,5 +1,6 @@
 import {
   Card,
+  Callout,
   Collapsible,
   DescriptionList,
   Heading,
@@ -12,6 +13,7 @@ import {
   Table,
   Text,
 } from "@flux-ui/react";
+import { scenarioCatalog } from "../perf/registry.js";
 import { health } from "../generated/health.js";
 import { formatMs, formatRatio, MAX_PERF_RATIO_METER } from "../lib/format.js";
 import { ComparisonBars } from "../ui/ComparisonBars.js";
@@ -33,6 +35,30 @@ export function PerformancePage() {
           <Link href="#lab">Run your own experiment →</Link>
         </Text>
         {health.performance.scenarios.map((scenario) => {
+          const definition = scenarioCatalog.find(
+            (entry) => entry.id === scenario.name,
+          );
+          if (
+            !definition ||
+            definition.fixtureRevision !== Number(scenario.fixtureRevision)
+          )
+            return (
+              <Card key={scenario.name} as="article" padding={6}>
+                <Stack gap="md">
+                  <Heading level={2} size="lg">
+                    {scenario.name} · reference changed
+                  </Heading>
+                  <Callout tone="warning">
+                    The recorded timing uses an older fixture. It is not
+                    comparable to the current implementation. Fresh measurements
+                    are pending; no current performance ratio is shown.
+                  </Callout>
+                  <Link href="#lab">
+                    Measure the current workload locally →
+                  </Link>
+                </Stack>
+              </Card>
+            );
           const reference = scenario.medians[scenario.reference];
           const flux = scenario.medians.flux;
           return (
@@ -41,7 +67,7 @@ export function PerformancePage() {
                 <Stack gap="md">
                   <Stack gap="md">
                     <Heading level={2} size="lg">
-                      {scenario.name} × {scenario.count}
+                      {scenario.name} × {scenario.count} {definition.unit}
                     </Heading>
                     <Text as="p" variant="body">
                       Reference:{" "}

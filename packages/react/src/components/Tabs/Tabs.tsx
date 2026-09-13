@@ -92,8 +92,17 @@ function TabsList({
     if (event.defaultPrevented) return;
 
     const horizontal = context.orientation === "horizontal";
-    const previousKey = horizontal ? "ArrowLeft" : "ArrowUp";
-    const nextKey = horizontal ? "ArrowRight" : "ArrowDown";
+    const rtl = getComputedStyle(event.currentTarget).direction === "rtl";
+    const previousKey = horizontal
+      ? rtl
+        ? "ArrowRight"
+        : "ArrowLeft"
+      : "ArrowUp";
+    const nextKey = horizontal
+      ? rtl
+        ? "ArrowLeft"
+        : "ArrowRight"
+      : "ArrowDown";
     if (
       event.key !== previousKey &&
       event.key !== nextKey &&
