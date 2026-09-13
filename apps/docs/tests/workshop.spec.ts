@@ -92,7 +92,10 @@ test("preferences persist and previews reset without resetting the theme", async
   await page.getByRole("tab", { name: "Theme lab", exact: true }).click();
   await page.getByRole("radio", { name: "teal", exact: true }).check();
   await page
-    .getByRole("banner")
+    .getByRole("button", { name: "Toggle navigation", exact: true })
+    .click();
+  await page
+    .getByRole("complementary", { name: "Documentation sidebar" })
     .getByRole("switch", { name: "Dark theme", exact: true })
     .check();
   await page.reload();

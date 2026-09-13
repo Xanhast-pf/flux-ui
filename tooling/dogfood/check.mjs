@@ -7,6 +7,54 @@ const policy = JSON.parse(
   await readFile(resolve(root, "tooling/dogfood/ownership.json"), "utf8"),
 );
 const errors = [];
+if (policy.schemaVersion !== 2)
+  errors.push("Dogfood policy must use schemaVersion 2.");
+for (const group of [
+  "sourceExceptions",
+  "artwork",
+  "assets",
+  "factories",
+  "domAdapters",
+  "inlineGeometry",
+  "tokenAdapters",
+]) {
+  for (const entry of policy[group] ?? []) {
+    if (
+      !entry.file?.startsWith("apps/docs/src/") ||
+      entry.file.endsWith("/") ||
+      entry.file.includes("..") ||
+      !entry.reason?.trim() ||
+      "prefix" in entry
+    ) {
+      errors.push(
+        `Invalid ${group} ownership: use an exact source file and a reason.`,
+      );
+      continue;
+    }
+    try {
+      await readFile(resolve(root, entry.file));
+    } catch {
+      errors.push(`Stale ${group} owner: ${entry.file}`);
+    }
+  }
+}
+if ("teachingFixtures" in policy)
+  errors.push(
+    "Default examples must not have a blanket teaching-fixture exemption.",
+  );
+for (const [file, owner] of Object.entries(policy.stylesheets)) {
+  if (
+    !Number.isSafeInteger(owner.maxDeclarations) ||
+    owner.maxDeclarations < 0 ||
+    !owner.rules
+  )
+    errors.push(`Invalid CSS contract: ${file}`);
+  try {
+    await readFile(resolve(root, file));
+  } catch {
+    errors.push(`Stale stylesheet owner: ${file}`);
+  }
+}
 let sources = 0;
 let stylesheets = 0;
 async function visit(directory) {

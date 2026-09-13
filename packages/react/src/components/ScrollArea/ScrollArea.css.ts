@@ -11,6 +11,5 @@ export const scrollArea = style({
       outline: "0.125rem solid var(--flux-color-focus)",
       outlineOffset: "-0.125rem",
     },
-    "&[hidden]": { display: "none" },
   },
 });

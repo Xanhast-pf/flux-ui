@@ -1,4 +1,4 @@
-import { createElement } from "react";
+import { createElement, type ReactElement } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import {
   textAlign,
@@ -17,11 +17,15 @@ export function Text({
   weight,
   align,
   numeric,
+  italic,
+  decoration,
   className,
   ...props
-}: TextProps) {
+}: TextProps): ReactElement {
   return createElement(as, {
     ...props,
+    "data-italic": italic || undefined,
+    "data-decoration": decoration,
     className: joinClassNames(
       textBase,
       variant === undefined ? undefined : textVariant[variant],

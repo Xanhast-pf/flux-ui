@@ -318,6 +318,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Sidebar",
+    slug: "sidebar",
+    category: "Layout",
+    status: "alpha",
+    description:
+      "Persistent, non-modal side navigation that shares layout with the content.",
+    sizeClass: "interactive",
+  },
+  {
     name: "Skeleton",
     slug: "skeleton",
     category: "Feedback",

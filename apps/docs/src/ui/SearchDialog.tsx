@@ -3,7 +3,7 @@ import {
   Dialog,
   EmptyState,
   Input,
-  Kbd,
+  IconButton,
   Link,
   List,
   ScrollArea,
@@ -52,12 +52,18 @@ export function SearchDialog() {
   }, [open]);
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className="search-trigger" aria-label="Search docs">
-        <SearchIcon aria-hidden="true" size={18} />
-        <Text className="search-label">Search docs</Text>
-        <Kbd aria-hidden="true">⌘ / Ctrl K</Kbd>
-      </Dialog.Trigger>
-      <Dialog.Popup className="search-popup">
+      <IconButton
+        variant="ghost"
+        tone="neutral"
+        aria-label="Search docs"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        title="Search docs (Ctrl or Command K)"
+        onClick={() => setOpen(true)}
+      >
+        <SearchIcon aria-hidden="true" size={20} />
+      </IconButton>
+      <Dialog.Popup>
         <Dialog.Title>Find your next building block.</Dialog.Title>
         <Dialog.Description>
           Search components and documentation. Use Tab to follow links and

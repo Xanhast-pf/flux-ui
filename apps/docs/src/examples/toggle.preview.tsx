@@ -1,4 +1,4 @@
-import { Stack, Toggle } from "@flux-ui/react";
+import { Stack, Text, Toggle } from "@flux-ui/react";
 import { useState } from "react";
 export default function Example() {
   const [saved, setSaved] = useState(false);
@@ -7,9 +7,9 @@ export default function Example() {
       <Toggle pressed={saved} onPressedChange={setSaved}>
         Save example
       </Toggle>
-      <p role="status">
+      <Text as="p" variant="body" role="status">
         {saved ? "Added to your local collection." : "Not saved yet."}
-      </p>
+      </Text>
     </Stack>
   );
 }

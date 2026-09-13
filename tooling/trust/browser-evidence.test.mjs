@@ -30,7 +30,14 @@ function fixture() {
   return createEvidence(
     receipts,
     source,
-    ["quality", "browser", "size", "runtime", "browser-tests"].map((name) => ({
+    [
+      "quality",
+      "browser",
+      "size",
+      "runtime",
+      "browser-tests",
+      "consumer-tests",
+    ].map((name) => ({
       name: `${name}.json`,
       bytes: 100,
       sha256: "b".repeat(64),

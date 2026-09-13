@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Card,
   Grid,
@@ -7,6 +6,7 @@ import {
   Inline,
   Link,
   Text,
+  Stack,
 } from "@flux-ui/react";
 import { lazy, Suspense, useState } from "react";
 import { components } from "../generated/components.js";
@@ -40,7 +40,7 @@ export default function CompositionInspector({
   return (
     <Card aria-label="Composition details" as="section" padding={6}>
       <Grid columns={{ base: 1, md: 2 }} gap="lg">
-        <Box>
+        <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
             Built with the real thing
           </Text>
@@ -55,8 +55,8 @@ export default function CompositionInspector({
               </Link>
             ))}
           </Inline>
-        </Box>
-        <Box>
+        </Stack>
+        <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
             What is custom here?
           </Text>
@@ -84,7 +84,7 @@ export default function CompositionInspector({
               Browse the showcase source ↗
             </Link>
           </Inline>
-        </Box>
+        </Stack>
         {source ? (
           <Grid.Item colSpan="full">
             <Suspense

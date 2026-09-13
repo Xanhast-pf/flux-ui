@@ -92,113 +92,156 @@ export default function MusicScene() {
             </Text>
             {playing ? "Pause visual loop" : "Play visual loop"}
           </Button>
-          <Text className="music-time" variant="caption">
-            LOOP 01 <Text>/</Text> 16 BEATS
+          <Text variant="caption" numeric>
+            LOOP 01 <Text tone="muted">/</Text> 16 BEATS
           </Text>
         </Inline>
-        <Text className="music-signature" variant="caption">
-          {tempo} BPM <Text>4 / 4</Text>
-          <Text>A minor</Text>
-        </Text>
+        <Inline gap="md" wrap>
+          <Text variant="caption" numeric>
+            {tempo} BPM
+          </Text>
+          <Text variant="caption" tone="muted">
+            4 / 4
+          </Text>
+          <Text variant="caption" tone="muted">
+            A minor
+          </Text>
+        </Inline>
       </Inline>
-      <Stack
-        aria-label="Four-track visual sequencer"
-        data-playing={playing}
-        style={{ "--loop-duration": `${960 / tempo}s` } as CSSProperties}
-        className="sequencer"
-        as="section"
-        gap="none"
-      >
-        <Box className="sequencer-ruler">
-          <Text variant="caption">TRACK / INSTRUMENT</Text>
-          <Box>
-            <Text variant="caption">01</Text>
-            <Text variant="caption">02</Text>
-            <Text variant="caption">03</Text>
-            <Text variant="caption">04</Text>
-          </Box>
-        </Box>
-        <Stack className="sequencer-tracks" gap="none">
-          {tracks.map((track) => (
-            <Box
-              key={track.id}
-              data-channel={track.channel}
-              data-muted={
-                muted.includes(track.id) || (solo !== null && solo !== track.id)
-              }
-              className="track-row"
-            >
-              <Inline className="track-info" gap="sm" padding={3}>
-                <span aria-hidden="true" className="track-color" />
-                <Stack gap="xs">
-                  <Text as="strong" weight="medium" variant="caption">
-                    {track.name}
-                  </Text>
-                  <Text variant="caption" tone="muted">
-                    {track.instrument}
-                  </Text>
-                </Stack>
-                <Inline className="track-toggles" gap="xs">
-                  <Toggle
-                    aria-label={`Mute ${track.name}`}
-                    pressed={muted.includes(track.id)}
-                    onPressedChange={(pressed) => {
-                      setMuted((current) =>
-                        pressed
-                          ? [...current, track.id]
-                          : current.filter((entry) => entry !== track.id),
-                      );
-                    }}
-                    size="sm"
-                  >
-                    M
-                  </Toggle>
-                  <Toggle
-                    aria-label={`Solo ${track.name}`}
-                    pressed={solo === track.id}
-                    onPressedChange={(pressed) => {
-                      setSolo(pressed ? track.id : null);
-                    }}
-                    size="sm"
-                  >
-                    S
-                  </Toggle>
-                </Inline>
-              </Inline>
-              <div className="track-lane">
-                <div
-                  style={{
-                    marginInlineStart: `${track.start}%`,
-                    inlineSize: `${track.length}%`,
+      <Box surface="default" border="all" radius="sm">
+        <Stack
+          aria-label="Four-track visual sequencer"
+          data-playing={playing}
+          style={{ "--loop-duration": `${960 / tempo}s` } as CSSProperties}
+          className="sequencer"
+          as="section"
+          gap="none"
+        >
+          <Grid
+            templateColumns={{
+              base: "minmax(0, 1fr)",
+              md: "17rem minmax(0, 1fr)",
+            }}
+            responsiveTo="container"
+            gap="none"
+          >
+            <Stack padding={3} gap="none">
+              <Text variant="caption" tone="muted">
+                TRACK / INSTRUMENT
+              </Text>
+            </Stack>
+            <Inline justify="between" padding={3} gap="sm">
+              <Text variant="caption">01</Text>
+              <Text variant="caption">02</Text>
+              <Text variant="caption">03</Text>
+              <Text variant="caption">04</Text>
+            </Inline>
+          </Grid>
+          <Stack gap="none">
+            {tracks.map((track) => (
+              <Box
+                key={track.id}
+                data-channel={track.channel}
+                data-muted={
+                  muted.includes(track.id) ||
+                  (solo !== null && solo !== track.id)
+                }
+                className="track-row"
+                border="bottom"
+              >
+                <Grid
+                  templateColumns={{
+                    base: "minmax(0, 1fr)",
+                    md: "17rem minmax(0, 1fr)",
                   }}
-                  className="audio-clip"
+                  responsiveTo="container"
+                  gap="none"
                 >
-                  <span>{track.clip}</span>
-                  <svg
-                    viewBox="0 0 160 34"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
+                  <Inline gap="sm" padding={3} justify="between">
+                    <Inline gap="sm">
+                      <span aria-hidden="true" className="track-color" />
+                      <Stack gap="xs">
+                        <Text as="strong" weight="medium" variant="caption">
+                          {track.name}
+                        </Text>
+                        <Text variant="caption" tone="muted">
+                          {track.instrument}
+                        </Text>
+                      </Stack>
+                    </Inline>
+                    <Inline gap="xs">
+                      <Toggle
+                        aria-label={`Mute ${track.name}`}
+                        pressed={muted.includes(track.id)}
+                        onPressedChange={(pressed) => {
+                          setMuted((current) =>
+                            pressed
+                              ? [...current, track.id]
+                              : current.filter((entry) => entry !== track.id),
+                          );
+                        }}
+                        size="sm"
+                      >
+                        M
+                      </Toggle>
+                      <Toggle
+                        aria-label={`Solo ${track.name}`}
+                        pressed={solo === track.id}
+                        onPressedChange={(pressed) => {
+                          setSolo(pressed ? track.id : null);
+                        }}
+                        size="sm"
+                      >
+                        S
+                      </Toggle>
+                    </Inline>
+                  </Inline>
+                  <Box
+                    className="track-lane"
+                    paddingBlock="sm"
+                    paddingInlineEnd="md"
                   >
-                    {track.waveform.map((mark) => (
-                      <rect
-                        key={mark.x}
-                        x={mark.x}
-                        y={mark.y}
-                        width="4"
-                        height={mark.height}
-                        rx="1"
-                      />
-                    ))}
-                  </svg>
-                </div>
-              </div>
-            </Box>
-          ))}
-          <div aria-hidden="true" className="sequencer-playhead">
-            <span />
-          </div>
+                    <Box
+                      paddingBlock="sm"
+                      paddingInline={3}
+                      radius="sm"
+                      border="all"
+                      style={{
+                        marginInlineStart: `${track.start}%`,
+                        inlineSize: `${track.length}%`,
+                      }}
+                      className="audio-clip"
+                    >
+                      <Stack gap="xs">
+                        <Text variant="caption">{track.clip}</Text>
+                        <svg
+                          viewBox="0 0 160 34"
+                          preserveAspectRatio="none"
+                          aria-hidden="true"
+                        >
+                          {track.waveform.map((mark) => (
+                            <rect
+                              key={mark.x}
+                              x={mark.x}
+                              y={mark.y}
+                              width="4"
+                              height={mark.height}
+                              rx="1"
+                            />
+                          ))}
+                        </svg>
+                      </Stack>
+                    </Box>
+                    <div aria-hidden="true" className="sequencer-playhead">
+                      <span />
+                    </div>
+                  </Box>
+                </Grid>
+              </Box>
+            ))}
+          </Stack>
         </Stack>
-      </Stack>
+      </Box>
       <Grid
         templateColumns={{
           base: "minmax(0, 1fr)",
@@ -224,8 +267,8 @@ export default function MusicScene() {
                 ? "Visual loop playing. This prototype produces no sound."
                 : "Silent visual prototype. Press play to move the playhead."}
             </SceneStatus>
-            <Text className="reduced-motion-note" as="p" variant="caption">
-              Reduced motion is enabled: the playhead stays still.
+            <Text as="p" variant="caption">
+              When reduced motion is enabled, the playhead stays still.
             </Text>
           </Stack>
         </Card>

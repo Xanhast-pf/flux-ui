@@ -110,6 +110,7 @@ export default function VideoScene() {
           <AspectRatio
             data-art={clip.art}
             ratio={aspectRatios[aspect]}
+            align="center"
             className="video-frame"
             style={{
               maxInlineSize:
@@ -133,11 +134,17 @@ export default function VideoScene() {
               FIELD NOTES / 003
             </Text>
             {titles ? (
-              <Heading level={3} size="md" style={{ color: "inherit" }}>
-                {clip.title}
-              </Heading>
+              <Stack padding="md" align="center" gap="none">
+                <Heading level={3} size="md">
+                  {clip.title}
+                </Heading>
+              </Stack>
             ) : null}
-            <Text className="video-frame-footer" variant="caption">
+            <Text
+              className="video-frame-footer"
+              variant="caption"
+              align="center"
+            >
               An invitation to go a little further.
             </Text>
           </AspectRatio>
@@ -259,7 +266,6 @@ export default function VideoScene() {
               key={entry.id}
               value={entry.id}
               data-art={entry.art}
-              className="video-clip"
             >
               <span aria-hidden="true" className="clip-thumbnail" />
               <Stack as="span" gap="xs" align="start">

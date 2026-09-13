@@ -1,3 +1,4 @@
+import { components } from "../generated/components.js";
 import { useSyncExternalStore } from "react";
 export const navigationGroups = [
   {
@@ -28,7 +29,6 @@ export const navigationGroups = [
       ["accessibility", "Live accessibility"],
       ["trust", "Trust Center"],
       ["health", "Repository health"],
-      ["rules", "Engineering rules"],
     ],
   },
 ] as const;
@@ -49,5 +49,21 @@ export function useRoute(): string {
 }
 
 export function routePath(route: string): string {
-  return route.split("?", 1)[0] || "overview";
+  const path = route.split("?", 1)[0] || "overview";
+  return path === "rules" ? "engineering" : path;
+}
+
+/** Titles describe the destination, including deep links and the legacy rules route. */
+export function pageTitle(route: string): string {
+  const path = routePath(route);
+  if (path.startsWith("components/")) {
+    const component = components.find(
+      (entry) => entry.slug === path.slice("components/".length),
+    );
+    return component
+      ? `${component.name} · Components · Flux UI`
+      : "Component not found · Flux UI";
+  }
+  const section = sections.find(([id]) => id === path);
+  return `${section?.[1] ?? "Page not found"} · Flux UI`;
 }

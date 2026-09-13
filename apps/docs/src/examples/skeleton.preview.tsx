@@ -1,17 +1,19 @@
-import { Button, Card, Inline, Skeleton, Stack } from "@flux-ui/react";
+import { Button, Card, Inline, Skeleton, Stack, Text } from "@flux-ui/react";
 import { useState } from "react";
 export default function Example() {
   const [loaded, setLoaded] = useState(false);
   return (
     <Stack gap="md">
-      <p role="status">
+      <Text as="p" variant="body" role="status">
         {loaded
           ? "Preview content is ready."
           : "Loading layout preview. Use the button to reveal the content."}
-      </p>
+      </Text>
       <Card aria-busy={!loaded}>
         {loaded ? (
-          <p>A small placeholder, replaced by real content.</p>
+          <Text as="p" variant="body">
+            A small placeholder, replaced by real content.
+          </Text>
         ) : (
           <Stack gap="md">
             <Inline gap="md">

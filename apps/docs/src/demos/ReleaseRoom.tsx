@@ -72,17 +72,17 @@ export function ReleaseRoom() {
   }
   return (
     <Dialog.Root open={confirmOpen} onOpenChange={setConfirmOpen}>
-      <Card className="release-room">
+      <Card padding="lg">
         <Stack gap="lg">
           <Inline justify="between" wrap>
-            <Box>
+            <Stack gap="md">
               <Text as="p" variant="eyebrow" tone="muted">
                 Your next good idea
               </Text>
               <Heading level={2} size="lg">
                 Release room
               </Heading>
-            </Box>
+            </Stack>
             <Badge tone={receipt ? "success" : "accent"}>
               {receipt ? "Demo complete" : "Interactive demo"}
             </Badge>
@@ -112,7 +112,7 @@ export function ReleaseRoom() {
                 <Inline
                   gap="sm"
                   data-done={task.done || undefined}
-                  className="task-row"
+                  paddingBlock="xs"
                 >
                   <Field.Control>
                     <Checkbox
@@ -138,7 +138,7 @@ export function ReleaseRoom() {
             onSubmit={addTask}
             as="form"
           >
-            <Inline gap="sm" className="add-task-row">
+            <Inline gap="sm" wrap>
               <Input
                 aria-label="New task"
                 name="task"
@@ -218,11 +218,10 @@ export function ReleaseRoom() {
           </Text>
           <Text
             role="status"
-            className="demo-receipt"
-            as="p"
-            variant="body"
             tone="success"
             weight="medium"
+            as="p"
+            variant="body"
           >
             {receipt}
           </Text>

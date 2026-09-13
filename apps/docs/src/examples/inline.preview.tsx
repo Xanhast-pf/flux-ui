@@ -1,15 +1,19 @@
-import { Button, Inline } from "@flux-ui/react";
+import { Button, Card, Inline, Text } from "@flux-ui/react";
 
 export default function Example() {
   return (
-    <Inline gap="sm" justify="between" wrap className="demo-boundary">
-      <strong>Actions</strong>
-      <Inline gap="sm" wrap>
-        <Button size="sm" variant="outline">
-          Export
-        </Button>
-        <Button size="sm">Create</Button>
+    <Card padding={3}>
+      <Inline gap="sm" justify="between" wrap>
+        <Text as="strong" weight="bold">
+          Actions
+        </Text>
+        <Inline gap="sm" wrap>
+          <Button size="sm" variant="outline">
+            Export
+          </Button>
+          <Button size="sm">Create</Button>
+        </Inline>
       </Inline>
-    </Inline>
+    </Card>
   );
 }

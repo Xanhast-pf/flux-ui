@@ -1,6 +1,5 @@
 import { ArrowUpRightIcon } from "@flux-ui/icons";
 import {
-  Box,
   Collapsible,
   Heading,
   Inline,
@@ -12,7 +11,6 @@ import {
 import { lazy, Suspense, useId, useState } from "react";
 import { ProductShowcase } from "../showcase/ProductShowcase.js";
 import { ExampleBoundary } from "../ui/ExampleBoundary.js";
-import "./landing.css";
 const ComponentWorkbench = lazy(
   () => import("../showcase/ComponentWorkbench.js"),
 );
@@ -37,7 +35,7 @@ export function PlaygroundPage() {
             Try a scene, switch its theme, then inspect the code.
           </Text>
         </PageHeader>
-        <Link href="#components" className="landing-text-link">
+        <Link href="#components" variant="ghost">
           Meet the ingredients <ArrowUpRightIcon size={16} />
         </Link>
       </Inline>
@@ -48,7 +46,7 @@ export function PlaygroundPage() {
         gap="lg"
         paddingBlock={8}
       >
-        <Box>
+        <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
             Prefer to tinker with the parts?
           </Text>
@@ -59,7 +57,7 @@ export function PlaygroundPage() {
             Open a focused lab for buttons, themes, collections, or a release
             workflow.
           </Text>
-        </Box>
+        </Stack>
         <Collapsible.Root
           onToggle={(event) => {
             setWorkbench(event.currentTarget.open);

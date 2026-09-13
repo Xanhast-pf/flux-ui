@@ -89,12 +89,12 @@ export function IconsPage() {
             you actually need.
           </Text>
         </PageHeader>
-        <Box aria-hidden="true" className="icons-hero-mark">
-          <FluxMarkIcon size={72} />
-        </Box>
+        <Card aria-hidden="true" surface="subtle" padding="md">
+          <FluxMarkIcon size={64} />
+        </Card>
       </Inline>
 
-      <Card className="icon-browser-panel">
+      <Card>
         <Stack gap="md">
           <Inline wrap gap="md">
             <Inline className="icon-search-control" gap="sm">
@@ -185,9 +185,9 @@ export function IconsPage() {
               }}
               type="button"
             >
-              <Text aria-hidden="true" className="icon-tile-stage">
+              <Stack aria-hidden="true" align="center" padding="md">
                 {createElement(entry.component, { size: Number(iconSize) })}
-              </Text>
+              </Stack>
               <Text>{iconLabel(entry)}</Text>
               <Text as="small" variant="caption">
                 {entry.category}
@@ -200,13 +200,15 @@ export function IconsPage() {
           <Box aria-label="Selected icon" className="icon-inspector" as="aside">
             <Card>
               <Stack gap="md">
-                <Box className="icon-inspector-stage">
-                  {createElement(selectedEntry.component, {
-                    size: 72,
-                    title: `${iconLabel(selectedEntry)} icon`,
-                  })}
+                <Box surface="subtle" border="all" radius="sm" padding="xl">
+                  <Stack align="center" gap="none">
+                    {createElement(selectedEntry.component, {
+                      size: 72,
+                      title: `${iconLabel(selectedEntry)} icon`,
+                    })}
+                  </Stack>
                 </Box>
-                <Box>
+                <Stack gap="sm">
                   <Text as="p" variant="eyebrow" tone="muted">
                     Selected icon
                   </Text>
@@ -216,7 +218,7 @@ export function IconsPage() {
                   <Text as="p" variant="body" tone="muted">
                     {selectedEntry.category}
                   </Text>
-                </Box>
+                </Stack>
                 <Inline gap="xs" wrap>
                   {selectedEntry.keywords.map((keyword) => (
                     <Badge key={keyword}>{keyword}</Badge>

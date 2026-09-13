@@ -171,3 +171,10 @@ Checked against the official documentation on 2026-09-10:
 - [Anchore SBOM Action](https://github.com/anchore/sbom-action)
 - [pnpm 10 pack](https://pnpm.io/10.x/cli/pack)
 - [OpenSSF Best Practices](https://www.bestpractices.dev/)
+
+### Built-package browser receipt
+
+The Browser job also runs `pnpm consumer:check`. The same-commit public evidence
+requires its successful `consumer` check and `consumer-tests.json`; missing,
+failed or flaky consumer results block publication. This tests built public
+exports and styles without docs aliases. It is not an npm-publishing attestation.

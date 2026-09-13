@@ -1,11 +1,13 @@
-import { Button, Inline, Progress, Stack } from "@flux-ui/react";
+import { Button, Inline, Progress, Stack, Text } from "@flux-ui/react";
 import { useState } from "react";
 
 export default function Example() {
   const [value, setValue] = useState(25);
   return (
     <Stack gap="md">
-      <p>Example progress: {value}%</p>
+      <Text as="p" variant="body">
+        Example progress: {value}%
+      </Text>
       <Progress aria-label="Example progress" value={value} />
       <Inline gap="sm" wrap>
         <Button
@@ -25,7 +27,9 @@ export default function Example() {
           Reset progress
         </Button>
       </Inline>
-      <p>Indeterminate (no value supplied)</p>
+      <Text as="p" variant="body">
+        Indeterminate (no value supplied)
+      </Text>
       <Progress aria-label="Waiting for progress" />
     </Stack>
   );

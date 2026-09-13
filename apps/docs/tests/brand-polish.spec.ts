@@ -21,7 +21,7 @@ for (const width of [320, 390, 768, 1440]) {
     await page.goto("/#playground");
     const header = page.getByRole("banner");
     const trigger = header.getByRole("button", {
-      name: "Browse sections",
+      name: "Toggle navigation",
       exact: true,
     });
     const brand = header.getByRole("link", { name: "Flux UI home" });
@@ -51,11 +51,15 @@ for (const width of [320, 390, 768, 1440]) {
       )
       .toBe(true);
     await trigger.click();
-    const drawer = page.getByRole("dialog", { name: "Flux UI documentation" });
+    const drawer = page.getByRole("complementary", {
+      name: "Documentation sidebar",
+    });
     for (const group of ["Build", "Design", "Inspect"]) {
       await expect(drawer.getByText(group, { exact: true })).toBeVisible();
     }
     await page.keyboard.press("Escape");
+    await expect(drawer).toBeVisible();
+    await drawer.getByRole("button", { name: "Close navigation" }).click();
     await expect(trigger).toBeFocused();
   });
 }
@@ -194,9 +198,17 @@ for (const width of [390, 1440]) {
   }) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/#playground?scene=music&mood=paper");
-    const tracks = await bounds(page.locator(".sequencer-tracks"));
-    const playhead = await bounds(page.locator(".sequencer-playhead"));
-    expect(Math.abs(playhead.y - tracks.y)).toBeLessThan(1);
+    const lanes = page.locator(".track-lane");
+    await expect(lanes).toHaveCount(4);
+    for (const lane of await lanes.all()) {
+      const track = await bounds(lane);
+      const playhead = await bounds(lane.locator(".sequencer-playhead"));
+      expect(Math.abs(playhead.y - track.y)).toBeLessThan(1);
+      expect(playhead.x).toBeGreaterThanOrEqual(track.x - 1);
+      expect(playhead.x + playhead.width).toBeLessThanOrEqual(
+        track.x + track.width + 1,
+      );
+    }
     const rows = page.locator(".track-row");
     const first = await bounds(rows.nth(0));
     const second = await bounds(rows.nth(1));

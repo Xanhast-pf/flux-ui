@@ -56,6 +56,13 @@ export default defineConfig({
         ),
       },
       {
+        find: "@flux-ui/tokens/reset.css",
+        replacement: resolve(
+          import.meta.dirname,
+          "../../packages/tokens/src/reset.css",
+        ),
+      },
+      {
         find: "@flux-ui/tokens",
         replacement: resolve(
           import.meta.dirname,

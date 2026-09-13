@@ -72,4 +72,29 @@ describe("Field", () => {
     expect(describedBy).toContain("external-help");
     expect(describedBy).toContain("search-control-description");
   });
+  it("does not claim descriptions or disabled state from a nested field", () => {
+    render(
+      <Field.Root id="outer" disabled>
+        <Field.Label>Outer</Field.Label>
+        <Field.Control>
+          <Input />
+        </Field.Control>
+        <Field.Root id="inner">
+          <Field.Label>Inner</Field.Label>
+          <Field.Control>
+            <Input />
+          </Field.Control>
+          <Field.Description>Inner only</Field.Description>
+          <Field.Error>Inactive error</Field.Error>
+        </Field.Root>
+      </Field.Root>,
+    );
+    const outer = screen.getByRole("textbox", { name: "Outer" });
+    const inner = screen.getByRole("textbox", { name: "Inner" });
+    expect(outer).toBeDisabled();
+    expect(outer).not.toHaveAttribute("aria-describedby");
+    expect(inner).not.toBeDisabled();
+    expect(inner).toHaveAttribute("aria-describedby", "inner-description");
+    expect(document.getElementById("outer-description")).toBeNull();
+  });
 });

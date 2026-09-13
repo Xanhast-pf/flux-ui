@@ -28,4 +28,16 @@ describe("Text", () => {
     expect(ref.current).not.toHaveAttribute("numeric");
     expect(ref.current).not.toHaveAttribute("tone");
   });
+  it("exposes text emphasis without leaking styling props to the DOM", () => {
+    render(
+      <Text italic decoration="line-through" data-testid="emphasis">
+        Archived
+      </Text>,
+    );
+    const text = screen.getByTestId("emphasis");
+    expect(text).not.toHaveAttribute("italic");
+    expect(text).not.toHaveAttribute("decoration");
+    expect(text).toHaveAttribute("data-italic", "true");
+    expect(text).toHaveAttribute("data-decoration", "line-through");
+  });
 });

@@ -161,7 +161,7 @@ If the answer points away from a prop, do not add the prop.
 
 ## Styling and design tokens
 
-- Use Vanilla Extract for component-local styles and recipes.
+- Use Vanilla Extract for static component-local styles. Do not reintroduce a recipe runtime for simple visual variants.
 - Do not add Emotion, styled-components or another runtime styling system to core packages.
 - Shared design decisions use semantic CSS variables from `@flux-ui/tokens`.
 - Reusable spatial values follow the Flux quarter-rem contract: explicit `rem` values, exact multiples of `0.25rem`, with `1rem` as the standard spacing and `0.25rem` as the standard radius.
@@ -322,3 +322,16 @@ A component is not done because it renders. It is done when:
 - bundle budget remains healthy;
 - Coding Bible, lint, types and tests are green;
 - adding the component did not introduce project-wide manual wiring.
+
+## Docs as the public consumer contract
+
+- Default live examples have no blanket teaching-fixture exception. Use public
+  Flux layout, surfaces, typography, controls, fields and overflow APIs.
+- Do not relocate app-owned CSS into inline styles to bypass ownership budgets.
+  Geometry-only exceptions require exact files/components/properties and reasons.
+- Keep persistent navigation in Sidebar, not modal Drawer. Mount Sidebar state
+  above route content; do not add automatic route/Escape closing or modal behavior.
+- Preserve hidden keyboard/visibility semantics and isolate compound instances
+  before optimizing selector or attribute bytes. Test actual browser behavior.
+- `check:full` includes the built-public-export consumer, with no docs aliases or
+  styles. The source-mode docs alone are not proof of package output integrity.

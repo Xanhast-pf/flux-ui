@@ -12,6 +12,7 @@ export const container = style({
       containerType: "inline-size",
       containerName: "flux-layout",
     },
+    "&[data-size='xs']": { maxInlineSize: "24rem" },
     "&[data-size='sm']": { maxInlineSize: "40rem" },
     "&[data-size='md']": { maxInlineSize: "56rem" },
     "&[data-size='lg']": { maxInlineSize: "72rem" },

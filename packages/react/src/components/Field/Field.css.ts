@@ -6,8 +6,19 @@ export const root = style({
   vars: {
     "--f-f-h": "initial",
     "--f-f-d": "initial",
+    "--f-f-label": "var(--flux-color-text)",
+    "--f-f-description": "var(--flux-color-text-muted)",
   },
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": {
+      display: "none !important",
+    },
+    "&[data-x]": {
+      vars: {
+        "--f-f-label": "var(--flux-color-text-muted)",
+        "--f-f-description": "var(--flux-color-text-subtle)",
+      },
+    },
     "&[data-d='compact']": {
       gap: "var(--flux-space-1)",
       fontSize: "var(--flux-font-caption)",
@@ -23,14 +34,9 @@ export const root = style({
 });
 
 export const label = style({
-  color: `var(${cssVars.color.text})`,
+  color: "var(--f-f-label)",
   fontWeight: 600,
   lineHeight: 1.25,
-  selectors: {
-    [`${root}[data-x] &`]: {
-      color: `var(${cssVars.color.textMuted})`,
-    },
-  },
 });
 
 export const requiredIndicator = style({
@@ -38,15 +44,10 @@ export const requiredIndicator = style({
 });
 
 export const description = style({
-  color: `var(${cssVars.color.textMuted})`,
+  color: "var(--f-f-description)",
   fontSize: "var(--f-f-d, 0.875rem)",
   lineHeight: 1.5,
   margin: 0,
-  selectors: {
-    [`${root}[data-x] &`]: {
-      color: `var(${cssVars.color.textSubtle})`,
-    },
-  },
 });
 
 export const error = style({

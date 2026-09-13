@@ -1,6 +1,5 @@
 import {
   Badge,
-  Box,
   Callout,
   Card,
   Code,
@@ -192,7 +191,7 @@ export function TrustPage() {
                 )}
                 <Grid minColumnWidth="17rem" gap="md">
                   {evidence.jobs.map((job) => (
-                    <Box key={job.job}>
+                    <Stack key={job.job} gap="md">
                       <Heading level={3} size="md">
                         {job.job === "quality" ? "Quality" : "Browser"}
                       </Heading>
@@ -204,7 +203,7 @@ export function TrustPage() {
                           · {check.label}
                         </Text>
                       ))}
-                    </Box>
+                    </Stack>
                   ))}
                 </Grid>
                 <Collapsible.Root>
@@ -217,12 +216,7 @@ export function TrustPage() {
                     verify signatures.
                   </Text>
                   {evidence.files.map((file) => (
-                    <Text
-                      key={file.name}
-                      className="evidence-file"
-                      as="p"
-                      variant="body"
-                    >
+                    <Text key={file.name} variant="caption" as="p">
                       <Link href={`evidence/${file.name}`} download>
                         {file.name}
                       </Link>{" "}

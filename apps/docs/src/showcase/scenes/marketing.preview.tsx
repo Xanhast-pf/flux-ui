@@ -15,12 +15,7 @@ import {
   Text,
 } from "@flux-ui/react";
 import { useId, useState } from "react";
-import {
-  artworkInkStyle,
-  Metric,
-  SceneHeader,
-  SceneStatus,
-} from "../SceneParts.js";
+import { Metric, SceneHeader, SceneStatus } from "../SceneParts.js";
 import "./marketing.css";
 export default function MarketingScene() {
   const id = useId();
@@ -46,31 +41,34 @@ export default function MarketingScene() {
         <Stack
           aria-label="Live campaign preview"
           className="campaign-poster"
-          style={artworkInkStyle}
+          data-artwork-ink=""
           as="section"
           gap={5}
-          padding={8}
+          padding={6}
+          responsiveTo="container"
         >
-          <Inline className="poster-topline" justify="between" gap="md">
+          <Inline className="poster-foreground" justify="between" gap="md">
             <Text variant="caption">OFFSCRIPT / 001</Text>
             <SparkIcon size={20} />
           </Inline>
-          <Heading level={3} size="md">
-            {empty ? "Your next big idea." : headline}
-          </Heading>
-          <Text as="p" variant="caption">
-            For{" "}
-            {audience === "creators"
-              ? "the endlessly curious"
-              : "teams that think differently"}
-            .<br />A new perspective starts here.
-          </Text>
+          <Stack gap="lg" className="poster-foreground">
+            <Heading level={3} size="display">
+              {empty ? "Your next big idea." : headline}
+            </Heading>
+            <Text as="p" variant="caption">
+              For{" "}
+              {audience === "creators"
+                ? "the endlessly curious"
+                : "teams that think differently"}
+              .<br />A new perspective starts here.
+            </Text>
+          </Stack>
           <div aria-hidden="true" className="poster-sculpture">
             <div />
             <div />
             <div />
           </div>
-          <Inline className="poster-bottomline" justify="between" gap="md">
+          <Inline className="poster-foreground" justify="between" gap="md">
             <Text variant="caption">A little outside the ordinary.</Text>
             <ArrowUpRightIcon size={24} />
           </Inline>

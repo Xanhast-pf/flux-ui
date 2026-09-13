@@ -1,4 +1,4 @@
-import { IconButton, Inline } from "@flux-ui/react";
+import { IconButton, Inline, Text } from "@flux-ui/react";
 import { useState } from "react";
 export default function Example() {
   const [count, setCount] = useState(0);
@@ -10,7 +10,7 @@ export default function Example() {
           setCount((value) => value + 1);
         }}
       >
-        <span aria-hidden="true">+</span>
+        <Text aria-hidden="true">+</Text>
       </IconButton>
       <IconButton
         aria-label="Reset sparks"
@@ -20,9 +20,9 @@ export default function Example() {
           setCount(0);
         }}
       >
-        <span aria-hidden="true">↺</span>
+        <Text aria-hidden="true">↺</Text>
       </IconButton>
-      <output aria-live="polite">{count} sparks</output>
+      <Text role="status">{count} sparks</Text>
     </Inline>
   );
 }

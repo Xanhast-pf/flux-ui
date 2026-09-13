@@ -217,6 +217,15 @@ describe.each(["light", "dark"] as const)(
       },
     );
 
+    it("keeps danger text readable on subtle surfaces", () => {
+      expectContrast(
+        block,
+        "--flux-color-danger",
+        "--flux-color-surface-subtle",
+        MIN_TEXT_CONTRAST,
+      );
+    });
+
     it("keeps strong boundaries visible on the normal surface", () => {
       expectContrast(
         block,

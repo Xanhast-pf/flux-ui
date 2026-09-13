@@ -1,10 +1,10 @@
 import { Heading, List, Stack, Text } from "@flux-ui/react";
-export function RulesPage() {
+export function EngineeringRules() {
   return (
-    <Stack className="reference-page" as="section" gap="lg">
+    <Stack as="section" aria-label="Engineering rules" gap="lg">
       <Stack gap="md">
-        <Heading level={1} size="xl">
-          Main engineering rules
+        <Heading level={2} size="lg">
+          Contributor rules
         </Heading>
         <List as="ol" variant="marker">
           <List.Item>

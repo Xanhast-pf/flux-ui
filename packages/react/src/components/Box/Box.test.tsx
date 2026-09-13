@@ -25,6 +25,22 @@ describe("Box", () => {
     expect(ref.current).not.toHaveAttribute("padding");
     expect(ref.current).not.toHaveAttribute("surface");
   });
+  it("supports logical edge padding while preserving consumer style precedence", () => {
+    render(
+      <Box
+        data-testid="box"
+        paddingInlineEnd="md"
+        paddingBlockStart="sm"
+        style={{ paddingInlineEnd: "3rem" }}
+      >
+        Content
+      </Box>,
+    );
+    const box = screen.getByTestId("box");
+    expect(box.style.paddingBlockStart).toBe("var(--flux-space-2)");
+    expect(box.style.paddingInlineEnd).toBe("3rem");
+  });
+
   it("preserves native form submission and consumer styles", async () => {
     const user = userEvent.setup();
     const submitted = vi.fn();

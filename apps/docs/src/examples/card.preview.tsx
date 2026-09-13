@@ -1,4 +1,12 @@
-import { Badge, Button, Card, Inline, Stack } from "@flux-ui/react";
+import {
+  Badge,
+  Button,
+  Card,
+  Heading,
+  Inline,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 import { useState } from "react";
 
 export default function Example() {
@@ -7,10 +15,14 @@ export default function Example() {
     <Card>
       <Stack gap="md">
         <Inline justify="between" wrap>
-          <h2>Ship in small pieces.</h2>
+          <Heading level={2} size="md">
+            Ship in small pieces.
+          </Heading>
           <Badge tone="accent">Composed</Badge>
         </Inline>
-        <p>Cards provide the surface. Your content supplies the meaning.</p>
+        <Text as="p" variant="body">
+          Cards provide the surface. Your content supplies the meaning.
+        </Text>
         <Button
           onClick={() => {
             setClicked(true);

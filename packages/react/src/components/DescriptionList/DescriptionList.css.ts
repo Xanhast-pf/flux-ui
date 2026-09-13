@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 export const descriptionList = style({
-  selectors: { "&[hidden]": { display: "none" } },
+  selectors: {},
   margin: 0,
   display: "grid",
   gridTemplateColumns: "minmax(0, 1fr)",

@@ -1,4 +1,4 @@
-import { Box, Callout, Heading, PageHeader, Stack, Text } from "@flux-ui/react";
+import { Callout, Heading, PageHeader, Stack, Text } from "@flux-ui/react";
 import { CodeBlock } from "../ui/CodeBlock.js";
 export function InstallPage() {
   return (
@@ -25,7 +25,7 @@ pnpm check`}
           label="Repository setup commands"
         />
 
-        <Box>
+        <Stack gap="md">
           <Heading level={2} size="lg">
             Package shape
           </Heading>
@@ -34,14 +34,18 @@ pnpm check`}
             does not pull in the component runtime.
           </Text>
           <CodeBlock
-            code={`// Inside the workspace
+            code={`// Opt-in document foundations, once at the application entry.
+import "@flux-ui/tokens/theme.css";
+import "@flux-ui/tokens/reset.css";
+
+// Component CSS is included by the public package.
 import { Button } from "@flux-ui/react";
 import { SearchIcon } from "@flux-ui/icons";`}
             label="Workspace package imports"
           />
-        </Box>
+        </Stack>
 
-        <Box>
+        <Stack gap="md">
           <Heading level={2} size="lg">
             Daily development
           </Heading>
@@ -56,9 +60,9 @@ pnpm check
 pnpm check:full`}
             label="Daily development commands"
           />
-        </Box>
+        </Stack>
 
-        <Box>
+        <Stack gap="md">
           <Heading level={2} size="lg">
             Add a component
           </Heading>
@@ -69,7 +73,7 @@ pnpm generate
 pnpm verify:all`}
             label="Component scaffolding commands"
           />
-        </Box>
+        </Stack>
       </Stack>
     </Stack>
   );

@@ -16,10 +16,6 @@ async function expectNoViolations(
     await expect(page.locator("[data-scene]")).toBeVisible();
   }
   const builder = new AxeBuilder({ page });
-  // The SkipLink component preview is embedded inside the docs page, so it
-  // cannot itself be the page's first skip link. The shell already provides
-  // the real first-focusable skip link; audit every other rule for the demo.
-  if (path === "components/skip-link") builder.disableRules(["skip-link"]);
   if (include !== undefined) {
     const surface = page.locator(include).first();
     await expect(surface).toBeVisible();
@@ -134,6 +130,44 @@ for (const theme of ["light", "dark"] as const) {
     await page
       .getByRole("button", { name: "Preview loading", exact: true })
       .click();
+    await expectNoViolations(page);
+  });
+}
+
+for (const theme of ["light", "dark"] as const) {
+  test(`persistent documentation navigation is axe-clean in ${theme}`, async ({
+    page,
+  }) => {
+    await page.addInitScript(
+      (value) => window.localStorage.setItem("flux-ui-theme", value),
+      theme,
+    );
+    await page.goto("/#components/card");
+    await page
+      .getByRole("button", { name: "Toggle navigation", exact: true })
+      .click();
+    await expect(
+      page.getByRole("complementary", { name: "Documentation sidebar" }),
+    ).toBeVisible();
+    await expectNoViolations(page);
+  });
+  test(`hosted skip link focuses its target without changing route in ${theme}`, async ({
+    page,
+  }) => {
+    await page.addInitScript(
+      (value) => window.localStorage.setItem("flux-ui-theme", value),
+      theme,
+    );
+    await page.goto("/#components/skip-link");
+    const link = page.getByRole("link", {
+      name: "Skip this example introduction",
+    });
+    await link.focus();
+    await expect(link).toBeVisible();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/#components\/skip-link$/u);
+    const target = page.locator(".preview-content section");
+    await expect(target).toBeFocused();
     await expectNoViolations(page);
   });
 }

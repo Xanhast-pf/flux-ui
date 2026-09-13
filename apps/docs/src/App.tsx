@@ -1,20 +1,18 @@
-import { ArrowUpRightIcon } from "@flux-ui/icons";
+import { MenuIcon } from "@flux-ui/icons";
 import {
-  Badge,
   Box,
   Container,
   Heading,
   Inline,
   Link,
   SkipLink,
+  Sidebar,
   Stack,
   Text,
 } from "@flux-ui/react";
 import { lazy, Suspense, useEffect, useRef } from "react";
 import { REPOSITORY_URL } from "./lib/format.js";
-import { routePath, useRoute } from "./lib/routing.js";
-import "./shell.css";
-import { ThemeSwitch } from "./ui/AppearanceControls.js";
+import { pageTitle, routePath, useRoute } from "./lib/routing.js";
 import { ExampleLoading } from "./ui/ExampleLoading.js";
 import { DocumentationNavigation } from "./ui/Navigation.js";
 import { SearchDialog } from "./ui/SearchDialog.js";
@@ -56,11 +54,6 @@ const SizePage = lazy(() =>
 const PerformancePage = lazy(() =>
   import("./pages/PerformancePage.js").then((module) => ({
     default: module.PerformancePage,
-  })),
-);
-const RulesPage = lazy(() =>
-  import("./pages/RulesPage.js").then((module) => ({
-    default: module.RulesPage,
   })),
 );
 const InstallPage = lazy(() =>
@@ -193,8 +186,6 @@ function RouteView({ route }: { route: string }) {
       return <SizePage />;
     case "performance":
       return <PerformancePage />;
-    case "rules":
-      return <RulesPage />;
     case "install":
       return <InstallPage />;
     case "documentation":
@@ -219,6 +210,9 @@ export function App() {
   const mainRef = useRef<HTMLElement>(null);
   const previousRoute = useRef(route);
   useEffect(() => {
+    document.title = pageTitle(route);
+  }, [route]);
+  useEffect(() => {
     if (previousRoute.current === route) return;
     previousRoute.current = route;
     const frame = requestAnimationFrame(() => {
@@ -230,7 +224,7 @@ export function App() {
     };
   }, [route]);
   return (
-    <>
+    <Sidebar.Root>
       <SkipLink
         href="#main-content"
         onClick={(event) => {
@@ -241,99 +235,99 @@ export function App() {
         Skip to content
       </SkipLink>
       <Box
-        data-gallery={gallery || undefined}
         className="site-header"
         as="header"
         surface="default"
         border="bottom"
       >
         <Container size="xl">
-          <Inline className="header-inner" gap="sm">
-            <DocumentationNavigation route={route} />
-            <Link href="#overview" aria-label="Flux UI home" className="brand">
-              <img
-                src={`${import.meta.env.BASE_URL}flux-mark.svg`}
-                alt=""
-                width={32}
-                height={32}
-                className="brand-mark"
-              />
-              <Text>
-                flux<Text className="brand-ui">UI</Text>
-              </Text>
-            </Link>
-            <Badge tone="accent">alpha</Badge>
-            <Box
-              aria-label="Primary navigation"
-              className="header-links"
-              as="nav"
-            >
-              <Link
-                href="#playground"
-                aria-current={route === "playground" ? "page" : undefined}
-                variant="navigation"
+          <Inline
+            className="header-inner"
+            justify="between"
+            gap="sm"
+            paddingBlock="sm"
+          >
+            <Inline gap="sm">
+              <Sidebar.Toggle
+                variant="ghost"
+                tone="neutral"
+                aria-label="Toggle navigation"
+                title="Toggle navigation"
               >
-                Playground
-              </Link>
+                <MenuIcon aria-hidden="true" size={20} />
+              </Sidebar.Toggle>
               <Link
-                href="#components"
-                aria-current={
-                  route === "components" || route.startsWith("components/")
-                    ? "page"
-                    : undefined
-                }
-                variant="navigation"
+                href="#overview"
+                aria-label="Flux UI home"
+                variant="ghost"
+                tone="neutral"
+                className="brand"
               >
-                Components
+                <Inline gap="sm">
+                  <img
+                    src={`${import.meta.env.BASE_URL}flux-mark.svg`}
+                    alt=""
+                    width={32}
+                    height={32}
+                  />
+                  <Text variant="lead" weight="bold">
+                    flux
+                    <Text tone="muted" weight="regular">
+                      UI
+                    </Text>
+                  </Text>
+                </Inline>
               </Link>
-              <Link
-                href="#engineering"
-                aria-current={route === "engineering" ? "page" : undefined}
-                variant="navigation"
-              >
-                Engineering
-              </Link>
-            </Box>
-            <Box className="header-search">
-              <SearchDialog />
-            </Box>
-            <Box className="header-theme">
-              <ThemeSwitch />
-            </Box>
-            <Link href={REPOSITORY_URL} className="header-github">
-              GitHub <ArrowUpRightIcon aria-hidden="true" size={14} />
-            </Link>
+            </Inline>
+            <SearchDialog />
           </Inline>
         </Container>
       </Box>
-      <Container
-        size="xl"
-        className={gallery ? "workshop-shell gallery-shell" : "workshop-shell"}
+      <Sidebar.Layout
+        className="workshop-shell"
+        style={{ "--flux-sidebar-offset": "4rem" }}
       >
-        <Box id="main-content" tabIndex={-1} ref={mainRef} as="main">
-          <Suspense fallback={<ExampleLoading />}>
-            <RouteView route={route} />
-          </Suspense>
-          <Box className="site-footer" as="footer">
-            <Inline justify="between" gap="md" wrap>
-              <Text as="p" variant="body">
-                Built with Flux. Still becoming.
-              </Text>
-              <Inline gap="md" wrap>
-                <Link href="#trust">Trust Center</Link>
-                <Link href="#engineering">Engineering</Link>
-                <Link href="#health">Project health</Link>
-                <Link href={`${REPOSITORY_URL}/blob/main/CONTRIBUTING.md`}>
-                  Contribute
-                </Link>
-                <Link href={`${REPOSITORY_URL}/blob/main/LICENSE`}>
-                  MIT license
-                </Link>
-              </Inline>
-            </Inline>
-          </Box>
-        </Box>
-      </Container>
-    </>
+        <DocumentationNavigation route={route} />
+        <Sidebar.Content>
+          <Container size={gallery ? "xl" : "lg"}>
+            <Stack
+              id="main-content"
+              tabIndex={-1}
+              ref={mainRef}
+              as="main"
+              gap={16}
+              paddingBlock="xl"
+            >
+              <Suspense fallback={<ExampleLoading />}>
+                <RouteView route={route} />
+              </Suspense>
+              <Box
+                className="site-footer"
+                as="footer"
+                border="block"
+                paddingBlock="xl"
+              >
+                <Stack gap="md">
+                  <Text as="p" variant="caption" tone="muted">
+                    Built with Flux. Still becoming.
+                  </Text>
+                  <Inline gap="md" wrap>
+                    <Link href="#trust">Trust Center</Link>
+                    <Link href="#engineering">Engineering</Link>
+                    <Link href="#health">Project health</Link>
+                    <Link href={`${REPOSITORY_URL}/blob/main/CONTRIBUTING.md`}>
+                      Contribute
+                    </Link>
+                    <Link href={`${REPOSITORY_URL}/blob/main/LICENSE`}>
+                      MIT license
+                    </Link>
+                  </Inline>
+                </Stack>
+              </Box>
+            </Stack>
+          </Container>
+        </Sidebar.Content>
+      </Sidebar.Layout>
+    </Sidebar.Root>
   );
 }

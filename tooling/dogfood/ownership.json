@@ -1,27 +1,12 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "sourceExceptions": [
     {
-      "prefix": "apps/docs/src/perf/",
-      "reason": "Native browser and React reference implementations are the measured performance baseline, not production UI."
+      "file": "apps/docs/src/perf/PerfApp.tsx",
+      "reason": "The isolated native/raw performance references are deliberately not Flux components. They are never regular route UI."
     }
   ],
   "artwork": [
-    {
-      "file": "apps/docs/src/pages/OverviewPage.tsx",
-      "className": "hero-signal",
-      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
-    },
-    {
-      "file": "apps/docs/src/pages/TokensPage.tsx",
-      "className": "space-sample",
-      "reason": "Token-size geometry sample; width is the value being illustrated."
-    },
-    {
-      "file": "apps/docs/src/showcase/ProductShowcase.tsx",
-      "className": "try-dot",
-      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
-    },
     {
       "file": "apps/docs/src/showcase/scenes/finance.preview.tsx",
       "className": "card-orbit",
@@ -44,22 +29,12 @@
     },
     {
       "file": "apps/docs/src/showcase/scenes/music.preview.tsx",
-      "className": "track-lane",
-      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
-    },
-    {
-      "file": "apps/docs/src/showcase/scenes/music.preview.tsx",
       "className": "sequencer-playhead",
       "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
     },
     {
       "file": "apps/docs/src/showcase/scenes/social.preview.tsx",
       "className": "gather-flower",
-      "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
-    },
-    {
-      "file": "apps/docs/src/showcase/scenes/social.preview.tsx",
-      "className": "creator-portrait",
       "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
     },
     {
@@ -71,79 +46,543 @@
       "file": "apps/docs/src/showcase/scenes/video.preview.tsx",
       "className": "clip-thumbnail",
       "reason": "Original scene/brand artwork. Native shapes are not controls, surfaces, or ordinary page typography."
-    },
-    {
-      "file": "apps/docs/src/ui/BundleExplorer.tsx",
-      "className": "bar-track",
-      "reason": "Decorative data geometry; the numeric value and label are provided as readable text."
-    },
-    {
-      "file": "apps/docs/src/ui/ComparisonBars.tsx",
-      "className": "bar-track",
-      "reason": "Decorative data geometry; the numeric value and label are provided as readable text."
     }
   ],
   "stylesheets": {
-    "apps/docs/src/pages/landing.css": {
-      "owner": "documentation-shell",
-      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
-      "maxDeclarations": 103
-    },
     "apps/docs/src/perf/perf.css": {
       "owner": "documentation-shell",
-      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
-      "maxDeclarations": 17
-    },
-    "apps/docs/src/shell.css": {
-      "owner": "documentation-shell",
-      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
-      "maxDeclarations": 23
+      "reason": "Native performance reference styling, isolated from normal documentation routes.",
+      "maxDeclarations": 17,
+      "rules": {
+        "html, body, #root": ["min-width", "margin", "padding"],
+        ".perf-native-button": [
+          "appearance",
+          "min-height",
+          "padding-inline",
+          "border",
+          "border-radius",
+          "background",
+          "color",
+          "font",
+          "font-size",
+          "font-weight",
+          "line-height"
+        ],
+        ".perf-native-button-content": ["display", "align-items", "gap"]
+      }
     },
     "apps/docs/src/showcase/scenes/commerce.css": {
       "owner": "scene-art",
-      "reason": "Domain illustration geometry, not a public control theme.",
-      "maxDeclarations": 48
+      "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
+      "maxDeclarations": 48,
+      "rules": {
+        ".product-art": [
+          "background",
+          "color",
+          "--speaker-body",
+          "--speaker-grille",
+          "--speaker-line"
+        ],
+        ".product-art > svg": ["inline-size", "max-block-size"],
+        ".product-art[data-finish=\"ink\"]": [
+          "--speaker-body",
+          "--speaker-grille",
+          "--speaker-line"
+        ],
+        ".product-art[data-finish=\"clay\"]": [
+          "--speaker-body",
+          "--speaker-grille",
+          "--speaker-line"
+        ],
+        ".speaker-shadow": ["fill", "opacity"],
+        ".speaker-handle": ["stroke", "stroke-width", "fill"],
+        ".speaker-body": ["fill", "stroke", "stroke-width"],
+        ".speaker-grille": ["fill"],
+        ".speaker-lines": [
+          "stroke",
+          "stroke-width",
+          "stroke-dasharray",
+          "fill"
+        ],
+        ".speaker-led": ["fill"],
+        ".speaker-controls": ["stroke", "stroke-width"]
+      }
     },
     "apps/docs/src/showcase/scenes/finance.css": {
       "owner": "scene-art",
-      "reason": "Domain illustration geometry, not a public control theme.",
-      "maxDeclarations": 54
+      "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
+      "maxDeclarations": 54,
+      "rules": {
+        ".cashflow-chart svg": [
+          "inline-size",
+          "display",
+          "max-block-size",
+          "overflow"
+        ],
+        ".chart-grid": ["fill", "stroke", "stroke-width", "stroke-dasharray"],
+        ".chart-area": ["fill", "opacity"],
+        ".chart-line": [
+          "vector-effect",
+          "fill",
+          "stroke",
+          "stroke-width",
+          "stroke-linecap",
+          "stroke-linejoin"
+        ],
+        ".folio-card": [
+          "position",
+          "overflow",
+          "background",
+          "color",
+          "--flux-color-text"
+        ],
+        ".card-chip": [
+          "inline-size",
+          "block-size",
+          "border",
+          "border-radius",
+          "opacity",
+          "background"
+        ],
+        ".card-orbit": [
+          "position",
+          "border",
+          "border-radius",
+          "inline-size",
+          "block-size",
+          "inset",
+          "opacity",
+          "box-shadow",
+          "pointer-events"
+        ]
+      }
     },
     "apps/docs/src/showcase/scenes/marketing.css": {
       "owner": "scene-art",
-      "reason": "Domain illustration geometry, not a public control theme.",
-      "maxDeclarations": 46
+      "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
+      "maxDeclarations": 46,
+      "rules": {
+        ".campaign-poster": ["position", "overflow", "background", "color"],
+        ".poster-foreground": ["position", "z-index"],
+        ".poster-sculpture": [
+          "position",
+          "inline-size",
+          "block-size",
+          "inset",
+          "transform",
+          "pointer-events"
+        ],
+        ".poster-sculpture > div": [
+          "position",
+          "inset",
+          "border",
+          "border-radius",
+          "opacity"
+        ],
+        ".poster-sculpture > div:nth-child(2)": ["transform", "opacity"],
+        ".poster-sculpture > div:nth-child(3)": ["transform", "opacity"],
+        "@container flux-layout (min-width: 48rem) / .poster-sculpture": [
+          "inline-size",
+          "block-size",
+          "inset-inline-end"
+        ],
+        "@container flux-layout (max-width: 30rem) / .poster-sculpture": [
+          "inline-size",
+          "block-size"
+        ]
+      }
     },
     "apps/docs/src/showcase/scenes/music.css": {
       "owner": "scene-art",
-      "reason": "Domain illustration geometry, not a public control theme.",
-      "maxDeclarations": 83
+      "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
+      "maxDeclarations": 83,
+      "rules": {
+        ".track-row[data-channel=\"one\"]": ["--track-color"],
+        ".track-row[data-channel=\"two\"]": ["--track-color"],
+        ".track-row[data-channel=\"three\"]": ["--track-color"],
+        ".track-row[data-channel=\"four\"]": ["--track-color"],
+        ".track-color": [
+          "inline-size",
+          "block-size",
+          "background",
+          "border-radius"
+        ],
+        ".track-lane": ["position", "background-image"],
+        ".audio-clip": ["background", "border-color", "overflow"],
+        ".audio-clip svg": ["inline-size", "block-size", "display", "fill"],
+        ".track-row[data-muted=\"true\"] .audio-clip": [
+          "background",
+          "border-style"
+        ],
+        ".track-row[data-muted=\"true\"] .audio-clip svg": ["opacity"],
+        ".sequencer-playhead": [
+          "position",
+          "inset",
+          "pointer-events",
+          "overflow"
+        ],
+        ".sequencer-playhead > span": [
+          "display",
+          "inline-size",
+          "block-size",
+          "transform",
+          "border-inline-start"
+        ],
+        ".sequencer[data-playing=\"true\"] .sequencer-playhead > span": [
+          "animation"
+        ],
+        "@keyframes visual-loop / from": ["transform"],
+        "@keyframes visual-loop / to": ["transform"],
+        "@media (prefers-reduced-motion: reduce) / .sequencer[data-playing=\"true\"] .sequencer-playhead > span": [
+          "animation"
+        ]
+      }
     },
     "apps/docs/src/showcase/scenes/social.css": {
       "owner": "scene-art",
-      "reason": "Domain illustration geometry, not a public control theme.",
-      "maxDeclarations": 50
+      "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
+      "maxDeclarations": 50,
+      "rules": {
+        ".gather-editorial": ["position", "overflow", "background", "color"],
+        ".editorial-foreground": ["position", "z-index"],
+        ".gather-flower": [
+          "position",
+          "inline-size",
+          "block-size",
+          "inset",
+          "opacity",
+          "pointer-events"
+        ],
+        ".gather-flower > span": [
+          "position",
+          "inset",
+          "border",
+          "border-radius",
+          "transform"
+        ],
+        ".gather-flower > span:nth-child(2)": ["transform"],
+        ".gather-flower > span:nth-child(3)": ["transform"],
+        ".gather-flower > span:nth-child(4)": ["transform"],
+        ".editorial-footnote": ["position"],
+        "@container flux-layout (min-width: 48rem) / .gather-flower": [
+          "inset-inline-end"
+        ],
+        "@container flux-layout (max-width: 30rem) / .gather-flower": [
+          "opacity"
+        ]
+      }
     },
     "apps/docs/src/showcase/scenes/video.css": {
       "owner": "scene-art",
-      "reason": "Domain illustration geometry, not a public control theme.",
-      "maxDeclarations": 83
+      "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
+      "maxDeclarations": 83,
+      "rules": {
+        ".video-frame": [
+          "position",
+          "overflow",
+          "inline-size",
+          "block-size",
+          "isolation",
+          "--flux-color-text",
+          "--flux-color-text-muted"
+        ],
+        ".video-landscape": [
+          "position",
+          "inset",
+          "z-index",
+          "background",
+          "overflow"
+        ],
+        ".landscape-sun": [
+          "position",
+          "inline-size",
+          "block-size",
+          "border-radius",
+          "inset",
+          "background"
+        ],
+        ".landscape-back, .landscape-front": [
+          "position",
+          "inset",
+          "background",
+          "border-radius",
+          "transform"
+        ],
+        ".landscape-front": ["background", "inset", "transform"],
+        "[data-art=\"dunes\"] .video-landscape": ["background"],
+        "[data-art=\"dunes\"] .landscape-back": ["background", "transform"],
+        "[data-art=\"dunes\"] .landscape-front": ["background", "transform"],
+        "[data-art=\"night\"] .video-landscape": ["background"],
+        "[data-art=\"night\"] .landscape-sun": ["background"],
+        "[data-art=\"night\"] .landscape-back": ["background"],
+        "[data-art=\"night\"] .landscape-front": ["background"],
+        ".video-frame::after": [
+          "content",
+          "position",
+          "inset",
+          "z-index",
+          "background",
+          "pointer-events"
+        ],
+        ".video-frame-label": ["position", "inset"],
+        ".video-frame-footer": ["position", "inset"],
+        ".clip-thumbnail": [
+          "inline-size",
+          "block-size",
+          "flex-shrink",
+          "border-radius",
+          "background"
+        ],
+        "[data-art=\"dunes\"] .clip-thumbnail": ["background"],
+        "[data-art=\"night\"] .clip-thumbnail": ["background"],
+        "@container flux-layout (max-width: 30rem) / .video-frame-label": [
+          "inset"
+        ],
+        "@container flux-layout (max-width: 30rem) / .video-frame-footer": [
+          "display"
+        ]
+      }
     },
     "apps/docs/src/showcase/showcase.css": {
       "owner": "showcase-staging",
-      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
-      "maxDeclarations": 29
+      "reason": "Original scene palettes and explicitly scoped semantic text colors inside artwork.",
+      "maxDeclarations": 29,
+      "rules": {
+        ".world-surface": [
+          "overflow",
+          "--art-canvas",
+          "--art-ink",
+          "--channel-one",
+          "--channel-two",
+          "--channel-three",
+          "--channel-four"
+        ],
+        ".world-surface[data-mood=\"studio\"]": [
+          "--art-canvas",
+          "--art-ink",
+          "--channel-one",
+          "--channel-two",
+          "--channel-three",
+          "--channel-four"
+        ],
+        ".world-surface[data-mood=\"bloom\"]": ["--art-canvas", "--art-ink"],
+        ".world-surface[data-mood=\"terminal\"]": ["--art-canvas", "--art-ink"],
+        "[data-artwork-ink]": [
+          "--flux-color-text",
+          "--flux-color-text-muted",
+          "--flux-color-text-subtle"
+        ]
+      }
     },
     "apps/docs/src/styles.css": {
       "owner": "documentation-shell",
-      "reason": "Site layout, brand/preview staging, and remaining explicitly bounded docs compositions. New ordinary controls belong in Flux.",
-      "maxDeclarations": 347
+      "reason": "Reviewed sticky-shell positioning, accent token adapters, original vector specimens and the isolated benchmark frame. No control/layout/typography skins.",
+      "maxDeclarations": 347,
+      "rules": {
+        "[data-docs-accent=\"teal\"][data-flux-theme=\"light\"]": [
+          "--flux-color-accent",
+          "--flux-color-accent-hover",
+          "--flux-color-accent-soft",
+          "--flux-color-accent-foreground",
+          "--flux-color-focus"
+        ],
+        "[data-docs-accent=\"teal\"][data-flux-theme=\"dark\"]": [
+          "--flux-color-accent",
+          "--flux-color-accent-hover",
+          "--flux-color-accent-soft",
+          "--flux-color-accent-foreground",
+          "--flux-color-focus"
+        ],
+        "[data-docs-accent=\"rose\"][data-flux-theme=\"light\"]": [
+          "--flux-color-accent",
+          "--flux-color-accent-hover",
+          "--flux-color-accent-soft",
+          "--flux-color-accent-foreground",
+          "--flux-color-focus"
+        ],
+        "[data-docs-accent=\"rose\"][data-flux-theme=\"dark\"]": [
+          "--flux-color-accent",
+          "--flux-color-accent-hover",
+          "--flux-color-accent-soft",
+          "--flux-color-accent-foreground",
+          "--flux-color-focus"
+        ],
+        ".site-header": ["position", "inset-block-start", "z-index"],
+        ".header-inner": ["min-block-size"],
+        ".preview-frame": ["overflow"],
+        ".preview-stage": ["overflow-x"],
+        ".collection-art": ["position", "background"],
+        ".collection-art::before": [
+          "content",
+          "position",
+          "inset",
+          "border",
+          "border-radius",
+          "transform",
+          "pointer-events"
+        ],
+        ".identity-hero": ["position", "overflow", "background"],
+        ".identity-hero::after": [
+          "content",
+          "position",
+          "inline-size",
+          "block-size",
+          "inset-inline-end",
+          "inset-block-end",
+          "border",
+          "border-radius",
+          "opacity",
+          "pointer-events"
+        ],
+        ".display-stage": ["background-image", "background-size"],
+        ".display-specimen, .alphabet-specimen svg": [
+          "display",
+          "inline-size",
+          "max-inline-size",
+          "block-size"
+        ],
+        ".lab-surface:empty": ["display"],
+        ".lab-surface": ["block-size", "overflow", "pointer-events"],
+        ".lab-surface iframe": [
+          "inline-size",
+          "block-size",
+          "border",
+          "display"
+        ],
+        "@media (forced-colors: active) / .collection-art, .identity-hero, .display-stage": [
+          "background"
+        ],
+        "@media (forced-colors: active) / .collection-art::before": [
+          "border-color"
+        ],
+        "@media (forced-colors: active) / .identity-hero::after": ["display"]
+      }
     }
   },
-  "teachingFixtures": [
+  "assets": [
     {
-      "prefix": "apps/docs/src/examples/",
-      "reason": "Native wrapper markup in teaching fixtures demonstrates interoperability; ordinary raw controls remain forbidden, and code strings are not rendered JSX."
+      "file": "apps/docs/src/App.tsx",
+      "reason": "References the original Flux SVG asset, with an explicit alternative text contract; not a replacement UI component."
+    },
+    {
+      "file": "apps/docs/src/pages/IdentityPage.tsx",
+      "reason": "References the original Flux SVG asset, with an explicit alternative text contract; not a replacement UI component."
+    }
+  ],
+  "domAdapters": [
+    {
+      "file": "apps/docs/src/lib/download.ts",
+      "tags": ["a"],
+      "reason": "Transient object-URL download anchor, immediately removed after activation. No rendered control or CSS is introduced."
+    },
+    {
+      "file": "apps/docs/src/lab/runner.ts",
+      "tags": ["iframe"],
+      "reason": "Isolated native/Flux benchmark document, explicitly titled and removed at the end of each sample."
+    }
+  ],
+  "factories": [
+    {
+      "file": "apps/docs/src/pages/IconsPage.tsx",
+      "expressions": ["entry.component", "selectedEntry.component"],
+      "reason": "Renders components from the public @flux-ui/icons/catalog, whose original paths and exports are generated and verified."
+    }
+  ],
+  "inlineGeometry": [
+    {
+      "file": "apps/docs/src/App.tsx",
+      "components": ["Sidebar.Layout"],
+      "properties": ["--flux-sidebar-offset"],
+      "reason": "Connects the public Sidebar offset hook to the sticky header height."
+    },
+    {
+      "file": "apps/docs/src/demos/CollectionLab.tsx",
+      "components": ["Skeleton"],
+      "properties": ["width"],
+      "reason": "Placeholder widths illustrate loading content without skinning controls."
+    },
+    {
+      "file": "apps/docs/src/examples/skeleton.preview.tsx",
+      "components": ["Skeleton"],
+      "properties": ["width"],
+      "reason": "The copied example demonstrates native width sizing on the public Skeleton."
+    },
+    {
+      "file": "apps/docs/src/examples/scroll-area.preview.tsx",
+      "components": ["Box"],
+      "properties": ["minInlineSize"],
+      "reason": "Deliberately wide content demonstrates the public ScrollArea overflow contract."
+    },
+    {
+      "file": "apps/docs/src/pages/TokensPage.tsx",
+      "components": ["Box"],
+      "properties": ["inlineSize", "blockSize"],
+      "reason": "The rectangle width is the token value being illustrated; surfaces and child rhythm are public props."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/finance.preview.tsx",
+      "components": ["Table.Root"],
+      "properties": ["minInlineSize"],
+      "reason": "Minimum table content width gives the public ScrollArea a real overflow example."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/music.preview.tsx",
+      "components": ["Stack"],
+      "properties": ["--loop-duration"],
+      "reason": "The original playhead animation duration is derived from the user BPM selection."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/music.preview.tsx",
+      "components": ["Box"],
+      "properties": ["marginInlineStart", "inlineSize"],
+      "reason": "Track start and duration determine clip geometry, not UI control appearance."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/video.preview.tsx",
+      "components": ["AspectRatio"],
+      "properties": ["maxInlineSize"],
+      "reason": "Bounds portrait/square illustrated frames according to the selected crop."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/video.preview.tsx",
+      "components": ["Inline"],
+      "properties": ["inlineSize"],
+      "reason": "Aligns preview metadata with the full width of its bounded artwork frame."
+    },
+    {
+      "file": "apps/docs/src/ui/BundleExplorer.tsx",
+      "components": ["ScrollArea"],
+      "properties": ["maxBlockSize"],
+      "reason": "Bounds the public scrolling measurement list."
+    },
+    {
+      "file": "apps/docs/src/ui/SearchDialog.tsx",
+      "components": ["ScrollArea"],
+      "properties": ["maxBlockSize"],
+      "reason": "Bounds results within the public modal search popup."
+    },
+    {
+      "file": "apps/docs/src/ui/ExampleLoading.tsx",
+      "components": ["Skeleton"],
+      "properties": ["width", "height"],
+      "reason": "Placeholder dimensions represent loading examples without skinning public controls."
+    }
+  ],
+  "tokenAdapters": [
+    {
+      "file": "apps/docs/src/showcase/scenes/commerce.preview.tsx",
+      "classes": ["product-art"],
+      "reason": "Light illustration canvas ink only, never ordinary controls."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/marketing.preview.tsx",
+      "classes": ["campaign-poster"],
+      "reason": "Light illustration canvas ink only, never ordinary controls."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/social.preview.tsx",
+      "classes": ["gather-editorial"],
+      "reason": "Light illustration canvas ink only, never ordinary controls."
     }
   ]
 }

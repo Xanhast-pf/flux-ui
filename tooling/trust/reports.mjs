@@ -72,7 +72,7 @@ export function validateReport(name, data, source) {
           throw new Error("Incomplete or invalid raw runtime samples.");
       }
     }
-  } else if (name === "browser-tests.json") {
+  } else if (name === "browser-tests.json" || name === "consumer-tests.json") {
     if (
       !isRecord(data.stats) ||
       !Number.isInteger(data.stats.expected) ||

@@ -1,9 +1,8 @@
 import {
-  Box,
   Card,
   Grid,
   Heading,
-  List,
+  Link,
   PageHeader,
   Stack,
   Stat,
@@ -68,27 +67,26 @@ export function HealthPage() {
           </Card>
         </Grid>
 
-        <Box>
-          <Heading level={2} size="lg">
-            Required quality gates
-          </Heading>
-          <List as="ul" variant="marker">
-            <List.Item>Generated registry is deterministic</List.Item>
-            <List.Item>Prettier formatting</List.Item>
-            <List.Item>ESLint</List.Item>
-            <List.Item>Strict TypeScript</List.Item>
-            <List.Item>Knip dependency/file analysis</List.Item>
-            <List.Item>Vitest component and token tests</List.Item>
-            <List.Item>Production package and docs builds</List.Item>
-            <List.Item>Per-component bundle-size contracts</List.Item>
-            <List.Item>Coding Bible automated rules</List.Item>
-            <List.Item>Storybook production build</List.Item>
-            <List.Item>Playwright accessibility and browser tests</List.Item>
-            <List.Item>
-              Native-relative runtime performance regression checks
-            </List.Item>
-          </List>
-        </Box>
+        <Card>
+          <Stack gap="md">
+            <Heading level={2} size="lg">
+              Read this snapshot
+            </Heading>
+            <Text as="p" tone="muted">
+              Catalog coverage is generated from component metadata. Weight
+              comes from committed, reviewed baselines; an unmeasured component
+              remains pending. These numbers are not a live CI verdict.
+            </Text>
+            <Link href="#size">
+              Inspect component-by-component bundle measurements
+            </Link>
+            <Link href="#performance">
+              Inspect committed runtime measurements
+            </Link>
+            <Link href="#engineering">How the quality gates work</Link>
+            <Link href="#trust">Build and security evidence</Link>
+          </Stack>
+        </Card>
       </Stack>
     </Stack>
   );

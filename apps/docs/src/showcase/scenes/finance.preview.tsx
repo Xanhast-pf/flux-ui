@@ -1,7 +1,6 @@
 import { ArrowUpRightIcon, LockIcon, UnlockIcon } from "@flux-ui/icons";
 import {
   Avatar,
-  Box,
   Button,
   Card,
   Grid,
@@ -88,14 +87,14 @@ export default function FinanceScene() {
         >
           <Stack gap={3}>
             <Inline justify="between" wrap gap={3}>
-              <Box>
+              <Stack gap="md">
                 <Text as="p" variant="caption" tone="muted">
                   The bigger picture
                 </Text>
                 <Heading level={3} size="md">
                   Money in motion.
                 </Heading>
-              </Box>
+              </Stack>
               <ToggleGroup.Root
                 type="single"
                 value={period}
@@ -125,7 +124,12 @@ export default function FinanceScene() {
             <Text as="p" variant="caption" tone="muted">
               Income · {data.label.toLowerCase()} · fictional USD
             </Text>
-            <Box className="cashflow-chart" as="figure">
+            <Stack
+              className="cashflow-chart"
+              as="figure"
+              gap="sm"
+              paddingBlock={5}
+            >
               <svg
                 viewBox="0 0 440 175"
                 preserveAspectRatio="none"
@@ -149,7 +153,7 @@ export default function FinanceScene() {
                   </Text>
                 ))}
               </Inline>
-            </Box>
+            </Stack>
             <Grid
               columns={{ base: 1, sm: 3 }}
               responsiveTo="container"
@@ -180,11 +184,14 @@ export default function FinanceScene() {
             className="folio-card"
             as="section"
             gap="lg"
+            padding={6}
           >
-            <Text variant="caption">folio / business</Text>
+            <Text variant="body" weight="medium">
+              folio / business
+            </Text>
             <div aria-hidden="true" className="card-orbit" />
             <span aria-hidden="true" className="card-chip" />
-            <Text as="strong" weight="bold" variant="caption">
+            <Text as="strong" weight="medium" variant="metric" numeric>
               •••• &nbsp; 4242
             </Text>
             <Inline justify="between" gap="sm" wrap>
@@ -264,8 +271,10 @@ export default function FinanceScene() {
                     <Table.Row>
                       <Table.ColumnHeader>Transaction</Table.ColumnHeader>
                       <Table.ColumnHeader>Date</Table.ColumnHeader>
-                      <Table.ColumnHeader style={{ textAlign: "end" }}>
-                        Amount
+                      <Table.ColumnHeader>
+                        <Text as="p" align="end">
+                          Amount
+                        </Text>
                       </Table.ColumnHeader>
                     </Table.Row>
                   </Table.Header>
@@ -299,10 +308,12 @@ export default function FinanceScene() {
                           </Inline>
                         </Table.RowHeader>
                         <Table.Cell>{row.date}</Table.Cell>
-                        <Table.Cell style={{ textAlign: "end" }}>
-                          <Text as="strong" variant="caption" numeric>
-                            {row.amount}
-                          </Text>
+                        <Table.Cell>
+                          <Stack as="span" align="end" gap="none">
+                            <Text as="strong" variant="caption" numeric>
+                              {row.amount}
+                            </Text>
+                          </Stack>
                         </Table.Cell>
                       </Table.Row>
                     ))}

@@ -127,5 +127,5 @@ export function actionButtonStyles(): {
     gap: `var(${cssVars.space[2]})`,
     selectors: { "[data-loading='true'] > &": { opacity: 0 } },
   };
-  return { button, content };
+  return { button: button, content: content };
 }

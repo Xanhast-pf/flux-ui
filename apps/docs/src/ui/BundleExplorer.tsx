@@ -1,5 +1,7 @@
 import {
-  Box,
+  Grid,
+  Meter,
+  ScrollArea,
   Card,
   Field,
   Heading,
@@ -40,14 +42,14 @@ export function BundleExplorer() {
     <Card aria-label="Bundle-size visualization" as="section" padding={6}>
       <Stack gap="lg">
         <Inline wrap justify="between" gap="lg">
-          <Box>
+          <Stack gap="xs">
             <Text as="p" variant="eyebrow" tone="muted">
               Anatomy of a lightweight system
             </Text>
             <Heading level={2} size="lg">
               Every component, in perspective.
             </Heading>
-          </Box>
+          </Stack>
           <Inline wrap gap="md">
             <Field.Root>
               <Field.Label>Find a component</Field.Label>
@@ -89,24 +91,43 @@ export function BundleExplorer() {
         <Text role="status" as="p" variant="caption" tone="muted">
           {entries.length} matching components
         </Text>
-        <Box className="bundle-bars">
-          {entries.map((entry) => (
-            <Box key={entry.slug} className="bundle-row">
-              <Link href={`#components/${entry.slug}`}>{entry.name}</Link>
-              <span aria-hidden="true" className="bar-track">
-                <span
-                  style={{
-                    width: `${((entry[compression] ?? 0) / maximum) * 100}%`,
-                  }}
-                  className="bar-flux"
-                />
-              </span>
-              <Text as="strong" weight="bold">
-                {formatBytes(entry[compression])}
-              </Text>
-            </Box>
-          ))}
-        </Box>
+        <ScrollArea
+          aria-label="Component sizes"
+          axis="vertical"
+          style={{ maxBlockSize: "32rem" }}
+        >
+          <Stack gap={3} padding="xs">
+            {entries.map((entry) => {
+              const value = entry[compression];
+              return (
+                <Grid
+                  key={entry.slug}
+                  templateColumns="minmax(0, 1fr) auto"
+                  gap="sm"
+                  align="center"
+                >
+                  <Link href={`#components/${entry.slug}`}>{entry.name}</Link>
+                  <Text numeric align="end" weight="medium">
+                    {formatBytes(value)}
+                  </Text>
+                  <Grid.Item colSpan="full">
+                    {value === null ? (
+                      <Text variant="caption" tone="muted">
+                        Measurement pending
+                      </Text>
+                    ) : (
+                      <Meter
+                        aria-label={`${entry.name} ${compression} bytes`}
+                        value={value}
+                        max={maximum}
+                      />
+                    )}
+                  </Grid.Item>
+                </Grid>
+              );
+            })}
+          </Stack>
+        </ScrollArea>
       </Stack>
     </Card>
   );

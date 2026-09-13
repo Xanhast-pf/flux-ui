@@ -13,14 +13,18 @@ export const badge = style({
   background: `var(${cssVars.color.surfaceSubtle})`,
   color: `var(${cssVars.color.text})`,
   selectors: {
-    "&[data-tone='accent']": { background: `var(${cssVars.color.accentSoft})` },
+    "&[data-tone='accent']": {
+      background: `var(${cssVars.color.accentSoft})`,
+    },
     "&[data-tone='success']": {
       background: `var(${cssVars.color.successSoft})`,
     },
     "&[data-tone='warning']": {
       background: `var(${cssVars.color.warningSoft})`,
     },
-    "&[data-tone='danger']": { background: `var(${cssVars.color.dangerSoft})` },
+    "&[data-tone='danger']": {
+      background: `var(${cssVars.color.dangerSoft})`,
+    },
     "&[data-tone='info']": { background: `var(${cssVars.color.infoSoft})` },
   },
 });

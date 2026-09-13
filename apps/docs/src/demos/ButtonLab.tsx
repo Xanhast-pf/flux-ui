@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Card,
   Field,
@@ -137,25 +136,27 @@ export function ButtonLab() {
         </Stack>
       </Card>
       <Stack gap="md">
-        <Box className="button-stage">
-          <Button
-            variant={variant}
-            tone={tone}
-            size={size}
-            disabled={disabled}
-            loading={loading}
-            onClick={() => {
-              setClicks((value) => value + 1);
-            }}
-          >
-            {label || "Button"}
-          </Button>
-          <Text role="status" as="p" variant="caption" tone="muted">
-            {clicks === 0
-              ? "Go on. Give it a click."
-              : `${clicks} clicks. Still satisfying.`}
-          </Text>
-        </Box>
+        <Card surface="subtle" padding="xl">
+          <Stack align="center" gap="xl" paddingBlock="xl">
+            <Button
+              variant={variant}
+              tone={tone}
+              size={size}
+              disabled={disabled}
+              loading={loading}
+              onClick={() => {
+                setClicks((value) => value + 1);
+              }}
+            >
+              {label || "Button"}
+            </Button>
+            <Text role="status" as="p" variant="caption" tone="muted">
+              {clicks === 0
+                ? "Go on. Give it a click."
+                : `${clicks} clicks. Still satisfying.`}
+            </Text>
+          </Stack>
+        </Card>
         <CodeBlock key={code} code={code} label="Your button" />
       </Stack>
     </Grid>

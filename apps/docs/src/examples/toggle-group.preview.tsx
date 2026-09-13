@@ -1,4 +1,4 @@
-import { Stack, ToggleGroup } from "@flux-ui/react";
+import { Stack, Text, ToggleGroup } from "@flux-ui/react";
 import { useState } from "react";
 export default function Example() {
   const [formats, setFormats] = useState<readonly string[]>(["bold"]);
@@ -14,18 +14,18 @@ export default function Example() {
         <ToggleGroup.Item value="italic">Italic</ToggleGroup.Item>
         <ToggleGroup.Item value="underline">Underline</ToggleGroup.Item>
       </ToggleGroup.Root>
-      <p
-        style={{
-          fontWeight: formats.includes("bold") ? 700 : 400,
-          fontStyle: formats.includes("italic") ? "italic" : "normal",
-          textDecoration: formats.includes("underline") ? "underline" : "none",
-        }}
+      <Text
+        as="p"
+        variant="body"
+        weight={formats.includes("bold") ? "bold" : "regular"}
+        italic={formats.includes("italic")}
+        decoration={formats.includes("underline") ? "underline" : "none"}
       >
         Good design is a team sport.
-      </p>
-      <p className="demo-help">
+      </Text>
+      <Text as="p" variant="body" tone="muted">
         Use arrows to move focus; Space or Enter changes selection.
-      </p>
+      </Text>
     </Stack>
   );
 }

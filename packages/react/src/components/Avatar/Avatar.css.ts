@@ -20,6 +20,9 @@ export const avatar = style({
   fontSize: "1rem",
   verticalAlign: "middle",
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": {
+      display: "none !important",
+    },
     [`${group} > &`]: {
       marginInlineStart: "calc(-1 * var(--flux-space-2))",
       outline: "0.125rem solid var(--flux-color-surface)",
