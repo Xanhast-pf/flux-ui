@@ -178,3 +178,22 @@ The Browser job also runs `pnpm consumer:check`. The same-commit public evidence
 requires its successful `consumer` check and `consumer-tests.json`; missing,
 failed or flaky consumer results block publication. This tests built public
 exports and styles without docs aliases. It is not an npm-publishing attestation.
+
+## Audit follow-through: repository settings are not source files
+
+CodeQL and Dependencies now also run for merge-queue groups. Dependency review
+uses that event's base and head SHAs rather than assuming a pull-request payload.
+Pinned action revisions and existing permission scopes are unchanged.
+
+A committed workflow is not proof that its status is required. Check the actual
+repository ruleset for the current default branch, including `CI / Required`,
+CodeQL, dependency review, and the lockfile audit as appropriate to the enabled
+GitHub features. Confirm that merge-queue checks finish before merging, that
+bypass permissions are intentional, and that package-publishing environments and
+trusted publishers match the release workflow. Source archives cannot verify
+those settings or establish the current advisory status of a dependency tree.
+
+Run the configured complete-lockfile audit and review its saved result before
+release. Do not treat the safer source-archive script as a credential audit of
+existing repository history. No security-score or certification claim follows
+from this checklist alone.

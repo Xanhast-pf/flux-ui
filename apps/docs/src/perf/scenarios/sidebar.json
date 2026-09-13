@@ -1,0 +1,9 @@
+{
+  "id": "sidebar",
+  "label": "Sidebar",
+  "unit": "navigation items",
+  "kind": "workload",
+  "maxCount": 5000,
+  "fixtureRevision": 1,
+  "description": "One in-flow Sidebar with N items; update closes it without unmounting content."
+}

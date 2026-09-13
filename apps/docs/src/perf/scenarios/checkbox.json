@@ -1,0 +1,9 @@
+{
+  "id": "checkbox",
+  "label": "Checkbox",
+  "unit": "checkboxes",
+  "kind": "workload",
+  "maxCount": 5000,
+  "fixtureRevision": 1,
+  "description": "Mount N native checkbox wrappers and update checked state."
+}

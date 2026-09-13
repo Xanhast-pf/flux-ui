@@ -1,6 +1,9 @@
 import { cssVars } from "@flux-ui/tokens";
 import { style } from "@vanilla-extract/css";
 export const root = style({
+  selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+  },
   display: "flex",
   alignItems: "center",
   flexWrap: "wrap",
@@ -20,6 +23,7 @@ export const button = style({
   font: "inherit",
   cursor: "pointer",
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&:hover:not(:disabled)": {
       background: `var(${cssVars.color.surfaceSubtle})`,
     },

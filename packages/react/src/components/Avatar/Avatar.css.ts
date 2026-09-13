@@ -1,6 +1,9 @@
 import { cssVars } from "@flux-ui/tokens";
 import { style } from "@vanilla-extract/css";
 export const group = style({
+  selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+  },
   display: "inline-flex",
   paddingInlineStart: "var(--flux-space-2)",
 });

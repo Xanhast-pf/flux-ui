@@ -16,6 +16,7 @@ export function InstallPage() {
           assume stable npm packages are available until a release is announced.
         </Callout>
         <CodeBlock
+          language="bash"
           code={`git clone https://github.com/Xanhast-pf/flux-ui.git
 cd flux-ui
 nvm use
@@ -34,6 +35,7 @@ pnpm check`}
             does not pull in the component runtime.
           </Text>
           <CodeBlock
+            language="bash"
             code={`// Opt-in document foundations, once at the application entry.
 import "@flux-ui/tokens/theme.css";
 import "@flux-ui/tokens/reset.css";
@@ -50,6 +52,7 @@ import { SearchIcon } from "@flux-ui/icons";`}
             Daily development
           </Heading>
           <CodeBlock
+            language="bash"
             code={`pnpm dev
 pnpm storybook
 
@@ -67,6 +70,7 @@ pnpm check:full`}
             Add a component
           </Heading>
           <CodeBlock
+            language="bash"
             code={`pnpm component:new SegmentedControl Inputs interactive
 pnpm component:doctor SegmentedControl
 pnpm generate

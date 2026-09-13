@@ -9,7 +9,7 @@ Flux measures two complementary layers:
 
 ## Bundle-size contract
 
-The dependency-free checker under `tooling/size/` operates on the normal multi-entry library build. It automatically discovers every public component and follows the emitted JS/CSS runtime graph.
+The build-time checker under `tooling/size/` operates on the normal multi-entry library build. It automatically discovers every public component and follows the emitted JS/CSS runtime graph.
 
 Automated gates include:
 
@@ -20,7 +20,7 @@ Automated gates include:
 - changed-component checks for fast local feedback;
 - full stale-baseline protection for release checks.
 
-New components start in the strictest `primitive` class. Raising a class is an explicit metadata/code-review decision, not a way to silence a size failure.
+Scaffolds default to the strictest `primitive` class. Deliberately complex families such as Chart and DataTable declare the existing `data-heavy` class in reviewed metadata. Reclassifying an existing component is not a way to silence a size failure.
 
 See [`../tooling/size/README.md`](../tooling/size/README.md).
 
@@ -64,3 +64,36 @@ See [`../tooling/perf/README.md`](../tooling/perf/README.md).
 - Never update a baseline reflexively just to turn CI green.
 
 As behavior-heavy components arrive, add scenarios that match their actual risk: open/close latency, focus management, repeated interaction, large collections, memory/leak behavior, and scaling curves.
+
+## Discovered workloads and honest references
+
+The docs Lab discovers paired `*.json` manifests and `*.fixture.tsx` implementations
+under `apps/docs/src/perf/scenarios/`. There are fourteen initial scenarios:
+Button, Grid, Text, Stack, Field/Input, Checkbox, Slider, Chart, CodeBlock, Knob,
+LevelMeter, DataTable, Sidebar, and SplitPane. New scenarios need a unique ID,
+fixture revision, workload unit, finite limits, and a matching fixture.
+
+Button and Grid have equivalent React/native comparisons. Other scenarios report
+absolute Flux workload timings, not invented native ratios. Grid measures **one
+layout with N cells**, not N Grid instances. DataTable measures loaded rows;
+Chart measures source samples; CodeBlock measures lines. The reported node count
+is separate from each scenario's work unit.
+
+The current Button and Grid fixtures are revision 2. Their computed layout
+fingerprints must match the equivalent native run before a ratio is produced.
+Grid now uses the same 24px gap in both variants. Previous baseline revisions
+must not be compared to these changed workloads. The performance page marks old
+measurements as pending instead of presenting them as current evidence.
+
+Run `pnpm perf:smoke` to check execution and equivalence. Run the full `pnpm perf`
+for historical ratio gates; it refuses a mismatched baseline fixture revision.
+Only after correctness, equivalence, and emitted package checks pass should a
+reviewed `pnpm perf:update` establish new measurements. This patch changes no
+recorded timing values. New flux-only scenarios have smoke/browser coverage, not
+historical timing thresholds or input-latency percentile claims yet.
+
+Relative local JS/CSS imports missing from a component's emitted graph are now
+fatal size errors, as are escaping paths and unaccounted runtime externals. The
+React peers excluded from component accounting are reported explicitly. Component
+size is still not the entire page download: tokens, peers, fonts/images, code
+splitting and browser cache behavior have distinct costs.

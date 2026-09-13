@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 export const fieldset = style({
-  selectors: {},
+  selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+  },
   display: "grid",
   gap: "var(--flux-space-4)",
   padding: 0,

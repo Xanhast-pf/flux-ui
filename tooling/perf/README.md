@@ -37,9 +37,9 @@ For each iteration Flux is paired with the corresponding reference result. Ratio
 
 A ratio of `1.08` means Flux took 8% longer than its reference for that metric during the paired browser measurements.
 
-Always interpret ratios together with absolute cost. When a reference takes only a few milliseconds for 1,000 instances, a large-looking percentage can still mean only a few microseconds of overhead per component.
+Always interpret ratios together with absolute cost. When a reference takes only a few milliseconds for 1,000 instances, a large-looking percentage can still mean only a few microseconds of overhead per work unit.
 
-CI therefore uses a two-axis regression gate: the native-relative ratio must exceed the allowed historical range **and** the additional Flux-minus-native overhead must have grown by a meaningful absolute amount versus the committed baseline. Currently that absolute regression floor is 5 µs per instance. This prevents tiny denominators from creating false failures while still rejecting regressions that materially increase abstraction cost.
+CI therefore uses a two-axis regression gate: the native-relative ratio must exceed the allowed historical range **and** the additional Flux-minus-native overhead must have grown by a meaningful absolute amount versus the committed baseline. Currently that absolute regression floor is 5 µs per work unit. This prevents tiny denominators from creating false failures while still rejecting regressions that materially increase abstraction cost.
 
 Native reference scenarios must also preserve behavior that Flux intentionally provides. For example, the Button reference explicitly renders `type="button"`, matching Flux's safe default instead of benchmarking against a semantically different native button.
 
@@ -60,3 +60,25 @@ pnpm --filter @flux-ui/docs exec playwright install chromium
 The committed baseline lives at `tooling/perf/baseline.json`.
 
 Do not run `perf:update` simply because `perf` failed. Investigate the regression first; update the baseline only when the new cost is understood and intentionally accepted.
+
+## Scenario discovery and revisions
+
+`apps/docs/src/perf/registry.ts` discovers JSON manifests and lazy fixtures from
+`scenarios/`. The manifest distinguishes `comparison` scenarios from `workload`
+scenarios; only comparisons may claim native-relative ratios. It also defines
+units, limits, and `fixtureRevision`. Pairing and uniqueness have source tests.
+
+The Lab prepares fixtures before timing, but counts their render/data-model work
+inside the run. Flux-only scenarios use median absolute work timings; they are
+not benchmarked against an unrelated simpler element. DOM counts remain visible.
+
+Both native comparisons are now revision 2 and verify equivalent computed layout.
+A mismatch fails instead of yielding a plausible-looking ratio. Full historical
+runs reject baselines without the current fixture revision; smoke runs still
+check equivalence but do not assert historical timing. The performance page
+labels stale fixtures rather than presenting obsolete ratios.
+
+The added scenarios are browser workload smoke coverage. Pointer latency
+percentiles, repeated modal lifecycle measurements, leak detection, dense Canvas
+streaming, and remote-data throughput still need separate scenario design. Do not
+claim these from synchronous mount/update results.

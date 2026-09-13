@@ -1,8 +1,8 @@
 # Flux size contract
 
 Flux treats consumer bytes as a release contract. This checker is deliberately
-small and dependency-free: after the library build it only walks emitted ESM
-imports and compresses files with Node's built-in gzip/Brotli implementations.
+small and build-only: it uses the already-pinned TypeScript parser to walk emitted
+ESM imports and compresses files with Node's built-in gzip/Brotli implementations.
 That keeps full-library checks practical even with thousands of components.
 
 ## Commands
@@ -62,3 +62,18 @@ entire public surface.
 Future competitor benchmarks should live in a separate reproducible consumer
 fixture. This core contract intentionally measures Flux itself and does not
 hard-code marketing comparisons into package.json.
+
+## Complete graphs, explicit peers
+
+A missing local JS/CSS dependency is an error, not a smaller component. Static
+imports, reexports, literal dynamic imports and stylesheet `@import` edges are
+followed. Root escapes and symlink escapes are rejected. Non-literal dynamic
+imports cannot be measured and fail explicitly.
+
+Bare React/ReactDOM peer imports are listed in the report but excluded from the
+component metric. They still cost bytes in the application. New external engines
+must be bundled or gain an independently reviewed/measured dependency contract;
+externalizing an engine is not a way to pass a component budget.
+
+Failure messages include exact bytes as well as rounded KiB, so a one-byte
+regression is not printed as an inexplicable equal-looking comparison.

@@ -1,0 +1,9 @@
+{
+  "id": "split-pane",
+  "label": "SplitPane",
+  "unit": "pane pairs",
+  "kind": "workload",
+  "maxCount": 100,
+  "fixtureRevision": 1,
+  "description": "Mount N split layouts then update their percentages."
+}

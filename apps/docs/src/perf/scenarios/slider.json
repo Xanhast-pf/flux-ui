@@ -1,0 +1,9 @@
+{
+  "id": "slider",
+  "label": "Slider",
+  "unit": "sliders",
+  "kind": "workload",
+  "maxCount": 5000,
+  "fixtureRevision": 1,
+  "description": "Mount N native range wrappers and update values."
+}

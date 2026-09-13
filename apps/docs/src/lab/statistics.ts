@@ -1,4 +1,5 @@
-import type { PerfResult, PerfScenario } from "../perf/PerfApp.js";
+import type { PerfResult } from "../perf/PerfApp.js";
+import type { PerfScenario } from "../perf/scenario.types.js";
 
 export const INSTANCE_COUNTS = [100, 500, 1_000, 2_000, 5_000] as const;
 export const ITERATION_COUNTS = [3, 5, 7] as const;
@@ -90,4 +91,75 @@ export function summarize(
     },
     pairs,
   };
+}
+
+export interface WorkloadSummary {
+  scenario: string;
+  count: number;
+  samples: PerfResult[];
+  metrics: Record<Metric, { median: number; minimum: number; maximum: number }>;
+  domNodes: number;
+}
+export function summarizeWorkload(
+  scenario: string,
+  count: number,
+  samples: PerfResult[],
+): WorkloadSummary {
+  if (
+    !samples.length ||
+    samples.some(
+      (sample) =>
+        sample.scenario !== scenario ||
+        sample.count !== count ||
+        sample.variant !== "flux" ||
+        METRICS.some((key) => !Number.isFinite(sample[key]) || sample[key] < 0),
+    )
+  )
+    throw new Error("Invalid workload sample set.");
+  const metric = (key: Metric) => {
+    const values = samples.map((sample) => sample[key]);
+    return {
+      median: median(values),
+      minimum: Math.min(...values),
+      maximum: Math.max(...values),
+    };
+  };
+  return {
+    scenario,
+    count,
+    samples,
+    domNodes: median(samples.map((sample) => sample.domNodes)),
+    metrics: {
+      mountMs: metric("mountMs"),
+      updateMs: metric("updateMs"),
+      unmountMs: metric("unmountMs"),
+    },
+  };
+}
+
+/** Refuse ratios when a future fixture silently changes visual work. */
+export function assertReferenceEquivalence(
+  native: PerfResult,
+  flux: PerfResult,
+): void {
+  if (
+    native.scenario !== flux.scenario ||
+    native.count !== flux.count ||
+    native.variant !== "native" ||
+    flux.variant !== "flux" ||
+    native.fixtureRevision !== flux.fixtureRevision ||
+    !native.fixtureRevision
+  )
+    throw new Error("Performance references describe different workloads.");
+  if (!native.layout || !flux.layout || Object.keys(native.layout).length === 0)
+    throw new Error("Missing reference layout fingerprint.");
+  const keys = new Set([
+    ...Object.keys(native.layout),
+    ...Object.keys(flux.layout),
+  ]);
+  for (const key of keys)
+    if (native.layout[key] !== flux.layout[key])
+      throw new Error(
+        `Reference layout differs at ${key}; no performance ratio was published.`,
+      );
 }

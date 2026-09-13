@@ -1,8 +1,5 @@
 import {
-  Children,
-  Fragment,
   createContext,
-  isValidElement,
   useCallback,
   useContext,
   useEffect,
@@ -54,20 +51,17 @@ export type NativeModalStyles = {
 };
 
 type NativeModalContextValue = {
-  descriptionId: string;
+  descriptionIds: string;
   setDialogNode: (node: HTMLDialogElement | null) => void;
-  hasDescription: boolean;
-  hasTitle: boolean;
   open: boolean;
   requestClose: () => void;
   requestOpen: (returnFocusTarget?: HTMLElement) => void;
   styles: NativeModalStyles;
-  titleId: string;
+  titleIds: string;
+  registerPart: (kind: "title" | "description", id: string) => () => void;
 };
 
 type NativeModalInternalRootProps = NativeModalRootProps & {
-  hasDescription: boolean;
-  hasTitle: boolean;
   styles: NativeModalStyles;
 };
 
@@ -81,47 +75,56 @@ function useNativeModalContext(part: string): NativeModalContextValue {
   return context;
 }
 
-export function containsNativeModalPart(
-  children: ReactNode,
-  part: unknown,
-  popupPart: unknown,
-): boolean {
-  return Children.toArray(children).some((child) => {
-    if (!isValidElement(child)) return false;
-    if (child.type === part) return true;
-
-    const mayContainOwnPart =
-      child.type === popupPart ||
-      child.type === Fragment ||
-      typeof child.type === "string";
-    if (!mayContainOwnPart) return false;
-
-    const childProps = child.props as { children?: ReactNode | undefined };
-    return childProps.children !== undefined
-      ? containsNativeModalPart(childProps.children, part, popupPart)
-      : false;
-  });
+/** React 19 callback-ref cleanup must survive both composition and Strict Mode. */
+function attachRef<T>(ref: Ref<T> | undefined, value: T): () => void {
+  if (typeof ref === "function") {
+    const cleanup = ref(value);
+    return () => {
+      if (typeof cleanup === "function") cleanup();
+      else ref(null);
+    };
+  }
+  if (ref) ref.current = value;
+  return () => {
+    if (ref) ref.current = null;
+  };
 }
 
-function assignRef<T>(ref: Ref<T> | undefined, value: T | null): void {
-  if (typeof ref === "function") {
-    ref(value);
-  } else if (ref !== null && ref !== undefined) {
-    (ref as { current: T | null }).current = value;
-  }
+function usePartRef<T>(
+  kind: "title" | "description",
+  id: string,
+  ref: Ref<T> | undefined,
+) {
+  const { registerPart } = useNativeModalContext(kind);
+  return useCallback(
+    (node: T | null) => {
+      if (node === null) return;
+      const unregister = registerPart(kind, id);
+      const cleanup = attachRef(ref, node);
+      return () => {
+        cleanup();
+        unregister();
+      };
+    },
+    [id, kind, ref, registerPart],
+  );
 }
 
 function NativeModalTitle({
+  ref,
   children,
   className,
   ...props
 }: NativeModalTitleProps) {
   const context = useNativeModalContext("Title");
+  const id = useId();
+  const setNode = usePartRef("title", id, ref);
   return (
     <h2
       {...props}
       className={joinClassNames(context.styles.title, className)}
-      id={context.titleId}
+      id={id}
+      ref={setNode}
     >
       {children}
     </h2>
@@ -129,16 +132,20 @@ function NativeModalTitle({
 }
 
 function NativeModalDescription({
+  ref,
   children,
   className,
   ...props
 }: NativeModalDescriptionProps) {
   const context = useNativeModalContext("Description");
+  const id = useId();
+  const setNode = usePartRef("description", id, ref);
   return (
     <p
       {...props}
       className={joinClassNames(context.styles.description, className)}
-      id={context.descriptionId}
+      id={id}
+      ref={setNode}
     >
       {children}
     </p>
@@ -148,13 +155,28 @@ function NativeModalDescription({
 function NativeModalRoot({
   children,
   defaultOpen = false,
-  hasDescription,
-  hasTitle,
   open: controlledOpen,
   onOpenChange,
   styles,
 }: NativeModalInternalRootProps) {
-  const generatedId = useId();
+  const [parts, setParts] = useState<{
+    title: string[];
+    description: string[];
+  }>({ title: [], description: [] });
+  const registerPart = useCallback(
+    (kind: "title" | "description", id: string) => {
+      setParts((previous) => ({
+        ...previous,
+        [kind]: [...previous[kind], id],
+      }));
+      return () =>
+        setParts((previous) => ({
+          ...previous,
+          [kind]: previous[kind].filter((value) => value !== id),
+        }));
+    },
+    [],
+  );
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
   const [dialogNode, setDialogNode] = useState<HTMLDialogElement | null>(null);
   const restoreFocusFrameRef = useRef<number | null>(null);
@@ -247,15 +269,14 @@ function NativeModalRoot({
   }, [dialogNode, open]);
 
   const context: NativeModalContextValue = {
-    descriptionId: `${generatedId}-description`,
-    hasDescription,
-    hasTitle,
+    descriptionIds: parts.description.join(" "),
+    registerPart,
     open,
     requestClose,
     requestOpen,
     setDialogNode,
     styles,
-    titleId: `${generatedId}-title`,
+    titleIds: parts.title.join(" "),
   };
 
   return <NativeModalContext value={context}>{children}</NativeModalContext>;
@@ -315,6 +336,7 @@ function NativeModalClose({
 function NativeModalPopup({
   "aria-describedby": ariaDescribedBy,
   "aria-labelledby": ariaLabelledBy,
+  "aria-label": ariaLabel,
   children,
   className,
   closeOnBackdrop = true,
@@ -358,9 +380,14 @@ function NativeModalPopup({
   }
 
   const setPopupRef = useCallback(
-    (node: HTMLDialogElement | null): void => {
+    (node: HTMLDialogElement | null) => {
       setDialogNode(node);
-      assignRef(ref, node);
+      if (node === null) return;
+      const cleanup = attachRef(ref, node);
+      return () => {
+        cleanup();
+        setDialogNode(null);
+      };
     },
     [ref, setDialogNode],
   );
@@ -368,12 +395,13 @@ function NativeModalPopup({
   return (
     <dialog
       {...props}
+      aria-label={ariaLabel}
       aria-describedby={
-        ariaDescribedBy ??
-        (context.hasDescription ? context.descriptionId : undefined)
+        ariaDescribedBy ?? (context.descriptionIds || undefined)
       }
       aria-labelledby={
-        ariaLabelledBy ?? (context.hasTitle ? context.titleId : undefined)
+        ariaLabelledBy ??
+        (ariaLabel ? undefined : context.titleIds || undefined)
       }
       className={joinClassNames(context.styles.popup, className)}
       data-state={context.open ? "open" : "closed"}

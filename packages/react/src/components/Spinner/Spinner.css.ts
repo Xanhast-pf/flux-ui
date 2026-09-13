@@ -10,6 +10,7 @@ export const spinner = style({
   verticalAlign: "middle",
   color: `var(${cssVars.color.textMuted})`,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-size='sm']": { inlineSize: "1rem", blockSize: "1rem" },
     "&[data-size='lg']": { inlineSize: "2rem", blockSize: "2rem" },
     "&::before": {

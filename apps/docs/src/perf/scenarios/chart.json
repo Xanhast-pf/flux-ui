@@ -1,0 +1,9 @@
+{
+  "id": "chart",
+  "label": "Chart",
+  "unit": "source samples",
+  "kind": "workload",
+  "maxCount": 5000,
+  "fixtureRevision": 1,
+  "description": "One SVG chart; generate, reduce and render N source samples, then shift values."
+}

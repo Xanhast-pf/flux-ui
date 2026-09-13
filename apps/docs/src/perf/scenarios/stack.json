@@ -1,0 +1,9 @@
+{
+  "id": "stack",
+  "label": "Stack",
+  "unit": "child items",
+  "kind": "workload",
+  "maxCount": 5000,
+  "fixtureRevision": 1,
+  "description": "One Stack with N children; change the shared spacing."
+}

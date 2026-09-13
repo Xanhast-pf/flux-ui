@@ -24,6 +24,7 @@ export const content = style({
   alignItems: "center",
   gap: `var(${cssVars.space[2]})`,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "button[data-loading='true'] &": { opacity: 0 },
   },
 });

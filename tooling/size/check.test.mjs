@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { resolve } from "node:path";
+import { resolve, join } from "node:path";
 import test from "node:test";
 import {
   absoluteBudgetFailures,
   collectRuntimeGraph,
+  measureEntry,
   compressMetrics,
   regressionFailures,
   toEntrySlug,
@@ -75,4 +76,71 @@ test("regression policy rejects meaningful growth but tolerates tiny deltas", ()
     ),
     ["raw", "gzip", "brotli"],
   );
+});
+
+test("runtime graph rejects missing local JS, CSS, dynamic imports and reexports", async () => {
+  const dir = await mkdtemp(resolve(tmpdir(), "flux-missing-import-"));
+  try {
+    for (const source of [
+      'import "./lost.css";',
+      'export * from "./lost.js";',
+      'const load = () => import("./lost.js");',
+    ]) {
+      await writeFile(resolve(dir, "entry.js"), source);
+      await assert.rejects(
+        collectRuntimeGraph(resolve(dir, "entry.js"), dir),
+        /Unresolved local runtime import/u,
+      );
+    }
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test("runtime graph ignores strings, follows CSS, and rejects unaccounted engines", async () => {
+  const root = await mkdtemp(join(tmpdir(), "flux-graph-"));
+  try {
+    await writeFile(
+      join(root, "entry.js"),
+      'import "react"; import "./main.css"; export const text = "import nonexistent from \\"./ghost.js\\"";',
+    );
+    await writeFile(
+      join(root, "main.css"),
+      '@import "./shared.css"; .x{content:"@import absent.css"}',
+    );
+    await writeFile(join(root, "shared.css"), ".x{color:red}");
+    const result = await measureEntry(join(root, "entry.js"), root);
+    assert.equal(result.files.length, 3);
+    assert.deepEqual(result.externalImports, ["react"]);
+    await writeFile(join(root, "entry.js"), 'import "unmeasured-highlighter";');
+    await assert.rejects(
+      collectRuntimeGraph(join(root, "entry.js"), root),
+      /Unaccounted external/,
+    );
+    await writeFile(join(root, "entry.js"), 'import("./missing.js");');
+    await assert.rejects(
+      collectRuntimeGraph(join(root, "entry.js"), root),
+      /Unresolved local/,
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("runtime graph rejects invalid JavaScript and dynamic imports it cannot measure", async () => {
+  const root = await mkdtemp(join(tmpdir(), "flux-invalid-graph-"));
+  try {
+    for (const source of [
+      "export const broken = ;",
+      "const load = (name) => import(name);",
+    ]) {
+      await writeFile(join(root, "entry.js"), source);
+      await assert.rejects(
+        collectRuntimeGraph(join(root, "entry.js"), root),
+        /Invalid emitted|Unmeasurable dynamic/,
+      );
+    }
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });

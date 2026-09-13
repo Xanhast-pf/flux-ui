@@ -96,6 +96,7 @@ const performanceScenarios = Object.entries(perfBaseline.scenarios ?? {})
     name,
     count: scenario.count,
     reference: scenario.reference,
+    fixtureRevision: scenario.fixtureRevision ?? 0,
     medians: scenario.medians,
     ratios: scenario.ratios,
   }));

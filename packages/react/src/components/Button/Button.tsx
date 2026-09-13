@@ -22,7 +22,11 @@ export function Button({
     <button
       {...buttonProps}
       aria-busy={loading || undefined}
-      className={joinClassNames(action, button, className)}
+      className={joinClassNames(
+        !buttonProps.hidden && action,
+        button,
+        className,
+      )}
       data-size={size}
       data-tone={tone}
       data-variant={variant}

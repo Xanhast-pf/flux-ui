@@ -6,6 +6,7 @@ export const root = style({
   flexWrap: "wrap",
   gap: `var(${cssVars.space[1]})`,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-o='vertical']": {
       flexDirection: "column",
       alignItems: "stretch",

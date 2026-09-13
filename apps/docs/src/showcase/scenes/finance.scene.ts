@@ -13,6 +13,7 @@ export default {
     "box",
     "button",
     "card",
+    "chart",
     "grid",
     "heading",
     "inline",
@@ -25,6 +26,6 @@ export default {
     "toggle-group",
   ],
   custom:
-    "The cash-flow chart and payment-card artwork are docs-only compositions, not public Chart or PaymentCard APIs. All amounts and transactions are fictional.",
+    "Cash flow uses the public Chart. The payment-card illustration remains original artwork, not a PaymentCard API. All amounts, samples and transactions are fictional.",
   Icon: GaugeIcon,
 } satisfies SceneDefinition;

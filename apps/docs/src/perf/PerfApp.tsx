@@ -1,9 +1,8 @@
 import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
-import { Button, Grid } from "@flux-ui/react";
-
-export type PerfScenario = "button" | "grid";
-export type PerfVariant = "raw" | "native" | "flux";
+import { getScenario, loadScenario } from "./registry.js";
+import type { PerfScenario, PerfVariant } from "./scenario.types.js";
+export type { PerfVariant } from "./scenario.types.js";
 
 const DEFAULT_PERF_INSTANCE_COUNT = 1_000;
 const MIN_PERF_INSTANCE_COUNT = 1;
@@ -42,6 +41,9 @@ export interface PerfResult {
   unmountMs: number;
 
   domNodes: number;
+  fixtureRevision?: number;
+  unit?: string;
+  layout?: Record<string, string>;
 }
 
 declare global {
@@ -63,9 +65,8 @@ function getConfig(): {
     params.get("count") ?? String(DEFAULT_PERF_INSTANCE_COUNT),
   );
 
-  if (scenario !== "button" && scenario !== "grid") {
-    throw new Error(`Unknown perf scenario: ${scenario ?? "missing"}`);
-  }
+  if (scenario === null) throw new Error("Missing performance scenario.");
+  const definition = getScenario(scenario);
 
   if (variant !== "raw" && variant !== "native" && variant !== "flux") {
     throw new Error(`Unknown perf variant: ${variant ?? "missing"}`);
@@ -74,109 +75,18 @@ function getConfig(): {
   if (
     !Number.isInteger(parsedCount) ||
     parsedCount < MIN_PERF_INSTANCE_COUNT ||
-    parsedCount > MAX_PERF_INSTANCE_COUNT
+    parsedCount > Math.min(MAX_PERF_INSTANCE_COUNT, definition.maxCount)
   ) {
     throw new Error(`Invalid perf count: ${parsedCount}`);
   }
 
+  if (definition.kind === "workload" && variant !== "flux")
+    throw new Error("This workload has no equivalent native reference.");
   return {
-    scenario,
+    scenario: definition.id,
     variant,
     count: parsedCount,
   };
-}
-
-function ButtonScenario({
-  count,
-  revision,
-  variant,
-}: {
-  count: number;
-  revision: number;
-  variant: PerfVariant;
-}) {
-  const ids = Array.from({ length: count }, (_, index) => `button-${index}`);
-  const suffix = revision === 0 ? "A" : "B";
-
-  return (
-    <div data-perf-root>
-      {ids.map((id, index) => {
-        const label = `Button ${index} ${suffix}`;
-
-        if (variant === "flux") {
-          return <Button key={id}>{label}</Button>;
-        }
-
-        if (variant === "native") {
-          return (
-            <button className="perf-native-button" key={id} type="button">
-              <span className="perf-native-button-content">{label}</span>
-            </button>
-          );
-        }
-
-        return <button key={id}>{label}</button>;
-      })}
-    </div>
-  );
-}
-
-function GridScenario({
-  count,
-  revision,
-  variant,
-}: {
-  count: number;
-  revision: number;
-  variant: PerfVariant;
-}) {
-  const ids = Array.from({ length: count }, (_, index) => `grid-${index}`);
-  const columns = revision === 0 ? 4 : 5;
-
-  const children = ids.map((id, index) => <div key={id}>Item {index}</div>);
-
-  if (variant === "flux") {
-    return (
-      <Grid columns={columns} gap="lg" data-perf-root>
-        {children}
-      </Grid>
-    );
-  }
-
-  if (variant === "native") {
-    return (
-      <div
-        data-perf-root
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-          gap: "var(--flux-space-4)",
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  return <div data-perf-root>{children}</div>;
-}
-
-function Scenario({
-  count,
-  revision,
-  scenario,
-  variant,
-}: {
-  count: number;
-  revision: number;
-  scenario: PerfScenario;
-  variant: PerfVariant;
-}) {
-  return scenario === "button" ? (
-    <ButtonScenario count={count} revision={revision} variant={variant} />
-  ) : (
-    <GridScenario count={count} revision={revision} variant={variant} />
-  );
 }
 
 /**
@@ -196,6 +106,9 @@ export async function runPerfHarness(rootElement: HTMLElement): Promise<void> {
 
   delete window.__FLUX_PERF_RESULT__;
 
+  // Lazy module loading is outside measured React work. Workload-owned transforms remain inside it.
+  const Scenario = await loadScenario(scenario);
+  const definition = getScenario(scenario);
   const root = createRoot(rootElement);
 
   // Give startup/JIT/layout work a couple of frames to settle before measuring.
@@ -208,14 +121,7 @@ export async function runPerfHarness(rootElement: HTMLElement): Promise<void> {
   let startedAt = performance.now();
 
   flushSync(() => {
-    root.render(
-      <Scenario
-        count={count}
-        revision={0}
-        scenario={scenario}
-        variant={variant}
-      />,
-    );
+    root.render(<Scenario count={count} revision={0} variant={variant} />);
   });
 
   const mountMs = performance.now() - startedAt;
@@ -225,6 +131,26 @@ export async function runPerfHarness(rootElement: HTMLElement): Promise<void> {
   const mountToFrameMs = performance.now() - startedAt;
 
   const domNodes = document.querySelectorAll("[data-perf-root] *").length;
+  const measuredRoot = document.querySelector<HTMLElement>(
+    scenario === "button" ? "[data-perf-root] button" : "[data-perf-root]",
+  );
+  const layout: Record<string, string> = {};
+  if (measuredRoot) {
+    const computed = getComputedStyle(measuredRoot);
+    for (const key of [
+      "display",
+      "column-gap",
+      "row-gap",
+      "grid-template-columns",
+      "font-size",
+      "font-weight",
+      "line-height",
+      "min-height",
+      "padding-inline-start",
+      "padding-inline-end",
+    ])
+      layout[key] = computed.getPropertyValue(key);
+  }
 
   /*
    * Update
@@ -232,14 +158,7 @@ export async function runPerfHarness(rootElement: HTMLElement): Promise<void> {
   startedAt = performance.now();
 
   flushSync(() => {
-    root.render(
-      <Scenario
-        count={count}
-        revision={1}
-        scenario={scenario}
-        variant={variant}
-      />,
-    );
+    root.render(<Scenario count={count} revision={1} variant={variant} />);
   });
 
   const updateMs = performance.now() - startedAt;
@@ -269,5 +188,8 @@ export async function runPerfHarness(rootElement: HTMLElement): Promise<void> {
     updateToFrameMs,
     unmountMs,
     domNodes,
+    fixtureRevision: definition.fixtureRevision,
+    unit: definition.unit,
+    layout,
   };
 }

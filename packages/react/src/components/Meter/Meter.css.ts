@@ -6,6 +6,7 @@ export const meter = style({
   blockSize: "1rem",
   accentColor: "var(--flux-color-accent)",
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&:focus-visible": {
       outline: "0.125rem solid var(--flux-color-focus)",
       outlineOffset: "0.125rem",

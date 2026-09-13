@@ -7,6 +7,7 @@ export const list = style({
   listStyle: "none",
   minInlineSize: 0,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-variant='marker']": {
       listStyle: "revert",
       paddingInlineStart: "var(--flux-space-6)",

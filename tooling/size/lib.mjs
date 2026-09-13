@@ -1,6 +1,13 @@
 import { brotliCompressSync, constants, gzipSync } from "node:zlib";
-import { readFile, readdir, stat } from "node:fs/promises";
-import { dirname, extname, relative, resolve, sep } from "node:path";
+import { readFile, readdir, stat, realpath } from "node:fs/promises";
+import {
+  dirname,
+  extname,
+  relative,
+  resolve,
+  sep,
+  isAbsolute,
+} from "node:path";
 import {
   aggregatePolicy,
   regressionPolicy,
@@ -8,8 +15,92 @@ import {
   validSizeClasses,
 } from "./budgets.mjs";
 
-const importPattern =
-  /(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)/g;
+// Parse emitted modules instead of treating strings/comments as executable imports.
+// Bare React peers are reported but not charged to each component. Other engines
+// must be bundled or gain an explicit, independently measured packaging contract.
+import ts from "typescript";
+const allowedPeers = new Set([
+  "react",
+  "react/jsx-runtime",
+  "react/jsx-dev-runtime",
+  "react-dom",
+  "react-dom/client",
+  "react-dom/server",
+]);
+function moduleImports(source, file) {
+  const result = [];
+  const ast = ts.createSourceFile(
+    file,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.JS,
+  );
+  if (ast.parseDiagnostics.length)
+    throw new Error(`Invalid emitted JavaScript in ${file}`);
+  function visit(node) {
+    if (
+      (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) &&
+      node.moduleSpecifier &&
+      ts.isStringLiteral(node.moduleSpecifier)
+    )
+      result.push(node.moduleSpecifier.text);
+    if (
+      ts.isCallExpression(node) &&
+      (node.expression.kind === ts.SyntaxKind.ImportKeyword ||
+        (ts.isIdentifier(node.expression) &&
+          node.expression.text === "require"))
+    ) {
+      const argument = node.arguments[0];
+      if (
+        !argument ||
+        (!ts.isStringLiteral(argument) &&
+          !ts.isNoSubstitutionTemplateLiteral(argument))
+      )
+        throw new Error(`Unmeasurable dynamic runtime import in ${file}`);
+      result.push(argument.text);
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(ast);
+  return result;
+}
+function stylesheetImports(source, file) {
+  // @import is evaluated only outside comments and quoted declaration values.
+  const imports = [];
+  for (let i = 0; i < source.length; i += 1) {
+    if (source.startsWith("/*", i)) {
+      const end = source.indexOf("*/", i + 2);
+      i = end < 0 ? source.length : end + 1;
+      continue;
+    }
+    if (source[i] === '"' || source[i] === "'") {
+      const quote = source[i];
+      for (i += 1; i < source.length; i += 1) {
+        if (source[i] === "\\") i += 1;
+        else if (source[i] === quote) break;
+      }
+      continue;
+    }
+    if (source.slice(i, i + 7).toLowerCase() === "@import") {
+      const match =
+        /^@import\s+(?:url\(\s*)?(?:"([^"\\]+)"|'([^'\\]+)'|([^\s);]+))/i.exec(
+          source.slice(i),
+        );
+      const value = match?.[1] ?? match?.[2] ?? match?.[3];
+      if (!value) throw new Error(`Unmeasurable CSS import in ${file}`);
+      imports.push(
+        /^[a-z]+:|^\/\//i.test(value)
+          ? value
+          : value.startsWith(".")
+            ? value
+            : `./${value}`,
+      );
+      i += match[0].length - 1;
+    }
+  }
+  return imports;
+}
 
 export function toEntrySlug(name) {
   return name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
@@ -46,25 +137,35 @@ async function pathExists(path) {
 
 async function resolveRelativeImport(fromFile, specifier) {
   if (!specifier.startsWith(".")) return null;
-  const candidate = resolve(dirname(fromFile), specifier);
+  const candidate = resolve(dirname(fromFile), specifier.split(/[?#]/u)[0]);
   if (await pathExists(candidate)) return candidate;
   for (const suffix of [".js", ".css", ".mjs", ".cjs"]) {
     if (await pathExists(`${candidate}${suffix}`))
       return `${candidate}${suffix}`;
   }
-  return null;
+  throw new Error(
+    `Unresolved local runtime import ${JSON.stringify(specifier)} from ${fromFile}`,
+  );
 }
 
-export async function collectRuntimeGraph(entryPath, distDir) {
+export async function collectRuntimeGraph(
+  entryPath,
+  distDir,
+  externalImports = new Set(),
+) {
   const seen = new Set();
   const queue = [resolve(entryPath)];
-  const distRoot = resolve(distDir);
+  const distRoot = await realpath(distDir);
 
   while (queue.length > 0) {
     const current = queue.shift();
     if (!current || seen.has(current)) continue;
     const relativeToDist = relative(distRoot, current);
-    if (relativeToDist === ".." || relativeToDist.startsWith(`..${sep}`)) {
+    if (
+      isAbsolute(relativeToDist) ||
+      relativeToDist === ".." ||
+      relativeToDist.startsWith(`..${sep}`)
+    ) {
       throw new Error(`Runtime graph escaped dist/: ${current}`);
     }
     if (!(await pathExists(current))) {
@@ -72,20 +173,38 @@ export async function collectRuntimeGraph(entryPath, distDir) {
         `Missing built runtime file: ${relative(process.cwd(), current)}`,
       );
     }
+    const real = await realpath(current);
+    const localReal = relative(distRoot, real);
+    if (
+      isAbsolute(localReal) ||
+      localReal === ".." ||
+      localReal.startsWith(`..${sep}`)
+    ) {
+      throw new Error(
+        `Runtime graph escaped dist/ through a symlink: ${current}`,
+      );
+    }
+    if (!(await stat(real)).isFile())
+      throw new Error(`Runtime import is not a file: ${current}`);
     seen.add(current);
 
     const extension = extname(current);
-    if (extension !== ".js" && extension !== ".mjs" && extension !== ".cjs") {
-      continue;
-    }
-
+    if (![".js", ".mjs", ".cjs", ".css"].includes(extension)) continue;
     const source = await readFile(current, "utf8");
-    importPattern.lastIndex = 0;
-    for (const match of source.matchAll(importPattern)) {
-      const specifier = match[1] ?? match[2];
-      if (!specifier) continue;
+    const imports =
+      extension === ".css"
+        ? stylesheetImports(source, current)
+        : moduleImports(source, current);
+    for (const specifier of imports) {
       const dependency = await resolveRelativeImport(current, specifier);
       if (dependency) queue.push(dependency);
+      else {
+        if (!allowedPeers.has(specifier))
+          throw new Error(
+            `Unaccounted external runtime import ${JSON.stringify(specifier)} in ${current}. Bundle it or add an independently measured dependency contract.`,
+          );
+        externalImports.add(specifier);
+      }
     }
   }
 
@@ -104,10 +223,12 @@ export async function measureFiles(files) {
 }
 
 export async function measureEntry(entryPath, distDir) {
-  const files = await collectRuntimeGraph(entryPath, distDir);
+  const externalImports = new Set();
+  const files = await collectRuntimeGraph(entryPath, distDir, externalImports);
   return {
     ...(await measureFiles(files)),
     files: files.map((file) => relative(distDir, file).replaceAll("\\", "/")),
+    externalImports: [...externalImports].sort(),
   };
 }
 

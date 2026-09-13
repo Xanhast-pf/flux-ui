@@ -1,0 +1,8 @@
+{
+  "name": "Chart",
+  "slug": "chart",
+  "category": "Data",
+  "status": "alpha",
+  "description": "Line, area and grouped bar renderers share semantic Flux tones and bounded paths per series rather than per-point DOM nodes.",
+  "sizeClass": "data-heavy"
+}

@@ -76,3 +76,24 @@ examples. Changes to native hidden behavior need real visibility and focus tests
 not merely an attribute assertion. See [workshop.md](workshop.md) for the app's
 route and consumer contracts, and [CONTRIBUTING.md](../CONTRIBUTING.md) for review
 and contribution policy.
+
+## Advanced families and safe local tools
+
+See [advanced-components.md](advanced-components.md) for the syntax, chart,
+numeric-control, data-table, and split-pane APIs and their explicit limits.
+`pnpm feature:test` checks their pure data models, token contrast, scenario
+pairing, and measurement semantics. Browser and React tests are separate gates.
+
+`pnpm clean` resolves the repository from the script location, not the shell's
+working directory. Only the repository cache and explicit app/package `dist`
+directories are eligible. The repository root, outside paths, and symlinked
+output paths are rejected. `pnpm safety:test` runs destructive-path reproductions
+only inside temporary test repositories.
+
+`pnpm archive` keeps its fixed filename and replaces the previous archive only
+after a successful staged ZIP. It excludes real local environment files, common
+private-key/credential files, symlinks, caches, and build noise. Safe example
+configuration and literal `${ENV}` references remain eligible, while detected
+credential values and private-key headers are omitted. This is a conservative
+sharing safeguard, not a complete secret scanner or a defense against hostile
+concurrent filesystem changes. Review the file summary before sharing a ZIP.

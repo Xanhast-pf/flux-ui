@@ -16,6 +16,7 @@ export const list = style({
   gap: `var(${cssVars.space[1]})`,
   borderBottom: `0.0625rem solid var(${cssVars.color.border})`,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-w]": { flexWrap: "wrap" },
     "&[data-a='pill']": { border: 0 },
     "&[aria-orientation='vertical']": {
@@ -45,6 +46,7 @@ export const tab = style({
   transitionDuration: `var(${cssVars.motion.fast})`,
   transitionTimingFunction: `var(${cssVars.motion.easing})`,
   selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-s='sm']": {
       minHeight: "var(--flux-control-sm)",
       fontSize: "var(--flux-font-caption)",

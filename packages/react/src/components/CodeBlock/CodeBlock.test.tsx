@@ -2,6 +2,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { CodeBlock } from "./CodeBlock.js";
+import type { CodeToken } from "./CodeBlock.types.js";
 describe("CodeBlock", () => {
   it("copies exactly the source and exposes feedback without parsing HTML", async () => {
     const user = userEvent.setup();
@@ -55,5 +56,80 @@ describe("CodeBlock", () => {
     render(<CodeBlock code="readOnly" copyable={false} />);
     expect(screen.queryByRole("button")).toBeNull();
     expect(screen.queryByRole("status")).toBeNull();
+  });
+});
+
+describe("CodeBlock highlighting", () => {
+  it("renders provider tokens as escaped text and preserves the original source", () => {
+    const code = "<img src=x onerror=alert(1)> & literal";
+    const view = render(
+      <CodeBlock
+        code={code}
+        copyable={false}
+        tokens={[{ start: 0, end: code.length, kind: "string" }]}
+      />,
+    );
+    expect(view.container.querySelector("code")?.textContent).toBe(code);
+    expect(view.container.querySelector("img, script")).toBeNull();
+    expect(
+      view.container.querySelector('[data-token="string"]'),
+    ).not.toBeNull();
+  });
+  it("falls back to plain text for invalid token ranges", () => {
+    const view = render(
+      <CodeBlock
+        code="plain"
+        tokens={[{ start: 0, end: 100, kind: "keyword" }]}
+      />,
+    );
+    expect(view.container.querySelector("code")?.textContent).toBe("plain");
+    expect(view.container.querySelector("[data-token]")).toBeNull();
+  });
+  it("aborts the previous grammar request and ignores stale results", async () => {
+    type Tokens = readonly CodeToken[];
+    const requests: {
+      source: string;
+      signal: AbortSignal;
+      resolve: (tokens: Tokens) => void;
+    }[] = [];
+    const highlight = (
+      source: string,
+      _language: string,
+      signal: AbortSignal,
+    ) =>
+      new Promise<Tokens>((resolve) => {
+        requests.push({ source, signal, resolve });
+      });
+    const view = render(
+      <CodeBlock code="first" language="test" highlight={highlight} />,
+    );
+    await act(async () => {
+      await Promise.resolve();
+    });
+    view.rerender(
+      <CodeBlock code="second" language="test" highlight={highlight} />,
+    );
+    await act(async () => {
+      await Promise.resolve();
+    });
+    const old = requests.find((request) => request.source === "first");
+    const current = requests.find((request) => request.source === "second");
+    if (!old || !current) throw new Error("Missing provider requests.");
+    expect(old.signal.aborted).toBe(true);
+    await act(async () => {
+      current.resolve([{ start: 0, end: 6, kind: "string" }]);
+      await Promise.resolve();
+    });
+    await act(async () => {
+      old.resolve([{ start: 0, end: 5, kind: "keyword" }]);
+      await Promise.resolve();
+    });
+    expect(view.container.querySelector("code")?.textContent).toBe("second");
+    expect(view.container.querySelector('[data-token="keyword"]')).toBeNull();
+    expect(
+      view.container.querySelector('[data-token="string"]'),
+    ).not.toBeNull();
+    view.unmount();
+    expect(current.signal.aborted).toBe(true);
   });
 });

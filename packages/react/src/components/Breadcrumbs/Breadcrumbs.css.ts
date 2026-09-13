@@ -5,6 +5,9 @@ export const root = style({
   color: `var(${cssVars.color.textMuted})`,
 });
 export const list = style({
+  selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+  },
   display: "flex",
   flexWrap: "wrap",
   alignItems: "center",
@@ -14,6 +17,9 @@ export const list = style({
   listStyle: "none",
 });
 export const item = style({
+  selectors: {
+    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+  },
   display: "inline-flex",
   alignItems: "center",
   gap: `var(${cssVars.space[2]})`,
