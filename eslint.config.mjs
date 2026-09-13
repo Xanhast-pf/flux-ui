@@ -26,12 +26,16 @@ export default tseslint.config(
       "**/.cache/**",
     ],
   },
+
   eslint.configs.recommended,
+
   ...typeCheckedConfigs,
+
   {
     ...reactHooks.configs.flat.recommended,
     files: reactFiles,
   },
+
   {
     files: typeCheckedFiles,
     languageOptions: {
@@ -61,6 +65,21 @@ export default tseslint.config(
       ],
     },
   },
+
+  // The consumer harness intentionally behaves like an external package
+  // consumer and has its own TypeScript project. Use that project explicitly
+  // instead of relying on monorepo project-service discovery.
+  {
+    files: ["apps/docs/consumer/**/*.{ts,tsx}"],
+    languageOptions: {
+      parserOptions: {
+        projectService: false,
+        project: "./apps/docs/consumer/tsconfig.json",
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+
   {
     files: ["scripts/**/*.mjs", "tooling/**/*.mjs", "*.config.mjs"],
     languageOptions: {
@@ -69,5 +88,6 @@ export default tseslint.config(
       },
     },
   },
+
   prettier,
 );
