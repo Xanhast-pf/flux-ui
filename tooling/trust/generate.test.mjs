@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { test } from "node:test";
 import { CHECKS, digest, sourceContext } from "./evidence.mjs";
+import { sizeReport } from "./fixtures/size-report.mjs";
 import { parseEvidence } from "../../apps/docs/src/lib/evidence.ts";
 
 const generator = fileURLToPath(new URL("./generate.mjs", import.meta.url));
@@ -37,16 +38,9 @@ async function fixture(callback) {
         }),
       );
     }
-    const metric = { raw: 10, gzip: 8, brotli: 6 };
     await writeFile(
       join(root, ".cache/trust/quality/size.json"),
-      JSON.stringify({
-        schemaVersion: 1,
-        componentCount: 1,
-        checkedComponentCount: 1,
-        components: { button: metric },
-        aggregate: { rootEntry: metric, runtime: metric, published: metric },
-      }),
+      JSON.stringify(sizeReport()),
     );
     await writeFile(
       join(root, ".cache/trust/browser/browser-tests.json"),
@@ -152,3 +146,63 @@ test("evidence publication requires the built-consumer report and successful rec
     assert.notEqual(generate(root).status, 0);
   });
 });
+
+for (const [name, mutate, message] of [
+  [
+    "legacy size schema",
+    (report) => {
+      report.schemaVersion = 1;
+    },
+    /schema/u,
+  ],
+  [
+    "missing bundled measurement",
+    (report) => {
+      delete report.bundledEntries.button;
+    },
+    /bundledEntries/u,
+  ],
+  [
+    "failed bundled gate",
+    (report) => {
+      report.componentGates.button.result = "fail";
+    },
+    /passing bundled gate/u,
+  ],
+  [
+    "partial bundled coverage",
+    (report) => {
+      report.bundledEntryCoverage.unmeasured.push("button");
+    },
+    /coverage/u,
+  ],
+  [
+    "baseline proposal",
+    (report) => {
+      report.baselineChanges = {};
+    },
+    /baseline proposal/u,
+  ],
+]) {
+  test(`evidence CLI rejects ${name} before replacing public evidence`, async () => {
+    await fixture(async (root) => {
+      const output = join(root, "apps/docs/public/evidence");
+      await mkdir(output, { recursive: true });
+      const sentinel = "previous evidence remains untouched";
+      await writeFile(join(output, "index.json"), sentinel);
+      const report = sizeReport();
+      mutate(report);
+      await writeFile(
+        join(root, ".cache/trust/quality/size.json"),
+        JSON.stringify(report),
+      );
+      const result = generate(root);
+      assert.notEqual(result.status, 0);
+      assert.match(result.stderr, message);
+      assert.equal(
+        await readFile(join(output, "index.json"), "utf8"),
+        sentinel,
+      );
+    });
+  });
+}
