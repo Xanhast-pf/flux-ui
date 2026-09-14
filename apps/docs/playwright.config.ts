@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 import { defineConfig, devices } from "@playwright/test";
 
@@ -18,7 +19,19 @@ export default defineConfig({
             },
           ],
         ]
-      : "list",
+      : process.env.FLUX_TERMINAL_ACTIVE
+        ? [
+            ["list"],
+            [
+              fileURLToPath(
+                new URL(
+                  "../../tooling/terminal/playwright-reporter.mjs",
+                  import.meta.url,
+                ),
+              ),
+            ],
+          ]
+        : "list",
   use: {
     baseURL: "http://127.0.0.1:4173",
     trace: "retain-on-failure",

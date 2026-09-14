@@ -133,3 +133,83 @@ describe("CodeBlock highlighting", () => {
     expect(current.signal.aborted).toBe(true);
   });
 });
+
+describe("CodeBlock asynchronous hardening", () => {
+  it("keeps feedback from the newest copy when older requests settle late", async () => {
+    const user = userEvent.setup();
+    let completeOld = () => {};
+    const old = new Promise<void>((resolve) => {
+      completeOld = resolve;
+    });
+    const copy = vi
+      .spyOn(navigator.clipboard, "writeText")
+      .mockReturnValueOnce(old)
+      .mockResolvedValueOnce(undefined);
+    const view = render(<CodeBlock code="old request" />);
+    await user.click(screen.getByRole("button", { name: "Copy code" }));
+    view.rerender(<CodeBlock code="latest request" />);
+    await user.click(screen.getByRole("button", { name: "Copy code" }));
+    await act(async () => {
+      completeOld();
+      await old;
+    });
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Copied to clipboard.",
+    );
+    copy.mockRestore();
+  });
+  it.each([true, false])(
+    "ignores an older clipboard rejection when the newest copy succeeds: %s",
+    async (latestSucceeds) => {
+      const user = userEvent.setup();
+      let rejectOld = () => {};
+      const old = new Promise<void>((_resolve, reject) => {
+        rejectOld = () => reject(new Error("Old request failed"));
+      });
+      const copy = vi
+        .spyOn(navigator.clipboard, "writeText")
+        .mockReturnValueOnce(old);
+      if (latestSucceeds) copy.mockResolvedValueOnce(undefined);
+      else copy.mockRejectedValueOnce(new Error("Latest request failed"));
+      render(<CodeBlock code="same source" />);
+      await user.click(screen.getByRole("button", { name: "Copy code" }));
+      await user.click(screen.getByRole("button", { name: "Copy code" }));
+      await act(async () => {
+        rejectOld();
+        await old.catch(() => {});
+      });
+      expect(screen.getByRole("status")).toHaveTextContent(
+        latestSucceeds ? "Copied to clipboard." : "Clipboard unavailable.",
+      );
+      copy.mockRestore();
+    },
+  );
+  it("does not start a provider whose deferred request was already aborted", async () => {
+    const highlight = vi.fn(() => []);
+    const view = render(<CodeBlock code="cancelled" highlight={highlight} />);
+    view.unmount();
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(highlight).not.toHaveBeenCalled();
+  });
+  it("does not revalidate stable token ranges when only copy feedback changes", async () => {
+    const user = userEvent.setup();
+    const readStart = vi.fn(() => 0);
+    const token: CodeToken = {
+      get start() {
+        return readStart();
+      },
+      end: 5,
+      kind: "keyword",
+    };
+    const copy = vi
+      .spyOn(navigator.clipboard, "writeText")
+      .mockResolvedValue(undefined);
+    render(<CodeBlock code="const" tokens={[token]} />);
+    readStart.mockClear();
+    await user.click(screen.getByRole("button", { name: "Copy code" }));
+    expect(readStart).not.toHaveBeenCalled();
+    copy.mockRestore();
+  });
+});

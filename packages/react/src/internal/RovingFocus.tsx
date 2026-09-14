@@ -12,7 +12,8 @@ import {
   type Ref,
   type RefCallback,
 } from "react";
-import { nextRovingIndex } from "./rovingFocus.js";
+import { attachRef } from "./attachRef.js";
+import { isRovingItemAvailable, nextRovingIndex } from "./rovingFocus.js";
 
 type RovingContextValue = {
   orientation: "horizontal" | "vertical";
@@ -54,13 +55,9 @@ export function RovingFocus({
   );
   const refresh = useCallback(() => {
     const all = ordered();
-    const available = all.filter((node) => {
-      if (node.matches(":disabled, [aria-disabled='true']")) return false;
-      const scope = node.closest("[data-flux-roving-root]");
-      const hidden = node.closest("[hidden], [inert]");
-      // Ignore an entirely hidden group/ancestor, but skip locally hidden items.
-      return hidden === null || hidden === scope || !scope?.contains(hidden);
-    });
+    const available = all.filter((node) =>
+      isRovingItemAvailable(node, node.closest("[data-flux-roving-root]")),
+    );
     const last = focused.current;
     const active =
       last !== null && available.includes(last)
@@ -127,23 +124,6 @@ export function RovingFocus({
   );
 }
 
-function attachRef<Element extends HTMLElement>(
-  ref: Ref<Element> | undefined,
-  node: Element,
-): () => void {
-  if (typeof ref === "function") {
-    const cleanup = ref(node);
-    return () => {
-      if (typeof cleanup === "function") cleanup();
-      else ref(null);
-    };
-  }
-  if (ref) ref.current = node;
-  return () => {
-    if (ref) ref.current = null;
-  };
-}
-
 export function useRovingItem<Element extends HTMLElement>({
   ref: forwardedRef,
   onFocus,
@@ -166,7 +146,7 @@ export function useRovingItem<Element extends HTMLElement>({
       const detach = attachRef(forwardedRef, node);
       return () => {
         unregister();
-        detach();
+        detach?.();
       };
     },
     [register, forwardedRef],

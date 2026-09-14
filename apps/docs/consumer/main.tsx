@@ -58,11 +58,30 @@ function ConsumerExtensions() {
     [],
   );
   const [gain, setGain] = useState(50);
+  const [roomy, setRoomy] = useState(false);
   const [split, setSplit] = useState(50);
   const code = 'const literal = "<img src=x onerror=alert(1)>";';
   return (
     <Stack as="section" gap="lg" aria-label="Advanced public components">
       <Heading level={2}>Advanced public components</Heading>
+      <Box
+        data-testid="edge-padding"
+        padding={roomy ? "lg" : "md"}
+        paddingInlineEnd="sm"
+      >
+        Logical padding precedence
+      </Box>
+      <Box
+        data-testid="style-padding"
+        padding="md"
+        paddingInlineEnd="sm"
+        style={{ padding: "3rem" }}
+      >
+        Consumer padding precedence
+      </Box>
+      <Button onClick={() => setRoomy((value) => !value)}>
+        Change padding fixture
+      </Button>
       <CodeBlock
         code={code}
         tokens={tokenizeCode(code, "typescript")}

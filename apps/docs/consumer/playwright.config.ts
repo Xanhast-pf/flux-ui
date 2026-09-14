@@ -20,7 +20,19 @@ export default defineConfig({
             },
           ],
         ]
-      : "list",
+      : process.env.FLUX_TERMINAL_ACTIVE
+        ? [
+            ["list"],
+            [
+              fileURLToPath(
+                new URL(
+                  "../../../tooling/terminal/playwright-reporter.mjs",
+                  import.meta.url,
+                ),
+              ),
+            ],
+          ]
+        : "list",
   use: { baseURL: "http://127.0.0.1:4179", trace: "retain-on-failure" },
   webServer: {
     command:

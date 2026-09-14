@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { attachRef } from "../../internal/attachRef.js";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { scrollArea } from "./ScrollArea.css.js";
 import type { ScrollAreaProps } from "./ScrollArea.types.js";
@@ -13,44 +14,52 @@ export function ScrollArea({
   const attach = useCallback(
     (node: HTMLDivElement | null) => {
       if (node === null) return undefined;
-      const refCleanup = typeof ref === "function" ? ref(node) : undefined;
-      if (ref && typeof ref !== "function") ref.current = node;
+      const detach = attachRef(ref, node);
+      const view = node.ownerDocument.defaultView;
+      // Explicit tab order needs no observers, measurements or resize listener.
+      if (tabIndex !== undefined || view === null) return detach;
       const update = () => {
-        if (tabIndex !== undefined) return;
-        const horizontal =
-          axis !== "vertical" && node.scrollWidth > node.clientWidth;
-        const vertical =
-          axis !== "horizontal" && node.scrollHeight > node.clientHeight;
-        node.tabIndex = horizontal || vertical ? 0 : -1;
+        const next =
+          (axis !== "vertical" && node.scrollWidth > node.clientWidth) ||
+          (axis !== "horizontal" && node.scrollHeight > node.clientHeight)
+            ? 0
+            : -1;
+        if (node.tabIndex !== next || !node.hasAttribute("tabindex"))
+          node.tabIndex = next;
       };
       const resize =
-        typeof ResizeObserver === "undefined"
+        typeof view.ResizeObserver === "undefined"
           ? undefined
-          : new ResizeObserver(update);
-      const observe = () => {
-        resize?.disconnect();
-        resize?.observe(node);
-        for (const child of node.children) resize?.observe(child);
+          : new view.ResizeObserver(update);
+      resize?.observe(node);
+      for (const child of node.children) resize?.observe(child);
+      const mutation = new view.MutationObserver((records) => {
+        // Text/deep mutations only need measurement. Reconnect only the direct
+        // children whose membership actually changed, not the entire subtree.
+        if (resize)
+          for (const record of records) {
+            if (record.target !== node) continue;
+            for (const child of record.removedNodes)
+              if (child instanceof view.Element) resize.unobserve(child);
+            for (const child of record.addedNodes)
+              if (child instanceof view.Element) resize.observe(child);
+          }
         update();
-      };
-      const mutation =
-        typeof MutationObserver === "undefined"
-          ? undefined
-          : new MutationObserver(observe);
-      mutation?.observe(node, {
+      });
+      mutation.observe(node, {
         childList: true,
         subtree: true,
         characterData: true,
+        attributes: true,
+        attributeFilter: ["class", "style", "hidden", "inert", "open"],
       });
-      window.addEventListener("resize", update);
-      observe();
+      view.addEventListener("resize", update);
+      update();
       return () => {
         resize?.disconnect();
-        mutation?.disconnect();
-        window.removeEventListener("resize", update);
-        if (typeof refCleanup === "function") refCleanup();
-        else if (typeof ref === "function") ref(null);
-        else if (ref) ref.current = null;
+        mutation.disconnect();
+        view.removeEventListener("resize", update);
+        detach?.();
       };
     },
     [axis, ref, tabIndex],

@@ -258,3 +258,86 @@ test("built Tabs uses RTL horizontal keyboard direction", async ({ page }) => {
   await page.keyboard.press("ArrowLeft");
   await expect(list.getByRole("tab", { name: "RTL two" })).toBeFocused();
 });
+
+test("built Tabs excludes hidden and inert targets without stealing shortcuts", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const list = page.getByRole("tablist", { name: "Inner tabs" });
+  const first = list.getByRole("tab", { name: "Inner one" });
+  const second = list.locator('[role="tab"][data-flux-tab-value="inner-two"]');
+  await first.focus();
+  await page.keyboard.press("Control+ArrowRight");
+  await expect(first).toBeFocused();
+  for (const attribute of ["hidden", "inert"]) {
+    await second.evaluate((element, name) => {
+      element.setAttribute(name, "");
+    }, attribute);
+    await page.keyboard.press("ArrowRight");
+    await expect(first).toBeFocused();
+    await second.evaluate((element, name) => {
+      element.removeAttribute(name);
+    }, attribute);
+  }
+  await page.keyboard.press("ArrowRight");
+  await expect(second).toBeFocused();
+});
+
+test("built Knob ignores cancellation from another pointer", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const knob = page.getByRole("slider", { name: "Consumer gain" });
+  await knob.scrollIntoViewIfNeeded();
+  const bounds = await knob.boundingBox();
+  if (bounds === null) throw new Error("Missing knob bounds.");
+  await knob.evaluate((element) => {
+    element.addEventListener(
+      "gotpointercapture",
+      (event) => {
+        if (event instanceof PointerEvent)
+          element.setAttribute("data-test-pointer", String(event.pointerId));
+      },
+      { once: true },
+    );
+  });
+  const x = bounds.x + bounds.width / 2;
+  const y = bounds.y + bounds.height / 2;
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  try {
+    await page.mouse.move(x, y - 16);
+    await expect(knob).toHaveAttribute("aria-valuenow", "60");
+    await expect(knob).toHaveAttribute("data-test-pointer", /\d+/);
+    await knob.evaluate((element) => {
+      const id = Number(element.getAttribute("data-test-pointer"));
+      element.dispatchEvent(
+        new PointerEvent("pointercancel", {
+          bubbles: true,
+          pointerId: id + 100,
+          isPrimary: false,
+        }),
+      );
+    });
+    await expect(knob).toHaveAttribute("aria-valuenow", "60");
+    await page.mouse.move(x, y - 32);
+    await expect(knob).toHaveAttribute("aria-valuenow", "70");
+  } finally {
+    await page.mouse.up();
+  }
+});
+
+test("built Box keeps edge precedence while broad padding changes", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const box = page.getByTestId("edge-padding");
+  await expect(box).toHaveCSS("padding-block-start", "16px");
+  await expect(box).toHaveCSS("padding-inline-end", "8px");
+  await page.getByRole("button", { name: "Change padding fixture" }).click();
+  await expect(box).toHaveCSS("padding-block-start", "24px");
+  await expect(box).toHaveCSS("padding-inline-end", "8px");
+  const styled = page.getByTestId("style-padding");
+  await expect(styled).toHaveCSS("padding-block-start", "48px");
+  await expect(styled).toHaveCSS("padding-inline-end", "48px");
+});

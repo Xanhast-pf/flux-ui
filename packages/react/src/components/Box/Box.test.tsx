@@ -63,3 +63,38 @@ describe("Box", () => {
     expect(ref.current?.style.padding).toBe("2rem");
   });
 });
+
+describe("Box padding precedence", () => {
+  it("keeps specific edges when broad padding changes", () => {
+    const view = render(
+      <Box data-testid="padding" padding="md" paddingInlineEnd="sm" />,
+    );
+    const box = screen.getByTestId("padding");
+    expect(box.style.paddingBlockStart).toBe("var(--flux-space-4)");
+    expect(box.style.paddingInlineEnd).toBe("var(--flux-space-2)");
+    view.rerender(
+      <Box data-testid="padding" padding="lg" paddingInlineEnd="sm" />,
+    );
+    expect(box.style.paddingBlockStart).toBe("var(--flux-space-6)");
+    expect(box.style.paddingInlineEnd).toBe("var(--flux-space-2)");
+  });
+
+  it("lets consumer shorthands override and then release prop padding", () => {
+    const view = render(
+      <Box
+        data-testid="padding"
+        padding="md"
+        paddingInlineEnd="sm"
+        style={{ padding: "3rem" }}
+      />,
+    );
+    const box = screen.getByTestId("padding");
+    expect(box.style.padding).toBe("3rem");
+    expect(box.style.paddingInlineEnd).toBe("");
+    view.rerender(
+      <Box data-testid="padding" padding="md" paddingInlineEnd="sm" />,
+    );
+    expect(box.style.padding).toBe("");
+    expect(box.style.paddingInlineEnd).toBe("var(--flux-space-2)");
+  });
+});

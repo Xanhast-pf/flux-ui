@@ -58,6 +58,13 @@ export function Chart({
     ? `${selected?.label}: ${formatX(point.x)}, ${point.y === null ? "No value" : formatY(point.y)}`
     : "No chart data";
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (
+      event.defaultPrevented ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey
+    )
+      return;
     let next = active;
     if (event.key === "Home") next = 0;
     else if (event.key === "End") next = data.length - 1;

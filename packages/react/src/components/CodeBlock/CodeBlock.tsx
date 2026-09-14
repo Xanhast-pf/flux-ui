@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { ScrollArea } from "../ScrollArea/ScrollArea.js";
 import { Button } from "../Button/Button.js";
@@ -17,6 +17,20 @@ export function CodeBlock({
   ...props
 }: CodeBlockProps) {
   const resolvedTokens = useCodeTokens(code, language, tokens, highlight);
+  const content = useMemo(
+    () =>
+      codeSegments(code, resolvedTokens).map((segment) =>
+        segment.kind ? (
+          <span className={token} data-token={segment.kind} key={segment.start}>
+            {segment.content}
+          </span>
+        ) : (
+          segment.content
+        ),
+      ),
+    [code, resolvedTokens],
+  );
+  const copyRequest = useRef(0);
   const [result, setResult] = useState<{
     code: string;
     success: boolean;
@@ -28,11 +42,12 @@ export function CodeBlock({
         : "Clipboard unavailable. Select the code and copy it manually."
       : "";
   async function copy(): Promise<void> {
+    const request = ++copyRequest.current;
     try {
       await navigator.clipboard.writeText(code);
-      setResult({ code, success: true });
+      if (request === copyRequest.current) setResult({ code, success: true });
     } catch {
-      setResult({ code, success: false });
+      if (request === copyRequest.current) setResult({ code, success: false });
     }
   }
   return (
@@ -54,21 +69,7 @@ export function CodeBlock({
       </div>
       <ScrollArea aria-label={label} axis="horizontal">
         <pre className={pre}>
-          <code data-language={language}>
-            {codeSegments(code, resolvedTokens).map((segment) =>
-              segment.kind ? (
-                <span
-                  className={token}
-                  data-token={segment.kind}
-                  key={segment.start}
-                >
-                  {segment.content}
-                </span>
-              ) : (
-                segment.content
-              ),
-            )}
-          </code>
+          <code data-language={language}>{content}</code>
         </pre>
       </ScrollArea>
       {copyable ? (

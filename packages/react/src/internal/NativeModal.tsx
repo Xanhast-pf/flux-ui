@@ -13,6 +13,7 @@ import {
   type Ref,
   type SyntheticEvent,
 } from "react";
+import { attachRef } from "./attachRef.js";
 import { joinClassNames } from "./joinClassNames.js";
 
 export type NativeModalSide = "top" | "right" | "bottom" | "left";
@@ -75,21 +76,6 @@ function useNativeModalContext(part: string): NativeModalContextValue {
   return context;
 }
 
-/** React 19 callback-ref cleanup must survive both composition and Strict Mode. */
-function attachRef<T>(ref: Ref<T> | undefined, value: T): () => void {
-  if (typeof ref === "function") {
-    const cleanup = ref(value);
-    return () => {
-      if (typeof cleanup === "function") cleanup();
-      else ref(null);
-    };
-  }
-  if (ref) ref.current = value;
-  return () => {
-    if (ref) ref.current = null;
-  };
-}
-
 function usePartRef<T>(
   kind: "title" | "description",
   id: string,
@@ -102,7 +88,7 @@ function usePartRef<T>(
       const unregister = registerPart(kind, id);
       const cleanup = attachRef(ref, node);
       return () => {
-        cleanup();
+        cleanup?.();
         unregister();
       };
     },
@@ -178,6 +164,7 @@ function NativeModalRoot({
     [],
   );
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+  const [nativeCloseRevision, setNativeCloseRevision] = useState(0);
   const [dialogNode, setDialogNode] = useState<HTMLDialogElement | null>(null);
   const restoreFocusFrameRef = useRef<number | null>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -190,7 +177,9 @@ function NativeModalRoot({
 
   function requestOpen(returnFocusTarget?: HTMLElement): void {
     if (restoreFocusFrameRef.current !== null) {
-      window.cancelAnimationFrame(restoreFocusFrameRef.current);
+      dialogNode?.ownerDocument.defaultView?.cancelAnimationFrame(
+        restoreFocusFrameRef.current,
+      );
       restoreFocusFrameRef.current = null;
     }
     if (returnFocusTarget !== undefined) {
@@ -200,11 +189,18 @@ function NativeModalRoot({
   }
 
   function requestClose(): void {
+    // Native close()/method="dialog" can close the DOM before a controlled
+    // owner accepts the request. Reconcile even when its open prop stays true.
+    if (controlledOpen === true && dialogNode !== null && !dialogNode.open)
+      setNativeCloseRevision((revision) => revision + 1);
     setOpen(false);
   }
 
   useEffect(() => {
     if (dialogNode === null) return;
+    const document = dialogNode.ownerDocument;
+    const view = document.defaultView;
+    if (view === null) return;
 
     const compatibleDialog = dialogNode as HTMLDialogElement & {
       close?: () => void;
@@ -213,13 +209,13 @@ function NativeModalRoot({
 
     if (open) {
       if (restoreFocusFrameRef.current !== null) {
-        window.cancelAnimationFrame(restoreFocusFrameRef.current);
+        view.cancelAnimationFrame(restoreFocusFrameRef.current);
         restoreFocusFrameRef.current = null;
       }
       if (!dialogNode.open) {
         if (previousFocusRef.current === null) {
           previousFocusRef.current =
-            document.activeElement instanceof HTMLElement
+            document.activeElement instanceof view.HTMLElement
               ? document.activeElement
               : null;
         }
@@ -244,7 +240,7 @@ function NativeModalRoot({
     previousFocusRef.current = null;
     if (returnFocusTarget === null) return;
 
-    restoreFocusFrameRef.current = window.requestAnimationFrame(() => {
+    restoreFocusFrameRef.current = view.requestAnimationFrame(() => {
       restoreFocusFrameRef.current = null;
       if (!returnFocusTarget.isConnected) return;
 
@@ -252,8 +248,7 @@ function NativeModalRoot({
       const focusStillBelongsToModal =
         activeElement === null ||
         activeElement === document.body ||
-        activeElement === dialogNode ||
-        (activeElement instanceof Node && dialogNode.contains(activeElement));
+        dialogNode.contains(activeElement);
 
       if (focusStillBelongsToModal) {
         returnFocusTarget.focus({ preventScroll: true });
@@ -262,11 +257,11 @@ function NativeModalRoot({
 
     return () => {
       if (restoreFocusFrameRef.current !== null) {
-        window.cancelAnimationFrame(restoreFocusFrameRef.current);
+        view.cancelAnimationFrame(restoreFocusFrameRef.current);
         restoreFocusFrameRef.current = null;
       }
     };
-  }, [dialogNode, open]);
+  }, [dialogNode, nativeCloseRevision, open]);
 
   const context: NativeModalContextValue = {
     descriptionIds: parts.description.join(" "),
@@ -351,7 +346,7 @@ function NativeModalPopup({
 
   function handleCancel(event: SyntheticEvent<HTMLDialogElement>): void {
     onCancel?.(event);
-    if (!event.defaultPrevented) {
+    if (!event.defaultPrevented && event.target === event.currentTarget) {
       event.preventDefault();
       context.requestClose();
     }
@@ -362,6 +357,8 @@ function NativeModalPopup({
     if (
       closeOnBackdrop &&
       !event.defaultPrevented &&
+      event.button === 0 &&
+      event.isPrimary !== false &&
       event.target === event.currentTarget
     ) {
       const bounds = event.currentTarget.getBoundingClientRect();
@@ -376,7 +373,15 @@ function NativeModalPopup({
 
   function handleClose(event: SyntheticEvent<HTMLDialogElement>): void {
     onClose?.(event);
-    if (!event.defaultPrevented && context.open) context.requestClose();
+    // A queued close event from an earlier close must not dismiss a reopened
+    // dialog. Nested modal events must not close their ancestor either.
+    if (
+      !event.defaultPrevented &&
+      event.target === event.currentTarget &&
+      !event.currentTarget.open &&
+      context.open
+    )
+      context.requestClose();
   }
 
   const setPopupRef = useCallback(
@@ -385,7 +390,7 @@ function NativeModalPopup({
       if (node === null) return;
       const cleanup = attachRef(ref, node);
       return () => {
-        cleanup();
+        cleanup?.();
         setDialogNode(null);
       };
     },

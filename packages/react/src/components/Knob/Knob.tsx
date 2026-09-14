@@ -1,6 +1,12 @@
 import { useRef, useState, type CSSProperties } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
-import { knobFraction, knobValue, snapKnob, validateKnob } from "./knobMath.js";
+import {
+  knobFraction,
+  knobValue,
+  snapKnob,
+  stepKnob,
+  validateKnob,
+} from "./knobMath.js";
 import { knob, dial, indicator, readout } from "./Knob.css.js";
 import type { KnobProps } from "./Knob.types.js";
 const numberFormatter = new Intl.NumberFormat("en-US", {
@@ -96,13 +102,13 @@ export function Knob({
       }}
       onPointerMove={(event) => {
         onPointerMove?.(event);
+        const active = drag.current;
+        if (!active || event.defaultPrevented || event.pointerId !== active.id)
+          return;
         if (disabled) {
           cancel();
           return;
         }
-        const active = drag.current;
-        if (!active || event.defaultPrevented || event.pointerId !== active.id)
-          return;
         active.fraction = Math.max(
           0,
           Math.min(
@@ -124,22 +130,31 @@ export function Knob({
         onPointerUp?.(event);
         if (drag.current?.id !== event.pointerId) return;
         const latest = drag.current.latest;
-        drag.current = null;
+        if (disabled) cancel();
+        else drag.current = null;
         if (event.currentTarget.hasPointerCapture(event.pointerId))
           event.currentTarget.releasePointerCapture(event.pointerId);
         if (!disabled && !event.defaultPrevented) onValueCommit?.(latest);
       }}
       onPointerCancel={(event) => {
         onPointerCancel?.(event);
-        cancel();
+        if (drag.current?.id === event.pointerId) cancel();
       }}
       onLostPointerCapture={(event) => {
         onLostPointerCapture?.(event);
-        cancel();
+        if (drag.current?.id === event.pointerId) cancel();
       }}
       onKeyDown={(event) => {
         onKeyDown?.(event);
-        if (disabled || event.defaultPrevented) return;
+        if (
+          disabled ||
+          event.defaultPrevented ||
+          event.altKey ||
+          event.ctrlKey ||
+          event.metaKey ||
+          event.target !== event.currentTarget
+        )
+          return;
         const amount = event.shiftKey ? step / 10 : step;
         const next =
           event.key === "Home"
@@ -147,9 +162,21 @@ export function Knob({
             : event.key === "End"
               ? max
               : ["ArrowUp", "ArrowRight", "PageUp"].includes(event.key)
-                ? value + amount * (event.key === "PageUp" ? 10 : 1)
+                ? stepKnob(
+                    value,
+                    min,
+                    max,
+                    amount,
+                    event.key === "PageUp" ? 10 : 1,
+                  )
                 : ["ArrowDown", "ArrowLeft", "PageDown"].includes(event.key)
-                  ? value - amount * (event.key === "PageDown" ? 10 : 1)
+                  ? stepKnob(
+                      value,
+                      min,
+                      max,
+                      amount,
+                      event.key === "PageDown" ? -10 : -1,
+                    )
                   : null;
         if (next === null) return;
         event.preventDefault();
