@@ -30,9 +30,10 @@ export function createProgress(output = process.stdout, env = process.env) {
   let label = "";
   let event = {};
   let done = false;
+  let stopped = false;
   let started;
   function draw() {
-    if (done) return;
+    if (done || stopped) return;
     const width = Math.max(1, (output.columns || 80) - 1);
     const determinate =
       Number.isInteger(event.current) &&
@@ -64,7 +65,7 @@ export function createProgress(output = process.stdout, env = process.env) {
   }
   return {
     start(text) {
-      if (started !== undefined || done) return;
+      if (started !== undefined || done || stopped) return;
       started = performance.now();
       label = clean(text);
       if (live) {
@@ -73,8 +74,15 @@ export function createProgress(output = process.stdout, env = process.env) {
       } else output.write(`RUN ${label}\n`);
     },
     update(value) {
-      if (!done)
-        event = typeof value === "string" ? { item: clean(value) } : value;
+      if (done || stopped) return;
+      const next = typeof value === "string" ? { item: clean(value) } : value;
+      const itemChanged = next.item !== event.item;
+      event = next;
+      if (live && started !== undefined && itemChanged) draw();
+    },
+    stop() {
+      stopped = true;
+      clearInterval(timer);
     },
     finish(text) {
       if (done) return;

@@ -1,14 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { Writable } from "node:stream";
+import { mkdtemp, rm } from "node:fs/promises";
+import { writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { setTimeout } from "node:timers/promises";
 import { runTask } from "./runner.mjs";
 import { createProgress } from "./output.mjs";
-function capture(tty = false, columns = 80) {
+function capture(tty = false, columns = 80, onWrite = () => {}) {
   let text = "";
   const output = new Writable({
     write(chunk, encoding, callback) {
       text += chunk;
+      onWrite(String(chunk));
       callback();
     },
   });
@@ -74,19 +79,65 @@ test("SIGINT is forwarded and returns 130", async () => {
   assert.equal((await pending).status, 130);
 });
 
-test("semantic updates reach a live task and stop with its completion", async () => {
-  const sink = capture(true, 80);
-  await runTask(
+test("semantic updates reach a live task and stop with its completion", async (t) => {
+  const directory = await mkdtemp(join(tmpdir(), "flux-live-test-"));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const acknowledgement = join(directory, "rendered");
+  let rendered = false;
+  const sink = capture(true, 80, (chunk) => {
+    if (chunk.includes("Example.test.tsx")) {
+      assert.ok(!sink.text().includes("PASS Tests"));
+      rendered = true;
+      writeFileSync(acknowledgement, "");
+    }
+  });
+  const result = await runTask(
     [
       "node",
       "-e",
-      'require("node:fs").writeFileSync(process.env.FLUX_PROGRESS_FILE,"Example.test.tsx");setTimeout(()=>{},400)',
+      `const fs = require("node:fs");
+       const watcher = fs.watch(${JSON.stringify(directory)}, () => {
+         if (fs.existsSync(${JSON.stringify(acknowledgement)})) watcher.close();
+       });
+       fs.writeFileSync(process.env.FLUX_PROGRESS_FILE, "Example.test.tsx");`,
     ],
-    { output: sink.output, label: "Tests" },
+    {
+      output: sink.output,
+      label: "Tests",
+      env: { ...process.env, CI: "", TERM: "xterm" },
+    },
   );
+  assert.equal(result.status, 0);
+  assert.ok(rendered);
   assert.ok(sink.text().includes("Example.test.tsx"));
   const completed = sink.text();
-  await setTimeout(150);
+  // Yield once after completion; scheduled renderer work is covered below.
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(sink.text(), completed);
+});
+
+test("semantic items render before the next tick and completion cancels pending progress", (t) => {
+  t.mock.timers.enable({ apis: ["setInterval"] });
+  const sink = capture(true);
+  const progress = createProgress(sink.output, {});
+  progress.start("Tests");
+  progress.update({ item: "First.test.tsx", current: 0, total: 1000 });
+  t.mock.timers.tick(99);
+  progress.update({ item: "Example.test.tsx", current: 1, total: 1000 });
+  assert.ok(sink.text().includes("Example.test.tsx"));
+  const active = sink.text();
+  for (let current = 2; current <= 1000; current++)
+    progress.update({ item: "Example.test.tsx", current, total: 1000 });
+  assert.equal(sink.text(), active);
+  progress.stop();
+  t.mock.timers.tick(1000);
+  progress.update("late read before summary");
+  assert.equal(sink.text(), active);
+  progress.finish("PASS Tests");
+  const completed = sink.text();
+  t.mock.timers.tick(1000);
+  progress.update("late item");
+  progress.finish("duplicate");
   assert.equal(sink.text(), completed);
 });
 
@@ -124,7 +175,8 @@ test("repeated tasks do not accumulate output listeners", async () => {
   );
 });
 
-test("truthful progress, tail truncation, color policy and throttling", async () => {
+test("truthful progress, tail truncation, color policy and throttling", async (t) => {
+  t.mock.timers.enable({ apis: ["setInterval"] });
   const { terminalCapabilities, truncate } = await import("./output.mjs");
   assert.equal(
     terminalCapabilities({ isTTY: false }, { FORCE_COLOR: "1" }).color,
@@ -142,16 +194,26 @@ test("truthful progress, tail truncation, color policy and throttling", async ()
   const sink = capture(true, 100);
   const progress = createProgress(sink.output, {});
   progress.start("Tests");
-  for (let i = 0; i < 1000; i++)
+  progress.update({
+    item: "Tabs.test.tsx",
+    current: 0,
+    total: 1000,
+    unit: "files",
+  });
+  const initial = sink.text();
+  for (let i = 1; i <= 1000; i++)
     progress.update({
-      current: 37,
-      total: 48,
+      current: i,
+      total: 1000,
       unit: "files",
       item: "Tabs.test.tsx",
     });
-  assert.equal(sink.text().split("\u001b[2K").length, 2);
-  await setTimeout(120);
-  assert.match(sink.text(), /37\/48 files/u);
+  assert.equal(sink.text(), initial);
+  t.mock.timers.tick(99);
+  assert.equal(sink.text(), initial);
+  t.mock.timers.tick(1);
+  assert.equal(sink.text().split("\u001b[2K").length, 4);
+  assert.match(sink.text(), /1000\/1000 files/u);
   assert.match(sink.text(), /Tabs.test.tsx/u);
   assert.match(sink.text(), /█/u);
   assert.ok(sink.text().includes("\u001b[36m"));

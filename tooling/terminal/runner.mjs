@@ -33,7 +33,7 @@ export async function runTask(
   const progressFile = env.FLUX_PROGRESS_FILE || join(directory, "progress");
   const handles = await Promise.all([open(log, "w"), open(warnings, "w")]);
   const progress = raw
-    ? { start() {}, update() {}, finish() {} }
+    ? { start() {}, update() {}, stop() {}, finish() {} }
     : createProgress(output, env);
   const started = performance.now();
   const elapsed = () => `${((performance.now() - started) / 1000).toFixed(1)}s`;
@@ -86,8 +86,10 @@ export async function runTask(
   const onTerm = () => interrupt("SIGTERM");
   process.on("SIGINT", onInt);
   process.on("SIGTERM", onTerm);
+  let completed = false;
   const timer = setInterval(async () => {
     const item = await readFile(progressFile, "utf8").catch(() => "");
+    if (completed) return;
     try {
       progress.update(JSON.parse(item));
     } catch {
@@ -95,11 +97,16 @@ export async function runTask(
     }
   }, 150);
   const result = await new Promise((resolve) => {
-    child.once("error", (error) => resolve({ status: 1, error }));
-    child.once("close", (status, signal) => resolve({ status, signal }));
+    const complete = (value) => {
+      completed = true;
+      clearInterval(timer);
+      progress.stop();
+      resolve(value);
+    };
+    child.once("error", (error) => complete({ status: 1, error }));
+    child.once("close", (status, signal) => complete({ status, signal }));
   });
   if (interrupted) kill("SIGKILL");
-  clearInterval(timer);
   clearTimeout(escalation);
   process.off("SIGINT", onInt);
   process.off("SIGTERM", onTerm);
