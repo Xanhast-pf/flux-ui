@@ -1,4 +1,5 @@
-import { spawnSync } from "node:child_process";
+import { commandLabel } from "../tooling/terminal/commands.mjs";
+import { runTask } from "../tooling/terminal/runner.mjs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -41,18 +42,20 @@ if (Number(process.versions.node.split(".")[0]) < 24) {
   throw new Error(reason);
 }
 const plan = verificationPlan(manifest.scripts);
-const checks = runVerification(plan, ([program, ...args]) => {
-  console.log(`\nVerification / ${[program, ...args].join(" ")}`);
-  // pnpm supplies its JS entry when launching a package script. Running that entry
-  // with Node also avoids shell interpretation and .cmd quoting on Windows.
-  const entry = program === "pnpm" ? process.env.npm_execpath : undefined;
-  const executable = entry || program === "node" ? process.execPath : program;
-  return spawnSync(executable, entry ? [entry, ...args] : args, {
-    cwd: root,
-    stdio: "inherit",
-    env: process.env,
-  });
-});
+console.log("Flux UI verify\n");
+const started = performance.now();
+const checks = await runVerification(
+  plan,
+  (command, index) =>
+    runTask(command, {
+      cwd: root,
+      label: `[${index + 1}/${plan.length}] ${commandLabel(command)}`,
+    }),
+  (check, index) =>
+    console.log(
+      `BLOCKED [${index + 1}/${plan.length}] ${check.command.join(" ")}: ${check.reason}`,
+    ),
+);
 const passed = checks.every((check) => check.status === "passed");
 await writeFile(
   destination,
@@ -67,10 +70,12 @@ await writeFile(
     2,
   )}\n`,
 );
-for (const check of checks) {
-  console.log(
-    `${check.status.toUpperCase().padEnd(7)} ${check.command.join(" ")}`,
-  );
-}
-console.log(`\nLocal verification receipt: ${destination}`);
-process.exitCode = passed ? 0 : 1;
+console.log(
+  `\n${passed ? "All checks passed" : "Verification failed"} in ${((performance.now() - started) / 1000).toFixed(1)}s`,
+);
+console.log(`Local verification receipt: ${destination}`);
+process.exitCode = passed
+  ? 0
+  : (checks.at(-1)?.reason?.startsWith("SIG")
+      ? checks.at(-1).exitCode
+      : checks.find((check) => check.status === "failed")?.exitCode) || 1;

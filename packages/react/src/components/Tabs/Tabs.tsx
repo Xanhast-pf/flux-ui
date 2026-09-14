@@ -7,6 +7,11 @@ import {
   type MouseEvent,
 } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
+import {
+  isRovingItemAvailable,
+  nextRovingIndex,
+  type RovingOptions,
+} from "../../internal/rovingFocus.js";
 import { list, panel, root, tab } from "./Tabs.css.js";
 import type {
   TabsListProps,
@@ -89,54 +94,41 @@ function TabsList({
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>): void {
     onKeyDown?.(event);
-    if (event.defaultPrevented) return;
-
-    const horizontal = context.orientation === "horizontal";
-    const rtl = getComputedStyle(event.currentTarget).direction === "rtl";
-    const previousKey = horizontal
-      ? rtl
-        ? "ArrowRight"
-        : "ArrowLeft"
-      : "ArrowUp";
-    const nextKey = horizontal
-      ? rtl
-        ? "ArrowLeft"
-        : "ArrowRight"
-      : "ArrowDown";
+    const options: RovingOptions = {
+      orientation: context.orientation,
+      direction: "ltr",
+      loopFocus,
+    };
     if (
-      event.key !== previousKey &&
-      event.key !== nextKey &&
-      event.key !== "Home" &&
-      event.key !== "End"
-    ) {
+      event.defaultPrevented ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      nextRovingIndex(event.key, 0, 1, options) === null
+    )
       return;
-    }
 
+    const scope = event.currentTarget;
     const tabs = Array.from(
-      event.currentTarget.querySelectorAll<HTMLButtonElement>(
-        '[role="tab"]:not(:disabled)',
-      ),
+      scope.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
     ).filter(
-      (element) => element.closest('[role="tablist"]') === event.currentTarget,
+      (element) =>
+        element.closest('[role="tablist"]') === scope &&
+        isRovingItemAvailable(element, scope),
     );
-    if (tabs.length === 0) return;
-
-    const currentIndex = tabs.indexOf(event.target as HTMLButtonElement);
-    if (currentIndex < 0) return;
-
+    options.direction =
+      scope.ownerDocument.defaultView?.getComputedStyle(scope).direction ===
+      "rtl"
+        ? "rtl"
+        : "ltr";
+    const nextIndex = nextRovingIndex(
+      event.key,
+      tabs.findIndex((element) => element === event.target),
+      tabs.length,
+      options,
+    );
+    if (nextIndex === null) return;
     event.preventDefault();
-    let nextIndex = currentIndex;
-
-    if (event.key === "Home") nextIndex = 0;
-    else if (event.key === "End") nextIndex = tabs.length - 1;
-    else if (event.key === nextKey) nextIndex = currentIndex + 1;
-    else if (event.key === previousKey) nextIndex = currentIndex - 1;
-
-    if (loopFocus) {
-      nextIndex = (nextIndex + tabs.length) % tabs.length;
-    } else {
-      nextIndex = Math.max(0, Math.min(tabs.length - 1, nextIndex));
-    }
 
     const nextTab = tabs[nextIndex];
     nextTab?.focus();
@@ -170,11 +162,15 @@ function TabsTab({
 }: TabsTabProps) {
   const context = useTabsContext("Tab");
   const selected = context.value === value;
+  const unavailable =
+    disabled ||
+    props["aria-disabled"] === true ||
+    props["aria-disabled"] === "true";
   const suffix = valueSuffix(value);
 
   function handleClick(event: MouseEvent<HTMLButtonElement>): void {
     onClick?.(event);
-    if (!event.defaultPrevented && !disabled) context.setValue(value);
+    if (!event.defaultPrevented && !unavailable) context.setValue(value);
   }
 
   return (
@@ -187,7 +183,7 @@ function TabsTab({
       data-o={context.orientation}
       data-s={context.size}
       data-flux-tab-value={value}
-      disabled={disabled}
+      disabled={unavailable}
       id={`${context.id}-tab-${suffix}`}
       onClick={handleClick}
       role="tab"

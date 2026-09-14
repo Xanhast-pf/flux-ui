@@ -1,29 +1,8 @@
-import { useCallback, type ChangeEvent, type Ref } from "react";
+import { useCallback, type ChangeEvent } from "react";
+import { attachRef } from "../../internal/attachRef.js";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { checkbox } from "./Checkbox.css.js";
 import type { CheckboxProps } from "./Checkbox.types.js";
-
-// Preserve React 19 callback-ref cleanup as well as object and legacy refs.
-function attachRef(
-  ref: Ref<HTMLInputElement> | undefined,
-  node: HTMLInputElement,
-): (() => void) | undefined {
-  if (typeof ref === "function") {
-    const cleanup = ref(node);
-    return typeof cleanup === "function"
-      ? cleanup
-      : () => {
-          ref(null);
-        };
-  }
-  if (ref != null) {
-    ref.current = node;
-    return () => {
-      ref.current = null;
-    };
-  }
-  return undefined;
-}
 
 export function Checkbox({
   className,

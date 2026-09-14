@@ -1,3 +1,5 @@
+import { scriptSource } from "../terminal/commands.mjs";
+
 /** Expand the existing full gate without maintaining a second check list. */
 export function verificationPlan(scripts) {
   function commands(source) {
@@ -15,38 +17,44 @@ export function verificationPlan(scripts) {
       return command.split(" ");
     });
   }
-  const full = commands(scripts["check:full"]);
+  const full = commands(scriptSource(scripts, "check:full"));
   const first = full.shift();
   if (first?.join(" ") !== "pnpm check") {
     throw new Error("check:full must start with pnpm check.");
   }
-  return [...commands(scripts.check), ...full];
+  return [...commands(scriptSource(scripts, "check")), ...full];
 }
 
 /** Continue independent checks after failures; never measure stale build output. */
-export function runVerification(plan, execute) {
+export async function runVerification(plan, execute, onBlocked = () => {}) {
   let buildPassed = false;
-  return plan.map((command) => {
+  const checks = [];
+  for (const [index, command] of plan.entries()) {
     const label = command.join(" ");
     if (
       (label === "pnpm size" || label.startsWith("node tooling/size/")) &&
       !buildPassed
     ) {
-      return {
+      const blocked = {
         command,
         status: "blocked",
         exitCode: null,
         reason: "The production build did not pass.",
       };
+      checks.push(blocked);
+      onBlocked(blocked, index);
+      continue;
     }
-    const result = execute(command);
+    const result = await execute(command, index);
     const passed = result.status === 0 && !result.error && !result.signal;
     if (label === "pnpm build") buildPassed = passed;
-    return {
+    checks.push({
       command,
       status: passed ? "passed" : "failed",
       exitCode: result.status,
       reason: result.error?.message ?? result.signal ?? null,
-    };
-  });
+    });
+    if (result.signal) break;
+  }
+  return checks;
 }

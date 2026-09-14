@@ -1,7 +1,7 @@
 // GENERATED FILE. Run `pnpm generate`; do not edit manually.
 export const health = {
   size: {
-    schemaVersion: 1,
+    schemaVersion: 2,
     budgetsVersion: 1,
     aggregate: {
       rootEntry: {

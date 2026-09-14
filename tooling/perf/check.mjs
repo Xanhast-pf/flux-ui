@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 const isUpdate = process.argv.includes("--update-baseline");
@@ -18,7 +19,9 @@ const result = spawnSync(
     "test",
     "tests/perf.spec.ts",
     "--project=chromium",
-    "--reporter=line",
+    process.env.FLUX_TERMINAL_ACTIVE
+      ? `--reporter=line,${fileURLToPath(new URL("../terminal/playwright-reporter.mjs", import.meta.url))}`
+      : "--reporter=line",
   ],
   {
     cwd: process.cwd(),

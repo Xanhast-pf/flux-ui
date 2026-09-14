@@ -1,4 +1,4 @@
-interface RovingOptions {
+export interface RovingOptions {
   orientation: "horizontal" | "vertical";
   direction: "ltr" | "rtl";
   loopFocus: boolean;
@@ -29,4 +29,14 @@ export function nextRovingIndex(
   return options.loopFocus
     ? (next + count) % count
     : Math.max(0, Math.min(count - 1, next));
+}
+
+/** Keep an entirely hidden scope intact, but never navigate to a hidden item. */
+export function isRovingItemAvailable(
+  node: HTMLElement,
+  scope: Element | null,
+): boolean {
+  if (node.matches(":disabled, [aria-disabled='true']")) return false;
+  const hidden = node.closest("[hidden], [inert]");
+  return hidden === null || hidden === scope || !scope?.contains(hidden);
 }

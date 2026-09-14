@@ -66,24 +66,39 @@ export function tokenizeCode(
   else if (lang === "sql") patterns.push(["comment", /--[^\r\n]*/y]);
   else patterns.push(["comment", /\/\/[^\r\n]*|\/\*[\s\S]*?(?:\*\/|$)/y]);
   patterns.push([
-    "string",
-    /"(?:\\[\s\S]|[^"\\])*(?:"|$)|'(?:\\[\s\S]|[^'\\])*(?:'|$)|`(?:\\[\s\S]|[^`\\])*(?:`|$)/y,
-  ]);
-  patterns.push([
     "number",
     /\b(?:0[xX][\da-fA-F]+|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/y,
   ]);
-  patterns.push(["property", /[A-Za-z_$][\w$-]*(?=\s*:)/y]);
   if (lang === "html" || lang === "xml" || lang === "jsx" || lang === "tsx")
     patterns.push(["keyword", /<\/?[A-Za-z][\w:-]*|\/>/y]);
   if (lang === "markdown")
-    patterns.push(["keyword", /#{1,6}(?=\s)|\*\*|__|\[[^\]\r\n]*\](?=\()/y]);
-  const word = /[A-Za-z_$][\w$]*/y;
+    patterns.push(["keyword", /#{1,6}(?=\s)|\*\*|__|\[[^[\]\r\n]*\](?=\()/y]);
+  // Scan an identifier once. A greedy property lookahead over hyphens can
+  // repeatedly rescan an entire suffix of adversarial input such as "a-a-a-".
+  const word = ["css", "scss"].includes(lang ?? "")
+    ? /[A-Za-z_$][\w$-]*/y
+    : /[A-Za-z_$][\w$]*/y;
+  const property = /\s*:/y;
   const space = /\s+/y;
   const punctuation = /[{}()[\];,.=:+*/!?<>|&%-]+/y;
   const result: CodeToken[] = [];
   let offset = 0;
   while (offset < code.length && result.length < 20_000) {
+    const quote = code[offset];
+    if (quote === '"' || quote === "'" || quote === "`") {
+      // Consume unterminated literals, including a final backslash, once.
+      // A failing greedy regex can rescan every escaped quote in the suffix.
+      let end = offset + 1;
+      while (end < code.length) {
+        const character = code[end++];
+        if (character === "\\") end += 1;
+        else if (character === quote) break;
+      }
+      end = Math.min(end, code.length);
+      result.push({ start: offset, end, kind: "string" });
+      offset = end;
+      continue;
+    }
     let consumed = false;
     for (const [kind, pattern] of patterns) {
       pattern.lastIndex = offset;
@@ -99,7 +114,10 @@ export function tokenizeCode(
     const match = word.exec(code);
     if (match) {
       const value = match[0].toLowerCase();
-      if ((lang === "sql" ? sqlKeywords : keywords).has(value))
+      property.lastIndex = word.lastIndex;
+      if (property.test(code))
+        result.push({ start: offset, end: word.lastIndex, kind: "property" });
+      else if ((lang === "sql" ? sqlKeywords : keywords).has(value))
         result.push({ start: offset, end: word.lastIndex, kind: "keyword" });
       offset = word.lastIndex;
       continue;

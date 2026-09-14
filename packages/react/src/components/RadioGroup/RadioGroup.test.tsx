@@ -397,3 +397,33 @@ describe("RadioGroup", () => {
     expect(markup).not.toMatch(/\sinvalid=/);
   });
 });
+
+describe("RadioGroup invalid-state passthrough", () => {
+  it("preserves explicit native invalid values without duplicating group invalidity", () => {
+    render(
+      <RadioGroup.Root invalid>
+        <RadioGroup.Legend>Validation</RadioGroup.Legend>
+        <RadioGroup.Item value="inherited" aria-label="Inherited invalid" />
+        <RadioGroup.Item
+          value="explicit"
+          aria-label="Explicit invalid"
+          aria-invalid="grammar"
+        />
+        <RadioGroup.Item
+          value="valid"
+          aria-label="Explicit valid"
+          aria-invalid={false}
+        />
+      </RadioGroup.Root>,
+    );
+    expect(
+      screen.getByRole("radio", { name: "Inherited invalid" }),
+    ).not.toHaveAttribute("aria-invalid");
+    expect(
+      screen.getByRole("radio", { name: "Explicit invalid" }),
+    ).toHaveAttribute("aria-invalid", "grammar");
+    expect(
+      screen.getByRole("radio", { name: "Explicit valid" }),
+    ).toHaveAttribute("aria-invalid", "false");
+  });
+});

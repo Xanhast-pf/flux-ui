@@ -10,18 +10,24 @@ test("verification preserves every command in the existing strict pipeline", asy
   const manifest = JSON.parse(
     await readFile(new URL("../../package.json", import.meta.url), "utf8"),
   );
+  const terminalCommands = JSON.parse(
+    await readFile(
+      new URL("../terminal/commands.json", import.meta.url),
+      "utf8",
+    ),
+  );
   const plan = verificationPlan(manifest.scripts).map((command) =>
     command.join(" "),
   );
   assert.deepEqual(plan, [
-    ...manifest.scripts.check.split(" && "),
-    ...manifest.scripts["check:full"].split(" && ").slice(1),
+    ...terminalCommands.check.split(" && "),
+    ...terminalCommands["check:full"].split(" && ").slice(1),
   ]);
   assert.ok(plan.indexOf("pnpm bible:check") > plan.indexOf("pnpm size"));
   assert.ok(plan.includes("pnpm test:e2e"));
   assert.ok(plan.includes("pnpm perf:smoke"));
 });
-test("a size failure cannot suppress later browser, analyzer or performance checks", () => {
+test("a size failure cannot suppress later browser, analyzer or performance checks", async () => {
   const plan = [
     ["pnpm", "build"],
     ["pnpm", "size"],
@@ -29,7 +35,7 @@ test("a size failure cannot suppress later browser, analyzer or performance chec
     ["pnpm", "test:e2e"],
     ["pnpm", "perf:smoke"],
   ];
-  const results = runVerification(plan, (command) =>
+  const results = await runVerification(plan, (command) =>
     command[1] === "size" ? failure : success,
   );
   assert.deepEqual(
@@ -41,9 +47,9 @@ test("a size failure cannot suppress later browser, analyzer or performance chec
     false,
   );
 });
-test("failed builds block both size gates rather than measuring stale output", () => {
+test("failed builds block both size gates rather than measuring stale output", async () => {
   const executed = [];
-  const results = runVerification(
+  const results = await runVerification(
     [
       ["pnpm", "build"],
       ["pnpm", "size"],
@@ -61,13 +67,13 @@ test("failed builds block both size gates rather than measuring stale output", (
   );
   assert.equal(executed.length, 2);
 });
-test("signals and executable errors are failures, never passes", () => {
+test("signals and executable errors are failures, never passes", async () => {
   for (const result of [
     { ...success, error: new Error("spawn failed") },
     { ...success, signal: "SIGTERM" },
   ]) {
     assert.equal(
-      runVerification([["pnpm", "lint"]], () => result)[0].status,
+      (await runVerification([["pnpm", "lint"]], () => result))[0].status,
       "failed",
     );
   }
@@ -85,4 +91,20 @@ test("unexpected script syntax fails explicitly instead of skipping a gate", () 
     () => verificationPlan({ check: "pnpm lint", "check:full": "pnpm test" }),
     /must start/u,
   );
+});
+
+test("interruption stops the verification plan immediately", async () => {
+  const executed = [];
+  const checks = await runVerification(
+    [
+      ["pnpm", "lint"],
+      ["pnpm", "test"],
+    ],
+    async (command) => {
+      executed.push(command);
+      return { status: 130, signal: "SIGINT" };
+    },
+  );
+  assert.equal(executed.length, 1);
+  assert.equal(checks[0].exitCode, 130);
 });

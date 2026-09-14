@@ -3,7 +3,6 @@
   "workspaces": {
     "apps/docs": {
       "entry": [
-        "src/main.tsx",
         "consumer/main.tsx",
         "consumer/types.tsx",
         "consumer/*.config.ts",

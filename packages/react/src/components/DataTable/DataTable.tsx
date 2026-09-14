@@ -185,7 +185,28 @@ export function DataTable<Row>({
                     port.scrollTop,
                 )
               : 0;
-          setViewport({ scrollTop: port.scrollTop, bodyOffset });
+          const scrollTop = port.scrollTop;
+          const next = tableWindow(
+            ordered.length,
+            scrollTop,
+            height,
+            rowHeight,
+            overscan,
+            bodyOffset,
+          );
+          setViewport((previous) => {
+            const current = tableWindow(
+              ordered.length,
+              previous.scrollTop,
+              height,
+              rowHeight,
+              overscan,
+              previous.bodyOffset,
+            );
+            return current.start === next.start && current.end === next.end
+              ? previous
+              : { scrollTop, bodyOffset };
+          });
         }}
         onFocusCapture={(event) => {
           const target = event.target;
@@ -205,8 +226,8 @@ export function DataTable<Row>({
       >
         <table className={table} aria-rowcount={ordered.length + 1}>
           <caption className={caption}>
-            {label} · {rows.length.toLocaleString()} loaded of{" "}
-            {totalRows.toLocaleString()} total rows
+            {label} · {rows.length.toLocaleString("en-US")} loaded of{" "}
+            {totalRows.toLocaleString("en-US")} total rows
             {manualSorting ? " · Server ordering" : ""}
           </caption>
           <colgroup>

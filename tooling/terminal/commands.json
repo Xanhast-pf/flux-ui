@@ -1,0 +1,16 @@
+{
+  "check": "pnpm generate:check && pnpm docs:check && pnpm dogfood:check && pnpm format:check && pnpm build:packages && pnpm lint && pnpm typecheck && pnpm knip && pnpm test && pnpm build && pnpm size && pnpm bible:check",
+  "check:full": "pnpm check && node tooling/size/check.mjs --release && pnpm storybook:build && pnpm test:e2e && pnpm perf:smoke && pnpm consumer:check",
+  "test": "pnpm -r --if-present test --reporter=default --reporter=../../tooling/terminal/vitest-reporter.mjs && pnpm size:test && pnpm icons:test && pnpm docs:test && pnpm trust:test && pnpm dogfood:test && pnpm safety:test && pnpm feature:test",
+  "size": "node tooling/size/check.mjs && pnpm icons:size",
+  "size:changed": "pnpm build:packages && node tooling/size/check.mjs --changed && pnpm icons:size",
+  "size:release": "pnpm build:packages && node tooling/size/check.mjs --release && pnpm icons:size",
+  "build": "pnpm build:packages && pnpm --filter @flux-ui/docs build",
+  "build:packages": "pnpm --filter @flux-ui/tokens build && pnpm --filter @flux-ui/icons build && pnpm --filter @flux-ui/identity build && pnpm --filter @flux-ui/react build",
+  "generate:check": "node scripts/generate-icons.mjs --check && node scripts/generate-brand.mjs --check && node scripts/generate-components.mjs --check",
+  "test:e2e": "pnpm --filter @flux-ui/docs test:e2e",
+  "perf": "node tooling/perf/check.mjs",
+  "perf:smoke": "node tooling/perf/check.mjs --smoke",
+  "consumer:check": "pnpm build:packages && pnpm --filter @flux-ui/docs exec tsc -p consumer/tsconfig.json && pnpm --filter @flux-ui/docs exec playwright test --config consumer/playwright.config.ts",
+  "storybook:build": "pnpm --filter @flux-ui/storybook build"
+}

@@ -17,10 +17,14 @@ export function useCodeTokens(
     const controller = new AbortController();
     // Promise assimilation also handles synchronous providers and thrown errors.
     void Promise.resolve()
-      .then(() => highlight(code, language, controller.signal))
+      .then(() =>
+        controller.signal.aborted
+          ? undefined
+          : highlight(code, language, controller.signal),
+      )
       .then(
         (tokens) => {
-          if (!controller.signal.aborted)
+          if (tokens !== undefined && !controller.signal.aborted)
             setResult({ code, language, highlight, tokens });
         },
         () => {

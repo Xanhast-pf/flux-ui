@@ -81,9 +81,18 @@ export function SplitPane({
         aria-valuenow={resolved}
         aria-valuetext={`${Math.round(resolved)} percent for first pane`}
         onKeyDown={(event) => {
+          if (
+            event.defaultPrevented ||
+            event.altKey ||
+            event.ctrlKey ||
+            event.metaKey
+          )
+            return;
           const direction =
             horizontal &&
-            getComputedStyle(event.currentTarget).direction === "rtl"
+            event.currentTarget.ownerDocument.defaultView?.getComputedStyle(
+              event.currentTarget,
+            ).direction === "rtl"
               ? -1
               : 1;
           const step = event.shiftKey ? 1 : 5;
@@ -122,7 +131,8 @@ export function SplitPane({
           }
         }}
         onPointerDown={(event) => {
-          if (event.button !== 0 || !event.isPrimary) return;
+          if (event.defaultPrevented || event.button !== 0 || !event.isPrimary)
+            return;
           const parent = event.currentTarget.parentElement;
           const bounds = parent?.getBoundingClientRect();
           if (!bounds) return;
@@ -141,7 +151,9 @@ export function SplitPane({
             latest: resolved,
             direction:
               horizontal &&
-              getComputedStyle(event.currentTarget).direction === "rtl"
+              event.currentTarget.ownerDocument.defaultView?.getComputedStyle(
+                event.currentTarget,
+              ).direction === "rtl"
                 ? -1
                 : 1,
           };
@@ -166,8 +178,12 @@ export function SplitPane({
             event.currentTarget.releasePointerCapture(event.pointerId);
           onValueCommit?.(active.latest);
         }}
-        onPointerCancel={cancel}
-        onLostPointerCapture={cancel}
+        onPointerCancel={(event) => {
+          if (drag.current?.id === event.pointerId) cancel();
+        }}
+        onLostPointerCapture={(event) => {
+          if (drag.current?.id === event.pointerId) cancel();
+        }}
       />
       {/* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */}
       <div className={content} id={`${id}-second`}>

@@ -1,9 +1,12 @@
 import { createElement, type ReactElement } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
-import { gapToCssValue } from "../../internal/spacing.js";
-import { surfaceStyle } from "../../internal/surface.js";
+import { gapToCssValue, type LayoutGap } from "../../internal/spacing.js";
 import { box } from "./Box.css.js";
 import type { BoxProps } from "./Box.types.js";
+
+function paddingValue(value: LayoutGap | undefined): string | undefined {
+  return value === undefined ? undefined : gapToCssValue(value);
+}
 
 export function Box({
   as = "div",
@@ -21,30 +24,26 @@ export function Box({
   style,
   ...props
 }: BoxProps): ReactElement {
-  const resolvedStyle = surfaceStyle(
-    padding,
-    paddingBlock,
-    paddingInline,
-    style,
-  );
+  const blockOverride =
+    style?.padding !== undefined || style?.paddingBlock !== undefined;
+  const inlineOverride =
+    style?.padding !== undefined || style?.paddingInline !== undefined;
+  // Resolve prop shorthands to logical edges. Mixing React style shorthands
+  // and longhands can overwrite unchanged edges during incremental updates.
   const edgeStyle = {
-    paddingBlockStart:
-      paddingBlockStart === undefined
-        ? undefined
-        : gapToCssValue(paddingBlockStart),
-    paddingBlockEnd:
-      paddingBlockEnd === undefined
-        ? undefined
-        : gapToCssValue(paddingBlockEnd),
-    paddingInlineStart:
-      paddingInlineStart === undefined
-        ? undefined
-        : gapToCssValue(paddingInlineStart),
-    paddingInlineEnd:
-      paddingInlineEnd === undefined
-        ? undefined
-        : gapToCssValue(paddingInlineEnd),
-    ...resolvedStyle,
+    paddingBlockStart: blockOverride
+      ? undefined
+      : paddingValue(paddingBlockStart ?? paddingBlock ?? padding),
+    paddingBlockEnd: blockOverride
+      ? undefined
+      : paddingValue(paddingBlockEnd ?? paddingBlock ?? padding),
+    paddingInlineStart: inlineOverride
+      ? undefined
+      : paddingValue(paddingInlineStart ?? paddingInline ?? padding),
+    paddingInlineEnd: inlineOverride
+      ? undefined
+      : paddingValue(paddingInlineEnd ?? paddingInline ?? padding),
+    ...style,
   };
 
   return createElement(as, {

@@ -1,3 +1,4 @@
+import { scriptSource } from "../terminal/commands.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
@@ -82,13 +83,19 @@ test("default examples have exact ownership and consumer build cannot silently u
 });
 test("consumer runs in the full gate and standalone icon checks cannot read stale builds", async () => {
   const manifest = JSON.parse(await source("package.json"));
-  assert.match(manifest.scripts["check:full"], /pnpm consumer:check/u);
+  assert.match(
+    scriptSource(manifest.scripts, "check:full"),
+    /pnpm consumer:check/u,
+  );
   for (const name of ["icons:size", "icons:size:update"])
     assert.match(
       manifest.scripts[name],
       /^pnpm --filter @flux-ui\/icons build && node tooling\/icons\/check\.mjs/u,
     );
-  assert.match(manifest.scripts["consumer:check"], /^pnpm build:packages &&/u);
+  assert.match(
+    scriptSource(manifest.scripts, "consumer:check"),
+    /^pnpm build:packages &&/u,
+  );
 });
 
 test("fresh checkouts build public declarations before type-aware consumer lint", async () => {
@@ -97,7 +104,7 @@ test("fresh checkouts build public declarations before type-aware consumer lint"
     ["check", "pnpm lint"],
     ["check:fix", "pnpm lint:fix"],
   ]) {
-    const commands = scripts[name].split(" && ");
+    const commands = scriptSource(scripts, name).split(" && ");
     assert.ok(commands.indexOf("pnpm build:packages") >= 0);
     assert.ok(commands.indexOf("pnpm build:packages") < commands.indexOf(lint));
   }

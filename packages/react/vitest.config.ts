@@ -10,6 +10,9 @@ export default defineConfig({
   },
   plugins: [vanillaExtractPlugin()],
   test: {
+    reporters: process.env.FLUX_TERMINAL_ACTIVE
+      ? ["default", "../../tooling/terminal/vitest-reporter.mjs"]
+      : ["default"],
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.test.{ts,tsx}"],

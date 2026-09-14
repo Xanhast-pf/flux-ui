@@ -92,7 +92,6 @@ function RadioGroupLegend({
 }
 
 function RadioGroupItem({
-  "aria-invalid": ariaInvalid,
   className,
   disabled,
   form,
@@ -103,6 +102,7 @@ function RadioGroupItem({
 }: RadioGroupItemProps) {
   const context = useRadioGroupContext("Item");
   const controlled = context.value !== undefined;
+  const ariaInvalid = inputProps["aria-invalid"];
 
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     onChange?.(event);

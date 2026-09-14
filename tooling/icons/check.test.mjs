@@ -1,3 +1,4 @@
+import { scriptSource } from "../terminal/commands.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
@@ -34,8 +35,8 @@ test("icons stay a standalone tree-shakeable package", () => {
 
 test("the root size contract measures icons", () => {
   const root = JSON.parse(toolbar);
-  assert.match(root.scripts.size, /icons:size/u);
-  assert.match(root.scripts["size:release"], /icons:size/u);
+  assert.match(scriptSource(root.scripts, "size"), /icons:size/u);
+  assert.match(scriptSource(root.scripts, "size:release"), /icons:size/u);
 });
 
 test("icon manifest stays searchable, unique and fully exported", () => {

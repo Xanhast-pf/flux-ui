@@ -1,4 +1,5 @@
 import type { CellValue, DataColumn, DataSort } from "./DataTable.types.js";
+const cellCollator = new Intl.Collator("en", { numeric: true });
 const MAX_LOADED_ROWS = 1_000_000;
 const MAX_SCROLL_GEOMETRY_PX = 16_000_000;
 function nonempty(value: unknown): value is string {
@@ -43,7 +44,7 @@ export function compareCells(left: CellValue, right: CellValue): number {
   if (right === null) return -1;
   if (typeof left === "number" && typeof right === "number")
     return left - right;
-  return String(left).localeCompare(String(right), "en", { numeric: true });
+  return cellCollator.compare(String(left), String(right));
 }
 export function sortDataRows<Row>(
   rows: readonly DataRow<Row>[],
@@ -114,17 +115,17 @@ export function tableWindow(
     throw new RangeError(
       "DataTable scroll geometry exceeds the portable browser range; load a smaller server window.",
     );
+  const visibleCount = Math.ceil(height / rowHeight) + overscan * 2 + 1;
+  // Filtering can leave a stale scroll offset beyond the new data. Keep a
+  // complete trailing window mounted until the browser clamps its scrollport.
   const start = Math.max(
     0,
     Math.min(
-      count,
-      Math.floor(Math.max(0, scrollTop - bodyOffset) / rowHeight) - overscan,
+      count - visibleCount,
+      Math.floor((scrollTop - bodyOffset) / rowHeight) - overscan,
     ),
   );
-  const end = Math.min(
-    count,
-    start + Math.ceil(height / rowHeight) + overscan * 2 + 1,
-  );
+  const end = Math.min(count, start + visibleCount);
   return { start, end };
 }
 export function nextDataSort(

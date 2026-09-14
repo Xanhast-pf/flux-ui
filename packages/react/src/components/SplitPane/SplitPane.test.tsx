@@ -44,3 +44,25 @@ describe("SplitPane", () => {
     expect(handle).toHaveAttribute("aria-valuenow", "50");
   });
 });
+
+describe("SplitPane hardening", () => {
+  it("respects modified shortcuts and capture-phase cancellation", () => {
+    const change = vi.fn();
+    render(
+      <SplitPane
+        label="Shortcut-safe panes"
+        first="First"
+        second="Second"
+        onValueChange={change}
+        onKeyDownCapture={(event) => {
+          if (event.key === "End") event.preventDefault();
+        }}
+      />,
+    );
+    const handle = screen.getByRole("separator");
+    for (const modifier of ["ctrlKey", "altKey", "metaKey"])
+      fireEvent.keyDown(handle, { key: "ArrowRight", [modifier]: true });
+    fireEvent.keyDown(handle, { key: "End" });
+    expect(change).not.toHaveBeenCalled();
+  });
+});
