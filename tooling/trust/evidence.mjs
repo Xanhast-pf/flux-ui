@@ -3,10 +3,106 @@ import { createHash } from "node:crypto";
 export const CHECKS = {
   quality: [
     {
-      id: "quality",
-      label:
-        "Formatting, lint, types, contracts, tests, build, sizes and Coding Bible",
-      command: ["pnpm", "check"],
+      id: "generated",
+      label: "Generated files",
+      command: ["pnpm", "generate:check"],
+    },
+    {
+      id: "docs-coverage",
+      label: "Docs coverage",
+      command: ["pnpm", "docs:check"],
+    },
+    {
+      id: "dogfood",
+      label: "Dogfood",
+      command: ["pnpm", "dogfood:check"],
+    },
+    {
+      id: "format",
+      label: "Formatting",
+      command: ["pnpm", "format:check"],
+    },
+    {
+      id: "package-build",
+      label: "Package builds",
+      command: ["pnpm", "build:packages"],
+    },
+    {
+      id: "lint",
+      label: "ESLint",
+      command: ["pnpm", "lint"],
+    },
+    {
+      id: "types",
+      label: "TypeScript",
+      command: ["pnpm", "typecheck"],
+    },
+    {
+      id: "knip",
+      label: "Knip",
+      command: ["pnpm", "knip"],
+    },
+    {
+      id: "workspace-tests",
+      label: "Workspace tests",
+      command: [
+        "pnpm",
+        "-r",
+        "--if-present",
+        "test",
+        "--reporter=default",
+        "--reporter=../../tooling/terminal/vitest-reporter.mjs",
+      ],
+    },
+    {
+      id: "size-tests",
+      label: "Size contracts",
+      command: ["pnpm", "size:test"],
+    },
+    {
+      id: "icons-tests",
+      label: "Icon contracts",
+      command: ["pnpm", "icons:test"],
+    },
+    {
+      id: "docs-tests",
+      label: "Docs contracts",
+      command: ["pnpm", "docs:test"],
+    },
+    {
+      id: "trust-tests",
+      label: "Trust, release and terminal contracts",
+      command: ["pnpm", "trust:test"],
+    },
+    {
+      id: "dogfood-tests",
+      label: "Dogfood contracts",
+      command: ["pnpm", "dogfood:test"],
+    },
+    {
+      id: "safety-tests",
+      label: "Safety contracts",
+      command: ["pnpm", "safety:test"],
+    },
+    {
+      id: "feature-tests",
+      label: "Feature contracts",
+      command: ["pnpm", "feature:test"],
+    },
+    {
+      id: "docs-build",
+      label: "Docs production build",
+      command: ["pnpm", "--filter", "@flux-ui/docs", "build"],
+    },
+    {
+      id: "size",
+      label: "Bundle budgets",
+      command: ["pnpm", "size"],
+    },
+    {
+      id: "coding-bible",
+      label: "Coding Bible",
+      command: ["pnpm", "bible:check"],
     },
     {
       id: "release-size",
