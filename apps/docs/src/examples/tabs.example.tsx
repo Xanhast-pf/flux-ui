@@ -9,6 +9,9 @@ export default {
   notes: [
     "Keyboard-accessible switching between related panels.",
     "Use native attributes, className, style and composition for customization.",
+    "Uncontrolled tabs recover the nearest available selection when the selected tab is removed, disabled, hidden or inert. Selection does not steal focus from unrelated controls.",
+    "A controlled owner must reconcile removed values. Flux keeps an available keyboard entry but does not invent a new controlled selection or display a mismatched panel.",
+    "Use hidden/inert or native disabled state for unavailable items. CSS-only visibility changes are not the collection lifecycle contract.",
   ],
   props: [
     [

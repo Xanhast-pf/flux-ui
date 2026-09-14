@@ -1,0 +1,8 @@
+{
+  "name": "Popover",
+  "slug": "popover",
+  "category": "Overlays",
+  "status": "alpha",
+  "description": "Non-modal anchored content with native top-layer dismissal and scoped themes.",
+  "sizeClass": "overlay"
+}

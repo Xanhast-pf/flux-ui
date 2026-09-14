@@ -2,9 +2,12 @@ import {
   Children,
   cloneElement,
   createContext,
+  useCallback,
   isValidElement,
   useContext,
   useId,
+  useLayoutEffect,
+  useState,
   type AriaAttributes,
   type ReactElement,
   type ReactNode,
@@ -27,13 +30,13 @@ import type {
 
 type FieldContextValue = {
   controlId: string;
-  descriptionId: string;
+  id: string;
   disabled: boolean;
-  errorId: string;
-  hasDescription: boolean;
-  hasError: boolean;
+  description: boolean;
+  error: boolean;
   invalid: boolean;
   required: boolean;
+  register: (part: "description" | "error") => () => void;
 };
 
 type FieldControlChildProps = {
@@ -71,13 +74,10 @@ function containsPart(children: ReactNode, part: unknown): boolean {
 function joinIdReferences(
   ...values: Array<string | undefined>
 ): string | undefined {
-  const ids = new Set<string>();
-  for (const value of values) {
-    for (const id of value?.split(/\s+/) ?? []) {
-      if (id) ids.add(id);
-    }
-  }
-  return ids.size > 0 ? [...ids].join(" ") : undefined;
+  return (
+    [...new Set(values.join(" ").split(/\s+/).filter(Boolean))].join(" ") ||
+    undefined
+  );
 }
 
 function FieldLabel({ children, className, ...labelProps }: FieldLabelProps) {
@@ -107,8 +107,8 @@ function FieldControl({ children }: FieldControlProps) {
   return cloneElement(child, {
     "aria-describedby": joinIdReferences(
       childProps["aria-describedby"],
-      context.hasDescription ? context.descriptionId : undefined,
-      context.invalid && context.hasError ? context.errorId : undefined,
+      context.description ? `${context.id}-description` : undefined,
+      context.invalid && context.error ? `${context.id}-error` : undefined,
     ),
     "aria-invalid": context.invalid ? "true" : childProps["aria-invalid"],
     "data-invalid": context.invalid ? "true" : childProps["data-invalid"],
@@ -118,32 +118,33 @@ function FieldControl({ children }: FieldControlProps) {
   });
 }
 
-function FieldDescription({
-  className,
-  ...descriptionProps
-}: FieldDescriptionProps) {
-  const context = useFieldContext("Description");
-
-  return (
-    <p
-      {...descriptionProps}
-      className={joinClassNames(description, className)}
-      id={context.descriptionId}
-    />
-  );
+/** Both parts share registration and React 19 ref cleanup. */
+function fieldPart(part: "description" | "error", style: string) {
+  return function Part({
+    className,
+    ...props
+  }: FieldDescriptionProps | FieldErrorProps) {
+    const context = useFieldContext(part);
+    const { register } = context;
+    const visible = part !== "error" || context.invalid;
+    useLayoutEffect(() => {
+      return visible ? register(part) : undefined;
+    }, [register, visible]);
+    if (!visible) return null;
+    return (
+      <p
+        {...props}
+        className={joinClassNames(style, className)}
+        id={`${context.id}-${part}`}
+      />
+    );
+  };
 }
+const FieldDescription = fieldPart("description", description);
+const FieldError = fieldPart("error", error);
 
-function FieldError({ className, ...errorProps }: FieldErrorProps) {
-  const context = useFieldContext("Error");
-  if (!context.invalid) return null;
-
-  return (
-    <p
-      {...errorProps}
-      className={joinClassNames(error, className)}
-      id={context.errorId}
-    />
-  );
+function hasContent(value: ReactNode): boolean {
+  return value !== undefined && value !== null && value !== false;
 }
 
 function FieldRoot({
@@ -151,6 +152,8 @@ function FieldRoot({
   children,
   className,
   controlId,
+  description: descriptionContent,
+  error: errorContent,
   disabled = false,
   id,
   invalid = false,
@@ -158,16 +161,27 @@ function FieldRoot({
   ...rootProps
 }: FieldRootProps) {
   const generatedId = useId();
+  const [parts, setParts] = useState({ description: 0, error: 0 });
+  const register = useCallback((part: "description" | "error") => {
+    setParts((current) => ({ ...current, [part]: current[part] + 1 }));
+    return () =>
+      setParts((current) => ({ ...current, [part]: current[part] - 1 }));
+  }, []);
+  const descriptionSlot = hasContent(descriptionContent);
+  const errorSlot = hasContent(errorContent);
   const baseId = id ?? controlId ?? generatedId;
   const context: FieldContextValue = {
     controlId: controlId ?? `${baseId}-control`,
-    descriptionId: `${baseId}-description`,
+    id: baseId,
     disabled,
-    errorId: `${baseId}-error`,
-    hasDescription: containsPart(children, FieldDescription),
-    hasError: containsPart(children, FieldError),
+    description:
+      descriptionSlot ||
+      parts.description > 0 ||
+      containsPart(children, FieldDescription),
+    error: errorSlot || parts.error > 0 || containsPart(children, FieldError),
     invalid,
     required,
+    register,
   };
 
   return (
@@ -180,6 +194,10 @@ function FieldRoot({
         id={id}
       >
         {children}
+        {descriptionSlot ? (
+          <FieldDescription>{descriptionContent}</FieldDescription>
+        ) : null}
+        {errorSlot ? <FieldError>{errorContent}</FieldError> : null}
       </div>
     </FieldContext>
   );

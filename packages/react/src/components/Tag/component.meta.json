@@ -1,0 +1,8 @@
+{
+  "name": "Tag",
+  "slug": "tag",
+  "category": "Data display",
+  "status": "alpha",
+  "description": "Compact labels with an explicitly named optional removal action.",
+  "sizeClass": "primitive"
+}

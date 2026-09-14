@@ -1,0 +1,8 @@
+{
+  "name": "Toast",
+  "slug": "toast",
+  "category": "Feedback",
+  "status": "alpha",
+  "description": "Scoped notification queues with paused dismissal timers and optional actions.",
+  "sizeClass": "interactive"
+}

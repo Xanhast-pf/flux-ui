@@ -1,0 +1,182 @@
+{
+  "startingBaselineSha256": "2d43f52b4e32026f00310438bd1ad295f2979c6380ab275fae6674a2f3548872",
+  "acceptedBaselineSha256": "34f9c43df5834cf9a0ae209f1596a09a87e2f4e74e43db5edb1bc9c85a00be1c",
+  "startingInventorySha256": "f523664d0fc89cddb6241c3f7074aba2f5771565122a12545961f0f0d3691288",
+  "components": {
+    "field": {
+      "before": {
+        "name": "Field",
+        "sizeClass": "primitive",
+        "raw": 3850,
+        "gzip": 1731,
+        "brotli": 1509,
+        "fileCount": 4,
+        "bundled": {
+          "raw": 2868,
+          "gzip": 1252,
+          "brotli": 1099,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 2035,
+              "gzip": 933,
+              "brotli": 837
+            },
+            "css": {
+              "raw": 833,
+              "gzip": 319,
+              "brotli": 262
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      },
+      "after": {
+        "name": "Field",
+        "sizeClass": "primitive",
+        "raw": 4141,
+        "gzip": 1939,
+        "brotli": 1685,
+        "fileCount": 4,
+        "bundled": {
+          "raw": 3037,
+          "gzip": 1426,
+          "brotli": 1254,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 2300,
+              "gzip": 1114,
+              "brotli": 1001
+            },
+            "css": {
+              "raw": 737,
+              "gzip": 312,
+              "brotli": 253
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      }
+    },
+    "tabs": {
+      "before": {
+        "name": "Tabs",
+        "sizeClass": "interactive",
+        "raw": 5793,
+        "gzip": 2505,
+        "brotli": 2121,
+        "fileCount": 4,
+        "bundled": {
+          "raw": 5092,
+          "gzip": 2199,
+          "brotli": 1891,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 2849,
+              "gzip": 1419,
+              "brotli": 1249
+            },
+            "css": {
+              "raw": 2243,
+              "gzip": 780,
+              "brotli": 642
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      },
+      "after": {
+        "name": "Tabs",
+        "sizeClass": "interactive",
+        "raw": 8345,
+        "gzip": 3707,
+        "brotli": 3200,
+        "fileCount": 6,
+        "bundled": {
+          "raw": 6452,
+          "gzip": 2746,
+          "brotli": 2394,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 4292,
+              "gzip": 1966,
+              "brotli": 1754
+            },
+            "css": {
+              "raw": 2160,
+              "gzip": 780,
+              "brotli": 640
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      }
+    }
+  },
+  "aggregate": {
+    "before": {
+      "rootEntry": {
+        "raw": 4619,
+        "gzip": 1543,
+        "brotli": 1352,
+        "fileCount": 1
+      },
+      "runtime": {
+        "raw": 164731,
+        "gzip": 76322,
+        "brotli": 65365,
+        "fileCount": 198
+      },
+      "published": {
+        "raw": 951639,
+        "gzip": 313646,
+        "brotli": 269402,
+        "fileCount": 815
+      }
+    },
+    "after": {
+      "rootEntry": {
+        "raw": 5275,
+        "gzip": 1734,
+        "brotli": 1520,
+        "fileCount": 1
+      },
+      "runtime": {
+        "raw": 199901,
+        "gzip": 92508,
+        "brotli": 79379,
+        "fileCount": 225
+      },
+      "published": {
+        "raw": 1099160,
+        "gzip": 374699,
+        "brotli": 322302,
+        "fileCount": 925
+      }
+    }
+  },
+  "preservation": {
+    "otherComponentsDeeplyIdentical": 68,
+    "recentAdditionsUnchanged": 8,
+    "componentCount": 70,
+    "unrelatedMetadataUnchanged": true,
+    "atAcceptanceOtherStartingFilesUnchangedExceptTwoBrowserTests": true,
+    "finalAllowedChangedStartingFiles": [
+      "apps/docs/src/generated/health.ts",
+      "apps/docs/tests/public-docs.spec.ts",
+      "apps/docs/tests/showcase-workflows.spec.ts",
+      "tooling/size/baseline.json"
+    ],
+    "byteIdenticalPolicyValidationDependencyFiles": 54
+  },
+  "verification": {
+    "finalCommand": "pnpm check:full",
+    "exitCode": 0,
+    "allSixStagesPassed": true,
+    "fullPerformanceRunExecuted": false,
+    "fullReleaseVerificationExecuted": false
+  }
+}

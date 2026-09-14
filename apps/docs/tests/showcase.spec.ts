@@ -409,7 +409,10 @@ test("container-responsive scenes do not inherit wide viewport columns", async (
       element.style.inlineSize = "20rem";
       element.style.maxInlineSize = "100%";
     });
-    const layout = root.locator(':scope > [data-r="container"]').first();
+    const layout =
+      scene === "finance"
+        ? root.getByTestId("finance-summary-layout")
+        : root.locator(':scope > [data-r="container"]').first();
     await expect(layout).toBeVisible();
     await expect
       .poll(() =>

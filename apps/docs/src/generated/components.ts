@@ -9,6 +9,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "AlertDialog",
+    slug: "alert-dialog",
+    category: "Overlays",
+    status: "alpha",
+    description:
+      "Destructive confirmations using the existing native modal foundation; backdrop clicks do not confirm or dismiss.",
+    sizeClass: "overlay",
+  },
+  {
     name: "AspectRatio",
     slug: "aspect-ratio",
     category: "Layout",
@@ -128,6 +137,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Combobox",
+    slug: "combobox",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Searchable single selection with committed form values, keyboard navigation and explicit unmatched-input validation.",
+    sizeClass: "overlay",
+  },
+  {
     name: "Container",
     slug: "container",
     category: "Layout",
@@ -169,6 +187,15 @@ export const components = [
     status: "alpha",
     description:
       "Edge-aligned modal panel for navigation and secondary workflows with native dialog semantics.",
+    sizeClass: "overlay",
+  },
+  {
+    name: "DropdownMenu",
+    slug: "dropdown-menu",
+    category: "Overlays",
+    status: "alpha",
+    description:
+      "Flat action menus with roving focus, typeahead, unavailable-item handling and native dismissal.",
     sizeClass: "overlay",
   },
   {
@@ -250,6 +277,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "InputGroup",
+    slug: "input-group",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Input composition for prefixes, suffixes and actions without replacing the native input contract.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Kbd",
     slug: "kbd",
     category: "Typography",
@@ -327,6 +363,15 @@ export const components = [
     description:
       "Controlled paging controls with native buttons and explicit boundaries.",
     sizeClass: "primitive",
+  },
+  {
+    name: "Popover",
+    slug: "popover",
+    category: "Overlays",
+    status: "alpha",
+    description:
+      "Non-modal anchored content with native top-layer dismissal and scoped themes.",
+    sizeClass: "overlay",
   },
   {
     name: "Progress",
@@ -474,6 +519,15 @@ export const components = [
     sizeClass: "interactive",
   },
   {
+    name: "Tag",
+    slug: "tag",
+    category: "Data display",
+    status: "alpha",
+    description:
+      "Compact labels with an explicitly named optional removal action.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Text",
     slug: "text",
     category: "Typography",
@@ -500,6 +554,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Toast",
+    slug: "toast",
+    category: "Feedback",
+    status: "alpha",
+    description:
+      "Scoped notification queues with paused dismissal timers and optional actions.",
+    sizeClass: "interactive",
+  },
+  {
     name: "Toggle",
     slug: "toggle",
     category: "Actions",
@@ -523,6 +586,15 @@ export const components = [
     status: "alpha",
     description:
       "Named action groups with one tab stop and arrow-key navigation.",
+    sizeClass: "interactive",
+  },
+  {
+    name: "Tooltip",
+    slug: "tooltip",
+    category: "Overlays",
+    status: "alpha",
+    description:
+      "Hoverable, focus-triggered supplemental help without adding a wrapper or a tab stop.",
     sizeClass: "interactive",
   },
   {

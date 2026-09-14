@@ -1,0 +1,8 @@
+{
+  "name": "Tooltip",
+  "slug": "tooltip",
+  "category": "Overlays",
+  "status": "alpha",
+  "description": "Hoverable, focus-triggered supplemental help without adding a wrapper or a tab stop.",
+  "sizeClass": "interactive"
+}

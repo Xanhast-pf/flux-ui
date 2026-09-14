@@ -39,10 +39,6 @@ export const label = style({
   lineHeight: 1.25,
 });
 
-export const requiredIndicator = style({
-  color: `var(${cssVars.color.danger})`,
-});
-
 export const description = style({
   color: "var(--f-f-description)",
   fontSize: "var(--f-f-d, 0.875rem)",
@@ -50,9 +46,8 @@ export const description = style({
   margin: 0,
 });
 
-export const error = style({
+export const requiredIndicator = style({
   color: `var(${cssVars.color.danger})`,
-  fontSize: "var(--f-f-d, 0.875rem)",
-  lineHeight: 1.5,
-  margin: 0,
 });
+
+export const error = style([description, requiredIndicator]);

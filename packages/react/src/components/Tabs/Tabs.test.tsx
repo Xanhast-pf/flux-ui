@@ -1,6 +1,12 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Tabs } from "./Tabs.js";
 
 describe("Tabs", () => {
@@ -222,5 +228,114 @@ describe("Tabs hardening", () => {
       fireEvent.keyDown(first, { key: "ArrowRight", [modifier]: true });
     fireEvent.keyDown(first, { key: "End" });
     expect(first).toHaveFocus();
+  });
+});
+
+describe("Tabs collection recovery", () => {
+  function Collection({
+    second = true,
+    blocked = false,
+    allBlocked = false,
+    controlled = false,
+    onValueChange = () => undefined,
+  }: {
+    second?: boolean;
+    blocked?: boolean;
+    allBlocked?: boolean;
+    controlled?: boolean;
+    onValueChange?: (value: string) => void;
+  }) {
+    return (
+      <>
+        <Tabs.Root
+          {...(controlled
+            ? { value: "two", onValueChange }
+            : { defaultValue: "two", onValueChange })}
+        >
+          <Tabs.List aria-label="Dynamic tabs">
+            <Tabs.Tab value="one" disabled={allBlocked}>
+              One
+            </Tabs.Tab>
+            {second ? (
+              <Tabs.Tab value="two" disabled={blocked || allBlocked}>
+                Two
+              </Tabs.Tab>
+            ) : null}
+            <Tabs.Tab value="three" disabled={allBlocked}>
+              Three
+            </Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="one">One content</Tabs.Panel>
+          {second ? <Tabs.Panel value="two">Two content</Tabs.Panel> : null}
+          <Tabs.Panel value="three">Three content</Tabs.Panel>
+        </Tabs.Root>
+        <button type="button">Outside tabs</button>
+      </>
+    );
+  }
+  it("selects and focuses the adjacent available tab when the focused selection is removed", async () => {
+    const user = userEvent.setup();
+    const view = render(<Collection />);
+    await user.tab();
+    expect(screen.getByRole("tab", { name: "Two" })).toHaveFocus();
+    view.rerender(<Collection second={false} />);
+    await waitFor(() =>
+      expect(screen.getByRole("tab", { name: "Three" })).toHaveAttribute(
+        "aria-selected",
+        "true",
+      ),
+    );
+    expect(screen.getByRole("tab", { name: "Three" })).toHaveFocus();
+    expect(screen.getByText("Three content")).toBeVisible();
+  });
+  it("recovers after disabling the selected item and after an all-unavailable interval", async () => {
+    const view = render(<Collection />);
+    view.rerender(<Collection blocked />);
+    await waitFor(() =>
+      expect(screen.getByRole("tab", { name: "Three" })).toHaveAttribute(
+        "tabindex",
+        "0",
+      ),
+    );
+    view.rerender(<Collection blocked allBlocked />);
+    expect(screen.getAllByRole("tab").every((tab) => tab.tabIndex === -1)).toBe(
+      true,
+    );
+    view.rerender(<Collection blocked />);
+    await waitFor(() =>
+      expect(screen.getByRole("tab", { name: "Three" })).toHaveAttribute(
+        "tabindex",
+        "0",
+      ),
+    );
+  });
+  it("keeps controlled owners authoritative but provides a reachable fallback", async () => {
+    const changed = vi.fn();
+    const user = userEvent.setup();
+    render(<Collection controlled second={false} onValueChange={changed} />);
+    expect(screen.getByRole("tab", { name: "One" })).toHaveAttribute(
+      "tabindex",
+      "0",
+    );
+    expect(changed).not.toHaveBeenCalled();
+    await user.click(screen.getByRole("tab", { name: "One" }));
+    expect(changed).toHaveBeenCalledWith("one");
+    expect(screen.getByRole("tab", { name: "One" })).toHaveAttribute(
+      "aria-selected",
+      "false",
+    );
+  });
+  it("does not steal focus after the user has left the collection", async () => {
+    const user = userEvent.setup();
+    const view = render(<Collection />);
+    await user.click(screen.getByRole("button", { name: "Outside tabs" }));
+    view.rerender(<Collection second={false} />);
+    await waitFor(() =>
+      expect(screen.getByRole("tab", { name: "Three" })).toHaveAttribute(
+        "aria-selected",
+        "true",
+      ),
+    );
+    expect(screen.getByRole("button", { name: "Outside tabs" })).toHaveFocus();
   });
 });
