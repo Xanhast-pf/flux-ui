@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
+import { validateReport } from "../trust/reports.mjs";
 
 test("size CLI keeps success concise, failures detailed and JSON clean", async (t) => {
   const root = await mkdtemp(join(tmpdir(), "flux-output-test-"));
@@ -48,14 +49,28 @@ test("size CLI keeps success concise, failures detailed and JSON clean", async (
   const verbose = run("--verbose");
   assert.equal(verbose.status, 0, verbose.stderr);
   assert.match(verbose.stdout, /Example \(primitive\)/u);
-  assert.equal(JSON.parse(run("--json").stdout).componentCount, 1);
+  // Exercise the producer/consumer boundary with real CLI output, not a
+  // separately versioned hand-written fixture that can hide schema drift.
+  const release = run("--release", "--json");
+  assert.equal(release.status, 0, release.stderr);
+  const report = JSON.parse(release.stdout);
+  assert.equal(report.componentCount, 1);
+  assert.equal(validateReport("size.json", report, {}), report);
+  const proposal = run("--review-bundled-baseline", "--json");
+  assert.equal(proposal.status, 0, proposal.stderr);
+  assert.throws(
+    () => validateReport("size.json", JSON.parse(proposal.stdout), {}),
+    /baseline proposal/u,
+  );
   await save(0);
   const failed = run();
   assert.equal(failed.status, 1);
   assert.match(failed.stdout, /Example \(primitive\)/u);
   assert.match(failed.stderr, /regression/u);
-  assert.equal(
-    JSON.parse(run("--json").stdout).componentGates.example.result,
-    "fail",
+  const failedReport = JSON.parse(run("--json").stdout);
+  assert.equal(failedReport.componentGates.example.result, "fail");
+  assert.throws(
+    () => validateReport("size.json", failedReport, {}),
+    /passing bundled gate/u,
   );
 });
