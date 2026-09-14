@@ -2,6 +2,7 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { sizeClasses } from "../tooling/size/budgets.mjs";
 import { format } from "prettier";
+import { generateShowcaseRecipes } from "./lib/showcase-recipes.mjs";
 
 const root = process.cwd();
 const componentsDir = resolve(root, "packages/react/src/components");
@@ -144,6 +145,7 @@ async function ensure(path, expected) {
 }
 
 const results = await Promise.all([
+  generateShowcaseRecipes(root, checkOnly),
   ensure(reactIndexPath, index),
   ensure(docsRegistryPath, registry),
   ensure(docsHealthPath, healthRegistry),

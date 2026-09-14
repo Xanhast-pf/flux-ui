@@ -1,6 +1,21 @@
-/* Optional, complete scoped palettes. Import @flux-ui/tokens/presets.css explicitly. */
+/* Optional, scoped palettes and density presets. Import @flux-ui/tokens/presets.css explicitly.
+ * Every mood defines the same dimensional keys so switching scopes cannot inherit
+ * a different mood's density. Standard space-4 remains 1rem; all geometry stays
+ * on the quarter-rem grid. No motion or interaction contract changes with mood.
+ */
 
 [data-flux-theme="paper"] {
+  --flux-radius-sm: 0.25rem;
+  --flux-radius-md: 0.5rem;
+  --flux-radius-lg: 0.75rem;
+  --flux-control-sm: 2rem;
+  --flux-control-md: 2.75rem;
+  --flux-control-lg: 3.25rem;
+  --flux-font-leading: 1.65;
+  --flux-font-tight: 1.2;
+  --flux-font-heading-xl: 2.5rem;
+  --flux-font-metric: 2rem;
+
   color-scheme: light;
   --flux-color-canvas: #eeede9;
   --flux-color-surface: #fffefb;
@@ -38,6 +53,17 @@
 }
 
 [data-flux-theme="studio"] {
+  --flux-radius-sm: 0.25rem;
+  --flux-radius-md: 0.25rem;
+  --flux-radius-lg: 0.5rem;
+  --flux-control-sm: 2rem;
+  --flux-control-md: 2.25rem;
+  --flux-control-lg: 2.75rem;
+  --flux-font-leading: 1.5;
+  --flux-font-tight: 1.15;
+  --flux-font-heading-xl: 2.25rem;
+  --flux-font-metric: 1.75rem;
+
   color-scheme: dark;
   --flux-color-canvas: #12131a;
   --flux-color-surface: #1b1c26;
@@ -75,6 +101,17 @@
 }
 
 [data-flux-theme="bloom"] {
+  --flux-radius-sm: 0.5rem;
+  --flux-radius-md: 0.75rem;
+  --flux-radius-lg: 1rem;
+  --flux-control-sm: 2.25rem;
+  --flux-control-md: 2.75rem;
+  --flux-control-lg: 3.25rem;
+  --flux-font-leading: 1.65;
+  --flux-font-tight: 1.2;
+  --flux-font-heading-xl: 2.5rem;
+  --flux-font-metric: 2rem;
+
   color-scheme: light;
   --flux-color-canvas: #f4eaed;
   --flux-color-surface: #fff9fb;
@@ -112,6 +149,17 @@
 }
 
 [data-flux-theme="terminal"] {
+  --flux-radius-sm: 0rem;
+  --flux-radius-md: 0.25rem;
+  --flux-radius-lg: 0.25rem;
+  --flux-control-sm: 2rem;
+  --flux-control-md: 2.25rem;
+  --flux-control-lg: 2.75rem;
+  --flux-font-leading: 1.5;
+  --flux-font-tight: 1.2;
+  --flux-font-heading-xl: 2.25rem;
+  --flux-font-metric: 1.75rem;
+
   color-scheme: dark;
   --flux-color-canvas: #0e1512;
   --flux-color-surface: #14201a;

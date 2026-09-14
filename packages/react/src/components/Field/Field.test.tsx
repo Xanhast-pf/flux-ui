@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { renderToString } from "react-dom/server";
+import { StrictMode } from "react";
 import { Input } from "../Input/Input.js";
 import { Field } from "./Field.js";
 
@@ -96,5 +98,92 @@ describe("Field", () => {
     expect(inner).not.toBeDisabled();
     expect(inner).toHaveAttribute("aria-describedby", "inner-description");
     expect(document.getElementById("outer-description")).toBeNull();
+  });
+});
+
+describe("Field composition and initial markup", () => {
+  function Help({ visible = true }: { visible?: boolean }) {
+    return visible ? (
+      <Field.Description>Wrapped help.</Field.Description>
+    ) : null;
+  }
+  function ErrorPart() {
+    return <Field.Error>Wrapped error.</Field.Error>;
+  }
+  it("discovers opaque components and removes relationships when their output disappears", () => {
+    const view = render(
+      <Field.Root id="wrapped" invalid>
+        <Field.Label>Value</Field.Label>
+        <Field.Control>
+          <Input />
+        </Field.Control>
+        <Help />
+        <ErrorPart />
+      </Field.Root>,
+    );
+    expect(screen.getByRole("textbox")).toHaveAttribute(
+      "aria-describedby",
+      "wrapped-description wrapped-error",
+    );
+    view.rerender(
+      <Field.Root id="wrapped">
+        <Field.Label>Value</Field.Label>
+        <Field.Control>
+          <Input />
+        </Field.Control>
+        <Help visible={false} />
+        <ErrorPart />
+      </Field.Root>,
+    );
+    expect(screen.getByRole("textbox")).not.toHaveAttribute("aria-describedby");
+  });
+  it("keeps root-owned slots in initial server HTML even when the slot content is opaque", () => {
+    function Content() {
+      return <>Server-visible help.</>;
+    }
+    const html = renderToString(
+      <Field.Root
+        id="server"
+        invalid
+        description={<Content />}
+        error="Server-visible error."
+      >
+        <Field.Label>Value</Field.Label>
+        <Field.Control>
+          <Input />
+        </Field.Control>
+      </Field.Root>,
+    );
+    expect(html).toContain(
+      'aria-describedby="server-description server-error"',
+    );
+    expect(html).toContain('id="server-description"');
+    expect(html).toContain('id="server-error"');
+    expect(html).toContain("Server-visible help.");
+  });
+  it("preserves callback-ref cleanup and strict-mode registration without duplicate IDs", () => {
+    const cleanup = vi.fn();
+    function HelpWithRef() {
+      return <Field.Description ref={() => cleanup}>Help.</Field.Description>;
+    }
+    const view = render(
+      <StrictMode>
+        <Field.Root id="strict">
+          <Field.Label>Value</Field.Label>
+          <Field.Control>
+            <Input />
+          </Field.Control>
+          <HelpWithRef />
+        </Field.Root>
+      </StrictMode>,
+    );
+    expect(screen.getByRole("textbox")).toHaveAttribute(
+      "aria-describedby",
+      "strict-description",
+    );
+    expect(document.querySelectorAll("#strict-description")).toHaveLength(1);
+    const before = cleanup.mock.calls.length;
+    view.unmount();
+    expect(cleanup.mock.calls.length).toBeGreaterThan(before);
   });
 });

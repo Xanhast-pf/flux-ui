@@ -39,6 +39,7 @@ import {
 } from "@flux-ui/react";
 import { useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { ConsumerInteractions } from "./interactions.js";
 
 interface ConsumerRow {
   id: string;
@@ -343,6 +344,7 @@ function Consumer() {
                 <Text>Findable hidden content</Text>
               </Stack>
               <ConsumerExtensions />
+              <ConsumerInteractions />
             </Stack>
           </Container>
         </Sidebar.Content>

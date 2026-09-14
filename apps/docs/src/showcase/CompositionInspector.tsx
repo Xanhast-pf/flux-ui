@@ -11,20 +11,15 @@ import {
 import { lazy, Suspense, useState } from "react";
 import { components } from "../generated/components.js";
 import { REPOSITORY_URL } from "../lib/format.js";
-import { CodeBlock } from "../ui/CodeBlock.js";
+import RecipeSource from "./RecipeSource.js";
 import { showcaseScenes, type ShowcaseScene } from "./catalog.js";
 const sources = new Map(
   showcaseScenes.map((scene) => {
     const Source = lazy(async () => {
-      const code = await scene.loadSource();
+      const recipe = await scene.loadRecipe();
       return {
         default: function SceneSource() {
-          return (
-            <CodeBlock
-              code={code}
-              label={`${scene.label} composition source`}
-            />
-          );
+          return <RecipeSource recipe={recipe} label={scene.label} />;
         },
       };
     });
@@ -64,9 +59,11 @@ export default function CompositionInspector({
             {scene.custom}
           </Text>
           <Text as="p" variant="caption" tone="muted">
-            Source below imports shared scene helpers. Styling and helpers live
-            alongside the preview; this is composition source, not a standalone
-            package.
+            Inspect every source file, then export the complete consumer recipe.
+            Helpers and approved artwork are included; no private Flux imports
+            or hidden docs styling are required. Package archives are supplied
+            separately so an unreleased version is never presented as
+            installable.
           </Text>
           <Inline wrap gap="sm">
             <Button

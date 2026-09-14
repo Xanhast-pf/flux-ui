@@ -3,14 +3,22 @@ export const moods = [
   {
     id: "paper",
     label: "Paper",
-    description: "Warm canvas. Quiet confidence.",
+    description: "Warm canvas. Open spacing. Quiet hierarchy.",
   },
-  { id: "studio", label: "Studio", description: "After dark. In full focus." },
-  { id: "bloom", label: "Bloom", description: "A softer side of the system." },
+  {
+    id: "studio",
+    label: "Studio",
+    description: "Compact rhythm. Focused surfaces. After dark.",
+  },
+  {
+    id: "bloom",
+    label: "Bloom",
+    description: "Soft surfaces. Generous controls. Clear hierarchy.",
+  },
   {
     id: "terminal",
     label: "Terminal",
-    description: "Precise, bright, and a little nostalgic.",
+    description: "Compact, precise, and deliberately technical.",
   },
 ] as const;
 export type Mood = (typeof moods)[number]["id"];

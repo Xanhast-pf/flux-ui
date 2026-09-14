@@ -9,6 +9,31 @@ export interface EvidenceFile {
   sha256: string;
   bytes: number;
 }
+const expectedQualityChecks = [
+  "generated",
+  "docs-coverage",
+  "dogfood",
+  "format",
+  "package-build",
+  "lint",
+  "types",
+  "knip",
+  "workspace-tests",
+  "size-tests",
+  "icons-tests",
+  "docs-tests",
+  "trust-tests",
+  "dogfood-tests",
+  "safety-tests",
+  "feature-tests",
+  "docs-build",
+  "size",
+  "coding-bible",
+  "release-size",
+  "storybook",
+  "clean-tree",
+] as const;
+
 export interface Evidence {
   generatedAt: string;
   status: "passed" | "incomplete";
@@ -103,7 +128,7 @@ export function parseEvidence(input: unknown): Evidence {
     jobs[0]?.job !== "quality" ||
     jobs[1]?.job !== "browser" ||
     jobs[0].checks.map((check) => check.id).join() !==
-      "quality,release-size,storybook,clean-tree" ||
+      expectedQualityChecks.join() ||
     jobs[1].checks.map((check) => check.id).join() !==
       "browser,consumer,performance"
   )

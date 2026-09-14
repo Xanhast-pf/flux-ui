@@ -34,8 +34,8 @@ export const tab = style({
   justifyContent: "center",
   gap: "var(--flux-space-2)",
   minHeight: `var(${cssVars.control.md})`,
-  border: 0,
-  borderBottom: "0.125rem solid transparent",
+  border: "0 solid transparent",
+  borderBottomWidth: "0.125rem",
   background: "transparent",
   color: `var(${cssVars.color.textMuted})`,
   cursor: "pointer",
@@ -57,7 +57,7 @@ export const tab = style({
     },
     "&[data-a='pill']": {
       borderRadius: "var(--flux-radius-md)",
-      border: 0,
+      borderWidth: 0,
     },
     "&[data-a='pill'][aria-selected='true']": {
       background: "var(--flux-color-text)",
@@ -78,12 +78,9 @@ export const tab = style({
     "&:disabled": { cursor: "not-allowed", opacity: 0.5 },
     "&[data-o='vertical']": {
       justifyContent: "flex-start",
-      borderInlineEnd: "0.125rem solid transparent",
-      borderBottom: 0,
+      borderInlineEndWidth: "0.125rem",
+      borderBottomWidth: 0,
       textAlign: "start",
-    },
-    "&[data-o='vertical'][aria-selected='true']": {
-      borderInlineEndColor: `var(${cssVars.color.accent})`,
     },
   },
   "@media": {

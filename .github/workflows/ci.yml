@@ -18,7 +18,7 @@ jobs:
   quality:
     name: Quality
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
@@ -41,8 +41,73 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run quality checks and record receipts
-        run: node tooling/trust/run-checks.mjs quality
+      # Keep the canonical local `pnpm check` command, but expose each gate as a
+      # first-class CI step so failures, timings and cancellations are attributable.
+      - name: Generated files
+        run: node tooling/trust/run-checks.mjs quality generated
+
+      - name: Docs coverage
+        run: node tooling/trust/run-checks.mjs quality docs-coverage
+
+      - name: Dogfood
+        run: node tooling/trust/run-checks.mjs quality dogfood
+
+      - name: Format
+        run: node tooling/trust/run-checks.mjs quality format
+
+      - name: Package builds
+        run: node tooling/trust/run-checks.mjs quality package-build
+
+      - name: ESLint
+        run: node tooling/trust/run-checks.mjs quality lint
+
+      - name: TypeScript
+        run: node tooling/trust/run-checks.mjs quality types
+
+      - name: Knip
+        run: node tooling/trust/run-checks.mjs quality knip
+
+      - name: Workspace tests
+        run: node tooling/trust/run-checks.mjs quality workspace-tests
+
+      - name: Size contracts
+        run: node tooling/trust/run-checks.mjs quality size-tests
+
+      - name: Icon contracts
+        run: node tooling/trust/run-checks.mjs quality icons-tests
+
+      - name: Docs contracts
+        run: node tooling/trust/run-checks.mjs quality docs-tests
+
+      - name: Trust, release and terminal contracts
+        run: node tooling/trust/run-checks.mjs quality trust-tests
+
+      - name: Dogfood contracts
+        run: node tooling/trust/run-checks.mjs quality dogfood-tests
+
+      - name: Safety contracts
+        run: node tooling/trust/run-checks.mjs quality safety-tests
+
+      - name: Feature contracts
+        run: node tooling/trust/run-checks.mjs quality feature-tests
+
+      - name: Docs production build
+        run: node tooling/trust/run-checks.mjs quality docs-build
+
+      - name: Bundle budgets
+        run: node tooling/trust/run-checks.mjs quality size
+
+      - name: Coding Bible
+        run: node tooling/trust/run-checks.mjs quality coding-bible
+
+      - name: Release bundle budgets
+        run: node tooling/trust/run-checks.mjs quality release-size
+
+      - name: Storybook production build
+        run: node tooling/trust/run-checks.mjs quality storybook
+
+      - name: No tracked generated drift
+        run: node tooling/trust/run-checks.mjs quality clean-tree
 
       - name: Upload quality evidence
         if: always()

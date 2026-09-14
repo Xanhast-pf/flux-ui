@@ -17,14 +17,15 @@ for (const [route, title] of [
       );
   });
 }
-test("getting-started headings have explicit rhythm before code blocks", async ({
+test("getting-started consumer and contributor guidance preserves content and spacing", async ({
   page,
 }) => {
   await page.goto("/#install");
   for (const name of [
-    "Package shape",
-    "Daily development",
-    "Add a component",
+    "Use Flux in an application",
+    "Start from a complete application recipe",
+    "Server rendering and framework boundaries",
+    "Contribute to the source",
   ]) {
     const heading = page.getByRole("heading", { name, exact: true });
     await expect(heading).toBeVisible();
@@ -38,4 +39,19 @@ test("getting-started headings have explicit rhythm before code blocks", async (
     });
     expect(gap).toBeGreaterThanOrEqual(15);
   }
+  await expect(
+    page.getByRole("region", { name: "Consumer candidate setup", exact: true }),
+  ).toContainText("pnpm add ./vendor/flux-ui-react.tgz");
+  await expect(
+    page.getByRole("region", {
+      name: "Repository contributor setup",
+      exact: true,
+    }),
+  ).toContainText("pnpm dev");
+  await expect(
+    page.getByRole("region", {
+      name: "Component scaffolding and generation",
+      exact: true,
+    }),
+  ).toContainText("pnpm component:new");
 });

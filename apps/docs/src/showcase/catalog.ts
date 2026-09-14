@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import type { ComponentType } from "react";
+import type { RecipeBundle } from "./recipeArchive.js";
 import type { SceneDefinition } from "./types.js";
 const definitions = import.meta.glob<SceneDefinition>("./scenes/*.scene.ts", {
   eager: true,
@@ -8,8 +9,7 @@ const definitions = import.meta.glob<SceneDefinition>("./scenes/*.scene.ts", {
 const previews = import.meta.glob<{ default: ComponentType }>(
   "./scenes/*.preview.tsx",
 );
-const sources = import.meta.glob<string>("./scenes/*.preview.tsx", {
-  query: "?raw",
+const recipes = import.meta.glob<RecipeBundle>("../generated/recipes/*.json", {
   import: "default",
 });
 /** Add a matching .scene.ts + .preview.tsx pair; no manual registry to update. */
@@ -19,11 +19,11 @@ export const showcaseScenes = Object.entries(definitions)
     if (id === undefined) throw new Error(`Invalid scene filename: ${path}`);
     const previewPath = `./scenes/${id}.preview.tsx`;
     const load = previews[previewPath];
-    const loadSource = sources[previewPath];
-    if (load === undefined || loadSource === undefined)
+    const loadRecipe = recipes[`../generated/recipes/${id}.json`];
+    if (load === undefined || loadRecipe === undefined)
       throw new Error(`Missing showcase preview: ${id}`);
     // Stable lazy identities preserve scene state when only the mood changes.
-    return { ...definition, id, Preview: lazy(load), loadSource };
+    return { ...definition, id, Preview: lazy(load), loadRecipe };
   })
   .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 if (showcaseScenes.length === 0)

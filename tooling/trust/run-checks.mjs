@@ -1,30 +1,64 @@
 import { spawnSync } from "node:child_process";
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { performance } from "node:perf_hooks";
 import { CHECKS, sourceContext } from "./evidence.mjs";
 
 const job = process.argv[2];
+const requestedCheck = process.argv[3] ?? null;
 if (!Object.hasOwn(CHECKS, job ?? ""))
-  throw new Error("Usage: node tooling/trust/run-checks.mjs quality|browser");
+  throw new Error(
+    "Usage: node tooling/trust/run-checks.mjs quality|browser [check-id]",
+  );
+const selected = requestedCheck
+  ? CHECKS[job].filter((check) => check.id === requestedCheck)
+  : CHECKS[job];
+if (selected.length === 0)
+  throw new Error(`Unknown ${job} evidence check: ${requestedCheck}`);
+
 const directory = resolve(".cache/trust", job);
-await rm(directory, { recursive: true, force: true });
-await mkdir(directory, { recursive: true });
+const receiptPath = resolve(directory, "receipt.json");
 const source = sourceContext();
-const checks = [];
-let failed = false;
-for (const check of CHECKS[job]) {
-  if (failed) {
-    checks.push({
-      id: check.id,
-      label: check.label,
-      command: check.command,
-      status: "not-run",
-      exitCode: null,
-      durationMs: 0,
-    });
-    continue;
+await mkdir(directory, { recursive: true });
+
+function emptyResult(check) {
+  return {
+    id: check.id,
+    label: check.label,
+    command: check.command,
+    status: "not-run",
+    exitCode: null,
+    durationMs: 0,
+  };
+}
+
+async function initialChecks() {
+  if (!requestedCheck) {
+    await rm(directory, { recursive: true, force: true });
+    await mkdir(directory, { recursive: true });
+    return CHECKS[job].map(emptyResult);
   }
+  try {
+    const previous = JSON.parse(await readFile(receiptPath, "utf8"));
+    const sameSource =
+      previous?.schemaVersion === 1 &&
+      previous?.job === job &&
+      JSON.stringify(previous.source) === JSON.stringify(source);
+    if (sameSource && Array.isArray(previous.checks)) {
+      return CHECKS[job].map((check) => {
+        const result = previous.checks.find((item) => item?.id === check.id);
+        return result ?? emptyResult(check);
+      });
+    }
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+  }
+  return CHECKS[job].map(emptyResult);
+}
+
+const checks = await initialChecks();
+let failed = false;
+for (const check of selected) {
   const [program, ...args] = check.command;
   const executable =
     process.platform === "win32" && program === "pnpm" ? "pnpm.cmd" : program;
@@ -37,21 +71,23 @@ for (const check of CHECKS[job]) {
     env: { ...process.env, FLUX_TRUST_JOB: job },
   });
   const status = result.status === 0 && !result.error ? "passed" : "failed";
-  checks.push({
+  const index = checks.findIndex((item) => item.id === check.id);
+  checks[index] = {
     id: check.id,
     label: check.label,
     command: check.command,
     status,
     exitCode: result.status,
     durationMs: Math.round(performance.now() - started),
-  });
+  };
   if (check.output && result.stdout)
     await writeFile(resolve(directory, check.output), result.stdout);
   if (result.error) console.error(result.error.message);
   failed = status === "failed";
+  if (failed) break;
 }
 await writeFile(
-  resolve(directory, "receipt.json"),
+  receiptPath,
   `${JSON.stringify({ schemaVersion: 1, job, source, checks, finishedAt: new Date().toISOString() }, null, 2)}\n`,
 );
 process.exitCode = failed ? 1 : 0;

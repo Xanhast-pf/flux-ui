@@ -1,6 +1,11 @@
 import { ArrowUpRightIcon, LockIcon, UnlockIcon } from "@flux-ui/icons";
 import {
   Avatar,
+  Container,
+  Sidebar,
+  Tabs,
+  DropdownMenu,
+  Toast,
   Button,
   Card,
   Chart,
@@ -18,6 +23,8 @@ import { useMemo, useState } from "react";
 import { Metric, SceneHeader, SceneStatus } from "../SceneParts.js";
 import { formatMoney } from "../model.js";
 import "./finance.css";
+import { FinanceTransactions, FinanceTeam } from "./finance.workspace.js";
+import type { Workspace } from "./finance.model.js";
 const periods = {
   week: {
     label: "This week",
@@ -57,7 +64,7 @@ const activity = [
     date: "Sep 22",
   },
 ];
-export default function FinanceScene() {
+function FinanceOverview() {
   const [period, setPeriod] = useState<keyof typeof periods>("month");
   const [frozen, setFrozen] = useState(false);
   const [paid, setPaid] = useState(false);
@@ -76,14 +83,9 @@ export default function FinanceScene() {
     ];
   }, [data]);
   return (
-    <Stack data-scene="finance" gap={5} padding={5}>
-      <SceneHeader brand="folio" context="Your business, in balance">
-        <Text variant="caption" tone="muted">
-          Personal workspace
-        </Text>
-        <Avatar alt="Demo account: Alex" fallback="A" size="sm" />
-      </SceneHeader>
+    <Stack gap="md">
       <Grid
+        data-testid="finance-summary-layout"
         templateColumns={{
           base: "minmax(0, 1fr)",
           md: "minmax(0, 1.75fr) minmax(0, 1fr)",
@@ -315,5 +317,98 @@ export default function FinanceScene() {
         </Grid.Item>
       </Grid>
     </Stack>
+  );
+}
+
+function FinanceWorkspace() {
+  const [workspace, setWorkspace] = useState<Workspace>("north");
+  const [view, setView] = useState("overview");
+  return (
+    <Sidebar.Root defaultOpen>
+      <Stack data-scene="finance" gap={5} padding={5}>
+        <SceneHeader brand="folio" context="Your business, in balance">
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger size="sm" variant="outline" tone="neutral">
+              {workspace === "north"
+                ? "Studio North ledger"
+                : "Fieldwork ledger"}
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Popup aria-label="Switch transaction ledger">
+              <DropdownMenu.Label>Transaction ledgers</DropdownMenu.Label>
+              <DropdownMenu.Item onSelect={() => setWorkspace("north")}>
+                Studio North
+              </DropdownMenu.Item>
+              <DropdownMenu.Item onSelect={() => setWorkspace("fieldwork")}>
+                Fieldwork
+              </DropdownMenu.Item>
+            </DropdownMenu.Popup>
+          </DropdownMenu.Root>
+          <Sidebar.Toggle size="sm" variant="ghost" tone="neutral">
+            Folio navigation
+          </Sidebar.Toggle>
+          <Avatar alt="Demo account: Alex" fallback="A" size="sm" />
+        </SceneHeader>
+        <Tabs.Root
+          value={view}
+          onValueChange={setView}
+          orientation="vertical"
+          appearance="pill"
+        >
+          <Sidebar.Layout>
+            <Sidebar.Panel aria-label="Folio workspace navigation">
+              <Stack gap="lg">
+                <Text variant="eyebrow" tone="muted">
+                  Workspace
+                </Text>
+                <Tabs.List aria-label="Folio sections" activateOnFocus>
+                  <Tabs.Tab value="overview">Overview</Tabs.Tab>
+                  <Tabs.Tab value="transactions">Transactions</Tabs.Tab>
+                  <Tabs.Tab value="team">Team</Tabs.Tab>
+                </Tabs.List>
+                <Text variant="caption" tone="muted">
+                  Local demonstration. No bank, payment, or email connection.
+                </Text>
+                <Sidebar.Close size="sm" variant="ghost" tone="neutral">
+                  Close Folio navigation
+                </Sidebar.Close>
+              </Stack>
+            </Sidebar.Panel>
+            <Sidebar.Content>
+              <Container query size="full">
+                <Stack gap="lg" paddingInline={3}>
+                  <Tabs.Panel value="overview" padding="none">
+                    <FinanceOverview />
+                  </Tabs.Panel>
+                  <Tabs.Panel value="transactions" padding="none">
+                    <Stack gap="md">
+                      <Text variant="caption" tone="muted">
+                        Ledger workspace:{" "}
+                        {workspace === "north" ? "Studio North" : "Fieldwork"}.
+                        Overview and team are separate local demo fixtures.
+                      </Text>
+                      <FinanceTransactions workspace={workspace} />
+                    </Stack>
+                  </Tabs.Panel>
+                  <Tabs.Panel value="team" padding="none">
+                    <FinanceTeam />
+                  </Tabs.Panel>
+                  <Toast.Viewport
+                    placement="inline"
+                    aria-label="Folio notifications"
+                  />
+                </Stack>
+              </Container>
+            </Sidebar.Content>
+          </Sidebar.Layout>
+        </Tabs.Root>
+      </Stack>
+    </Sidebar.Root>
+  );
+}
+export default function FinanceScene() {
+  return (
+    <Toast.Provider>
+      <FinanceWorkspace />
+    </Toast.Provider>
   );
 }
