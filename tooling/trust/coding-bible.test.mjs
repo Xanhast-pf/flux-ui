@@ -25,9 +25,11 @@ test("main declaration retains a concrete installed revision and explicit refres
   assert.ok(revisions.length >= 3);
   assert.equal(new Set(revisions.map((match) => match[1])).size, 1);
   const workspace = await read("pnpm-workspace.yaml");
-  assert.match(
-    workspace,
-    /onlyBuiltDependencies:\n {2}- esbuild\n {2}- coding-bible\n/u,
+  assert.ok(
+    workspace.includes(
+      `onlyBuiltDependencies:\n  - esbuild\n  - "coding-bible@https://codeload.github.com/Xanhast-pf/coding-bible/tar.gz/${revisions[0][1]}"\n`,
+    ),
+    "Git preparation must be allowed for the exact locked Coding Bible revision",
   );
 });
 

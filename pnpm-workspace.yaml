@@ -42,4 +42,4 @@ catalog:
 
 onlyBuiltDependencies:
   - esbuild
-  - coding-bible
+  - "coding-bible@https://codeload.github.com/Xanhast-pf/coding-bible/tar.gz/0cfc27d7511ba65016e4ec554d0377c849ce5a4b"
