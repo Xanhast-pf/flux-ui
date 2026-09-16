@@ -89,7 +89,6 @@ function ComponentDetail({
           <Badge>{entry.category}</Badge>
           <Badge tone="accent">{entry.status}</Badge>
         </Inline>
-
         <Text as="p" variant="lead" tone="muted">
           {entry.description}
         </Text>
@@ -142,7 +141,15 @@ function ComponentDetail({
               paddingInline="md"
               className="preview-stage"
             >
-              <Container size={compact ? "xs" : "sm"}>
+              <Container
+                size={
+                  compact
+                    ? "xs"
+                    : example.previewWidth === "wide"
+                      ? "full"
+                      : "sm"
+                }
+              >
                 <Stack
                   align={previewLayout === "fill" ? "stretch" : "center"}
                   data-compact={compact || undefined}

@@ -1,12 +1,41 @@
 import { useState } from "react";
-import { Field, Inline, Knob, NumberField, Stack, Text } from "@flux-ui/react";
+import {
+  Button,
+  Field,
+  Inline,
+  Knob,
+  NumberField,
+  Select,
+  Stack,
+  Text,
+} from "@flux-ui/react";
 export default function Preview() {
   const [cutoff, setCutoff] = useState(1000);
+  const [size, setSize] = useState<"sm" | "md" | "lg">("md");
   return (
     <Stack gap="md">
+      <Field.Root>
+        <Field.Label>Knob size</Field.Label>
+        <Field.Control>
+          <Select
+            value={size}
+            onChange={(event) => {
+              const next = event.currentTarget.value;
+              if (next === "sm" || next === "md" || next === "lg")
+                setSize(next);
+            }}
+          >
+            <option value="sm">Small</option>
+            <option value="md">Medium</option>
+            <option value="lg">Large</option>
+          </Select>
+        </Field.Control>
+      </Field.Root>
       <Inline align="center" gap="lg" wrap>
         <Knob
           aria-label="Filter cutoff"
+          size={size}
+          resetValue={1000}
           min={20}
           max={20000}
           step={10}
@@ -31,9 +60,13 @@ export default function Preview() {
           </Field.Control>
         </Field.Root>
       </Inline>
+      <Button variant="outline" onClick={() => setCutoff(1000)}>
+        Reset cutoff
+      </Button>
       <Text tone="muted">
         Drag vertically. Arrow keys adjust; Shift makes fine adjustments.
-        Home/End reach limits. This example is silent.
+        Home/End reach limits. Double-click resets to 1,000 Hz. This example is
+        silent.
       </Text>
     </Stack>
   );

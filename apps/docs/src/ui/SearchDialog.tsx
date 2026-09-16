@@ -22,7 +22,7 @@ const entries = [
   ...components.map((entry) => ({
     href: `#components/${entry.slug}`,
     title: entry.name,
-    detail: `${entry.category} · ${entry.description}`,
+    detail: `${entry.category} · ${entry.description}${entry.slug === "combobox" ? " · autocomplete searchable selection" : ""}`,
   })),
 ];
 export function SearchDialog() {

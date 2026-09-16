@@ -28,3 +28,21 @@ describe("Drawer", () => {
     expect(drawer).not.toHaveAttribute("open");
   });
 });
+
+it("accepts forwarded undefined options without consumer conditional spreads", () => {
+  render(
+    <Drawer.Root
+      open={undefined}
+      defaultOpen={undefined}
+      onOpenChange={undefined}
+    >
+      <Drawer.Trigger>Open optional drawer</Drawer.Trigger>
+      <Drawer.Popup side={undefined} closeOnBackdrop={undefined}>
+        <Drawer.Title>Optional drawer</Drawer.Title>
+      </Drawer.Popup>
+    </Drawer.Root>,
+  );
+  expect(
+    screen.getByRole("button", { name: "Open optional drawer" }),
+  ).toHaveAttribute("aria-expanded", "false");
+});

@@ -1,5 +1,7 @@
+import { checkbox as checkboxClass } from "../Checkbox/Checkbox.css.js";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
 import { DataTable } from "./DataTable.js";
 import { tableWindow } from "./tableModel.js";
 interface Row {
@@ -55,7 +57,11 @@ describe("DataTable", () => {
         selectable
       />,
     );
-    fireEvent.click(screen.getByRole("checkbox", { name: "Select row b" }));
+    const selection = screen.getByRole("checkbox", { name: "Select row b" });
+    expect(selection).toHaveClass(checkboxClass);
+    expect(selection.tagName).toBe("INPUT");
+    expect(selection.parentElement?.querySelectorAll("input")).toHaveLength(1);
+    fireEvent.click(selection);
     fireEvent.click(screen.getByRole("button", { name: /Value/ }));
     expect(
       screen.getByRole("checkbox", { name: "Select row b" }),
@@ -64,6 +70,31 @@ describe("DataTable", () => {
       "aria-sort",
       "ascending",
     );
+  });
+  it("preserves equal-value source order through ascending and descending sorts", () => {
+    const view = render(
+      <DataTable
+        label="Tied rows"
+        rows={[
+          { id: "b", value: 2 },
+          { id: "a", value: 2 },
+          { id: "c", value: 1 },
+        ]}
+        columns={columns}
+        getRowId={getRowId}
+      />,
+    );
+    const rowIds = () =>
+      Array.from(view.container.querySelectorAll("[data-row-id]"), (row) =>
+        row.getAttribute("data-row-id"),
+      );
+    const sort = screen.getByRole("button", { name: /Value/ });
+    fireEvent.click(sort);
+    expect(rowIds()).toEqual(["c", "b", "a"]);
+    fireEvent.click(sort);
+    expect(rowIds()).toEqual(["b", "a", "c"]);
+    fireEvent.click(sort);
+    expect(rowIds()).toEqual(["b", "a", "c"]);
   });
   it("pins the focused row instead of discarding its input during scroll", () => {
     const rows = Array.from({ length: 2000 }, (_, i) => ({
@@ -85,9 +116,15 @@ describe("DataTable", () => {
       target: { scrollTop: 40000 },
     });
     expect(checkbox).toBeInTheDocument();
+    fireEvent.click(checkbox);
+    const sort = screen.getByRole("button", { name: /Value/ });
+    fireEvent.click(sort);
+    fireEvent.click(sort);
+    expect(checkbox).toBeInTheDocument();
+    expect(checkbox).toBeChecked();
+    expect(checkbox.closest("tr")).toHaveAttribute("aria-rowindex", "2001");
   });
 });
-
 describe("DataTable hardening", () => {
   it("keeps nonempty rows mounted when filtering invalidates a distant scroll offset", () => {
     const rows = Array.from({ length: 2000 }, (_, i) => ({
@@ -149,7 +186,6 @@ describe("DataTable hardening", () => {
     expect(renderCell).toHaveBeenCalled();
   });
 });
-
 describe("DataTable window boundaries", () => {
   it.each([
     [0, 40000, 0, 0, 0],
@@ -195,4 +231,28 @@ describe("DataTable window boundaries", () => {
     ).not.toBeNull();
     expect(view.container.querySelector("[data-row-id='row-100']")).toBeNull();
   });
+});
+
+it("keeps keyboard selection controlled by the consumer", async () => {
+  const user = userEvent.setup();
+  const onSelectionChange = vi.fn();
+  const props = {
+    label: "Owned selection",
+    rows: [{ id: "a", value: 1 }],
+    columns,
+    getRowId,
+    selectable: true,
+    onSelectionChange,
+  };
+  const view = render(<DataTable {...props} selectedRowIds={[]} />);
+  const checkbox = screen.getByRole("checkbox", { name: "Select row a" });
+  act(() => checkbox.focus());
+  await user.keyboard(" ");
+  expect(onSelectionChange).toHaveBeenCalledExactlyOnceWith(["a"]);
+  expect(checkbox).not.toBeChecked();
+  view.rerender(<DataTable {...props} selectedRowIds={["a"]} />);
+  expect(checkbox).toBeChecked();
+  await user.keyboard(" ");
+  expect(onSelectionChange).toHaveBeenLastCalledWith([]);
+  expect(checkbox).toBeChecked();
 });

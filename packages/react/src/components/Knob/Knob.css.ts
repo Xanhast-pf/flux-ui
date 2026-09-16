@@ -12,15 +12,16 @@ export const knob = style({
   borderRadius: "var(--flux-radius-md)",
   selectors: {
     "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
+    "&[data-size='sm']": { vars: { "--f-knob-size": "3rem" } },
+    "&[data-size='lg']": { vars: { "--f-knob-size": "5rem" } },
     "&:focus-visible": { outline: "0.125rem solid var(--flux-color-focus)" },
     "&[aria-disabled='true']": { opacity: 0.5, cursor: "not-allowed" },
   },
 });
 export const dial = style({
   position: "relative",
-  display: "block",
-  inlineSize: "4rem",
-  blockSize: "4rem",
+  inlineSize: "var(--flux-knob-size, var(--f-knob-size, 4rem))",
+  blockSize: "var(--flux-knob-size, var(--f-knob-size, 4rem))",
   borderRadius: "50%",
   background:
     "conic-gradient(from 225deg, var(--flux-color-accent) var(--f-knob-angle), var(--flux-color-border-strong) 0deg 270deg, transparent 0deg)",
@@ -28,7 +29,7 @@ export const dial = style({
     "&::before": {
       content: '""',
       position: "absolute",
-      inset: "0.5rem",
+      inset: "12.5%",
       borderRadius: "50%",
       background: "var(--flux-color-surface)",
       border: "0.0625rem solid var(--flux-color-border)",
@@ -40,15 +41,14 @@ export const dial = style({
 });
 export const indicator = style({
   position: "absolute",
-  inset: "0.75rem",
-  borderRadius: "50%",
+  inset: "18.75%",
   transform: "rotate(calc(var(--f-knob-angle) - 135deg))",
   selectors: {
     "&::after": {
       content: '""',
       display: "block",
-      inlineSize: "0.25rem",
-      blockSize: "0.75rem",
+      inlineSize: "10%",
+      blockSize: "30%",
       marginInline: "auto",
       background: "var(--flux-color-text)",
     },

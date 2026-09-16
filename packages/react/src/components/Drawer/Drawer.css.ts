@@ -1,6 +1,5 @@
 import { cssVars } from "@flux-ui/tokens";
-import { keyframes, style } from "@vanilla-extract/css";
-
+import { globalStyle, keyframes, style } from "@vanilla-extract/css";
 const enterFromLeft = keyframes({
   from: { transform: "translateX(-100%)" },
   to: { transform: "translateX(0)" },
@@ -17,7 +16,6 @@ const enterFromBottom = keyframes({
   from: { transform: "translateY(100%)" },
   to: { transform: "translateY(0)" },
 });
-
 export const popup = style({
   position: "fixed",
   boxSizing: "border-box",
@@ -73,7 +71,9 @@ export const popup = style({
   },
   "@media": { "(prefers-reduced-motion: reduce)": { animation: "none" } },
 });
-
+// Keep a scrolled page stationary behind any open Drawer. Native dialog owns
+// focus/inertness; this static rule adds scroll containment without body mutation.
+globalStyle(`html:has(.${popup}[open])`, { overflow: "hidden" });
 export {
   modalAction as trigger,
   modalAction as close,

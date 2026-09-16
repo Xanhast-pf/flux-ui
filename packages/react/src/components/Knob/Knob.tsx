@@ -1,4 +1,4 @@
-import { useRef, useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import {
   knobFraction,
@@ -9,12 +9,24 @@ import {
 } from "./knobMath.js";
 import { knob, dial, indicator, readout } from "./Knob.css.js";
 import type { KnobProps } from "./Knob.types.js";
+const keySteps: Readonly<Partial<Record<string, number>>> = {
+  Home: -Infinity,
+  End: Infinity,
+  ArrowUp: 1,
+  ArrowRight: 1,
+  ArrowDown: -1,
+  ArrowLeft: -1,
+  PageUp: 10,
+  PageDown: -10,
+};
 const numberFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 3,
 });
 const formatNumber = (value: number): string => numberFormatter.format(value);
 export function Knob({
   value: controlled,
+  size = "md",
+  resetValue,
   defaultValue = 50,
   min = 0,
   max = 100,
@@ -26,6 +38,7 @@ export function Knob({
   onValueCommit,
   className,
   style,
+  onDoubleClick,
   onPointerDown,
   onPointerMove,
   onPointerUp,
@@ -38,40 +51,55 @@ export function Knob({
   ...props
 }: KnobProps) {
   validateKnob(min, max, step, scale);
-  const [internal, setInternal] = useState(defaultValue);
-  const raw = controlled ?? internal;
+  const [localValue, setLocalValue] = useState(defaultValue);
+  const state = useRef<{
+    reset: number;
+    key: boolean;
+    pointer: null | {
+      id: number;
+      y: number;
+      fraction: number;
+      start: number;
+      value: number;
+    };
+  }>({ reset: defaultValue, key: false, pointer: null }).current;
+  if (resetValue !== undefined && !Number.isFinite(resetValue))
+    throw new RangeError("Knob.resetValue must be finite.");
+  const raw = controlled ?? localValue;
   if (!Number.isFinite(raw)) throw new RangeError("Knob.value must be finite.");
   const value = Math.max(min, Math.min(max, raw));
-  const drag = useRef<{
-    id: number;
-    y: number;
-    fraction: number;
-    original: number;
-    latest: number;
-  } | null>(null);
-  const keyboard = useRef(false);
-  function change(next: number) {
+  const text = formatValue(value);
+
+  // Change publication is shared by keyboard, pointer, cancellation and reset.
+  function publish(next: number, commit = false) {
     if (next === value) return;
-    if (controlled === undefined) setInternal(next);
+    if (controlled === undefined) setLocalValue(next);
     onValueChange?.(next);
+    if (commit) onValueCommit?.(next);
   }
-  function cancel() {
-    if (drag.current) {
-      const original = drag.current.original;
-      drag.current = null;
-      change(original);
-    }
+  function finishKey(commit: boolean) {
+    if (!state.key) return;
+    state.key = false;
+    if (commit && !disabled) onValueCommit?.(value);
   }
+  function cancelPointer(event: PointerEvent<HTMLDivElement>) {
+    const pointer = state.pointer;
+    if (!pointer || pointer.id !== event.pointerId) return;
+    state.pointer = null;
+    publish(pointer.start);
+  }
+
   return (
     <div
       {...props}
       className={joinClassNames(knob, className)}
       role="slider"
+      data-size={size}
       aria-orientation="vertical"
       aria-valuemin={min}
       aria-valuemax={max}
       aria-valuenow={value}
-      aria-valuetext={formatValue(value)}
+      aria-valuetext={text}
       aria-disabled={disabled}
       tabIndex={disabled ? -1 : (tabIndex ?? 0)}
       style={
@@ -80,69 +108,95 @@ export function Knob({
           ...style,
         } as CSSProperties
       }
+      onDoubleClick={(event) => {
+        onDoubleClick?.(event);
+        if (
+          disabled ||
+          event.defaultPrevented ||
+          (controlled !== undefined && resetValue === undefined)
+        )
+          return;
+        const pointer = state.pointer;
+        state.pointer = null;
+        state.key = false;
+        if (pointer && event.currentTarget.hasPointerCapture(pointer.id))
+          event.currentTarget.releasePointerCapture(pointer.id);
+        publish(snapKnob(resetValue ?? state.reset, min, max, step), true);
+      }}
       onPointerDown={(event) => {
         onPointerDown?.(event);
         if (
-          event.defaultPrevented ||
           disabled ||
-          event.button !== 0 ||
-          !event.isPrimary
+          event.defaultPrevented ||
+          !event.isPrimary ||
+          event.button !== 0
         )
           return;
         event.preventDefault();
         event.currentTarget.focus();
         event.currentTarget.setPointerCapture(event.pointerId);
-        drag.current = {
+        state.pointer = {
           id: event.pointerId,
           y: event.clientY,
           fraction: knobFraction(value, min, max, scale),
-          original: value,
-          latest: value,
+          start: value,
+          value,
         };
       }}
       onPointerMove={(event) => {
         onPointerMove?.(event);
-        const active = drag.current;
-        if (!active || event.defaultPrevented || event.pointerId !== active.id)
+        const pointer = state.pointer;
+        if (
+          !pointer ||
+          event.defaultPrevented ||
+          pointer.id !== event.pointerId
+        )
           return;
         if (disabled) {
-          cancel();
+          cancelPointer(event);
           return;
         }
-        active.fraction = Math.max(
+        pointer.fraction = Math.max(
           0,
           Math.min(
             1,
-            active.fraction +
-              (active.y - event.clientY) / (event.shiftKey ? 1600 : 160),
+            pointer.fraction +
+              (pointer.y - event.clientY) / (event.shiftKey ? 1600 : 160),
           ),
         );
-        active.y = event.clientY;
-        active.latest = snapKnob(
-          knobValue(active.fraction, min, max, scale),
+        pointer.y = event.clientY;
+        pointer.value = snapKnob(
+          knobValue(pointer.fraction, min, max, scale),
           min,
           max,
           event.shiftKey ? step / 10 : step,
         );
-        change(active.latest);
+        publish(pointer.value);
       }}
       onPointerUp={(event) => {
         onPointerUp?.(event);
-        if (drag.current?.id !== event.pointerId) return;
-        const latest = drag.current.latest;
-        if (disabled) cancel();
-        else drag.current = null;
+        if (state.pointer?.id !== event.pointerId) return;
+        // Clear the interaction before releasing capture; a synchronous lost
+        // capture event must not cancel a completed transaction.
+        const pointer = state.pointer;
+        state.pointer = null;
+        if (disabled) publish(pointer.start);
         if (event.currentTarget.hasPointerCapture(event.pointerId))
           event.currentTarget.releasePointerCapture(event.pointerId);
-        if (!disabled && !event.defaultPrevented) onValueCommit?.(latest);
+        if (
+          !disabled &&
+          !event.defaultPrevented &&
+          pointer.value !== pointer.start
+        )
+          onValueCommit?.(pointer.value);
       }}
       onPointerCancel={(event) => {
         onPointerCancel?.(event);
-        if (drag.current?.id === event.pointerId) cancel();
+        cancelPointer(event);
       }}
       onLostPointerCapture={(event) => {
         onLostPointerCapture?.(event);
-        if (drag.current?.id === event.pointerId) cancel();
+        cancelPointer(event);
       }}
       onKeyDown={(event) => {
         onKeyDown?.(event);
@@ -155,66 +209,29 @@ export function Knob({
           event.target !== event.currentTarget
         )
           return;
-        const amount = event.shiftKey ? step / 10 : step;
-        const next =
-          event.key === "Home"
-            ? min
-            : event.key === "End"
-              ? max
-              : ["ArrowUp", "ArrowRight", "PageUp"].includes(event.key)
-                ? stepKnob(
-                    value,
-                    min,
-                    max,
-                    amount,
-                    event.key === "PageUp" ? 10 : 1,
-                  )
-                : ["ArrowDown", "ArrowLeft", "PageDown"].includes(event.key)
-                  ? stepKnob(
-                      value,
-                      min,
-                      max,
-                      amount,
-                      event.key === "PageDown" ? -10 : -1,
-                    )
-                  : null;
-        if (next === null) return;
+        const ticks = keySteps[event.key];
+        if (typeof ticks !== "number") return;
         event.preventDefault();
-        keyboard.current = true;
-        change(snapKnob(next, min, max, amount));
+        state.key = true;
+        publish(
+          stepKnob(value, min, max, event.shiftKey ? step / 10 : step, ticks),
+        );
       }}
       onKeyUp={(event) => {
         onKeyUp?.(event);
-        if (
-          keyboard.current &&
-          [
-            "Home",
-            "End",
-            "ArrowUp",
-            "ArrowDown",
-            "ArrowLeft",
-            "ArrowRight",
-            "PageUp",
-            "PageDown",
-          ].includes(event.key)
-        ) {
-          keyboard.current = false;
-          if (!disabled && !event.defaultPrevented) onValueCommit?.(value);
-        }
+        if (typeof keySteps[event.key] === "number")
+          finishKey(!event.defaultPrevented);
       }}
       onBlur={(event) => {
         onBlur?.(event);
-        if (keyboard.current) {
-          keyboard.current = false;
-          if (!disabled) onValueCommit?.(value);
-        }
+        finishKey(true);
       }}
     >
       <span className={dial} aria-hidden="true">
         <span className={indicator} />
       </span>
       <span className={readout} aria-hidden="true">
-        {formatValue(value)}
+        {text}
       </span>
     </div>
   );

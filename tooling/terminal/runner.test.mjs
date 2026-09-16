@@ -25,7 +25,11 @@ test("successful output is captured, warnings retained, non-TTY is plain", async
   const sink = capture();
   const result = await runTask(
     ["node", "-e", 'console.log("hidden"); console.error("warning")'],
-    { output: sink.output, label: "Example" },
+    {
+      output: sink.output,
+      label: "Example",
+      env: { ...process.env, FORCE_COLOR: undefined, NO_COLOR: undefined },
+    },
   );
   assert.equal(result.status, 0);
   assert.ok(!sink.text().includes("hidden"));
@@ -33,6 +37,27 @@ test("successful output is captured, warnings retained, non-TTY is plain", async
   assert.match(sink.text(), /PASS Example/u);
   assert.match(sink.text(), /warning/u);
 });
+for (const noColor of [undefined, ""]) {
+  test(`non-TTY forced color ${noColor === undefined ? "colors summaries without cursor control" : "respects NO_COLOR"}`, async () => {
+    const sink = capture();
+    const result = await runTask(["node", "-e", 'console.error("warning")'], {
+      output: sink.output,
+      label: "Example",
+      env: { ...process.env, FORCE_COLOR: "1", NO_COLOR: noColor },
+    });
+    assert.equal(result.status, 0);
+    assert.match(sink.text(), /PASS Example/u);
+    assert.match(sink.text(), /warning/u);
+    if (noColor === undefined) {
+      assert.ok(sink.text().includes("\u001b[32mPASS Example"));
+      assert.ok(sink.text().includes("\u001b[33mWARN"));
+      assert.ok(!sink.text().includes("\u001b[2K"));
+      assert.ok(!sink.text().includes("\r"));
+    } else {
+      assert.ok(!sink.text().includes("\u001b"));
+    }
+  });
+}
 test("failure preserves stdout, stderr and actual exit status", async () => {
   const sink = capture();
   const result = await runTask(

@@ -4,6 +4,8 @@ export interface ComponentExample {
   Preview: ComponentType;
   /** Controls center naturally; layout examples fill the centered preview canvas. */
   previewLayout?: "center" | "fill";
+  /** A layout canvas large enough to demonstrate desktop container behavior. */
+  previewWidth?: "standard" | "wide";
   code: string;
   notes: readonly string[];
   props: ReadonlyArray<

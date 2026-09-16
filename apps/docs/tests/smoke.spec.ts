@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-
 test("renders the workshop, native form examples, and overlay demos", async ({
   page,
 }) => {
@@ -44,30 +43,29 @@ test("renders the workshop, native form examples, and overlay demos", async ({
   ).toBeVisible();
   await page.getByRole("button", { name: "Close drawer", exact: true }).click();
 });
-
-test("keeps the non-modal Sidebar open after mobile navigation", async ({
+test("mobile navigation overlays the page and closes after a destination", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-
-  await page.getByRole("button", { name: "Toggle navigation" }).click();
-  const navigationDrawer = page.getByRole("complementary", {
-    name: "Documentation sidebar",
+  const trigger = page.getByRole("button", {
+    name: "Toggle navigation",
+    exact: true,
   });
-  await expect(navigationDrawer).toBeVisible();
-
-  await navigationDrawer
+  await trigger.click();
+  const navigation = page.getByRole("dialog", {
+    name: "Documentation",
+    exact: true,
+  });
+  await expect(navigation).toBeVisible();
+  await navigation
     .getByRole("link", { name: "Components", exact: true })
     .click();
-  await expect(navigationDrawer).toBeVisible();
   await expect(page).toHaveURL(/#components$/u);
-  await page
-    .getByRole("button", { name: "Toggle navigation", exact: true })
-    .click();
-  await expect(navigationDrawer).not.toBeVisible();
+  await expect(navigation).not.toBeVisible();
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(page.getByRole("main")).toBeFocused();
 });
-
 test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async ({
   page,
 }) => {
@@ -96,14 +94,12 @@ test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async
     name: "Accept the project terms",
     exact: true,
   });
-
   await expect(updates).toBeChecked();
   await form.getByText("Release updates", { exact: true }).click();
   await expect(updates).not.toBeChecked();
   await expect(updates).toBeFocused();
   await page.keyboard.press("Space");
   await expect(updates).toBeChecked();
-
   await expect(all).toHaveJSProperty("indeterminate", true);
   await all.focus();
   await page.keyboard.press("Space");
@@ -111,14 +107,12 @@ test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async
   await expect(all).toBeChecked();
   await expect(email).toBeChecked();
   await expect(push).toBeChecked();
-
   await email.uncheck();
   await expect(all).toHaveJSProperty("indeterminate", true);
   await expect(all).toHaveJSProperty("checked", false);
   await all.click();
   await expect(email).toBeChecked();
   await expect(push).toBeChecked();
-
   await expect(terms).toHaveAttribute("required", "");
   await expect(terms).toHaveAttribute("aria-invalid", "true");
   await terms.check();
@@ -132,7 +126,6 @@ test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async
       exact: true,
     }),
   ).toBeDisabled();
-
   const submitted = await form.evaluate((element) => {
     if (!(element instanceof HTMLFormElement)) {
       throw new Error("Expected a form.");
@@ -145,7 +138,6 @@ test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async
     ["channel", "push"],
     ["terms", "accepted"],
   ]);
-
   await updates.uncheck();
   await form
     .getByRole("button", { name: "Reset preferences", exact: true })
@@ -157,7 +149,6 @@ test("Checkbox preserves keyboard, mixed-state, form, and reset behavior", async
   await expect(terms).not.toBeChecked();
   await expect(terms).toHaveAttribute("aria-invalid", "true");
 });
-
 test("Native selection controls keep browser rendering and keyboard behavior in forced colors", async ({
   page,
 }) => {
@@ -175,7 +166,6 @@ test("Native selection controls keep browser rendering and keyboard behavior in 
   await expect(
     page.getByRole("checkbox", { name: "All channels", exact: true }),
   ).toHaveJSProperty("indeterminate", true);
-
   await page.goto("/#components/radio-group");
   const stable = page.getByRole("radio", { name: "Stable", exact: true });
   const beta = page.getByRole("radio", { name: "Beta", exact: true });
@@ -185,7 +175,6 @@ test("Native selection controls keep browser rendering and keyboard behavior in 
   await expect(beta).toBeFocused();
   await expect(beta).toBeChecked();
 });
-
 test("RadioGroup preserves native keyboard, form, controlled, and reset behavior", async ({
   page,
 }) => {
@@ -210,24 +199,20 @@ test("RadioGroup preserves native keyboard, form, controlled, and reset behavior
     name: "Canary (unavailable)",
     exact: true,
   });
-
   await expect(stable).toBeChecked();
   await expect(stable).toHaveAttribute("required", "");
   await expect(canary).toBeDisabled();
-
   await stable.focus();
   await page.keyboard.press("ArrowRight");
   await expect(beta).toBeFocused();
   await expect(beta).toBeChecked();
   await expect(stable).not.toBeChecked();
-
   const production = form.getByRole("radio", {
     name: "Production",
     exact: true,
   });
   await production.check();
   await expect(production).toBeChecked();
-
   const submitted = await form.evaluate((element) => {
     if (!(element instanceof HTMLFormElement)) {
       throw new Error("Expected a form.");
@@ -238,7 +223,6 @@ test("RadioGroup preserves native keyboard, form, controlled, and reset behavior
     ["release-channel", "beta"],
     ["environment", "production"],
   ]);
-
   await form
     .getByRole("button", { name: "Reset radio groups", exact: true })
     .click();
@@ -247,7 +231,6 @@ test("RadioGroup preserves native keyboard, form, controlled, and reset behavior
     form.getByRole("radio", { name: "Staging", exact: true }),
   ).toBeChecked();
 });
-
 test("uses the Flux identity mark in the docs shell", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".brand img")).toBeVisible();

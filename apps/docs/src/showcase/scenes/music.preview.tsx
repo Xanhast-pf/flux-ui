@@ -14,7 +14,6 @@ import {
   Grid,
   Heading,
   Inline,
-  Fader,
   Knob,
   LevelMeter,
   NumberField,
@@ -97,10 +96,11 @@ const tracks = (
     height: height * 0.3,
   })),
 }));
+const defaults = createStudioSession();
 function MusicWorkspace() {
   const id = useId();
   const [playing, setPlaying] = useState(false);
-  const [tempo, setTempo] = useState(108);
+  const [tempo, setTempo] = useState(defaults.tempo);
   const [channels, setChannels] = useState(
     () => createStudioSession().channels,
   );
@@ -120,7 +120,7 @@ function MusicWorkspace() {
   function setCutoff(value: number) {
     updateChannel({ cutoff: value });
   }
-  const [volume, setVolume] = useState(72);
+  const [volume, setVolume] = useState(defaults.volume);
   const [muted, setMuted] = useState<readonly TrackId[]>([]);
   const [solo, setSolo] = useState<TrackId | null>(null);
   const session: StudioSession = {
@@ -439,6 +439,7 @@ function MusicWorkspace() {
                             max={180}
                             step={1}
                             value={tempo}
+                            resetValue={defaults.tempo}
                             onValueChange={setTempo}
                           />
                         </Field.Control>
@@ -453,15 +454,27 @@ function MusicWorkspace() {
                           </Text>
                         </Field.Label>
                         <Field.Control>
-                          <Fader
+                          <Slider
+                            orientation="vertical"
                             min={0}
                             max={100}
                             value={volume}
+                            resetValue={defaults.volume}
                             onValueChange={setVolume}
                           />
                         </Field.Control>
                       </Field.Root>
                     </Box>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setTempo(defaults.tempo);
+                        setVolume(defaults.volume);
+                      }}
+                    >
+                      Reset session controls
+                    </Button>
                     <LevelMeter
                       value={volume}
                       min={0}
@@ -492,10 +505,12 @@ function MusicWorkspace() {
                     <Field.Root description="UI gain only. This does not change any audio.">
                       <Field.Label>Track gain (dB)</Field.Label>
                       <Field.Control>
-                        <Fader
+                        <Slider
+                          orientation="vertical"
                           min={-60}
                           max={6}
                           step={1}
+                          resetValue={defaults.channels[selectedTrack].gain}
                           value={channels[selectedTrack].gain}
                           onValueChange={(gain) => updateChannel({ gain })}
                         />
@@ -508,6 +523,7 @@ function MusicWorkspace() {
                           min={-100}
                           max={100}
                           step={1}
+                          resetValue={defaults.channels[selectedTrack].pan}
                           value={channels[selectedTrack].pan}
                           onValueChange={(pan) => updateChannel({ pan })}
                         />
@@ -542,6 +558,7 @@ function MusicWorkspace() {
                   max={20000}
                   step={10}
                   scale="log"
+                  resetValue={defaults.channels[selectedTrack].cutoff}
                   value={cutoff}
                   onValueChange={setCutoff}
                   formatValue={(value) => `${value.toLocaleString()} Hz`}
@@ -551,7 +568,14 @@ function MusicWorkspace() {
                   arrow keys; Shift makes fine changes.
                 </Text>
               </Inline>
-              <Tooltip content="Each track keeps independent gain, pan and cutoff settings. Checkpoints never contain audio.">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => updateChannel(defaults.channels[selectedTrack])}
+              >
+                Reset track controls
+              </Button>
+              <Tooltip content="Each track keeps independent gain, pan and cutoff settings. Double-click a control to reset it, or use the Reset buttons. Checkpoints never contain audio.">
                 <Button variant="ghost" size="sm" tone="neutral">
                   About these controls
                 </Button>

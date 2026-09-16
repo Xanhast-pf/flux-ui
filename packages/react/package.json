@@ -1,6 +1,6 @@
 {
   "name": "@flux-ui/react",
-  "version": "0.0.0",
+  "version": "0.1.25",
   "type": "module",
   "sideEffects": [
     "**/*.css"

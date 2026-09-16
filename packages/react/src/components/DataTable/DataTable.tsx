@@ -1,3 +1,4 @@
+import { Checkbox } from "../Checkbox/Checkbox.js";
 import {
   useMemo,
   useRef,
@@ -63,9 +64,14 @@ export function DataTable<Row>({
     () => sortDataRows(identified, columns, activeSort, manualSorting),
     [identified, columns, activeSort, manualSorting],
   );
-  const rowIndexes = useMemo(
-    () => new Map(ordered.map((entry, index) => [entry.id, index])),
-    [ordered],
+  // Only the focused identity needs an index. Cache its lookup across scrolls
+  // instead of allocating a second full-row collection for every sort.
+  const focusedIndex = useMemo(
+    () =>
+      focusedId === null
+        ? -1
+        : ordered.findIndex((entry) => entry.id === focusedId),
+    [ordered, focusedId],
   );
   const selected = useMemo(
     () => new Set(selectedRowIds ?? localSelection),
@@ -84,8 +90,6 @@ export function DataTable<Row>({
     viewport.bodyOffset,
   );
   // A focused row remains mounted even outside the visible window. Sorting uses stable IDs.
-  const focusedIndex =
-    focusedId === null ? -1 : (rowIndexes.get(focusedId) ?? -1);
   const indexes = Array.from(
     { length: window.end - window.start },
     (_, offset) => window.start + offset,
@@ -132,12 +136,11 @@ export function DataTable<Row>({
         {selectable ? (
           <td className={bodyCell}>
             <div className={cellContent} style={{ height: rowHeight }}>
-              <input
-                type="checkbox"
+              <Checkbox
                 aria-label={`Select row ${entry.id}`}
                 checked={selected.has(entry.id)}
-                onChange={(event) =>
-                  changeSelection(entry.id, event.currentTarget.checked)
+                onCheckedChange={(checked) =>
+                  changeSelection(entry.id, checked)
                 }
               />
             </div>

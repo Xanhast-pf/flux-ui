@@ -24,3 +24,29 @@ export const Disabled: Story = {
     />
   ),
 };
+export const Vertical: Story = {
+  args: {
+    "aria-label": "Volume",
+    orientation: "vertical",
+    min: 0,
+    max: 100,
+    defaultValue: 40,
+  },
+};
+export const CustomTrackAndThumb: Story = {
+  args: {
+    "aria-label": "Mix level",
+    appearance: "custom",
+    orientation: "vertical",
+    defaultValue: 40,
+    style: {
+      "--flux-slider-length": "12rem",
+      "--flux-slider-track-size": "0.5rem",
+      "--flux-slider-thumb-inline-size": "2rem",
+      "--flux-slider-thumb-radius": "0.25rem",
+    },
+  },
+};
+export const ResetShortcut: Story = {
+  args: { "aria-label": "Resettable value", defaultValue: 75, resetValue: 25 },
+};

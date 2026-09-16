@@ -20,7 +20,7 @@ pnpm size:compare <base> [current-ref|working-tree] [--json] # isolated revision
 
 `pnpm size` uses existing production output; run `pnpm build:packages` first
 when checking source changes outside a workflow that already builds packages.
-The review and update commands build current source before measuring all entries.
+The review and update commands build current source before measuring selected entries (all entries by default).
 Review is read-only with respect to baselines and source files; its build refreshes
 package output. Only `pnpm size:update` accepts and writes a bundled baseline.
 
@@ -31,6 +31,9 @@ output breakdown and peers. Version 1 remains readable, but missing or malformed
 bundled baselines fail the primary gate explicitly. Historical emitted values
 are never used as bundled baselines.
 
+### Full acceptance
+
+Use when a deliberately reviewed change should accept all current bundled entries.
 Review the proposed bundled baseline changes before explicitly accepting them:
 
 ```bash
@@ -53,6 +56,38 @@ never overwritten. Updates cannot be combined with `--changed` or `--release`.
 registry generation. The checker still rejects the legacy `--update-baseline`
 flag. Icon baseline acceptance remains a separate explicit operation through
 `pnpm icons:size:update`. Release verification is unchanged.
+
+### Targeted acceptance
+
+Use explicit component slugs when only reviewed components should advance while
+other regressions remain blocked:
+
+```bash
+pnpm size:baseline:review -- --components=data-table,knob
+pnpm size:update -- --components=data-table,knob
+```
+
+The list must contain known, unique slugs, with no empty entries or whitespace.
+Input order does not affect selection; reports normalize selection by slug.
+`--components` requires review or update, and cannot combine with `--changed` or
+`--release`. Review and update are mutually exclusive. Acceptance never infers
+selection from Git changes.
+
+Only selected entries are bundled and included in `baselineChanges`.
+`bundledEntryCoverage.measured` lists selected slugs; `unmeasured` lists every
+other live slug, without zero-value placeholders. Every emitted graph and global
+aggregate is still measured. Updates replace only selected `bundled` objects,
+preserving all other component data, historical entries, aggregate baselines,
+schema/budget versions and method metadata. Targeted acceptance requires schema 2
+and matching bundling-method metadata, with existing selected bundled objects;
+initial baseline or toolchain migration needs separate review. Targeted writes
+replace only selected JSON values, preserving unrelated bytes including whitespace.
+Validation, measurement, absolute-budget or applicable aggregate-gate failures
+prevent writing. The same atomic writer is used for full and targeted acceptance.
+
+Targeted acceptance does not change absolute budgets or regression tolerance,
+does not update aggregate baselines, and does not hide unselected component
+failures in normal `pnpm size`, which still checks every public entry.
 
 ## Size classes
 

@@ -1,0 +1,29 @@
+name: Coding Bible Canary
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # Flux intentionally tracks Coding Bible main as a downstream canary.
+      # Revisit this architecture before pinning this check to a release.
+      - uses: Xanhast-pf/coding-bible@main
+        with:
+          scope: project
+          config: coding-bible.config.json
+          fail-on: error

@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 export const root = style({
   display: "flex",
   alignItems: "center",
@@ -15,7 +15,9 @@ export const root = style({
       outlineOffset: 2,
     },
     "&[hidden]": { display: "none" },
-    "&:has([aria-invalid='true'])": { borderColor: "var(--flux-color-danger)" },
+    "&:has([aria-invalid='true'], [data-invalid], :user-invalid)": {
+      borderColor: "var(--flux-color-danger)",
+    },
   },
 });
 export const addon = style({
@@ -26,10 +28,13 @@ export const addon = style({
   color: "var(--flux-color-text-muted)",
   fontSize: "var(--flux-font-caption)",
 });
-export const input = style({
+// Field.Control clones its input, so this also covers NumberField without a
+// wrapper component, alternate numeric parser, or duplicate input styling.
+globalStyle(`${root} > input`, {
   flex: 1,
+  minInlineSize: 0,
   border: 0,
   borderRadius: 0,
   paddingInline: 0,
-  selectors: { "&:focus-visible": { outline: "none" } },
 });
+globalStyle(`${root} > input:focus-visible`, { outline: "none" });

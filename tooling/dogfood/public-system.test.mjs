@@ -4,7 +4,6 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 const root = new URL("../../", import.meta.url);
 const source = (file) => readFile(new URL(file, root), "utf8");
-
 test("display-owning primitives preserve hidden and until-found locally", async () => {
   for (const file of [
     "packages/react/src/internal/flexLayout.css.ts",
@@ -29,7 +28,6 @@ test("display-owning primitives preserve hidden and until-found locally", async 
     );
     assert.match(css, /display:\s*["']none !important["']/u);
   }
-
   const button = await source(
     "packages/react/src/components/Button/Button.tsx",
   );
@@ -45,7 +43,9 @@ test("Tabs styling state is part-local, never inherited through an ancestor sele
   assert.doesNotMatch(css, /\$\{root\}/u);
   assert.match(css, /&\[data-a='pill'\]/u);
   assert.match(css, /&\[aria-orientation='vertical'\]/u);
-  const component = await source("packages/react/src/components/Tabs/Tabs.tsx");
+  const component = await source(
+    "packages/react/src/components/Tabs/TabsList.tsx",
+  );
   assert.match(component, /closest\('\[role="tablist"\]'\)/u);
 });
 test("Sidebar is distinct from the native modal implementation and lives outside route content", async () => {
@@ -62,7 +62,12 @@ test("Sidebar is distinct from the native modal implementation and lives outside
   assert.match(sidebar, /aria-expanded=\{state\.open\}/u);
   assert.match(app, /<Sidebar.Root>/u);
   assert.match(app, /<Sidebar.Content>/u);
-  assert.doesNotMatch(nav, /Drawer|setOpen\(false\)|onNavigate/u);
+  assert.match(app, /<Drawer.Root\s+open=\{compactNavigation && mobileOpen\}/u);
+  assert.match(nav, /!mobile &&/u);
+  assert.match(nav, /<Sidebar.Panel/u);
+  assert.match(nav, /<Drawer.Popup/u);
+  assert.match(nav, /onNavigate=\{onNavigate\}/u);
+  assert.doesNotMatch(sidebar, /Drawer|setOpen\(false\).*route/u);
 });
 test("default examples have exact ownership and consumer build cannot silently use sources", async () => {
   const policy = JSON.parse(await source("tooling/dogfood/ownership.json"));
@@ -97,7 +102,6 @@ test("consumer runs in the full gate and standalone icon checks cannot read stal
     /^pnpm build:packages &&/u,
   );
 });
-
 test("fresh checkouts build public declarations before type-aware consumer lint", async () => {
   const { scripts } = JSON.parse(await source("package.json"));
   for (const [name, lint] of [
@@ -109,14 +113,12 @@ test("fresh checkouts build public declarations before type-aware consumer lint"
     assert.ok(commands.indexOf("pnpm build:packages") < commands.indexOf(lint));
   }
 });
-
 test("until-found is exercised as a platform attribute, not a React boolean prop", async () => {
   const semantic = await source(
     "packages/react/src/internal/semantic.types.ts",
   );
   const entry = await source("apps/docs/consumer/main.tsx");
   const spec = await source("apps/docs/consumer/consumer.spec.ts");
-
   assert.doesNotMatch(semantic, /HiddenState|until-found/u);
   assert.doesNotMatch(entry, /hidden=["']until-found["']/u);
   assert.match(spec, /setAttribute\("hidden", "until-found"\)/u);

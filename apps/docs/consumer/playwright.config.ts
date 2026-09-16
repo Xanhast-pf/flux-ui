@@ -2,7 +2,11 @@ import { fileURLToPath } from "node:url";
 import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: ".",
-  testMatch: ["consumer.spec.ts", "interactions.spec.ts"],
+  testMatch: [
+    "consumer.spec.ts",
+    "interactions.spec.ts",
+    "refinements.spec.ts",
+  ],
   outputDir: "../../../.cache/consumer-results",
   reporter:
     process.env.FLUX_TRUST_JOB === "browser"

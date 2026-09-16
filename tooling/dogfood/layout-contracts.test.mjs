@@ -7,9 +7,7 @@ import {
 } from "../../packages/react/src/internal/spacing.ts";
 import { setResponsiveCssVariable } from "../../packages/react/src/internal/responsiveValue.ts";
 import { responsiveStyle } from "../../packages/react/src/internal/responsive.css.ts";
-
 const root = new URL("../../", import.meta.url);
-
 test("all named and numbered gap tokens map to the same public CSS contract", () => {
   for (const [alias, step] of Object.entries({
     xs: 1,
@@ -73,7 +71,7 @@ test("docs no longer mount or style a second, fixed navigation panel", async () 
   const app = await readFile(new URL("apps/docs/src/App.tsx", root), "utf8");
   const css = await readFile(new URL("apps/docs/src/styles.css", root), "utf8");
   assert.doesNotMatch(app + css, /desktop-sidebar|sidebar-sticky/u);
-  assert.match(app, /<DocumentationNavigation route=\{route\}/u);
+  assert.match(app, /<DocumentationNavigation\s+route=\{route\}/u);
 });
 test("new browser regressions are discovered and performance tests remain separately runnable", async () => {
   const manifest = JSON.parse(

@@ -16,7 +16,6 @@ export default {
     "button",
     "card",
     "dropdown-menu",
-    "fader",
     "field",
     "grid",
     "heading",
@@ -34,6 +33,6 @@ export default {
     "tooltip",
   ],
   custom:
-    "Knob, Fader, NumberField and LevelMeter are public controls. The sequencer, clip waveforms and playhead remain original visual artwork. This is not an audio engine: playback is silent, and no microphone or audio file is accessed.",
+    "Knob, vertical Slider, NumberField and LevelMeter are public controls. The sequencer, clip waveforms and playhead remain original visual artwork. This is not an audio engine: playback is silent, and no microphone or audio file is accessed.",
   Icon: SlidersIcon,
 } satisfies SceneDefinition;

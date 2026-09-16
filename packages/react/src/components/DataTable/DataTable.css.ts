@@ -4,13 +4,11 @@ export const dataTable = style({
   color: "var(--flux-color-text)",
 });
 export const scrollport = style({
-  overflow: "auto",
   overflowAnchor: "none",
   border: "0.0625rem solid var(--flux-color-border)",
   borderRadius: "var(--flux-radius-md)",
   selectors: {
     "&:focus-visible": {
-      outline: "0.125rem solid var(--flux-color-focus)",
       outlineOffset: "0.125rem",
     },
   },

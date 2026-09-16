@@ -2,6 +2,8 @@ import { MenuIcon } from "@flux-ui/icons";
 import {
   Box,
   Container,
+  Drawer,
+  IconButton,
   Heading,
   Inline,
   Link,
@@ -10,7 +12,15 @@ import {
   Stack,
   Text,
 } from "@flux-ui/react";
-import { lazy, Suspense, useEffect, useRef } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useCompactNavigation } from "./lib/useCompactNavigation.js";
 import { REPOSITORY_URL } from "./lib/format.js";
 import { pageTitle, routePath, useRoute } from "./lib/routing.js";
 import { ExampleLoading } from "./ui/ExampleLoading.js";
@@ -208,6 +218,34 @@ export function App() {
   const route = routePath(useRoute());
   const gallery = route === "overview" || route === "playground";
   const mainRef = useRef<HTMLElement>(null);
+  const navigationTrigger = useRef<HTMLButtonElement>(null);
+  const breakpointFrame = useRef<number | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const closeMobile = useCallback(() => setMobileOpen(false), []);
+  const onBreakpointChange = useCallback(() => {
+    const popup = document.querySelector("[data-docs-navigation][open]");
+    const restore = popup?.contains(document.activeElement) === true;
+    setMobileOpen(false);
+    if (breakpointFrame.current !== null)
+      cancelAnimationFrame(breakpointFrame.current);
+    if (restore)
+      breakpointFrame.current = requestAnimationFrame(() => {
+        breakpointFrame.current = null;
+        navigationTrigger.current?.focus({ preventScroll: true });
+      });
+  }, []);
+  const compactNavigation = useCompactNavigation(onBreakpointChange);
+  useEffect(() => {
+    window.addEventListener("hashchange", closeMobile);
+    return () => window.removeEventListener("hashchange", closeMobile);
+  }, [closeMobile]);
+  useEffect(
+    () => () => {
+      if (breakpointFrame.current !== null)
+        cancelAnimationFrame(breakpointFrame.current);
+    },
+    [],
+  );
   const previousRoute = useRef(route);
   useEffect(() => {
     document.title = pageTitle(route);
@@ -225,109 +263,137 @@ export function App() {
   }, [route]);
   return (
     <Sidebar.Root>
-      <SkipLink
-        href="#main-content"
-        onClick={(event) => {
-          event.preventDefault();
-          mainRef.current?.focus();
-        }}
+      <Drawer.Root
+        open={compactNavigation && mobileOpen}
+        onOpenChange={setMobileOpen}
       >
-        Skip to content
-      </SkipLink>
-      <Box
-        className="site-header"
-        as="header"
-        surface="default"
-        border="bottom"
-      >
-        <Container size="xl">
-          <Inline
-            className="header-inner"
-            justify="between"
-            gap="sm"
-            paddingBlock="sm"
-          >
-            <Inline gap="sm">
-              <Sidebar.Toggle
-                variant="ghost"
-                tone="neutral"
-                aria-label="Toggle navigation"
-                title="Toggle navigation"
-              >
-                <MenuIcon aria-hidden="true" size={20} />
-              </Sidebar.Toggle>
-              <Link
-                href="#overview"
-                aria-label="Flux UI home"
-                variant="ghost"
-                tone="neutral"
-                className="brand"
-              >
-                <Inline gap="sm">
-                  <img
-                    src={`${import.meta.env.BASE_URL}flux-mark.svg`}
-                    alt=""
-                    width={32}
-                    height={32}
-                  />
-                  <Text variant="lead" weight="bold">
-                    flux
-                    <Text tone="muted" weight="regular">
-                      UI
-                    </Text>
-                  </Text>
-                </Inline>
-              </Link>
-            </Inline>
-            <SearchDialog />
-          </Inline>
-        </Container>
-      </Box>
-      <Sidebar.Layout
-        className="workshop-shell"
-        style={{ "--flux-sidebar-offset": "4rem" }}
-      >
-        <DocumentationNavigation route={route} />
-        <Sidebar.Content>
-          <Container size={gallery ? "xl" : "lg"}>
-            <Stack
-              id="main-content"
-              tabIndex={-1}
-              ref={mainRef}
-              as="main"
-              gap={16}
-              paddingBlock="xl"
+        <SkipLink
+          href="#main-content"
+          onClick={(event) => {
+            event.preventDefault();
+            mainRef.current?.focus();
+          }}
+        >
+          Skip to content
+        </SkipLink>
+        <Box
+          className="site-header"
+          as="header"
+          surface="default"
+          border="bottom"
+        >
+          <Container size="xl">
+            <Inline
+              className="header-inner"
+              justify="between"
+              gap="sm"
+              paddingBlock="sm"
             >
-              <Suspense fallback={<ExampleLoading />}>
-                <RouteView route={route} />
-              </Suspense>
-              <Box
-                className="site-footer"
-                as="footer"
-                border="block"
+              <Inline gap="sm">
+                {compactNavigation ? (
+                  <IconButton
+                    ref={navigationTrigger}
+                    variant="ghost"
+                    tone="neutral"
+                    aria-label="Toggle navigation"
+                    title="Toggle navigation"
+                    aria-haspopup="dialog"
+                    aria-controls="docs-mobile-navigation"
+                    aria-expanded={mobileOpen}
+                    onClick={() => setMobileOpen(true)}
+                  >
+                    <MenuIcon aria-hidden="true" size={20} />
+                  </IconButton>
+                ) : (
+                  <Sidebar.Toggle
+                    ref={navigationTrigger}
+                    variant="ghost"
+                    tone="neutral"
+                    aria-label="Toggle navigation"
+                    title="Toggle navigation"
+                  >
+                    <MenuIcon aria-hidden="true" size={20} />
+                  </Sidebar.Toggle>
+                )}
+                <Link
+                  href="#overview"
+                  aria-label="Flux UI home"
+                  variant="ghost"
+                  tone="neutral"
+                  className="brand"
+                >
+                  <Inline gap="sm">
+                    <img
+                      src={`${import.meta.env.BASE_URL}flux-mark.svg`}
+                      alt=""
+                      width={32}
+                      height={32}
+                    />
+                    <Text variant="lead" weight="bold">
+                      flux
+                      <Text tone="muted" weight="regular">
+                        UI
+                      </Text>
+                    </Text>
+                  </Inline>
+                </Link>
+              </Inline>
+              <SearchDialog />
+            </Inline>
+          </Container>
+        </Box>
+        <Sidebar.Layout
+          className="workshop-shell"
+          style={{ "--flux-sidebar-offset": "4rem" }}
+        >
+          <DocumentationNavigation
+            route={route}
+            mobile={compactNavigation}
+            onNavigate={closeMobile}
+          />
+          <Sidebar.Content>
+            <Container size={gallery ? "xl" : "lg"}>
+              <Stack
+                id="main-content"
+                tabIndex={-1}
+                ref={mainRef}
+                as="main"
+                gap={16}
                 paddingBlock="xl"
               >
-                <Stack gap="md">
-                  <Text as="p" variant="caption" tone="muted">
-                    Built with Flux. Still becoming.
-                  </Text>
-                  <Inline gap="md" wrap>
-                    <Link href="#trust">Trust Center</Link>
-                    <Link href="#engineering">Engineering</Link>
-                    <Link href="#health">Project health</Link>
-                    <Link href={`${REPOSITORY_URL}/blob/main/CONTRIBUTING.md`}>
-                      Contribute
-                    </Link>
-                    <Link href={`${REPOSITORY_URL}/blob/main/LICENSE`}>
-                      MIT license
-                    </Link>
-                  </Inline>
-                </Stack>
-              </Box>
-            </Stack>
-          </Container>
-        </Sidebar.Content>
-      </Sidebar.Layout>
+                <Suspense fallback={<ExampleLoading />}>
+                  <RouteView route={route} />
+                </Suspense>
+                <Box
+                  className="site-footer"
+                  as="footer"
+                  border="block"
+                  paddingBlock="xl"
+                >
+                  <Stack gap="md">
+                    <Text as="p" variant="caption" tone="muted">
+                      Built with Flux. Still becoming.
+                    </Text>
+                    <Inline gap="md" wrap>
+                      <Link href="#trust">Trust Center</Link>
+                      <Link href="#engineering">Engineering</Link>
+                      <Link href="#health">Project health</Link>
+                      <Link
+                        href={`${REPOSITORY_URL}/blob/main/CONTRIBUTING.md`}
+                      >
+                        Contribute
+                      </Link>
+                      <Link href={`${REPOSITORY_URL}/blob/main/LICENSE`}>
+                        MIT license
+                      </Link>
+                    </Inline>
+                  </Stack>
+                </Box>
+              </Stack>
+            </Container>
+          </Sidebar.Content>
+        </Sidebar.Layout>
+      </Drawer.Root>
     </Sidebar.Root>
   );
 }

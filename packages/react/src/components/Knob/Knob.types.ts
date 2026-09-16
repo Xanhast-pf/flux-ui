@@ -1,10 +1,16 @@
-import type { ComponentPropsWithRef } from "react";
+import type { ComponentPropsWithRef, CSSProperties } from "react";
 import type { AccessibleName } from "../../internal/accessibility.types.js";
 export type KnobProps = Omit<
   ComponentPropsWithRef<"div">,
-  "children" | "defaultValue" | "aria-label" | "aria-labelledby"
+  "children" | "defaultValue" | "aria-label" | "aria-labelledby" | "style"
 > &
   AccessibleName & {
+    size?: "sm" | "md" | "lg" | undefined;
+    /** Public diameter override. All dial geometry scales with it. */
+    style?:
+      (CSSProperties & { "--flux-knob-size"?: string | undefined }) | undefined;
+    /** Double-click target; required for reset in controlled mode. */
+    resetValue?: number | undefined;
     value?: number | undefined;
     defaultValue?: number | undefined;
     min?: number | undefined;

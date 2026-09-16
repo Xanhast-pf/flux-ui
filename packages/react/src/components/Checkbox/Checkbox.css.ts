@@ -6,7 +6,6 @@ export const checkbox = style({
   // the input with a button, hidden proxy, SVG, or pseudo-element indicator.
   appearance: "auto",
   accentColor: `var(${cssVars.color.accent})`,
-  boxSizing: "border-box",
   inlineSize: "1.5rem",
   blockSize: "1.5rem",
   flexShrink: 0,
@@ -22,14 +21,14 @@ export const checkbox = style({
       cursor: "not-allowed",
       opacity: 0.62,
     },
-    "&[aria-invalid='true'], &[data-invalid='true'], &:user-invalid": {
+    "&:is([aria-invalid='true'], [data-invalid='true'], :user-invalid)": {
       boxShadow: `0 0 0 0.125rem var(${cssVars.color.danger})`,
     },
   },
   "@media": {
     "(forced-colors: active)": {
       selectors: {
-        "&[aria-invalid='true'], &[data-invalid='true'], &:user-invalid": {
+        "&:is([aria-invalid='true'], [data-invalid='true'], :user-invalid)": {
           boxShadow: "none",
           outline: "0.125rem dashed CanvasText",
           outlineOffset: "0.125rem",

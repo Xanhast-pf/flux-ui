@@ -1,5 +1,4 @@
 import { expect, test, type Page } from "@playwright/test";
-
 async function expectNoOverflow(page: Page): Promise<void> {
   expect(
     await page.evaluate(
@@ -7,8 +6,7 @@ async function expectNoOverflow(page: Page): Promise<void> {
     ),
   ).toBe(true);
 }
-
-for (const width of [320, 390, 768, 1440]) {
+for (const width of [768, 1440]) {
   test(`persistent non-modal navigation and no overflow at ${width}px`, async ({
     page,
   }) => {
@@ -50,7 +48,6 @@ for (const width of [320, 390, 768, 1440]) {
     await expectNoOverflow(page);
   });
 }
-
 for (const slug of ["badge", "card", "input", "link", "grid", "skip-link"]) {
   test(`${slug} preview stays centered at full and compact widths`, async ({
     page,
@@ -84,7 +81,6 @@ for (const slug of ["badge", "card", "input", "link", "grid", "skip-link"]) {
     }
   });
 }
-
 test("default card padding, explicit box padding and consumer CSS survive stylesheet order", async ({
   page,
 }) => {
@@ -109,7 +105,6 @@ test("default card padding, explicit box padding and consumer CSS survive styles
     "24px",
   );
 });
-
 test("sparse layout CSS cascades without viewport leakage or inherited instance values", async ({
   page,
 }) => {
@@ -156,7 +151,6 @@ test("sparse layout CSS cascades without viewport leakage or inherited instance 
   });
   await expect(stack).toHaveCSS("gap", "32px");
 });
-
 test("grid modes, axis gaps and placements keep their breakpoint semantics", async ({
   page,
 }) => {
@@ -184,7 +178,6 @@ test("grid modes, axis gaps and placements keep their breakpoint semantics", asy
     await expect(grid).toHaveCSS("column-gap", "8px");
   }
 });
-
 test("all drawer sides keep native geometry and honor reduced motion", async ({
   page,
 }) => {
@@ -214,7 +207,6 @@ test("all drawer sides keep native geometry and honor reduced motion", async ({
     page.getByRole("button", { name: "Open drawer", exact: true }),
   ).toBeFocused();
 });
-
 test("surface defaults do not erase footer spacing or header auto alignment", async ({
   page,
 }) => {
@@ -239,7 +231,6 @@ test("surface defaults do not erase footer spacing or header auto alignment", as
     throw new Error("Header geometry unavailable.");
   expect(search.x).toBeGreaterThan(brand.x + brand.width);
 });
-
 test("sidebar preserves its own scroll position through routing and its toggle stays reachable", async ({
   page,
 }) => {
@@ -273,7 +264,6 @@ test("sidebar preserves its own scroll position through routing and its toggle s
     Math.abs((await sidebar.evaluate((element) => element.scrollTop)) - scroll),
   ).toBeLessThanOrEqual(1);
 });
-
 for (const theme of ["light", "dark"]) {
   test(`responsive shell and benchmark cards retain spacing in ${theme}`, async ({
     page,

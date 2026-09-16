@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function Example() {
   const [saved, setSaved] = useState(false);
   return (
-    <Stack gap="md">
+    <Stack gap="md" align="start">
       <Toggle pressed={saved} onPressedChange={setSaved}>
         Save example
       </Toggle>

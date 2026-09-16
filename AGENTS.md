@@ -709,8 +709,10 @@ Rules:
 
 - Keep all applicable automated rules enabled.
 
-- Pin normal development to a known Canary-green Coding Bible tag/SHA
-  rather than following experimental work indefinitely.
+- Flux intentionally serves as a downstream canary for Coding Bible main.
+  Declare main locally, retain an exact lockfile revision for reproducible
+  installs, and use the live main Action in the dedicated canary workflow.
+  Refresh the local resolution explicitly with pnpm bible:refresh.
 
 - \`pnpm bible:check\` is a required project quality gate.
 
@@ -815,11 +817,12 @@ A component is not done because it renders. It is done when:
   Geometry-only exceptions require exact files/components/properties and
 reasons.
 
-- Keep persistent navigation in Sidebar, not modal Drawer. Mount
-  Sidebar state
-
-  above route content; do not add automatic route/Escape closing or
-modal behavior.
+- Keep desktop persistent navigation in Sidebar. Mount its state above
+  route content; desktop navigation must not close on route changes or Escape.
+  At narrow widths, compose the public Drawer for temporary modal navigation
+  instead of stacking navigation above scrolled content. Keep mobile open state
+  separate, close it on navigation, and preserve desktop open preference across
+  breakpoint changes. Sidebar itself remains non-modal.
 
 - Preserve hidden keyboard/visibility semantics and isolate compound
   instances
