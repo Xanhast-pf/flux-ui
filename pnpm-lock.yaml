@@ -743,6 +743,7 @@ packages:
     resolution:
       {
         gitHosted: true,
+        path: packages/analyzer,
         integrity: sha512-JeuJMOZ+FNwBGBWQn4Cag+ztEiUHavYFWx+9xf0UrWpLa+zNSayMBvN4aE1dPjrUqrybqu7M7ekCQjSZyy8Ycg==,
         tarball: https://codeload.github.com/Xanhast-pf/coding-bible/tar.gz/0cfc27d7511ba65016e4ec554d0377c849ce5a4b,
       }

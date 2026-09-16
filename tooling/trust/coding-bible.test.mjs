@@ -53,6 +53,18 @@ test("main declaration retains a concrete installed revision and explicit refres
   );
   const lock = await read("pnpm-lock.yaml");
   assert.ok(lock.includes(`specifier: ${ref}`));
+  // pnpm 10.34.5 drops resolution.path when serializing Git tarballs with an
+  // integrity hash. The dependency key's #path suffix alone is not enough:
+  // frozen installs then fetch the repository root instead of the analyzer.
+  const analyzerResolution = lock.match(
+    /"@coding-bible\/analyzer@[^\n]+":\n\s+resolution:\s+\{([^}]+)\}/u,
+  );
+  assert.ok(analyzerResolution, "Analyzer must have a locked resolution");
+  assert.match(
+    analyzerResolution[1],
+    /\bpath: packages\/analyzer,/u,
+    "Frozen installs must select the analyzer subdirectory; retain this field after bible:refresh",
+  );
   const revisions = [
     ...lock.matchAll(/coding-bible\/tar\.gz\/([a-f0-9]{40})/gu),
   ];
