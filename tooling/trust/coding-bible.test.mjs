@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile, mkdtemp, writeFile } from "node:fs/promises";
+import { readFile, mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -8,6 +8,40 @@ import { test } from "node:test";
 
 const root = new URL("../../", import.meta.url);
 const read = (path) => readFile(new URL(path, root), "utf8");
+
+for (const layout of ["prepared package", "repository archive"]) {
+  test(`CLI runner supports ${layout} and preserves arguments and failures`, async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "flux-bible-runner-"));
+    const packageRoot = join(cwd, "node_modules/@coding-bible/analyzer");
+    const prepared = layout === "prepared package";
+    const cli = prepared
+      ? "dist/bin/coding-bible.mjs"
+      : "packages/analyzer/dist/bin/coding-bible.mjs";
+    await mkdir(join(packageRoot, cli, ".."), { recursive: true });
+    await writeFile(
+      join(packageRoot, "package.json"),
+      JSON.stringify({
+        name: prepared ? "@coding-bible/analyzer" : "coding-bible",
+        type: "module",
+        ...(prepared ? { exports: { "./bin": `./${cli}` } } : {}),
+      }),
+    );
+    await writeFile(
+      join(packageRoot, cli),
+      "console.log(JSON.stringify(process.argv.slice(2))); process.exitCode = 7;",
+    );
+    const runner = join(cwd, "run-coding-bible.mjs");
+    await writeFile(runner, await read("scripts/run-coding-bible.mjs"));
+    const args = ["check", ".", "--staged"];
+    const result = spawnSync(process.execPath, [runner, ...args], {
+      cwd,
+      encoding: "utf8",
+    });
+    assert.ifError(result.error);
+    assert.equal(result.status, 7, result.stderr);
+    assert.deepEqual(JSON.parse(result.stdout), args);
+  });
+}
 
 test("main declaration retains a concrete installed revision and explicit refresh", async () => {
   const pkg = JSON.parse(await read("package.json"));
