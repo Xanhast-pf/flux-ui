@@ -6,6 +6,8 @@ export default {
   code,
   previewLayout: "fill",
   notes: [
+    "Deprecated compatibility export. New code should use Slider orientation=vertical; existing Fader imports and native props continue to work.",
+    "Slider now owns orientation, custom appearance and resetValue. See the Slider page for the primary API.",
     "Vertical single native range input, not a multi-thumb widget.",
     "Native keyboard, form and disabled semantics are preserved; use aria-valuetext to expose units.",
   ],

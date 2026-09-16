@@ -1,12 +1,13 @@
 import Preview from "./tabs.preview.js";
 import code from "./tabs.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
-
 export default {
   Preview,
   previewLayout: "fill",
   code,
   notes: [
+    "Lists scroll natively by default. Use wrap for multiple rows or orientation for vertical tabs.",
+    "Trigger and Content are aliases for the established Tab and Panel parts.",
     "Keyboard-accessible switching between related panels.",
     "Use native attributes, className, style and composition for customization.",
     "Uncontrolled tabs recover the nearest available selection when the selected tab is removed, disabled, hidden or inert. Selection does not steal focus from unrelated controls.",
@@ -23,6 +24,11 @@ export default {
       "Root.orientation",
       "horizontal | vertical",
       "Layout and keyboard navigation direction.",
+    ],
+    [
+      "List.wrap",
+      "boolean",
+      "Use wrapping instead of native horizontal scrolling.",
     ],
     ["List", "activateOnFocus / loopFocus", "Roving-focus behavior."],
     ["Tab / Panel", "value: string", "Associate each trigger with its panel."],

@@ -8,7 +8,6 @@ function nonempty(value: unknown): value is string {
 export interface DataRow<Row> {
   id: string;
   row: Row;
-  index: number;
 }
 export function identifyRows<Row>(
   rows: readonly Row[],
@@ -19,12 +18,12 @@ export function identifyRows<Row>(
       "DataTable accepts at most one million loaded rows; use server windows for larger sources.",
     );
   const seen = new Set<string>();
-  return rows.map((row, index) => {
+  return rows.map((row) => {
     const id = getRowId(row);
     if (!nonempty(id) || seen.has(id))
       throw new Error("DataTable row IDs must be nonempty and unique.");
     seen.add(id);
-    return { row, id, index };
+    return { row, id };
   });
 }
 export function cellValue(value: unknown): CellValue {
@@ -71,15 +70,13 @@ export function sortDataRows<Row>(
   if (!column || column.sortable === false)
     throw new Error("DataTable sorting must name a sortable column.");
   if (manual) return rows;
-  // Cache accessor values once, not on every sort comparison. Input remains immutable.
+  // Cache accessor values once. Native stable sort preserves source order for
+  // equal cells, without storing a second index on every loaded row.
   return rows
     .map((entry) => ({ entry, value: cellValue(column.value(entry.row)) }))
     .sort((left, right) => {
       const order = compareCells(left.value, right.value);
-      return (
-        (sorting.direction === "ascending" ? order : -order) ||
-        left.entry.index - right.entry.index
-      );
+      return sorting.direction === "ascending" ? order : -order;
     })
     .map(({ entry }) => entry);
 }

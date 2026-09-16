@@ -2,6 +2,8 @@ import { reportProgress, reportSummary } from "../terminal/progress.mjs";
 import {
   bundledBaseline,
   bundledRegressions,
+  targetedBaseline,
+  targetedBaselineText,
   writeBaselineAtomic,
 } from "./baseline.mjs";
 import { execFileSync } from "node:child_process";
@@ -24,7 +26,9 @@ import {
 const root = process.cwd();
 const distDir = resolve(root, "packages/react/dist");
 const baselinePath = resolve(root, "tooling/size/baseline.json");
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const args = new Set(argv);
+const componentFlags = argv.filter((arg) => arg.startsWith("--components"));
 const updateBaseline = args.has("--update-bundled-baseline");
 const reviewBaseline = args.has("--review-bundled-baseline");
 const migration = updateBaseline || reviewBaseline;
@@ -38,8 +42,31 @@ if (
   (updateBaseline && reviewBaseline)
 ) {
   throw new Error(
-    "Use --review-bundled-baseline, then explicitly --update-bundled-baseline for all entries; legacy --update-baseline and partial/release updates are unsupported.",
+    "Use --review-bundled-baseline and --update-bundled-baseline separately; neither can combine with --changed or --release. The legacy --update-baseline flag is unsupported.",
   );
+}
+
+let explicitSlugs;
+if (componentFlags.length) {
+  if (!migration || changedOnly || releaseMode)
+    throw new Error(
+      "--components requires baseline review/update and cannot combine with --changed or --release.",
+    );
+  if (
+    componentFlags.length !== 1 ||
+    !/^--components=[a-z][a-z0-9]*(?:-[a-z0-9]+)*(?:,[a-z][a-z0-9]*(?:-[a-z0-9]+)*)*$/u.test(
+      componentFlags[0],
+    )
+  )
+    throw new Error(
+      "Use one --components=slug,slug list with no empty or malformed entries.",
+    );
+  explicitSlugs = componentFlags[0]
+    .slice("--components=".length)
+    .split(",")
+    .sort();
+  if (new Set(explicitSlugs).size !== explicitSlugs.length)
+    throw new Error("--components must not contain duplicate slugs.");
 }
 
 async function readBaseline() {
@@ -82,6 +109,16 @@ function changedPaths() {
 }
 
 function selectedComponents(components) {
+  if (explicitSlugs) {
+    const bySlug = new Map(
+      components.map((component) => [component.slug, component]),
+    );
+    return explicitSlugs.map((slug) => {
+      const component = bySlug.get(slug);
+      if (!component) throw new Error(`Unknown component slug: ${slug}`);
+      return component;
+    });
+  }
   if (!changedOnly) return components;
   const paths = changedPaths();
   if (paths.size === 0) return [];
@@ -131,6 +168,7 @@ if (!jsonMode)
 
 const selected = selectedComponents(components);
 const selectedSet = new Set(selected);
+if (explicitSlugs) targetedBaseline(baseline, {});
 const measured = {};
 const bundledEntries = {};
 const externalPeers = new Set();
@@ -289,7 +327,7 @@ const report = {
   schemaVersion: 2,
   budgetsVersion: BUDGETS_VERSION,
   componentCount: components.length,
-  checkedComponentCount: changedOnly ? selected.length : components.length,
+  checkedComponentCount: selected.length,
   components: measured,
   emittedGraphs: measured,
   componentGates,
@@ -310,7 +348,9 @@ const report = {
 };
 
 if (migration) {
-  const proposal = bundledBaseline(baseline, bundledEntries);
+  const proposal = explicitSlugs
+    ? targetedBaseline(baseline, bundledEntries)
+    : bundledBaseline(baseline, bundledEntries);
   report.baselineChanges = Object.fromEntries(
     Object.entries(bundledEntries).map(([slug, after]) => [
       slug,
@@ -336,7 +376,15 @@ if (migration) {
     if (failed) {
       console.error("Baseline was not updated because a size gate failed.");
     } else {
-      await writeBaselineAtomic(baselinePath, proposal);
+      await writeBaselineAtomic(
+        baselinePath,
+        explicitSlugs
+          ? await targetedBaselineText(
+              await readFile(baselinePath, "utf8"),
+              bundledEntries,
+            )
+          : proposal,
+      );
       if (!jsonMode) console.log(`Updated ${relative(root, baselinePath)}.`);
     }
   }

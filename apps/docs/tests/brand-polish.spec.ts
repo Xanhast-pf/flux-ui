@@ -1,18 +1,15 @@
 import { expect, test, type Locator } from "@playwright/test";
-
 async function bounds(locator: Locator) {
   await expect(locator).toBeVisible();
   const box = await locator.boundingBox();
   if (box === null) throw new Error("Expected visible layout geometry.");
   return box;
 }
-
 async function expectSeparateLines(first: Locator, second: Locator) {
   const a = await bounds(first);
   const b = await bounds(second);
   expect(b.y).toBeGreaterThanOrEqual(a.y + a.height - 1);
 }
-
 for (const width of [320, 390, 768, 1440]) {
   test(`single app bar places an icon-only menu before the brand at ${width}px`, async ({
     page,
@@ -51,19 +48,24 @@ for (const width of [320, 390, 768, 1440]) {
       )
       .toBe(true);
     await trigger.click();
-    const drawer = page.getByRole("complementary", {
-      name: "Documentation sidebar",
-    });
+    const drawer =
+      width < 768
+        ? page.getByRole("dialog", { name: "Documentation", exact: true })
+        : page.getByRole("complementary", { name: "Documentation sidebar" });
     for (const group of ["Build", "Design", "Inspect"]) {
       await expect(drawer.getByText(group, { exact: true })).toBeVisible();
     }
     await page.keyboard.press("Escape");
+    if (width < 768) {
+      await expect(drawer).not.toBeVisible();
+      await expect(trigger).toBeFocused();
+      await trigger.click();
+    }
     await expect(drawer).toBeVisible();
     await drawer.getByRole("button", { name: "Close navigation" }).click();
     await expect(trigger).toBeFocused();
   });
 }
-
 test("brand SVG downloads are vectors and the favicon resolves", async ({
   page,
 }) => {
@@ -88,7 +90,6 @@ test("brand SVG downloads are vectors and the favicon resolves", async ({
     true,
   );
 });
-
 test("finance transaction titles and metadata have distinct lines", async ({
   page,
 }) => {
@@ -99,7 +100,6 @@ test("finance transaction titles and metadata have distinct lines", async ({
     activity.getByText("Invoice · 1042", { exact: true }),
   );
 });
-
 test("marketing audience copy does not run together", async ({ page }) => {
   await page.goto("/#playground?scene=marketing&mood=paper");
   await expectSeparateLines(
@@ -107,7 +107,6 @@ test("marketing audience copy does not run together", async ({ page }) => {
     page.getByText("Fictional audience preview", { exact: true }),
   );
 });
-
 test("social author metadata is separate and like stays content-sized", async ({
   page,
 }) => {
@@ -125,7 +124,6 @@ test("social author metadata is separate and like stays content-sized", async ({
   const card = await bounds(post);
   expect(button.width).toBeLessThan(card.width - 64);
 });
-
 test("commerce separates the bag total from its action", async ({ page }) => {
   await page.goto("/#playground?scene=commerce&mood=paper");
   const summary = page.getByRole("region", { name: "Demo bag summary" });
@@ -135,7 +133,6 @@ test("commerce separates the bag total from its action", async ({ page }) => {
   );
   expect(clear.x - total.x - total.width).toBeGreaterThanOrEqual(15);
 });
-
 for (const outer of ["light", "dark"]) {
   test(`video headings stay light across all artwork and moods in ${outer}`, async ({
     page,
@@ -157,7 +154,6 @@ for (const outer of ["light", "dark"]) {
     }
   });
 }
-
 test("video frame control produces the requested geometry", async ({
   page,
 }) => {
@@ -178,7 +174,6 @@ test("video frame control produces the requested geometry", async ({
       .toBeLessThan(0.01);
   }
 });
-
 test("workbench tabs wrap at narrow widths", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto("/#playground");
@@ -191,7 +186,6 @@ test("workbench tabs wrap at narrow widths", async ({ page }) => {
     expect(rect.x + rect.width).toBeLessThanOrEqual(321);
   }
 });
-
 for (const width of [390, 1440]) {
   test(`music playhead starts with the track lanes at ${width}px`, async ({
     page,

@@ -6,6 +6,8 @@ export default {
   code,
   previewLayout: "fill",
   notes: [
+    "Combobox is searchable selection with autocomplete. It commits an existing option key; it is not a free-text search input and unmatched text cannot be submitted as a new option.",
+    "For arbitrary search text use Input type=search. The Combobox name and committed-value API remain unchanged.",
     "Options require unique stable values. Labels are shown to users; the optional hidden named input submits only a committed, enabled value.",
     "Typing clears the committed value and filters the local options. Non-empty uncommitted text fails native constraint validation.",
     "The popup does not move DOM focus from the input. Controlled owners remain authoritative. This is single-select, not async search or multiple selection.",

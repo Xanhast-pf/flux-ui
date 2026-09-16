@@ -20,12 +20,12 @@ export type NativeModalSide = "top" | "right" | "bottom" | "left";
 
 type NativeModalRootBaseProps = {
   children?: ReactNode;
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange?: ((open: boolean) => void) | undefined;
 };
 
 export type NativeModalRootProps = NativeModalRootBaseProps &
   (
-    | { defaultOpen?: boolean; open?: never }
+    | { defaultOpen?: boolean | undefined; open?: undefined }
     | { defaultOpen?: never; open: boolean }
   );
 
@@ -40,7 +40,7 @@ export interface NativeModalPopupProps extends Omit<
   ComponentPropsWithRef<"dialog">,
   "open"
 > {
-  closeOnBackdrop?: boolean;
+  closeOnBackdrop?: boolean | undefined;
 }
 
 export type NativeModalStyles = {

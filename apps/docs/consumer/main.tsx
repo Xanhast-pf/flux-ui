@@ -40,7 +40,7 @@ import {
 import { useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ConsumerInteractions } from "./interactions.js";
-
+import { ConsumerRefinements } from "./refinements.js";
 interface ConsumerRow {
   id: string;
   value: number;
@@ -183,7 +183,6 @@ function ConsumerExtensions() {
     </Stack>
   );
 }
-
 function Consumer() {
   const [page, setPage] = useState("Overview");
   const [count, setCount] = useState(0);
@@ -345,6 +344,7 @@ function Consumer() {
               </Stack>
               <ConsumerExtensions />
               <ConsumerInteractions />
+              <ConsumerRefinements />
             </Stack>
           </Container>
         </Sidebar.Content>

@@ -3,7 +3,7 @@ import { readFile, readdir } from "node:fs/promises";
 import { test } from "node:test";
 
 const workflows = new URL("../../.github/workflows/", import.meta.url);
-test("all external workflow actions remain immutable and no privileged PR checkout is introduced", async () => {
+test("external actions remain immutable except the dedicated Coding Bible main canary", async () => {
   for (const file of await readdir(workflows)) {
     if (!file.endsWith(".yml")) continue;
     const source = await readFile(new URL(file, workflows), "utf8");
@@ -12,6 +12,11 @@ test("all external workflow actions remain immutable and no privileged PR checko
       /pull_request_target|secrets\.NPM_TOKEN|secrets\.NODE_AUTH_TOKEN/u,
     );
     for (const [, action] of source.matchAll(/uses:\s+([^\s#]+)/gu)) {
+      if (
+        file === "coding-bible.yml" &&
+        action === "Xanhast-pf/coding-bible@main"
+      )
+        continue;
       if (!action.startsWith("./")) assert.match(action, /@[a-f0-9]{40}$/u);
     }
   }

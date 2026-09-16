@@ -5,10 +5,14 @@ export default {
   Preview,
   code,
   previewLayout: "fill",
+  previewWidth: "wide",
   notes: [
-    "Keep Root above route content. Route transitions do not close or remount the panel.",
+    "The wide canvas demonstrates desktop push layout; Compact preview demonstrates a mobile Drawer. The mode is labelled explicitly and follows available canvas width, not a simulated device.",
+    "Keep desktop Sidebar state and temporary mobile Drawer state separate. Closing mobile navigation after a destination is selected must not clear the desktop open preference.",
+    "The docs shell uses the public Drawer below 48rem so opening navigation while scrolled down keeps it in the viewport. Sidebar itself stays non-modal.",
+    "Keep the desktop Root above route content. Route transitions do not close or remount its panel.",
     "Use ordinary links in a named navigation landmark, not ARIA menu items. Toggle exposes expanded state.",
-    "Below 48rem of available layout width the panel stacks above the content. There is no backdrop, focus trap, scroll lock or automatic Escape close.",
+    "A bare Sidebar still stacks below 48rem with no modality. For application navigation, choose Drawer at that breakpoint as this preview does; the mobile Drawer supports Escape, focus containment and scroll locking.",
     "Closing from inside the panel returns focus to an outside toggle. User refs and native props are preserved.",
   ],
   props: [

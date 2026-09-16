@@ -28,6 +28,7 @@
     "size": "node tooling/terminal/cli.mjs size",
     "bible:check": "node scripts/run-coding-bible.mjs check .",
     "bible:staged": "node scripts/run-coding-bible.mjs check . --staged",
+    "bible:refresh": "pnpm update -w @coding-bible/analyzer",
     "bible:pin": "node scripts/pin-coding-bible.mjs",
     "check": "node tooling/terminal/cli.mjs check",
     "check:full": "node tooling/terminal/cli.mjs check:full",
@@ -71,7 +72,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "catalog:",
-    "@coding-bible/analyzer": "github:Xanhast-pf/coding-bible#801dd87920e99f63016636d39586fa1565c997d9&path:packages/analyzer",
+    "@coding-bible/analyzer": "github:Xanhast-pf/coding-bible#main&path:packages/analyzer",
     "@eslint/js": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",

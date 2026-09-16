@@ -2,6 +2,7 @@ import { CloseIcon } from "@flux-ui/icons";
 import {
   Box,
   Collapsible,
+  Drawer,
   Sidebar,
   Heading,
   Inline,
@@ -13,7 +14,13 @@ import {
 import { components } from "../generated/components.js";
 import { navigationGroups } from "../lib/routing.js";
 import { ThemeSwitch } from "./AppearanceControls.js";
-function Navigation({ route }: { route: string }) {
+function Navigation({
+  route,
+  onNavigate,
+}: {
+  route: string;
+  onNavigate?: (() => void) | undefined;
+}) {
   return (
     <Box aria-label="Documentation sections" as="nav">
       <Stack gap="md">
@@ -27,6 +34,17 @@ function Navigation({ route }: { route: string }) {
                 <List.Item key={id}>
                   <Link
                     href={`#${id}`}
+                    onClick={(event) => {
+                      if (
+                        !event.defaultPrevented &&
+                        event.button === 0 &&
+                        !event.metaKey &&
+                        !event.ctrlKey &&
+                        !event.shiftKey &&
+                        !event.altKey
+                      )
+                        onNavigate?.();
+                    }}
                     aria-current={route === id ? "page" : undefined}
                     variant="navigation"
                   >
@@ -47,6 +65,17 @@ function Navigation({ route }: { route: string }) {
                 <List.Item key={entry.slug}>
                   <Link
                     href={`#components/${entry.slug}`}
+                    onClick={(event) => {
+                      if (
+                        !event.defaultPrevented &&
+                        event.button === 0 &&
+                        !event.metaKey &&
+                        !event.ctrlKey &&
+                        !event.shiftKey &&
+                        !event.altKey
+                      )
+                        onNavigate?.();
+                    }}
                     aria-current={
                       route === `components/${entry.slug}` ? "page" : undefined
                     }
@@ -63,33 +92,69 @@ function Navigation({ route }: { route: string }) {
     </Box>
   );
 }
-export function DocumentationNavigation({ route }: { route: string }) {
+export function DocumentationNavigation({
+  route,
+  mobile,
+  onNavigate,
+}: {
+  route: string;
+  mobile: boolean;
+  onNavigate: () => void;
+}) {
   return (
-    <Sidebar.Panel
-      aria-label="Documentation sidebar"
-      className="documentation-sidebar"
-    >
-      <Stack gap="lg">
-        <Inline justify="between" gap="sm">
-          <Heading level={2} size="sm">
-            Documentation
-          </Heading>
-          <Sidebar.Close
-            variant="ghost"
-            size="sm"
-            tone="neutral"
-            aria-label="Close navigation"
-            title="Close navigation"
-          >
-            <CloseIcon aria-hidden="true" size={16} />
-          </Sidebar.Close>
-        </Inline>
-        <Navigation route={route} />
-        <ThemeSwitch />
-        <Link href="https://github.com/Xanhast-pf/flux-ui">
-          Flux UI on GitHub
-        </Link>
-      </Stack>
-    </Sidebar.Panel>
+    <>
+      {!mobile && (
+        <Sidebar.Panel
+          aria-label="Documentation sidebar"
+          className="documentation-sidebar"
+        >
+          <Stack gap="lg">
+            <Inline justify="between" gap="sm">
+              <Heading level={2} size="sm">
+                Documentation
+              </Heading>
+              <Sidebar.Close
+                variant="ghost"
+                size="sm"
+                tone="neutral"
+                aria-label="Close navigation"
+                title="Close navigation"
+              >
+                <CloseIcon aria-hidden="true" size={16} />
+              </Sidebar.Close>
+            </Inline>
+            <Navigation route={route} />
+            <ThemeSwitch />
+            <Link href="https://github.com/Xanhast-pf/flux-ui">
+              Flux UI on GitHub
+            </Link>
+          </Stack>
+        </Sidebar.Panel>
+      )}
+      <Drawer.Popup
+        side="left"
+        id="docs-mobile-navigation"
+        data-docs-navigation=""
+      >
+        {mobile && (
+          <Stack gap="lg">
+            <Inline justify="between" gap="sm">
+              <Drawer.Title>Documentation</Drawer.Title>
+              <Drawer.Close
+                aria-label="Close navigation"
+                title="Close navigation"
+              >
+                <CloseIcon aria-hidden="true" size={16} />
+              </Drawer.Close>
+            </Inline>
+            <Navigation route={route} onNavigate={onNavigate} />
+            <ThemeSwitch />
+            <Link href="https://github.com/Xanhast-pf/flux-ui">
+              Flux UI on GitHub
+            </Link>
+          </Stack>
+        )}
+      </Drawer.Popup>
+    </>
   );
 }

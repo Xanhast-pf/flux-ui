@@ -172,19 +172,25 @@ See [`tooling/perf/README.md`](tooling/perf/README.md).
 
 ### Coding Bible
 
-Flux dogfoods the full applicable Coding Bible analyzer catalog. The analyzer is pinned to an immutable Git revision.
+Flux intentionally serves as a downstream canary for Coding Bible `main`, with the full applicable analyzer catalog enabled. The dedicated GitHub Action follows `Xanhast-pf/coding-bible@main` on Flux changes and daily, exercising upstream fixes independently of the installed analyzer.
+
+The dependency declares `#main&path:packages/analyzer`, while `pnpm-lock.yaml` resolves an exact Git commit. Normal CI uses `pnpm install --frozen-lockfile` and never refreshes dependencies automatically. The package-specific `coding-bible` build approval permits Git dependency preparation without allowing other packages.
 
 ```bash
 pnpm bible:check
 pnpm bible:staged
 ```
 
-To intentionally move the analyzer pin:
+To explicitly refresh the local `main` resolution, run `pnpm bible:refresh` and review the lockfile diff. This updates only the analyzer dependency and its required transitive graph.
+
+For temporary debugging or reproduction, retain the manual immutable path:
 
 ```bash
 pnpm bible:pin <tag-or-sha>
 pnpm install
 ```
+
+The pin helper changes the manifest; installation updates the lockfile. To return from a temporary pin, restore `#main&path:packages/analyzer` in `package.json`, then run `pnpm bible:refresh`.
 
 Do not exclude rules merely to make CI green.
 
