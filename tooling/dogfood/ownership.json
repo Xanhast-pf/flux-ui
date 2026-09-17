@@ -479,6 +479,12 @@
   ],
   "inlineGeometry": [
     {
+      "file": "apps/docs/src/examples/overflow.preview.tsx",
+      "components": ["Overflow"],
+      "properties": ["maxInlineSize"],
+      "reason": "Switches the demonstration container width to exercise automatic overflow; all presentation remains owned by public Flux components."
+    },
+    {
       "file": "apps/docs/src/App.tsx",
       "components": ["Sidebar.Layout"],
       "properties": ["--flux-sidebar-offset"],
@@ -555,6 +561,12 @@
       "components": ["Skeleton"],
       "properties": ["width", "height"],
       "reason": "Placeholder dimensions represent loading examples without skinning public controls."
+    },
+    {
+      "file": "apps/docs/src/perf/scenarios/overflow.fixture.tsx",
+      "components": ["Overflow"],
+      "properties": ["inlineSize"],
+      "reason": "Matched workload phases constrain collection width to measure resize-driven overflow; public Flux components own all presentation."
     }
   ],
   "tokenAdapters": [

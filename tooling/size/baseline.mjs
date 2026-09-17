@@ -123,3 +123,32 @@ export async function writeBaselineAtomic(path, baseline) {
     await rm(temporary, { force: true });
   }
 }
+
+// Replace only the aggregate value, preserving every unrelated byte.
+export async function aggregateBaselineText(source, aggregate) {
+  const baseline = JSON.parse(source);
+  const document = ts.parseJsonText("baseline.json", source);
+  const properties = document.statements[0]?.expression?.properties;
+  const matches = properties?.filter(
+    (entry) => entry.name?.text === "aggregate",
+  );
+  if (matches?.length !== 1)
+    throw new Error(
+      "Aggregate acceptance requires exactly one existing aggregate property.",
+    );
+  const value = matches[0].initializer;
+  const start = value.getStart(document);
+  const indent = source
+    .slice(source.lastIndexOf("\n", start) + 1, start)
+    .match(/^\s*/u)[0];
+  const formatted = await format(JSON.stringify(aggregate), { parser: "json" });
+  const result =
+    source.slice(0, start) +
+    formatted.trimEnd().replaceAll("\n", `\n${indent}`) +
+    source.slice(value.end);
+  if (!isDeepStrictEqual(JSON.parse(result), { ...baseline, aggregate }))
+    throw new Error(
+      "Aggregate-only baseline text does not match the reviewed proposal.",
+    );
+  return result;
+}

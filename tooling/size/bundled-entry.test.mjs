@@ -1,3 +1,4 @@
+import { aggregateMethod } from "./aggregate-baseline.mjs";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
@@ -246,6 +247,16 @@ test("--changed bundles only selected entries while measuring every emitted grap
     join(root, "tooling/size/baseline.json"),
     JSON.stringify({
       budgetsVersion: 1,
+      aggregate: {
+        componentCount: 2,
+        method: aggregateMethod,
+        ...Object.fromEntries(
+          ["rootEntry", "runtime", "published"].map((name) => [
+            name,
+            { raw: 1000, gzip: 1000, brotli: 1000, fileCount: 3 },
+          ]),
+        ),
+      },
       components: {
         selected: {
           raw: 1,
@@ -338,6 +349,16 @@ test("CLI gates bundled growth and bundled absolute budgets, not emitted growth"
       baselinePath,
       JSON.stringify({
         budgetsVersion: 1,
+        aggregate: {
+          componentCount: 1,
+          method: aggregateMethod,
+          ...Object.fromEntries(
+            ["rootEntry", "runtime", "published"].map((name) => [
+              name,
+              { raw: 100000, gzip: 100000, brotli: 100000, fileCount: 2 },
+            ]),
+          ),
+        },
         components: {
           example: { raw: 1, gzip: 1, brotli: 1, bundled: values },
         },

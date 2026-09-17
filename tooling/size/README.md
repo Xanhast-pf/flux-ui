@@ -13,6 +13,8 @@ pnpm size                  # check already-built dist + icon sizes (used by pnpm
 pnpm size:changed          # build packages + check changed components + icon sizes
 pnpm size:baseline:review  # build packages + read-only bundled baseline proposal
 pnpm size:update           # build packages + explicitly update bundled baseline
+pnpm size:aggregate:review # build packages + read-only aggregate proposal
+pnpm size:aggregate:update # build packages + accept aggregate only (approval required)
 pnpm size:release          # build packages + full check + stale-baseline protection + icon sizes
 pnpm size:test             # checker unit tests
 pnpm size:compare <base> [current-ref|working-tree] [--json] # isolated revision comparison
@@ -96,6 +98,7 @@ Every component metadata file has a `sizeClass`. New components default to
 explicit code-review decision rather than a silent budget increase.
 
 - `primitive`: wrappers, layout, visual primitives
+- `overflow`: the measured native-picker capability (5,632 raw / 2,688 gzip / 2,304 Brotli maximum, including CSS)
 - `interactive`: buttons, toggles, tabs and similar local interactions
 - `overlay`: popovers, tooltips, menus and dialogs
 - `composite`: multi-part coordinated widgets
@@ -111,7 +114,7 @@ shared runtime that the component actually pulls into a consumer graph.
 
 Aggregate runtime measures the union of emitted runtime files, counting shared
 files once; it is not the sum of standalone bundled entries. Its existing budgets
-and baseline regression gates remain enforced independently, including during
+and applicable baseline regression gates remain enforced independently, including during
 bundled baseline review and update. Neither command changes aggregate baselines.
 The checker also reports all files that would live under `packages/react/dist`. Source maps and declarations affect the
 published-package metric but not individual runtime component cost.
@@ -120,8 +123,8 @@ published-package metric but not individual runtime component cost.
 
 Bundled-entry raw, gzip and Brotli values enforce both category budgets and
 per-component baseline regressions. Numeric limits and tolerances are unchanged.
-Emitted-graph deltas are diagnostic only. Aggregate accounting and gates are
-unchanged. Absolute budgets prevent a component from becoming objectively heavy.
+Emitted-graph deltas are diagnostic only. Aggregate accounting and thresholds are
+unchanged; aggregate snapshots now carry independent applicability metadata. Absolute budgets prevent a component from becoming objectively heavy.
 The checked-in baseline prevents gradual drift inside those ceilings. Current
 component output may grow by at most 2%, with a tiny byte floor for very small
 files. Meaningful growth requires an explicit baseline diff in the PR.
@@ -213,3 +216,63 @@ and current size-gate results (`sizeCheck`). A failing size gate is reported wit
 and diagnostics; it does not invalidate a successfully measured comparison.
 The historical bundled values never come from `baseline.json`: that file is used
 only to identify separate emitted-graph diagnostic regressions.
+
+## Aggregate snapshot review and acceptance
+
+Component bundled baselines and aggregate snapshots are separate contracts.
+Accepting a new component never implicitly accepts package-wide growth. Aggregate
+applicability uses its own `componentCount` and `method`, never the number of
+component baseline entries (which may include newly accepted or removed entries).
+
+```bash
+pnpm size:aggregate:review
+# Only after explicit human approval of the measured proposal:
+pnpm size:aggregate:update
+```
+
+Both commands use the authoritative `build:packages` path before measuring all
+live components and the same aggregate definitions as the normal checker. A
+failed build stops the command; direct checker flags assume production output
+has already been built, just like the existing bundled baseline flags. Graph
+validation rejects missing/invalid modules and unaccounted imports.
+
+Review is read-only with respect to source and baselines; building refreshes
+package output. It prints exact baseline/current/delta tuples for raw, gzip,
+Brotli and file count, plus the snapshot component count. The result is explicitly
+**a proposal, not acceptance**. Legacy snapshots have an unknown component count;
+review never attributes them to the current catalog. Task-specific attribution
+remains in `docs/overflow-aggregate-attribution.md`, separating the historical
+discrepancy from the isolated Overflow addition.
+
+Review and update enforce all individual bundled budgets and regressions,
+including missing/malformed component baselines, and all absolute aggregate
+budgets. Only aggregate historical regression/applicability is suspended for this
+explicit review or acceptance. Malformed aggregate metrics or metadata fail
+safely. Any measurement or gate failure prevents acceptance. Neither command can
+combine with the other, bundled review/update, `--components`, `--changed`, or
+`--release`. Absolute budgets and regression tolerances are never changed.
+
+The snapshot stores `componentCount` and `method`: aggregate schema version 1,
+gzip level 9, Brotli quality 11, the versioned Flux production package build
+contract, root `dist/index.js`, the JS/MJS/CJS/CSS runtime union, all dist files
+for the published union, and per-file compression/summing. The method version
+must advance when build/measurement semantics change. It excludes Git IDs,
+timestamps and machine paths. The top-level baseline schema is unchanged.
+
+Normal and release checks fail on absent, legacy, malformed or stale snapshot
+metadata. An applicable snapshot enforces the existing historical regression
+policy. Staleness never counts as a passed historical check. Component baseline
+review/update reports stale aggregate metadata separately, allowing the component
+contract to be accepted first; it still blocks malformed aggregate state,
+absolute aggregate failures and applicable aggregate regressions. Normal/release
+quality remains red until aggregate review and explicit acceptance follow.
+
+Aggregate update recomputes live measurements and replaces only the aggregate
+JSON value, preserving every unrelated byte, component baseline and bundled-entry
+method. It validates the aggregate-only proposal, writes an exclusive `.pending`
+sibling, syncs and atomically renames it. Failure leaves the original untouched;
+a pre-existing `.pending` is never overwritten. Update requires an existing
+aggregate property; an entirely missing property needs separate repair. Legacy
+values migrate on explicit acceptance only. No icon/performance baselines or
+component registries are updated. Component baseline updates never alter
+aggregate values, and aggregate updates never alter component baselines.

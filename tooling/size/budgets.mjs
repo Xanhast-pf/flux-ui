@@ -3,6 +3,8 @@ export const BUDGETS_VERSION = 1;
 // New components start in the strictest class. Escalating the class is an
 // explicit component metadata change that reviewers can see and challenge.
 export const sizeClasses = Object.freeze({
+  // Native-picker overflow capability: measured JS + CSS, with ~10–15% headroom.
+  overflow: Object.freeze({ raw: 5632, gzip: 2688, brotli: 2304 }),
   primitive: Object.freeze({
     raw: 6 * 1024,
     gzip: 2 * 1024,

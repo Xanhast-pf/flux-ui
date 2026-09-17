@@ -1,0 +1,251 @@
+{
+  "method": {
+    "bundler": "esbuild",
+    "version": "0.28.2",
+    "target": "es2022",
+    "format": "esm",
+    "splitting": false,
+    "minify": true,
+    "external": [
+      "react",
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+      "react-dom",
+      "react-dom/client",
+      "react-dom/server"
+    ]
+  },
+  "before": {
+    "raw": 6505,
+    "gzip": 2744,
+    "brotli": 2392,
+    "fileCount": 2,
+    "outputs": {
+      "js": {
+        "raw": 4345,
+        "gzip": 1964,
+        "brotli": 1752
+      },
+      "css": {
+        "raw": 2160,
+        "gzip": 780,
+        "brotli": 640
+      }
+    },
+    "externalImports": ["react", "react/jsx-runtime"]
+  },
+  "entries": {
+    "tabs": {
+      "raw": 6482,
+      "gzip": 2773,
+      "brotli": 2421,
+      "outputs": {
+        "js": {
+          "raw": 4322,
+          "gzip": 1993,
+          "brotli": 1781
+        },
+        "css": {
+          "raw": 2160,
+          "gzip": 780,
+          "brotli": 640
+        }
+      },
+      "retained": [
+        {
+          "input": "packages/react/dist/chunks/Tabs-Di22a8jK.js",
+          "kind": "js",
+          "bytes": 3548
+        },
+        {
+          "input": "packages/react/dist/assets/Tabs.css",
+          "kind": "css",
+          "bytes": 2159
+        },
+        {
+          "input": "packages/react/dist/chunks/rovingFocus-Dylj0IZd.js",
+          "kind": "js",
+          "bytes": 510
+        },
+        {
+          "input": "packages/react/dist/chunks/attachRef-W0crYlek.js",
+          "kind": "js",
+          "bytes": 141
+        },
+        {
+          "input": "packages/react/dist/chunks/joinClassNames-LlMWkLFo.js",
+          "kind": "js",
+          "bytes": 52
+        },
+        {
+          "input": "packages/react/dist/chunks/overflowCapability-BwkmyGl9.js",
+          "kind": "js",
+          "bytes": 52
+        },
+        {
+          "input": "packages/react/dist/assets/Tabs.css",
+          "kind": "js",
+          "bytes": 0
+        },
+        {
+          "input": "<stdin>",
+          "kind": "js",
+          "bytes": 0
+        }
+      ]
+    },
+    "overflow": {
+      "raw": 5083,
+      "gzip": 2338,
+      "brotli": 2028,
+      "outputs": {
+        "js": {
+          "raw": 3971,
+          "gzip": 1842,
+          "brotli": 1627
+        },
+        "css": {
+          "raw": 1112,
+          "gzip": 496,
+          "brotli": 401
+        }
+      },
+      "retained": [
+        {
+          "input": "packages/react/dist/chunks/Overflow-B-dwskkN.js",
+          "kind": "js",
+          "bytes": 3689
+        },
+        {
+          "input": "packages/react/dist/assets/Select.css",
+          "kind": "css",
+          "bytes": 623
+        },
+        {
+          "input": "packages/react/dist/assets/Overflow.css",
+          "kind": "css",
+          "bytes": 488
+        },
+        {
+          "input": "packages/react/dist/chunks/Select-BH_vs6zF.js",
+          "kind": "js",
+          "bytes": 154
+        },
+        {
+          "input": "packages/react/dist/chunks/joinClassNames-LlMWkLFo.js",
+          "kind": "js",
+          "bytes": 52
+        },
+        {
+          "input": "packages/react/dist/chunks/overflowCapability-BwkmyGl9.js",
+          "kind": "js",
+          "bytes": 52
+        },
+        {
+          "input": "packages/react/dist/assets/Select.css",
+          "kind": "js",
+          "bytes": 0
+        },
+        {
+          "input": "packages/react/dist/assets/Overflow.css",
+          "kind": "js",
+          "bytes": 0
+        },
+        {
+          "input": "<stdin>",
+          "kind": "js",
+          "bytes": 0
+        }
+      ]
+    },
+    "composed": {
+      "raw": 11497,
+      "gzip": 4493,
+      "brotli": 3981,
+      "outputs": {
+        "js": {
+          "raw": 8226,
+          "gzip": 3434,
+          "brotli": 3097
+        },
+        "css": {
+          "raw": 3271,
+          "gzip": 1059,
+          "brotli": 884
+        }
+      },
+      "retained": [
+        {
+          "input": "packages/react/dist/chunks/Overflow-B-dwskkN.js",
+          "kind": "js",
+          "bytes": 3705
+        },
+        {
+          "input": "packages/react/dist/chunks/Tabs-Di22a8jK.js",
+          "kind": "js",
+          "bytes": 3571
+        },
+        {
+          "input": "packages/react/dist/assets/Tabs.css",
+          "kind": "css",
+          "bytes": 2159
+        },
+        {
+          "input": "packages/react/dist/assets/Select.css",
+          "kind": "css",
+          "bytes": 623
+        },
+        {
+          "input": "packages/react/dist/chunks/rovingFocus-Dylj0IZd.js",
+          "kind": "js",
+          "bytes": 510
+        },
+        {
+          "input": "packages/react/dist/assets/Overflow.css",
+          "kind": "css",
+          "bytes": 488
+        },
+        {
+          "input": "packages/react/dist/chunks/Select-BH_vs6zF.js",
+          "kind": "js",
+          "bytes": 158
+        },
+        {
+          "input": "packages/react/dist/chunks/attachRef-W0crYlek.js",
+          "kind": "js",
+          "bytes": 141
+        },
+        {
+          "input": "packages/react/dist/chunks/overflowCapability-BwkmyGl9.js",
+          "kind": "js",
+          "bytes": 54
+        },
+        {
+          "input": "packages/react/dist/chunks/joinClassNames-LlMWkLFo.js",
+          "kind": "js",
+          "bytes": 52
+        },
+        {
+          "input": "packages/react/dist/assets/Tabs.css",
+          "kind": "js",
+          "bytes": 0
+        },
+        {
+          "input": "<stdin>",
+          "kind": "js",
+          "bytes": 0
+        },
+        {
+          "input": "packages/react/dist/assets/Select.css",
+          "kind": "js",
+          "bytes": 0
+        },
+        {
+          "input": "packages/react/dist/assets/Overflow.css",
+          "kind": "js",
+          "bytes": 0
+        }
+      ]
+    }
+  }
+}

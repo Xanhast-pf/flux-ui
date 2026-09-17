@@ -1,4 +1,5 @@
-import { useCallback, useLayoutEffect, useRef } from "react";
+import { useCallback, useContext, useLayoutEffect, useRef } from "react";
+import { OverflowCapabilityContext } from "../../internal/overflowCapability.js";
 import { attachRef } from "../../internal/attachRef.js";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import {
@@ -8,6 +9,10 @@ import {
 import { list } from "./Tabs.css.js";
 import { useTabsContext } from "./TabsContext.js";
 import type { TabsListProps } from "./Tabs.types.js";
+const tabs = (node: HTMLElement) =>
+  [...node.querySelectorAll<HTMLButtonElement>('[role="tab"]')].filter(
+    (tab) => tab.closest('[role="tablist"]') === node,
+  );
 export function TabsList({
   wrap = false,
   activateOnFocus = false,
@@ -19,46 +24,34 @@ export function TabsList({
   ...props
 }: TabsListProps) {
   const context = useTabsContext("List");
+  const enhance = useContext(OverflowCapabilityContext);
   const previous = useRef(0);
   const focused = useRef<HTMLButtonElement | null>(null);
   const scope = useRef<HTMLDivElement | null>(null);
   const setRef = useCallback(
     (node: HTMLDivElement | null) => {
       scope.current = node;
-      if (node === null) return;
-      const cleanup = attachRef(ref, node);
-      return () => {
-        scope.current = null;
-        cleanup?.();
-      };
+      if (!node) return;
+      return attachRef(ref, node);
     },
     [ref],
   );
-  const tabs = (node: HTMLDivElement) =>
-    Array.from(node.querySelectorAll<HTMLButtonElement>('[role="tab"]')).filter(
-      (tab) =>
-        tab.closest('[role="tablist"]') === node &&
-        isRovingItemAvailable(tab, node),
-    );
   useLayoutEffect(() => {
     const node = scope.current;
-    if (node === null) return;
+    if (!node) return;
     const reconcile = () => {
-      const all = tabs(node);
+      const candidates = tabs(node);
+      const all = candidates.filter((tab) => isRovingItemAvailable(tab, node));
       const selected =
         all.find((tab) => tab.dataset.fluxTabValue === context.value) ??
         all[Math.min(previous.current, all.length - 1)];
-      for (const tab of node.querySelectorAll<HTMLButtonElement>(
-        '[role="tab"]',
-      ))
-        if (tab.closest('[role="tablist"]') === node)
-          tab.tabIndex = tab === selected ? 0 : -1;
+      for (const tab of candidates) tab.tabIndex = tab === selected ? 0 : -1;
       if (!selected) return;
       previous.current = all.indexOf(selected);
       const value = selected.dataset.fluxTabValue;
       if (!context.controlled && value !== undefined) context.setValue(value);
       if (
-        focused.current !== null &&
+        focused.current &&
         !all.includes(focused.current) &&
         (node.ownerDocument.activeElement === node.ownerDocument.body ||
           node.contains(node.ownerDocument.activeElement))
@@ -103,7 +96,7 @@ export function TabsList({
       node.removeEventListener("focusout", blur);
     };
   }, [context]);
-  return (
+  const element = (
     <div
       {...props}
       data-a={context.appearance}
@@ -126,7 +119,9 @@ export function TabsList({
           event.target.closest('[role="tablist"]') !== node
         )
           return;
-        const all = tabs(node);
+        const all = tabs(node).filter((tab) =>
+          isRovingItemAvailable(tab, node),
+        );
         const index = nextRovingIndex(
           event.key,
           all.findIndex((tab) => tab === event.target),
@@ -143,12 +138,17 @@ export function TabsList({
         );
         if (index === null) return;
         const next = all[index];
-        if (next === undefined) return;
+        if (!next) return;
         event.preventDefault();
         next.focus();
         const value = next.dataset.fluxTabValue;
         if (activateOnFocus && value !== undefined) context.setValue(value);
       }}
     />
+  );
+  return (
+    enhance?.(element, {
+      items: tabs,
+    }) ?? element
   );
 }

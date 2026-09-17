@@ -124,3 +124,44 @@ test("built tabs preserve native scrolling, keyboard activation and controlled s
     page.getByRole("button", { name: "After consumer tabs" }),
   ).toBeFocused();
 });
+
+test("built Overflow keeps one semantic tab representation and restores container width", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const scope = page.getByRole("region", { name: "Built Overflow" });
+  const list = scope.getByRole("tablist");
+  const picker = scope.getByRole("combobox", { name: "More items" });
+  await expect(picker).toBeVisible();
+  await expect(picker.getByRole("option", { name: "Billing" })).toBeDisabled();
+  await picker.focus();
+  await picker.selectOption({ label: "History" });
+  await expect(list.getByRole("tab", { name: "History" })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
+  await expect(scope.getByRole("tabpanel")).toHaveText("History built panel");
+  await expect(picker).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(
+    scope.getByRole("button", { name: "After built Overflow" }),
+  ).toBeFocused();
+  await scope
+    .getByRole("button", { name: "Change Overflow membership" })
+    .click();
+  await expect(
+    picker.getByRole("option", { name: "Extra section" }),
+  ).toHaveCount(1);
+  await scope
+    .getByRole("button", { name: "Change Overflow membership" })
+    .click();
+  await expect(
+    picker.getByRole("option", { name: "Extra section" }),
+  ).toHaveCount(0);
+  await scope.getByRole("button", { name: "Resize built Overflow" }).click();
+  await expect(picker).toHaveCount(0);
+  await expect(list.getByRole("tab")).toHaveCount(6);
+  await scope.getByRole("button", { name: "Resize built Overflow" }).click();
+  await expect(picker).toBeVisible();
+  await expect(list.getByRole("tab", { name: "History" })).toBeVisible();
+});

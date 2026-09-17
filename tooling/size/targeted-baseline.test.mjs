@@ -12,6 +12,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
+import { aggregateMethod } from "./aggregate-baseline.mjs";
 import { bundledEntryMethod } from "./bundled-entry.mjs";
 import { targetedBaseline, targetedBaselineText } from "./baseline.mjs";
 
@@ -52,7 +53,11 @@ async function fixture(t) {
     schemaVersion: 2,
     budgetsVersion: 1,
     bundledEntryMethod,
-    aggregate: { note: "preserve" },
+    aggregate: {
+      rootEntry: { raw: 500, gzip: 500, brotli: 500, fileCount: 1 },
+      runtime: { raw: 500, gzip: 500, brotli: 500, fileCount: 4 },
+      published: { raw: 500, gzip: 500, brotli: 500, fileCount: 4 },
+    },
     components: { ...components, removed: { note: "historical" } },
   };
   const path = join(size, "baseline.json");
@@ -201,7 +206,12 @@ test("targeted update preserves baseline on absolute and aggregate gate failures
   assert.equal(await readFile(path, "utf8"), bytes);
   await writeFile(join(dist, "knob.js"), "export const value = 1;");
   delete original.components.removed;
-  original.aggregate = { runtime: { raw: 0, gzip: 0, brotli: 0 } };
+  original.aggregate = {
+    ...original.aggregate,
+    componentCount: 3,
+    method: aggregateMethod,
+    runtime: { raw: 0, gzip: 0, brotli: 0, fileCount: 4 },
+  };
   const aggregateBytes = JSON.stringify(original);
   await writeFile(path, aggregateBytes);
   const aggregate = run("--update-bundled-baseline", "--components=knob");

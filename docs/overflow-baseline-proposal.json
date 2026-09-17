@@ -1,0 +1,69 @@
+{
+  "component": "overflow",
+  "before": null,
+  "after": {
+    "bundled": {
+      "raw": 5083,
+      "gzip": 2338,
+      "brotli": 2028,
+      "fileCount": 2,
+      "outputs": {
+        "js": {
+          "raw": 3971,
+          "gzip": 1842,
+          "brotli": 1627
+        },
+        "css": {
+          "raw": 1112,
+          "gzip": 496,
+          "brotli": 401
+        }
+      },
+      "externalImports": ["react", "react/jsx-runtime"]
+    }
+  },
+  "note": "Review only. Existing Tabs and all other baseline entries must remain byte-for-byte unchanged.",
+  "aggregateReview": {
+    "before": {
+      "rootEntry": {
+        "raw": 5275,
+        "gzip": 1734,
+        "brotli": 1520,
+        "fileCount": 1
+      },
+      "runtime": {
+        "raw": 199901,
+        "gzip": 92508,
+        "brotli": 79379,
+        "fileCount": 225
+      },
+      "published": {
+        "raw": 1099160,
+        "gzip": 374699,
+        "brotli": 322302,
+        "fileCount": 925
+      }
+    },
+    "after": {
+      "rootEntry": {
+        "raw": 5394,
+        "gzip": 1775,
+        "brotli": 1560,
+        "fileCount": 1
+      },
+      "runtime": {
+        "raw": 209067,
+        "gzip": 96000,
+        "brotli": 82350,
+        "fileCount": 229
+      },
+      "published": {
+        "raw": 1137485,
+        "gzip": 389791,
+        "brotli": 334996,
+        "fileCount": 947
+      }
+    },
+    "note": "Adding the component entry makes baseline/live component counts equal and re-enables aggregate regression checks. These aggregate changes require separate explicit approval."
+  }
+}

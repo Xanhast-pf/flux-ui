@@ -111,13 +111,15 @@ export function formatBytes(bytes) {
   return `${(bytes / 1024).toFixed(bytes < 10 * 1024 ? 2 : 1)} KiB`;
 }
 
+export const compressionMethod = { gzipLevel: 9, brotliQuality: 11 };
+
 export function compressMetrics(buffer) {
   return {
     raw: buffer.byteLength,
-    gzip: gzipSync(buffer, { level: 9 }).byteLength,
+    gzip: gzipSync(buffer, { level: compressionMethod.gzipLevel }).byteLength,
     brotli: brotliCompressSync(buffer, {
       params: {
-        [constants.BROTLI_PARAM_QUALITY]: 11,
+        [constants.BROTLI_PARAM_QUALITY]: compressionMethod.brotliQuality,
       },
     }).byteLength,
   };
