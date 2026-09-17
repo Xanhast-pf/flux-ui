@@ -1,5 +1,6 @@
 import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { validSizeClasses } from "../tooling/size/budgets.mjs";
 
 const name = process.argv[2];
 if (!name) {
@@ -57,13 +58,6 @@ try {
     failed = true;
     console.error(`✗ missing live docs example for ${meta.slug}`);
   }
-  const validSizeClasses = [
-    "primitive",
-    "interactive",
-    "overlay",
-    "composite",
-    "data-heavy",
-  ];
   if (!validSizeClasses.includes(meta.sizeClass)) {
     failed = true;
     console.error(

@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
+import { aggregateMethod } from "./aggregate-baseline.mjs";
 import { validateReport } from "../trust/reports.mjs";
 
 test("size CLI keeps success concise, failures detailed and JSON clean", async (t) => {
@@ -30,6 +31,16 @@ test("size CLI keeps success concise, failures detailed and JSON clean", async (
       join(size, "baseline.json"),
       JSON.stringify({
         budgetsVersion: 1,
+        aggregate: {
+          componentCount: 1,
+          method: aggregateMethod,
+          ...Object.fromEntries(
+            ["rootEntry", "runtime", "published"].map((name) => [
+              name,
+              { raw: 500, gzip: 500, brotli: 500, fileCount: 2 },
+            ]),
+          ),
+        },
         components: {
           example: { bundled: { raw: value, gzip: value, brotli: value } },
         },
@@ -60,6 +71,12 @@ test("size CLI keeps success concise, failures detailed and JSON clean", async (
   assert.equal(proposal.status, 0, proposal.stderr);
   assert.throws(
     () => validateReport("size.json", JSON.parse(proposal.stdout), {}),
+    /baseline proposal/u,
+  );
+  const aggregateProposal = run("--review-aggregate-baseline", "--json");
+  assert.equal(aggregateProposal.status, 0, aggregateProposal.stderr);
+  assert.throws(
+    () => validateReport("size.json", JSON.parse(aggregateProposal.stdout), {}),
     /baseline proposal/u,
   );
   await save(0);

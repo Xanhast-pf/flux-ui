@@ -20,6 +20,12 @@ import {
   regressionFailures,
 } from "./lib.mjs";
 
+import {
+  measureAggregate,
+  compareAggregates,
+  formatAggregateComparison,
+} from "./compare-aggregate.mjs";
+
 // No checkout, index changes, dependency installation, or baseline writes.
 const root = process.cwd();
 const [baseRef, currentRef = "working-tree", flag] = process.argv.slice(2);
@@ -98,6 +104,7 @@ try {
     }
   }
   const measurements = [];
+  const aggregates = [];
   for (const copy of [baseRoot, currentRoot]) {
     await linkDependencies(
       join(root, "node_modules"),
@@ -137,6 +144,7 @@ try {
       };
     }
     measurements.push(entries);
+    aggregates.push(await measureAggregate(dist, components.length));
   }
   const [before, after] = measurements;
   const baseline = JSON.parse(
@@ -193,6 +201,7 @@ try {
       zlib: process.versions.zlib,
     },
     rows,
+    aggregate: compareAggregates(...aggregates),
     sizeCheck,
   };
   if (flag === "--json") console.log(JSON.stringify(report, null, 2));
@@ -206,6 +215,7 @@ try {
       console.log(
         `${row.component} | ${row.baseBrotli ?? "absent"} | ${row.currentBrotli ?? "absent"} | ${row.delta ?? "n/a"} | ${row.percent === null ? "n/a" : row.percent.toFixed(2) + "%"}`,
       );
+    console.log(formatAggregateComparison(report.aggregate));
   }
 } finally {
   await rm(temporary, { recursive: true, force: true });

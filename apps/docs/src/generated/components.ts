@@ -348,6 +348,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Overflow",
+    slug: "overflow",
+    category: "Layout",
+    status: "alpha",
+    description:
+      "Responsive collection overflow with a native accessible picker; Tabs is the first supported collection.",
+    sizeClass: "overflow",
+  },
+  {
     name: "PageHeader",
     slug: "page-header",
     category: "Layout",

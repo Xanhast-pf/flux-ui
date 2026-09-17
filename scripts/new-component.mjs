@@ -1,6 +1,7 @@
 import { mkdir, writeFile, access } from "node:fs/promises";
 import { resolve } from "node:path";
 import { spawnSync } from "node:child_process";
+import { validSizeClasses } from "../tooling/size/budgets.mjs";
 
 function isMissingPathError(error) {
   return error instanceof Error && "code" in error && error.code === "ENOENT";
@@ -18,13 +19,6 @@ if (!/^[A-Z][A-Za-z0-9]*$/.test(rawName)) {
 }
 const category = process.argv[3] ?? "Uncategorized";
 const sizeClass = process.argv[4] ?? "primitive";
-const validSizeClasses = [
-  "primitive",
-  "interactive",
-  "overlay",
-  "composite",
-  "data-heavy",
-];
 if (!validSizeClasses.includes(sizeClass)) {
   throw new Error(`sizeClass must be one of: ${validSizeClasses.join(", ")}.`);
 }

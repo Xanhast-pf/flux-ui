@@ -1082,6 +1082,27 @@
         "externalImports": ["react/jsx-runtime"]
       }
     },
+    "overflow": {
+      "bundled": {
+        "raw": 5083,
+        "gzip": 2338,
+        "brotli": 2028,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 3971,
+            "gzip": 1842,
+            "brotli": 1627
+          },
+          "css": {
+            "raw": 1112,
+            "gzip": 496,
+            "brotli": 401
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
     "page-header": {
       "name": "PageHeader",
       "sizeClass": "composite",
@@ -1603,15 +1624,15 @@
       "brotli": 3200,
       "fileCount": 6,
       "bundled": {
-        "raw": 6505,
-        "gzip": 2744,
-        "brotli": 2392,
+        "raw": 6482,
+        "gzip": 2773,
+        "brotli": 2421,
         "fileCount": 2,
         "outputs": {
           "js": {
-            "raw": 4345,
-            "gzip": 1964,
-            "brotli": 1752
+            "raw": 4322,
+            "gzip": 1993,
+            "brotli": 1781
           },
           "css": {
             "raw": 2160,
@@ -1894,23 +1915,28 @@
     }
   },
   "aggregate": {
-    "rootEntry": {
-      "raw": 5275,
-      "gzip": 1734,
-      "brotli": 1520,
-      "fileCount": 1
-    },
+    "componentCount": 71,
+    "rootEntry": { "raw": 5394, "gzip": 1775, "brotli": 1560, "fileCount": 1 },
     "runtime": {
-      "raw": 199901,
-      "gzip": 92508,
-      "brotli": 79379,
-      "fileCount": 225
+      "raw": 209067,
+      "gzip": 96000,
+      "brotli": 82350,
+      "fileCount": 229
     },
     "published": {
-      "raw": 1099160,
-      "gzip": 374699,
-      "brotli": 322302,
-      "fileCount": 925
+      "raw": 1137485,
+      "gzip": 389791,
+      "brotli": 334996,
+      "fileCount": 947
+    },
+    "method": {
+      "schemaVersion": 1,
+      "compression": { "gzipLevel": 9, "brotliQuality": 11 },
+      "build": "flux-production-packages-v1",
+      "rootEntry": "packages/react/dist/index.js",
+      "runtime": [".js", ".mjs", ".cjs", ".css"],
+      "published": "packages/react/dist/**",
+      "accounting": "sum-per-file-compressed-bytes"
     }
   },
   "bundledEntryMethod": {

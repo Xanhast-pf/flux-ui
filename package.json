@@ -1,6 +1,6 @@
 {
   "name": "flux-ui",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.34.5",
@@ -41,6 +41,8 @@
     "size:changed": "node tooling/terminal/cli.mjs size:changed",
     "size:compare": "node tooling/size/compare.mjs",
     "size:baseline:review": "pnpm build:packages && node tooling/size/check.mjs --review-bundled-baseline",
+    "size:aggregate:review": "pnpm build:packages && node tooling/size/check.mjs --review-aggregate-baseline",
+    "size:aggregate:update": "pnpm build:packages && node tooling/size/check.mjs --update-aggregate-baseline",
     "size:update": "pnpm build:packages && node tooling/size/check.mjs --update-bundled-baseline",
     "size:release": "node tooling/terminal/cli.mjs size:release",
     "size:test": "node --test --test-reporter=./tooling/terminal/node-reporter.mjs tooling/size/*.test.mjs",

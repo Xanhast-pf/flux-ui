@@ -101,7 +101,12 @@ for (const width of [320, 768, 1440]) {
     ).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(sidebar).toBeVisible();
-    await expect(page.locator("[inert], dialog[open]")).toHaveCount(0);
+    // Hidden Overflow items are intentionally inert; visible page content must
+    // remain interactive while the non-modal Sidebar is open.
+    for (const element of await page.locator("[inert]").all()) {
+      await expect(element).toBeHidden();
+    }
+    await expect(page.locator("dialog[open]")).toHaveCount(0);
     await page.getByRole("button", { name: "Close sidebar" }).click();
     await expect(toggle).toBeFocused();
     await expect(sidebar).not.toBeVisible();

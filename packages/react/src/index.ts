@@ -39,6 +39,7 @@ export * from "./components/Link/index.js";
 export * from "./components/List/index.js";
 export * from "./components/Meter/index.js";
 export * from "./components/NumberField/index.js";
+export * from "./components/Overflow/index.js";
 export * from "./components/PageHeader/index.js";
 export * from "./components/Pagination/index.js";
 export * from "./components/Popover/index.js";

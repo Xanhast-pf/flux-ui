@@ -1,5 +1,11 @@
+import {
+  aggregateSnapshotState,
+  formatAggregateProposal,
+  aggregateMethod,
+} from "./aggregate-baseline.mjs";
 import { reportProgress, reportSummary } from "../terminal/progress.mjs";
 import {
+  aggregateBaselineText,
   bundledBaseline,
   bundledRegressions,
   targetedBaseline,
@@ -14,6 +20,7 @@ import { bundledEntryMethod, measureBundledEntry } from "./bundled-entry.mjs";
 import {
   absoluteBudgetFailures,
   aggregateFailures,
+  collectRuntimeGraph,
   discoverComponents,
   formatBytes,
   listPublishedFiles,
@@ -31,10 +38,25 @@ const args = new Set(argv);
 const componentFlags = argv.filter((arg) => arg.startsWith("--components"));
 const updateBaseline = args.has("--update-bundled-baseline");
 const reviewBaseline = args.has("--review-bundled-baseline");
+const reviewAggregate = args.has("--review-aggregate-baseline");
+const updateAggregate = args.has("--update-aggregate-baseline");
+const aggregateAcceptance = reviewAggregate || updateAggregate;
 const migration = updateBaseline || reviewBaseline;
 const changedOnly = args.has("--changed");
 const releaseMode = args.has("--release");
 const jsonMode = args.has("--json");
+
+if (
+  aggregateAcceptance &&
+  (migration ||
+    changedOnly ||
+    releaseMode ||
+    componentFlags.length ||
+    (reviewAggregate && updateAggregate))
+)
+  throw new Error(
+    "Aggregate review/update must run separately and cannot combine with bundled review/update, --components, --changed or --release.",
+  );
 
 if (
   args.has("--update-baseline") ||
@@ -268,6 +290,7 @@ reportProgress({
   item: "Measured",
 });
 
+await collectRuntimeGraph(resolve(distDir, "index.js"), distDir);
 const rootEntry = await measureFiles([resolve(distDir, "index.js")]);
 const runtimeFiles = await listRuntimeFiles(distDir);
 const runtime = await measureFiles(runtimeFiles);
@@ -287,28 +310,38 @@ for (const failure of aggregates) {
   );
 }
 
-{
-  const baselineComponentCount = Object.keys(baseline.components ?? {}).length;
-  if (baselineComponentCount === components.length && baseline.aggregate) {
-    for (const [name, current] of Object.entries({
-      rootEntry,
-      runtime,
-      published,
-    })) {
-      for (const regression of regressionFailures(
-        current,
-        baseline.aggregate[name],
-      )) {
-        if (regression.metric === "baseline") continue;
-        failed = true;
-        console.error(
-          `✖ aggregate ${name} ${regression.metric} regression: ` +
-            `${formatBytes(regression.actual)} (${regression.actual} B) > ${formatBytes(regression.limit)} (${regression.limit} B) ` +
-            `(baseline ${formatBytes(regression.previous)})`,
-        );
-      }
+const aggregate = {
+  componentCount: components.length,
+  rootEntry,
+  runtime,
+  published,
+  method: aggregateMethod,
+};
+const aggregateState = aggregateSnapshotState(baseline.aggregate, aggregate);
+if (
+  aggregateState.status === "malformed" ||
+  (!aggregateAcceptance && !migration && aggregateState.status !== "applicable")
+) {
+  failed = true;
+  console.error(
+    `✖ Aggregate baseline ${aggregateState.status}: ${aggregateState.reason}. Run pnpm size:aggregate:review; acceptance requires explicit pnpm size:aggregate:update.`,
+  );
+} else if (!aggregateAcceptance && aggregateState.status === "applicable") {
+  for (const name of ["rootEntry", "runtime", "published"]) {
+    for (const regression of regressionFailures(
+      aggregate[name],
+      baseline.aggregate[name],
+    )) {
+      failed = true;
+      console.error(
+        `✖ aggregate ${name} ${regression.metric} regression: ${regression.actual} B > ${regression.limit} B (baseline ${regression.previous} B)`,
+      );
     }
   }
+} else if (migration && aggregateState.status !== "applicable") {
+  console.error(
+    `Aggregate baseline stale: ${aggregateState.reason}; component acceptance does not accept aggregate growth. Run pnpm size:aggregate:review separately.`,
+  );
 }
 
 if (releaseMode) {
@@ -340,12 +373,40 @@ const report = {
       .map((component) => component.slug),
   },
   externalPeersNotIncluded: [...externalPeers].sort(),
-  aggregate: {
-    rootEntry,
-    runtime,
-    published,
-  },
+  aggregate: { rootEntry, runtime, published },
+  aggregateMethod,
+  aggregateBaselineState: aggregateState,
 };
+
+if (aggregateAcceptance) {
+  report.baselineChanges = {
+    aggregate: { before: baseline.aggregate ?? null, after: aggregate },
+  };
+  report.aggregateBaselineChanges = {
+    before: baseline.aggregate ?? null,
+    after: aggregate,
+    accepted: false,
+  };
+  if (!jsonMode)
+    console.log(formatAggregateProposal(baseline.aggregate, aggregate));
+  if (updateAggregate) {
+    if (failed)
+      console.error(
+        "Aggregate baseline was not updated because a size gate failed.",
+      );
+    else {
+      await writeBaselineAtomic(
+        baselinePath,
+        await aggregateBaselineText(
+          await readFile(baselinePath, "utf8"),
+          aggregate,
+        ),
+      );
+      report.aggregateBaselineChanges.accepted = true;
+      if (!jsonMode) console.log("Accepted aggregate baseline only.");
+    }
+  }
+}
 
 if (migration) {
   const proposal = explicitSlugs
