@@ -4,6 +4,6 @@
   "unit": "sliders",
   "kind": "workload",
   "maxCount": 5000,
-  "fixtureRevision": 1,
+  "fixtureRevision": 2,
   "description": "Mount N native range wrappers and update values."
 }

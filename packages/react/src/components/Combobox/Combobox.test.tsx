@@ -8,6 +8,29 @@ const options = [
   { value: "legacy", label: "Engineering legacy", disabled: true },
 ];
 describe("Combobox", () => {
+  it("accepts optional application values without conditional-spread workarounds", () => {
+    const disabled: boolean | undefined = undefined;
+    const listLabel: string | undefined = undefined;
+    const emptyMessage: string | undefined = undefined;
+    const invalidSelectionMessage: string | undefined = undefined;
+    const defaultValue: string | null | undefined = undefined;
+    const onValueChange: ((value: string | null) => void) | undefined =
+      undefined;
+
+    render(
+      <Combobox
+        aria-label="Team"
+        options={[{ value: "design", label: "Design", disabled }]}
+        defaultValue={defaultValue}
+        listLabel={listLabel}
+        emptyMessage={emptyMessage}
+        invalidSelectionMessage={invalidSelectionMessage}
+        onValueChange={onValueChange}
+      />,
+    );
+    expect(screen.getByRole("combobox", { name: "Team" })).toHaveValue("");
+  });
+
   it("filters, keeps input focus and submits a committed key rather than its label", async () => {
     const user = userEvent.setup();
     render(

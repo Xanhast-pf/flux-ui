@@ -13,8 +13,13 @@ export default {
   props: [
     [
       "size",
-      "sm | md | lg | xl | full",
+      "xs | sm | md | lg | xl | full",
       "Named width constraint with responsive page gutters.",
+    ],
+    [
+      "query",
+      "boolean",
+      'Establish the named inline-size container used by responsiveTo="container" descendants.',
     ],
     [
       "Native props",

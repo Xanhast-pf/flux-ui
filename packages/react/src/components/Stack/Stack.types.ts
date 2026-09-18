@@ -15,6 +15,6 @@ export type StackProps = SemanticProps<
   LayoutSpacing & {
     responsiveTo?: ResponsiveScope | undefined;
     gap?: ResponsiveValue<LayoutGap> | undefined;
-    align?: "start" | "center" | "end" | "stretch";
+    align?: "start" | "center" | "end" | "stretch" | undefined;
   }
 >;

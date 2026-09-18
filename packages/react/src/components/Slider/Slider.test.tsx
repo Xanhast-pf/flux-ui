@@ -175,26 +175,21 @@ describe("Slider refinement", () => {
     expect(change).not.toHaveBeenCalled();
     expect(screen.getByRole("slider")).toHaveValue("70");
   });
-  it.each(["disabled", "readOnly"] as const)(
-    "does not reset %s controls",
-    (flag) => {
-      const change = vi.fn();
-      render(
-        <Slider
-          aria-label="Level"
-          defaultValue={70}
-          resetValue={20}
-          onValueChange={change}
-          {...{
-            [flag]: true,
-          }}
-        />,
-      );
-      fireEvent.doubleClick(screen.getByRole("slider"));
-      expect(change).not.toHaveBeenCalled();
-      expect(screen.getByRole("slider")).toHaveValue("70");
-    },
-  );
+  it("does not reset disabled controls", () => {
+    const change = vi.fn();
+    render(
+      <Slider
+        aria-label="Level"
+        defaultValue={70}
+        disabled
+        resetValue={20}
+        onValueChange={change}
+      />,
+    );
+    fireEvent.doubleClick(screen.getByRole("slider"));
+    expect(change).not.toHaveBeenCalled();
+    expect(screen.getByRole("slider")).toHaveValue("70");
+  });
   it("captures the native default midpoint and preserves callback-ref cleanup", () => {
     const cleanup = vi.fn();
     const ref = vi.fn(() => cleanup);

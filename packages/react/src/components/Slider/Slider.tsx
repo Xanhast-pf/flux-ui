@@ -43,7 +43,7 @@ export function Slider({
       onChange={onValueChange ? handleChange : onChange}
       onDoubleClick={(event) => {
         onDoubleClick?.(event);
-        if (event.defaultPrevented || props.disabled || props.readOnly) return;
+        if (event.defaultPrevented || props.disabled) return;
         if (
           value !== undefined &&
           (resetValue === undefined || (!onChange && !onValueChange))

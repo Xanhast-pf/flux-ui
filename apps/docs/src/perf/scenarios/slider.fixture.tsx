@@ -1,6 +1,8 @@
 import { Box, Slider } from "@flux-ui/react";
 import type { ScenarioProps } from "../scenario.types.js";
 
+const ignoreChange = () => {};
+
 export default function Fixture({ count, revision }: ScenarioProps) {
   return (
     <Box data-perf-root>
@@ -9,7 +11,7 @@ export default function Fixture({ count, revision }: ScenarioProps) {
           key={id}
           aria-label={id}
           value={revision === 0 ? 25 : 75}
-          readOnly
+          onChange={ignoreChange}
         />
       ))}
     </Box>

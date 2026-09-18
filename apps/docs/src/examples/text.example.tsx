@@ -24,7 +24,12 @@ export default {
     [
       "tone / weight / align / numeric",
       "Semantic variants",
-      "Color, emphasis, alignment and tabular numbers.",
+      "Color, weight, alignment and tabular numbers.",
+    ],
+    [
+      "italic / decoration",
+      "boolean; none | underline | line-through",
+      "Finite text emphasis without changing native semantics.",
     ],
   ],
 } satisfies ComponentExample;
