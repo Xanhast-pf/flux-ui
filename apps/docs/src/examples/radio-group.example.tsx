@@ -1,5 +1,5 @@
-import { RadioGroupDemo as Preview } from "../demos/RadioGroupDemo.js";
-import code from "../demos/RadioGroupDemo.tsx?raw";
+import { RadioGroupDemo as Preview } from "./radio-group.preview.js";
+import code from "./radio-group.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 
 export default {

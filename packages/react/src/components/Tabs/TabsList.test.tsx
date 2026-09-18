@@ -147,23 +147,20 @@ it("uses one fresh collection when a keyboard handler changes tab availability",
   ).toHaveLength(1);
 });
 
-it("preserves controlled ownership and consumer click cancellation through Trigger/Content", async () => {
+it("preserves controlled ownership and consumer click cancellation through Tab/Panel", async () => {
   const change = vi.fn();
   const user = userEvent.setup();
   render(
     <Tabs.Root value="one" onValueChange={change}>
       <Tabs.List aria-label="Controlled tabs">
-        <Tabs.Trigger value="one">First</Tabs.Trigger>
-        <Tabs.Trigger value="two">Second</Tabs.Trigger>
-        <Tabs.Trigger
-          value="cancel"
-          onClick={(event) => event.preventDefault()}
-        >
+        <Tabs.Tab value="one">First</Tabs.Tab>
+        <Tabs.Tab value="two">Second</Tabs.Tab>
+        <Tabs.Tab value="cancel" onClick={(event) => event.preventDefault()}>
           Cancelled
-        </Tabs.Trigger>
+        </Tabs.Tab>
       </Tabs.List>
-      <Tabs.Content value="one">First panel</Tabs.Content>
-      <Tabs.Content value="two">Second panel</Tabs.Content>
+      <Tabs.Panel value="one">First panel</Tabs.Panel>
+      <Tabs.Panel value="two">Second panel</Tabs.Panel>
     </Tabs.Root>,
   );
   await user.click(screen.getByRole("tab", { name: "Cancelled" }));

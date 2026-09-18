@@ -65,6 +65,7 @@ test("public dispatch preserves existing tasks and argument arrays", () => {
     ["build packages", "build:packages"],
     ["component new Button", "component:new", ["Button"]],
     ["component doctor Button", "component:doctor", ["Button"]],
+    ["component readiness", "component:readiness"],
     ["size aggregate review", "size:aggregate:review"],
     ["perf smoke", "perf:smoke"],
     ["release guide", "release"],

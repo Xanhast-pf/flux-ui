@@ -1,5 +1,5 @@
-import { CheckboxDemo as Preview } from "../demos/CheckboxDemo.js";
-import code from "../demos/CheckboxDemo.tsx?raw";
+import { CheckboxDemo as Preview } from "./checkbox.preview.js";
+import code from "./checkbox.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 
 export default {

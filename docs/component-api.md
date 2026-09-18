@@ -137,6 +137,22 @@ State-only roots/providers that intentionally render no DOM node are the excepti
 
 The docs separate the generated **Public contract** from curated **API highlights**. Highlights teach the common path; the generated contract and linked TypeScript source define the actual public structure.
 
+## Component lifecycle and promotion evidence
+
+`component.meta.json` supports three lifecycle labels: `alpha`, `beta`, and `stable`. The label is a maintainer product decision, not a score calculated by CI.
+
+`pnpm flux component readiness` derives the machine-verifiable prerequisites for promotion across the whole Core catalog. A family is eligible for beta review only when it has:
+
+- the complete component scaffold, public TypeScript contract, and named public props;
+- meaningful live docs notes and API highlights rather than scaffold placeholders;
+- an accepted bundled size baseline;
+- catalog-driven browser route coverage and axe coverage;
+- no remaining `@deprecated` public API.
+
+The public-contract checker also enforces Flux's canonical controlled/uncontrolled callback vocabulary. A surface that exposes `onValueChange`, `onOpenChange`, `onCheckedChange`, or `onPressedChange` must retain the matching value/default pair.
+
+`beta` and `stable` metadata are rejected when those automatic prerequisites are incomplete. `stable` additionally requires a `stableSince` semver release in component metadata. Promotion still requires maintainer API/behavior review and, for stable, real-world confidence; passing automation does not make that judgment.
+
 ## API review checklist
 
 Before adding or approving a public API, ask:

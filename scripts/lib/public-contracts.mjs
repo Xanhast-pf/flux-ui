@@ -31,6 +31,50 @@ function hasProperty(checker, type, name) {
   );
 }
 
+const canonicalStateModels = [
+  {
+    name: "value",
+    callback: "onValueChange",
+    value: "value",
+    defaultValue: "defaultValue",
+  },
+  {
+    name: "open",
+    callback: "onOpenChange",
+    value: "open",
+    defaultValue: "defaultOpen",
+  },
+  {
+    name: "checked",
+    callback: "onCheckedChange",
+    value: "checked",
+    defaultValue: "defaultChecked",
+  },
+  {
+    name: "pressed",
+    callback: "onPressedChange",
+    value: "pressed",
+    defaultValue: "defaultPressed",
+  },
+];
+
+function stateModels(checker, propsType, familyName, pathName, errors) {
+  const models = [];
+  for (const model of canonicalStateModels) {
+    if (!hasProperty(checker, propsType, model.callback)) continue;
+    const missing = [model.value, model.defaultValue].filter(
+      (name) => !hasProperty(checker, propsType, name),
+    );
+    if (missing.length > 0) {
+      errors.push(
+        `${familyName}: ${pathName} exposes ${model.callback} but is missing canonical ${missing.join(" / ")} state props.`,
+      );
+    }
+    models.push(model.name);
+  }
+  return models;
+}
+
 function customProperties(checker, propsType) {
   const styleSymbol = checker.getPropertyOfType(
     checker.getApparentType(propsType),
@@ -58,7 +102,7 @@ function customProperties(checker, propsType) {
   return [...result].sort();
 }
 
-function componentParts(checker, moduleSymbol, familyName) {
+function componentParts(checker, moduleSymbol, familyName, errors) {
   const moduleExports = checker.getExportsOfModule(moduleSymbol);
   const typeExports = new Set(moduleExports.map((symbol) => symbol.name));
   const parts = [];
@@ -77,6 +121,13 @@ function componentParts(checker, moduleSymbol, familyName) {
         style: hasProperty(checker, propsType, "style"),
         ref: hasProperty(checker, propsType, "ref"),
         cssVariables: customProperties(checker, propsType),
+        stateModels: stateModels(
+          checker,
+          propsType,
+          familyName,
+          pathName,
+          errors,
+        ),
         expectedPropsName,
         hasPropsExport: typeExports.has(expectedPropsName),
       });
@@ -177,7 +228,7 @@ export function createPublicContracts(root) {
       continue;
     }
 
-    const parts = componentParts(checker, moduleSymbol, familyName);
+    const parts = componentParts(checker, moduleSymbol, familyName, errors);
     if (parts.length === 0) {
       errors.push(`${familyName}: no public callable component surface found.`);
       continue;
@@ -225,6 +276,9 @@ export function createPublicContracts(root) {
           ...(part.ref ? ["ref"] : []),
         ],
         cssVariables: part.cssVariables,
+        ...(part.stateModels.length === 0
+          ? {}
+          : { stateModels: part.stateModels }),
       };
     });
 

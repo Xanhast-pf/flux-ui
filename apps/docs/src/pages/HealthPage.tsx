@@ -10,11 +10,13 @@ import {
 } from "@flux-ui/react";
 import { components } from "../generated/components.js";
 import { health } from "../generated/health.js";
+import { readiness } from "../generated/readiness.js";
 import { formatBytes } from "../lib/format.js";
 import { MeasurementNotice } from "../ui/MeasurementNotice.js";
 export function HealthPage() {
   const runtimeBrotli = health.size.aggregate.runtime.brotli;
   const publishedBrotli = health.size.aggregate.published.brotli;
+  const lifecycle = readiness.summary.status;
   return (
     <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="md">
@@ -32,6 +34,33 @@ export function HealthPage() {
             <Stat
               label={<>Public component families</>}
               value={<>{components.length}</>}
+            />
+          </Card>
+          <Card>
+            <Stat
+              label={<>Eligible for beta review</>}
+              value={
+                <>
+                  {readiness.summary.eligibleForBetaReview} /{" "}
+                  {readiness.summary.total}
+                </>
+              }
+              note={
+                <>
+                  Automated prerequisites; promotion stays a maintainer decision
+                </>
+              }
+            />
+          </Card>
+          <Card>
+            <Stat
+              label={<>Lifecycle labels</>}
+              value={<>{lifecycle.alpha} alpha</>}
+              note={
+                <>
+                  {lifecycle.beta} beta · {lifecycle.stable} stable
+                </>
+              }
             />
           </Card>
           <Card>
@@ -73,9 +102,11 @@ export function HealthPage() {
               Read this snapshot
             </Heading>
             <Text as="p" tone="muted">
-              Catalog coverage is generated from component metadata. Weight
-              comes from committed, reviewed baselines; an unmeasured component
-              remains pending. These numbers are not a live CI verdict.
+              Catalog coverage and lifecycle readiness are generated from the
+              current public contract, docs, tests, browser/a11y catalog
+              coverage, and reviewed size baselines. Eligibility means the
+              automated prerequisites are present; it is not an automatic
+              promotion or a blanket production-readiness claim.
             </Text>
             <Link href="#size">
               Inspect component-by-component bundle measurements

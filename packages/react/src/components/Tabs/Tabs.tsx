@@ -105,8 +105,6 @@ function TabsPanel({
 }
 export const Tabs = {
   List: TabsList,
-  Trigger: TabsTab,
-  Content: TabsPanel,
   Panel: TabsPanel,
   Root: TabsRoot,
   Tab: TabsTab,
