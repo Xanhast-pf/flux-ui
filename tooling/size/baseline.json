@@ -650,33 +650,6 @@
         "externalImports": ["react", "react/jsx-runtime"]
       }
     },
-    "fader": {
-      "name": "Fader",
-      "sizeClass": "primitive",
-      "raw": 1844,
-      "gzip": 1331,
-      "brotli": 1104,
-      "fileCount": 6,
-      "bundled": {
-        "raw": 3580,
-        "gzip": 1260,
-        "brotli": 1056,
-        "fileCount": 2,
-        "outputs": {
-          "js": {
-            "raw": 1310,
-            "gzip": 677,
-            "brotli": 585
-          },
-          "css": {
-            "raw": 2270,
-            "gzip": 583,
-            "brotli": 471
-          }
-        },
-        "externalImports": ["react", "react/jsx-runtime"]
-      }
-    },
     "field": {
       "name": "Field",
       "sizeClass": "primitive",
@@ -1894,19 +1867,19 @@
     }
   },
   "aggregate": {
-    "componentCount": 70,
-    "rootEntry": { "raw": 5328, "gzip": 1752, "brotli": 1549, "fileCount": 1 },
+    "componentCount": 69,
+    "rootEntry": { "raw": 5239, "gzip": 1727, "brotli": 1521, "fileCount": 1 },
     "runtime": {
-      "raw": 209739,
-      "gzip": 95478,
-      "brotli": 81971,
-      "fileCount": 226
+      "raw": 208967,
+      "gzip": 94934,
+      "brotli": 81505,
+      "fileCount": 223
     },
     "published": {
-      "raw": 1135977,
-      "gzip": 386550,
-      "brotli": 332419,
-      "fileCount": 934
+      "raw": 1132371,
+      "gzip": 384056,
+      "brotli": 330320,
+      "fileCount": 922
     },
     "method": {
       "schemaVersion": 1,

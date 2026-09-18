@@ -66,16 +66,14 @@ test("all advertised CodeBlock languages have distinct literal samples and lossl
     );
   }
 });
-test("selection reuses the public checkbox and Fader remains a Slider adapter", async () => {
+test("selection reuses public controls and vertical ranges use Slider directly", async () => {
   const table = await source(
     "packages/react/src/components/DataTable/DataTable.tsx",
   );
   assert.match(table, /<Checkbox/u);
   assert.doesNotMatch(table, /type=["']checkbox["']/u);
-  const fader = await source("packages/react/src/components/Fader/Fader.tsx");
-  assert.match(fader, /<Slider/u);
-  assert.match(fader, /orientation="vertical"/u);
-  assert.match(fader, /@deprecated/u);
+  const publicIndex = await source("packages/react/src/index.ts");
+  assert.doesNotMatch(publicIndex, /components\/Fader/u);
   const music = await source("apps/docs/src/showcase/scenes/music.preview.tsx");
   assert.doesNotMatch(music, /\bFader\b/u);
   assert.match(music, /orientation="vertical"/u);

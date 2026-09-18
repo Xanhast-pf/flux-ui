@@ -94,9 +94,9 @@ Use `Chart` or a separate text summary when axes and detailed inspection matter.
 ## Numeric and DAW-style controls
 
 `NumberField` is a native number input with `onValueChange(number | null)` and
-normal form, reset, minimum, maximum, step, and validation behavior. `Fader` uses
-the native Slider input with vertical presentation. Neither steals wheel input
-or starts an audio engine.
+normal form, reset, minimum, maximum, step, and validation behavior. Use
+`Slider orientation="vertical"` for fader-style range controls. Neither control
+steals wheel input or starts an audio engine.
 
 `Knob` is a named slider for numeric interaction:
 

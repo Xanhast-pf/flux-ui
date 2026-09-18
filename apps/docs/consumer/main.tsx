@@ -11,7 +11,6 @@ import {
   DataTable,
   Dialog,
   Drawer,
-  Fader,
   IconButton,
   Kbd,
   Knob,
@@ -33,6 +32,7 @@ import {
   Inline,
   Input,
   Sidebar,
+  Slider,
   Stack,
   Tabs,
   Text,
@@ -107,8 +107,9 @@ function ConsumerExtensions() {
       <Sparkline label="Consumer trend" values={[0, 1, null, 3, 2]} />
       <Inline gap="lg" align="center">
         <Knob aria-label="Consumer gain" value={gain} onValueChange={setGain} />
-        <Fader
-          aria-label="Consumer fader"
+        <Slider
+          aria-label="Consumer vertical slider"
+          orientation="vertical"
           value={gain}
           onChange={(event) => setGain(event.currentTarget.valueAsNumber)}
         />
@@ -322,10 +323,11 @@ function Consumer() {
                 aria-label="Hidden knob"
                 data-hidden-contract="knob"
               />
-              <Fader
+              <Slider
                 hidden
-                aria-label="Hidden fader"
-                data-hidden-contract="fader"
+                orientation="vertical"
+                aria-label="Hidden vertical slider"
+                data-hidden-contract="slider"
               />
               <LevelMeter
                 hidden

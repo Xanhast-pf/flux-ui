@@ -1,5 +1,7 @@
 # DataTable and Knob size investigation
 
+> **Historical size audit.** Measurements below describe the repository state at the time of this audit. The deprecated `Fader` compatibility wrapper was subsequently removed before 1.0.
+
 ## Result
 
 Incomplete. Both bundled entries still exceed their unchanged regression gates.

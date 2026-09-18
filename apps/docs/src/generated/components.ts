@@ -207,15 +207,6 @@ export const components = [
     sizeClass: "composite",
   },
   {
-    name: "Fader",
-    slug: "fader",
-    category: "Audio",
-    status: "alpha",
-    description:
-      "Vertical single native range input, not a multi-thumb widget.",
-    sizeClass: "primitive",
-  },
-  {
     name: "Field",
     slug: "field",
     category: "Inputs",
