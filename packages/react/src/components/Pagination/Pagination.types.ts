@@ -5,6 +5,8 @@ export interface PaginationRootProps extends ComponentPropsWithRef<"nav"> {
   onPageChange: (page: number) => void;
 }
 export type PaginationButtonProps = ComponentPropsWithRef<"button">;
+export type PaginationPreviousProps = PaginationButtonProps;
+export type PaginationNextProps = PaginationButtonProps;
 export interface PaginationPageProps extends Omit<
   PaginationButtonProps,
   "aria-current"

@@ -16,6 +16,7 @@ export const components = [
     description:
       "Destructive confirmations using the existing native modal foundation; backdrop clicks do not confirm or dismiss.",
     sizeClass: "overlay",
+    nonDomParts: ["AlertDialog.Root"],
   },
   {
     name: "AspectRatio",
@@ -179,6 +180,7 @@ export const components = [
     description:
       "Modal dialog composition built on the native top layer with automatic labeling and predictable dismissal.",
     sizeClass: "overlay",
+    nonDomParts: ["Dialog.Root"],
   },
   {
     name: "Drawer",
@@ -188,6 +190,7 @@ export const components = [
     description:
       "Edge-aligned modal panel for navigation and secondary workflows with native dialog semantics.",
     sizeClass: "overlay",
+    nonDomParts: ["Drawer.Root"],
   },
   {
     name: "DropdownMenu",
@@ -197,6 +200,7 @@ export const components = [
     description:
       "Flat action menus with roving focus, typeahead, unavailable-item handling and native dismissal.",
     sizeClass: "overlay",
+    nonDomParts: ["DropdownMenu.Root"],
   },
   {
     name: "EmptyState",
@@ -214,6 +218,7 @@ export const components = [
     description:
       "Accessible form-field composition that wires labels, descriptions, errors, and shared control state.",
     sizeClass: "primitive",
+    nonDomParts: ["Field.Control"],
   },
   {
     name: "Fieldset",
@@ -363,6 +368,7 @@ export const components = [
     description:
       "Non-modal anchored content with native top-layer dismissal and scoped themes.",
     sizeClass: "overlay",
+    nonDomParts: ["Popover.Root"],
   },
   {
     name: "Progress",
@@ -415,6 +421,7 @@ export const components = [
     description:
       "Persistent, non-modal side navigation that shares layout with the content.",
     sizeClass: "interactive",
+    nonDomParts: ["Sidebar.Root"],
   },
   {
     name: "Skeleton",
@@ -552,6 +559,7 @@ export const components = [
     description:
       "Scoped notification queues with paused dismissal timers and optional actions.",
     sizeClass: "interactive",
+    nonDomParts: ["Toast.Provider"],
   },
   {
     name: "Toggle",

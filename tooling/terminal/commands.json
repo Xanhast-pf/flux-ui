@@ -185,6 +185,7 @@
       "--test",
       "--test-reporter=./tooling/terminal/node-reporter.mjs",
       "scripts/test/docs-catalog.test.mjs",
+      "scripts/test/public-contracts.test.mjs",
       "scripts/test/showcase*.test.mjs"
     ]
   ],

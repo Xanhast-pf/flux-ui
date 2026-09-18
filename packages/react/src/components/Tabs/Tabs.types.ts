@@ -20,7 +20,9 @@ export interface TabsListProps extends ComponentPropsWithRef<"div"> {
 export interface TabsTabProps extends ComponentPropsWithRef<"button"> {
   value: string;
 }
+export type TabsTriggerProps = TabsTabProps;
 export interface TabsPanelProps extends ComponentPropsWithRef<"div"> {
   padding?: "none" | "md" | undefined;
   value: string;
 }
+export type TabsContentProps = TabsPanelProps;

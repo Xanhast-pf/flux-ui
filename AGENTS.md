@@ -439,6 +439,13 @@ appropriate combination of:
 - a headless hook or low-level primitive only when the component has
   behavior worth reusing independently of its presentation.
 
+The generated public-contract check derives callable exports and compound
+parts from TypeScript. DOM-backed public surfaces must retain `className`
+and `style` together, and every runtime component export must have a named
+public `*Props` type. State-only controller/provider parts must be declared
+locally through `component.meta.json` `nonDomParts`; do not add central
+exception registries.
+
 Do **not** expose internal reducers, private refs,
 implementation-specific state machines or styling internals as public
 API.

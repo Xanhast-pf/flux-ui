@@ -10,3 +10,5 @@ export interface AvatarProps extends Omit<
   shape?: "circle" | "square" | undefined;
   size?: "sm" | "md" | "lg" | undefined;
 }
+
+export type AvatarGroupProps = ComponentPropsWithRef<"div">;

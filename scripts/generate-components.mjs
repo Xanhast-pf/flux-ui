@@ -2,6 +2,7 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { sizeClasses } from "../tooling/size/budgets.mjs";
 import { format } from "prettier";
+import { createPublicContracts } from "./lib/public-contracts.mjs";
 import { generateShowcaseRecipes } from "./lib/showcase-recipes.mjs";
 
 const root = process.cwd();
@@ -9,6 +10,7 @@ const componentsDir = resolve(root, "packages/react/src/components");
 const reactIndexPath = resolve(root, "packages/react/src/index.ts");
 const docsRegistryPath = resolve(root, "apps/docs/src/generated/components.ts");
 const docsHealthPath = resolve(root, "apps/docs/src/generated/health.ts");
+const docsContractsPath = resolve(root, "apps/docs/src/generated/contracts.ts");
 const sizeBaselinePath = resolve(root, "tooling/size/baseline.json");
 const perfBaselinePath = resolve(root, "tooling/perf/baseline.json");
 const checkOnly = process.argv.includes("--check");
@@ -41,6 +43,13 @@ async function readJson(path) {
 
 const componentNames = await listComponentNames();
 
+const { contracts: publicContracts, errors: contractErrors } =
+  createPublicContracts(root);
+if (contractErrors.length > 0) {
+  console.error(contractErrors.join("\n"));
+  process.exit(1);
+}
+
 const metas = await Promise.all(
   componentNames.map(async (name) => {
     const raw = await readFile(
@@ -72,6 +81,16 @@ const registry = await formatTypeScript(
     `export const components = ${JSON.stringify(metas, null, 2)} as const;`,
     "",
     "export type ComponentMeta = (typeof components)[number];",
+    "",
+  ].join("\n"),
+);
+
+const contractsRegistry = await formatTypeScript(
+  [
+    "// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.",
+    `export const publicContracts = ${JSON.stringify(publicContracts, null, 2)} as const;`,
+    "",
+    "export type PublicContract = (typeof publicContracts)[number];",
     "",
   ].join("\n"),
 );
@@ -148,6 +167,7 @@ const results = await Promise.all([
   generateShowcaseRecipes(root, checkOnly),
   ensure(reactIndexPath, index),
   ensure(docsRegistryPath, registry),
+  ensure(docsContractsPath, contractsRegistry),
   ensure(docsHealthPath, healthRegistry),
 ]);
 if (checkOnly && results.some((result) => !result)) process.exitCode = 1;

@@ -1,5 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { createPublicContracts } from "./lib/public-contracts.mjs";
 import {
   validateExampleFiles,
   validateShowcaseFiles,
@@ -20,10 +21,14 @@ const metadata = await Promise.all(
   ),
 );
 const filenames = await readdir(resolve(root, "apps/docs/src/examples"));
-const errors = validateExampleFiles(
-  metadata.map((entry) => entry.slug),
-  filenames,
-);
+const { errors: contractErrors } = createPublicContracts(root);
+const errors = [
+  ...contractErrors,
+  ...validateExampleFiles(
+    metadata.map((entry) => entry.slug),
+    filenames,
+  ),
+];
 const showcaseFiles = await readdir(
   resolve(root, "apps/docs/src/showcase/scenes"),
 );
