@@ -4,6 +4,7 @@ import { Grid } from "../components/Grid/Grid.js";
 import { Heading } from "../components/Heading/Heading.js";
 import { Inline } from "../components/Inline/Inline.js";
 import { Link } from "../components/Link/Link.js";
+import { Knob } from "../components/Knob/Knob.js";
 import { Meter } from "../components/Meter/Meter.js";
 import { Slider } from "../components/Slider/Slider.js";
 import { Stack } from "../components/Stack/Stack.js";
@@ -30,6 +31,12 @@ describe("Public semantic type contracts", () => {
         <Link href="/download" variant="solid" tone="neutral" size="sm">
           Download
         </Link>
+        <Knob aria-label="Uncontrolled gain" defaultValue={30} />
+        <Knob
+          aria-label="Controlled gain"
+          value={30}
+          onValueChange={() => {}}
+        />
         <Switch aria-label="Alerts" disabled />
         <Slider aria-label="Level" disabled />
       </>
@@ -60,6 +67,17 @@ describe("Public semantic type contracts", () => {
         Docs
       </Link>
     );
+    // @ts-expect-error Controlled knobs require an owner callback.
+    const ownerlessKnob = <Knob aria-label="Ownerless gain" value={30} />;
+    const ambiguousKnob = (
+      // @ts-expect-error Controlled knobs cannot also declare an uncontrolled default.
+      <Knob
+        aria-label="Ambiguous gain"
+        value={30}
+        defaultValue={20}
+        onValueChange={() => {}}
+      />
+    );
     // @ts-expect-error Native checkbox switches have no read-only interaction mode.
     const readonlySwitch = <Switch aria-label="Alerts" readOnly />;
     // @ts-expect-error Native range inputs have no read-only interaction mode.
@@ -74,8 +92,10 @@ describe("Public semantic type contracts", () => {
       themeEdge,
       linkTone,
       linkSize,
+      ownerlessKnob,
+      ambiguousKnob,
       readonlySwitch,
       readonlySlider,
-    ]).toHaveLength(10);
+    ]).toHaveLength(12);
   });
 });

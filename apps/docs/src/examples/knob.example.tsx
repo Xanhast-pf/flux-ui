@@ -28,7 +28,7 @@ export default {
     [
       "value / defaultValue",
       "number",
-      "Controlled/uncontrolled numeric value.",
+      "Choose one ownership mode: controlled value requires onValueChange; uncontrolled mode may use defaultValue.",
     ],
     [
       "min / max / step",
@@ -36,6 +36,11 @@ export default {
       "Finite increasing domain and positive step.",
     ],
     ["scale", "linear | log", "Log requires a positive minimum."],
+    [
+      "onValueChange",
+      "(number) => void",
+      "Required when value is controlled; optional for uncontrolled notifications.",
+    ],
     [
       "onValueCommit",
       "(number) => void",
