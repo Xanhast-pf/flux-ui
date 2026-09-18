@@ -1,5 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { createComponentReadiness } from "./lib/component-readiness.mjs";
 import { createPublicContracts } from "./lib/public-contracts.mjs";
 import {
   validateExampleFiles,
@@ -21,9 +22,11 @@ const metadata = await Promise.all(
   ),
 );
 const filenames = await readdir(resolve(root, "apps/docs/src/examples"));
-const { errors: contractErrors } = createPublicContracts(root);
+const { contracts, errors: contractErrors } = createPublicContracts(root);
+const readiness = createComponentReadiness(root, contracts);
 const errors = [
   ...contractErrors,
+  ...readiness.errors,
   ...validateExampleFiles(
     metadata.map((entry) => entry.slug),
     filenames,

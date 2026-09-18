@@ -38,15 +38,15 @@ export function ConsumerTabs() {
       >
         <Tabs.List aria-label="Built tabs sections" wrap={wrap}>
           {items.map((item) => (
-            <Tabs.Trigger key={item} value={item} disabled={item === "Billing"}>
+            <Tabs.Tab key={item} value={item} disabled={item === "Billing"}>
               {item}
-            </Tabs.Trigger>
+            </Tabs.Tab>
           ))}
         </Tabs.List>
         {items.map((item) => (
-          <Tabs.Content key={item} value={item}>
+          <Tabs.Panel key={item} value={item}>
             {item} built panel
-          </Tabs.Content>
+          </Tabs.Panel>
         ))}
       </Tabs.Root>
       <Button>After built Tabs</Button>

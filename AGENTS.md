@@ -46,8 +46,10 @@ Core promise:
     an architecture bug.
 
 8.  **Generated surfaces are generated.** Never hand-edit
-    \`packages/react/src/index.ts\` or
-    \`apps/docs/src/generated/components.ts\`.
+    \`packages/react/src/index.ts\`,
+    \`apps/docs/src/generated/components.ts\`,
+    \`apps/docs/src/generated/contracts.ts\`, or
+    \`apps/docs/src/generated/readiness.ts\`.
 
 9.  **No speculative complexity.** Do not add infrastructure,
     dependencies, abstraction layers or variants without a demonstrated
@@ -411,7 +413,19 @@ Use established patterns:
 
 - \`checked\` / \`defaultChecked\` / \`onCheckedChange\`
 
-Do not invent component-specific synonyms.
+- \`pressed\` / \`defaultPressed\` / \`onPressedChange\`
+
+Do not invent component-specific synonyms. The compiler-derived public-contract gate enforces these callback/value families whenever a Flux convenience change callback is exposed.
+
+### Component lifecycle
+
+`component.meta.json` lifecycle is `alpha`, `beta`, or `stable`.
+
+- `alpha` may carry promotion blockers while an API is still being shaped.
+- `beta` requires all machine-verifiable promotion evidence reported by `pnpm flux component readiness`.
+- `stable` requires the same evidence plus `stableSince` with the semver release where the stability promise began.
+
+Changing lifecycle status remains a maintainer product/API decision. Automation proves prerequisites; it does not claim that an API has had enough real-world use or that a component is production-ready in every environment.
 
 ### Composition before configuration
 
@@ -738,6 +752,10 @@ The following are generated and committed:
 
 - \`apps/docs/src/generated/components.ts\`
 
+- \`apps/docs/src/generated/contracts.ts\`
+
+- \`apps/docs/src/generated/readiness.ts\`
+
 Run \`pnpm flux maintain generate\`. CI uses \`pnpm flux check generated\` and fails on
 drift.
 
@@ -767,6 +785,8 @@ pnpm flux build storybook
 pnpm flux component new Name Category \[sizeClass\]
 
 pnpm flux component doctor Name
+
+pnpm flux component readiness
 
 pnpm flux maintain generate
 

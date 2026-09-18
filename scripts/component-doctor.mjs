@@ -1,6 +1,7 @@
 import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { validSizeClasses } from "../tooling/size/budgets.mjs";
+import { createComponentReadiness } from "./lib/component-readiness.mjs";
 import { createPublicContracts } from "./lib/public-contracts.mjs";
 
 const name = process.argv[2];
@@ -68,12 +69,32 @@ try {
 } catch {
   failed = true;
 }
-const { errors: contractErrors } = createPublicContracts(process.cwd());
+const { contracts, errors: contractErrors } = createPublicContracts(
+  process.cwd(),
+);
 for (const error of contractErrors.filter((message) =>
-  message.startsWith(`${name}:`),
+  message.startsWith(name + ":"),
 )) {
   failed = true;
-  console.error(`✗ ${error}`);
+  console.error("✗ " + error);
+}
+const readiness = createComponentReadiness(process.cwd(), contracts);
+const componentReadiness = readiness.components.find(
+  (component) => component.name === name,
+);
+for (const error of readiness.errors.filter((message) =>
+  message.startsWith(name + ":"),
+)) {
+  failed = true;
+  console.error("✗ " + error);
+}
+if (componentReadiness !== undefined) {
+  if (componentReadiness.blockers.length === 0)
+    console.log("✓ eligible for beta review");
+  else
+    console.log(
+      "i alpha promotion blockers: " + componentReadiness.blockers.join("; "),
+    );
 }
 if (failed) process.exitCode = 1;
 else console.log(`\n${name} satisfies the Flux component scaffold contract.`);

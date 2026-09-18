@@ -2,6 +2,7 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { sizeClasses } from "../tooling/size/budgets.mjs";
 import { format } from "prettier";
+import { createComponentReadiness } from "./lib/component-readiness.mjs";
 import { createPublicContracts } from "./lib/public-contracts.mjs";
 import { generateShowcaseRecipes } from "./lib/showcase-recipes.mjs";
 
@@ -11,6 +12,7 @@ const reactIndexPath = resolve(root, "packages/react/src/index.ts");
 const docsRegistryPath = resolve(root, "apps/docs/src/generated/components.ts");
 const docsHealthPath = resolve(root, "apps/docs/src/generated/health.ts");
 const docsContractsPath = resolve(root, "apps/docs/src/generated/contracts.ts");
+const docsReadinessPath = resolve(root, "apps/docs/src/generated/readiness.ts");
 const sizeBaselinePath = resolve(root, "tooling/size/baseline.json");
 const perfBaselinePath = resolve(root, "tooling/perf/baseline.json");
 const checkOnly = process.argv.includes("--check");
@@ -47,6 +49,12 @@ const { contracts: publicContracts, errors: contractErrors } =
   createPublicContracts(root);
 if (contractErrors.length > 0) {
   console.error(contractErrors.join("\n"));
+  process.exit(1);
+}
+
+const componentReadiness = createComponentReadiness(root, publicContracts);
+if (componentReadiness.errors.length > 0) {
+  console.error(componentReadiness.errors.join("\n"));
   process.exit(1);
 }
 
@@ -91,6 +99,25 @@ const contractsRegistry = await formatTypeScript(
     `export const publicContracts = ${JSON.stringify(publicContracts, null, 2)} as const;`,
     "",
     "export type PublicContract = (typeof publicContracts)[number];",
+    "",
+  ].join("\n"),
+);
+
+const readinessRegistry = await formatTypeScript(
+  [
+    "// GENERATED FILE. Run pnpm flux maintain generate; do not edit manually.",
+    "export const readiness = " +
+      JSON.stringify(
+        {
+          summary: componentReadiness.summary,
+          components: componentReadiness.components,
+        },
+        null,
+        2,
+      ) +
+      " as const;",
+    "",
+    "export type ReadinessSnapshot = typeof readiness;",
     "",
   ].join("\n"),
 );
@@ -168,6 +195,7 @@ const results = await Promise.all([
   ensure(reactIndexPath, index),
   ensure(docsRegistryPath, registry),
   ensure(docsContractsPath, contractsRegistry),
+  ensure(docsReadinessPath, readinessRegistry),
   ensure(docsHealthPath, healthRegistry),
 ]);
 if (checkOnly && results.some((result) => !result)) process.exitCode = 1;

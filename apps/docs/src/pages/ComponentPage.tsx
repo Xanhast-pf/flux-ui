@@ -196,6 +196,7 @@ function ComponentDetail({
                 <Table.Row>
                   <Table.ColumnHeader>Part</Table.ColumnHeader>
                   <Table.ColumnHeader>Customization</Table.ColumnHeader>
+                  <Table.ColumnHeader>State model</Table.ColumnHeader>
                   <Table.ColumnHeader>CSS variables</Table.ColumnHeader>
                 </Table.Row>
               </Table.Header>
@@ -209,6 +210,11 @@ function ComponentDetail({
                       {part.kind === "controller"
                         ? "State/composition only"
                         : part.escapeHatches.join(" · ")}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {"stateModels" in part
+                        ? part.stateModels.join(" · ")
+                        : "—"}
                     </Table.Cell>
                     <Table.Cell>
                       {part.cssVariables.length === 0 ? (

@@ -13,15 +13,15 @@ export default function Fixture({ count, revision }: ScenarioProps) {
           >
             <Tabs.List aria-label={id}>
               {sections.map((value) => (
-                <Tabs.Trigger key={value} value={value}>
+                <Tabs.Tab key={value} value={value}>
                   {value}
-                </Tabs.Trigger>
+                </Tabs.Tab>
               ))}
             </Tabs.List>
             {sections.map((value) => (
-              <Tabs.Content key={value} value={value}>
+              <Tabs.Panel key={value} value={value}>
                 {value}
-              </Tabs.Content>
+              </Tabs.Panel>
             ))}
           </Tabs.Root>
         ),

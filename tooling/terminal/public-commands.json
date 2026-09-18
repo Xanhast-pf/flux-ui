@@ -464,6 +464,22 @@
     "options": []
   },
   {
+    "path": "component readiness",
+    "task": "component:readiness",
+    "summary": "Report lifecycle status and machine-verifiable promotion evidence. Read-only.",
+    "audience": "maintainer",
+    "writes": "none",
+    "when": "Use before reviewing Core components for beta or stable promotion.",
+    "usage": "pnpm flux component readiness",
+    "examples": [
+      "pnpm flux component readiness",
+      "pnpm flux component readiness --json"
+    ],
+    "minArgs": 0,
+    "maxArgs": 0,
+    "options": ["--json"]
+  },
+  {
     "path": "size",
     "task": "size",
     "summary": "Enforce component, aggregate and icon size contracts. Read-only except measurement/cache output.",
