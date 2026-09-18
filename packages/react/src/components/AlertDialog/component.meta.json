@@ -4,5 +4,6 @@
   "category": "Overlays",
   "status": "alpha",
   "description": "Destructive confirmations using the existing native modal foundation; backdrop clicks do not confirm or dismiss.",
-  "sizeClass": "overlay"
+  "sizeClass": "overlay",
+  "nonDomParts": ["AlertDialog.Root"]
 }

@@ -1,6 +1,7 @@
 import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { validSizeClasses } from "../tooling/size/budgets.mjs";
+import { createPublicContracts } from "./lib/public-contracts.mjs";
 
 const name = process.argv[2];
 if (!name) {
@@ -66,6 +67,13 @@ try {
   }
 } catch {
   failed = true;
+}
+const { errors: contractErrors } = createPublicContracts(process.cwd());
+for (const error of contractErrors.filter((message) =>
+  message.startsWith(`${name}:`),
+)) {
+  failed = true;
+  console.error(`✗ ${error}`);
 }
 if (failed) process.exitCode = 1;
 else console.log(`\n${name} satisfies the Flux component scaffold contract.`);

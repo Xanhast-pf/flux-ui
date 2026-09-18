@@ -122,6 +122,21 @@ Layout components may support an explicit composition escape hatch when forcing 
 
 Do not introduce a library-wide `as`/polymorphic generic unless a demonstrated use case justifies its TypeScript and semantic cost.
 
+## Machine-enforced public contract
+
+The public component contract is derived from the built TypeScript source rather than maintained as a second handwritten registry. `pnpm flux maintain generate` writes `apps/docs/src/generated/contracts.ts`, and normal generated-file/docs checks fail when that surface is stale or invalid.
+
+For every public callable component or compound part, Flux requires:
+
+- a named exported `*Props` type matching the runtime export;
+- `className` and `style` together for DOM-backed surfaces;
+- a public family to retain at least one customizable DOM-backed surface;
+- typed `--flux-*` component CSS variables to appear automatically in the generated docs contract.
+
+State-only roots/providers that intentionally render no DOM node are the exception. They must be listed explicitly in that component's `component.meta.json` `nonDomParts` field. The generator rejects unknown, stale, or unnecessary exceptions.
+
+The docs separate the generated **Public contract** from curated **API highlights**. Highlights teach the common path; the generated contract and linked TypeScript source define the actual public structure.
+
 ## API review checklist
 
 Before adding or approving a public API, ask:

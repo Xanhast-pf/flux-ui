@@ -20,6 +20,7 @@ import {
   Toggle,
 } from "@flux-ui/react";
 import { lazy, Suspense, useState, type ReactElement } from "react";
+import { publicContracts } from "../generated/contracts.js";
 import { health } from "../generated/health.js";
 import { catalog, type ComponentExample } from "../lib/examples.js";
 import { formatBytes, REPOSITORY_URL } from "../lib/format.js";
@@ -71,6 +72,9 @@ function ComponentDetail({
   const [compact, setCompact] = useState(false);
   const slug = entry.slug;
   const measurement = health.size.components.find((item) => item.slug === slug);
+  const publicContract = publicContracts.find((item) => item.slug === slug);
+  if (publicContract === undefined)
+    throw new Error(`Missing generated public contract for ${slug}.`);
   const { Preview, code, props, notes, previewLayout = "center" } = example;
   return (
     <Stack gap="lg">
@@ -172,13 +176,61 @@ function ComponentDetail({
       <Stack as="section" gap="lg">
         <Stack gap="md">
           <Heading level={2} size="lg">
-            API at a glance
+            Public contract
+          </Heading>
+          <Text as="p" variant="body" tone="muted">
+            Generated from the published TypeScript component surface.
+            DOM-backed parts keep the listed escape hatches; controller parts
+            intentionally render no customizable DOM node.
+          </Text>
+          <ScrollArea
+            aria-label={`${entry.name} public contract`}
+            axis="horizontal"
+          >
+            <Table.Root>
+              <Table.Caption>
+                Public component parts and customization escape hatches derived
+                from TypeScript.
+              </Table.Caption>
+              <Table.Header>
+                <Table.Row>
+                  <Table.ColumnHeader>Part</Table.ColumnHeader>
+                  <Table.ColumnHeader>Customization</Table.ColumnHeader>
+                  <Table.ColumnHeader>CSS variables</Table.ColumnHeader>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {publicContract.parts.map((part) => (
+                  <Table.Row key={part.path}>
+                    <Table.RowHeader>
+                      <Code>{part.path}</Code>
+                    </Table.RowHeader>
+                    <Table.Cell>
+                      {part.kind === "controller"
+                        ? "State/composition only"
+                        : part.escapeHatches.join(" · ")}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {part.cssVariables.length === 0 ? (
+                        "—"
+                      ) : (
+                        <Code>{part.cssVariables.join(", ")}</Code>
+                      )}
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table.Root>
+          </ScrollArea>
+          <Heading level={2} size="lg">
+            API highlights
           </Heading>
           <ScrollArea aria-label={`${entry.name} props`} axis="horizontal">
             <Table.Root>
               <Table.Caption>
-                Common props and composition points; native element props remain
-                available.
+                Curated common props and composition points. The generated
+                public contract above and linked TypeScript source are
+                authoritative.
               </Table.Caption>
               <Table.Header>
                 <Table.Row>

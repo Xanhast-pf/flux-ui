@@ -19,7 +19,10 @@ for (const component of components) {
     ).toBeVisible();
     await expect(page.locator(".preview-content")).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "API at a glance", exact: true }),
+      page.getByRole("heading", { name: "Public contract", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "API highlights", exact: true }),
     ).toBeVisible();
     await page.getByRole("tab", { name: "Code", exact: true }).click();
     await expect(

@@ -3,5 +3,7 @@ export type {
   PaginationRootProps,
   PaginationButtonProps,
   PaginationPageProps,
+  PaginationPreviousProps,
+  PaginationNextProps,
   PaginationEllipsisProps,
 } from "./Pagination.types.js";
