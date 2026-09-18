@@ -97,6 +97,7 @@ test("public dispatch preserves existing tasks and argument arrays", () => {
 });
 
 test("pipelines keep required gate order and stop on failure", async () => {
+  const repositoryRoot = fileURLToPath(new URL("../../", import.meta.url));
   assert.deepEqual(
     commands.check.map((command) => command[2]),
     [
@@ -124,7 +125,7 @@ test("pipelines keep required gate order and stop on failure", async () => {
   const calls = [];
   const status = await runPipeline("check", [], async (command, options) => {
     calls.push(command);
-    assert.match(options.cwd, /flux-ui[/\\]?$/u);
+    assert.equal(options.cwd, repositoryRoot);
     assert.ok(options.label);
     return { status: command[2] === "build" ? 7 : 0 };
   });

@@ -25,12 +25,13 @@ export function executableCommand(
   platform = process.platform,
 ) {
   const [program, ...args] = command;
-  const entry = program === "pnpm" ? env.npm_execpath : undefined;
-  if (entry || program === "node")
-    return [process.execPath, entry ? [entry, ...args] : args, {}];
+  // Deliberately do not execute paths supplied through the environment.
+  // The environment is still accepted for API compatibility with callers.
+  void env;
+  if (program === "node") return [process.execPath, args, {}];
   if (platform === "win32" && program === "pnpm") {
     return [
-      env.ComSpec || env.comspec || "cmd.exe",
+      "cmd.exe",
       ["/d", "/s", "/c", `"pnpm.cmd ${args.map(batchArgument).join(" ")}"`],
       { windowsVerbatimArguments: true },
     ];

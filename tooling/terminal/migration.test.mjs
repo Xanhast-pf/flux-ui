@@ -93,19 +93,26 @@ test("size selection reaches only measurement; other focused task arguments surv
   assert.equal(commandLabel(taskCommand("bible:check")), "Coding Bible");
 });
 
-test("Windows pnpm executable and npm-provided JS entry preserve argv", () => {
-  assert.deepEqual(executableCommand(["pnpm", "exec", "tsc"], {}, "win32"), [
+test("Windows pnpm executable preserves argv without trusting environment paths", () => {
+  const expected = [
     "cmd.exe",
     ["/d", "/s", "/c", '"pnpm.cmd ^"exec^" ^"tsc^""'],
     { windowsVerbatimArguments: true },
-  ]);
+  ];
+  assert.deepEqual(
+    executableCommand(["pnpm", "exec", "tsc"], {}, "win32"),
+    expected,
+  );
   assert.deepEqual(
     executableCommand(
       ["pnpm", "exec", "tsc"],
-      { npm_execpath: "C:\\tools\\pnpm.cjs" },
+      {
+        npm_execpath: "C:\\untrusted\\pnpm.cjs",
+        ComSpec: "C:\\untrusted\\cmd.exe",
+      },
       "win32",
     ),
-    [process.execPath, ["C:\\tools\\pnpm.cjs", "exec", "tsc"], {}],
+    expected,
   );
 });
 
