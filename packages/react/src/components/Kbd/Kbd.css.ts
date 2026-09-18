@@ -11,7 +11,7 @@ export const kbd = style({
   borderRadius: `var(${cssVars.radius.sm})`,
   background: `var(${cssVars.color.surfaceSubtle})`,
   color: `var(${cssVars.color.textMuted})`,
-  fontFamily: "ui-monospace, monospace",
+  fontFamily: `var(${cssVars.font.mono})`,
   fontSize: "0.75rem",
   lineHeight: 1.75,
   whiteSpace: "nowrap",

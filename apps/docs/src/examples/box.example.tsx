@@ -21,6 +21,11 @@ export default {
       "Named gaps or numbered token steps; not arbitrary CSS.",
     ],
     [
+      "paddingBlockStart / paddingBlockEnd / paddingInlineStart / paddingInlineEnd",
+      "LayoutGap",
+      "Logical edge overrides for one-off spacing without physical-direction props.",
+    ],
+    [
       "surface / border / radius",
       "Finite variants",
       "Shared static surface treatment; className and style remain escape hatches.",

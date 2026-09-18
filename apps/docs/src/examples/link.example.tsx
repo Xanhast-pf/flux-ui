@@ -15,7 +15,11 @@ export default {
       "text | navigation | solid | soft | outline | ghost",
       "Anchor appearance, sharing the button action recipe.",
     ],
-    ["tone / size", "Action variants", "Shared colors and control sizing."],
+    [
+      "tone / size",
+      "Action-style variants only",
+      "Available with solid, soft, outline or ghost; text and navigation links reject these no-op combinations.",
+    ],
     [
       "href / download / ref",
       "Native anchor props",

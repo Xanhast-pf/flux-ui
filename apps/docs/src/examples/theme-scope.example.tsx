@@ -18,9 +18,9 @@ export default {
     ],
     ["query", "boolean", "Opt into a named inline-size query container."],
     [
-      "Box props",
-      "Surface and native props",
-      "Semantic element, spacing, surface, native ref and attributes.",
+      "Surface / native props",
+      "Semantic element and surface options",
+      "Supports padding, paddingBlock, paddingInline, surface, border, radius, native ref and attributes.",
     ],
   ],
 } satisfies ComponentExample;

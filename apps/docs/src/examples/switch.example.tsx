@@ -9,6 +9,7 @@ export default {
     "The label must remain constant when a switch changes state. Use description text to explain the result.",
     "The real input owns keyboard, form submission, defaultChecked and reset semantics. There is no mixed state.",
     "Forced-colors mode restores the native checkbox indicator while retaining the switch role.",
+    "Native checkbox switches do not have a read-only interaction mode; use disabled when the control must not change.",
   ],
   props: [
     [

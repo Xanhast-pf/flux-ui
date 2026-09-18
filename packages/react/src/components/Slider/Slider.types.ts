@@ -1,7 +1,7 @@
 import type { ChangeEvent, ComponentPropsWithRef, CSSProperties } from "react";
 export interface SliderProps extends Omit<
   ComponentPropsWithRef<"input">,
-  "type" | "children" | "style"
+  "type" | "children" | "style" | "readOnly"
 > {
   orientation?: "horizontal" | "vertical" | undefined;
   /** Native appearance by default; custom exposes the track/thumb CSS variables. */

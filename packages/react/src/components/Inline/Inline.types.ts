@@ -15,8 +15,8 @@ export type InlineProps = SemanticProps<
   LayoutSpacing & {
     responsiveTo?: ResponsiveScope | undefined;
     gap?: ResponsiveValue<LayoutGap> | undefined;
-    align?: "start" | "center" | "end" | "baseline" | "stretch";
-    justify?: "start" | "center" | "end" | "between";
-    wrap?: boolean;
+    align?: "start" | "center" | "end" | "baseline" | "stretch" | undefined;
+    justify?: "start" | "center" | "end" | "between" | undefined;
+    wrap?: boolean | undefined;
   }
 >;
