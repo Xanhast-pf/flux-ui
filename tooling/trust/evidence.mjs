@@ -1,3 +1,4 @@
+import { taskCommand } from "../terminal/commands.mjs";
 import { createHash } from "node:crypto";
 
 export const CHECKS = {
@@ -5,42 +6,42 @@ export const CHECKS = {
     {
       id: "generated",
       label: "Generated files",
-      command: ["pnpm", "generate:check"],
+      command: taskCommand("generate:check"),
     },
     {
       id: "docs-coverage",
       label: "Docs coverage",
-      command: ["pnpm", "docs:check"],
+      command: taskCommand("docs:check"),
     },
     {
       id: "dogfood",
       label: "Dogfood",
-      command: ["pnpm", "dogfood:check"],
+      command: taskCommand("dogfood:check"),
     },
     {
       id: "format",
       label: "Formatting",
-      command: ["pnpm", "format:check"],
+      command: taskCommand("format:check"),
     },
     {
       id: "package-build",
       label: "Package builds",
-      command: ["pnpm", "build:packages"],
+      command: taskCommand("build:packages"),
     },
     {
       id: "lint",
       label: "ESLint",
-      command: ["pnpm", "lint"],
+      command: taskCommand("lint"),
     },
     {
       id: "types",
       label: "TypeScript",
-      command: ["pnpm", "typecheck"],
+      command: taskCommand("typecheck"),
     },
     {
       id: "knip",
       label: "Knip",
-      command: ["pnpm", "knip"],
+      command: taskCommand("knip"),
     },
     {
       id: "workspace-tests",
@@ -57,52 +58,52 @@ export const CHECKS = {
     {
       id: "size-tests",
       label: "Size contracts",
-      command: ["pnpm", "size:test"],
+      command: taskCommand("size:test"),
     },
     {
       id: "icons-tests",
       label: "Icon contracts",
-      command: ["pnpm", "icons:test"],
+      command: taskCommand("icons:test"),
     },
     {
       id: "docs-tests",
       label: "Docs contracts",
-      command: ["pnpm", "docs:test"],
+      command: taskCommand("docs:test"),
     },
     {
       id: "trust-tests",
       label: "Trust, release and terminal contracts",
-      command: ["pnpm", "trust:test"],
+      command: taskCommand("trust:test"),
     },
     {
       id: "dogfood-tests",
       label: "Dogfood contracts",
-      command: ["pnpm", "dogfood:test"],
+      command: taskCommand("dogfood:test"),
     },
     {
       id: "safety-tests",
       label: "Safety contracts",
-      command: ["pnpm", "safety:test"],
+      command: taskCommand("safety:test"),
     },
     {
       id: "feature-tests",
       label: "Feature contracts",
-      command: ["pnpm", "feature:test"],
+      command: taskCommand("feature:test"),
     },
     {
       id: "docs-build",
       label: "Docs production build",
-      command: ["pnpm", "--filter", "@flux-ui/docs", "build"],
+      command: taskCommand("build:docs"),
     },
     {
       id: "size",
       label: "Bundle budgets",
-      command: ["pnpm", "size"],
+      command: taskCommand("size"),
     },
     {
       id: "coding-bible",
       label: "Coding Bible",
-      command: ["pnpm", "bible:check"],
+      command: taskCommand("bible:check"),
     },
     {
       id: "release-size",
@@ -113,7 +114,7 @@ export const CHECKS = {
     {
       id: "storybook",
       label: "Storybook production build",
-      command: ["pnpm", "storybook:build"],
+      command: taskCommand("storybook:build"),
     },
     {
       id: "clean-tree",
@@ -125,17 +126,17 @@ export const CHECKS = {
     {
       id: "browser",
       label: "Chromium behavior and axe accessibility tests",
-      command: ["pnpm", "test:e2e"],
+      command: taskCommand("test:e2e"),
     },
     {
       id: "consumer",
       label: "Built public exports, declarations and browser composition",
-      command: ["pnpm", "consumer:check"],
+      command: taskCommand("consumer:check"),
     },
     {
       id: "performance",
       label: "Native-relative runtime regression gate",
-      command: ["pnpm", "perf"],
+      command: taskCommand("perf"),
     },
   ],
 };

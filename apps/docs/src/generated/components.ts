@@ -1,4 +1,4 @@
-// GENERATED FILE. Run `pnpm generate`; do not edit manually.
+// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.
 export const components = [
   {
     name: "Accordion",
@@ -348,15 +348,6 @@ export const components = [
     sizeClass: "primitive",
   },
   {
-    name: "Overflow",
-    slug: "overflow",
-    category: "Layout",
-    status: "alpha",
-    description:
-      "Responsive collection overflow with a native accessible picker; Tabs is the first supported collection.",
-    sizeClass: "overflow",
-  },
-  {
     name: "PageHeader",
     slug: "page-header",
     category: "Layout",
@@ -524,8 +515,8 @@ export const components = [
     category: "Navigation",
     status: "alpha",
     description:
-      "Keyboard-accessible tabbed navigation for switching between related panels without leaving the page.",
-    sizeClass: "interactive",
+      "Responsive tabbed navigation with automatic overflow menus and keyboard-accessible panels.",
+    sizeClass: "composite",
   },
   {
     name: "Tag",

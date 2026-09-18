@@ -1,3 +1,4 @@
+import { executableCommand } from "../terminal/executable.mjs";
 import { spawnSync } from "node:child_process";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -59,12 +60,11 @@ async function initialChecks() {
 const checks = await initialChecks();
 let failed = false;
 for (const check of selected) {
-  const [program, ...args] = check.command;
-  const executable =
-    process.platform === "win32" && program === "pnpm" ? "pnpm.cmd" : program;
+  const [executable, args, platformOptions] = executableCommand(check.command);
   console.log(`\nEvidence / ${check.label}`);
   const started = performance.now();
   const result = spawnSync(executable, args, {
+    ...platformOptions,
     stdio: check.output ? ["ignore", "pipe", "inherit"] : "inherit",
     encoding: "utf8",
     maxBuffer: 16 * 1024 * 1024,

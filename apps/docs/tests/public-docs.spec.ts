@@ -47,11 +47,11 @@ test("getting-started consumer and contributor guidance preserves content and sp
       name: "Repository contributor setup",
       exact: true,
     }),
-  ).toContainText("pnpm dev");
+  ).toContainText("pnpm flux dev");
   await expect(
     page.getByRole("region", {
       name: "Component scaffolding and generation",
       exact: true,
     }),
-  ).toContainText("pnpm component:new");
+  ).toContainText("pnpm flux component new");
 });

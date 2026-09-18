@@ -1,10 +1,10 @@
-import { scriptSource } from "../terminal/commands.mjs";
+import { commands, taskName } from "../terminal/commands.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const [packageJson, iconBase, toolbar, manifestJson, generatedIndex] =
-  await Promise.all([
+const [packageJson, iconBase, manifestJson, generatedIndex] = await Promise.all(
+  [
     readFile(
       new URL("../../packages/icons/package.json", import.meta.url),
       "utf8",
@@ -13,7 +13,6 @@ const [packageJson, iconBase, toolbar, manifestJson, generatedIndex] =
       new URL("../../packages/icons/src/IconBase.tsx", import.meta.url),
       "utf8",
     ),
-    readFile(new URL("../../package.json", import.meta.url), "utf8"),
     readFile(
       new URL("../../packages/icons/icons.json", import.meta.url),
       "utf8",
@@ -22,7 +21,8 @@ const [packageJson, iconBase, toolbar, manifestJson, generatedIndex] =
       new URL("../../packages/icons/src/index.ts", import.meta.url),
       "utf8",
     ),
-  ]);
+  ],
+);
 
 test("icons stay a standalone tree-shakeable package", () => {
   const pkg = JSON.parse(packageJson);
@@ -34,9 +34,11 @@ test("icons stay a standalone tree-shakeable package", () => {
 });
 
 test("the root size contract measures icons", () => {
-  const root = JSON.parse(toolbar);
-  assert.match(scriptSource(root.scripts, "size"), /icons:size/u);
-  assert.match(scriptSource(root.scripts, "size:release"), /icons:size/u);
+  for (const name of ["size", "size:changed", "size:release"]) {
+    assert.ok(
+      commands[name].some((command) => taskName(command) === "icons:size"),
+    );
+  }
 });
 
 test("icon manifest stays searchable, unique and fully exported", () => {

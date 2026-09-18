@@ -137,7 +137,7 @@ hydration, browser interaction latency, or screen-reader behavior. The existing
 browser performance baselines are unchanged by this tranche.
 
 Checkbox starts in the `primitive` size class (1,536 Brotli bytes). Its actual
-production size is pending the first `pnpm size:update`; no size number is inferred
+production size is pending the first `pnpm flux size baseline accept`; no size number is inferred
 from source length and no budget is increased for the new component.
 
 ## References

@@ -63,8 +63,8 @@ not global margins on headings or ad-hoc page CSS.
 
 ## Source mode and built-package proof
 
-Source aliases keep `pnpm dev` fast. They are not sufficient proof that the
-emitted public package works. `pnpm consumer:check` rebuilds packages, checks
+Source aliases keep `pnpm flux dev` fast. They are not sufficient proof that the
+emitted public package works. `pnpm flux test consumer` rebuilds packages, checks
 consumer types, and exercises a separate production fixture with no docs CSS or
 private source aliases. Its module-graph guard rejects private package source and
 docs implementation imports. Public theme/reset CSS is deliberately allowed.
@@ -75,7 +75,7 @@ report. Presence of a workflow file is not proof of a successful run.
 
 ## Ownership and validation
 
-`pnpm dogfood:check` checks ordinary JSX, imported UI, runtime element factories,
+`pnpm flux check dogfood` checks ordinary JSX, imported UI, runtime element factories,
 inline styling, and every application stylesheet. Exact selector/property
 contracts constrain illustration/data geometry and page positioning; declaration
 budgets remain an additional ceiling. Tests cover known bypasses, not a claim

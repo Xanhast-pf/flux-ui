@@ -276,7 +276,7 @@ function parsePerfBaseline(value: unknown): PerfBaseline {
 
   if (value["policyVersion"] !== 3) {
     throw new Error(
-      "Unsupported performance baseline policyVersion. Regenerate it with `pnpm perf:update`.",
+      "Unsupported performance baseline policyVersion. Regenerate it with `pnpm flux perf accept`.",
     );
   }
 
@@ -553,7 +553,7 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
 
   expect(
     baseline,
-    "No runtime performance baseline. Run `pnpm perf:update` and commit tooling/perf/baseline.json.",
+    "No runtime performance baseline. Run `pnpm flux perf accept` and commit tooling/perf/baseline.json.",
   ).not.toBeNull();
 
   if (baseline === null) {
@@ -567,7 +567,7 @@ test("Flux runtime overhead stays close to native browser baselines", async ({
       throw new Error(`Missing scenario baseline: ${scenario.name}`);
     expect(
       previousSummary.fixtureRevision,
-      "Performance fixture changed. Review the equivalent reference, run pnpm perf:update and commit the measured baseline; old timings are not comparable.",
+      "Performance fixture changed. Review the equivalent reference, run pnpm flux perf accept and commit the measured baseline; old timings are not comparable.",
     ).toBe(summary.fixtureRevision);
     const current = summary.ratios;
     const previous = previousSummary.ratios;

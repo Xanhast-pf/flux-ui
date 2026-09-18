@@ -1,3 +1,7 @@
+import {
+  commands as tasks,
+  taskName,
+} from "../../tooling/terminal/commands.mjs";
 import assert from "node:assert/strict";
 import {
   mkdtemp,
@@ -137,12 +141,9 @@ test("generated recipe checks catch drift and orphan output rather than silently
 });
 
 test("repair workflow refreshes source exports after lint and formatting edits", async () => {
-  const pkg = JSON.parse(
-    await readFile(new URL("../../package.json", import.meta.url), "utf8"),
-  );
-  const commands = pkg.scripts["check:fix"].split(" && ");
-  const format = commands.indexOf("pnpm format");
-  assert.ok(format > commands.indexOf("pnpm lint:fix"));
-  assert.equal(commands[format + 1], "pnpm generate");
-  assert.equal(commands.at(-1), "pnpm check");
+  const commands = tasks["check:fix"].map(taskName);
+  const format = commands.indexOf("format");
+  assert.ok(format > commands.indexOf("lint:fix"));
+  assert.equal(commands[format + 1], "generate");
+  assert.equal(commands.at(-1), "check");
 });

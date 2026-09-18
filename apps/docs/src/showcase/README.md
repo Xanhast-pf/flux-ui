@@ -39,7 +39,7 @@ list edit is needed.
 Metadata must stay lightweight because it is eagerly loaded. Do not import the
 preview or media assets from the metadata module.
 
-`pnpm docs:check` rejects missing/orphan pairs and invalid names. Browser fixtures
+`pnpm flux check docs` rejects missing/orphan pairs and invalid names. Browser fixtures
 discover all pairs, so a new world joins viewport and mood/a11y coverage without a
 second manual list. Add a focused behavior test for its own interactions.
 
@@ -64,5 +64,5 @@ Source audit and validation limits: [`docs/showcase-audit.md`](../../../../docs/
 
 Current composition and ownership contracts: [`docs/dogfooding.md`](../../../../docs/dogfooding.md).
 
-Run both `pnpm docs:check` and `pnpm dogfood:check`. Catalog coverage alone does
+Run both `pnpm flux check docs` and `pnpm flux check dogfood`. Catalog coverage alone does
 not prove that the surrounding page is using public components.

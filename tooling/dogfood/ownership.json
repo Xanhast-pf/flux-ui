@@ -365,7 +365,7 @@
     },
     "apps/docs/src/styles.css": {
       "owner": "documentation-shell",
-      "reason": "Reviewed sticky-shell positioning, accent token adapters, original vector specimens and the isolated benchmark frame. No control/layout/typography skins.",
+      "reason": "Reviewed sticky-shell positioning, accent token adapters, original vector specimens and the isolated benchmark frame. No control/layout/typography skins. App-owned viewport and preview native scrollbars mirror Flux theme colors without styling consumer documents.",
       "maxDeclarations": 347,
       "rules": {
         "[data-docs-accent=\"teal\"][data-flux-theme=\"light\"]": [
@@ -444,7 +444,31 @@
         "@media (forced-colors: active) / .collection-art::before": [
           "border-color"
         ],
-        "@media (forced-colors: active) / .identity-hero::after": ["display"]
+        "@media (forced-colors: active) / .identity-hero::after": ["display"],
+        "@supports not selector(::-webkit-scrollbar) / html, .preview-frame, .preview-stage": [
+          "scrollbar-width",
+          "scrollbar-color"
+        ],
+        "@media (forced-colors: none) / :is(html, .preview-frame, .preview-stage)::-webkit-scrollbar": [
+          "width",
+          "height"
+        ],
+        "@media (forced-colors: none) / :is(html, .preview-frame, .preview-stage)::-webkit-scrollbar-track": [
+          "background"
+        ],
+        "@media (forced-colors: none) / :is(html, .preview-frame, .preview-stage)::-webkit-scrollbar-thumb": [
+          "border",
+          "background",
+          "background-clip",
+          "border-radius"
+        ],
+        "@media (forced-colors: none) / :is(html, .preview-frame, .preview-stage)::-webkit-scrollbar-thumb:hover": [
+          "background-color"
+        ],
+        "@media (forced-colors: active) / html, .preview-frame, .preview-stage": [
+          "scrollbar-color",
+          "scrollbar-width"
+        ]
       }
     }
   },
@@ -478,12 +502,6 @@
     }
   ],
   "inlineGeometry": [
-    {
-      "file": "apps/docs/src/examples/overflow.preview.tsx",
-      "components": ["Overflow"],
-      "properties": ["maxInlineSize"],
-      "reason": "Switches the demonstration container width to exercise automatic overflow; all presentation remains owned by public Flux components."
-    },
     {
       "file": "apps/docs/src/App.tsx",
       "components": ["Sidebar.Layout"],
@@ -563,8 +581,8 @@
       "reason": "Placeholder dimensions represent loading examples without skinning public controls."
     },
     {
-      "file": "apps/docs/src/perf/scenarios/overflow.fixture.tsx",
-      "components": ["Overflow"],
+      "file": "apps/docs/src/perf/scenarios/tabs.fixture.tsx",
+      "components": ["Tabs.Root"],
       "properties": ["inlineSize"],
       "reason": "Matched workload phases constrain collection width to measure resize-driven overflow; public Flux components own all presentation."
     }

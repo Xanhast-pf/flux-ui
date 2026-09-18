@@ -101,7 +101,7 @@ for (const width of [320, 768, 1440]) {
     ).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(sidebar).toBeVisible();
-    // Hidden Overflow items are intentionally inert; visible page content must
+    // Hidden Tabs items are intentionally inert; visible page content must
     // remain interactive while the non-modal Sidebar is open.
     for (const element of await page.locator("[inert]").all()) {
       await expect(element).toBeHidden();

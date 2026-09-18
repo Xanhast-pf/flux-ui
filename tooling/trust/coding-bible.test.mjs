@@ -1,3 +1,4 @@
+import { commands } from "../terminal/commands.mjs";
 import assert from "node:assert/strict";
 import { readFile, mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -47,10 +48,9 @@ test("main declaration retains a concrete installed revision and explicit refres
   const pkg = JSON.parse(await read("package.json"));
   const ref = "github:Xanhast-pf/coding-bible#main&path:packages/analyzer";
   assert.equal(pkg.devDependencies["@coding-bible/analyzer"], ref);
-  assert.equal(
-    pkg.scripts["bible:refresh"],
-    "pnpm update -w @coding-bible/analyzer",
-  );
+  assert.deepEqual(commands["bible:refresh"], [
+    ["pnpm", "update", "-w", "@coding-bible/analyzer"],
+  ]);
   const lock = await read("pnpm-lock.yaml");
   assert.ok(lock.includes(`specifier: ${ref}`));
   // pnpm 10.34.5 drops resolution.path when serializing Git tarballs with an
@@ -123,6 +123,6 @@ test("manual pin preserves other manifest fields and explains the main workflow"
   });
   assert.ifError(result.error);
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /bible:refresh/u);
+  assert.match(result.stderr, /pnpm flux maintain bible refresh/u);
   assert.equal(await readFile(path, "utf8"), before);
 });

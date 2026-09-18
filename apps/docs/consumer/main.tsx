@@ -40,7 +40,7 @@ import {
 import { useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ConsumerInteractions } from "./interactions.js";
-import { ConsumerOverflow } from "./overflow.js";
+import { ConsumerTabs } from "./tabs.js";
 import { ConsumerRefinements } from "./refinements.js";
 interface ConsumerRow {
   id: string;
@@ -346,7 +346,7 @@ function Consumer() {
               <ConsumerExtensions />
               <ConsumerInteractions />
               <ConsumerRefinements />
-              <ConsumerOverflow />
+              <ConsumerTabs />
             </Stack>
           </Container>
         </Sidebar.Content>

@@ -10,13 +10,13 @@ Use Node 24 and the pinned pnpm 10.34.5 toolchain. From the repository root:
 
 ```sh
 pnpm install --frozen-lockfile
-pnpm format
-pnpm check
-pnpm test:e2e
-pnpm perf
+node tooling/terminal/tasks.mjs format
+pnpm flux check
+pnpm flux test e2e
+pnpm flux perf
 ```
 
-`pnpm format` normalizes source formatting; the check pipeline remains strict
+`node tooling/terminal/tasks.mjs format` normalizes source formatting; the check pipeline remains strict
 and non-mutating. Install Chromium with `pnpm --filter @flux-ui/docs exec
 playwright install --with-deps chromium` when needed. Commit generated or
 formatting changes before running the receipt wrapper's clean-tree check.
@@ -95,10 +95,10 @@ channel, enter Changesets prerelease mode before versioning:
 
 ```sh
 pnpm exec changeset pre enter alpha
-pnpm release:version
+pnpm flux release version
 pnpm install --lockfile-only
-pnpm format
-pnpm check
+node tooling/terminal/tasks.mjs format
+pnpm flux check
 ```
 
 Review and commit the versions, changelogs, prerelease state and lockfile. A stable
@@ -174,7 +174,7 @@ Checked against the official documentation on 2026-09-10:
 
 ### Built-package browser receipt
 
-The Browser job also runs `pnpm consumer:check`. The same-commit public evidence
+The Browser job also runs `pnpm flux test consumer`. The same-commit public evidence
 requires its successful `consumer` check and `consumer-tests.json`; missing,
 failed or flaky consumer results block publication. This tests built public
 exports and styles without docs aliases. It is not an npm-publishing attestation.

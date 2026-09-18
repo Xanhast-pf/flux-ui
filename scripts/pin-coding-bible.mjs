@@ -3,13 +3,13 @@ import { resolve } from "node:path";
 
 const ref = process.argv[2];
 if (!ref) {
-  console.error("Usage: pnpm bible:pin <tag-or-sha>");
+  console.error("Usage: pnpm flux maintain bible pin <tag-or-sha>");
   process.exit(1);
 }
 
 if (["main", "master"].includes(ref)) {
   console.error(
-    "bible:pin is the immutable debug path. For the main canary, declare #main and use pnpm bible:refresh.",
+    "bible:pin is the immutable debug path. For the main canary, declare #main and use pnpm flux maintain bible refresh.",
   );
   process.exit(1);
 }

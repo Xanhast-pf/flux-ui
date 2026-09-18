@@ -1,0 +1,9 @@
+{
+  "id": "tabs",
+  "label": "Responsive Tabs",
+  "unit": "five-tab collections",
+  "kind": "workload",
+  "maxCount": 1000,
+  "fixtureRevision": 2,
+  "description": "Independent responsive Tabs collections; update changes selection and available width. Absolute workload, without a fabricated native-equivalence ratio."
+}

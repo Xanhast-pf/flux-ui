@@ -6,7 +6,8 @@ export default {
   previewLayout: "fill",
   code,
   notes: [
-    "Lists scroll natively by default. Use wrap for multiple rows or orientation for vertical tabs.",
+    "Horizontal lists automatically keep the selected tab visible and move extra tabs into a Flux DropdownMenu. Use Tab to reach More tabs; its menu supports arrows, typeahead and Escape. Before measurement, native scrolling remains available with themed scrollbars.",
+    "Vertical and wrapping lists keep their explicit layout. Panel entrance motion respects reduced motion. Remove the former Overflow wrapper; ordinary Tabs now owns responsiveness.",
     "Trigger and Content are aliases for the established Tab and Panel parts.",
     "Keyboard-accessible switching between related panels.",
     "Use native attributes, className, style and composition for customization.",
@@ -28,7 +29,7 @@ export default {
     [
       "List.wrap",
       "boolean",
-      "Use wrapping instead of native horizontal scrolling.",
+      "Use multiple rows instead of automatic menu overflow.",
     ],
     ["List", "activateOnFocus / loopFocus", "Roving-focus behavior."],
     ["Tab / Panel", "value: string", "Associate each trigger with its panel."],

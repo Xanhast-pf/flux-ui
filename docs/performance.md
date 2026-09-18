@@ -85,10 +85,10 @@ Grid now uses the same 24px gap in both variants. Previous baseline revisions
 must not be compared to these changed workloads. The performance page marks old
 measurements as pending instead of presenting them as current evidence.
 
-Run `pnpm perf:smoke` to check execution and equivalence. Run the full `pnpm perf`
+Run `pnpm flux perf smoke` to check execution and equivalence. Run the full `pnpm flux perf`
 for historical ratio gates; it refuses a mismatched baseline fixture revision.
 Only after correctness, equivalence, and emitted package checks pass should a
-reviewed `pnpm perf:update` establish new measurements. This patch changes no
+reviewed `pnpm flux perf accept` establish new measurements. This patch changes no
 recorded timing values. New flux-only scenarios have smoke/browser coverage, not
 historical timing thresholds or input-latency percentile claims yet.
 

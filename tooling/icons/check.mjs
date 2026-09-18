@@ -43,7 +43,7 @@ for (const file of files) {
     if (previous === undefined) {
       failed = true;
       console.error(
-        `✖ ${name} has no icon size baseline. Run \`pnpm size:update\` and review tooling/icons/baseline.json.`,
+        `✖ ${name} has no icon size baseline. Run \`pnpm flux size icons accept\` and review tooling/icons/baseline.json.`,
       );
     } else {
       for (const metric of ["raw", "gzip", "brotli"]) {
@@ -93,7 +93,7 @@ for (const name of Object.keys(baseline.icons ?? {})) {
   if (!(name in measured)) {
     failed = true;
     console.error(
-      `✖ Icon baseline contains removed entry ${name}. Run \`pnpm size:update\` after reviewing the removal.`,
+      `✖ Icon baseline contains removed entry ${name}. Run \`pnpm flux size icons accept\` after reviewing the removal.`,
     );
   }
 }

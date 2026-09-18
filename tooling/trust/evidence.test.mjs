@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { taskCommand } from "../terminal/commands.mjs";
 import {
   CHECKS,
   createEvidence,
@@ -30,6 +31,12 @@ function receipt(job) {
     })),
   };
 }
+test("docs-build evidence uses the authoritative build and chunk-budget task", () => {
+  const check = CHECKS.quality.find(({ id }) => id === "docs-build");
+  assert.ok(check);
+  assert.equal(check.label, "Docs production build");
+  assert.deepEqual(check.command, taskCommand("build:docs"));
+});
 test("CI context rejects partial identity and local execution never becomes CI", () => {
   assert.throws(() => sourceContext({ GITHUB_ACTIONS: "true" }), /requires/u);
   assert.equal(sourceContext({}).kind, "local");

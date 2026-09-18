@@ -118,11 +118,11 @@ reduced motion, forced colors, responsive layouts and light/dark accessibility.
 Inclusion of these tests is not a passing result: run the pinned pipeline.
 
 ```bash
-pnpm generate
-pnpm size:update
-pnpm check:fix
-pnpm check:full
-pnpm perf
+pnpm flux maintain generate
+pnpm flux size baseline accept
+pnpm flux fix
+pnpm flux check full
+pnpm flux perf
 ```
 
 Review baseline changes. Do not run perf:update merely to accept a failure.

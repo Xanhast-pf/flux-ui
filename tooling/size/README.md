@@ -9,22 +9,22 @@ the React package's Vite toolchain; no new dependency is required.
 ## Commands
 
 ```bash
-pnpm size                  # check already-built dist + icon sizes (used by pnpm check)
-pnpm size:changed          # build packages + check changed components + icon sizes
-pnpm size:baseline:review  # build packages + read-only bundled baseline proposal
-pnpm size:update           # build packages + explicitly update bundled baseline
-pnpm size:aggregate:review # build packages + read-only aggregate proposal
-pnpm size:aggregate:update # build packages + accept aggregate only (approval required)
-pnpm size:release          # build packages + full check + stale-baseline protection + icon sizes
-pnpm size:test             # checker unit tests
-pnpm size:compare <base> [current-ref|working-tree] [--json] # isolated revision comparison
+pnpm flux size                  # check already-built dist + icon sizes (used by pnpm flux check)
+pnpm flux size changed          # build packages + check changed components + icon sizes
+pnpm flux size baseline review  # build packages + read-only bundled baseline proposal
+pnpm flux size baseline accept           # build packages + explicitly update bundled baseline
+pnpm flux size aggregate review # build packages + read-only aggregate proposal
+pnpm flux size aggregate accept # build packages + accept aggregate only (approval required)
+pnpm flux size release          # build packages + full check + stale-baseline protection + icon sizes
+pnpm flux test size             # checker unit tests
+pnpm flux size compare <base> [current-ref|working-tree] [--json] # isolated revision comparison
 ```
 
-`pnpm size` uses existing production output; run `pnpm build:packages` first
+`pnpm flux size` uses existing production output; run `pnpm flux build packages` first
 when checking source changes outside a workflow that already builds packages.
 The review and update commands build current source before measuring selected entries (all entries by default).
 Review is read-only with respect to baselines and source files; its build refreshes
-package output. Only `pnpm size:update` accepts and writes a bundled baseline.
+package output. Only `pnpm flux size baseline accept` accepts and writes a bundled baseline.
 
 `tooling/size/baseline.json` is committed. Schema version 2 keeps the legacy
 component `raw`, `gzip`, `brotli`, and metadata fields as emitted-graph diagnostics
@@ -39,9 +39,9 @@ Use when a deliberately reviewed change should accept all current bundled entrie
 Review the proposed bundled baseline changes before explicitly accepting them:
 
 ```bash
-pnpm size:baseline:review
+pnpm flux size baseline review
 # Only after explicit approval of the proposal:
-pnpm size:update
+pnpm flux size baseline accept
 ```
 
 Both commands measure all entries with the same production methodology as the
@@ -53,11 +53,11 @@ metadata. It records the bundling method and writes deterministic JSON through
 an exclusively created sibling file followed by atomic rename. Measurement or
 gate failure leaves the original untouched. A pre-existing `.pending` file is
 never overwritten. Updates cannot be combined with `--changed` or `--release`.
-`pnpm size:update` replaces the legacy combined update workflow: it now uses
+`pnpm flux size baseline accept` replaces the legacy combined update workflow: it now uses
 `--update-bundled-baseline`, does not update icon baselines, and does not run
 registry generation. The checker still rejects the legacy `--update-baseline`
 flag. Icon baseline acceptance remains a separate explicit operation through
-`pnpm icons:size:update`. Release verification is unchanged.
+`pnpm flux size icons accept`. Release verification is unchanged.
 
 ### Targeted acceptance
 
@@ -65,8 +65,8 @@ Use explicit component slugs when only reviewed components should advance while
 other regressions remain blocked:
 
 ```bash
-pnpm size:baseline:review -- --components=data-table,knob
-pnpm size:update -- --components=data-table,knob
+pnpm flux size baseline review -- --components=data-table,knob
+pnpm flux size baseline accept -- --components=data-table,knob
 ```
 
 The list must contain known, unique slugs, with no empty entries or whitespace.
@@ -89,7 +89,7 @@ prevent writing. The same atomic writer is used for full and targeted acceptance
 
 Targeted acceptance does not change absolute budgets or regression tolerance,
 does not update aggregate baselines, and does not hide unselected component
-failures in normal `pnpm size`, which still checks every public entry.
+failures in normal `pnpm flux size`, which still checks every public entry.
 
 ## Size classes
 
@@ -150,7 +150,7 @@ settings). Existing `components` fields and aggregate metrics retain their
 original meaning. Text output labels both measurements.
 
 Bundled measurements require their own accepted baselines. Until migration,
-`pnpm size` exits nonzero with explicit missing-bundled-baseline errors while
+`pnpm flux size` exits nonzero with explicit missing-bundled-baseline errors while
 still displaying both measurement families and aggregate failures. JSON keeps
 legacy `components`, adds the explicit `emittedGraphs` family, and reports
 `componentGates` alongside `bundledEntries`. Text includes all three sizes and
@@ -193,8 +193,8 @@ group. Text output reports both counts. An unmeasured entry has no zero placehol
 Compare two source revisions with the current measurement implementation:
 
 ```bash
-pnpm size:compare e0443a84 working-tree
-pnpm size:compare e0443a84 working-tree --json > /tmp/flux-size-comparison.json
+pnpm flux size compare e0443a84 working-tree
+pnpm flux size compare e0443a84 working-tree --json > /tmp/flux-size-comparison.json
 # An explicit current revision (for example HEAD) is also supported.
 ```
 
@@ -225,9 +225,9 @@ applicability uses its own `componentCount` and `method`, never the number of
 component baseline entries (which may include newly accepted or removed entries).
 
 ```bash
-pnpm size:aggregate:review
+pnpm flux size aggregate review
 # Only after explicit human approval of the measured proposal:
-pnpm size:aggregate:update
+pnpm flux size aggregate accept
 ```
 
 Both commands use the authoritative `build:packages` path before measuring all
@@ -276,3 +276,30 @@ aggregate property; an entirely missing property needs separate repair. Legacy
 values migrate on explicit acceptance only. No icon/performance baselines or
 component registries are updated. Component baseline updates never alter
 aggregate values, and aggregate updates never alter component baselines.
+
+## Docs production chunks
+
+`pnpm flux build docs` checks emitted JavaScript with
+`tooling/size/docs-chunks.mjs` after Vite succeeds. The aggregate build delegates
+here, so both `pnpm flux check` and `pnpm flux check full` enforce this policy.
+Focused unit tests do not rebuild docs.
+
+Normal docs chunks are capped at **500,000 raw bytes**, preserving Vite's decimal
+500 kB protection and staying below 500 KiB. The only exception is the separate
+`axe-core` module used by the Accessibility page's live scan. Its 4.13.0 build is
+586,951 bytes; its hard ceiling is **600,000 bytes** (13,049 bytes / 2.22% headroom).
+This single large engine module is already isolated; arbitrary vendor grouping
+would not divide its implementation usefully. The live scan stays available in
+production and imports the engine only when requested.
+
+The build emits `.vite/docs-chunks.json` using final bundler module/import metadata,
+without source maps. Classification uses the `node_modules/axe-core/` module path,
+not a filename or hash, and forbids unrelated modules in the exception. The checker
+measures actual asset bytes, accounts for every JavaScript asset, requires exactly
+one axe chunk, and rejects entry/static dependencies on axe (even from lazy routes).
+Axe must have an emitted dynamic import boundary and remain outside the initial
+entry's transitive static graph. Synthetic graph tests cover these failure modes.
+
+Vite's generic warning limit is 600 kB only to avoid duplicate noise for this
+bounded optional engine. This does not change component, icon, aggregate or
+runtime-performance budgets or baselines.

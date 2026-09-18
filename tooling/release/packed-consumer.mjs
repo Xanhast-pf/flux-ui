@@ -61,7 +61,7 @@ try {
   if (Number.parseInt(process.versions.node.split(".")[0], 10) < 24)
     throw new Error("Packed-consumer checks require Node 24 or newer.");
   if (resolve(process.cwd()) !== resolve(root))
-    throw new Error("Run pnpm consumer:packed from the repository root.");
+    throw new Error("Run pnpm flux release consumer from the repository root.");
   const pnpm = run("pnpm", ["--version"]).trim();
   if (pnpm !== "10.34.5")
     throw new Error("Use the pinned pnpm 10.34.5 toolchain.");

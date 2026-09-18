@@ -1,3 +1,5 @@
+import { executableCommand } from "../terminal/executable.mjs";
+import { commands } from "../terminal/commands.mjs";
 import { execFileSync, spawnSync } from "node:child_process";
 import {
   copyFile,
@@ -128,10 +130,16 @@ try {
     console.error(
       `Building ${copy === baseRoot ? base : current} in isolation...`,
     );
-    execFileSync("pnpm", ["build:packages"], {
-      cwd: copy,
-      stdio: ["ignore", 2, 2],
-    });
+    // Build historical snapshots with the current canonical workspace commands,
+    // without requiring either old root scripts or a registry in that snapshot.
+    for (const command of commands["build:packages"]) {
+      const [executable, args, platformOptions] = executableCommand(command);
+      execFileSync(executable, args, {
+        ...platformOptions,
+        cwd: copy,
+        stdio: ["ignore", 2, 2],
+      });
+    }
     const components = await discoverComponents(copy);
     const entries = {};
     const dist = join(copy, "packages/react/dist");

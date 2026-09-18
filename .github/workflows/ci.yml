@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Keep the canonical local `pnpm check` command, but expose each gate as a
+      # Share the internal tasks behind `pnpm flux check`, exposing each gate as a
       # first-class CI step so failures, timings and cancellations are attributable.
       - name: Generated files
         run: node tooling/trust/run-checks.mjs quality generated
@@ -244,7 +244,7 @@ jobs:
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       - name: Build docs
-        run: pnpm --filter @flux-ui/docs build
+        run: node tooling/terminal/tasks.mjs build:docs
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

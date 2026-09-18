@@ -1,1 +1,1 @@
-pnpm check
+node tooling/terminal/tasks.mjs check

@@ -1,4 +1,4 @@
-import { scriptSource } from "../terminal/commands.mjs";
+import { commands, taskName, taskCommand } from "../terminal/commands.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
@@ -87,30 +87,33 @@ test("default examples have exact ownership and consumer build cannot silently u
   assert.match(entry, /@flux-ui\/tokens\/reset\.css/u);
 });
 test("consumer runs in the full gate and standalone icon checks cannot read stale builds", async () => {
-  const manifest = JSON.parse(await source("package.json"));
-  assert.match(
-    scriptSource(manifest.scripts, "check:full"),
-    /pnpm consumer:check/u,
+  assert.ok(
+    commands["check:full"].some(
+      (command) => taskName(command) === "consumer:check",
+    ),
   );
-  for (const name of ["icons:size", "icons:size:update"])
-    assert.match(
-      manifest.scripts[name],
-      /^pnpm --filter @flux-ui\/icons build && node tooling\/icons\/check\.mjs/u,
-    );
-  assert.match(
-    scriptSource(manifest.scripts, "consumer:check"),
-    /^pnpm build:packages &&/u,
+  for (const name of ["icons:size", "icons:size:update"]) {
+    assert.deepEqual(commands[name][0], [
+      "pnpm",
+      "--filter",
+      "@flux-ui/icons",
+      "build",
+    ]);
+    assert.equal(commands[name][1][1], "tooling/icons/check.mjs");
+  }
+  assert.deepEqual(
+    commands["consumer:check"][0],
+    taskCommand("build:packages"),
   );
 });
-test("fresh checkouts build public declarations before type-aware consumer lint", async () => {
-  const { scripts } = JSON.parse(await source("package.json"));
+test("fresh checkouts build public declarations before type-aware consumer lint", () => {
   for (const [name, lint] of [
-    ["check", "pnpm lint"],
-    ["check:fix", "pnpm lint:fix"],
+    ["check", "lint"],
+    ["check:fix", "lint:fix"],
   ]) {
-    const commands = scriptSource(scripts, name).split(" && ");
-    assert.ok(commands.indexOf("pnpm build:packages") >= 0);
-    assert.ok(commands.indexOf("pnpm build:packages") < commands.indexOf(lint));
+    const tasks = commands[name].map(taskName);
+    assert.ok(tasks.indexOf("build:packages") >= 0);
+    assert.ok(tasks.indexOf("build:packages") < tasks.indexOf(lint));
   }
 });
 test("until-found is exercised as a platform attribute, not a React boolean prop", async () => {

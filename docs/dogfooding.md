@@ -136,7 +136,7 @@ do not waive actual emitted-cost limits or authorize higher baselines.
 
 ## Ownership guardrail
 
-Run `pnpm dogfood:check` in addition to `pnpm docs:check`.
+Run `pnpm flux check dogfood` in addition to `pnpm flux check docs`.
 
 The TypeScript AST check visits rendered source rather than counting strings in
 examples. It rejects ordinary raw controls, typography, and layout that should
@@ -158,20 +158,20 @@ ownership check, not a CSS parser, specificity proof, or security certification.
 When adding a legitimate new illustration, record its exact file/class and
 reason. Do not expand a broad prefix or increase a declaration cap to conceal a
 missing public component. Test new exceptions against negative examples through
-`pnpm dogfood:test`.
+`pnpm flux test dogfood`.
 
 ## Validation and evidence
 
 ```bash
-pnpm generate
-pnpm dogfood:check
-pnpm dogfood:test
-pnpm check
-pnpm check:full
+pnpm flux maintain generate
+pnpm flux check dogfood
+pnpm flux test dogfood
+pnpm flux check
+pnpm flux check full
 ```
 
-`pnpm generate` owns public exports and the docs registries. For a source handoff
-created outside the pinned toolchain, use `pnpm check:fix` to regenerate, apply
+`pnpm flux maintain generate` owns public exports and the docs registries. For a source handoff
+created outside the pinned toolchain, use `pnpm flux fix` to regenerate, apply
 lint fixes, and normalize formatting before strict verification.
 
 The native-relative performance methodology, bundle budgets, baseline files,
@@ -266,7 +266,7 @@ ordinary control, layout, typography or surface behavior.
 
 ## Built-package consumer acceptance
 
-`pnpm consumer:check` rebuilds the packages, typechecks a standalone consumer,
+`pnpm flux test consumer` rebuilds the packages, typechecks a standalone consumer,
 and runs its Chromium suite. The fixture in `apps/docs/consumer` imports only
 public exports and the optional public `theme.css` / `reset.css` foundations.
 Its Vite build has **no source aliases or Vanilla Extract plugin**, and rejects

@@ -120,6 +120,11 @@ export function App() {
         <Heading level={2} size="lg">
           Contribute to the source
         </Heading>
+        <Text as="p">
+          Repository contributors need Node 24+ and pnpm 10.34.5. Library
+          consumers do not need the developer CLI. Run pnpm flux to discover
+          commands and pnpm flux size --help for focused help.
+        </Text>
         <CodeBlock
           language="bash"
           label="Repository contributor setup"
@@ -128,26 +133,28 @@ cd flux-ui
 nvm use
 corepack enable
 pnpm install --frozen-lockfile
-pnpm dev
-pnpm storybook
+pnpm flux doctor
+pnpm flux dev
+# Optional isolated workbench:
+pnpm flux dev storybook
 
 # Start with focused tests for the affected behavior.
-pnpm check
+pnpm flux check
 # Broader checks include a performance smoke test, not the full benchmark.
-pnpm check:full
+pnpm flux check full
 # Full runtime regression measurement, when required:
-pnpm perf`}
+pnpm flux perf`}
         />
         <CodeBlock
           language="bash"
           label="Component scaffolding and generation"
-          code={`pnpm component:new SegmentedControl Inputs interactive
-pnpm component:doctor SegmentedControl
-pnpm generate
+          code={`pnpm flux component new SegmentedControl Inputs interactive
+pnpm flux component doctor SegmentedControl
+pnpm flux maintain generate
 
 # After approved versions have been prepared and built:
-pnpm release:pack
-pnpm consumer:packed`}
+pnpm flux release pack
+pnpm flux release consumer`}
         />
         <Text as="p">
           Packed-consumer validation does not publish. It checks the exact

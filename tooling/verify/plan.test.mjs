@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { commands, taskCommand, taskName } from "../terminal/commands.mjs";
 import test from "node:test";
 import { runVerification, verificationPlan } from "./plan.mjs";
 
@@ -7,36 +7,43 @@ const success = { status: 0, error: undefined, signal: null };
 const failure = { status: 1, error: undefined, signal: null };
 
 test("verification preserves every command in the existing strict pipeline", async () => {
-  const manifest = JSON.parse(
-    await readFile(new URL("../../package.json", import.meta.url), "utf8"),
-  );
-  const terminalCommands = JSON.parse(
-    await readFile(
-      new URL("../terminal/commands.json", import.meta.url),
-      "utf8",
-    ),
-  );
-  const plan = verificationPlan(manifest.scripts).map((command) =>
-    command.join(" "),
-  );
+  const plan = verificationPlan();
   assert.deepEqual(plan, [
-    ...terminalCommands.check.split(" && "),
-    ...terminalCommands["check:full"].split(" && ").slice(1),
+    ...commands.check,
+    ...commands["check:full"].slice(1),
   ]);
-  assert.ok(plan.indexOf("pnpm bible:check") > plan.indexOf("pnpm size"));
-  assert.ok(plan.includes("pnpm test:e2e"));
-  assert.ok(plan.includes("pnpm perf:smoke"));
+  assert.deepEqual(commands.check.map(taskName), [
+    "generate:check",
+    "docs:check",
+    "dogfood:check",
+    "format:check",
+    "build:packages",
+    "lint",
+    "typecheck",
+    "knip",
+    "test",
+    "build",
+    "size",
+    "bible:check",
+  ]);
+  assert.deepEqual(plan.slice(-5), [
+    ["node", "tooling/size/check.mjs", "--release"],
+    ...["storybook:build", "test:e2e", "perf:smoke", "consumer:check"].map(
+      taskCommand,
+    ),
+  ]);
 });
+
 test("a size failure cannot suppress later browser, analyzer or performance checks", async () => {
   const plan = [
-    ["pnpm", "build"],
-    ["pnpm", "size"],
-    ["pnpm", "bible:check"],
-    ["pnpm", "test:e2e"],
-    ["pnpm", "perf:smoke"],
+    taskCommand("build"),
+    taskCommand("size"),
+    taskCommand("bible:check"),
+    taskCommand("test:e2e"),
+    taskCommand("perf:smoke"),
   ];
   const results = await runVerification(plan, (command) =>
-    command[1] === "size" ? failure : success,
+    taskName(command) === "size" ? failure : success,
   );
   assert.deepEqual(
     results.map((result) => result.status),
@@ -51,14 +58,14 @@ test("failed builds block both size gates rather than measuring stale output", a
   const executed = [];
   const results = await runVerification(
     [
-      ["pnpm", "build"],
-      ["pnpm", "size"],
+      taskCommand("build"),
+      taskCommand("size"),
       ["node", "tooling/size/check.mjs", "--release"],
-      ["pnpm", "test:e2e"],
+      taskCommand("test:e2e"),
     ],
     (command) => {
       executed.push(command);
-      return command[1] === "build" ? failure : success;
+      return taskName(command) === "build" ? failure : success;
     },
   );
   assert.deepEqual(
@@ -73,33 +80,15 @@ test("signals and executable errors are failures, never passes", async () => {
     { ...success, signal: "SIGTERM" },
   ]) {
     assert.equal(
-      (await runVerification([["pnpm", "lint"]], () => result))[0].status,
+      (await runVerification([taskCommand("lint")], () => result))[0].status,
       "failed",
     );
   }
 });
-test("unexpected script syntax fails explicitly instead of skipping a gate", () => {
-  assert.throws(
-    () =>
-      verificationPlan({
-        check: "pnpm lint; echo skipped",
-        "check:full": "pnpm check",
-      }),
-    /Unsupported verification/u,
-  );
-  assert.throws(
-    () => verificationPlan({ check: "pnpm lint", "check:full": "pnpm test" }),
-    /must start/u,
-  );
-});
-
 test("interruption stops the verification plan immediately", async () => {
   const executed = [];
   const checks = await runVerification(
-    [
-      ["pnpm", "lint"],
-      ["pnpm", "test"],
-    ],
+    [taskCommand("lint"), taskCommand("test")],
     async (command) => {
       executed.push(command);
       return { status: 130, signal: "SIGINT" };

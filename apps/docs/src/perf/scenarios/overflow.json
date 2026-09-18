@@ -1,9 +1,0 @@
-{
-  "id": "overflow",
-  "label": "Overflow + Tabs",
-  "unit": "five-tab collections",
-  "kind": "workload",
-  "maxCount": 1000,
-  "fixtureRevision": 1,
-  "description": "Independent Overflow collections; update changes selection and available width. Absolute workload, without a fabricated native-equivalence ratio."
-}

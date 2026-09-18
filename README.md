@@ -50,6 +50,9 @@ The default examples and docs compose public layout, typography, surfaces, scope
 
 ## Clone and run
 
+Contributors need **Node 24+** and **pnpm 10.34.5**.
+No additional system task runner is required.
+
 ### Requirements
 
 - Node.js 24 (`.nvmrc` is included)
@@ -62,8 +65,9 @@ cd flux-ui
 # If you use nvm; otherwise make sure `node --version` reports Node 24.
 nvm use
 corepack enable
-pnpm install
-pnpm check
+pnpm install --frozen-lockfile
+pnpm flux doctor
+pnpm flux dev
 ```
 
 `pnpm install` also installs the Git hooks through Husky.
@@ -72,7 +76,7 @@ For browser, accessibility, and runtime-performance checks, install Playwright's
 
 ```bash
 pnpm --filter @flux-ui/docs exec playwright install chromium
-pnpm check:full
+pnpm flux check full
 ```
 
 On Linux, if Playwright reports missing system libraries, use:
@@ -83,31 +87,36 @@ pnpm --filter @flux-ui/docs exec playwright install --with-deps chromium
 
 ## Development
 
+Run `pnpm flux` to discover the small command menu, or `pnpm flux size --help` for focused help.
+`pnpm flux check` is the normal fail-fast gate; `pnpm flux check full` adds browser/Storybook/runtime checks.
+`pnpm flux check all` continues independent checks and writes a local diagnostic receipt.
+`pnpm flux fix` regenerates source, applies safe lint/format fixes, then runs the normal check. It writes files and never accepts baselines.
+
 Run the public docs/dogfood application:
 
 ```bash
-pnpm dev
+pnpm flux dev
 ```
 
 Run the isolated component workbench:
 
 ```bash
-pnpm storybook
+pnpm flux dev storybook
 ```
 
 Before pushing:
 
 ```bash
-pnpm check
+pnpm flux check
 ```
 
 For changes involving browser behavior, accessibility, Storybook, or runtime performance:
 
 ```bash
-pnpm check:full
+pnpm flux check full
 ```
 
-The full gate includes `pnpm consumer:check`: a separate production consumer that resolves built public exports without the docs source aliases or styles.
+The full gate includes `pnpm flux test consumer`: a separate production consumer that resolves built public exports without the docs source aliases or styles.
 
 See [`docs/development.md`](docs/development.md) for the complete local workflow, baseline rules, troubleshooting, and PR checklist.
 
@@ -116,8 +125,8 @@ See [`docs/development.md`](docs/development.md) for the complete local workflow
 Always scaffold components through the generator:
 
 ```bash
-pnpm component:new SegmentedControl Inputs interactive
-pnpm component:doctor SegmentedControl
+pnpm flux component new SegmentedControl Inputs interactive
+pnpm flux component doctor SegmentedControl
 ```
 
 A generated public component includes:
@@ -134,12 +143,12 @@ SegmentedControl/
 └── index.ts
 ```
 
-The generator also creates `apps/docs/src/examples/{slug}.preview.tsx` and `{slug}.example.tsx`, then refreshes the committed public component and docs registries. Implement the preview and its API/accessibility notes alongside the component. `pnpm docs:check` rejects missing or orphaned docs examples. Do not hand-edit generated registries.
+The generator also creates `apps/docs/src/examples/{slug}.preview.tsx` and `{slug}.example.tsx`, then refreshes the committed public component and docs registries. Implement the preview and its API/accessibility notes alongside the component. `pnpm flux check docs` rejects missing or orphaned docs examples. Do not hand-edit generated registries.
 
 A new component intentionally has no size baseline. After reviewing its emitted cost:
 
 ```bash
-pnpm size:update
+pnpm flux size baseline accept
 ```
 
 Commit the resulting `tooling/size/baseline.json` change with the component. Do **not** run baseline-update commands as part of normal first-time setup.
@@ -151,9 +160,9 @@ Commit the resulting `tooling/size/baseline.json` change with the component. Do 
 Every public component is measured after the package build using raw, gzip, and Brotli sizes. Absolute limits come from the component's complexity class, while `tooling/size/baseline.json` prevents gradual regressions.
 
 ```bash
-pnpm size:changed
-pnpm size
-pnpm size:release
+pnpm flux size changed
+pnpm flux size
+pnpm flux size release
 ```
 
 See [`tooling/size/README.md`](tooling/size/README.md).
@@ -163,9 +172,9 @@ See [`tooling/size/README.md`](tooling/size/README.md).
 The Playwright/Chromium harness compares Flux with equivalent React/native implementations on the same machine and browser run. It records synchronous mount/update/unmount cost and next-frame diagnostics, while CI gates on stable native-relative synchronous ratios.
 
 ```bash
-pnpm perf:smoke
-pnpm perf
-pnpm perf:update   # only when intentionally accepting a new baseline
+pnpm flux perf smoke
+pnpm flux perf
+pnpm flux perf accept   # only when intentionally accepting a new baseline
 ```
 
 See [`tooling/perf/README.md`](tooling/perf/README.md).
@@ -177,20 +186,20 @@ Flux intentionally serves as a downstream canary for Coding Bible `main`, with t
 The dependency declares `#main&path:packages/analyzer`, while `pnpm-lock.yaml` resolves an exact Git commit. Normal CI uses `pnpm install --frozen-lockfile` and never refreshes dependencies automatically. The package-specific `coding-bible` build approval permits Git dependency preparation without allowing other packages.
 
 ```bash
-pnpm bible:check
-pnpm bible:staged
+pnpm flux check bible
+node scripts/run-coding-bible.mjs check . --staged
 ```
 
-To explicitly refresh the local `main` resolution, run `pnpm bible:refresh` and review the lockfile diff. This updates only the analyzer dependency and its required transitive graph.
+To explicitly refresh the local `main` resolution, run `pnpm flux maintain bible refresh` and review the lockfile diff. This updates only the analyzer dependency and its required transitive graph.
 
 For temporary debugging or reproduction, retain the manual immutable path:
 
 ```bash
-pnpm bible:pin <tag-or-sha>
+pnpm flux maintain bible pin <tag-or-sha>
 pnpm install
 ```
 
-The pin helper changes the manifest; installation updates the lockfile. To return from a temporary pin, restore `#main&path:packages/analyzer` in `package.json`, then run `pnpm bible:refresh`.
+The pin helper changes the manifest; installation updates the lockfile. To return from a temporary pin, restore `#main&path:packages/analyzer` in `package.json`, then run `pnpm flux maintain bible refresh`.
 
 Do not exclude rules merely to make CI green.
 
@@ -213,7 +222,7 @@ import { SearchIcon, SparkIcon } from "@flux-ui/icons";
 <SparkIcon aria-hidden="true" size={24} />
 ```
 
-Icons are generated from `packages/icons/icons.json`, use `currentColor`, and are decorative by default unless labelled. The dedicated `#icons` docs route browses all 64 icons by name, category, or intent metadata. `pnpm icons:size` enforces a strict per-icon runtime budget.
+Icons are generated from `packages/icons/icons.json`, use `currentColor`, and are decorative by default unless labelled. The dedicated `#icons` docs route browses all 64 icons by name, category, or intent metadata. `pnpm flux size icons` enforces a strict per-icon runtime budget.
 
 Flux Display currently lives as vector design source in `packages/identity/`; it is deliberately not shipped as a compiled font yet. The live `#identity` docs route renders the glyph geometry directly so the letterforms can be evaluated before font engineering. The renderer reserves optical padding around mitered glyph geometry and reports unsupported specimen characters instead of silently presenting the prototype as complete.
 
@@ -288,16 +297,16 @@ The live lab and axe engine load on demand; benchmark and scan results stay loca
 
 ### Generated evidence
 
-`pnpm trust:quality` and `pnpm trust:browser` execute the fixed check commands and
+`node tooling/trust/run-checks.mjs quality` and `node tooling/trust/run-checks.mjs browser` execute the fixed check commands and
 record exit-status receipts in `.cache/trust/`. Quality includes a clean tracked
-working-tree check, so commit intentional changes first. `pnpm trust:generate`
+working-tree check, so commit intentional changes first. `node tooling/trust/generate.mjs`
 combines executed receipts and complete reports; `--require-ci` refuses local or
 failed/mismatched inputs. CI publishes `evidence/index.json`, `quality.json`,
 `browser.json`, `size.json`, `runtime.json`, and `browser-tests.json` with Pages.
 Generated evidence is ignored by Git. No placeholder green reports are committed.
 
 Run the dependency-free evidence, statistics and release contract tests with
-`pnpm trust:test` (also included in `pnpm test`). New Chromium tests cover lab
+`pnpm flux test trust` (also included in `pnpm flux test`). New Chromium tests cover lab
 execution/cancellation, evidence failures, live axe detection/repair, mobile
 layout and the new routes' accessibility in both themes.
 
@@ -309,4 +318,4 @@ npm package authorization and the OpenSSF application require maintainer action.
 The release workflow is manual, main-only and dry-run by default. It builds/packs
 once, creates package-scoped SPDX inventories in a read-only job, then verifies,
 attests and publishes the exact tarballs with OIDC in the protected `npm`
-environment. Local token-based `pnpm release` is intentionally disabled.
+environment. Local token-based `pnpm flux release guide` is intentionally disabled.

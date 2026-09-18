@@ -137,12 +137,29 @@ export function EngineeringPage() {
             <Link href="#lab">Run the lab</Link>
           </Text>
         </Stack>
+        <Heading level={2} size="lg">
+          Contributor workflow
+        </Heading>
+        <Text as="p">
+          Contributors use Node 24+ and pnpm 10.34.5. One small human command
+          surface keeps the strict internal quality gates unchanged. No
+          additional system task runner is required.
+        </Text>
         <CodeBlock
           label="Contributor workflow"
           code={
-            "pnpm component:new MyComponent Utilities\npnpm component:doctor MyComponent\npnpm generate\npnpm check:full"
+            "pnpm install --frozen-lockfile\npnpm flux doctor\npnpm flux dev\n\npnpm flux component new MyComponent Utilities primitive\npnpm flux component doctor MyComponent\n\npnpm flux check"
           }
         />
+        <Text as="p">
+          Run pnpm flux for command discovery or pnpm flux size --help for
+          focused size help. Use pnpm flux check full for browser and
+          runtime-sensitive changes; pnpm flux check all continues independent
+          checks and writes a local diagnostic receipt.
+          <Link href={`${REPOSITORY_URL}/blob/main/docs/development.md`}>
+            Contributor setup and command reference
+          </Link>
+        </Text>
         <Stack as="section" gap="lg">
           <Heading level={2} size="lg">
             What blocks a merge?

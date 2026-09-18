@@ -12,7 +12,7 @@ export type TabsRootProps = TabsRootBaseProps &
     | { defaultValue?: never; value: string }
   );
 export interface TabsListProps extends ComponentPropsWithRef<"div"> {
-  /** Wrap tabs instead of using native horizontal scrolling. */
+  /** Wrap tabs instead of using the automatic horizontal overflow menu. */
   wrap?: boolean | undefined;
   activateOnFocus?: boolean | undefined;
   loopFocus?: boolean | undefined;
