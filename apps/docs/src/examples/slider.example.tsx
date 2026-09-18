@@ -11,7 +11,7 @@ export default {
     "The browser clamps and steps reset values. onDoubleClick and onChange can cancel their downstream work; disabled/readOnly controls do not reset. No synthetic ChangeEvent is fabricated.",
     "Double-click is a convenience, not the only reset action: provide a labelled Reset button. Home and End still reach the range limits.",
     "Use appearance=custom with --flux-slider-length, --flux-slider-track-size, --flux-slider-thumb-size, --flux-slider-thumb-inline-size, --flux-slider-thumb-block-size and --flux-slider-thumb-radius. The default native appearance keeps browser styling.",
-    "Fader is a deprecated compatibility wrapper. Use Slider orientation=vertical in new interfaces. This is single-thumb, not a logarithmic or multi-thumb slider.",
+    "Use orientation=vertical for fader-style controls. Slider remains single-thumb, not logarithmic or multi-thumb.",
   ],
   props: [
     [

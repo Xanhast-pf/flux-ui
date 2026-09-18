@@ -23,7 +23,6 @@ export * from "./components/Dialog/index.js";
 export * from "./components/Drawer/index.js";
 export * from "./components/DropdownMenu/index.js";
 export * from "./components/EmptyState/index.js";
-export * from "./components/Fader/index.js";
 export * from "./components/Field/index.js";
 export * from "./components/Fieldset/index.js";
 export * from "./components/Grid/index.js";

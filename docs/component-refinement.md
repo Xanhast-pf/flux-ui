@@ -1,5 +1,7 @@
 # Component refinement: controls, composition, and navigation
 
+> **Historical implementation record.** This document describes the component-refinement state before the pre-1.0 cleanup. The deprecated `Fader` compatibility wrapper was subsequently removed; use `Slider orientation="vertical"` for vertical range controls. Measurements and component counts below intentionally remain as recorded at the time.
+
 This change extends the existing public components. It does not rename exported
 components, remove Fader, add runtime dependencies, or accept size regressions.
 

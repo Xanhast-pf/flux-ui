@@ -201,12 +201,14 @@ test("built advanced exports preserve numeric control, chart and resize semantic
   await expect(
     page.getByRole("spinbutton", { name: "Consumer exact gain" }),
   ).toHaveValue("51");
-  const fader = page.getByRole("slider", { name: "Consumer fader" });
-  await fader.focus();
+  const verticalSlider = page.getByRole("slider", {
+    name: "Consumer vertical slider",
+  });
+  await verticalSlider.focus();
   await page.keyboard.press("ArrowUp");
   await expect(knob).toHaveAttribute("aria-valuenow", "52");
-  const bounds = await fader.boundingBox();
-  if (!bounds) throw new Error("Fader has no visible geometry.");
+  const bounds = await verticalSlider.boundingBox();
+  if (!bounds) throw new Error("Vertical Slider has no visible geometry.");
   expect(bounds.height).toBeGreaterThan(bounds.width);
   const cursor = page.getByRole("slider", {
     name: "Consumer chart data cursor",

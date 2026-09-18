@@ -1,5 +1,7 @@
 # Component ticket validation after Tabs overflow removal
 
+> **Historical validation record.** The findings and size measurements below describe an earlier 70-component snapshot. The deprecated `Fader` compatibility wrapper was subsequently removed before 1.0; current code uses `Slider orientation="vertical"`.
+
 ## Verdict
 
 **NOT READY.** Tabs now passes its existing size gates and semantic tests. Release
