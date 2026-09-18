@@ -10,7 +10,7 @@ function isMissingPathError(error) {
 const rawName = process.argv[2];
 if (!rawName) {
   console.error(
-    "Usage: pnpm component:new ComponentName [category] [sizeClass]",
+    "Usage: pnpm flux component new ComponentName [category] [sizeClass]",
   );
   process.exit(1);
 }
@@ -94,4 +94,4 @@ const generated = spawnSync(
   },
 );
 if (generated.status !== 0) process.exit(generated.status ?? 1);
-console.log(`Created ${rawName}. Next: pnpm component:doctor ${rawName}`);
+console.log(`Created ${rawName}. Next: pnpm flux component doctor ${rawName}`);

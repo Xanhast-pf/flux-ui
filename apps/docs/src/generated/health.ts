@@ -1,27 +1,27 @@
-// GENERATED FILE. Run `pnpm generate`; do not edit manually.
+// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.
 export const health = {
   size: {
     schemaVersion: 2,
     budgetsVersion: 1,
     aggregate: {
-      componentCount: 71,
+      componentCount: 70,
       rootEntry: {
-        raw: 5394,
-        gzip: 1775,
-        brotli: 1560,
+        raw: 5328,
+        gzip: 1752,
+        brotli: 1549,
         fileCount: 1,
       },
       runtime: {
-        raw: 209067,
-        gzip: 96000,
-        brotli: 82350,
-        fileCount: 229,
+        raw: 209739,
+        gzip: 95478,
+        brotli: 81971,
+        fileCount: 226,
       },
       published: {
-        raw: 1137485,
-        gzip: 389791,
-        brotli: 334996,
-        fileCount: 947,
+        raw: 1135977,
+        gzip: 386550,
+        brotli: 332419,
+        fileCount: 934,
       },
       method: {
         schemaVersion: 1,
@@ -398,15 +398,6 @@ export const health = {
         budgetBrotli: 1536,
       },
       {
-        name: "Overflow",
-        slug: "overflow",
-        sizeClass: "overflow",
-        raw: null,
-        gzip: null,
-        brotli: null,
-        budgetBrotli: 2304,
-      },
-      {
         name: "PageHeader",
         slug: "page-header",
         sizeClass: "composite",
@@ -580,11 +571,11 @@ export const health = {
       {
         name: "Tabs",
         slug: "tabs",
-        sizeClass: "interactive",
+        sizeClass: "composite",
         raw: 8345,
         gzip: 3707,
         brotli: 3200,
-        budgetBrotli: 3072,
+        budgetBrotli: 8192,
       },
       {
         name: "Tag",

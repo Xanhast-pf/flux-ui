@@ -68,10 +68,10 @@ Component discovery is convention-driven. These committed files are generated:
 Run:
 
 ```bash
-pnpm generate
+pnpm flux maintain generate
 ```
 
-CI runs `pnpm generate:check` and fails if generated output has drifted. Generated files should not be hand-edited.
+CI runs `pnpm flux check generated` and fails if generated output has drifted. Generated files should not be hand-edited.
 
 ## Component boundaries
 

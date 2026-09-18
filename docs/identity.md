@@ -16,7 +16,7 @@ Design contract:
 - regular SVG props and React 19 refs
 - no provider, sprite sheet, icon font or styling runtime
 
-The canonical source is `packages/icons/icons.json`. Every entry carries lowercase intent/search keywords; geometry aliases are rejected so discoverability does not create duplicate runtime glyphs. `pnpm generate` creates the public icon components, root exports and docs catalog. Browse the full set on the dedicated `#icons` docs route.
+The canonical source is `packages/icons/icons.json`. Every entry carries lowercase intent/search keywords; geometry aliases are rejected so discoverability does not create duplicate runtime glyphs. `pnpm flux maintain generate` creates the public icon components, root exports and docs catalog. Browse the full set on the dedicated `#icons` docs route.
 
 Use an icon as decoration when adjacent text already communicates the meaning:
 
@@ -77,7 +77,7 @@ real text; Flux Display remains a separate type-design prototype.
 The three Bézier paths in `packages/icons/icons.json` are the geometry source
 for both the generated React icon and the full-color brand assets. Colors and
 gradient coordinates live in `packages/identity/brand/flux-mark.json`.
-Run `pnpm generate` after changing either source; `pnpm generate:check` checks
+Run `pnpm flux maintain generate` after changing either source; `pnpm flux check generated` checks
 both the icon and the SVG copies served by the docs app.
 
 Generated SVG variants:

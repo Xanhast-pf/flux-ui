@@ -46,9 +46,9 @@ Native reference scenarios must also preserve behavior that Flux intentionally p
 ## Commands
 
 ```bash
-pnpm perf:smoke   # fast sanity run; no historical assertion
-pnpm perf         # full benchmark + synchronous regression assertion
-pnpm perf:update  # intentionally record a new baseline
+pnpm flux perf smoke   # fast sanity run; no historical assertion
+pnpm flux perf         # full benchmark + synchronous regression assertion
+pnpm flux perf accept  # intentionally record a new baseline
 ```
 
 Playwright Chromium must be installed once:

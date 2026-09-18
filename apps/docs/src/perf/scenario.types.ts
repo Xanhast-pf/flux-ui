@@ -9,7 +9,7 @@ export type PerfScenario =
   | "grid"
   | "knob"
   | "level-meter"
-  | "overflow"
+  | "tabs"
   | "sidebar"
   | "slider"
   | "split-pane"

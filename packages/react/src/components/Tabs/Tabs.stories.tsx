@@ -43,3 +43,61 @@ export const Vertical: Story = {
     </Tabs.Root>
   ),
 };
+
+export const Responsive: Story = {
+  args: { defaultValue: "Overview" },
+  render: (args) => (
+    <Tabs.Root {...args} style={{ maxInlineSize: "20rem" }}>
+      <Tabs.List aria-label="Responsive project sections">
+        {[
+          "Overview",
+          "Activity",
+          "Settings",
+          "Members",
+          "Billing",
+          "History",
+        ].map((value) => (
+          <Tabs.Tab key={value} value={value} disabled={value === "Billing"}>
+            {value}
+          </Tabs.Tab>
+        ))}
+      </Tabs.List>
+      {[
+        "Overview",
+        "Activity",
+        "Settings",
+        "Members",
+        "Billing",
+        "History",
+      ].map((value) => (
+        <Tabs.Panel key={value} value={value}>
+          {value} panel
+        </Tabs.Panel>
+      ))}
+    </Tabs.Root>
+  ),
+};
+
+export const Wrapping: Story = {
+  args: { defaultValue: "Overview" },
+  render: (args) => (
+    <Tabs.Root {...args} style={{ maxInlineSize: "20rem" }}>
+      <Tabs.List wrap aria-label="Wrapping project sections">
+        {["Overview", "Activity", "Settings", "Members", "History"].map(
+          (value) => (
+            <Tabs.Tab key={value} value={value}>
+              {value}
+            </Tabs.Tab>
+          ),
+        )}
+      </Tabs.List>
+      {["Overview", "Activity", "Settings", "Members", "History"].map(
+        (value) => (
+          <Tabs.Panel key={value} value={value}>
+            {value} panel
+          </Tabs.Panel>
+        ),
+      )}
+    </Tabs.Root>
+  ),
+};

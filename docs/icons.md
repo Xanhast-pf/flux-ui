@@ -41,4 +41,4 @@ Every individual icon is measured together with the shared `IconBase` runtime. T
 - gzip: 1.25 KiB
 - Brotli: 1 KiB
 
-Run `pnpm size:update` after adding icons so new per-icon baselines are measured from the production build. Do not raise the ceilings to accommodate a new drawing.
+After adding icons, inspect `pnpm flux size icons`. Only after explicit review may maintainers run `pnpm flux size icons accept` to accept the separate per-icon baseline from the production build. Do not raise the ceilings to accommodate a new drawing.

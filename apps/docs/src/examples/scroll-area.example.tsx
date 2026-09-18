@@ -6,6 +6,7 @@ export default {
   previewLayout: "fill",
   code,
   notes: [
+    "Native scrolling with discreet Flux-themed scrollbars; forced colors preserve platform contrast. No custom scrollbar mechanics.",
     "Supply aria-label or aria-labelledby. This is a named native scroll region, not custom scrollbars.",
     "Overflowing regions enter the tab order automatically; fitting regions do not add an extra tab stop. Explicit tabIndex is preserved.",
     "Observation is local to mounted ScrollArea instances and is cleaned up on unmount. Layout primitives do not install observers.",

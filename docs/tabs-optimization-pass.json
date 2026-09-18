@@ -1,0 +1,1659 @@
+{
+  "kind": "diagnostic evidence, not an accepted baseline",
+  "retainedExperiments": [],
+  "phases": {
+    "start": {
+      "entries": {
+        "code-block": {
+          "raw": 11480,
+          "gzip": 4583,
+          "brotli": 3964,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 6829,
+              "gzip": 3260,
+              "brotli": 2858
+            },
+            "css": {
+              "raw": 4651,
+              "gzip": 1323,
+              "brotli": 1106
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "data-table": {
+          "raw": 10048,
+          "gzip": 4160,
+          "brotli": 3685,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 7285,
+              "gzip": 3216,
+              "brotli": 2886
+            },
+            "css": {
+              "raw": 2763,
+              "gzip": 944,
+              "brotli": 799
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "dropdown-menu": {
+          "raw": 12372,
+          "gzip": 4645,
+          "brotli": 4104,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 8183,
+              "gzip": 3391,
+              "brotli": 3039
+            },
+            "css": {
+              "raw": 4189,
+              "gzip": 1254,
+              "brotli": 1065
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "popover": {
+          "raw": 9341,
+          "gzip": 3735,
+          "brotli": 3273,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 6003,
+              "gzip": 2637,
+              "brotli": 2348
+            },
+            "css": {
+              "raw": 3338,
+              "gzip": 1098,
+              "brotli": 925
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "scroll-area": {
+          "raw": 2197,
+          "gzip": 1128,
+          "brotli": 931,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 1329,
+              "gzip": 736,
+              "brotli": 628
+            },
+            "css": {
+              "raw": 868,
+              "gzip": 392,
+              "brotli": 303
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "sidebar": {
+          "raw": 6511,
+          "gzip": 2430,
+          "brotli": 2101,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 2384,
+              "gzip": 1152,
+              "brotli": 1007
+            },
+            "css": {
+              "raw": 4127,
+              "gzip": 1278,
+              "brotli": 1094
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "tabs": {
+          "raw": 23843,
+          "gzip": 8051,
+          "brotli": 7193,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 16142,
+              "gzip": 6058,
+              "brotli": 5448
+            },
+            "css": {
+              "raw": 7701,
+              "gzip": 1993,
+              "brotli": 1745
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      },
+      "aggregate": {
+        "rootEntry": {
+          "raw": 5328,
+          "gzip": 1752,
+          "brotli": 1549,
+          "fileCount": 1
+        },
+        "runtime": {
+          "raw": 209739,
+          "gzip": 95478,
+          "brotli": 81971,
+          "fileCount": 226
+        },
+        "published": {
+          "raw": 1135977,
+          "gzip": 386550,
+          "brotli": 332419,
+          "fileCount": 934
+        }
+      }
+    },
+    "named": {
+      "entries": {
+        "dropdown-menu": {
+          "raw": 12127,
+          "gzip": 4579,
+          "brotli": 4052,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 7938,
+              "gzip": 3325,
+              "brotli": 2987
+            },
+            "css": {
+              "raw": 4189,
+              "gzip": 1254,
+              "brotli": 1065
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "popover": {
+          "raw": 9341,
+          "gzip": 3735,
+          "brotli": 3273,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 6003,
+              "gzip": 2637,
+              "brotli": 2348
+            },
+            "css": {
+              "raw": 3338,
+              "gzip": 1098,
+              "brotli": 925
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "tabs": {
+          "raw": 23331,
+          "gzip": 7897,
+          "brotli": 7058,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 15630,
+              "gzip": 5904,
+              "brotli": 5313
+            },
+            "css": {
+              "raw": 7701,
+              "gzip": 1993,
+              "brotli": 1745
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      },
+      "aggregate": {
+        "rootEntry": {
+          "raw": 5328,
+          "gzip": 1753,
+          "brotli": 1545,
+          "fileCount": 1
+        },
+        "runtime": {
+          "raw": 209829,
+          "gzip": 95526,
+          "brotli": 82000,
+          "fileCount": 226
+        },
+        "published": {
+          "raw": 1136568,
+          "gzip": 386649,
+          "brotli": 332519,
+          "fileCount": 934
+        }
+      }
+    },
+    "split": {
+      "entries": {
+        "dropdown-menu": {
+          "raw": 12173,
+          "gzip": 4598,
+          "brotli": 4069,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 7984,
+              "gzip": 3339,
+              "brotli": 2999
+            },
+            "css": {
+              "raw": 4189,
+              "gzip": 1259,
+              "brotli": 1070
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "popover": {
+          "raw": 9341,
+          "gzip": 3735,
+          "brotli": 3273,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 6003,
+              "gzip": 2637,
+              "brotli": 2348
+            },
+            "css": {
+              "raw": 3338,
+              "gzip": 1098,
+              "brotli": 925
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "tabs": {
+          "raw": 23094,
+          "gzip": 7861,
+          "brotli": 7025,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 15629,
+              "gzip": 5903,
+              "brotli": 5311
+            },
+            "css": {
+              "raw": 7465,
+              "gzip": 1958,
+              "brotli": 1714
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      },
+      "aggregate": {
+        "rootEntry": {
+          "raw": 5299,
+          "gzip": 1741,
+          "brotli": 1532,
+          "fileCount": 1
+        },
+        "runtime": {
+          "raw": 210267,
+          "gzip": 95939,
+          "brotli": 82368,
+          "fileCount": 228
+        },
+        "published": {
+          "raw": 1138192,
+          "gzip": 388128,
+          "brotli": 333796,
+          "fileCount": 941
+        }
+      }
+    },
+    "idle": {
+      "entries": {
+        "dropdown-menu": {
+          "raw": 12127,
+          "gzip": 4579,
+          "brotli": 4052,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 7938,
+              "gzip": 3325,
+              "brotli": 2987
+            },
+            "css": {
+              "raw": 4189,
+              "gzip": 1254,
+              "brotli": 1065
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "popover": {
+          "raw": 9341,
+          "gzip": 3735,
+          "brotli": 3273,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 6003,
+              "gzip": 2637,
+              "brotli": 2348
+            },
+            "css": {
+              "raw": 3338,
+              "gzip": 1098,
+              "brotli": 925
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "tabs": {
+          "raw": 23552,
+          "gzip": 7981,
+          "brotli": 7137,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 15851,
+              "gzip": 5988,
+              "brotli": 5392
+            },
+            "css": {
+              "raw": 7701,
+              "gzip": 1993,
+              "brotli": 1745
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      },
+      "aggregate": {
+        "rootEntry": {
+          "raw": 5328,
+          "gzip": 1752,
+          "brotli": 1545,
+          "fileCount": 1
+        },
+        "runtime": {
+          "raw": 210123,
+          "gzip": 95604,
+          "brotli": 82080,
+          "fileCount": 226
+        },
+        "published": {
+          "raw": 1137917,
+          "gzip": 386985,
+          "brotli": 332787,
+          "fileCount": 934
+        }
+      }
+    },
+    "refined": {
+      "entries": {
+        "dropdown-menu": {
+          "raw": 12127,
+          "gzip": 4579,
+          "brotli": 4052,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 7938,
+              "gzip": 3325,
+              "brotli": 2987
+            },
+            "css": {
+              "raw": 4189,
+              "gzip": 1254,
+              "brotli": 1065
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "popover": {
+          "raw": 9341,
+          "gzip": 3735,
+          "brotli": 3273,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 6003,
+              "gzip": 2637,
+              "brotli": 2348
+            },
+            "css": {
+              "raw": 3338,
+              "gzip": 1098,
+              "brotli": 925
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "tabs": {
+          "raw": 23560,
+          "gzip": 7993,
+          "brotli": 7148,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 15859,
+              "gzip": 6000,
+              "brotli": 5403
+            },
+            "css": {
+              "raw": 7701,
+              "gzip": 1993,
+              "brotli": 1745
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      },
+      "aggregate": {
+        "rootEntry": {
+          "raw": 5328,
+          "gzip": 1753,
+          "brotli": 1545,
+          "fileCount": 1
+        },
+        "runtime": {
+          "raw": 210174,
+          "gzip": 95620,
+          "brotli": 82092,
+          "fileCount": 226
+        },
+        "published": {
+          "raw": 1137760,
+          "gzip": 386983,
+          "brotli": 332783,
+          "fileCount": 934
+        }
+      }
+    },
+    "small": {
+      "entries": {
+        "dropdown-menu": {
+          "raw": 12127,
+          "gzip": 4579,
+          "brotli": 4052,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 7938,
+              "gzip": 3325,
+              "brotli": 2987
+            },
+            "css": {
+              "raw": 4189,
+              "gzip": 1254,
+              "brotli": 1065
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "popover": {
+          "raw": 9341,
+          "gzip": 3735,
+          "brotli": 3273,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 6003,
+              "gzip": 2637,
+              "brotli": 2348
+            },
+            "css": {
+              "raw": 3338,
+              "gzip": 1098,
+              "brotli": 925
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "tabs": {
+          "raw": 23337,
+          "gzip": 7906,
+          "brotli": 7066,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 15636,
+              "gzip": 5913,
+              "brotli": 5321
+            },
+            "css": {
+              "raw": 7701,
+              "gzip": 1993,
+              "brotli": 1745
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      },
+      "aggregate": {
+        "rootEntry": {
+          "raw": 5328,
+          "gzip": 1752,
+          "brotli": 1548,
+          "fileCount": 1
+        },
+        "runtime": {
+          "raw": 209865,
+          "gzip": 95535,
+          "brotli": 82011,
+          "fileCount": 226
+        },
+        "published": {
+          "raw": 1136382,
+          "gzip": 386624,
+          "brotli": 332484,
+          "fileCount": 934
+        }
+      }
+    },
+    "compact": {
+      "entries": {
+        "code-block": {
+          "raw": 11464,
+          "gzip": 4578,
+          "brotli": 3956,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 6829,
+              "gzip": 3261,
+              "brotli": 2856
+            },
+            "css": {
+              "raw": 4635,
+              "gzip": 1317,
+              "brotli": 1100
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "data-table": {
+          "raw": 10032,
+          "gzip": 4152,
+          "brotli": 3663,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 7285,
+              "gzip": 3216,
+              "brotli": 2886
+            },
+            "css": {
+              "raw": 2747,
+              "gzip": 936,
+              "brotli": 777
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "dropdown-menu": {
+          "raw": 12127,
+          "gzip": 4579,
+          "brotli": 4052,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 7938,
+              "gzip": 3325,
+              "brotli": 2987
+            },
+            "css": {
+              "raw": 4189,
+              "gzip": 1254,
+              "brotli": 1065
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "popover": {
+          "raw": 9341,
+          "gzip": 3735,
+          "brotli": 3273,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 6003,
+              "gzip": 2637,
+              "brotli": 2348
+            },
+            "css": {
+              "raw": 3338,
+              "gzip": 1098,
+              "brotli": 925
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "scroll-area": {
+          "raw": 2181,
+          "gzip": 1121,
+          "brotli": 924,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 1329,
+              "gzip": 736,
+              "brotli": 628
+            },
+            "css": {
+              "raw": 852,
+              "gzip": 385,
+              "brotli": 296
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "sidebar": {
+          "raw": 6495,
+          "gzip": 2425,
+          "brotli": 2106,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 2384,
+              "gzip": 1152,
+              "brotli": 1016
+            },
+            "css": {
+              "raw": 4111,
+              "gzip": 1273,
+              "brotli": 1090
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        },
+        "tabs": {
+          "raw": 23315,
+          "gzip": 7890,
+          "brotli": 7050,
+          "fileCount": 2,
+          "outputs": {
+            "js": {
+              "raw": 15630,
+              "gzip": 5904,
+              "brotli": 5313
+            },
+            "css": {
+              "raw": 7685,
+              "gzip": 1986,
+              "brotli": 1737
+            }
+          },
+          "externalImports": ["react", "react/jsx-runtime"]
+        }
+      },
+      "aggregate": {
+        "rootEntry": {
+          "raw": 5328,
+          "gzip": 1753,
+          "brotli": 1545,
+          "fileCount": 1
+        },
+        "runtime": {
+          "raw": 209813,
+          "gzip": 95520,
+          "brotli": 81993,
+          "fileCount": 226
+        },
+        "published": {
+          "raw": 1136329,
+          "gzip": 386630,
+          "brotli": 332463,
+          "fileCount": 934
+        }
+      }
+    }
+  },
+  "performance": {
+    "start": [
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 89.90000000596046,
+          "mountToFrameMs": 110.40000000596046,
+          "updateMs": 10.800000011920929,
+          "updateToFrameMs": 90.30000001192093,
+          "unmountMs": 6,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      },
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 65.69999998807907,
+          "mountToFrameMs": 82,
+          "updateMs": 10.700000017881393,
+          "updateToFrameMs": 90.30000001192093,
+          "unmountMs": 6.0999999940395355,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      },
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 80.19999998807907,
+          "mountToFrameMs": 100.5,
+          "updateMs": 12.100000023841858,
+          "updateToFrameMs": 114.5,
+          "unmountMs": 6.100000023841858,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      }
+    ],
+    "idle": [
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 125,
+          "mountToFrameMs": 154.09999999403954,
+          "updateMs": 17.400000005960464,
+          "updateToFrameMs": 123.5,
+          "unmountMs": 6.5999999940395355,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      },
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 77.69999998807907,
+          "mountToFrameMs": 98.2999999821186,
+          "updateMs": 13.199999988079071,
+          "updateToFrameMs": 105.2999999821186,
+          "unmountMs": 7,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      },
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 78.59999999403954,
+          "mountToFrameMs": 100.09999999403954,
+          "updateMs": 12.300000011920929,
+          "updateToFrameMs": 102.30000001192093,
+          "unmountMs": 5,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      }
+    ],
+    "refined": [
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 92.90000000596046,
+          "mountToFrameMs": 116.90000000596046,
+          "updateMs": 17.19999998807907,
+          "updateToFrameMs": 109.69999998807907,
+          "unmountMs": 6.699999988079071,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      },
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 63.599999994039536,
+          "mountToFrameMs": 80.5,
+          "updateMs": 9.099999994039536,
+          "updateToFrameMs": 88.19999998807907,
+          "unmountMs": 7,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      },
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 76.30000001192093,
+          "mountToFrameMs": 96.59999999403954,
+          "updateMs": 9.200000017881393,
+          "updateToFrameMs": 100.90000000596046,
+          "unmountMs": 6.4000000059604645,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      }
+    ],
+    "final": [
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 93.59999999403954,
+          "mountToFrameMs": 114.5,
+          "updateMs": 11.899999976158142,
+          "updateToFrameMs": 93.09999999403954,
+          "unmountMs": 6,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      },
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 70,
+          "mountToFrameMs": 87.90000000596046,
+          "updateMs": 12.5,
+          "updateToFrameMs": 85.2000000178814,
+          "unmountMs": 5.399999976158142,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      },
+      {
+        "workload": {
+          "scenario": "tabs",
+          "variant": "flux",
+          "count": 100,
+          "mountMs": 65.90000000596046,
+          "mountToFrameMs": 80.80000001192093,
+          "updateMs": 10,
+          "updateToFrameMs": 97.7999999821186,
+          "unmountMs": 5.4000000059604645,
+          "domNodes": 1900,
+          "fixtureRevision": 2,
+          "unit": "five-tab collections",
+          "layout": {
+            "display": "flex",
+            "column-gap": "0px",
+            "row-gap": "0px",
+            "grid-template-columns": "none",
+            "font-size": "16px",
+            "font-weight": "400",
+            "line-height": "normal",
+            "min-height": "0px",
+            "padding-inline-start": "0px",
+            "padding-inline-end": "0px"
+          }
+        },
+        "observation": {
+          "created": 100,
+          "active": 0
+        }
+      }
+    ]
+  },
+  "final": {
+    "entries": {
+      "code-block": {
+        "raw": 11480,
+        "gzip": 4583,
+        "brotli": 3964,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 6829,
+            "gzip": 3260,
+            "brotli": 2858
+          },
+          "css": {
+            "raw": 4651,
+            "gzip": 1323,
+            "brotli": 1106
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "data-table": {
+        "raw": 10048,
+        "gzip": 4160,
+        "brotli": 3685,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 7285,
+            "gzip": 3216,
+            "brotli": 2886
+          },
+          "css": {
+            "raw": 2763,
+            "gzip": 944,
+            "brotli": 799
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "dropdown-menu": {
+        "raw": 12372,
+        "gzip": 4645,
+        "brotli": 4104,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 8183,
+            "gzip": 3391,
+            "brotli": 3039
+          },
+          "css": {
+            "raw": 4189,
+            "gzip": 1254,
+            "brotli": 1065
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "popover": {
+        "raw": 9341,
+        "gzip": 3735,
+        "brotli": 3273,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 6003,
+            "gzip": 2637,
+            "brotli": 2348
+          },
+          "css": {
+            "raw": 3338,
+            "gzip": 1098,
+            "brotli": 925
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "scroll-area": {
+        "raw": 2197,
+        "gzip": 1128,
+        "brotli": 931,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 1329,
+            "gzip": 736,
+            "brotli": 628
+          },
+          "css": {
+            "raw": 868,
+            "gzip": 392,
+            "brotli": 303
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "sidebar": {
+        "raw": 6511,
+        "gzip": 2430,
+        "brotli": 2101,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 2384,
+            "gzip": 1152,
+            "brotli": 1007
+          },
+          "css": {
+            "raw": 4127,
+            "gzip": 1278,
+            "brotli": 1094
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "tabs": {
+        "raw": 23843,
+        "gzip": 8051,
+        "brotli": 7193,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 16142,
+            "gzip": 6058,
+            "brotli": 5448
+          },
+          "css": {
+            "raw": 7701,
+            "gzip": 1993,
+            "brotli": 1745
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
+    "aggregate": {
+      "rootEntry": {
+        "raw": 5328,
+        "gzip": 1752,
+        "brotli": 1549,
+        "fileCount": 1
+      },
+      "runtime": {
+        "raw": 209739,
+        "gzip": 95478,
+        "brotli": 81971,
+        "fileCount": 226
+      },
+      "published": {
+        "raw": 1135977,
+        "gzip": 386550,
+        "brotli": 332419,
+        "fileCount": 934
+      }
+    }
+  },
+  "componentProposal": {
+    "code-block": {
+      "before": {
+        "raw": 10891,
+        "gzip": 4427,
+        "brotli": 3826,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 6820,
+            "gzip": 3251,
+            "brotli": 2851
+          },
+          "css": {
+            "raw": 4071,
+            "gzip": 1176,
+            "brotli": 975
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "after": {
+        "raw": 11480,
+        "gzip": 4583,
+        "brotli": 3964,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 6829,
+            "gzip": 3260,
+            "brotli": 2858
+          },
+          "css": {
+            "raw": 4651,
+            "gzip": 1323,
+            "brotli": 1106
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
+    "data-table": {
+      "before": {
+        "raw": 9459,
+        "gzip": 3996,
+        "brotli": 3533,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 7276,
+            "gzip": 3206,
+            "brotli": 2879
+          },
+          "css": {
+            "raw": 2183,
+            "gzip": 790,
+            "brotli": 654
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "after": {
+        "raw": 10048,
+        "gzip": 4160,
+        "brotli": 3685,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 7285,
+            "gzip": 3216,
+            "brotli": 2886
+          },
+          "css": {
+            "raw": 2763,
+            "gzip": 944,
+            "brotli": 799
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
+    "scroll-area": {
+      "before": {
+        "raw": 1608,
+        "gzip": 919,
+        "brotli": 760,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 1320,
+            "gzip": 726,
+            "brotli": 618
+          },
+          "css": {
+            "raw": 288,
+            "gzip": 193,
+            "brotli": 142
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "after": {
+        "raw": 2197,
+        "gzip": 1128,
+        "brotli": 931,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 1329,
+            "gzip": 736,
+            "brotli": 628
+          },
+          "css": {
+            "raw": 868,
+            "gzip": 392,
+            "brotli": 303
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
+    "sidebar": {
+      "before": {
+        "raw": 5922,
+        "gzip": 2277,
+        "brotli": 1965,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 2375,
+            "gzip": 1142,
+            "brotli": 1000
+          },
+          "css": {
+            "raw": 3547,
+            "gzip": 1135,
+            "brotli": 965
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "after": {
+        "raw": 6511,
+        "gzip": 2430,
+        "brotli": 2101,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 2384,
+            "gzip": 1152,
+            "brotli": 1007
+          },
+          "css": {
+            "raw": 4127,
+            "gzip": 1278,
+            "brotli": 1094
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
+    "tabs": {
+      "before": {
+        "raw": 6482,
+        "gzip": 2773,
+        "brotli": 2421,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 4322,
+            "gzip": 1993,
+            "brotli": 1781
+          },
+          "css": {
+            "raw": 2160,
+            "gzip": 780,
+            "brotli": 640
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      },
+      "after": {
+        "raw": 23843,
+        "gzip": 8051,
+        "brotli": 7193,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 16142,
+            "gzip": 6058,
+            "brotli": 5448
+          },
+          "css": {
+            "raw": 7701,
+            "gzip": 1993,
+            "brotli": 1745
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    }
+  },
+  "aggregateProposal": {
+    "before": {
+      "componentCount": 71,
+      "rootEntry": {
+        "raw": 5394,
+        "gzip": 1775,
+        "brotli": 1560,
+        "fileCount": 1
+      },
+      "runtime": {
+        "raw": 209067,
+        "gzip": 96000,
+        "brotli": 82350,
+        "fileCount": 229
+      },
+      "published": {
+        "raw": 1137485,
+        "gzip": 389791,
+        "brotli": 334996,
+        "fileCount": 947
+      },
+      "method": {
+        "schemaVersion": 1,
+        "compression": {
+          "gzipLevel": 9,
+          "brotliQuality": 11
+        },
+        "build": "flux-production-packages-v1",
+        "rootEntry": "packages/react/dist/index.js",
+        "runtime": [".js", ".mjs", ".cjs", ".css"],
+        "published": "packages/react/dist/**",
+        "accounting": "sum-per-file-compressed-bytes"
+      }
+    },
+    "after": {
+      "componentCount": 70,
+      "rootEntry": {
+        "raw": 5328,
+        "gzip": 1752,
+        "brotli": 1549,
+        "fileCount": 1
+      },
+      "runtime": {
+        "raw": 209739,
+        "gzip": 95478,
+        "brotli": 81971,
+        "fileCount": 226
+      },
+      "published": {
+        "raw": 1135977,
+        "gzip": 386550,
+        "brotli": 332419,
+        "fileCount": 934
+      },
+      "method": {
+        "schemaVersion": 1,
+        "compression": {
+          "gzipLevel": 9,
+          "brotliQuality": 11
+        },
+        "build": "flux-production-packages-v1",
+        "rootEntry": "packages/react/dist/index.js",
+        "runtime": [".js", ".mjs", ".cjs", ".css"],
+        "published": "packages/react/dist/**",
+        "accounting": "sum-per-file-compressed-bytes"
+      }
+    },
+    "accepted": false
+  },
+  "attribution": {
+    "../../../../tmp/tabs.js": {
+      "imports": [
+        {
+          "path": "react/jsx-runtime",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "react",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "react",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "react/jsx-runtime",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "react",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "react/jsx-runtime",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "react",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "react/jsx-runtime",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "exports": ["Tabs"],
+      "entryPoint": "packages/react/dist/tabs.js",
+      "cssBundle": "../../../../tmp/tabs.css",
+      "inputs": {
+        "packages/react/dist/chunks/joinClassNames-LlMWkLFo.js": {
+          "bytesInOutput": 52
+        },
+        "packages/react/dist/chunks/attachRef-W0crYlek.js": {
+          "bytesInOutput": 141
+        },
+        "packages/react/dist/assets/scrollbar.css.ts.css": {
+          "bytesInOutput": 0
+        },
+        "packages/react/dist/assets/Tabs.css": {
+          "bytesInOutput": 0
+        },
+        "packages/react/dist/chunks/rovingFocus-Dylj0IZd.js": {
+          "bytesInOutput": 511
+        },
+        "packages/react/dist/chunks/Button-Cks8wA1h.js": {
+          "bytesInOutput": 545
+        },
+        "packages/react/dist/assets/Button.css": {
+          "bytesInOutput": 0
+        },
+        "packages/react/dist/chunks/floating.css.ts.vanilla-jkLbEOYd.js": {
+          "bytesInOutput": 1938
+        },
+        "packages/react/dist/assets/floating.css.ts.css": {
+          "bytesInOutput": 0
+        },
+        "packages/react/dist/chunks/Popover-DrwBisSH.js": {
+          "bytesInOutput": 3191
+        },
+        "packages/react/dist/assets/Popover.css": {
+          "bytesInOutput": 0
+        },
+        "packages/react/dist/chunks/DropdownMenu-BiQTHLUY.js": {
+          "bytesInOutput": 2171
+        },
+        "packages/react/dist/assets/DropdownMenu.css": {
+          "bytesInOutput": 0
+        },
+        "packages/react/dist/chunks/Tabs-B9US7tYF.js": {
+          "bytesInOutput": 7573
+        },
+        "packages/react/dist/tabs.js": {
+          "bytesInOutput": 0
+        }
+      },
+      "bytes": 16142
+    },
+    "../../../../tmp/tabs.css": {
+      "imports": [],
+      "inputs": {
+        "packages/react/dist/assets/scrollbar.css.ts.css": {
+          "bytesInOutput": 580
+        },
+        "packages/react/dist/assets/Tabs.css": {
+          "bytesInOutput": 2932
+        },
+        "packages/react/dist/assets/action.css": {
+          "bytesInOutput": 1891
+        },
+        "packages/react/dist/assets/Button.css": {
+          "bytesInOutput": 700
+        },
+        "packages/react/dist/assets/floating.css.ts.css": {
+          "bytesInOutput": 667
+        },
+        "packages/react/dist/assets/Popover.css": {
+          "bytesInOutput": 79
+        },
+        "packages/react/dist/assets/DropdownMenu.css": {
+          "bytesInOutput": 851
+        }
+      },
+      "bytes": 7701
+    }
+  }
+}

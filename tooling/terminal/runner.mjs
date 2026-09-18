@@ -1,3 +1,4 @@
+import { executableCommand } from "./executable.mjs";
 import { spawn } from "node:child_process";
 import { mkdtemp, open, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { createReadStream } from "node:fs";
@@ -6,6 +7,12 @@ import { join } from "node:path";
 import { once } from "node:events";
 import { stripVTControlCharacters } from "node:util";
 import { createProgress } from "./output.mjs";
+
+export function terminalChildEnv({ raw, parentEnv }) {
+  return raw
+    ? { ...parentEnv }
+    : { ...parentEnv, NO_COLOR: "1", FORCE_COLOR: "0" };
+}
 
 async function replay(path, output) {
   for await (const chunk of createReadStream(path, { encoding: "utf8" })) {
@@ -38,27 +45,21 @@ export async function runTask(
   const started = performance.now();
   const elapsed = () => `${((performance.now() - started) / 1000).toFixed(1)}s`;
   progress.start(label);
-  const [program, ...args] = command;
-  const entry = program === "pnpm" ? env.npm_execpath : undefined;
-  const child = spawn(
-    entry || program === "node" ? process.execPath : program,
-    entry ? [entry, ...args] : args,
-    {
-      cwd,
-      env: {
-        ...env,
-        NO_COLOR: "1",
-        FORCE_COLOR: "0",
-        FLUX_TERMINAL_ACTIVE: "1",
-        FLUX_SUMMARY_FILE: raw ? env.FLUX_SUMMARY_FILE : summaryFile,
-        FLUX_PROGRESS_FILE: raw ? env.FLUX_PROGRESS_FILE : progressFile,
-      },
-      stdio: raw
-        ? ["inherit", stdout, "inherit"]
-        : ["inherit", handles[0].fd, handles[1].fd],
-      detached: process.platform !== "win32" && !env.FLUX_TERMINAL_ACTIVE,
+  const [executable, args, platformOptions] = executableCommand(command, env);
+  const child = spawn(executable, args, {
+    ...platformOptions,
+    cwd,
+    env: {
+      ...terminalChildEnv({ raw, parentEnv: env }),
+      FLUX_TERMINAL_ACTIVE: "1",
+      FLUX_SUMMARY_FILE: raw ? env.FLUX_SUMMARY_FILE : summaryFile,
+      FLUX_PROGRESS_FILE: raw ? env.FLUX_PROGRESS_FILE : progressFile,
     },
-  );
+    stdio: raw
+      ? ["inherit", stdout, "inherit"]
+      : ["inherit", handles[0].fd, handles[1].fd],
+    detached: process.platform !== "win32" && !env.FLUX_TERMINAL_ACTIVE,
+  });
   let interrupted;
   let escalation;
   function kill(signal) {

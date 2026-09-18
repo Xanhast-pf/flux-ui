@@ -83,9 +83,11 @@ export function DocumentationPage() {
           <Accordion.Item>
             <Accordion.Trigger>How do I add a component?</Accordion.Trigger>
             <Accordion.Content>
-              Run <Code>pnpm component:new Name Category</Code>, implement its
-              API and preview, then run the generator and quality checks.
-              Registration is convention-based.
+              Run <Code>pnpm flux component new Name Category</Code>, implement
+              its API and preview, then run{" "}
+              <Code>pnpm flux component doctor Name</Code>,{" "}
+              <Code>pnpm flux maintain generate</Code> and{" "}
+              <Code>pnpm flux check</Code>. Registration is convention-based.
             </Accordion.Content>
           </Accordion.Item>
           <Accordion.Item>
@@ -104,8 +106,15 @@ export function DocumentationPage() {
             </Accordion.Trigger>
             <Accordion.Content>
               No reviewed production baseline is committed for that entry. Run{" "}
-              <Code>pnpm size:update</Code> only after reviewing the
-              implementation. Absolute budgets remain enforced.
+              <Code>pnpm flux size baseline review</Code> to inspect the
+              proposed component baseline. Only after explicit review may
+              maintainers run <Code>pnpm flux size baseline accept</Code>.
+              Aggregate review and acceptance use{" "}
+              <Code>pnpm flux size aggregate review</Code> and{" "}
+              <Code>pnpm flux size aggregate accept</Code> separately; icons use{" "}
+              <Code>pnpm flux size icons accept</Code>. Review is read-only;
+              accept writes the accepted baseline. Absolute budgets remain
+              enforced.
             </Accordion.Content>
           </Accordion.Item>
         </Accordion.Root>

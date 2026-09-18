@@ -1,16 +1,57 @@
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
   base: "./",
+  build: {
+    // Flux enforces stricter semantic budgets after the build. Raise Vite's
+    // generic warning only to avoid duplicate noise for bounded lazy axe-core.
+    chunkSizeWarningLimit: 600,
+  },
   define: {
     "import.meta.env.VITE_BUILD_COMMIT": JSON.stringify(
       process.env.GITHUB_SHA ?? "",
     ),
   },
-  plugins: [react(), vanillaExtractPlugin()],
+  plugins: [
+    react(),
+    vanillaExtractPlugin(),
+    {
+      name: "flux-docs-chunk-metadata",
+      apply: "build",
+      generateBundle: {
+        order: "post",
+        handler(_options, bundle) {
+          const chunks = Object.values(bundle)
+            .filter((item) => item.type === "chunk")
+            .map((chunk) => ({
+              fileName: chunk.fileName,
+              isEntry: chunk.isEntry,
+              isDynamicEntry: chunk.isDynamicEntry,
+              imports: chunk.imports,
+              // Vite retains dynamic CSS placeholder names after deleting their JS.
+              // Only emitted JavaScript belongs in this runtime chunk graph.
+              dynamicImports: chunk.dynamicImports.filter(
+                (name) => bundle[name]?.type === "chunk",
+              ),
+              modules: Object.keys(chunk.modules).map((id) =>
+                relative(resolve(import.meta.dirname, "../.."), id).replaceAll(
+                  "\\",
+                  "/",
+                ),
+              ),
+            }));
+          this.emitFile({
+            type: "asset",
+            fileName: ".vite/docs-chunks.json",
+            source: JSON.stringify(chunks),
+          });
+        },
+      },
+    },
+  ],
   resolve: {
     alias: [
       {

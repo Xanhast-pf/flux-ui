@@ -58,7 +58,7 @@ const [sizeBaseline, perfBaseline] = await Promise.all([
 
 const index = await formatTypeScript(
   [
-    "// GENERATED FILE. Run `pnpm generate`; do not edit manually.",
+    "// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.",
     ...componentNames.map(
       (name) => `export * from "./components/${name}/index.js";`,
     ),
@@ -68,7 +68,7 @@ const index = await formatTypeScript(
 
 const registry = await formatTypeScript(
   [
-    "// GENERATED FILE. Run `pnpm generate`; do not edit manually.",
+    "// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.",
     `export const components = ${JSON.stringify(metas, null, 2)} as const;`,
     "",
     "export type ComponentMeta = (typeof components)[number];",
@@ -118,7 +118,7 @@ const health = {
 
 const healthRegistry = await formatTypeScript(
   [
-    "// GENERATED FILE. Run `pnpm generate`; do not edit manually.",
+    "// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.",
     `export const health = ${JSON.stringify(health, null, 2)} as const;`,
     "",
     "export type HealthSnapshot = typeof health;",

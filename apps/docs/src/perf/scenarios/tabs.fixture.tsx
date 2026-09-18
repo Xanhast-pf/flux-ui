@@ -1,4 +1,4 @@
-import { Overflow, Stack, Tabs } from "@flux-ui/react";
+import { Stack, Tabs } from "@flux-ui/react";
 import type { ScenarioProps } from "../scenario.types.js";
 const sections = ["Overview", "Activity", "Members", "Settings", "History"];
 export default function Fixture({ count, revision }: ScenarioProps) {
@@ -6,25 +6,24 @@ export default function Fixture({ count, revision }: ScenarioProps) {
     <Stack data-perf-root>
       {Array.from({ length: count }, (_, index) => `collection-${index}`).map(
         (id) => (
-          <Overflow
+          <Tabs.Root
             key={id}
+            value={revision ? "History" : "Overview"}
             style={{ inlineSize: revision ? "16rem" : "24rem" }}
           >
-            <Tabs.Root value={revision ? "History" : "Overview"}>
-              <Tabs.List aria-label={id}>
-                {sections.map((value) => (
-                  <Tabs.Trigger key={value} value={value}>
-                    {value}
-                  </Tabs.Trigger>
-                ))}
-              </Tabs.List>
+            <Tabs.List aria-label={id}>
               {sections.map((value) => (
-                <Tabs.Content key={value} value={value}>
+                <Tabs.Trigger key={value} value={value}>
                   {value}
-                </Tabs.Content>
+                </Tabs.Trigger>
               ))}
-            </Tabs.Root>
-          </Overflow>
+            </Tabs.List>
+            {sections.map((value) => (
+              <Tabs.Content key={value} value={value}>
+                {value}
+              </Tabs.Content>
+            ))}
+          </Tabs.Root>
         ),
       )}
     </Stack>

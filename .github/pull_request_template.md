@@ -4,10 +4,10 @@
 
 ## Validation
 
-- [ ] `pnpm check`
-- [ ] `pnpm storybook:build` for component/visual changes
-- [ ] `pnpm check:full` for browser/accessibility-facing changes
-- [ ] `pnpm perf` for runtime-sensitive changes
+- [ ] `pnpm flux check`
+- [ ] `pnpm flux build storybook` for component/visual changes
+- [ ] `pnpm flux check full` for browser/accessibility-facing changes
+- [ ] `pnpm flux perf` for runtime-sensitive changes
 - [ ] Generated files and lockfile changes are intentional
 - [ ] Size/performance baselines changed only after reviewing the regression/cost
 - [ ] Changeset added when a published package contract changed

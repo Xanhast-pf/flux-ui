@@ -131,8 +131,8 @@ evidence before changing its configuration.
 
 Never automatically run or commit the results of:
 
-- `pnpm size:update`;
-- `pnpm perf:update`;
+- `pnpm flux size baseline accept`;
+- `pnpm flux perf accept`;
 - snapshot/baseline regeneration that accepts a regression;
 - equivalent commands that redefine an existing quality baseline.
 
@@ -161,15 +161,15 @@ During implementation, prefer this progression where applicable:
 7.  broader package checks;
 8.  full repository verification once at the end.
 
-Do not repeatedly run `pnpm verify:all` while developing.
+Do not repeatedly run `pnpm flux check all` while developing.
 
-Run `pnpm verify:all` only when:
+Run `pnpm flux check all` only when:
 
 - targeted checks for the requested work are green; and
 - the implementation is believed to be complete; or
 - the user explicitly requests it.
 
-If `verify:all` fails, run the smallest command reproducing each failure
+If `pnpm flux check all` fails, run the smallest command reproducing each failure
 while fixing it. Do not rerun the entire suite after every edit.
 
 Before starting an unusually expensive command, briefly state why it is
@@ -341,9 +341,9 @@ Always start with:
 
 \`\`\`bash
 
-pnpm component:new ComponentName Category \[sizeClass\]
+pnpm flux component new ComponentName Category \[sizeClass\]
 
-pnpm component:doctor ComponentName
+pnpm flux component doctor ComponentName
 
 \`\`\`
 
@@ -351,9 +351,9 @@ Then implement the component and run:
 
 \`\`\`bash
 
-pnpm generate
+pnpm flux maintain generate
 
-pnpm check
+pnpm flux check
 
 \`\`\`
 
@@ -362,8 +362,7 @@ The scaffold also creates a live docs preview
 (\`{slug}.example.tsx\`). The metadata imports the preview's actual
 source through Vite \`?raw\`; do not maintain an unrelated copy of
 example code. Every public slug needs one discoverable example with
-meaningful API notes, semantics and keyboard guidance. \`pnpm
-docs:check\` and component doctor enforce example coverage. Add browser
+meaningful API notes, semantics and keyboard guidance. \`pnpm flux check docs\` and component doctor enforce example coverage. Add browser
 checks for meaningful behavior, not just screenshots.
 
 Do not create or maintain unrelated central registries manually. If a
@@ -472,7 +471,7 @@ If the answer points away from a prop, do not add the prop.
   \`@flux-ui/react\`. Keep the package independently tree-shakeable.
 
 - \`packages/icons/icons.json\` is the canonical icon manifest. Run
-  \`pnpm generate\` after editing it; do not hand-maintain generated
+  \`pnpm flux maintain generate\` after editing it; do not hand-maintain generated
   icon exports. Every icon must include useful lowercase search
   keywords, and aliases should be represented as keywords rather than
   duplicate SVG geometry.
@@ -494,7 +493,7 @@ If the answer points away from a prop, do not add the prop.
   provider, or CSS-in-JS dependency. A consumer importing one icon
   should not pay for the catalog.
 
-- Per-icon emitted runtime cost is enforced by \`pnpm icons:size\`.
+- Per-icon emitted runtime cost is enforced by \`pnpm flux size icons\`.
   Raise that budget only through an explicit architecture decision.
 
 - Flux Display is currently vector design source, not a production
@@ -712,11 +711,11 @@ Rules:
 - Flux intentionally serves as a downstream canary for Coding Bible main.
   Declare main locally, retain an exact lockfile revision for reproducible
   installs, and use the live main Action in the dedicated canary workflow.
-  Refresh the local resolution explicitly with pnpm bible:refresh.
+  Refresh the local resolution explicitly with pnpm flux maintain bible refresh.
 
-- \`pnpm bible:check\` is a required project quality gate.
+- \`pnpm flux check bible\` is a required project quality gate.
 
-- \`pnpm bible:staged\` runs in pre-commit.
+- \`node scripts/run-coding-bible.mjs check . --staged\` runs in pre-commit.
 
 - When Flux exposes a Coding Bible false positive/negative, create a
   Canary contract first, fix/promote Coding Bible, then upgrade Flux.
@@ -732,8 +731,17 @@ The following are generated and committed:
 
 - \`apps/docs/src/generated/components.ts\`
 
-Run \`pnpm generate\`. CI uses \`pnpm generate:check\` and fails on
+Run \`pnpm flux maintain generate\`. CI uses \`pnpm flux check generated\` and fails on
 drift.
+
+## Contributor command interface
+
+Use `pnpm flux` for human repository commands; Node and pnpm are the only toolchain prerequisites.
+`pnpm flux` lists concepts. `pnpm flux check` is the normal fail-fast gate; `pnpm flux check full`
+adds browser/Storybook/runtime-sensitive checks. `pnpm flux check all` continues independent
+checks and writes a local receipt. CI and hooks invoke the underlying Node task registry
+directly. `pnpm flux doctor` is read-only.
+`pnpm flux fix` writes generated source and safe lint/format fixes before checking.
 
 ## Quality commands
 
@@ -743,41 +751,41 @@ the affected contract. Full-suite commands are final verification gates.
 
 \`\`\`bash
 
-pnpm dev
+pnpm flux dev
 
-pnpm storybook
+pnpm flux dev storybook
 
-pnpm storybook:build
+pnpm flux build storybook
 
-pnpm component:new Name Category \[sizeClass\]
+pnpm flux component new Name Category \[sizeClass\]
 
-pnpm component:doctor Name
+pnpm flux component doctor Name
 
-pnpm generate
+pnpm flux maintain generate
 
-pnpm test
+pnpm flux test
 
-pnpm bench
+pnpm flux perf bench
 
-pnpm size
+pnpm flux size
 
-pnpm size:changed
+pnpm flux size changed
 
-pnpm size:release
+pnpm flux size release
 
-pnpm perf:smoke
+pnpm flux perf smoke
 
-pnpm perf
+pnpm flux perf
 
-pnpm bible:check
+pnpm flux check bible
 
-pnpm check
+pnpm flux check
 
-pnpm check:full
+pnpm flux check full
 
 \`\`\`
 
-Use \`pnpm check:fix\` for deterministic formatting/lint/generation
+Use \`pnpm flux fix\` for deterministic formatting/lint/generation
 fixes, then review the resulting diff.
 
 ## Definition of done for a public component
@@ -830,7 +838,7 @@ reasons.
   before optimizing selector or attribute bytes. Test actual browser
 behavior.
 
-- \`check:full\` includes the built-public-export consumer, with no
+- \`pnpm flux check full\` includes the built-public-export consumer, with no
   docs aliases or
 
   styles. The source-mode docs alone are not proof of package output

@@ -85,30 +85,39 @@ test("built table checkboxes and grouped numbers use the public input styling", 
   await page.getByRole("button", { name: "Submit grouped amount" }).click();
   await expect(page.getByTestId("submitted-amount")).toBeEmpty();
 });
-test("built tabs preserve native scrolling, keyboard activation and controlled selection", async ({
+test("built tabs preserve responsive keyboard activation and controlled selection", async ({
   page,
 }) => {
   await page.goto("/");
   const list = page.getByRole("tablist", { name: "Consumer tabs" });
+  const strip = list.locator("..");
   const first = list.getByRole("tab", { name: "Overview", exact: true });
-  const last = list.getByRole("tab", { name: "Audit history", exact: true });
   await first.focus();
-  await page.keyboard.press("End");
-  await expect(last).toBeFocused();
+  const visibleLastName = await list.getByRole("tab").last().textContent();
+  await first.press("End");
+  await expect(
+    list.getByRole("tab", { name: visibleLastName ?? "", exact: true }),
+  ).toBeFocused();
   await expect(first).toHaveAttribute("aria-selected", "true");
-  await page.keyboard.press("Enter");
+  await strip.getByRole("button", { name: "More tabs" }).click();
+  await strip
+    .getByRole("menuitem", { name: "Audit history", exact: true })
+    .click();
+  const last = list.getByRole("tab", { name: "Audit history", exact: true });
+  await expect(last).toBeFocused();
   await expect(
     page.getByRole("tabpanel", { name: "Audit history", exact: true }),
   ).toBeVisible();
-  await expect
-    .poll(() => list.evaluate((node) => node.scrollLeft))
-    .toBeGreaterThan(0);
+  await expect(list).toHaveCSS("overflow-x", "hidden");
+  expect(
+    await list.evaluate((node) => node.scrollWidth <= node.clientWidth + 1),
+  ).toBe(true);
   await page.getByRole("button", { name: "Resize consumer tabs" }).click();
   await expect(last).toHaveAttribute("aria-selected", "true");
   await page.getByRole("button", { name: "Toggle RTL tabs" }).click();
   await page.getByRole("button", { name: "Toggle automatic tabs" }).click();
   await first.focus();
-  await page.keyboard.press("ArrowLeft");
+  await first.press("ArrowLeft");
   await expect(list.getByRole("tab", { name: "Transactions" })).toBeFocused();
   await expect(
     page.getByRole("tabpanel", { name: "Transactions" }),
@@ -117,7 +126,7 @@ test("built tabs preserve native scrolling, keyboard activation and controlled s
     .getByRole("button", { name: "Toggle final tab availability" })
     .click();
   await first.focus();
-  await page.keyboard.press("End");
+  await first.press("End");
   await expect(list.getByRole("tab", { name: "Permissions" })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
@@ -125,43 +134,68 @@ test("built tabs preserve native scrolling, keyboard activation and controlled s
   ).toBeFocused();
 });
 
-test("built Overflow keeps one semantic tab representation and restores container width", async ({
+test("built Tabs keeps one semantic representation and restores container width", async ({
   page,
 }) => {
   await page.goto("/");
-  const scope = page.getByRole("region", { name: "Built Overflow" });
+  const scope = page.getByRole("region", { name: "Built Tabs" });
   const list = scope.getByRole("tablist");
-  const picker = scope.getByRole("combobox", { name: "More items" });
-  await expect(picker).toBeVisible();
-  await expect(picker.getByRole("option", { name: "Billing" })).toBeDisabled();
-  await picker.focus();
-  await picker.selectOption({ label: "History" });
-  await expect(list.getByRole("tab", { name: "History" })).toHaveAttribute(
-    "aria-selected",
-    "true",
-  );
+  const trigger = scope.getByRole("button", { name: "More tabs" });
+  await trigger.click();
+  await expect(scope.getByRole("menuitem", { name: "Billing" })).toBeDisabled();
+  await scope.getByRole("menuitem", { name: "History" }).click();
+  await expect(list.getByRole("tab", { name: "History" })).toBeFocused();
   await expect(scope.getByRole("tabpanel")).toHaveText("History built panel");
-  await expect(picker).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(trigger).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
-    scope.getByRole("button", { name: "After built Overflow" }),
+    scope.getByRole("button", { name: "After built Tabs" }),
   ).toBeFocused();
-  await scope
-    .getByRole("button", { name: "Change Overflow membership" })
-    .click();
+  await scope.getByRole("button", { name: "Change Tabs membership" }).click();
+  await trigger.click();
   await expect(
-    picker.getByRole("option", { name: "Extra section" }),
-  ).toHaveCount(1);
-  await scope
-    .getByRole("button", { name: "Change Overflow membership" })
-    .click();
+    scope.getByRole("menuitem", { name: "Extra section" }),
+  ).toBeVisible();
+  await page.keyboard.press("Escape");
+  await scope.getByRole("button", { name: "Change Tabs membership" }).click();
+  await trigger.click();
   await expect(
-    picker.getByRole("option", { name: "Extra section" }),
+    scope.getByRole("menuitem", { name: "Extra section" }),
   ).toHaveCount(0);
-  await scope.getByRole("button", { name: "Resize built Overflow" }).click();
-  await expect(picker).toHaveCount(0);
+  await page.keyboard.press("Escape");
+  await scope.getByRole("button", { name: "Resize built Tabs" }).click();
+  await expect(trigger).toHaveCount(0);
   await expect(list.getByRole("tab")).toHaveCount(6);
-  await scope.getByRole("button", { name: "Resize built Overflow" }).click();
-  await expect(picker).toBeVisible();
+  await scope.getByRole("button", { name: "Resize built Tabs" }).click();
+  await expect(trigger).toBeVisible();
   await expect(list.getByRole("tab", { name: "History" })).toBeVisible();
+});
+
+test("built Tabs explicit layouts bypass responsive menus and restore enhancement", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const scope = page.getByRole("region", { name: "Built Tabs" });
+  const list = scope.getByRole("tablist");
+  const trigger = scope.getByRole("button", { name: "More tabs" });
+  await expect(trigger).toBeVisible();
+  await scope.getByRole("button", { name: "Toggle wrapped Tabs" }).click();
+  await expect(trigger).toHaveCount(0);
+  await expect(list).toHaveCSS("flex-wrap", "wrap");
+  await expect(list.getByRole("tab")).toHaveCount(6);
+  await expect(list).not.toHaveAttribute("data-flux-tabs-managed");
+  await scope.getByRole("button", { name: "Toggle wrapped Tabs" }).click();
+  await expect(trigger).toBeVisible();
+  await scope.getByRole("button", { name: "Toggle vertical Tabs" }).click();
+  await expect(trigger).toHaveCount(0);
+  await expect(list).toHaveAttribute("aria-orientation", "vertical");
+  await expect(list.getByRole("tab")).toHaveCount(6);
+  await list.getByRole("tab", { name: "Overview", exact: true }).focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(
+    list.getByRole("tab", { name: "Activity", exact: true }),
+  ).toBeFocused();
+  await scope.getByRole("button", { name: "Toggle vertical Tabs" }).click();
+  await expect(trigger).toBeVisible();
 });

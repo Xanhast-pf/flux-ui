@@ -1,12 +1,13 @@
-import { useCallback, useContext, useLayoutEffect, useRef } from "react";
-import { OverflowCapabilityContext } from "../../internal/overflowCapability.js";
+import { useCallback, useLayoutEffect, useRef } from "react";
+import { DropdownMenu } from "../DropdownMenu/DropdownMenu.js";
+import { useTabOverflow } from "./useTabOverflow.js";
 import { attachRef } from "../../internal/attachRef.js";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import {
   isRovingItemAvailable,
   nextRovingIndex,
 } from "../../internal/rovingFocus.js";
-import { list } from "./Tabs.css.js";
+import { list, strip, more } from "./Tabs.css.js";
 import { useTabsContext } from "./TabsContext.js";
 import type { TabsListProps } from "./Tabs.types.js";
 const tabs = (node: HTMLElement) =>
@@ -24,15 +25,21 @@ export function TabsList({
   ...props
 }: TabsListProps) {
   const context = useTabsContext("List");
-  const enhance = useContext(OverflowCapabilityContext);
+  const trigger = useRef<HTMLButtonElement>(null);
   const previous = useRef(0);
   const focused = useRef<HTMLButtonElement | null>(null);
   const scope = useRef<HTMLDivElement | null>(null);
+  const horizontal = context.orientation === "horizontal" && !wrap;
+  const overflow = useTabOverflow(scope, trigger, horizontal, context.value);
   const setRef = useCallback(
     (node: HTMLDivElement | null) => {
       scope.current = node;
       if (!node) return;
-      return attachRef(ref, node);
+      const cleanup = attachRef(ref, node);
+      return () => {
+        scope.current = null;
+        cleanup?.();
+      };
     },
     [ref],
   );
@@ -99,6 +106,7 @@ export function TabsList({
   const element = (
     <div
       {...props}
+      data-flux-tabs-managed={overflow.managed || undefined}
       data-a={context.appearance}
       data-w={wrap || undefined}
       aria-orientation={context.orientation}
@@ -146,9 +154,37 @@ export function TabsList({
       }}
     />
   );
+  if (!horizontal) return element;
   return (
-    enhance?.(element, {
-      items: tabs,
-    }) ?? element
+    <div className={strip} data-active={overflow.items.length > 0 || undefined}>
+      {element}
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger
+          ref={trigger}
+          className={more}
+          aria-label="More tabs"
+          variant="ghost"
+          tone="neutral"
+          size={context.size}
+          tabIndex={overflow.items.length ? 0 : -1}
+          aria-hidden={overflow.items.length ? undefined : true}
+        >
+          <span aria-hidden="true">···</span>
+        </DropdownMenu.Trigger>
+        {overflow.items.length > 0 && (
+          <DropdownMenu.Popup aria-label="More tabs" align="end">
+            {overflow.items.map((item) => (
+              <DropdownMenu.Item
+                key={item.id}
+                disabled={item.disabled}
+                onSelect={() => overflow.activate(item.node)}
+              >
+                {item.label}
+              </DropdownMenu.Item>
+            ))}
+          </DropdownMenu.Popup>
+        )}
+      </DropdownMenu.Root>
+    </div>
   );
 }

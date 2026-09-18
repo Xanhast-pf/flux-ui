@@ -1,10 +1,15 @@
 # Verification terminal
 
-The original `check` and `check:full` shell chains and synchronous verifier
-streamed every subprocess. `commands.json` now owns those unchanged ordered
-command chains; package scripts dispatch through `cli.mjs`. The verifier expands
-that source and retains its independent-check aggregation, production-build
-prerequisite for size, and JSON receipt. Ordinary chains stop at the first error.
+The contributor interface is `pnpm flux`; root scripts contain `flux` and `prepare`.
+`public-commands.json` defines human commands, help metadata, argument rules and task
+references. `public-commands.mjs` resolves the tree and validates input. `cli.mjs`
+dispatches through the shared runner. `commands.json` owns ordered argv arrays for
+atomic commands and pipelines; `commands.mjs` validates task references and labels.
+`tasks.mjs` executes internal tasks from the repository root without shell parsing.
+Hooks and fine-grained CI evidence steps use this same internal entrypoint.
+Verification expands normal/full pipelines, preserving independent-check aggregation,
+the production build prerequisite for size and the JSON receipt. Ordinary pipelines
+remain fail-fast. Use `pnpm -w flux ...` from nested workspace directories.
 
 `runner.mjs` owns disk-backed capture, real exit statuses, process groups and
 signal cleanup. Successful stdout is suppressed; stderr remains visible so
@@ -52,8 +57,7 @@ is preserved, but cross-stream chronology is not reconstructed.
 The direct size checker preserves `--json` stdout, provides `--verbose` component
 detail, and writes human baseline reviews to a temporary JSON file. Review and
 acceptance commands are never executed by the terminal migration. For a pure
-machine stream use `node tooling/size/check.mjs --json`; pnpm itself may print
-package-script headers unless invoked with `--silent`.
+machine stream use `node tooling/size/check.mjs --json`; the internal CLI also preserves `--json` output.
 
-Run `pnpm terminal:test` and `pnpm size:test`. No dependencies, thresholds,
+Run `pnpm flux test terminal` and `pnpm flux test size`. No dependencies, thresholds,
 baselines or application behavior are changed.

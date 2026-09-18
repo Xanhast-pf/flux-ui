@@ -11,9 +11,9 @@ Absolute per-icon ceilings:
 `baseline.json` also prevents quiet growth below the absolute ceiling. A metric may grow by at most 10% or the small byte floor encoded in `check.mjs`, whichever is larger.
 
 ```bash
-pnpm build:packages
-pnpm icons:size
-pnpm icons:size:update # only after reviewing intentional emitted changes
+pnpm flux build packages
+pnpm flux size icons
+pnpm flux size icons accept # only after reviewing intentional emitted changes
 ```
 
-Normal new-icon work should use `pnpm size:update`, which updates both component and icon baselines only after absolute budgets pass.
+For new icons, inspect `pnpm flux size icons` first. After explicit review, maintainers may use `pnpm flux size icons accept`; it accepts only icon baselines after absolute budgets pass. Component bundled and aggregate baseline acceptance are separate operations.

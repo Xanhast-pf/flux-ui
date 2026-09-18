@@ -60,7 +60,7 @@ function iconSource(icon) {
 
 function indexSource() {
   return [
-    "// GENERATED FILE. Run `pnpm generate`; do not edit manually.",
+    "// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.",
     'export { IconBase, type IconProps } from "./IconBase.js";',
     ...icons.map((icon) => {
       const name = componentName(icon.name);
@@ -90,7 +90,7 @@ function catalogSource() {
     ];
   });
   return [
-    "// GENERATED FILE. Run `pnpm generate`; do not edit manually.",
+    "// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.",
     'import type { ComponentType } from "react";',
     'import type { IconProps } from "./IconBase.js";',
     ...imports,

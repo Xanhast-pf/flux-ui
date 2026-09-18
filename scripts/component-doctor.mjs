@@ -4,7 +4,7 @@ import { validSizeClasses } from "../tooling/size/budgets.mjs";
 
 const name = process.argv[2];
 if (!name) {
-  console.error("Usage: pnpm component:doctor ComponentName");
+  console.error("Usage: pnpm flux component doctor ComponentName");
   process.exit(1);
 }
 const dir = resolve(process.cwd(), "packages/react/src/components", name);

@@ -1,4 +1,4 @@
-// GENERATED FILE. Run `pnpm generate`; do not edit manually.
+// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.
 export { IconBase, type IconProps } from "./IconBase.js";
 export { ArrowDownIcon } from "./icons/ArrowDownIcon.js";
 export { ArrowLeftIcon } from "./icons/ArrowLeftIcon.js";

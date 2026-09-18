@@ -41,7 +41,7 @@ if (Number(process.versions.node.split(".")[0]) < 24) {
   );
   throw new Error(reason);
 }
-const plan = verificationPlan(manifest.scripts);
+const plan = verificationPlan();
 console.log("Flux UI verify\n");
 const started = performance.now();
 const checks = await runVerification(

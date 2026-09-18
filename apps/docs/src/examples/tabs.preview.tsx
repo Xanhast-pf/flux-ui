@@ -8,6 +8,7 @@ const sections = [
   ["integrations", "Integrations"],
   ["notifications", "Notifications"],
   ["security", "Security"],
+  ["administration", "International administration settings"],
   ["history", "History"],
 ] as const;
 export default function Example() {
@@ -15,7 +16,7 @@ export default function Example() {
     <Tabs.Root defaultValue="overview">
       <Tabs.List aria-label="Example project sections" activateOnFocus>
         {sections.map(([value, label]) => (
-          <Tabs.Tab key={value} value={value}>
+          <Tabs.Tab key={value} value={value} disabled={value === "billing"}>
             {label}
           </Tabs.Tab>
         ))}

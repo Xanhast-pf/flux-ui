@@ -35,6 +35,17 @@ test("Pages consumes same-attempt evidence only after the Required gate", async 
     /evidence-browser-\$\{\{ github\.run_id \}\}-\$\{\{ github\.run_attempt \}\}/u,
   );
 });
+test("Pages builds its deployed artifact through the docs chunk-budget task", async () => {
+  const source = await readFile(new URL("ci.yml", workflows), "utf8");
+  const pages = source
+    .split("\n  pages-build:")[1]
+    .split("\n  pages-deploy:")[0];
+  assert.match(
+    pages,
+    /- name: Build docs\s+run: node tooling\/terminal\/tasks\.mjs build:docs\s/u,
+  );
+  assert.doesNotMatch(pages, /pnpm\s+--filter\s+@flux-ui\/docs\s+build/u);
+});
 test("release scanning stays outside the signing job and dry-run is the default", async () => {
   const source = await readFile(new URL("release.yml", workflows), "utf8");
   assert.match(source, /dry_run:[\s\S]*?default: true/u);

@@ -1,31 +1,35 @@
+import { scrollbar } from "../../internal/scrollbar.css.js";
 import { cssVars } from "@flux-ui/tokens";
-import { style } from "@vanilla-extract/css";
+import { globalStyle, keyframes, style } from "@vanilla-extract/css";
 
 export const root = style({
   minInlineSize: 0,
   maxInlineSize: "100%",
 });
 
-export const list = style({
-  minInlineSize: 0,
-  maxInlineSize: "100%",
-  overflowX: "auto",
-  overscrollBehaviorInline: "contain",
-  display: "flex",
-  flexWrap: "nowrap",
-  gap: `var(${cssVars.space[1]})`,
-  borderBottom: `0.0625rem solid var(${cssVars.color.border})`,
-  selectors: {
-    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
-    "&[data-w]": { flexWrap: "wrap" },
-    "&[data-a='pill']": { border: 0 },
-    "&[aria-orientation='vertical']": {
-      flexDirection: "column",
-      borderBottom: 0,
-      borderInlineEnd: `0.0625rem solid var(${cssVars.color.border})`,
+export const list = style([
+  scrollbar,
+  {
+    minInlineSize: 0,
+    maxInlineSize: "100%",
+    overflowX: "auto",
+    overscrollBehaviorInline: "contain",
+    display: "flex",
+    flexWrap: "nowrap",
+    gap: `var(${cssVars.space[1]})`,
+    borderBottom: `0.0625rem solid var(${cssVars.color.border})`,
+    selectors: {
+      "&[data-flux-tabs-managed]": { overflowX: "hidden" },
+      "&[data-w]": { flexWrap: "wrap" },
+      "&[data-a='pill']": { border: 0 },
+      "&[aria-orientation='vertical']": {
+        flexDirection: "column",
+        borderBottom: 0,
+        borderInlineEnd: `0.0625rem solid var(${cssVars.color.border})`,
+      },
     },
   },
-});
+]);
 
 export const tab = style({
   flexShrink: 0,
@@ -43,10 +47,9 @@ export const tab = style({
   fontWeight: 650,
   paddingInline: `var(${cssVars.space[3]})`,
   transitionProperty: "background-color, border-color, color",
-  transitionDuration: `var(${cssVars.motion.fast})`,
+  transitionDuration: `var(${cssVars.motion.normal})`,
   transitionTimingFunction: `var(${cssVars.motion.easing})`,
   selectors: {
-    "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
     "&[data-s='sm']": {
       minHeight: "var(--flux-control-sm)",
       fontSize: "var(--flux-font-caption)",
@@ -96,9 +99,58 @@ export const tab = style({
   },
 });
 
+const entrance = keyframes({
+  from: { opacity: 0, transform: "translateY(0.125rem)" },
+  to: { opacity: 1, transform: "none" },
+});
 export const panel = style({
+  animation: `${entrance} var(--flux-motion-normal) var(--flux-motion-easing)`,
+  "@media": { "(prefers-reduced-motion: reduce)": { animation: "none" } },
   selectors: {
     "&[data-p='none']": { padding: 0 },
   },
   paddingBlock: `var(${cssVars.space[4]})`,
 });
+
+globalStyle(`:is(${list},${tab})[hidden]:not([hidden='until-found' i])`, {
+  display: "none !important",
+});
+
+export const strip = style({
+  position: "relative",
+  display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr)",
+  columnGap: "var(--flux-space-1)",
+  minInlineSize: 0,
+  selectors: {
+    "&[data-active]": { gridTemplateColumns: "minmax(0, 1fr) max-content" },
+  },
+});
+export const more = style({
+  alignSelf: "start",
+  selectors: {
+    [`${strip}:not([data-active]) &`]: {
+      position: "absolute",
+      visibility: "hidden",
+      pointerEvents: "none",
+    },
+  },
+});
+// Fixed invisible boxes retain intrinsic measurement without creating scrollable
+// overflow in the tablist. Inert removes their semantic and keyboard exposure.
+globalStyle(`${list} [data-flux-tab-overflowed]`, {
+  position: "fixed",
+  inset: 0,
+  inlineSize: "max-content",
+  blockSize: "max-content",
+  visibility: "hidden",
+  pointerEvents: "none",
+});
+globalStyle(
+  `${list}[data-flux-tabs-managed] [role="tab"]:not([data-flux-tab-overflowed])`,
+  {
+    minInlineSize: 0,
+    maxInlineSize: "100%",
+    overflow: "hidden",
+  },
+);

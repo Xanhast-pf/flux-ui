@@ -21,7 +21,7 @@ const samples: Record<Language, string> = {
   html: '<section aria-labelledby="greeting">\n  <h1 id="greeting">Hello Flux UI</h1>\n</section>',
   xml: '<?xml version="1.0" encoding="UTF-8"?>\n<project name="Flux UI">\n  <component>Slider</component>\n</project>',
   yaml: "project: Flux UI\ncomponents:\n  - Slider\n  - Tabs\nchecks:\n  enabled: true",
-  bash: "#!/usr/bin/env bash\nset -euo pipefail\n# Verify the application\npnpm check:full",
+  bash: "#!/usr/bin/env bash\nset -euo pipefail\n# Verify the application\npnpm flux check full",
   sql: "SELECT name, COUNT(*) AS total\nFROM events\nWHERE active = true\nGROUP BY name;",
   python:
     'def greet(name: str) -> str:\n    return f"Hello {name}"\n\nprint(greet("Flux UI"))',

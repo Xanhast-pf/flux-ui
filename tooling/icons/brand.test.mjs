@@ -1,4 +1,4 @@
-import { scriptSource } from "../terminal/commands.mjs";
+import { commands } from "../terminal/commands.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
@@ -51,11 +51,16 @@ test("brand assets are deterministic and included in strict generation verificat
     },
   );
   assert.equal(result.status, 0, result.stdout + result.stderr);
-  const manifest = JSON.parse(await read("package.json"));
-  assert.match(manifest.scripts.generate, /generate-brand\.mjs/u);
-  assert.match(
-    scriptSource(manifest.scripts, "generate:check"),
-    /generate-brand\.mjs --check/u,
+  assert.ok(
+    commands.generate.some(
+      (command) => command[1] === "scripts/generate-brand.mjs",
+    ),
+  );
+  assert.ok(
+    commands["generate:check"].some(
+      (command) =>
+        command.join(" ") === "node scripts/generate-brand.mjs --check",
+    ),
   );
 });
 

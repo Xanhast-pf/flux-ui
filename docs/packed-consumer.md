@@ -1,10 +1,10 @@
 # Candidate consumer verification
 
-`pnpm consumer:packed` is an opt-in validation command, not a publish action and not an automatic change to CI/release policy.
+`pnpm flux release consumer` is an opt-in validation command, not a publish action and not an automatic change to CI/release policy.
 
 ## Preconditions
 
-Use Node 24 or newer, pnpm 10.34.5, the frozen repository lockfile and all three Playwright browser binaries. Prepare approved non-placeholder public versions through the existing Changesets process, build the packages, and run the existing `pnpm release:pack`. This implementation deliberately does not bump versions or accept new size/performance baselines.
+Use Node 24 or newer, pnpm 10.34.5, the frozen repository lockfile and all three Playwright browser binaries. Prepare approved non-placeholder public versions through the existing Changesets process, build the packages, and run the existing `pnpm flux release pack`. This implementation deliberately does not bump versions or accept new size/performance baselines.
 
 The command reads `.cache/release/manifest.json`, verifies its schema, candidate identities, digests and packed metadata, then copies the exact bytes into a unique system temporary directory outside the monorepo. Flux dependencies, including transitive Flux resolution, use only those local archive files. Tool versions come from the repository's installed packages and are written as exact versions in the isolated project. Install scripts are disabled. Dependencies still require an available registry/cache; this is not an offline test.
 

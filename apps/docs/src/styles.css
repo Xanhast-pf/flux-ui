@@ -124,3 +124,39 @@
     display: none;
   }
 }
+
+/* App-owned scrollbars: importing Flux never themes arbitrary consumer scroll containers. */
+@supports not selector(::-webkit-scrollbar) {
+  html,
+  .preview-frame,
+  .preview-stage {
+    scrollbar-width: thin;
+    scrollbar-color: var(--flux-color-border) transparent;
+  }
+}
+@media (forced-colors: none) {
+  :is(html, .preview-frame, .preview-stage)::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  :is(html, .preview-frame, .preview-stage)::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  :is(html, .preview-frame, .preview-stage)::-webkit-scrollbar-thumb {
+    border: 0.125rem solid transparent;
+    background: var(--flux-color-border);
+    background-clip: padding-box;
+    border-radius: 0.25rem;
+  }
+  :is(html, .preview-frame, .preview-stage)::-webkit-scrollbar-thumb:hover {
+    background-color: var(--flux-color-border-strong);
+  }
+}
+@media (forced-colors: active) {
+  html,
+  .preview-frame,
+  .preview-stage {
+    scrollbar-color: auto;
+    scrollbar-width: auto;
+  }
+}

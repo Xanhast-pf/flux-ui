@@ -1,4 +1,4 @@
-// GENERATED FILE. Run `pnpm generate`; do not edit manually.
+// GENERATED FILE. Run `pnpm flux maintain generate`; do not edit manually.
 import type { ComponentType } from "react";
 import type { IconProps } from "./IconBase.js";
 import { ArrowDownIcon } from "./icons/ArrowDownIcon.js";

@@ -261,12 +261,16 @@ test("the Tabs preview supports keyboard selection and accessible panels", async
     name: "Example project sections",
   });
   await list.getByRole("tab").first().focus();
+  const lastName = await list
+    .getByRole("tab", { disabled: false })
+    .last()
+    .textContent();
   await page.keyboard.press("End");
-  const last = list.getByRole("tab").last();
+  const last = list.getByRole("tab", { name: lastName ?? "", exact: true });
   await expect(last).toBeFocused();
   await expect(last).toHaveAttribute("aria-selected", "true");
   await expect(
-    preview.getByRole("tabpanel", { name: "History", exact: true }),
+    preview.getByRole("tabpanel", { name: lastName ?? "", exact: true }),
   ).toBeVisible();
   expect(
     (await new AxeBuilder({ page }).include(".preview-content").analyze())

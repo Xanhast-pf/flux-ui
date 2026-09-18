@@ -7,10 +7,10 @@ interface ObservationMetrics {
 }
 declare global {
   interface Window {
-    __OVERFLOW_METRICS__: ObservationMetrics;
+    __TABS_METRICS__: ObservationMetrics;
   }
 }
-test("Overflow measures mount, resize, update and observer cleanup", async ({
+test("Tabs measures mount, resize, update and observer cleanup", async ({
   page,
 }, testInfo) => {
   await page.addInitScript(() => {
@@ -19,7 +19,7 @@ test("Overflow measures mount, resize, update and observer cleanup", async ({
       active: 0,
       measuredFrames: [],
     };
-    window.__OVERFLOW_METRICS__ = metrics;
+    window.__TABS_METRICS__ = metrics;
     const probed = new WeakSet<Element>();
     const probe = { reads: 0 };
     const NativeObserver = window.ResizeObserver;
@@ -59,11 +59,11 @@ test("Overflow measures mount, resize, update and observer cleanup", async ({
   });
   const samples = [];
   for (let iteration = 0; iteration < 3; iteration++) {
-    await page.goto("/?perf=1&scenario=overflow&variant=flux&count=100");
+    await page.goto("/?perf=1&scenario=tabs&variant=flux&count=100");
     await page.waitForFunction(() => window.__FLUX_PERF_RESULT__ !== undefined);
     const sample = await page.evaluate(() => ({
       workload: window.__FLUX_PERF_RESULT__,
-      observation: window.__OVERFLOW_METRICS__,
+      observation: window.__TABS_METRICS__,
     }));
     expect(sample.observation.created).toBe(100);
     expect(sample.observation.active).toBe(0);
@@ -71,9 +71,9 @@ test("Overflow measures mount, resize, update and observer cleanup", async ({
     expect(sample.workload?.mountMs).toBeGreaterThan(0);
     samples.push(sample);
   }
-  const output = testInfo.outputPath("overflow-performance.json");
+  const output = testInfo.outputPath("tabs-performance.json");
   await writeFile(output, JSON.stringify(samples, null, 2));
-  await testInfo.attach("overflow-performance.json", {
+  await testInfo.attach("tabs-performance.json", {
     path: output,
     contentType: "application/json",
   });

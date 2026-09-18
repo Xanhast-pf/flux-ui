@@ -249,3 +249,39 @@ test("truthful progress, tail truncation, color policy and throttling", async (t
   progress.finish("duplicate");
   assert.equal(sink.text(), finished);
 });
+
+for (const raw of [false, true]) {
+  for (const preference of [
+    {},
+    { NO_COLOR: "" },
+    { FORCE_COLOR: "2" },
+    { CI: "true", FORCE_COLOR: "1" },
+  ]) {
+    test(`child color environment raw=${raw} ${JSON.stringify(preference)}`, async (t) => {
+      const { readFile } = await import("node:fs/promises");
+      const directory = await mkdtemp(join(tmpdir(), "flux-color-test-"));
+      t.after(() => rm(directory, { recursive: true, force: true }));
+      const path = join(directory, "environment.json");
+      const env = { ...process.env, ...preference };
+      for (const key of ["NO_COLOR", "FORCE_COLOR", "CI"])
+        if (!Object.hasOwn(preference, key)) delete env[key];
+      const original = { ...env };
+      const result = await runTask(
+        [
+          process.execPath,
+          "-e",
+          'require("node:fs").writeFileSync(process.argv[1], JSON.stringify(process.env))',
+          path,
+        ],
+        { raw, env, output: capture().output },
+      );
+      assert.equal(result.status, 0);
+      const actual = JSON.parse(await readFile(path, "utf8"));
+      assert.equal(actual.NO_COLOR, raw ? preference.NO_COLOR : "1");
+      assert.equal(actual.FORCE_COLOR, raw ? preference.FORCE_COLOR : "0");
+      assert.equal(actual.CI, preference.CI);
+      assert.equal(actual.FLUX_TERMINAL_ACTIVE, "1");
+      assert.deepEqual(env, original);
+    });
+  }
+}

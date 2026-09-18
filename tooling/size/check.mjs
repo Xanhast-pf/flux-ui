@@ -324,7 +324,7 @@ if (
 ) {
   failed = true;
   console.error(
-    `✖ Aggregate baseline ${aggregateState.status}: ${aggregateState.reason}. Run pnpm size:aggregate:review; acceptance requires explicit pnpm size:aggregate:update.`,
+    `✖ Aggregate baseline ${aggregateState.status}: ${aggregateState.reason}. Run pnpm flux size aggregate review; acceptance requires explicit pnpm flux size aggregate accept.`,
   );
 } else if (!aggregateAcceptance && aggregateState.status === "applicable") {
   for (const name of ["rootEntry", "runtime", "published"]) {
@@ -340,7 +340,7 @@ if (
   }
 } else if (migration && aggregateState.status !== "applicable") {
   console.error(
-    `Aggregate baseline stale: ${aggregateState.reason}; component acceptance does not accept aggregate growth. Run pnpm size:aggregate:review separately.`,
+    `Aggregate baseline stale: ${aggregateState.reason}; component acceptance does not accept aggregate growth. Run pnpm flux size aggregate review separately.`,
   );
 }
 

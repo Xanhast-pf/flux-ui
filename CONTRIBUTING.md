@@ -4,6 +4,9 @@ Thanks for helping build Flux UI. The repository is intentionally strict because
 
 ## First-time setup
 
+Contributors need **Node 24+** and **pnpm 10.34.5**.
+No additional system task runner is required.
+
 Follow the canonical setup guide in [`docs/development.md`](docs/development.md):
 
 ```bash
@@ -12,8 +15,9 @@ cd flux-ui
 # If you use nvm; otherwise make sure `node --version` reports Node 24.
 nvm use
 corepack enable
-pnpm install
-pnpm check
+pnpm install --frozen-lockfile
+pnpm flux doctor
+pnpm flux dev
 ```
 
 Install Playwright Chromium before running browser/full checks:
@@ -33,8 +37,8 @@ Public API additions should include the real usage that motivated them. Prefer a
 Create public components through the generator:
 
 ```bash
-pnpm component:new ComponentName Category [sizeClass]
-pnpm component:doctor ComponentName
+pnpm flux component new ComponentName Category [sizeClass]
+pnpm flux component doctor ComponentName
 ```
 
 Do not copy folders or manually wire generated registries. If adding a component requires unrelated project-wide edits simply to become discoverable, improve the generator instead.
@@ -45,24 +49,27 @@ New components default to the strict `primitive` size class. Choose a larger cla
 
 Component scaffolding creates `apps/docs/src/examples/{slug}.preview.tsx` and `{slug}.example.tsx` automatically. Use public `@flux-ui/react` exports in the preview. The metadata imports that exact TSX file with `?raw` for the copyable code tab, and supplies focused API and accessibility notes. New component pages and search links are discovered from metadata; do not edit a central catalog list.
 
-Run `pnpm docs:check` for coverage and `pnpm docs:test` for the dependency-free catalog contract tests. Both are included in the ordinary quality pipeline. A public component without an example, or an orphaned example without a public component, is an error.
+Run `pnpm flux check docs` for coverage and `pnpm flux test docs` for the dependency-free catalog contract tests. Both are included in the ordinary quality pipeline. A public component without an example, or an orphaned example without a public component, is an error.
 
 See [`docs/workshop.md`](docs/workshop.md) for the documentation shell and browser test expectations.
 
 ## Validation
 
+Run `pnpm flux` for command discovery and `pnpm flux size --help` for focused help.
+`pnpm flux fix` writes generated source and safe lint/format fixes, then runs the normal gate; it never accepts baselines.
+
 Before pushing ordinary changes:
 
 ```bash
-pnpm check
+pnpm flux check
 ```
 
 For component visuals, browser behavior, accessibility, Storybook, or runtime-sensitive changes:
 
 ```bash
-pnpm storybook:build
-pnpm check:full
-pnpm perf
+pnpm flux build storybook
+pnpm flux check full
+pnpm flux perf
 ```
 
 Keep Coding Bible enabled. Do not hide findings with exclusions merely to make CI green.
@@ -70,12 +77,10 @@ Keep Coding Bible enabled. Do not hide findings with exclusions merely to make C
 To collect the complete local result when an early gate fails, use:
 
 ```bash
-pnpm generate
-pnpm format
-pnpm verify:all
+pnpm flux check all
 ```
 
-`verify:all` runs the commands already defined by `check` and `check:full`, but
+`pnpm flux check all` runs the internal tasks behind `pnpm flux check` and `pnpm flux check full`, but
 continues independent checks after a failure. A failed build blocks size checks
 so stale output cannot be reported as a new measurement. Any failed or blocked
 check keeps the final exit code nonzero. The local receipt is written to
@@ -89,7 +94,7 @@ Size and runtime baselines are reviewed contracts, not snapshots to regenerate w
 Use:
 
 ```bash
-pnpm size:update
+pnpm flux size baseline accept
 ```
 
 only for a new public component or an intentionally accepted size change.
@@ -97,7 +102,7 @@ only for a new public component or an intentionally accepted size change.
 Use:
 
 ```bash
-pnpm perf:update
+pnpm flux perf accept
 ```
 
 only when intentionally establishing or changing the runtime-performance baseline.
@@ -109,7 +114,7 @@ Commit baseline changes with the code that justifies them.
 Add a Changeset for user-visible published package changes:
 
 ```bash
-pnpm changeset
+pnpm flux release changeset
 ```
 
 Docs-only, test-only, and internal tooling changes generally do not require one unless the published package contract changes.
