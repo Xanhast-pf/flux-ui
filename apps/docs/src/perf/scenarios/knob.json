@@ -4,6 +4,6 @@
   "unit": "knobs",
   "kind": "workload",
   "maxCount": 1000,
-  "fixtureRevision": 1,
+  "fixtureRevision": 2,
   "description": "Render N numeric sliders and update controlled values; not a drag-latency benchmark."
 }

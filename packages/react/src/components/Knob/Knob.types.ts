@@ -1,6 +1,7 @@
 import type { ComponentPropsWithRef, CSSProperties } from "react";
 import type { AccessibleName } from "../../internal/accessibility.types.js";
-export type KnobProps = Omit<
+
+type KnobBaseProps = Omit<
   ComponentPropsWithRef<"div">,
   "children" | "defaultValue" | "aria-label" | "aria-labelledby" | "style"
 > &
@@ -11,14 +12,26 @@ export type KnobProps = Omit<
       (CSSProperties & { "--flux-knob-size"?: string | undefined }) | undefined;
     /** Double-click target; required for reset in controlled mode. */
     resetValue?: number | undefined;
-    value?: number | undefined;
-    defaultValue?: number | undefined;
     min?: number | undefined;
     max?: number | undefined;
     step?: number | undefined;
     scale?: "linear" | "log" | undefined;
     disabled?: boolean | undefined;
     formatValue?: ((value: number) => string) | undefined;
-    onValueChange?: ((value: number) => void) | undefined;
     onValueCommit?: ((value: number) => void) | undefined;
   };
+
+type KnobUncontrolledProps = {
+  value?: undefined;
+  defaultValue?: number | undefined;
+  onValueChange?: ((value: number) => void) | undefined;
+};
+
+type KnobControlledProps = {
+  value: number;
+  defaultValue?: never;
+  onValueChange: (value: number) => void;
+};
+
+export type KnobProps = KnobBaseProps &
+  (KnobUncontrolledProps | KnobControlledProps);
