@@ -1,16 +1,28 @@
 import type { ComponentPropsWithRef, ReactNode } from "react";
-export interface SplitPaneProps extends Omit<
+
+type SplitPaneBaseProps = Omit<
   ComponentPropsWithRef<"div">,
-  "children"
-> {
+  "children" | "dangerouslySetInnerHTML"
+> & {
   label: string;
   first: ReactNode;
   second: ReactNode;
   orientation?: "horizontal" | "vertical" | undefined;
-  value?: number | undefined;
-  defaultValue?: number | undefined;
   min?: number | undefined;
   max?: number | undefined;
-  onValueChange?: ((value: number) => void) | undefined;
   onValueCommit?: ((value: number) => void) | undefined;
-}
+};
+
+export type SplitPaneProps = SplitPaneBaseProps &
+  (
+    | {
+        value: number;
+        defaultValue?: never;
+        onValueChange: (value: number) => void;
+      }
+    | {
+        value?: undefined;
+        defaultValue?: number | undefined;
+        onValueChange?: ((value: number) => void) | undefined;
+      }
+  );

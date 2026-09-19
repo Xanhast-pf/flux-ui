@@ -1,9 +1,11 @@
 import { Sidebar, Stack, Text } from "@flux-ui/react";
 import type { ScenarioProps } from "../scenario.types.js";
 
+const ignoreOpenChange = () => {};
+
 export default function Fixture({ count, revision }: ScenarioProps) {
   return (
-    <Sidebar.Root open={revision === 0}>
+    <Sidebar.Root open={revision === 0} onOpenChange={ignoreOpenChange}>
       <Sidebar.Layout data-perf-root>
         <Sidebar.Panel aria-label="Benchmark navigation">
           <Stack>

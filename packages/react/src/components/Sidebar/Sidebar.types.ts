@@ -4,10 +4,17 @@ import type { ButtonProps } from "../Button/Button.types.js";
 
 export type SidebarRootProps = {
   children?: ReactNode;
-  onOpenChange?: ((open: boolean) => void) | undefined;
 } & (
-  | { open: boolean; defaultOpen?: never }
-  | { open?: undefined; defaultOpen?: boolean | undefined }
+  | {
+      open: boolean;
+      defaultOpen?: never;
+      onOpenChange: (open: boolean) => void;
+    }
+  | {
+      open?: undefined;
+      defaultOpen?: boolean | undefined;
+      onOpenChange?: ((open: boolean) => void) | undefined;
+    }
 );
 
 /**
@@ -29,5 +36,8 @@ export type SidebarPanelProps = Omit<
 > &
   AccessibleName;
 export type SidebarContentProps = ComponentPropsWithRef<"div">;
-export type SidebarToggleProps = ButtonProps;
+export type SidebarToggleProps = Omit<
+  ButtonProps,
+  "aria-controls" | "aria-expanded"
+>;
 export type SidebarCloseProps = ButtonProps;
