@@ -6,7 +6,7 @@ const meta = { title: "Feedback/Progress", component: Progress } satisfies Meta<
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
-  args: {},
+  args: { "aria-label": "Release checklist" },
   render: () => <Progress aria-label="Release checklist" value={50} />,
 };
 export const Indeterminate: Story = {

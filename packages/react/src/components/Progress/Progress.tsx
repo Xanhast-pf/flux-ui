@@ -7,6 +7,10 @@ export function Progress({
   value,
   ...props
 }: ProgressProps) {
+  // x * 0 !== 0 flags NaN/±Infinity; finite numbers produce zero.
+  if (max <= 0 || max * 0 !== 0 || (value ?? 0) * 0 !== 0) {
+    throw new RangeError();
+  }
   return (
     <progress
       {...props}

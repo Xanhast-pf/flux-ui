@@ -52,7 +52,7 @@ describe("Public semantic type contracts", () => {
     // @ts-expect-error Heading hierarchy must be specified explicitly.
     const hierarchy = <Heading>Missing level</Heading>;
     // @ts-expect-error Unknown measurements are not silently represented as zero.
-    const unknown = <Meter value={null} />;
+    const unknown = <Meter aria-label="Unknown measurement" value={null} />;
     // @ts-expect-error ThemeScope owns only axis-level surface spacing.
     const themeEdge = <ThemeScope theme="paper" paddingBlockStart="sm" />;
     const linkTone = (

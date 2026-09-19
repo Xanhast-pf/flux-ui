@@ -1,26 +1,28 @@
 import type { ComponentPropsWithRef, ReactNode } from "react";
 export interface ToastOptions {
   title: string;
-  description?: string;
-  tone?: "neutral" | "success" | "danger";
+  description?: string | undefined;
+  tone?: "neutral" | "success" | "danger" | undefined;
   /** Zero disables automatic dismissal. Timers pause while hovered, focused or the document is hidden. */
-  duration?: number;
-  action?: {
-    label: string;
-    onClick: () => void;
-  };
+  duration?: number | undefined;
+  action?:
+    | {
+        label: string;
+        onClick: () => void;
+      }
+    | undefined;
 }
 export interface ToastProviderProps {
   children?: ReactNode;
-  duration?: number;
-  maxVisible?: number;
-  dismissLabel?: string;
+  duration?: number | undefined;
+  maxVisible?: number | undefined;
+  dismissLabel?: string | undefined;
 }
 export interface ToastViewportProps extends Omit<
   ComponentPropsWithRef<"ol">,
-  "children"
+  "children" | "dangerouslySetInnerHTML"
 > {
-  placement?: "fixed" | "inline";
+  placement?: "fixed" | "inline" | undefined;
 }
 export interface ToastController {
   notify: (options: ToastOptions) => string;

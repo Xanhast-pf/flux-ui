@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useRef } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { Toast, useToast } from "./Toast.js";
+import type { ToastOptions } from "./Toast.types.js";
 afterEach(() => vi.useRealTimers());
 function Producer() {
   const sequence = useRef(0);
@@ -19,6 +20,35 @@ function Producer() {
   );
 }
 describe("Toast", () => {
+  it("accepts optional application values without conditional spreads", () => {
+    const description: string | undefined = undefined;
+    const tone: "neutral" | "success" | "danger" | undefined = undefined;
+    const duration: number | undefined = undefined;
+    const action: ToastOptions["action"] = undefined;
+    const maxVisible: number | undefined = undefined;
+    const dismissLabel: string | undefined = undefined;
+    const placement: "fixed" | "inline" | undefined = undefined;
+    const options: ToastOptions = {
+      title: "Optional notice",
+      description,
+      tone,
+      duration,
+      action,
+    };
+
+    render(
+      <Toast.Provider
+        duration={duration}
+        maxVisible={maxVisible}
+        dismissLabel={dismissLabel}
+      >
+        <Toast.Viewport placement={placement} />
+      </Toast.Provider>,
+    );
+
+    expect(options.title).toBe("Optional notice");
+  });
+
   it("starts queued timers only after the notice becomes visible", async () => {
     vi.useFakeTimers();
     render(

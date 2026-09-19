@@ -1,7 +1,7 @@
 import type { ComponentPropsWithRef } from "react";
 export interface SpinnerProps extends Omit<
   ComponentPropsWithRef<"span">,
-  "children" | "role" | "aria-label" | "aria-hidden"
+  "children" | "role" | "aria-label" | "aria-hidden" | "dangerouslySetInnerHTML"
 > {
   /** Set null only when a nearby status already names the operation. */
   label?: string | null | undefined;
