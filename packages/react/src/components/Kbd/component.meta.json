@@ -2,7 +2,7 @@
   "name": "Kbd",
   "slug": "kbd",
   "category": "Typography",
-  "status": "alpha",
+  "status": "beta",
   "description": "Semantic keyboard hints, styled without adding shortcut behavior.",
   "sizeClass": "primitive"
 }

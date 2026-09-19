@@ -2,7 +2,7 @@
   "name": "Breadcrumbs",
   "slug": "breadcrumbs",
   "category": "Navigation",
-  "status": "alpha",
+  "status": "beta",
   "description": "Semantic navigation trails with decorative separators.",
   "sizeClass": "primitive"
 }

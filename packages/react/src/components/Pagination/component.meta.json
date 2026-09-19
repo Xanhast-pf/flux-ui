@@ -2,7 +2,7 @@
   "name": "Pagination",
   "slug": "pagination",
   "category": "Navigation",
-  "status": "alpha",
+  "status": "beta",
   "description": "Controlled paging controls with native buttons and explicit boundaries.",
   "sizeClass": "primitive"
 }

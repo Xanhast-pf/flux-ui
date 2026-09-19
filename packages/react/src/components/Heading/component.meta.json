@@ -2,7 +2,7 @@
   "name": "Heading",
   "slug": "heading",
   "category": "Typography",
-  "status": "alpha",
+  "status": "beta",
   "description": "Explicit heading hierarchy with independent visual size.",
   "sizeClass": "primitive"
 }

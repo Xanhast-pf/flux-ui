@@ -2,7 +2,7 @@
   "name": "Sidebar",
   "slug": "sidebar",
   "category": "Layout",
-  "status": "alpha",
+  "status": "beta",
   "description": "Persistent, non-modal side navigation that shares layout with the content.",
   "sizeClass": "interactive",
   "nonDomParts": ["Sidebar.Root"]

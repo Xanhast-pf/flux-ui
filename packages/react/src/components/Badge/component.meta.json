@@ -2,7 +2,7 @@
   "name": "Badge",
   "slug": "badge",
   "category": "Display",
-  "status": "alpha",
+  "status": "beta",
   "description": "Compact, non-interactive status labels with semantic tones.",
   "sizeClass": "primitive"
 }

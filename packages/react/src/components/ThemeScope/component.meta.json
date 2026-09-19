@@ -2,7 +2,7 @@
   "name": "ThemeScope",
   "slug": "theme-scope",
   "category": "Layout",
-  "status": "alpha",
+  "status": "beta",
   "description": "Scoped semantic theme application with optional container queries.",
   "sizeClass": "primitive"
 }

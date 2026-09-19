@@ -2,7 +2,7 @@
   "name": "List",
   "slug": "list",
   "category": "Typography",
-  "status": "alpha",
+  "status": "beta",
   "description": "Styled native content lists, not an ARIA menu.",
   "sizeClass": "primitive"
 }

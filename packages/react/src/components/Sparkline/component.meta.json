@@ -2,7 +2,7 @@
   "name": "Sparkline",
   "slug": "sparkline",
   "category": "Data",
-  "status": "alpha",
+  "status": "beta",
   "description": "Decorative trend rendering is not a replacement for data access. Supply a meaningful accessible label or an equivalent nearby summary.",
   "sizeClass": "primitive"
 }

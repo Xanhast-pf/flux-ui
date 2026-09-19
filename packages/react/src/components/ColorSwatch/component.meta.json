@@ -2,7 +2,7 @@
   "name": "ColorSwatch",
   "slug": "color-swatch",
   "category": "Display",
-  "status": "alpha",
+  "status": "beta",
   "description": "Decorative color sample for composition inside named selection controls.",
   "sizeClass": "primitive"
 }

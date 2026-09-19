@@ -2,7 +2,7 @@
   "name": "DataTable",
   "slug": "data-table",
   "category": "Data",
-  "status": "alpha",
+  "status": "beta",
   "description": "Windowed, fixed-row-height native table; not an editable spreadsheet or ARIA grid.",
   "sizeClass": "data-heavy"
 }

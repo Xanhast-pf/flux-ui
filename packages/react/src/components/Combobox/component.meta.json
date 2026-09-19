@@ -2,7 +2,7 @@
   "name": "Combobox",
   "slug": "combobox",
   "category": "Inputs",
-  "status": "alpha",
+  "status": "beta",
   "description": "Searchable single selection with committed form values, keyboard navigation and explicit unmatched-input validation.",
   "sizeClass": "overlay"
 }
