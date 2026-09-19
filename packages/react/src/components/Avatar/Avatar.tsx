@@ -56,7 +56,7 @@ export function Avatar({
       data-h={shape === "circle" ? undefined : shape}
       role={alt ? "img" : undefined}
       aria-label={alt || undefined}
-      aria-hidden={alt ? props["aria-hidden"] : true}
+      aria-hidden={alt ? undefined : true}
     >
       {src ? (
         <AvatarPicture key={src} src={src} fallback={fallback} />

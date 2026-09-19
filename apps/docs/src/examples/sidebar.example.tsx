@@ -19,7 +19,7 @@ export default {
     [
       "Root open / defaultOpen / onOpenChange",
       "boolean / callback",
-      "Controlled or uncontrolled state; storage belongs to the app.",
+      "Controlled open requires onOpenChange; uncontrolled state may use defaultOpen. Storage belongs to the app.",
     ],
     [
       "Layout",

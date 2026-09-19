@@ -22,7 +22,7 @@ export default {
     ],
   ],
   notes: [
-    "The root supplies a single accessible image name; the internal image and fallback are decorative to avoid duplicate announcements.",
+    'The root owns image exposure: nonempty alt supplies one accessible image name, while alt="" makes the Avatar decorative. The internal image and fallback stay decorative to avoid duplicate announcements.',
     "Use text or a decorative icon for fallback, not an interactive control.",
     "Changing src resets a previous failure without an effect. An old image error cannot hide a different source.",
     "Images are optional. No initials inference, external avatar service, or network dependency is introduced.",

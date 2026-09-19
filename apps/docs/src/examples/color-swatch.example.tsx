@@ -5,7 +5,7 @@ export default {
   Preview,
   code,
   notes: [
-    "The swatch is decorative and always aria-hidden. Put names and selection state on the enclosing Toggle or ToggleGroup.Item.",
+    "The swatch is always decorative and owns aria-hidden; role, focus and accessible naming belong to the enclosing Toggle or ToggleGroup.Item.",
     "A check mark supplements color for a selected sample; do not use color as the only accessible status signal.",
   ],
   props: [

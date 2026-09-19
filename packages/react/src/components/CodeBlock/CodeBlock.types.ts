@@ -12,7 +12,10 @@ export type CodeHighlighter = (
   language: string,
   signal: AbortSignal,
 ) => readonly CodeToken[] | Promise<readonly CodeToken[]>;
-export type CodeBlockProps = Omit<ComponentPropsWithRef<"div">, "children"> & {
+export type CodeBlockProps = Omit<
+  ComponentPropsWithRef<"div">,
+  "children" | "dangerouslySetInnerHTML"
+> & {
   code: string;
   label?: string | undefined;
   copyable?: boolean | undefined;

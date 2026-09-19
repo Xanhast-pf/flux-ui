@@ -12,7 +12,11 @@ export default {
   ],
   props: [
     ["first / second", "ReactNode", "Composable pane contents."],
-    ["value / defaultValue", "number", "First pane percentage."],
+    [
+      "value / defaultValue",
+      "number",
+      "Controlled value requires onValueChange; defaultValue initializes uncontrolled first-pane percentage.",
+    ],
     ["min / max", "number", "Accessible resizing limits."],
   ],
 } satisfies ComponentExample;
