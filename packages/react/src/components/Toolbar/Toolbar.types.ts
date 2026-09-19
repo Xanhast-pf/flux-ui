@@ -12,7 +12,7 @@ export type ToolbarRootProps = Omit<
 
 export type ToolbarButtonProps = Omit<
   ComponentPropsWithRef<"button">,
-  "tabIndex"
+  "tabIndex" | "aria-busy"
 > & {
   /** Marks the action busy, disables native activation, and removes it from roving focus. */
   loading?: boolean | undefined;
@@ -22,4 +22,7 @@ export type ToolbarLinkProps = Omit<ComponentPropsWithRef<"a">, "tabIndex"> & {
   href: string;
 };
 
-export type ToolbarSeparatorProps = ComponentPropsWithRef<"hr">;
+export type ToolbarSeparatorProps = Omit<
+  ComponentPropsWithRef<"hr">,
+  "role" | "aria-orientation"
+>;

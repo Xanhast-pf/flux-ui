@@ -18,12 +18,12 @@ export default {
     [
       "Button / Link",
       "native button / anchor props",
-      "Participating controls share one roving tab stop; refs preserve React 19 cleanup.",
+      "Participating controls share one roving tab stop; Button.loading owns aria-busy; refs preserve React 19 cleanup.",
     ],
     [
       "Separator",
-      "native hr props",
-      "Decorative divider follows toolbar orientation.",
+      "decorative hr",
+      "Runtime fixes role=none and a perpendicular visual orientation; ARIA role/orientation are not caller overrides.",
     ],
   ],
   notes: [

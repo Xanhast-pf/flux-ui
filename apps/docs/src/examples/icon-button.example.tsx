@@ -24,6 +24,6 @@ export default {
   notes: [
     'Keep the action name meaningful without the icon. Give decorative icons aria-hidden="true".',
     'Buttons default to type="button". Explicit submit remains available.',
-    "Loading uses the same disabled and busy contract as Button.",
+    "Loading uses the same disabled and runtime-owned busy contract as Button.",
   ],
 } satisfies ComponentExample;
