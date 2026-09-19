@@ -26,12 +26,12 @@ export default {
     [
       "sorting / onSortingChange",
       "DataSort | null",
-      "Local or server-owned ordering.",
+      "Controlled sorting requires onSortingChange; defaultSorting initializes local state. manualSorting also requires a sort-request callback.",
     ],
     [
       "selectedRowIds / onSelectionChange",
       "readonly string[]",
-      "Selection by identity, not row position.",
+      "Controlled selection requires onSelectionChange; defaultSelectedRowIds initializes local selection by identity.",
     ],
   ],
 } satisfies ComponentExample;

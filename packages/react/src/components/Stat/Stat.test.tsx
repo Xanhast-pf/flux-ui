@@ -2,6 +2,12 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Stat } from "./Stat.js";
 describe("Stat", () => {
+  it("accepts an optional application note without conditional spreads", () => {
+    const note: string | undefined = undefined;
+    render(<Stat label="Errors" value={0} note={note} />);
+    expect(screen.getByText("0")).toBeInTheDocument();
+  });
+
   it("keeps a real zero associated with its label and optional note", () => {
     const { container } = render(
       <Stat label="Errors" value={0} note="Current run" />,

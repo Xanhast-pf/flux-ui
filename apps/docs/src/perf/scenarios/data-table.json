@@ -4,6 +4,6 @@
   "unit": "loaded rows",
   "kind": "workload",
   "maxCount": 5000,
-  "fixtureRevision": 1,
+  "fixtureRevision": 2,
   "description": "One virtual table; create and sort N loaded rows; update with a new ordering."
 }

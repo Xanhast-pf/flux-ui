@@ -13,10 +13,10 @@ export interface DataSort {
   direction: "ascending" | "descending";
 }
 /** Fixed-height windowed native table. It is not an editable ARIA grid. */
-export interface DataTableProps<Row> extends Omit<
+type DataTableBaseProps<Row> = Omit<
   ComponentPropsWithRef<"div">,
-  "children"
-> {
+  "children" | "dangerouslySetInnerHTML"
+> & {
   label: string;
   rows: readonly Row[];
   columns: readonly DataColumn<Row>[];
@@ -24,15 +24,44 @@ export interface DataTableProps<Row> extends Omit<
   height?: number | undefined;
   rowHeight?: number | undefined;
   overscan?: number | undefined;
-  sorting?: DataSort | null | undefined;
-  defaultSorting?: DataSort | null | undefined;
-  onSortingChange?: ((sorting: DataSort | null) => void) | undefined;
-  /** Sort the loaded data locally unless the server owns ordering. */
-  manualSorting?: boolean | undefined;
   /** Informational total only: unloaded rows are not fabricated or fetched. */
   totalRows?: number | undefined;
   selectable?: boolean | undefined;
-  selectedRowIds?: readonly string[] | undefined;
-  defaultSelectedRowIds?: readonly string[] | undefined;
-  onSelectionChange?: ((rowIds: readonly string[]) => void) | undefined;
-}
+};
+
+type DataTableSortingProps =
+  | {
+      sorting: DataSort | null;
+      defaultSorting?: never;
+      onSortingChange: (sorting: DataSort | null) => void;
+      manualSorting?: boolean | undefined;
+    }
+  | {
+      sorting?: undefined;
+      defaultSorting?: DataSort | null | undefined;
+      onSortingChange?: ((sorting: DataSort | null) => void) | undefined;
+      manualSorting?: false | undefined;
+    }
+  | {
+      sorting?: undefined;
+      defaultSorting?: DataSort | null | undefined;
+      onSortingChange: (sorting: DataSort | null) => void;
+      /** Server-owned ordering requires a request callback. */
+      manualSorting: true;
+    };
+
+type DataTableSelectionProps =
+  | {
+      selectedRowIds: readonly string[];
+      defaultSelectedRowIds?: never;
+      onSelectionChange: (rowIds: readonly string[]) => void;
+    }
+  | {
+      selectedRowIds?: undefined;
+      defaultSelectedRowIds?: readonly string[] | undefined;
+      onSelectionChange?: ((rowIds: readonly string[]) => void) | undefined;
+    };
+
+export type DataTableProps<Row> = DataTableBaseProps<Row> &
+  DataTableSortingProps &
+  DataTableSelectionProps;

@@ -13,7 +13,7 @@ export interface ChartSeries {
 }
 export interface ChartProps extends Omit<
   ComponentPropsWithRef<"figure">,
-  "children"
+  "children" | "dangerouslySetInnerHTML"
 > {
   label: string;
   description?: string | undefined;
