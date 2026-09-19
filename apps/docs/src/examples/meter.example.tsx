@@ -8,7 +8,7 @@ export default {
   notes: [
     "A meter describes a known bounded measurement, not task progress. Use Progress for completion.",
     "value, min and max must be finite; max must exceed min. Unknown measurements are rendered separately by the caller.",
-    "Supply an accessible name or use aria-hidden when the same value is already presented as accessible text.",
+    "Supply an accessible name or explicitly use aria-hidden when the same measurement is already presented as accessible text.",
   ],
   props: [
     ["value", "number", "Required finite measurement."],

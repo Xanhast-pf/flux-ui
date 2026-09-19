@@ -28,17 +28,21 @@ describe("Meter", () => {
   it.each([Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY])(
     "rejects unknown or non-finite value %s",
     (value) => {
-      expect(() => renderToStaticMarkup(<Meter value={value} />)).toThrow(
-        RangeError,
-      );
+      expect(() =>
+        renderToStaticMarkup(<Meter aria-label="Measurement" value={value} />),
+      ).toThrow(RangeError);
     },
   );
   it("rejects reversed or zero-width bounds", () => {
     expect(() =>
-      renderToStaticMarkup(<Meter value={1} min={3} max={2} />),
+      renderToStaticMarkup(
+        <Meter aria-label="Measurement" value={1} min={3} max={2} />,
+      ),
     ).toThrow(RangeError);
     expect(() =>
-      renderToStaticMarkup(<Meter value={1} min={1} max={1} />),
+      renderToStaticMarkup(
+        <Meter aria-label="Measurement" value={1} min={1} max={1} />,
+      ),
     ).toThrow(RangeError);
   });
 });
