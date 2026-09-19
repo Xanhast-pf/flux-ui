@@ -1,6 +1,9 @@
 import { Stack, Tabs } from "@flux-ui/react";
 import type { ScenarioProps } from "../scenario.types.js";
+
 const sections = ["Overview", "Activity", "Members", "Settings", "History"];
+const ignoreValueChange = () => {};
+
 export default function Fixture({ count, revision }: ScenarioProps) {
   return (
     <Stack data-perf-root>
@@ -9,6 +12,7 @@ export default function Fixture({ count, revision }: ScenarioProps) {
           <Tabs.Root
             key={id}
             value={revision ? "History" : "Overview"}
+            onValueChange={ignoreValueChange}
             style={{ inlineSize: revision ? "16rem" : "24rem" }}
           >
             <Tabs.List aria-label={id}>

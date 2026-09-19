@@ -4,13 +4,13 @@ export interface PaginationRootProps extends ComponentPropsWithRef<"nav"> {
   pageCount: number;
   onPageChange: (page: number) => void;
 }
-export type PaginationButtonProps = ComponentPropsWithRef<"button">;
+export type PaginationButtonProps = Omit<
+  ComponentPropsWithRef<"button">,
+  "aria-current"
+>;
 export type PaginationPreviousProps = PaginationButtonProps;
 export type PaginationNextProps = PaginationButtonProps;
-export interface PaginationPageProps extends Omit<
-  PaginationButtonProps,
-  "aria-current"
-> {
+export interface PaginationPageProps extends PaginationButtonProps {
   page: number;
 }
 export type PaginationEllipsisProps = Omit<
