@@ -14,7 +14,7 @@ export default {
     [
       "Root.name",
       "string",
-      "Optional deterministic group name. Otherwise useId keeps groups isolated.",
+      "Optional deterministic group name for single mode only. Multiple mode intentionally has no shared name.",
     ],
     [
       "Item / Trigger / Content",

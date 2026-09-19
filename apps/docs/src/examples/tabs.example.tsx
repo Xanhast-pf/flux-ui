@@ -8,7 +8,7 @@ export default {
   notes: [
     "Horizontal lists automatically keep the selected tab visible and move extra tabs into a Flux DropdownMenu. Use Tab to reach More tabs; its menu supports arrows, typeahead and Escape. Before measurement, native scrolling remains available with themed scrollbars.",
     "Vertical and wrapping lists keep their explicit layout. Panel entrance motion respects reduced motion. Remove the former Overflow wrapper; ordinary Tabs now owns responsiveness.",
-    "Trigger and Content are aliases for the established Tab and Panel parts.",
+    "Use the canonical Tab and Panel parts; the former Trigger and Content aliases are no longer part of the public API.",
     "Keyboard-accessible switching between related panels.",
     "Use native attributes, className, style and composition for customization.",
     "Uncontrolled tabs recover the nearest available selection when the selected tab is removed, disabled, hidden or inert. Selection does not steal focus from unrelated controls.",
@@ -19,7 +19,7 @@ export default {
     [
       "Root",
       "value / defaultValue / onValueChange",
-      "Selection state; an initial value is required.",
+      "Selection state; an initial value is required. Controlled value requires onValueChange.",
     ],
     [
       "Root.orientation",

@@ -12,6 +12,7 @@ import { hydrateRoot } from "react-dom/client";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { Tabs } from "./Tabs.js";
 
+const ignoreValueChange = () => {};
 let width = 300;
 const observers: {
   callback: ResizeObserverCallback;
@@ -293,7 +294,7 @@ it("hydrates ordinary tabs without replacement or recoverable errors", async () 
 it("reveals externally selected hidden tabs without another observer", () => {
   function Controlled({ value }: { value: string }) {
     return (
-      <Tabs.Root value={value}>
+      <Tabs.Root value={value} onValueChange={ignoreValueChange}>
         <Tabs.List>
           {["One", "Two", "Three"].map((item) => (
             <Tabs.Tab key={item} value={item}>
