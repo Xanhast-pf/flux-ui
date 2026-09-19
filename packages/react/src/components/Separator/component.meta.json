@@ -2,7 +2,7 @@
   "name": "Separator",
   "slug": "separator",
   "category": "Layout",
-  "status": "alpha",
+  "status": "beta",
   "description": "Semantic or decorative dividers in either orientation.",
   "sizeClass": "primitive"
 }

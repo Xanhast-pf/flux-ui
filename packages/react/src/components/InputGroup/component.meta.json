@@ -2,7 +2,7 @@
   "name": "InputGroup",
   "slug": "input-group",
   "category": "Inputs",
-  "status": "alpha",
+  "status": "beta",
   "description": "Input composition for prefixes, suffixes and actions without replacing the native input contract.",
   "sizeClass": "primitive"
 }

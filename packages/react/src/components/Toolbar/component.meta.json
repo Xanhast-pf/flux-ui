@@ -2,7 +2,7 @@
   "name": "Toolbar",
   "slug": "toolbar",
   "category": "Actions",
-  "status": "alpha",
+  "status": "beta",
   "description": "Named action groups with one tab stop and arrow-key navigation.",
   "sizeClass": "interactive"
 }

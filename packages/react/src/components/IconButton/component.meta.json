@@ -2,7 +2,7 @@
   "name": "IconButton",
   "slug": "icon-button",
   "category": "Actions",
-  "status": "alpha",
+  "status": "beta",
   "description": "Compact icon actions with a required accessible name.",
   "sizeClass": "primitive"
 }

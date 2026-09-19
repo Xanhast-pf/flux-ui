@@ -2,7 +2,7 @@
   "name": "Button",
   "slug": "button",
   "category": "Actions",
-  "status": "alpha",
+  "status": "beta",
   "description": "Triggers an immediate action with predictable states and native button semantics.",
   "sizeClass": "interactive"
 }

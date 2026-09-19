@@ -2,7 +2,7 @@
   "name": "Switch",
   "slug": "switch",
   "category": "Inputs",
-  "status": "alpha",
+  "status": "beta",
   "description": "Native checkbox form behavior with binary switch semantics.",
   "sizeClass": "primitive"
 }

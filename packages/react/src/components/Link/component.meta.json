@@ -2,7 +2,7 @@
   "name": "Link",
   "slug": "link",
   "category": "Navigation",
-  "status": "alpha",
+  "status": "beta",
   "description": "Native navigation with text, navigation and action treatments.",
   "sizeClass": "primitive"
 }

@@ -2,7 +2,7 @@
   "name": "Tag",
   "slug": "tag",
   "category": "Data display",
-  "status": "alpha",
+  "status": "beta",
   "description": "Compact labels with an explicitly named optional removal action.",
   "sizeClass": "primitive"
 }

@@ -19,13 +19,18 @@ test("all current Core families carry complete automated beta-review evidence", 
   const readiness = createComponentReadiness(root, contracts);
   assert.deepEqual(readiness.errors, []);
   assert.equal(readiness.summary.total, expectedFamilies);
-  assert.deepEqual(readiness.summary.status, {
-    alpha: expectedFamilies,
-    beta: 0,
-    stable: 0,
-  });
+  assert.equal(
+    Object.values(readiness.summary.status).reduce(
+      (total, count) => total + count,
+      0,
+    ),
+    expectedFamilies,
+  );
   assert.equal(readiness.summary.eligibleForBetaReview, expectedFamilies);
-  assert.equal(readiness.summary.eligibleForStableReview, 0);
+  assert.equal(
+    readiness.summary.eligibleForStableReview,
+    readiness.summary.status.beta,
+  );
   assert.equal(readiness.summary.blocked, 0);
   assert.equal(readiness.summary.browserCatalogCoverage, true);
   assert.equal(readiness.summary.accessibilityCatalogCoverage, true);

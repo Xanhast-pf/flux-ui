@@ -2,7 +2,7 @@
   "name": "Popover",
   "slug": "popover",
   "category": "Overlays",
-  "status": "alpha",
+  "status": "beta",
   "description": "Non-modal anchored content with native top-layer dismissal and scoped themes.",
   "sizeClass": "overlay",
   "nonDomParts": ["Popover.Root"]

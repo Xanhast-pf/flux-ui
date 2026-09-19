@@ -2,7 +2,7 @@
   "name": "Spinner",
   "slug": "spinner",
   "category": "Feedback",
-  "status": "alpha",
+  "status": "beta",
   "description": "An accessible loading status with reduced-motion-safe presentation.",
   "sizeClass": "primitive"
 }

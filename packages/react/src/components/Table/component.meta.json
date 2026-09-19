@@ -2,7 +2,7 @@
   "name": "Table",
   "slug": "table",
   "category": "Data",
-  "status": "alpha",
+  "status": "beta",
   "description": "Composable semantic tables without a data-grid runtime.",
   "sizeClass": "primitive"
 }

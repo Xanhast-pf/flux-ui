@@ -2,7 +2,7 @@
   "name": "DropdownMenu",
   "slug": "dropdown-menu",
   "category": "Overlays",
-  "status": "alpha",
+  "status": "beta",
   "description": "Flat action menus with roving focus, typeahead, unavailable-item handling and native dismissal.",
   "sizeClass": "overlay",
   "nonDomParts": ["DropdownMenu.Root"]

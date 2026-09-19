@@ -2,7 +2,7 @@
   "name": "Text",
   "slug": "text",
   "category": "Typography",
-  "status": "alpha",
+  "status": "beta",
   "description": "Tokenized text roles independent from native semantics.",
   "sizeClass": "primitive"
 }

@@ -2,7 +2,7 @@
   "name": "CodeBlock",
   "slug": "code-block",
   "category": "Typography",
-  "status": "alpha",
+  "status": "beta",
   "description": "Literal code, optional copy action and accessible clipboard feedback.",
   "sizeClass": "composite"
 }

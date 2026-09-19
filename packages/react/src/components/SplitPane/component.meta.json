@@ -2,7 +2,7 @@
   "name": "SplitPane",
   "slug": "split-pane",
   "category": "Layout",
-  "status": "alpha",
+  "status": "beta",
   "description": "An in-flow two-pane layout, separate from Sidebar and Drawer.",
   "sizeClass": "interactive"
 }

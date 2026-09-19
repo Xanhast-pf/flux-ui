@@ -2,7 +2,7 @@
   "name": "PageHeader",
   "slug": "page-header",
   "category": "Layout",
-  "status": "alpha",
+  "status": "beta",
   "description": "A public recipe for consistent page introductions.",
   "sizeClass": "composite"
 }

@@ -2,7 +2,7 @@
   "name": "AlertDialog",
   "slug": "alert-dialog",
   "category": "Overlays",
-  "status": "alpha",
+  "status": "beta",
   "description": "Destructive confirmations using the existing native modal foundation; backdrop clicks do not confirm or dismiss.",
   "sizeClass": "overlay",
   "nonDomParts": ["AlertDialog.Root"]

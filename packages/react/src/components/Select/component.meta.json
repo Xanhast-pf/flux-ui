@@ -2,7 +2,7 @@
   "name": "Select",
   "slug": "select",
   "category": "Inputs",
-  "status": "alpha",
+  "status": "beta",
   "description": "Native select, option and optgroup behavior with Flux styling.",
   "sizeClass": "primitive"
 }
