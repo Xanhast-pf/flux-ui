@@ -23,7 +23,7 @@ export default {
     [
       "loading / disabled",
       "boolean",
-      "Loading also disables activation. Native type defaults to button.",
+      "Loading also disables activation and owns aria-busy. Native type defaults to button.",
     ],
     [
       "startIcon / endIcon",

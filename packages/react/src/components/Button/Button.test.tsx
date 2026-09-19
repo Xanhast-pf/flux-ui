@@ -5,6 +5,22 @@ import { describe, expect, it, vi } from "vitest";
 import { Button } from "./Button.js";
 
 describe("Button", () => {
+  it("accepts optional application values without conditional spreads", () => {
+    const tone: "accent" | "neutral" | "danger" | undefined = undefined;
+    const variant: "solid" | "soft" | "outline" | "ghost" | undefined =
+      undefined;
+    const size: "sm" | "md" | "lg" | undefined = undefined;
+    const loading: boolean | undefined = undefined;
+
+    render(
+      <Button tone={tone} variant={variant} size={size} loading={loading}>
+        Save
+      </Button>,
+    );
+
+    expect(screen.getByRole("button", { name: "Save" })).toBeEnabled();
+  });
+
   it("preserves native button behavior", async () => {
     const user = userEvent.setup();
     const onClick = vi.fn();

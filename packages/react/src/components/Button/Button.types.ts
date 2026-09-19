@@ -6,12 +6,12 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends Omit<
   ComponentPropsWithRef<"button">,
-  "color"
+  "color" | "aria-busy"
 > {
-  tone?: ButtonTone;
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  loading?: boolean;
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
+  tone?: ButtonTone | undefined;
+  variant?: ButtonVariant | undefined;
+  size?: ButtonSize | undefined;
+  loading?: boolean | undefined;
+  startIcon?: ReactNode | undefined;
+  endIcon?: ReactNode | undefined;
 }

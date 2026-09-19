@@ -15,20 +15,32 @@ type RootBase = Omit<
     loopFocus?: boolean | undefined;
     disabled?: boolean | undefined;
   };
-type Single = {
-  type: "single";
-  onValueChange?: ((value: string | null) => void) | undefined;
-} & (
-  | { value: string | null; defaultValue?: never }
-  | { value?: undefined; defaultValue?: string | null | undefined }
-);
-type Multiple = {
-  type: "multiple";
-  onValueChange?: ((value: readonly string[]) => void) | undefined;
-} & (
-  | { value: readonly string[]; defaultValue?: never }
-  | { value?: undefined; defaultValue?: readonly string[] | undefined }
-);
+type Single =
+  | {
+      type: "single";
+      value: string | null;
+      defaultValue?: never;
+      onValueChange: (value: string | null) => void;
+    }
+  | {
+      type: "single";
+      value?: undefined;
+      defaultValue?: string | null | undefined;
+      onValueChange?: ((value: string | null) => void) | undefined;
+    };
+type Multiple =
+  | {
+      type: "multiple";
+      value: readonly string[];
+      defaultValue?: never;
+      onValueChange: (value: readonly string[]) => void;
+    }
+  | {
+      type: "multiple";
+      value?: undefined;
+      defaultValue?: readonly string[] | undefined;
+      onValueChange?: ((value: readonly string[]) => void) | undefined;
+    };
 export type ToggleGroupRootProps = RootBase & (Single | Multiple);
 export type ToggleGroupItemProps = Omit<
   ComponentPropsWithRef<"button">,
