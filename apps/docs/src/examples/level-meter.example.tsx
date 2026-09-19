@@ -6,7 +6,7 @@ export default {
   code,
   previewLayout: "fill",
   notes: [
-    "A passive labelled meter, not a slider. The application owns updates, peak hold and clip reset.",
+    "A passive labelled meter, not a slider. Flux owns role and numeric ARIA meter state; callers may customize aria-valuetext for units. The application owns updates, peak hold and clip reset.",
     "The visible CLIP indication does not rely solely on color. Do not make frame-rate changes live announcements.",
   ],
   props: [

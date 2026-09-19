@@ -1,8 +1,27 @@
 import type { ComponentPropsWithRef } from "react";
-export interface SparklineProps extends Omit<
+
+type SparklineBaseProps = Omit<
   ComponentPropsWithRef<"svg">,
-  "values" | "children"
-> {
+  | "values"
+  | "children"
+  | "role"
+  | "viewBox"
+  | "aria-label"
+  | "aria-labelledby"
+  | "aria-hidden"
+  | "dangerouslySetInnerHTML"
+> & {
   values: readonly (number | null)[];
-  label: string;
-}
+};
+
+export type SparklineProps = SparklineBaseProps &
+  (
+    | {
+        label: string;
+        "aria-hidden"?: false | "false" | undefined;
+      }
+    | {
+        label?: never;
+        "aria-hidden": true | "true";
+      }
+  );

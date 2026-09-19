@@ -1,6 +1,9 @@
 import type { ComponentPropsWithRef, ReactNode } from "react";
-export type StatProps = Omit<ComponentPropsWithRef<"dl">, "children"> & {
+export type StatProps = Omit<
+  ComponentPropsWithRef<"dl">,
+  "children" | "dangerouslySetInnerHTML"
+> & {
   label: ReactNode;
   value: ReactNode;
-  note?: ReactNode;
+  note?: ReactNode | undefined;
 };

@@ -1,13 +1,16 @@
 import type { ComponentPropsWithRef } from "react";
-export type TagProps = ComponentPropsWithRef<"span"> & {
-  tone?: "neutral" | "accent";
+export type TagProps = Omit<
+  ComponentPropsWithRef<"span">,
+  "dangerouslySetInnerHTML"
+> & {
+  tone?: "neutral" | "accent" | undefined;
 } & (
     | {
         onRemove: () => void;
         removeLabel: string;
       }
     | {
-        onRemove?: never;
-        removeLabel?: never;
+        onRemove?: undefined;
+        removeLabel?: undefined;
       }
   );

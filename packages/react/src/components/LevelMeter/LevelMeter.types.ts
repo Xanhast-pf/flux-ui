@@ -2,7 +2,14 @@ import type { ComponentPropsWithRef } from "react";
 import type { AccessibleName } from "../../internal/accessibility.types.js";
 export type LevelMeterProps = Omit<
   ComponentPropsWithRef<"div">,
-  "children" | "aria-label" | "aria-labelledby"
+  | "children"
+  | "aria-label"
+  | "aria-labelledby"
+  | "role"
+  | "aria-valuemin"
+  | "aria-valuemax"
+  | "aria-valuenow"
+  | "dangerouslySetInnerHTML"
 > &
   AccessibleName & {
     value: number;

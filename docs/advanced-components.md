@@ -176,10 +176,11 @@ The mounted window is bounded by viewport size and overscan. A focused row stays
 mounted outside that window, with spacer rows preserving geometry. Caption and
 header height are measured on scroll instead of being mistaken for data rows.
 Sorting state is controlled with `sorting`/`onSortingChange`, or initialized with
-`defaultSorting`; selection uses the corresponding selected-row-ID props.
+`defaultSorting`; controlled selection likewise pairs `selectedRowIds` with
+`onSelectionChange`, while `defaultSelectedRowIds` initializes local selection.
 
-For server ordering, set `manualSorting` and fetch a new loaded window in response
-to sorting changes. `totalRows` is informational: it neither fabricates unloaded
+For server ordering, set `manualSorting` with `onSortingChange` and fetch a new
+loaded window in response to sorting changes. `totalRows` is informational: it neither fabricates unloaded
 rows nor fetches them. The native table's row-count semantics describe the loaded
 window. Data loading, cancellation, stale-response handling, filtering, and
 server pagination belong to the application in this version.

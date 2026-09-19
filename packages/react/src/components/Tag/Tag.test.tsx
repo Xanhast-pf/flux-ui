@@ -3,6 +3,18 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Tag } from "./Tag.js";
 describe("Tag", () => {
+  it("accepts explicit optional absence without conditional spreads", () => {
+    const tone: "neutral" | "accent" | undefined = undefined;
+    const onRemove: undefined = undefined;
+    const removeLabel: undefined = undefined;
+    render(
+      <Tag tone={tone} onRemove={onRemove} removeLabel={removeLabel}>
+        Design
+      </Tag>,
+    );
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+  });
+
   it("provides a specifically named removal action without swallowing the label", async () => {
     const user = userEvent.setup();
     const remove = vi.fn();

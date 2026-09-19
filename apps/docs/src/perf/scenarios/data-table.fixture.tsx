@@ -9,6 +9,8 @@ const columns = [
   { id: "value", header: "Value", value: (row: Row) => row.value },
 ];
 const getRowId = (row: Row) => row.id;
+const ignoreSortingChange = () => {};
+
 export default function Fixture({ count, revision }: ScenarioProps) {
   const rows = Array.from({ length: count }, (_, i) => ({
     id: `row-${i}`,
@@ -26,6 +28,7 @@ export default function Fixture({ count, revision }: ScenarioProps) {
           columnId: "value",
           direction: revision === 0 ? "ascending" : "descending",
         }}
+        onSortingChange={ignoreSortingChange}
       />
     </Box>
   );
