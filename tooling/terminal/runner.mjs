@@ -45,7 +45,7 @@ export async function runTask(
   const started = performance.now();
   const elapsed = () => `${((performance.now() - started) / 1000).toFixed(1)}s`;
   progress.start(label);
-  const [executable, args, platformOptions] = executableCommand(command, env);
+  const [executable, args, platformOptions] = executableCommand(command);
   const child = spawn(executable, args, {
     ...platformOptions,
     cwd,

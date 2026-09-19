@@ -9,7 +9,6 @@ export const repositoryRoot = fileURLToPath(new URL("../../", import.meta.url));
 export function probeVersion(program, platform = process.platform) {
   const [executable, args, platformOptions] = executableCommand(
     [program, "--version"],
-    process.env,
     platform,
   );
   const result = spawnSync(executable, args, {
