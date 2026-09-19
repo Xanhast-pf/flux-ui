@@ -19,15 +19,10 @@ function batchArgument(value) {
   return quoted.replace(/[()[\]%!^"`<>&|;, *?]/gu, "^$&");
 }
 
-export function executableCommand(
-  command,
-  env = process.env,
-  platform = process.platform,
-) {
+// Command selection is intentionally independent of process.env. Callers pass
+// argv only; environment values are forwarded to the child process separately.
+export function executableCommand(command, platform = process.platform) {
   const [program, ...args] = command;
-  // Deliberately do not execute paths supplied through the environment.
-  // The environment is still accepted for API compatibility with callers.
-  void env;
   if (program === "node") return [process.execPath, args, {}];
   if (platform === "win32" && program === "pnpm") {
     return [

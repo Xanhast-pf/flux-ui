@@ -93,33 +93,17 @@ test("size selection reaches only measurement; other focused task arguments surv
   assert.equal(commandLabel(taskCommand("bible:check")), "Coding Bible");
 });
 
-test("Windows pnpm executable preserves argv without trusting environment paths", () => {
-  const expected = [
+test("Windows pnpm execution uses fixed executable names and escaped argv", () => {
+  assert.deepEqual(executableCommand(["pnpm", "exec", "tsc"], "win32"), [
     "cmd.exe",
     ["/d", "/s", "/c", '"pnpm.cmd ^"exec^" ^"tsc^""'],
     { windowsVerbatimArguments: true },
-  ];
-  assert.deepEqual(
-    executableCommand(["pnpm", "exec", "tsc"], {}, "win32"),
-    expected,
-  );
-  assert.deepEqual(
-    executableCommand(
-      ["pnpm", "exec", "tsc"],
-      {
-        npm_execpath: "C:\\untrusted\\pnpm.cjs",
-        ComSpec: "C:\\untrusted\\cmd.exe",
-      },
-      "win32",
-    ),
-    expected,
-  );
+  ]);
 });
 
 test("Windows batch arguments protect metacharacters, quotes and trailing path slashes", () => {
   const [, args, options] = executableCommand(
     ["pnpm", "a&b", "%PATH%", "!name!", 'a"b', "C:\\x y\\"],
-    {},
     "win32",
   );
   assert.deepEqual(options, { windowsVerbatimArguments: true });
@@ -128,7 +112,7 @@ test("Windows batch arguments protect metacharacters, quotes and trailing path s
     '"pnpm.cmd ^"a^&b^" ^"^%PATH^%^" ^"^!name^!^" ^"a\\^"b^" ^"C:\\x^ y\\\\^""',
   );
   assert.throws(
-    () => executableCommand(["pnpm", "first\nsecond"], {}, "win32"),
+    () => executableCommand(["pnpm", "first\nsecond"], "win32"),
     /line breaks/u,
   );
 });
