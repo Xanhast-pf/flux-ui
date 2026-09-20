@@ -6,7 +6,7 @@ import { joinClassNames } from "../../internal/joinClassNames.js";
 import {
   isRovingItemAvailable,
   nextRovingIndex,
-} from "../../internal/rovingFocus.js";
+} from "../../internal/rovingFocusPolicy.js";
 import { list, strip, more } from "./Tabs.css.js";
 import { useTabsContext } from "./TabsContext.js";
 import type { TabsListProps } from "./Tabs.types.js";

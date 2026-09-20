@@ -13,7 +13,7 @@ import {
   type RefCallback,
 } from "react";
 import { attachRef } from "./attachRef.js";
-import { isRovingItemAvailable, nextRovingIndex } from "./rovingFocus.js";
+import { isRovingItemAvailable, nextRovingIndex } from "./rovingFocusPolicy.js";
 
 type RovingContextValue = {
   orientation: "horizontal" | "vertical";

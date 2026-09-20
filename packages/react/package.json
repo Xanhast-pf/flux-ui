@@ -40,7 +40,7 @@
     "@storybook/react-vite": "catalog:"
   },
   "scripts": {
-    "build": "node ../../scripts/clean.mjs packages/react/dist && vite build && tsc -p tsconfig.build.json",
+    "build": "node ../../scripts/check-portable-paths.mjs && node ../../scripts/clean.mjs packages/react/dist && vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "bench": "vitest bench --run"

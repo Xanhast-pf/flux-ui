@@ -13,6 +13,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { containsSecret, omitFile } from "../../scripts/lib/archive-policy.mjs";
+import { findPortablePathCollisions } from "../../scripts/lib/portable-paths.mjs";
 
 async function fixture(run) {
   const dir = await mkdtemp(join(tmpdir(), "flux-safety-"));
@@ -117,6 +118,22 @@ test("archive includes sources/templates but not secrets, symlinks or generated 
     );
   });
 });
+test("portable paths reject case and Unicode-normalization collisions", () => {
+  assert.deepEqual(
+    findPortablePathCollisions([
+      "src/internal/RovingFocus.tsx",
+      "src/internal/rovingfocus.tsx",
+      "docs/caf\u00e9.md",
+      "docs/cafe\u0301.md",
+      "src/index.ts",
+    ]),
+    [
+      ["docs/cafe\u0301.md", "docs/caf\u00e9.md"],
+      ["src/internal/RovingFocus.tsx", "src/internal/rovingfocus.tsx"],
+    ],
+  );
+});
+
 test("credential screening distinguishes environment placeholders from literal credentials", () => {
   assert.equal(
     containsSecret(

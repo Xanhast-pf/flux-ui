@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { nextRovingIndex } from "./rovingFocus.js";
+import { nextRovingIndex } from "./rovingFocusPolicy.js";
 const base = {
   orientation: "horizontal",
   direction: "ltr",
