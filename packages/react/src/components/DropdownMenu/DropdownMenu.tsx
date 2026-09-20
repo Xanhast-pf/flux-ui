@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
-import { isRovingItemAvailable } from "../../internal/rovingFocus.js";
+import { isRovingItemAvailable } from "../../internal/rovingFocusPolicy.js";
 import { Popover, usePopover } from "../Popover/Popover.js";
 import { item, label, menu, separator } from "./DropdownMenu.css.js";
 import type {

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { attachRef } from "../../packages/react/src/internal/attachRef.ts";
-import { nextRovingIndex } from "../../packages/react/src/internal/rovingFocus.ts";
+import { nextRovingIndex } from "../../packages/react/src/internal/rovingFocusPolicy.ts";
 import {
   compareCells,
   identifyRows,

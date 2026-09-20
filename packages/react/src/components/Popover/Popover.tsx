@@ -10,7 +10,7 @@ import {
 } from "react";
 import { attachRef } from "../../internal/attachRef.js";
 import { joinClassNames } from "../../internal/joinClassNames.js";
-import { isRovingItemAvailable } from "../../internal/rovingFocus.js";
+import { isRovingItemAvailable } from "../../internal/rovingFocusPolicy.js";
 import {
   nativePopoverOpen,
   useFloatingSurface,
