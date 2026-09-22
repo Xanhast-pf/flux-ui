@@ -17,7 +17,6 @@ body,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--flux-space-2);
 }
 
 .perf-native-button-content {

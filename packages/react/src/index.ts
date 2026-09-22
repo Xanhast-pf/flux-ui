@@ -25,6 +25,7 @@ export * from "./components/DropdownMenu/index.js";
 export * from "./components/EmptyState/index.js";
 export * from "./components/Field/index.js";
 export * from "./components/Fieldset/index.js";
+export * from "./components/Footer/index.js";
 export * from "./components/Grid/index.js";
 export * from "./components/Heading/index.js";
 export * from "./components/IconButton/index.js";

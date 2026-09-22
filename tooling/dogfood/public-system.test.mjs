@@ -32,7 +32,8 @@ test("display-owning primitives preserve hidden and until-found locally", async 
     "packages/react/src/components/Button/Button.tsx",
   );
   const link = await source("packages/react/src/components/Link/Link.tsx");
-  assert.match(button, /!buttonProps\.hidden && action/u);
+  assert.match(button, /className=\{joinClassNames\(button, className\)\}/u);
+  assert.doesNotMatch(button, /action\.css/u);
   assert.match(link, /!props\.hidden && link/u);
   assert.match(link, /!props\.hidden && actionLike && action/u);
   const index = await source("packages/react/src/index.ts");
