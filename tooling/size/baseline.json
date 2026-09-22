@@ -704,6 +704,27 @@
         "externalImports": ["react/jsx-runtime"]
       }
     },
+    "footer": {
+      "bundled": {
+        "raw": 430,
+        "gzip": 336,
+        "brotli": 283,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 203,
+            "gzip": 169,
+            "brotli": 144
+          },
+          "css": {
+            "raw": 227,
+            "gzip": 167,
+            "brotli": 139
+          }
+        },
+        "externalImports": ["react/jsx-runtime"]
+      }
+    },
     "grid": {
       "name": "Grid",
       "sizeClass": "interactive",
@@ -1867,19 +1888,19 @@
     }
   },
   "aggregate": {
-    "componentCount": 69,
-    "rootEntry": { "raw": 5239, "gzip": 1727, "brotli": 1521, "fileCount": 1 },
+    "componentCount": 70,
+    "rootEntry": { "raw": 5308, "gzip": 1747, "brotli": 1539, "fileCount": 1 },
     "runtime": {
-      "raw": 208967,
-      "gzip": 94934,
-      "brotli": 81505,
-      "fileCount": 223
+      "raw": 211220,
+      "gzip": 95588,
+      "brotli": 82076,
+      "fileCount": 224
     },
     "published": {
-      "raw": 1132371,
-      "gzip": 384056,
-      "brotli": 330320,
-      "fileCount": 922
+      "raw": 1141419,
+      "gzip": 387855,
+      "brotli": 333757,
+      "fileCount": 931
     },
     "method": {
       "schemaVersion": 1,

@@ -55,6 +55,7 @@ test("action style factory is referenced only by build-time stylesheets", async 
   }
   await walk(sourceRoot);
   assert.deepEqual(imports, [
+    resolve(sourceRoot, "components/Button/Button.css.ts"),
     resolve(sourceRoot, "components/IconButton/IconButton.css.ts"),
   ]);
 });

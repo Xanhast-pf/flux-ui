@@ -1,6 +1,5 @@
-import { action } from "../../internal/action.css.js";
 import { joinClassNames } from "../../internal/joinClassNames.js";
-import { button, content, spinner } from "./Button.css.js";
+import { button, content } from "./Button.css.js";
 import type { ButtonProps } from "./Button.types.js";
 
 export function Button({
@@ -22,11 +21,7 @@ export function Button({
     <button
       {...buttonProps}
       aria-busy={loading || undefined}
-      className={joinClassNames(
-        !buttonProps.hidden && action,
-        button,
-        className,
-      )}
+      className={joinClassNames(button, className)}
       data-size={size}
       data-tone={tone}
       data-variant={variant}
@@ -34,7 +29,6 @@ export function Button({
       disabled={isDisabled}
       type={type}
     >
-      {loading ? <span aria-hidden="true" className={spinner} /> : null}
       <span className={content}>
         {startIcon}
         {children}

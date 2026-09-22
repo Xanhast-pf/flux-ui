@@ -541,6 +541,18 @@ export const publicContracts = [
     ],
   },
   {
+    name: "Footer",
+    slug: "footer",
+    parts: [
+      {
+        path: "Footer",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
     name: "Grid",
     slug: "grid",
     parts: [

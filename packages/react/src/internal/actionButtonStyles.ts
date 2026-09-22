@@ -28,22 +28,18 @@ export function actionButtonStyles(): {
     position: "relative",
     border: "0.0625rem solid transparent",
     borderRadius: `var(--flux-button-radius, var(${cssVars.radius.md}))`,
-    minBlockSize: `var(${cssVars.control.md})`,
+    minHeight: `var(${cssVars.control.md})`,
     paddingInline: `var(${cssVars.space[4]})`,
     font: "inherit",
     fontSize: "1rem",
     fontWeight: 650,
     lineHeight: 1,
     cursor: "pointer",
-    userSelect: "none",
     background: `var(--flux-button-bg, ${background})`,
     color: `var(--flux-button-fg, ${foreground})`,
-    transition: ["background-color", "border-color", "color", "transform"]
-      .map(
-        (property) =>
-          `${property} var(${cssVars.motion.fast}) var(${cssVars.motion.easing})`,
-      )
-      .join(", "),
+    transitionProperty: "background-color, border-color, color, transform",
+    transitionDuration: `var(${cssVars.motion.fast})`,
+    transitionTimingFunction: `var(${cssVars.motion.easing})`,
     selectors: {
       "&[hidden]:not([hidden='until-found' i])": { display: "none !important" },
       "&:where([data-tone='neutral'])": {
@@ -77,12 +73,12 @@ export function actionButtonStyles(): {
       "&:where([data-variant='ghost']):hover:not(:disabled):not([aria-pressed='true'])":
         { background: `var(${cssVars.color.surfaceSubtle})` },
       "&:where([data-size='sm'])": {
-        minBlockSize: `var(${cssVars.control.sm})`,
+        minHeight: `var(${cssVars.control.sm})`,
         paddingInline: `var(${cssVars.space[3]})`,
         fontSize: "0.75rem",
       },
       "&:where([data-size='lg'])": {
-        minBlockSize: `var(${cssVars.control.lg})`,
+        minHeight: `var(${cssVars.control.lg})`,
         paddingInline: `var(${cssVars.space[5]})`,
       },
       "&:focus-visible": {
@@ -90,12 +86,12 @@ export function actionButtonStyles(): {
         outlineOffset: "0.125rem",
       },
       "&:active:not(:disabled)": { transform: "scale(0.985)" },
-      "&:disabled": { cursor: "not-allowed", opacity: 0.52 },
+      "&:disabled": { opacity: 0.52 },
       "&[data-loading='true']::after": {
         content: '""',
         position: "absolute",
-        inlineSize: "1rem",
-        blockSize: "1rem",
+        width: "1rem",
+        height: "1rem",
         border: "0.125rem solid currentColor",
         borderRightColor: "transparent",
         borderRadius: "50%",

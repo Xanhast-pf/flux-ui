@@ -230,6 +230,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Footer",
+    slug: "footer",
+    category: "Layout",
+    status: "alpha",
+    description:
+      "Semantic page footer that settles at the bottom of flex-column layouts.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Grid",
     slug: "grid",
     category: "Layout",
