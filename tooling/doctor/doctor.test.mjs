@@ -226,3 +226,45 @@ test("readGitHooksPath returns null when local core.hooksPath is absent", () => 
     null,
   );
 });
+
+test("a Git-config read failure is reported instead of silently skipping hook health", () => {
+  const result = diagnose(
+    fixture({
+      gitHooksPath: () => {
+        throw new Error("unreadable config");
+      },
+    }),
+  );
+  assert.equal(result.exitCode, 1);
+  const finding = result.checks.find((check) =>
+    check.message.startsWith("Local Git hook configuration:"),
+  );
+  assert.equal(finding?.status, "fail");
+  assert.match(finding?.remedy ?? "", /manual/u);
+});
+
+test("local hook parsing handles comments and boolean worktree overrides", () => {
+  const root = join(repositoryRoot, "linked with comments");
+  const gitDir = join(repositoryRoot, ".git", "worktrees", "with-comments");
+  const files = new Map([
+    [join(root, ".git"), `gitdir: ${gitDir}\n`],
+    [join(gitDir, "commondir"), "../..\n"],
+    [
+      join(repositoryRoot, ".git", "config"),
+      "[core]\nhooksPath = .husky/shared # note\n[extensions]\nworktreeConfig = yes\n",
+    ],
+    [
+      join(gitDir, "config.worktree"),
+      '[core]\nhooksPath = ".husky/local dir" # override\n',
+    ],
+  ]);
+  assert.equal(
+    readGitHooksPath({
+      root,
+      exists: (path) => files.has(path),
+      read: (path) => files.get(path),
+      isDirectory: () => false,
+    }),
+    ".husky/local dir",
+  );
+});

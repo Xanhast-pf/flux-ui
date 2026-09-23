@@ -21,7 +21,7 @@ Flux UI is a **pre-stable React design system** built around a few hard promises
 
 ## Status
 
-Flux UI is pre-stable. Most current component families are beta; individual lifecycle status is shown in the [live component catalog](https://flux.varua.ca/#components). The catalog is generated from each component's `component.meta.json`; you can also inspect the generated registry at [`apps/docs/src/generated/components.ts`](apps/docs/src/generated/components.ts). `pnpm flux check generated` rejects metadata/registry drift.
+Flux UI is pre-stable. Individual component lifecycle status is shown in the [live component catalog](https://flux.varua.ca/#components). The catalog is generated from each component's `component.meta.json`; you can also inspect the generated registry at [`apps/docs/src/generated/components.ts`](apps/docs/src/generated/components.ts). `pnpm flux check generated` rejects metadata/registry drift.
 
 The repository already enforces the same quality contracts intended for the mature library: generated exports, accessibility checks, bundle budgets, runtime-performance baselines, Storybook builds, and protected CI.
 
@@ -211,7 +211,7 @@ import { SearchIcon, SparkIcon } from "@flux-ui/icons";
 <SparkIcon aria-hidden="true" size={24} />
 ```
 
-Icons are generated from `packages/icons/icons.json`, use `currentColor`, and are decorative by default unless labelled. The dedicated `#icons` docs route browses all 64 icons by name, category, or intent metadata. `pnpm flux size icons` enforces a strict per-icon runtime budget.
+Icons are generated from `packages/icons/icons.json`, use `currentColor`, and are decorative by default unless labelled. The dedicated `#icons` docs route browses the complete icon catalog by name, category, or intent metadata. `pnpm flux size icons` enforces a strict per-icon runtime budget.
 
 Flux Display currently lives as vector design source in `packages/identity/`; it is deliberately not shipped as a compiled font yet. The live `#identity` docs route renders the glyph geometry directly so the letterforms can be evaluated before font engineering. The renderer reserves optical padding around mitered glyph geometry and reports unsupported specimen characters instead of silently presenting the prototype as complete.
 
@@ -248,6 +248,8 @@ CONTRIBUTING.md           contributor expectations
 ```
 
 ## Documentation
+
+Run `pnpm flux check drift` for fast, read-only cross-file consistency validation. See the [documentation index](docs/README.md) and [repository consistency contract](docs/repository-consistency.md).
 
 - [Developer setup and workflow](docs/development.md)
 - [Architecture](docs/architecture.md)

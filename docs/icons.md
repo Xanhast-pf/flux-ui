@@ -1,6 +1,6 @@
 # Flux Icons
 
-`@flux-ui/icons` contains the original Flux icon set. The current catalog has 64 glyphs across actions, navigation, status, theme, layout, content, communication, developer tooling, and brand.
+`@flux-ui/icons` contains the original Flux icon set. The generated catalog covers actions, navigation, status, theme, layout, content, communication, developer tooling, and brand.
 
 ```tsx
 import { SearchIcon, SlidersIcon } from "@flux-ui/icons";

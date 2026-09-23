@@ -4,7 +4,7 @@ Flux UI owns its visual identity in the same monorepo as the component system.
 
 ## Flux Icons
 
-`@flux-ui/icons` is the public icon package. The current 64-icon set covers navigation, actions, status, theme, layout, content, communication, developer tooling and the Flux mark.
+`@flux-ui/icons` is the public icon package. The generated icon set covers navigation, actions, status, theme, layout, content, communication, developer tooling and the Flux mark.
 
 Design contract:
 

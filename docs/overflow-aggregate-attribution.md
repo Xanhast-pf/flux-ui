@@ -1,5 +1,7 @@
 # Overflow aggregate attribution — evidence only
 
+> **Historical report.** This records a prior snapshot, not current behavior or release readiness. Consult current engineering documentation and executed checks.
+
 No baseline acceptance is authorized or performed by this report.
 
 ## Control and reproducibility

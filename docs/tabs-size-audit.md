@@ -1,5 +1,7 @@
 # Tabs size audit
 
+> **Historical report.** This records a prior snapshot, not current behavior or release readiness. Consult current engineering documentation and executed checks.
+
 Current decision and validation: [semantic Tabs cleanup report](./component-ticket-validation.md). Automatic overflow was removed after this investigation.
 
 Follow-up: [whole-component continuation evidence](./tabs-size-continuation.md). The measurements below remain the starting baseline for that investigation.

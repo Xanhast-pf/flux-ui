@@ -61,6 +61,8 @@ test("public dispatch preserves existing tasks and argument arrays", () => {
     ["check", "check"],
     ["check full", "check:full"],
     ["check all", "verify:all"],
+    ["check drift", "drift:check"],
+    ["test drift", "drift:test"],
     ["test e2e", "test:e2e"],
     ["build packages", "build:packages"],
     ["component new Button", "component:new", ["Button"]],
@@ -103,6 +105,7 @@ test("pipelines keep required gate order and stop on failure", async () => {
     commands.check.map((command) => command[2]),
     [
       "generate:check",
+      "drift:check",
       "docs:check",
       "dogfood:check",
       "format:check",

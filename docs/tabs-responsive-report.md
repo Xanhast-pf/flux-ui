@@ -1,5 +1,7 @@
 # Responsive Tabs implementation and validation report
 
+> **Historical report.** This records a prior snapshot, not current behavior or release readiness. Consult current engineering documentation and executed checks.
+
 Implementation is complete; retained size and performance baselines are not accepted. The final approval boundary concerns component size proposals and the aggregate snapshot. Packed-consumer verification also remains blocked by the existing release-version prerequisites.
 
 The starting tree contained staged contributor work. Changes below are relative to that starting index, preserving unrelated work. Historical Overflow investigations and reports remain unchanged.

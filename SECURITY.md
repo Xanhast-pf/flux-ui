@@ -1,7 +1,7 @@
 # Security policy
 
-Flux UI is a pre-stable project. Most current component families are beta;
-individual lifecycle status is published in the [component catalog](https://flux.varua.ca/#components).
+Flux UI is a pre-stable project. Individual
+component lifecycle status is published in the [component catalog](https://flux.varua.ca/#components).
 Security checks reduce specific risks; they are not an independent audit,
 certification, guarantee of safety, or promise that every vulnerability is detected.
 

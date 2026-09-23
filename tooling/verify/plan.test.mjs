@@ -14,6 +14,7 @@ test("verification preserves every command in the existing strict pipeline", asy
   ]);
   assert.deepEqual(commands.check.map(taskName), [
     "generate:check",
+    "drift:check",
     "docs:check",
     "dogfood:check",
     "format:check",

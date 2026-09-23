@@ -4,6 +4,9 @@ This directory contains the contributor and engineering documentation for Flux U
 
 ## Start here
 
+- [Repository consistency](repository-consistency.md) — drift guard, facts ownership, and supported scan scope.
+- [Release certification](release-certification.md) — developer, designer, interaction and assistive-technology signoff.
+- [Command migration](command-migration.md) — mapping older commands to the current CLI.
 - [Development workflow](development.md) — clone/setup, daily commands, verification, and PR workflow.
 - [Architecture](architecture.md) — package boundaries and tooling architecture.
 - [Component API design](component-api.md) — public API and composition conventions.

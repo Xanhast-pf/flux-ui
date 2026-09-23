@@ -1,5 +1,7 @@
 # Tabs whole-component size investigation
 
+> **Historical report.** This records a prior snapshot, not current behavior or release readiness. Consult current engineering documentation and executed checks.
+
 Current decision and validation: [semantic Tabs cleanup report](./component-ticket-validation.md). Automatic overflow was removed after this investigation.
 
 ## Outcome and scope

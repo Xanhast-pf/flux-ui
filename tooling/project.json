@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "siteUrl": "https://flux.varua.ca/",
+  "repository": "Xanhast-pf/flux-ui",
+  "reservedCatalogDependencies": {
+    "@base-ui/react": "Reserved for behavior-heavy primitives when justified by demonstrated accessibility needs."
+  },
+  "mutableActionExceptions": {
+    ".github/workflows/coding-bible.yml": ["Xanhast-pf/coding-bible@main"]
+  }
+}

@@ -147,3 +147,14 @@ test("repair workflow refreshes source exports after lint and formatting edits",
   assert.equal(commands[format + 1], "generate");
   assert.equal(commands.at(-1), "check");
 });
+
+test("recipe toolchain metadata and instructions derive from the supplied project manifest", () => {
+  const files = recipeProject("finance", catalog, "MIT", {
+    packageManager: "pnpm@99.1.2",
+    engines: { node: ">=30" },
+  });
+  const pkg = JSON.parse(files["package.json"]);
+  assert.equal(pkg.packageManager, "pnpm@99.1.2");
+  assert.equal(pkg.engines.node, ">=30");
+  assert.match(files["README.md"], /Node 30 and pnpm 99\.1\.2/u);
+});

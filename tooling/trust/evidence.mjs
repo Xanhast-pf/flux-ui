@@ -9,6 +9,11 @@ export const CHECKS = {
       command: taskCommand("generate:check"),
     },
     {
+      id: "drift",
+      label: "Repository drift",
+      command: taskCommand("drift:check"),
+    },
+    {
       id: "docs-coverage",
       label: "Docs coverage",
       command: taskCommand("docs:check"),
