@@ -36,6 +36,7 @@ function fixture() {
       "size",
       "runtime",
       "browser-tests",
+      "compatibility-tests",
       "consumer-tests",
     ].map((name) => ({
       name: `${name}.json`,

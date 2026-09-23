@@ -148,8 +148,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright Chromium
-        run: pnpm --filter @flux-ui/docs exec playwright install --with-deps chromium
+      - name: Install Playwright browsers
+        run: pnpm --filter @flux-ui/docs run playwright:install:compat
 
       - name: Run browser checks and record receipts
         run: node tooling/trust/run-checks.mjs browser
@@ -173,6 +173,7 @@ jobs:
             apps/docs/test-results
             apps/docs/playwright-report
             .cache/consumer-results
+            .cache/consumer-compat-results
           if-no-files-found: ignore
           retention-days: 7
 

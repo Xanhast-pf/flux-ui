@@ -168,10 +168,11 @@ export function EngineeringPage() {
             The Required CI job depends on both Quality and Browser. Quality
             checks generation drift, docs coverage, formatting, lint,
             TypeScript, unused code, tests, builds, size budgets and Coding
-            Bible. Browser runs Chromium behavior, axe and native-relative
-            performance checks. Pages is built only after those jobs pass.
-            Repository rules must require that check; a YAML file cannot enable
-            branch protection.
+            Bible. Browser runs broad Chromium behavior and axe checks, a
+            focused Chromium/Firefox/WebKit built-consumer compatibility suite,
+            and native-relative performance checks. Pages is built only after
+            those jobs pass. Repository rules must require that check; a YAML
+            file cannot enable branch protection.
           </Text>
           <Text as="p" variant="body">
             <Link href={`${REPOSITORY_URL}/blob/main/AGENTS.md`}>
@@ -182,10 +183,11 @@ export function EngineeringPage() {
         <EngineeringRules />
         <Callout>
           Current limits: pre-stable APIs with lifecycle status tracked per
-          component, two runtime benchmark scenarios, and Chromium-focused
-          browser automation. Manual assistive-technology testing and broader
-          browser coverage remain explicit review work. See the Trust Center
-          before adopting Flux for a production-critical interface.
+          component, two runtime benchmark scenarios, broad docs automation that
+          remains Chromium-focused, and a focused three-engine built-consumer
+          compatibility suite. Manual assistive-technology testing and full
+          docs-suite parity across browsers remain explicit review work. See the
+          Trust Center before adopting Flux for a production-critical interface.
         </Callout>
         <Link href="#trust" variant="solid">
           Open the Trust Center →

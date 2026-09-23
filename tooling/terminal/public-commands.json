@@ -222,6 +222,20 @@
     "forwardArgs": true
   },
   {
+    "path": "test compat",
+    "task": "test:compat",
+    "summary": "Run focused Chromium, Firefox and WebKit built-consumer compatibility tests. Test/build output only.",
+    "audience": "contributor",
+    "writes": "build/cache/temporary output",
+    "when": "Use to verify built public behavior across the supported browser engines.",
+    "usage": "pnpm flux test compat [args...]",
+    "examples": ["pnpm flux test compat"],
+    "minArgs": 0,
+    "maxArgs": 0,
+    "options": [],
+    "forwardArgs": true
+  },
+  {
     "path": "test a11y",
     "task": "test:a11y",
     "summary": "Run focused docs accessibility tests. Test/build output only.",

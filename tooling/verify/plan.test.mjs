@@ -27,11 +27,15 @@ test("verification preserves every command in the existing strict pipeline", asy
     "size",
     "bible:check",
   ]);
-  assert.deepEqual(plan.slice(-5), [
+  assert.deepEqual(plan.slice(-6), [
     ["node", "tooling/size/check.mjs", "--release"],
-    ...["storybook:build", "test:e2e", "perf:smoke", "consumer:check"].map(
-      taskCommand,
-    ),
+    ...[
+      "storybook:build",
+      "test:e2e",
+      "test:compat",
+      "perf:smoke",
+      "consumer:check",
+    ].map(taskCommand),
   ]);
 });
 

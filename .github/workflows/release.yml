@@ -38,7 +38,8 @@ jobs:
           node-version: 24
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @flux-ui/docs exec playwright install --with-deps chromium
+      - name: Install Playwright browsers
+        run: pnpm --filter @flux-ui/docs run playwright:install:compat
       - name: Full quality and browser gates
         run: |
           node tooling/trust/run-checks.mjs quality
@@ -51,6 +52,8 @@ jobs:
         env:
           FLUX_RELEASE_TAG: ${{ inputs.npm_tag }}
         run: node tooling/release/pack.mjs
+      - name: Verify packed consumers across browser engines
+        run: pnpm flux release consumer
       - name: Upload immutable tarballs and manifest
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:

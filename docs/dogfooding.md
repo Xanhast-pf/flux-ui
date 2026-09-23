@@ -275,8 +275,7 @@ Public token CSS export paths are intentionally allowed. No docs stylesheet is
 loaded. This tests emitted exports/declarations/CSS integration, not registry
 availability or an npm-published release.
 
-The full check, `verify:all`, and the required CI Browser job include that gate.
-The Trust Center receives its executed `consumer-tests.json` report; missing or
-failed consumer evidence blocks publication. Size and ownership budgets are
+The full check, `verify:all`, and the required CI Browser job include that Chromium gate plus `pnpm flux test compat`, which reruns the focused consumer interactions in Chromium, Firefox and WebKit.
+The Trust Center receives both `consumer-tests.json` and `compatibility-tests.json`; missing or failed browser evidence blocks publication. Size and ownership budgets are
 not widened by it. Standalone `icons:size` and `icons:size:update` rebuild icons
 first, so old `dist` output cannot masquerade as a new measurement.

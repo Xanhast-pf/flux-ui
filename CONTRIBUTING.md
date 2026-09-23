@@ -20,11 +20,13 @@ pnpm flux doctor
 pnpm flux dev
 ```
 
-Install Playwright Chromium before running browser/full checks:
+Install Chromium, Firefox, and WebKit before running browser/full checks:
 
 ```bash
-pnpm --filter @flux-ui/docs exec playwright install chromium
+pnpm --filter @flux-ui/docs exec playwright install chromium firefox webkit
 ```
+
+On Linux, use `pnpm --filter @flux-ui/docs run playwright:install:compat` if Playwright reports missing system libraries.
 
 ## Before changing public API or architecture
 

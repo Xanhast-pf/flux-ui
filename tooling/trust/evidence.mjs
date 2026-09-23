@@ -134,6 +134,11 @@ export const CHECKS = {
       command: taskCommand("test:e2e"),
     },
     {
+      id: "compatibility",
+      label: "Chromium, Firefox and WebKit built-consumer compatibility",
+      command: taskCommand("test:compat"),
+    },
+    {
       id: "consumer",
       label: "Built public exports, declarations and browser composition",
       command: taskCommand("consumer:check"),
@@ -246,7 +251,7 @@ export function createEvidence(receipts, context, files, requireCI = false) {
     source: context,
     status: passed ? "passed" : "incomplete",
     scope:
-      "Repository quality and Chromium behavior/accessibility/runtime and built-package consumer checks. Not a security certification or a WCAG conformance claim.",
+      "Repository quality, broad Chromium behavior/accessibility/runtime, focused Chromium/Firefox/WebKit compatibility, and built-package consumer checks. Not a security certification or a WCAG conformance claim.",
     runUrl:
       context.kind === "github-actions"
         ? `https://github.com/${context.repository}/actions/runs/${context.runId}/attempts/${context.runAttempt}`

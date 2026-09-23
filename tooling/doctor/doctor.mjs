@@ -196,9 +196,9 @@ export function diagnose({
   }
   checks.push({
     status: available ? "pass" : "warning",
-    message: "Optional Chromium browser prerequisite",
+    message: "Optional Playwright browser prerequisites",
     remedy:
-      "For full checks, run pnpm --filter @flux-ui/docs exec playwright install chromium; system libraries may also be required.",
+      "For full checks, run pnpm --filter @flux-ui/docs exec playwright install chromium firefox webkit; system libraries may also be required.",
   });
   return {
     checks,

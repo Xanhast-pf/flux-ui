@@ -50,6 +50,23 @@ async function fixture(callback) {
       }),
     );
     await writeFile(
+      join(root, ".cache/trust/browser/compatibility-tests.json"),
+      JSON.stringify({
+        config: {
+          projects: ["chromium", "firefox", "webkit"].map((name) => ({ name })),
+        },
+        suites: [
+          {
+            tests: ["chromium", "firefox", "webkit"].flatMap((projectName) =>
+              Array.from({ length: 6 }, () => ({ projectName })),
+            ),
+          },
+        ],
+        stats: { expected: 18, unexpected: 0, flaky: 0 },
+        errors: [],
+      }),
+    );
+    await writeFile(
       join(root, ".cache/trust/browser/consumer-tests.json"),
       JSON.stringify({
         stats: { expected: 6, unexpected: 0, flaky: 0 },

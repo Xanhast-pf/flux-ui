@@ -13,12 +13,13 @@ pnpm install --frozen-lockfile
 node tooling/terminal/tasks.mjs format
 pnpm flux check
 pnpm flux test e2e
+pnpm flux test compat
 pnpm flux perf
 ```
 
 `node tooling/terminal/tasks.mjs format` normalizes source formatting; the check pipeline remains strict
-and non-mutating. Install Chromium with `pnpm --filter @flux-ui/docs exec
-playwright install --with-deps chromium` when needed. Commit generated or
+and non-mutating. Install Chromium, Firefox and WebKit with `pnpm --filter @flux-ui/docs run
+playwright:install:compat` on Linux when needed. Commit generated or
 formatting changes before running the receipt wrapper's clean-tree check.
 
 The existing `CI / Quality`, `CI / Browser` and `CI / Required` job identities are
@@ -106,7 +107,7 @@ release uses Changesets' normal/pre-exit process and the `latest` tag. The workf
 does not bump versions, commit files or create tags on your behalf.
 
 Run **Release packages** on `main` with `dry_run=true` and the matching npm tag.
-All quality, Chromium, performance and dependency-audit gates must pass. Packages
+All quality, required browser, performance and dependency-audit gates must pass. Packages
 are built and packed once, inspected, and hashed; SBOMs scan those exact tarballs
 in a read-only job. The fresh publishing job has no dependency installation or
 package-manager cache. Dry runs do not publish or create attestations. A dry run
@@ -174,10 +175,7 @@ Checked against the official documentation on 2026-09-10:
 
 ### Built-package browser receipt
 
-The Browser job also runs `pnpm flux test consumer`. The same-commit public evidence
-requires its successful `consumer` check and `consumer-tests.json`; missing,
-failed or flaky consumer results block publication. This tests built public
-exports and styles without docs aliases. It is not an npm-publishing attestation.
+The Browser job runs the broad Chromium docs suite, `pnpm flux test compat`, and `pnpm flux test consumer`. The same-commit public evidence requires successful compatibility and consumer checks plus `compatibility-tests.json` and `consumer-tests.json`; missing, failed or flaky results block publication. The focused compatibility suite exercises the built consumer in Chromium, Firefox and WebKit, while the normal consumer report remains Chromium-based. These checks are not npm-publishing attestations.
 
 ## Audit follow-through: repository settings are not source files
 
