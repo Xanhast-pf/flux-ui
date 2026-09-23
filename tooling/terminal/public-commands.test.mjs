@@ -64,6 +64,7 @@ test("public dispatch preserves existing tasks and argument arrays", () => {
     ["check drift", "drift:check"],
     ["test drift", "drift:test"],
     ["test e2e", "test:e2e"],
+    ["test compat", "test:compat"],
     ["build packages", "build:packages"],
     ["component new Button", "component:new", ["Button"]],
     ["component doctor Button", "component:doctor", ["Button"]],
@@ -85,6 +86,7 @@ test("public dispatch preserves existing tasks and argument arrays", () => {
   });
   const args = ["a b", "$(echo unsafe)", '"quoted"', "C:\\path with spaces"];
   assert.deepEqual(resolveCommand(["test", "e2e", ...args]).args, args);
+  assert.deepEqual(resolveCommand(["test", "compat", ...args]).args, args);
   for (const input of [
     ["component", "new"],
     ["doctor", "extra"],
@@ -122,9 +124,13 @@ test("pipelines keep required gate order and stop on failure", async () => {
   assert.deepEqual(commands["check:full"], [
     taskCommand("check"),
     ["node", "tooling/size/check.mjs", "--release"],
-    ...["storybook:build", "test:e2e", "perf:smoke", "consumer:check"].map(
-      taskCommand,
-    ),
+    ...[
+      "storybook:build",
+      "test:e2e",
+      "test:compat",
+      "perf:smoke",
+      "consumer:check",
+    ].map(taskCommand),
   ]);
   const calls = [];
   const status = await runPipeline("check", [], async (command, options) => {

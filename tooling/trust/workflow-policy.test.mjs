@@ -21,6 +21,13 @@ test("external actions remain immutable except the dedicated Coding Bible main c
     }
   }
 });
+test("required browser CI installs and enforces all supported Playwright engines", async () => {
+  const source = await readFile(new URL("ci.yml", workflows), "utf8");
+  const browser = source.split("\n  browser:")[1].split("\n  required:")[0];
+  assert.match(browser, /run playwright:install:compat/u);
+  assert.match(browser, /tooling\/trust\/run-checks\.mjs browser/u);
+  assert.match(browser, /consumer-compat-results/u);
+});
 test("Pages consumes same-attempt evidence only after the Required gate", async () => {
   const source = await readFile(new URL("ci.yml", workflows), "utf8");
   assert.match(source, /needs: \[quality, browser\]/u);
@@ -60,4 +67,12 @@ test("release scanning stays outside the signing job and dry-run is the default"
   assert.match(publish, /environment: npm/u);
   assert.match(publish, /needs: \[prepare, inventory\]/u);
   assert.match(publish, /trust|release\/verify\.mjs/u);
+  const prepare = source.split("\n  prepare:")[1].split("\n  inventory:")[0];
+  assert.match(prepare, /run playwright:install:compat/u);
+  const pack = prepare.indexOf("run: node tooling/release/pack.mjs");
+  const consumer = prepare.indexOf("run: pnpm flux release consumer");
+  const upload = prepare.indexOf(
+    "name: Upload immutable tarballs and manifest",
+  );
+  assert.ok(pack >= 0 && consumer > pack && upload > consumer);
 });

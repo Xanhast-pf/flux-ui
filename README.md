@@ -61,23 +61,23 @@ pnpm flux dev
 
 `pnpm install` also installs the Git hooks through Husky.
 
-For browser, accessibility, and runtime-performance checks, install Playwright's Chromium once:
+For browser, accessibility, compatibility, and runtime-performance checks, install the supported Playwright engines once:
 
 ```bash
-pnpm --filter @flux-ui/docs exec playwright install chromium
+pnpm --filter @flux-ui/docs exec playwright install chromium firefox webkit
 pnpm flux check full
 ```
 
 On Linux, if Playwright reports missing system libraries, use:
 
 ```bash
-pnpm --filter @flux-ui/docs exec playwright install --with-deps chromium
+pnpm --filter @flux-ui/docs run playwright:install:compat
 ```
 
 ## Development
 
 Run `pnpm flux` to discover the small command menu, or `pnpm flux size --help` for focused help.
-`pnpm flux check` is the normal fail-fast gate; `pnpm flux check full` adds browser/Storybook/runtime checks.
+`pnpm flux check` is the normal fail-fast gate; `pnpm flux check full` adds Storybook, broad Chromium checks, focused Chromium/Firefox/WebKit compatibility, runtime, and built-consumer checks.
 `pnpm flux check all` continues independent checks and writes a local diagnostic receipt.
 `pnpm flux fix` regenerates source, applies safe lint/format fixes, then runs the normal check. It writes files and never accepts baselines.
 

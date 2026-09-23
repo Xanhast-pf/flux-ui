@@ -54,7 +54,7 @@ const controls = [
     title: "Accessibility",
     status: "Automated + manual scope",
     detail:
-      "Chromium axe and behavior checks accompany keyboard, focus and reduced-motion contracts. Automated tests and the live demo do not certify WCAG conformance.",
+      "Broad Chromium axe and behavior checks plus focused Firefox/WebKit built-consumer compatibility accompany keyboard, focus and reduced-motion contracts. Automated tests and the live demo do not certify WCAG conformance.",
     href: "#accessibility",
   },
 ];
@@ -232,9 +232,9 @@ export function TrustPage() {
               </>
             )}
             <Text as="p" variant="body" tone="muted">
-              Only quality and Chromium checks from the same commit, workflow
-              run and attempt are combined. Independent security workflows have
-              their own results below.
+              Only quality and required browser checks from the same commit,
+              workflow run and attempt are combined. Independent security
+              workflows have their own results below.
             </Text>
           </Stack>
         </Card>

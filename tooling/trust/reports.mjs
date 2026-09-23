@@ -2,6 +2,22 @@ import { isRecord } from "./evidence.mjs";
 
 const sizeMetrics = ["raw", "gzip", "brotli"];
 
+function compatibilityProjectCounts(data) {
+  const counts = new Map();
+  function visit(value) {
+    if (Array.isArray(value)) {
+      for (const item of value) visit(item);
+      return;
+    }
+    if (!isRecord(value)) return;
+    if (typeof value.projectName === "string")
+      counts.set(value.projectName, (counts.get(value.projectName) ?? 0) + 1);
+    for (const item of Object.values(value)) visit(item);
+  }
+  visit(data.suites);
+  return counts;
+}
+
 function validateSizeReport(data) {
   if (data.schemaVersion !== 2)
     throw new Error(
@@ -145,7 +161,11 @@ export function validateReport(name, data, source) {
           throw new Error("Incomplete or invalid raw runtime samples.");
       }
     }
-  } else if (name === "browser-tests.json" || name === "consumer-tests.json") {
+  } else if (
+    name === "browser-tests.json" ||
+    name === "compatibility-tests.json" ||
+    name === "consumer-tests.json"
+  ) {
     if (
       !isRecord(data.stats) ||
       !Number.isInteger(data.stats.expected) ||
@@ -158,6 +178,26 @@ export function validateReport(name, data, source) {
       throw new Error(
         "Browser evidence does not show a clean executed test suite.",
       );
+    if (name === "compatibility-tests.json") {
+      const projects = data.config?.projects;
+      const names = Array.isArray(projects)
+        ? projects.map((project) => project?.name).sort()
+        : [];
+      const expected = ["chromium", "firefox", "webkit"];
+      if (JSON.stringify(names) !== JSON.stringify(expected))
+        throw new Error(
+          "Compatibility evidence must configure Chromium, Firefox and WebKit.",
+        );
+      const counts = compatibilityProjectCounts(data);
+      if (
+        expected.some((project) => !Number.isInteger(counts.get(project))) ||
+        [...counts.values()].reduce((total, count) => total + count, 0) !==
+          data.stats.expected
+      )
+        throw new Error(
+          "Compatibility evidence must execute tests in Chromium, Firefox and WebKit.",
+        );
+    }
   } else throw new Error("Unknown evidence report.");
   return data;
 }

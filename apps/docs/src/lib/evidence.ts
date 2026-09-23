@@ -131,7 +131,7 @@ export function parseEvidence(input: unknown): Evidence {
     jobs[0].checks.map((check) => check.id).join() !==
       expectedQualityChecks.join() ||
     jobs[1].checks.map((check) => check.id).join() !==
-      "browser,consumer,performance"
+      "browser,compatibility,consumer,performance"
   )
     throw new Error("Incomplete evidence checks.");
   if (
@@ -144,7 +144,7 @@ export function parseEvidence(input: unknown): Evidence {
     const name = text(file["name"]);
     const sha256 = text(file["sha256"]);
     if (
-      !/^(quality|browser|size|runtime|browser-tests|consumer-tests)\.json$/u.test(
+      !/^(quality|browser|size|runtime|browser-tests|compatibility-tests|consumer-tests)\.json$/u.test(
         name,
       ) ||
       !/^[a-f0-9]{64}$/u.test(sha256)
@@ -154,7 +154,7 @@ export function parseEvidence(input: unknown): Evidence {
     if (bytes === 0) throw new Error("Empty evidence artifact.");
     return { name, sha256, bytes };
   });
-  if (new Set(files.map((file) => file.name)).size !== 6 || files.length !== 6)
+  if (new Set(files.map((file) => file.name)).size !== 7 || files.length !== 7)
     throw new Error("Missing evidence artifacts.");
   return {
     generatedAt: timestamp(data["generatedAt"]),

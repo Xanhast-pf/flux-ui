@@ -24,10 +24,12 @@
   },
   "scripts": {
     "playwright:install": "playwright install --with-deps chromium",
+    "playwright:install:compat": "playwright install --with-deps chromium firefox webkit",
     "dev": "vite",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
+    "test:compat": "playwright test --config consumer/playwright.compat.config.ts",
     "test:a11y": "playwright test tests/a11y.spec.ts tests/showcase-a11y.spec.ts"
   }
 }

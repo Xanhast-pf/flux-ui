@@ -15,14 +15,14 @@ Run `pnpm flux` for the small command menu, or `pnpm flux check --help`, `pnpm f
 `pnpm flux component --help`, `pnpm flux size --help`, `pnpm flux perf --help`, `pnpm flux release --help`
 and `pnpm flux maintain --help` for focused discovery. Invoke from the repository root; use `pnpm -w flux ...` from nested workspace directories.
 
-For browser checks, install Chromium separately:
+For browser/full checks, install Chromium, Firefox, and WebKit separately:
 
 ```bash
-pnpm --filter @flux-ui/docs exec playwright install chromium
+pnpm --filter @flux-ui/docs exec playwright install chromium firefox webkit
 ```
 
-On Linux, use `install --with-deps chromium` if system libraries are missing.
-Doctor checks versions, workspace files, dependencies and optional Chromium without
+On Linux, use `pnpm --filter @flux-ui/docs run playwright:install:compat` if system libraries are missing.
+Doctor checks versions, workspace files, dependencies and the optional Playwright browser prerequisites without
 network access, installation or source writes. It is not a quality gate.
 
 ## Before opening a pull request
@@ -33,8 +33,8 @@ pnpm flux check
 
 This is the normal fail-fast merge-readiness contract. For browser, accessibility,
 Storybook or runtime-sensitive changes, run `pnpm flux check full`. It includes release
-size checks, Storybook, browser tests, performance smoke and the built-public-export
-consumer (without docs aliases or CSS).
+size checks, Storybook, the broad Chromium suite, focused Chromium/Firefox/WebKit
+compatibility, performance smoke and the built-public-export consumer (without docs aliases or CSS).
 
 For exhaustive local diagnosis, `pnpm flux check all` continues independent checks and
 writes `.cache/verify-all/receipt.json`. Failed production builds block size checks;
@@ -45,19 +45,19 @@ regenerates again, then runs `pnpm flux check`. It writes files; review the diff
 not accept baselines or suppress failures. On a fresh checkout, run `pnpm flux build packages`
 before standalone type-aware lint. Builds write dist/cache output, never baselines.
 
-| Command                                                                                              | Purpose                                      | Writes files?         | Typical user       |
-| ---------------------------------------------------------------------------------------------------- | -------------------------------------------- | --------------------- | ------------------ |
-| `pnpm flux doctor`                                                                                   | Check local prerequisites                    | No                    | Everyone           |
-| `pnpm flux dev`                                                                                      | Start docs development                       | No source writes      | Everyone           |
-| `pnpm flux check`                                                                                    | Normal fail-fast gate                        | Build/cache only      | Everyone           |
-| `pnpm flux check full`                                                                               | Add browser/Storybook/runtime/consumer gates | Build/test/cache only | UI/runtime changes |
-| `pnpm flux check all`                                                                                | Continue independent checks, save receipt    | Build/cache/receipt   | Troubleshooting    |
-| `pnpm flux fix`                                                                                      | Generate, safe lint/format fixes, check      | Yes                   | Everyone           |
-| `pnpm flux component new ...`                                                                        | Scaffold component and docs example          | Yes                   | Component work     |
-| `pnpm flux size baseline review` / `pnpm flux size aggregate review`                                 | Inspect proposed baseline                    | Build/cache only      | Maintainers        |
-| `pnpm flux size baseline accept` / `pnpm flux size aggregate accept` / `pnpm flux size icons accept` | Accept separately reviewed baselines         | **Yes**               | Maintainers only   |
-| `pnpm flux perf accept`                                                                              | Accept reviewed performance baseline         | **Yes**               | Maintainers only   |
-| `pnpm flux release ...`                                                                              | Protected release preparation/inspection     | Depends; see help     | Maintainers        |
+| Command                                                                                              | Purpose                                                    | Writes files?         | Typical user       |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | --------------------- | ------------------ |
+| `pnpm flux doctor`                                                                                   | Check local prerequisites                                  | No                    | Everyone           |
+| `pnpm flux dev`                                                                                      | Start docs development                                     | No source writes      | Everyone           |
+| `pnpm flux check`                                                                                    | Normal fail-fast gate                                      | Build/cache only      | Everyone           |
+| `pnpm flux check full`                                                                               | Add browser compatibility/Storybook/runtime/consumer gates | Build/test/cache only | UI/runtime changes |
+| `pnpm flux check all`                                                                                | Continue independent checks, save receipt                  | Build/cache/receipt   | Troubleshooting    |
+| `pnpm flux fix`                                                                                      | Generate, safe lint/format fixes, check                    | Yes                   | Everyone           |
+| `pnpm flux component new ...`                                                                        | Scaffold component and docs example                        | Yes                   | Component work     |
+| `pnpm flux size baseline review` / `pnpm flux size aggregate review`                                 | Inspect proposed baseline                                  | Build/cache only      | Maintainers        |
+| `pnpm flux size baseline accept` / `pnpm flux size aggregate accept` / `pnpm flux size icons accept` | Accept separately reviewed baselines                       | **Yes**               | Maintainers only   |
+| `pnpm flux perf accept`                                                                              | Accept reviewed performance baseline                       | **Yes**               | Maintainers only   |
+| `pnpm flux release ...`                                                                              | Protected release preparation/inspection                   | Depends; see help     | Maintainers        |
 
 ## Components and size baselines
 

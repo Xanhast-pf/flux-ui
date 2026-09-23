@@ -12,7 +12,7 @@ This is a review checklist, not a certification claim or permission to publish. 
 - [ ] Exact packed tarballs and transitive Flux resolution are verified by the existing packed-consumer harness.
 - [ ] Previous released consumer code compiles against candidate declarations. Review removed exports, compound members, newly required props, narrowed unions, and ref-element changes; document intended incompatibilities. Current-source tests alone do not prove compatibility.
 
-The docs Playwright suite and normal built-consumer suite are Chromium-based. The separate opt-in release packed-consumer harness exercises Chromium, Firefox and WebKit. Do not describe these as interchangeable, and do not infer a three-engine release run from the normal repository gate.
+The broad docs Playwright suite and normal built-consumer suite remain Chromium-based. The required focused compatibility gate exercises the built consumer in Chromium, Firefox and WebKit, and the release packed-consumer harness repeats three-engine verification against the exact candidate tarballs. Do not describe the focused compatibility gate as equivalent to full docs-suite parity across all engines.
 
 ## Focused design and user review
 

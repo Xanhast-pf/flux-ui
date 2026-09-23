@@ -37,6 +37,15 @@ test("docs-build evidence uses the authoritative build and chunk-budget task", (
   assert.equal(check.label, "Docs production build");
   assert.deepEqual(check.command, taskCommand("build:docs"));
 });
+test("browser evidence requires the focused three-engine compatibility task", () => {
+  const check = CHECKS.browser.find(({ id }) => id === "compatibility");
+  assert.ok(check);
+  assert.equal(
+    check.label,
+    "Chromium, Firefox and WebKit built-consumer compatibility",
+  );
+  assert.deepEqual(check.command, taskCommand("test:compat"));
+});
 test("CI context rejects partial identity and local execution never becomes CI", () => {
   assert.throws(() => sourceContext({ GITHUB_ACTIONS: "true" }), /requires/u);
   assert.equal(sourceContext({}).kind, "local");

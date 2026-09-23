@@ -316,6 +316,52 @@ test("runtime evidence requires every current full-run sample", () => {
   assert.throws(() => validateReport("runtime.json", report, source));
 });
 
+test("compatibility browser evidence requires every configured engine to execute", () => {
+  const projects = ["chromium", "firefox", "webkit"];
+  const report = {
+    config: { projects: projects.map((name) => ({ name })) },
+    suites: [
+      {
+        tests: projects.flatMap((projectName) =>
+          Array.from({ length: 2 }, () => ({ projectName })),
+        ),
+      },
+    ],
+    stats: { expected: 6, unexpected: 0, flaky: 0 },
+    errors: [],
+  };
+  assert.equal(
+    validateReport("compatibility-tests.json", report, source),
+    report,
+  );
+  assert.throws(() =>
+    validateReport(
+      "compatibility-tests.json",
+      {
+        ...report,
+        config: { projects: report.config.projects.slice(0, 2) },
+      },
+      source,
+    ),
+  );
+  assert.throws(() =>
+    validateReport(
+      "compatibility-tests.json",
+      {
+        ...report,
+        suites: [
+          {
+            tests: report.suites[0].tests.filter(
+              (test) => test.projectName !== "webkit",
+            ),
+          },
+        ],
+      },
+      source,
+    ),
+  );
+});
+
 test("consumer browser reports must be executed, clean and non-flaky", () => {
   const report = {
     stats: { expected: 6, unexpected: 0, flaky: 0 },

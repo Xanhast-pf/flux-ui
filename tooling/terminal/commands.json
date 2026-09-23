@@ -82,6 +82,10 @@
     ["node", "tooling/terminal/tasks.mjs", "feature:test"]
   ],
   "test:e2e": [["pnpm", "--filter", "@flux-ui/docs", "test:e2e"]],
+  "test:compat": [
+    ["node", "tooling/terminal/tasks.mjs", "build:packages"],
+    ["pnpm", "--filter", "@flux-ui/docs", "test:compat"]
+  ],
   "test:a11y": [["pnpm", "--filter", "@flux-ui/docs", "test:a11y"]],
   "bench": [["pnpm", "--filter", "@flux-ui/react", "bench"]],
   "size": [
@@ -114,6 +118,7 @@
     ["node", "tooling/size/check.mjs", "--release"],
     ["node", "tooling/terminal/tasks.mjs", "storybook:build"],
     ["node", "tooling/terminal/tasks.mjs", "test:e2e"],
+    ["node", "tooling/terminal/tasks.mjs", "test:compat"],
     ["node", "tooling/terminal/tasks.mjs", "perf:smoke"],
     ["node", "tooling/terminal/tasks.mjs", "consumer:check"]
   ],
