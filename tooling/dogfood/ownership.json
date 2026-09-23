@@ -585,6 +585,12 @@
       "components": ["Tabs.Root"],
       "properties": ["inlineSize"],
       "reason": "Matched workload phases constrain collection width to measure resize-driven overflow; public Flux components own all presentation."
+    },
+    {
+      "file": "apps/docs/src/examples/split-pane.preview.tsx",
+      "components": ["SplitPane"],
+      "properties": ["minBlockSize"],
+      "reason": "Narrow documentation previews stack the public splitter and need explicit block geometry so both panes remain readable."
     }
   ],
   "tokenAdapters": [

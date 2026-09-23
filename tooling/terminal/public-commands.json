@@ -851,5 +851,31 @@
     "minArgs": 1,
     "maxArgs": 1,
     "options": []
+  },
+  {
+    "path": "check drift",
+    "task": "drift:check",
+    "summary": "Validate cross-file repository contracts. Read-only.",
+    "audience": "contributor",
+    "writes": "none",
+    "when": "Run while editing to catch reference, metadata and documentation drift before expensive gates.",
+    "usage": "pnpm flux check drift",
+    "examples": ["pnpm flux check drift"],
+    "minArgs": 0,
+    "maxArgs": 0,
+    "options": ["--json", "--strict"]
+  },
+  {
+    "path": "test drift",
+    "task": "drift:test",
+    "summary": "Test repository drift rules and regression fixtures.",
+    "audience": "contributor",
+    "writes": "temporary test fixtures",
+    "when": "Run while editing to catch reference, metadata and documentation drift before expensive gates.",
+    "usage": "pnpm flux test drift",
+    "examples": ["pnpm flux test drift"],
+    "minArgs": 0,
+    "maxArgs": 0,
+    "options": []
   }
 ]

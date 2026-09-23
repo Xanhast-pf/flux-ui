@@ -1,7 +1,10 @@
 import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { validSizeClasses } from "../tooling/size/budgets.mjs";
-import { createComponentReadiness } from "./lib/component-readiness.mjs";
+import {
+  createComponentReadiness,
+  requiredComponentFiles,
+} from "./lib/component-readiness.mjs";
 import { createPublicContracts } from "./lib/public-contracts.mjs";
 
 const name = process.argv[2];
@@ -10,16 +13,9 @@ if (!name) {
   process.exit(1);
 }
 const dir = resolve(process.cwd(), "packages/react/src/components", name);
-const required = [
-  `${name}.tsx`,
-  `${name}.types.ts`,
-  `${name}.css.ts`,
-  `${name}.test.tsx`,
-  `${name}.stories.tsx`,
-  `${name}.bench.tsx`,
-  "component.meta.json",
-  "index.ts",
-];
+const required = requiredComponentFiles.map((suffix) =>
+  suffix.startsWith(".") ? name + suffix : suffix,
+);
 let failed = false;
 for (const file of required) {
   try {

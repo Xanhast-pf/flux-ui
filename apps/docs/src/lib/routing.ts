@@ -48,9 +48,15 @@ export function useRoute(): string {
   return useSyncExternalStore(subscribe, snapshot, () => "overview");
 }
 
+export const routeAliases: Readonly<Record<string, string>> = {
+  rules: "engineering",
+};
+
 export function routePath(route: string): string {
   const path = route.split("?", 1)[0] || "overview";
-  return path === "rules" ? "engineering" : path;
+  return Object.hasOwn(routeAliases, path)
+    ? (routeAliases[path] ?? path)
+    : path;
 }
 
 /** Titles describe the destination, including deep links and the legacy rules route. */

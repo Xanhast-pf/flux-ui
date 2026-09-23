@@ -9,11 +9,10 @@ export function InstallPage() {
         </Text>
       </PageHeader>
       <Callout tone="warning">
-        Flux UI is pre-stable. Most current component families are beta; check
-        the component catalog for individual lifecycle status. Public package
-        versions in this source may still be unreleased. Use an explicitly
-        approved release or candidate archive; do not assume a stable npm
-        package exists.
+        Flux UI is pre-stable. Check the component catalog for individual
+        lifecycle status. Public package versions in this source may still be
+        unreleased. Use an explicitly approved release or candidate archive; do
+        not assume a stable npm package exists.
       </Callout>
       <Stack gap="md">
         <Heading level={2} size="lg">

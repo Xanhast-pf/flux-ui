@@ -12,7 +12,7 @@ export default function Preview() {
           <Text variant="caption" tone="muted">
             Acme Console
           </Text>
-          <Link href="#footer">Documentation</Link>
+          <Link href="#documentation">Documentation</Link>
         </Inline>
       </Footer>
     </Stack>

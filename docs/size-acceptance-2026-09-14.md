@@ -1,5 +1,7 @@
 # Reviewed size acceptance — 2026-09-14
 
+> **Historical report.** This records a prior snapshot, not current behavior or release readiness. Consult current engineering documentation and executed checks.
+
 This records two separately authorized acceptance decisions, not new absolute
 budgets or extra headroom. The existing optimized Field/Tabs implementations
 were preserved. No component implementation or packaging policy changed.

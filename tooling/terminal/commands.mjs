@@ -14,6 +14,7 @@ export function taskName(command) {
 
 const labels = {
   "generate:check": "Generated files",
+  "drift:check": "Repository drift",
   "docs:check": "Docs coverage",
   "dogfood:check": "Dogfood",
   "format:check": "Format",

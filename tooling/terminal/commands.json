@@ -96,6 +96,7 @@
   "bible:pin": [["node", "scripts/pin-coding-bible.mjs"]],
   "check": [
     ["node", "tooling/terminal/tasks.mjs", "generate:check"],
+    ["node", "tooling/terminal/tasks.mjs", "drift:check"],
     ["node", "tooling/terminal/tasks.mjs", "docs:check"],
     ["node", "tooling/terminal/tasks.mjs", "dogfood:check"],
     ["node", "tooling/terminal/tasks.mjs", "format:check"],
@@ -189,7 +190,8 @@
       "scripts/test/public-contracts.test.mjs",
       "scripts/test/component-readiness.test.mjs",
       "scripts/test/showcase*.test.mjs"
-    ]
+    ],
+    ["node", "tooling/terminal/tasks.mjs", "drift:test"]
   ],
   "icons:size": [
     ["pnpm", "--filter", "@flux-ui/icons", "build"],
@@ -285,5 +287,14 @@
   "build:docs": [
     ["pnpm", "--filter", "@flux-ui/docs", "build"],
     ["node", "tooling/size/docs-chunks.mjs"]
+  ],
+  "drift:check": [["node", "tooling/drift/check.mjs"]],
+  "drift:test": [
+    [
+      "node",
+      "--test",
+      "--test-reporter=./tooling/terminal/node-reporter.mjs",
+      "tooling/drift/*.test.mjs"
+    ]
   ]
 }

@@ -11,6 +11,7 @@ export interface EvidenceFile {
 }
 const expectedQualityChecks = [
   "generated",
+  "drift",
   "docs-coverage",
   "dogfood",
   "format",

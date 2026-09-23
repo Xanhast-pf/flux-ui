@@ -1,3 +1,4 @@
+import projectPackage from "../../package.json" with { type: "json" };
 import { archiveName, assertVersion, REPOSITORY } from "./contract.mjs";
 export const consumerPackages = [
   "@flux-ui/icons",
@@ -71,8 +72,8 @@ export function consumerPackageJson(manifest, toolVersions) {
     private: true,
     version: "0.0.0",
     type: "module",
-    packageManager: "pnpm@10.34.5",
-    engines: { node: ">=24" },
+    packageManager: projectPackage.packageManager,
+    engines: { node: projectPackage.engines.node },
     dependencies: {
       ...flux,
       react: toolVersions.react,

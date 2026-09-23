@@ -1,5 +1,7 @@
 # Flux UI — webpage audit and product-world redesign
 
+> **Historical report.** This records a prior snapshot, not current behavior or release readiness. Consult current engineering documentation and executed checks.
+
 ## Scope and evidence
 
 Baseline: the supplied `flux-ui-0.1.15.zip` archive (source commit

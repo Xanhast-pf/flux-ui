@@ -1,3 +1,4 @@
+import { gitBoolean, gitConfigValue } from "./git-config.mjs";
 import { executableCommand } from "../terminal/executable.mjs";
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
@@ -19,33 +20,6 @@ export function probeVersion(program, platform = process.platform) {
   return result.status === 0 && !result.error ? result.stdout.trim() : null;
 }
 
-function gitConfigValue(source, section, key) {
-  let currentSection = null;
-  let value = null;
-
-  for (const line of source.split(/\r?\n/u)) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith(";"))
-      continue;
-
-    const sectionMatch = /^\[([^\]\s"]+)(?:\s+"[^"]*")?\]$/u.exec(trimmed);
-    if (sectionMatch) {
-      currentSection = sectionMatch[1].toLowerCase();
-      continue;
-    }
-    if (currentSection !== section.toLowerCase()) continue;
-
-    const settingMatch = /^([^=\s]+)\s*(?:=\s*)?(.*)$/u.exec(trimmed);
-    if (!settingMatch || settingMatch[1].toLowerCase() !== key.toLowerCase())
-      continue;
-
-    const raw = settingMatch[2].trim();
-    value = raw.startsWith('"') && raw.endsWith('"') ? raw.slice(1, -1) : raw;
-  }
-
-  return value;
-}
-
 export function readGitHooksPath({
   root = repositoryRoot,
   exists = existsSync,
@@ -58,7 +32,10 @@ export function readGitHooksPath({
   let gitDir = dotGit;
   if (!isDirectory(dotGit)) {
     const match = /^gitdir:\s*(.+)$/imu.exec(read(dotGit));
-    if (!match) return null;
+    if (!match)
+      throw new Error(
+        "Invalid .git pointer; cannot verify local hook configuration.",
+      );
     gitDir = resolve(dirname(dotGit), match[1].trim());
   }
 
@@ -70,12 +47,16 @@ export function readGitHooksPath({
   }
 
   const commonConfigPath = join(commonDir, "config");
-  if (!exists(commonConfigPath)) return null;
+  if (!exists(commonConfigPath))
+    throw new Error(
+      "Local Git config is missing; cannot verify hook configuration.",
+    );
   const commonConfig = read(commonConfigPath);
   let hooksPath = gitConfigValue(commonConfig, "core", "hooksPath");
 
-  const worktreeConfigEnabled =
-    gitConfigValue(commonConfig, "extensions", "worktreeConfig") === "true";
+  const worktreeConfigEnabled = gitBoolean(
+    gitConfigValue(commonConfig, "extensions", "worktreeConfig"),
+  );
   const worktreeConfigPath = join(gitDir, "config.worktree");
   if (worktreeConfigEnabled && exists(worktreeConfigPath)) {
     const worktreeHooksPath = gitConfigValue(
@@ -86,6 +67,10 @@ export function readGitHooksPath({
     if (worktreeHooksPath !== null) hooksPath = worktreeHooksPath;
   }
 
+  if (hooksPath?.startsWith("~") || hooksPath?.startsWith("%(prefix)"))
+    throw new Error(
+      "Expanded Git hook paths require manual effective-path verification.",
+    );
   return hooksPath;
 }
 
@@ -184,8 +169,12 @@ export function diagnose({
   let hooksPath = null;
   try {
     hooksPath = gitHooksPath();
-  } catch {
-    /* A Git-config read failure should not hide required workspace checks. */
+  } catch (error) {
+    add(
+      false,
+      `Local Git hook configuration: ${error.message}`,
+      "Inspect git config --show-origin --get core.hooksPath manually; doctor does not evaluate global/system configuration or includes.",
+    );
   }
   if (hooksPath && /(^|[\\/])\.husky([\\/]|$)/u.test(hooksPath)) {
     const hooksRoot = isAbsolute(hooksPath)

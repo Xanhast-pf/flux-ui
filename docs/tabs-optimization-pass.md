@@ -1,5 +1,7 @@
 # Bounded smart Tabs optimization pass
 
+> **Historical report.** This records a prior snapshot, not current behavior or release readiness. Consult current engineering documentation and executed checks.
+
 No implementation experiment was retained. All touched source and test files were restored byte for byte to the task-start working tree. The approved smart Tabs architecture and its package-level advantage remain intact. Only this report and `docs/tabs-optimization-pass.json` are new task changes.
 
 The requested 500–1,000 Brotli-byte recovery was not reached. The smallest measured Tabs experiment was 7,025 bytes, a 168-byte saving, but its aggregate compressed cost increased. The retained result is 7,193 bytes (999 bytes below the unchanged 8 KiB composite ceiling). This is the outcome of a bounded pass, not proof of a universal theoretical minimum.

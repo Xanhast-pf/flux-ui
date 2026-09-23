@@ -207,6 +207,6 @@ callbacks. It does not add persistence, routing, or modal behavior.
 ## Still separate work
 
 A grammar/worker integration, adaptive Canvas charts, editable data grids,
-Popover, Tooltip, Combobox, waveform/envelope/timeline editors, and real audio
+waveform/envelope/timeline editors, and real audio
 processing remain separate projects. Add them against demonstrated use cases and
 measured consumer scenarios, not by expanding every foundational import.

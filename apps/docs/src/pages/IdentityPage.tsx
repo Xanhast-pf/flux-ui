@@ -148,8 +148,8 @@ export function IdentityPage() {
               One grammar, more vocabulary.
             </Heading>
             <Text as="p" variant="lead" tone="muted">
-              Browse 64 tree-shakeable icons with search, copyable imports,
-              accessible naming, and per-icon size budgets.
+              Browse the tree-shakeable icon catalog with search, copyable
+              imports, accessible naming, and per-icon size budgets.
             </Text>
           </Stack>
           <Card>
@@ -164,7 +164,7 @@ export function IdentityPage() {
                 <ShieldCheckIcon size={26} />
               </Inline>
               <Link href="#icons" variant="solid">
-                Browse all 64 icons
+                Browse all icons
                 <ArrowUpRightIcon aria-hidden="true" size={16} />
               </Link>
             </Stack>

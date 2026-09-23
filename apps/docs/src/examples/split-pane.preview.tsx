@@ -1,3 +1,4 @@
+import { useSyncExternalStore } from "react";
 import {
   Card,
   CodeBlock,
@@ -6,13 +7,33 @@ import {
   Stack,
   Text,
 } from "@flux-ui/react";
+
+const narrowQuery = "(max-width: 48rem)";
+
+function subscribeNarrow(notify: () => void) {
+  const media = window.matchMedia(narrowQuery);
+  media.addEventListener("change", notify);
+  return () => media.removeEventListener("change", notify);
+}
+
+function getNarrowSnapshot() {
+  return window.matchMedia(narrowQuery).matches;
+}
+
 export default function Preview() {
+  const narrow = useSyncExternalStore(
+    subscribeNarrow,
+    getNarrowSnapshot,
+    () => false,
+  );
   return (
     <SplitPane
       label="Resize explanation and source"
+      orientation={narrow ? "vertical" : "horizontal"}
       defaultValue={45}
       min={20}
       max={75}
+      style={narrow ? { minBlockSize: "32rem" } : {}}
       first={
         <Card>
           <Stack gap="md">

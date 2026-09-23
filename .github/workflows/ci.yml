@@ -46,6 +46,9 @@ jobs:
       - name: Generated files
         run: node tooling/trust/run-checks.mjs quality generated
 
+      - name: Repository drift
+        run: node tooling/trust/run-checks.mjs quality drift
+
       - name: Docs coverage
         run: node tooling/trust/run-checks.mjs quality docs-coverage
 

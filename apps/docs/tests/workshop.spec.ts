@@ -740,6 +740,6 @@ test("identity lab redraws Flux Display and reports unsupported glyphs", async (
   await specimen.fill("Café");
   await expect(page.getByRole("status")).toContainText("Not drawn yet: É");
   await expect(
-    page.getByRole("link", { name: /Browse all 64 icons/ }),
+    page.getByRole("link", { name: /Browse all icons/ }),
   ).toHaveAttribute("href", "#icons");
 });

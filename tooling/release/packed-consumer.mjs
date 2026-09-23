@@ -1,3 +1,4 @@
+import projectPackage from "../../package.json" with { type: "json" };
 import {
   copyFile,
   mkdir,
@@ -63,8 +64,10 @@ try {
   if (resolve(process.cwd()) !== resolve(root))
     throw new Error("Run pnpm flux release consumer from the repository root.");
   const pnpm = run("pnpm", ["--version"]).trim();
-  if (pnpm !== "10.34.5")
-    throw new Error("Use the pinned pnpm 10.34.5 toolchain.");
+  if (pnpm !== projectPackage.packageManager.replace(/^pnpm@/u, ""))
+    throw new Error(
+      `Use the pinned ${projectPackage.packageManager} toolchain.`,
+    );
   report.pnpm = pnpm;
   const manifestPath = resolve(root, ".cache/release/manifest.json");
   const bytes = await readFile(manifestPath);

@@ -4,7 +4,7 @@ import ts from "typescript";
 
 export const lifecycleStatuses = ["alpha", "beta", "stable"];
 
-const requiredComponentFiles = [
+export const requiredComponentFiles = [
   ".tsx",
   ".types.ts",
   ".css.ts",
