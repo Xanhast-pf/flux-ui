@@ -6,16 +6,16 @@ It deliberately leaves account-, personnel- and history-dependent answers open.
 
 ## Project identity
 
-| Field                                         | Draft answer                                                                                                                              |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Project name                                  | Flux UI                                                                                                                                   |
-| Repository                                    | https://github.com/Xanhast-pf/flux-ui                                                                                                     |
-| Project website                               | https://xanhast-pf.github.io/flux-ui/                                                                                                     |
-| Description                                   | An alpha React UI system with semantic tokens, static styles, composable components, live documentation and explicit engineering budgets. |
-| Primary languages                             | TypeScript, JavaScript, CSS                                                                                                               |
-| License                                       | MIT; confirm all included third-party assets and dependencies separately.                                                                 |
-| Applicant / authorized project representative | Maintainer must supply and verify.                                                                                                        |
-| Contact / enrollment identifier               | Not supplied; no account or project ID fabricated.                                                                                        |
+| Field                                         | Draft answer                                                                                                                                             |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Project name                                  | Flux UI                                                                                                                                                  |
+| Repository                                    | https://github.com/Xanhast-pf/flux-ui                                                                                                                    |
+| Project website                               | https://flux.varua.ca/                                                                                                                                   |
+| Description                                   | A pre-stable React UI system with semantic tokens, static styles, composable components, lifecycle-aware documentation and explicit engineering budgets. |
+| Primary languages                             | TypeScript, JavaScript, CSS                                                                                                                              |
+| License                                       | MIT; confirm all included third-party assets and dependencies separately.                                                                                |
+| Applicant / authorized project representative | Maintainer must supply and verify.                                                                                                                       |
+| Contact / enrollment identifier               | Not supplied; no account or project ID fabricated.                                                                                                       |
 
 ## Evidence to review before answering the official criteria
 

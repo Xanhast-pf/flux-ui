@@ -277,8 +277,9 @@ for (const raw of [false, true]) {
       );
       assert.equal(result.status, 0);
       const actual = JSON.parse(await readFile(path, "utf8"));
-      assert.equal(actual.NO_COLOR, raw ? preference.NO_COLOR : "1");
+      assert.equal(actual.NO_COLOR, raw ? preference.NO_COLOR : undefined);
       assert.equal(actual.FORCE_COLOR, raw ? preference.FORCE_COLOR : "0");
+      if (!raw) assert.ok(!Object.hasOwn(actual, "NO_COLOR"));
       assert.equal(actual.CI, preference.CI);
       assert.equal(actual.FLUX_TERMINAL_ACTIVE, "1");
       assert.deepEqual(env, original);

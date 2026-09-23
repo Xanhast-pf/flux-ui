@@ -181,11 +181,11 @@ export function EngineeringPage() {
         </Stack>
         <EngineeringRules />
         <Callout>
-          Current limits: alpha APIs, two runtime benchmark scenarios, and
-          Chromium-focused browser automation. Manual assistive-technology
-          testing and broader browser coverage remain explicit review work. See
-          the Trust Center before adopting Flux for a production-critical
-          interface.
+          Current limits: pre-stable APIs with lifecycle status tracked per
+          component, two runtime benchmark scenarios, and Chromium-focused
+          browser automation. Manual assistive-technology testing and broader
+          browser coverage remain explicit review work. See the Trust Center
+          before adopting Flux for a production-critical interface.
         </Callout>
         <Link href="#trust" variant="solid">
           Open the Trust Center →

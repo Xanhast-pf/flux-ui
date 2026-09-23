@@ -1,7 +1,7 @@
 import { executableCommand } from "../terminal/executable.mjs";
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
-import { isAbsolute, join } from "node:path";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { dirname, isAbsolute, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const repositoryRoot = fileURLToPath(new URL("../../", import.meta.url));
@@ -17,6 +17,76 @@ export function probeVersion(program, platform = process.platform) {
     timeout: 5000,
   });
   return result.status === 0 && !result.error ? result.stdout.trim() : null;
+}
+
+function gitConfigValue(source, section, key) {
+  let currentSection = null;
+  let value = null;
+
+  for (const line of source.split(/\r?\n/u)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith(";"))
+      continue;
+
+    const sectionMatch = /^\[([^\]\s"]+)(?:\s+"[^"]*")?\]$/u.exec(trimmed);
+    if (sectionMatch) {
+      currentSection = sectionMatch[1].toLowerCase();
+      continue;
+    }
+    if (currentSection !== section.toLowerCase()) continue;
+
+    const settingMatch = /^([^=\s]+)\s*(?:=\s*)?(.*)$/u.exec(trimmed);
+    if (!settingMatch || settingMatch[1].toLowerCase() !== key.toLowerCase())
+      continue;
+
+    const raw = settingMatch[2].trim();
+    value = raw.startsWith('"') && raw.endsWith('"') ? raw.slice(1, -1) : raw;
+  }
+
+  return value;
+}
+
+export function readGitHooksPath({
+  root = repositoryRoot,
+  exists = existsSync,
+  read = (path) => readFileSync(path, "utf8"),
+  isDirectory = (path) => statSync(path).isDirectory(),
+} = {}) {
+  const dotGit = join(root, ".git");
+  if (!exists(dotGit)) return null;
+
+  let gitDir = dotGit;
+  if (!isDirectory(dotGit)) {
+    const match = /^gitdir:\s*(.+)$/imu.exec(read(dotGit));
+    if (!match) return null;
+    gitDir = resolve(dirname(dotGit), match[1].trim());
+  }
+
+  let commonDir = gitDir;
+  const commonDirFile = join(gitDir, "commondir");
+  if (exists(commonDirFile)) {
+    const relativeCommonDir = read(commonDirFile).trim();
+    if (relativeCommonDir) commonDir = resolve(gitDir, relativeCommonDir);
+  }
+
+  const commonConfigPath = join(commonDir, "config");
+  if (!exists(commonConfigPath)) return null;
+  const commonConfig = read(commonConfigPath);
+  let hooksPath = gitConfigValue(commonConfig, "core", "hooksPath");
+
+  const worktreeConfigEnabled =
+    gitConfigValue(commonConfig, "extensions", "worktreeConfig") === "true";
+  const worktreeConfigPath = join(gitDir, "config.worktree");
+  if (worktreeConfigEnabled && exists(worktreeConfigPath)) {
+    const worktreeHooksPath = gitConfigValue(
+      read(worktreeConfigPath),
+      "core",
+      "hooksPath",
+    );
+    if (worktreeHooksPath !== null) hooksPath = worktreeHooksPath;
+  }
+
+  return hooksPath;
 }
 
 function version(value) {
@@ -39,7 +109,16 @@ export function diagnose({
   root = repositoryRoot,
   node = process.version,
   probe = probeVersion,
+  gitHooksPath = () => readGitHooksPath({ root }),
   exists = existsSync,
+  readable = (path) => {
+    try {
+      readFileSync(path);
+      return true;
+    } catch {
+      return false;
+    }
+  },
   read = (path) => readFileSync(path, "utf8"),
   browser = () => {
     const result = spawnSync(
@@ -101,6 +180,25 @@ export function diagnose({
     "Installed workspace dependencies",
     "Run pnpm install --frozen-lockfile.",
   );
+
+  let hooksPath = null;
+  try {
+    hooksPath = gitHooksPath();
+  } catch {
+    /* A Git-config read failure should not hide required workspace checks. */
+  }
+  if (hooksPath && /(^|[\\/])\.husky([\\/]|$)/u.test(hooksPath)) {
+    const hooksRoot = isAbsolute(hooksPath)
+      ? hooksPath
+      : resolve(root, hooksPath);
+    const bootstrap = join(hooksRoot, "h");
+    add(
+      exists(bootstrap) && readable(bootstrap),
+      `Husky Git hook bootstrap (${hooksPath})`,
+      "Run pnpm prepare (or pnpm install --frozen-lockfile) to restore the local Husky bootstrap.",
+    );
+  }
+
   let available = false;
   try {
     available = browser();
