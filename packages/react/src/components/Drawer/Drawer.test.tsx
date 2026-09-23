@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Drawer } from "./Drawer.js";
 
 describe("Drawer", () => {
@@ -26,6 +26,39 @@ describe("Drawer", () => {
 
     await user.click(screen.getByRole("button", { name: "Close navigation" }));
     expect(drawer).not.toHaveAttribute("open");
+  });
+
+  it("measures the classic scrollbar before opening", async () => {
+    const user = userEvent.setup();
+    const clientWidth = vi
+      .spyOn(document.documentElement, "clientWidth", "get")
+      .mockReturnValue(1000);
+    const innerWidth = vi
+      .spyOn(window, "innerWidth", "get")
+      .mockReturnValue(1024);
+    const property = "--g";
+
+    try {
+      render(
+        <Drawer.Root>
+          <Drawer.Trigger>Open compensated drawer</Drawer.Trigger>
+          <Drawer.Popup>
+            <Drawer.Title>Compensated drawer</Drawer.Title>
+          </Drawer.Popup>
+        </Drawer.Root>,
+      );
+
+      await user.click(
+        screen.getByRole("button", { name: "Open compensated drawer" }),
+      );
+      expect(document.documentElement.style.getPropertyValue(property)).toBe(
+        "24px",
+      );
+    } finally {
+      document.documentElement.style.removeProperty(property);
+      clientWidth.mockRestore();
+      innerWidth.mockRestore();
+    }
   });
 });
 

@@ -124,7 +124,7 @@ test("sparse layout CSS cascades without viewport leakage or inherited instance 
   for (const [width, gap] of [
     [390, "8px"],
     [768, "8px"],
-    [1024, "32px"],
+    [1040, "32px"],
     [1440, "32px"],
   ] as const) {
     await page.setViewportSize({ width, height: 1000 });

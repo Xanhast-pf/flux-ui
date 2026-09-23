@@ -72,8 +72,11 @@ export const popup = style({
   "@media": { "(prefers-reduced-motion: reduce)": { animation: "none" } },
 });
 // Keep a scrolled page stationary behind any open Drawer. Native dialog owns
-// focus/inertness; this static rule adds scroll containment without body mutation.
-globalStyle(`html:has(.${popup}[open])`, { overflow: "hidden" });
+// focus/inertness; reserve the measured classic scrollbar gutter while locked.
+globalStyle(`html:has(.${popup}[open])`, {
+  overflow: "hidden",
+  borderInlineEnd: "var(--g) solid #0000",
+});
 export {
   modalAction as trigger,
   modalAction as close,

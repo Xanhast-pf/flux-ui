@@ -1,6 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { components } from "../src/generated/components.js";
+
+test.use({ reducedMotion: "reduce" });
 async function expectNoViolations(
   page: Page,
   include?: string,
