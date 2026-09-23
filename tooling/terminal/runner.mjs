@@ -9,9 +9,10 @@ import { stripVTControlCharacters } from "node:util";
 import { createProgress } from "./output.mjs";
 
 export function terminalChildEnv({ raw, parentEnv }) {
-  return raw
-    ? { ...parentEnv }
-    : { ...parentEnv, NO_COLOR: "1", FORCE_COLOR: "0" };
+  if (raw) return { ...parentEnv };
+  const childEnv = { ...parentEnv, FORCE_COLOR: "0" };
+  delete childEnv.NO_COLOR;
+  return childEnv;
 }
 
 async function replay(path, output) {

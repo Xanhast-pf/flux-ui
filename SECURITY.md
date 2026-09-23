@@ -1,8 +1,9 @@
 # Security policy
 
-Flux UI is an alpha project. Security checks reduce specific risks; they are not
-an independent audit, certification, guarantee of safety, or promise that every
-vulnerability is detected.
+Flux UI is a pre-stable project. Most current component families are beta;
+individual lifecycle status is published in the [component catalog](https://flux.varua.ca/#components).
+Security checks reduce specific risks; they are not an independent audit,
+certification, guarantee of safety, or promise that every vulnerability is detected.
 
 ## Reporting a vulnerability
 
@@ -22,8 +23,8 @@ fix and an appropriate disclosure date rather than assuming silence means a fix.
 
 ## Supported versions
 
-Security maintenance targets the latest released alpha (or latest stable release
-once one exists). Older versions do not have a promised backport policy. Check
+Security maintenance targets the latest released pre-stable version (or latest
+stable release once one exists). Older versions do not have a promised backport policy. Check
 published advisories and release notes before adopting or upgrading.
 
 ## Security boundaries

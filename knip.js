@@ -1,7 +1,27 @@
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath, URL } from "node:url";
 import { commands } from "./tooling/terminal/commands.mjs";
 
 // CLI entrypoints moved from package scripts into the shared argv registry.
-// Keep Knip discovery derived from the executable tasks, not a duplicate allowlist.
+// Keep Knip discovery derived from executable tasks, while avoiding duplicate
+// roots that Knip already discovers from GitHub workflow run commands.
+const root = fileURLToPath(new URL("./", import.meta.url));
+const workflows = join(root, ".github/workflows");
+
+const workflowEntries = new Set(
+  existsSync(workflows)
+    ? readdirSync(workflows, { withFileTypes: true })
+        .filter((entry) => entry.isFile() && /\.ya?ml$/u.test(entry.name))
+        .flatMap((entry) => {
+          const source = readFileSync(join(workflows, entry.name), "utf8");
+          return [...source.matchAll(/\bnode\s+([^\s"']+\.mjs)\b/gu)].map(
+            (match) => match[1].replace(/^\.\//u, ""),
+          );
+        })
+    : [],
+);
+
 const entry = [
   ...new Set(
     Object.values(commands)
@@ -12,7 +32,8 @@ const entry = [
               .slice(1)
               .filter((arg) => arg.endsWith(".mjs") && !arg.startsWith("-"))
           : [],
-      ),
+      )
+      .filter((path) => !workflowEntries.has(path)),
   ),
 ];
 

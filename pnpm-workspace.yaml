@@ -19,7 +19,6 @@ catalog:
   "@playwright/test": ^1.62.1
   "@axe-core/playwright": ^4.13.0
   "@vanilla-extract/css": ^1.21.2
-  "@vanilla-extract/recipes": ^0.5.7
   "@vanilla-extract/vite-plugin": ^5.2.6
   "vite-plugin-lib-inject-css": ^2.2.2
   "@base-ui/react": ^1.7.0 # Adopt when the first behavior-heavy primitive needs it.

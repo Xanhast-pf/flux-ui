@@ -137,10 +137,10 @@ export function TrustPage() {
           </Text>
         </PageHeader>
         <Callout tone="warning">
-          Flux UI is alpha. No independent security certification, audit,
-          OpenSSF badge or blanket accessibility guarantee is claimed.
-          Configured controls, observed CI results and externally awarded
-          recognition are different things.
+          Flux UI is pre-stable; component lifecycle status varies by family. No
+          independent security certification, audit, OpenSSF badge or blanket
+          accessibility guarantee is claimed. Configured controls, observed CI
+          results and externally awarded recognition are different things.
         </Callout>
         <Card>
           <Stack gap="md">

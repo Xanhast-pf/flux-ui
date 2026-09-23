@@ -3,9 +3,9 @@
 **Beautiful by default. Fast by construction.**
 
 [![CI](https://github.com/Xanhast-pf/flux-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Xanhast-pf/flux-ui/actions/workflows/ci.yml)
-[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-222)](https://xanhast-pf.github.io/flux-ui/)
+[![Docs](https://img.shields.io/badge/docs-flux.varua.ca-222)](https://flux.varua.ca/)
 
-Flux UI is an **alpha-stage React design system** built around a few hard promises:
+Flux UI is a **pre-stable React design system** built around a few hard promises:
 
 - simple, predictable public APIs;
 - native semantics and tested accessibility;
@@ -16,29 +16,18 @@ Flux UI is an **alpha-stage React design system** built around a few hard promis
 
 > Easy until you need power. Powerful without becoming complicated.
 
-**Live docs:** https://xanhast-pf.github.io/flux-ui/  
+**Live docs:** https://flux.varua.ca/
 **Repository:** https://github.com/Xanhast-pf/flux-ui
 
 ## Status
 
-Flux UI is under active development and is not yet a stable public package release. The current foundation includes:
-
-| Area                     | Current components                                                                                                         |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| Actions                  | Button, IconButton, Toggle, ToggleGroup, Toolbar                                                                           |
-| Forms                    | Input, Field, Fieldset, Textarea, Checkbox, RadioGroup, Switch, Select, Slider                                             |
-| Layout and surfaces      | Box, Container, Grid / Grid.Item, Stack, Inline, Card, Separator, AspectRatio, ThemeScope, ScrollArea                      |
-| Typography and content   | Text, Heading, Link, Code, CodeBlock, List, DescriptionList                                                                |
-| Information and feedback | Badge, Callout, Progress, Meter, Table, Avatar / AvatarGroup, ColorSwatch, Stat, EmptyState, PageHeader, Skeleton, Spinner |
-| Disclosure and overlays  | Collapsible, Accordion, Dialog, Drawer                                                                                     |
-| Navigation               | Sidebar, Tabs, Breadcrumbs, Pagination                                                                                     |
-| Accessibility and hints  | VisuallyHidden, Kbd, SkipLink                                                                                              |
+Flux UI is pre-stable. Most current component families are beta; individual lifecycle status is shown in the [live component catalog](https://flux.varua.ca/#components). The catalog is generated from each component's `component.meta.json`; you can also inspect the generated registry at [`apps/docs/src/generated/components.ts`](apps/docs/src/generated/components.ts). `pnpm flux check generated` rejects metadata/registry drift.
 
 The repository already enforces the same quality contracts intended for the mature library: generated exports, accessibility checks, bundle budgets, runtime-performance baselines, Storybook builds, and protected CI.
 
 ## Explore the workshop
 
-The GitHub Pages app is a real consumer of the public library, not just a health dashboard. It also contains an Identity lab for the original Flux icon set and the in-progress Flux Display vector alphabet. Explore a local release-room demo, save/filter/page through the collection lab, customize a button, switch theme/accent presets, search with Ctrl/Cmd+K, and open dedicated component pages with live previews, copyable source, API notes and measured size information.
+The public docs app is a real consumer of the public library, not just a health dashboard. It also contains an Identity lab for the original Flux icon set and the in-progress Flux Display vector alphabet. Explore a local release-room demo, save/filter/page through the collection lab, customize a button, switch theme/accent presets, search with Ctrl/Cmd+K, and open dedicated component pages with live previews, copyable source, API notes and measured size information.
 
 The component catalog does not mount every demo. Individual examples load on demand; the displayed code is imported from the same TSX source as the rendered preview. Search uses Flux Dialog; persistent documentation navigation uses the public non-modal Sidebar. It pushes content on wider screens and stacks above it on narrow screens, without closing on route changes. Drawer remains available for temporary modal tasks. Component pages use Breadcrumbs, Toggle and IconButton; loading examples use Skeleton and Spinner, and keyboard shortcuts remain available through Ctrl/Cmd+K. Existing health, size, performance, install and token deep links remain available; the legacy rules route opens Engineering.
 

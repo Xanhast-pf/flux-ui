@@ -95,9 +95,10 @@ export function DocumentationPage() {
               Does a green demo mean production-ready?
             </Accordion.Trigger>
             <Accordion.Content>
-              No. Flux is alpha. A preview is one integration check, not
-              certification. Review the <Link href="#trust">Trust Center</Link>{" "}
-              for evidence and known limits.
+              No. Flux is pre-stable, and lifecycle status varies by component.
+              A preview is one integration check, not certification. Review the{" "}
+              <Link href="#trust">Trust Center</Link> for evidence and known
+              limits.
             </Accordion.Content>
           </Accordion.Item>
           <Accordion.Item>

@@ -116,7 +116,7 @@ export function OverviewPage() {
             </Link>
           </Inline>
           <Text variant="caption" tone="muted">
-            Open source · React 19 · Static CSS · Alpha
+            Open source · React 19 · Static CSS · Pre-stable
           </Text>
         </Stack>
       </Grid>
@@ -233,9 +233,9 @@ export function OverviewPage() {
             <Collapsible.Content>
               <Stack gap="md">
                 <Text as="p">
-                  Flux is alpha. APIs are evolving. Passing checks and measured
-                  components are evidence, not a blanket production-readiness
-                  guarantee.
+                  Flux is pre-stable. Lifecycle status varies by component, and
+                  APIs may still evolve. Passing checks and measured components
+                  are evidence, not a blanket production-readiness guarantee.
                 </Text>
                 <Link href="#trust">Review the actual trust evidence →</Link>
               </Stack>

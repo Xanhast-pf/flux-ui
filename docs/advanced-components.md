@@ -1,6 +1,6 @@
 # Advanced components
 
-These alpha families cover concrete documentation and showcase needs. They do
+These pre-stable families cover concrete documentation and showcase needs. They do
 not add an editor engine, chart runtime, audio graph, or data-fetching dependency
 to the core library. Their metadata selects an existing size class; the normal
 emitted-package budgets and first-baseline checks still apply.
