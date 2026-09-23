@@ -7,19 +7,19 @@ import type { DrawerPopupProps, DrawerRootProps } from "./Drawer.types.js";
 
 const drawerStyles: NativeModalStyles = {
   close,
-  description,
-  popup,
-  title,
   trigger,
+  description,
+  title,
+  popup,
 };
 
-function DrawerPopup({ side = "right", ...props }: DrawerPopupProps) {
-  return <NativeModal.Popup {...props} data-side={side} />;
-}
+const DrawerPopup = ({ side = "right", ...props }: DrawerPopupProps) => (
+  <NativeModal.Popup {...props} data-side={side} />
+);
 
-function DrawerRoot(props: DrawerRootProps) {
-  return <NativeModal.Root {...props} styles={drawerStyles} />;
-}
+const DrawerRoot = (props: DrawerRootProps) => (
+  <NativeModal.Root {...props} styles={drawerStyles} />
+);
 
 export const Drawer = {
   Close: NativeModal.Close,

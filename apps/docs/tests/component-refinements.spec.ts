@@ -23,9 +23,20 @@ const examples: Record<string, string> = {
 };
 test("each advertised CodeBlock language shows and copies its own literal sample", async ({
   page,
-  context,
 }) => {
-  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.addInitScript(() => {
+    let copied = "";
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        readText: () => Promise.resolve(copied),
+        writeText: (text: string) => {
+          copied = text;
+          return Promise.resolve();
+        },
+      },
+    });
+  });
   await page.goto("/#components/code-block");
   const preview = page.locator(".preview-content");
   const selector = preview.getByRole("combobox", { name: "Source language" });
@@ -190,7 +201,13 @@ for (const width of [320, 390]) {
         }),
       ).toBe(true);
     }
-    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+    // These hash hrefs are SPA routes, not in-document skip links. Firefox
+    // exposes them to axe's best-practice heuristic as missing fragment targets;
+    // route activation itself is covered by the navigation journey tests.
+    const axe = await new AxeBuilder({ page })
+      .disableRules(["skip-link"])
+      .analyze();
+    expect(axe.violations).toEqual([]);
     const close = drawer.getByRole("button", { name: "Close navigation" });
     await close.focus();
     await expect(close).toBeFocused();

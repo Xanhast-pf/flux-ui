@@ -56,7 +56,7 @@ type NativeModalContextValue = {
   setDialogNode: (node: HTMLDialogElement | null) => void;
   open: boolean;
   requestClose: () => void;
-  requestOpen: (returnFocusTarget?: HTMLElement) => void;
+  requestOpen: (returnFocusTarget: HTMLElement) => void;
   styles: NativeModalStyles;
   titleIds: string;
   registerPart: (kind: "title" | "description", id: string) => () => void;
@@ -175,37 +175,30 @@ function NativeModalRoot({
     if (nextOpen !== open) onOpenChange?.(nextOpen);
   }
 
-  function requestOpen(returnFocusTarget?: HTMLElement): void {
+  function requestOpen(returnFocusTarget: HTMLElement): void {
     if (restoreFocusFrameRef.current !== null) {
       dialogNode?.ownerDocument.defaultView?.cancelAnimationFrame(
         restoreFocusFrameRef.current,
       );
       restoreFocusFrameRef.current = null;
     }
-    if (returnFocusTarget !== undefined) {
-      previousFocusRef.current = returnFocusTarget;
-    }
+    previousFocusRef.current = returnFocusTarget;
     setOpen(true);
   }
 
   function requestClose(): void {
     // Native close()/method="dialog" can close the DOM before a controlled
     // owner accepts the request. Reconcile even when its open prop stays true.
-    if (controlledOpen === true && dialogNode !== null && !dialogNode.open)
+    if (controlledOpen && dialogNode !== null && !dialogNode.open)
       setNativeCloseRevision((revision) => revision + 1);
     setOpen(false);
   }
 
   useEffect(() => {
-    if (dialogNode === null) return;
+    if (!dialogNode) return;
     const document = dialogNode.ownerDocument;
     const view = document.defaultView;
     if (view === null) return;
-
-    const compatibleDialog = dialogNode as HTMLDialogElement & {
-      close?: () => void;
-      showModal?: () => void;
-    };
 
     if (open) {
       if (restoreFocusFrameRef.current !== null) {
@@ -213,6 +206,11 @@ function NativeModalRoot({
         restoreFocusFrameRef.current = null;
       }
       if (!dialogNode.open) {
+        const root = document.documentElement;
+        root.style.setProperty(
+          "--g",
+          view.innerWidth - root.clientWidth + "px",
+        );
         if (previousFocusRef.current === null) {
           previousFocusRef.current =
             document.activeElement instanceof view.HTMLElement
@@ -220,8 +218,8 @@ function NativeModalRoot({
               : null;
         }
 
-        if (typeof compatibleDialog.showModal === "function") {
-          compatibleDialog.showModal();
+        if (typeof dialogNode.showModal === "function") {
+          dialogNode.showModal();
         } else {
           dialogNode.setAttribute("open", "");
         }
@@ -230,8 +228,8 @@ function NativeModalRoot({
     }
 
     if (dialogNode.open) {
-      if (typeof compatibleDialog.close === "function") {
-        compatibleDialog.close();
+      if (typeof dialogNode.close === "function") {
+        dialogNode.close();
       } else {
         dialogNode.removeAttribute("open");
       }

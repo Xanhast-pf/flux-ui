@@ -36,6 +36,28 @@ test("forced colors preserve scene selection and keyboard-operable controls", as
   await expect(mute).toBeVisible();
   await mute.press("Space");
   await expect(mute).toHaveAttribute("aria-pressed", "true");
-  const results = await new AxeBuilder({ page }).analyze();
+  expect(
+    await page.locator("html").evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        accent: style.getPropertyValue("--flux-color-accent").trim(),
+        accentForeground: style
+          .getPropertyValue("--flux-color-accent-foreground")
+          .trim(),
+        canvas: style.getPropertyValue("--flux-color-canvas").trim(),
+        text: style.getPropertyValue("--flux-color-text").trim(),
+      };
+    }),
+  ).toEqual({
+    accent: "Highlight",
+    accentForeground: "HighlightText",
+    canvas: "Canvas",
+    text: "CanvasText",
+  });
+  // In forced-colors mode the OS owns contrast through system colors. Headless
+  // WebKit's synthetic Highlight palette is not a meaningful author-color audit.
+  const results = await new AxeBuilder({ page })
+    .disableRules(["color-contrast"])
+    .analyze();
   expect(results.violations).toEqual([]);
 });
