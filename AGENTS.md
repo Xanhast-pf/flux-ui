@@ -517,13 +517,14 @@ If the answer points away from a prop, do not add the prop.
 - Per-icon emitted runtime cost is enforced by \`pnpm flux size icons\`.
   Raise that budget only through an explicit architecture decision.
 
-- Flux Display is currently vector design source, not a production
-  body font. Keep the source framework-agnostic under
-  \`packages/identity/\` until the glyph set, spacing and optical
-  corrections are mature enough for font engineering.
+- Flux UI does not ship a custom typeface. Product UI continues to use the
+  existing semantic body and monospace font stacks from \`@flux-ui/tokens\`.
+  Adding a bundled or hosted font requires an explicit design, licensing,
+  delivery-size and browser-rendering decision.
 
-- Do not generate or commit binary font files until the vector
-  letterforms have been reviewed as a system.
+- Keep framework-agnostic brand-mark source under
+  \`packages/identity/brand/\`; public component runtime must not depend on
+  the private identity package.
 
 ## Styling and design tokens
 

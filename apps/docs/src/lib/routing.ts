@@ -16,7 +16,6 @@ export const navigationGroups = [
     items: [
       ["tokens", "Design tokens"],
       ["icons", "Icons"],
-      ["identity", "Brand & identity"],
     ],
   },
   {

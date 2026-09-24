@@ -7,8 +7,7 @@
       "@flux-ui/tokens": ["../../packages/tokens/src/index.ts"],
       "@flux-ui/tokens/*": ["../../packages/tokens/src/*"],
       "@flux-ui/icons": ["../../packages/icons/src/index.ts"],
-      "@flux-ui/icons/*": ["../../packages/icons/src/*.ts"],
-      "@flux-ui/identity": ["../../packages/identity/src/index.ts"]
+      "@flux-ui/icons/*": ["../../packages/icons/src/*.ts"]
     }
   },
   "include": [

@@ -25,7 +25,6 @@ modal tasks, not persistent documentation navigation.
 | `#components`        | Searchable catalog; does not mount every example            |
 | `#components/{slug}` | Lazy live preview, its actual source, API and usage notes   |
 | `#icons`             | Searchable public icon catalog                              |
-| `#identity`          | Logo downloads and Flux Display vector design source        |
 | `#tokens`            | Semantic tokens and resolved theme values                   |
 | `#install`           | Source checkout and development commands                    |
 | `#documentation`     | Task-oriented guides and FAQ                                |

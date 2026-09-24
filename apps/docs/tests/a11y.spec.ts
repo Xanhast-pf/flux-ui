@@ -44,7 +44,6 @@ for (const theme of ["light", "dark"] as const) {
     "overview",
     "components",
     "icons",
-    "identity",
     "playground",
     "tokens",
     "health",

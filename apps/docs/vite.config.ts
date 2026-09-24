@@ -69,13 +69,6 @@ export default defineConfig({
         ),
       },
       {
-        find: "@flux-ui/identity",
-        replacement: resolve(
-          import.meta.dirname,
-          "../../packages/identity/src/index.ts",
-        ),
-      },
-      {
         find: "@flux-ui/react",
         replacement: resolve(
           import.meta.dirname,

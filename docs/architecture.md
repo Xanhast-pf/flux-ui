@@ -14,26 +14,27 @@ semantic CSS variables   tree-shakeable SVG iconography
 consumer application
 ```
 
-`packages/tokens` owns shared semantic variables and default theme values. `packages/react` owns component behavior, composition, native semantics, and component-local Vanilla Extract styles. `packages/icons` is a separate public package so consumers can use Flux iconography without importing the component runtime. `packages/identity` holds framework-agnostic vector design source such as the Flux Display prototype and is private until those assets are mature enough to publish.
+`packages/tokens` owns shared semantic variables and default theme values. `packages/react` owns component behavior, composition, native semantics, and component-local Vanilla Extract styles. `packages/icons` is a separate public package so consumers can use Flux iconography without importing the component runtime. `packages/identity` is a private build-time home for brand asset source used by the mark generator; public runtime packages do not depend on it.
 
 No runtime CSS-in-JS engine is part of the core architecture. Theme changes should flow through CSS custom properties without forcing React rerenders.
 
 ## Development surfaces
 
 ```text
-                    packages/react
-                    packages/tokens
-                    packages/icons
-                   packages/identity
-                         │
-               ┌─────────┴─────────┐
-               ▼                   ▼
-          apps/storybook       apps/docs
-          isolated lab         real dogfood app
-               │                   │
-       states / a11y / DX     guides / examples /
-                              public GitHub Pages
+             packages/react
+             packages/tokens
+             packages/icons
+                    │
+          ┌─────────┴─────────┐
+          ▼                   ▼
+     apps/storybook       apps/docs
+     isolated lab         real dogfood app
+          │                   │
+  states / a11y / DX     guides / examples /
+                         public GitHub Pages
 ```
+
+`packages/identity/brand` is separate build-time source for generated mark assets. It does not participate in the application runtime dependency graph.
 
 ### `apps/storybook`
 

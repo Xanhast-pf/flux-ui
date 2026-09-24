@@ -27,7 +27,7 @@ The repository already enforces the same quality contracts intended for the matu
 
 ## Explore the workshop
 
-The public docs app is a real consumer of the public library, not just a health dashboard. It also contains an Identity lab for the original Flux icon set and the in-progress Flux Display vector alphabet. Explore a local release-room demo, save/filter/page through the collection lab, customize a button, switch theme/accent presets, search with Ctrl/Cmd+K, and open dedicated component pages with live previews, copyable source, API notes and measured size information.
+The public docs app is a real consumer of the public library, not just a health dashboard. Explore the original Flux icon set, a local release-room demo, the collection lab, component customization, theme/accent presets, Ctrl/Cmd+K search, and dedicated component pages with live previews, copyable source, API notes and measured size information.
 
 The component catalog does not mount every demo. Individual examples load on demand; the displayed code is imported from the same TSX source as the rendered preview. Search uses Flux Dialog; persistent documentation navigation uses the public non-modal Sidebar. It pushes content on wider screens and stacks above it on narrow screens, without closing on route changes. Drawer remains available for temporary modal tasks. Component pages use Breadcrumbs, Toggle and IconButton; loading examples use Skeleton and Spinner, and keyboard shortcuts remain available through Ctrl/Cmd+K. Existing health, size, performance, install and token deep links remain available; the legacy rules route opens Engineering.
 
@@ -213,7 +213,7 @@ import { SearchIcon, SparkIcon } from "@flux-ui/icons";
 
 Icons are generated from `packages/icons/icons.json`, use `currentColor`, and are decorative by default unless labelled. The dedicated `#icons` docs route browses the complete icon catalog by name, category, or intent metadata. `pnpm flux size icons` enforces a strict per-icon runtime budget.
 
-Flux Display currently lives as vector design source in `packages/identity/`; it is deliberately not shipped as a compiled font yet. The live `#identity` docs route renders the glyph geometry directly so the letterforms can be evaluated before font engineering. The renderer reserves optical padding around mitered glyph geometry and reports unsupported specimen characters instead of silently presenting the prototype as complete.
+Flux UI does not ship a custom typeface. Product typography continues to use the existing semantic font stacks from `@flux-ui/tokens`, so consumers do not download a Flux webfont.
 
 See [`docs/identity.md`](docs/identity.md) and [`docs/icons.md`](docs/icons.md).
 
@@ -226,7 +226,7 @@ apps/
 packages/
   react/                 public React components
   icons/                 original tree-shakeable Flux iconography
-  identity/              private vector identity/type design source
+  identity/              private brand asset source
   tokens/                semantic tokens + default theme variables
 docs/
   README.md              documentation index

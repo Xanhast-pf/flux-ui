@@ -238,8 +238,4 @@ test("uses the Flux identity mark in the docs shell", async ({ page }) => {
     "src",
     /flux-mark\.svg$/u,
   );
-  await page.goto("/#identity");
-  await expect(
-    page.getByRole("heading", { level: 1, name: "Drawn for the system." }),
-  ).toBeVisible();
 });

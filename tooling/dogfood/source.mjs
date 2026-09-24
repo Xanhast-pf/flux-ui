@@ -40,7 +40,7 @@ const svgTags = new Set([
   "use",
 ]);
 const permittedModules =
-  /^(?:react(?:-dom(?:\/client)?|\/jsx-(?:dev-)?runtime)?|axe-core|@flux-ui\/(?:react|identity|tokens|icons(?:\/catalog|\/[A-Za-z]+Icon)?|tokens\/(?:theme|palette|presets|reset)\.css))$/u;
+  /^(?:react(?:-dom(?:\/client)?|\/jsx-(?:dev-)?runtime)?|axe-core|@flux-ui\/(?:react|tokens|icons(?:\/catalog|\/[A-Za-z]+Icon)?|tokens\/(?:theme|palette|presets|reset)\.css))$/u;
 const privateModule =
   /(?:@flux-ui\/react\/|@flux-ui\/[^/]+\/src(?:\/|$)|(?:^|\/)packages\/[^/]+\/src(?:\/|$))/u;
 

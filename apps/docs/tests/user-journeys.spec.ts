@@ -16,7 +16,6 @@ for (const width of [320, 1280]) {
         "documentation",
         "components",
         "icons",
-        "identity",
         "playground",
       ]) {
         await page.goto(`/#${route}`);

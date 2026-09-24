@@ -1,7 +1,2 @@
-export {
-  fluxDisplayGlyphs,
-  getUnsupportedFluxDisplayCharacters,
-  fluxDisplayMetrics,
-  normalizeFluxDisplayText,
-  type FluxDisplayGlyph,
-} from "./flux-display.js";
+/** Private build-time home for Flux brand assets. No runtime exports. */
+export {};
