@@ -3,7 +3,7 @@ export default function Example() {
   return (
     <Breadcrumbs.Root aria-label="Example breadcrumb">
       <Breadcrumbs.List>
-        <Breadcrumbs.Item>
+        <Breadcrumbs.Item separator="›">
           <Breadcrumbs.Link href="#overview">Workshop</Breadcrumbs.Link>
         </Breadcrumbs.Item>
         <Breadcrumbs.Item>

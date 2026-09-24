@@ -6,7 +6,8 @@ export default {
   Preview,
   code,
   notes: [
-    "Badge is a non-interactive span. Use real buttons and links for actions.",
+    "Badge is a standalone non-interactive status label, not a count/dot overlay attached to another control.",
+    "Use real buttons and links for actions; compose overlay indicators separately rather than making Badge interactive.",
     "Meaningful text carries the status; color is supplementary.",
   ],
   props: [

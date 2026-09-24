@@ -7,6 +7,7 @@ export default {
   code,
   notes: [
     "Native multi-line text entry with Flux styling and Field composition.",
+    'Use style={{ fieldSizing: "content" }} when content-sized growth is appropriate; no measurement runtime is required.',
     "Use native attributes, className, style and composition for customization.",
   ],
   props: [

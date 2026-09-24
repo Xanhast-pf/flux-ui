@@ -257,6 +257,10 @@ export function createPublicContracts(root) {
         );
       } else if (hasDomEscapeHatches) {
         domPartCount += 1;
+        if (!part.ref)
+          errors.push(
+            `${familyName}: ${part.path} is DOM-backed and must expose ref.`,
+          );
         if (declaredController)
           errors.push(
             `${familyName}: ${part.path} is DOM-backed and must not be listed in nonDomParts.`,

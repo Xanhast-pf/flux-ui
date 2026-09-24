@@ -1281,6 +1281,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        stateModels: ["open"],
       },
     ],
   },

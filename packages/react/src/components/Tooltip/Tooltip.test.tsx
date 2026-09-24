@@ -32,6 +32,47 @@ describe("Tooltip", () => {
     await user.tab();
     expect(screen.getByRole("button", { name: "Next" })).toHaveFocus();
   });
+  it("supports controlled visibility without mutating owner state", async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    const renderTooltip = (open: boolean) => (
+      <Tooltip
+        content="Controlled help."
+        open={open}
+        onOpenChange={onOpenChange}
+      >
+        <button type="button">Controlled</button>
+      </Tooltip>
+    );
+    const { rerender } = render(renderTooltip(false));
+
+    await user.tab();
+    expect(onOpenChange).toHaveBeenLastCalledWith(true);
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+
+    rerender(renderTooltip(true));
+    expect(screen.getByRole("tooltip")).toBeVisible();
+    await user.keyboard("{Escape}");
+    expect(onOpenChange).toHaveBeenLastCalledWith(false);
+    expect(screen.getByRole("tooltip")).toBeVisible();
+
+    rerender(renderTooltip(false));
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+  });
+
+  it("can start open while keeping trigger-owned state", async () => {
+    const user = userEvent.setup();
+    render(
+      <Tooltip content="Initially visible." defaultOpen>
+        <button type="button">Help</button>
+      </Tooltip>,
+    );
+    expect(screen.getByRole("tooltip")).toBeVisible();
+    await user.tab();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+  });
+
   it("delays pointer opening and remains hoverable until both targets are left", async () => {
     vi.useFakeTimers();
     render(

@@ -14,6 +14,7 @@ import type {
   BreadcrumbsLinkProps,
   BreadcrumbsCurrentProps,
 } from "./Breadcrumbs.types.js";
+
 function BreadcrumbsRoot({
   className,
   "aria-label": label = "Breadcrumb",
@@ -27,11 +28,14 @@ function BreadcrumbsRoot({
     />
   );
 }
+
 function BreadcrumbsList({ className, ...props }: BreadcrumbsListProps) {
   return <ol {...props} className={joinClassNames(list, className)} />;
 }
+
 function BreadcrumbsItem({
   children,
+  separator: separatorContent = "/",
   className,
   ...props
 }: BreadcrumbsItemProps) {
@@ -39,11 +43,12 @@ function BreadcrumbsItem({
     <li {...props} className={joinClassNames(item, className)}>
       {children}
       <span aria-hidden="true" className={separator}>
-        /
+        {separatorContent}
       </span>
     </li>
   );
 }
+
 function BreadcrumbsLink({
   children,
   className,
@@ -55,6 +60,7 @@ function BreadcrumbsLink({
     </a>
   );
 }
+
 function BreadcrumbsCurrent({ className, ...props }: BreadcrumbsCurrentProps) {
   return (
     <span
@@ -64,6 +70,7 @@ function BreadcrumbsCurrent({ className, ...props }: BreadcrumbsCurrentProps) {
     />
   );
 }
+
 export const Breadcrumbs = {
   Root: BreadcrumbsRoot,
   List: BreadcrumbsList,

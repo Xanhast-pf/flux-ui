@@ -3,6 +3,6 @@
   "slug": "badge",
   "category": "Display",
   "status": "beta",
-  "description": "Compact, non-interactive status labels with semantic tones.",
+  "description": "Compact, standalone status labels with semantic tones; not an overlay counter.",
   "sizeClass": "primitive"
 }
