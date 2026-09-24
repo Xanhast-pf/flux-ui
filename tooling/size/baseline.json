@@ -110,8 +110,8 @@
         "externalImports": ["react", "react/jsx-runtime"]
       }
     },
-    "badge": {
-      "name": "Badge",
+    "status-badge": {
+      "name": "StatusBadge",
       "sizeClass": "primitive",
       "raw": 1446,
       "gzip": 859,

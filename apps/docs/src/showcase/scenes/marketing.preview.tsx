@@ -2,7 +2,7 @@ import { ArrowUpRightIcon, SparkIcon } from "@flux-ui/icons";
 import {
   Avatar,
   AvatarGroup,
-  Badge,
+  StatusBadge,
   Button,
   Card,
   Field,
@@ -26,9 +26,9 @@ export default function MarketingScene() {
   return (
     <Stack data-scene="marketing" gap={5} padding={5}>
       <SceneHeader brand="signal" context="Campaign studio">
-        <Badge tone={launched ? "success" : "neutral"}>
+        <StatusBadge tone={launched ? "success" : "neutral"}>
           {launched ? "Launched locally" : "Draft campaign"}
-        </Badge>
+        </StatusBadge>
       </SceneHeader>
       <Grid
         templateColumns={{

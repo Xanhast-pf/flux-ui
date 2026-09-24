@@ -1,5 +1,5 @@
 import {
-  Badge,
+  StatusBadge,
   Box,
   Button,
   Callout,
@@ -83,9 +83,9 @@ export function ReleaseRoom() {
                 Release room
               </Heading>
             </Stack>
-            <Badge tone={receipt ? "success" : "accent"}>
+            <StatusBadge tone={receipt ? "success" : "accent"}>
               {receipt ? "Demo complete" : "Interactive demo"}
-            </Badge>
+            </StatusBadge>
           </Inline>
           <Text as="p" variant="body" tone="muted">
             A tiny workspace made entirely from Flux pieces. Check things off.
@@ -229,8 +229,8 @@ export function ReleaseRoom() {
             <Collapsible.Trigger>What is this built with?</Collapsible.Trigger>
             <Collapsible.Content>
               <Text as="p" variant="body">
-                Card, Badge, Checkbox, Field, Input, Select, Slider, Switch,
-                Progress, Separator, Button, Collapsible and Dialog. No
+                Card, StatusBadge, Checkbox, Field, Input, Select, Slider,
+                Switch, Progress, Separator, Button, Collapsible and Dialog. No
                 application backend or external UI library.
               </Text>
             </Collapsible.Content>

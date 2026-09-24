@@ -1,5 +1,5 @@
 import {
-  Badge,
+  StatusBadge,
   Button,
   Card,
   Heading,
@@ -18,7 +18,7 @@ export default function Example() {
           <Heading level={2} size="md">
             Ship in small pieces.
           </Heading>
-          <Badge tone="accent">Composed</Badge>
+          <StatusBadge tone="accent">Composed</StatusBadge>
         </Inline>
         <Text as="p" variant="body">
           Cards provide the surface. Your content supplies the meaning.

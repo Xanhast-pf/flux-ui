@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 import { renderToString } from "react-dom/server";
 import { bench, describe } from "vitest";
-import { Badge } from "./Badge.js";
+import { StatusBadge } from "./StatusBadge.js";
 const ids = Array.from({ length: 1000 }, (_, index) => `sample-${index}`);
-describe("Badge SSR", () => {
+describe("StatusBadge SSR", () => {
   bench("native 1,000 instances", () => {
     renderToString(
       <>
@@ -20,7 +20,7 @@ describe("Badge SSR", () => {
       <>
         {ids.map((id) => (
           <Fragment key={id}>
-            <Badge tone="success">Ready to ship</Badge>
+            <StatusBadge tone="success">Ready to ship</StatusBadge>
           </Fragment>
         ))}
       </>,

@@ -10,7 +10,7 @@ export default {
   prompt: "Rewrite the headline. Pick an audience. Launch your local campaign.",
   components: [
     "avatar",
-    "badge",
+    "status-badge",
     "box",
     "button",
     "card",

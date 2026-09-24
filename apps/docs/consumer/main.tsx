@@ -5,7 +5,7 @@ import { FluxMarkIcon } from "@flux-ui/icons";
 import {
   Avatar,
   AspectRatio,
-  Badge,
+  StatusBadge,
   CodeBlock,
   Chart,
   DataTable,
@@ -308,9 +308,9 @@ function Consumer() {
               <Toggle hidden data-hidden-contract="toggle">
                 Hidden toggle
               </Toggle>
-              <Badge hidden data-hidden-contract="badge">
+              <StatusBadge hidden data-hidden-contract="status-badge">
                 <Button>Hidden badge child</Button>
-              </Badge>
+              </StatusBadge>
               <Kbd hidden data-hidden-contract="kbd">
                 <Button>Hidden keyboard child</Button>
               </Kbd>

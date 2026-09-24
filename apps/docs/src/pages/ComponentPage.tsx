@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@flux-ui/icons";
 import {
-  Badge,
+  StatusBadge,
   Box,
   Breadcrumbs,
   Callout,
@@ -90,8 +90,8 @@ function ComponentDetail({
       </Breadcrumbs.Root>
       <PageHeader title={<>{entry.name}</>}>
         <Inline gap="sm" wrap>
-          <Badge>{entry.category}</Badge>
-          <Badge tone="accent">{entry.status}</Badge>
+          <StatusBadge>{entry.category}</StatusBadge>
+          <StatusBadge tone="accent">{entry.status}</StatusBadge>
         </Inline>
         <Text as="p" variant="lead" tone="muted">
           {entry.description}

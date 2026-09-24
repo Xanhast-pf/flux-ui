@@ -1,6 +1,6 @@
 {
-  "name": "Badge",
-  "slug": "badge",
+  "name": "StatusBadge",
+  "slug": "status-badge",
   "category": "Display",
   "status": "beta",
   "description": "Compact, standalone status labels with semantic tones; not an overlay counter.",

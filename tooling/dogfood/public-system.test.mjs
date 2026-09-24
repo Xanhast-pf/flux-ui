@@ -9,7 +9,7 @@ test("display-owning primitives preserve hidden and until-found locally", async 
     "packages/react/src/internal/flexLayout.css.ts",
     "packages/react/src/internal/actionButtonStyles.ts",
     "packages/react/src/components/AspectRatio/AspectRatio.css.ts",
-    "packages/react/src/components/Badge/Badge.css.ts",
+    "packages/react/src/components/StatusBadge/StatusBadge.css.ts",
     "packages/react/src/components/Breadcrumbs/Breadcrumbs.css.ts",
     "packages/react/src/components/Kbd/Kbd.css.ts",
     "packages/react/src/components/Skeleton/Skeleton.css.ts",

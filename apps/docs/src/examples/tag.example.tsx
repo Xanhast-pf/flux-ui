@@ -8,7 +8,7 @@ export default {
   notes: [
     "A removable tag requires both onRemove and a specific removeLabel.",
     "The owner removes the item and manages focus after removal; Tag does not invent collection or arrow-key behavior.",
-    "Use Badge for a passive status, Tag for a compact removable label, and a future token-input pattern for text entry into a collection.",
+    "Use StatusBadge for a passive status, Tag for a compact removable label, and a future token-input pattern for text entry into a collection.",
   ],
   props: [
     ["tone", "neutral | accent", "Semantic appearance."],

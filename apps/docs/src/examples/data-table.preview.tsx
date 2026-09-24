@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import {
-  Badge,
+  StatusBadge,
   DataTable,
   Field,
   Select,
@@ -21,7 +21,9 @@ const columns: readonly DataColumn<Row>[] = [
     id: "status",
     header: "Status",
     value: (row) => (row.active ? "Active" : "Paused"),
-    renderCell: (row) => <Badge>{row.active ? "Active" : "Paused"}</Badge>,
+    renderCell: (row) => (
+      <StatusBadge>{row.active ? "Active" : "Paused"}</StatusBadge>
+    ),
   },
 ];
 const getRowId = (row: Row) => row.id;
