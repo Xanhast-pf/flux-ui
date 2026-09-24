@@ -74,15 +74,6 @@ export const health = {
         budgetBrotli: 1536,
       },
       {
-        name: "Badge",
-        slug: "badge",
-        sizeClass: "primitive",
-        raw: 1446,
-        gzip: 859,
-        brotli: 732,
-        budgetBrotli: 1536,
-      },
-      {
         name: "Box",
         slug: "box",
         sizeClass: "primitive",
@@ -549,6 +540,15 @@ export const health = {
         gzip: 3322,
         brotli: 2774,
         budgetBrotli: 8192,
+      },
+      {
+        name: "StatusBadge",
+        slug: "status-badge",
+        sizeClass: "primitive",
+        raw: 1446,
+        gzip: 859,
+        brotli: 732,
+        budgetBrotli: 1536,
       },
       {
         name: "Switch",

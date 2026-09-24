@@ -1,5 +1,5 @@
 import {
-  Badge,
+  StatusBadge,
   Callout,
   Card,
   Code,
@@ -154,7 +154,7 @@ export function TrustPage() {
             )}
             {evidence !== null && (
               <>
-                <Badge
+                <StatusBadge
                   tone={
                     matchingBuild && evidence.status === "passed"
                       ? "accent"
@@ -164,7 +164,7 @@ export function TrustPage() {
                   {matchingBuild
                     ? `CI reported ${evidence.status}`
                     : "Unverified or different build"}
-                </Badge>
+                </StatusBadge>
                 {!matchingBuild && (
                   <Callout tone="warning">
                     This artifact is local or does not match the displayed build

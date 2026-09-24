@@ -1,5 +1,5 @@
 import {
-  Badge,
+  StatusBadge,
   Card,
   EmptyState,
   Grid,
@@ -69,7 +69,7 @@ export function ComponentsPage() {
                     <Card key={item.slug}>
                       <Stack gap="md">
                         <Inline justify="between" wrap>
-                          <Badge>{item.category}</Badge>
+                          <StatusBadge>{item.category}</StatusBadge>
                           <Text tone="muted">{item.status}</Text>
                         </Inline>
                         <Heading level={2} size="lg">

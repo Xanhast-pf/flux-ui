@@ -1,5 +1,5 @@
 import {
-  Badge,
+  StatusBadge,
   Box,
   Button,
   Card,
@@ -36,7 +36,7 @@ function ColorToken({ variable }: { variable: string }) {
             <Text as="strong" weight="bold">
               {variable.replace("--flux-color-", "").replaceAll("-", " ")}
             </Text>
-            <Badge>{value}</Badge>
+            <StatusBadge>{value}</StatusBadge>
           </Inline>
           <Code>{variable}</Code>
           <Button

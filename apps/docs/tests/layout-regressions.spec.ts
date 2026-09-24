@@ -48,7 +48,14 @@ for (const width of [768, 1440]) {
     await expectNoOverflow(page);
   });
 }
-for (const slug of ["badge", "card", "input", "link", "grid", "skip-link"]) {
+for (const slug of [
+  "status-badge",
+  "card",
+  "input",
+  "link",
+  "grid",
+  "skip-link",
+]) {
   test(`${slug} preview stays centered at full and compact widths`, async ({
     page,
   }) => {
@@ -71,7 +78,7 @@ for (const slug of ["badge", "card", "input", "link", "grid", "skip-link"]) {
         Math.abs(rect.x + rect.width / 2 - stage.x - stage.width / 2),
       ).toBeLessThan(1);
       expect(rect.width).toBeLessThanOrEqual(compact ? 385 : 705);
-      if (slug === "badge" || slug === "input" || slug === "link") {
+      if (slug === "status-badge" || slug === "input" || slug === "link") {
         const child = await preview.locator(":scope > *").first().boundingBox();
         if (child === null) throw new Error("Demo geometry is unavailable.");
         expect(

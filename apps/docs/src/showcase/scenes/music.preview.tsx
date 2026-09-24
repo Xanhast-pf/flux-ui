@@ -1,6 +1,6 @@
 import {
   AlertDialog,
-  Badge,
+  StatusBadge,
   DropdownMenu,
   Tabs,
   Textarea,
@@ -154,9 +154,9 @@ function MusicWorkspace() {
       <Stack data-scene="music" gap={5} padding={5}>
         <SceneHeader brand="afterhours" context="Somewhere, after midnight">
           <Inline wrap gap="sm">
-            <Badge tone={dirty ? "warning" : "success"}>
+            <StatusBadge tone={dirty ? "warning" : "success"}>
               {dirty ? "Unsaved local changes" : "Checkpoint current"}
-            </Badge>
+            </StatusBadge>
             <DropdownMenu.Root>
               <DropdownMenu.Trigger size="sm" variant="outline" tone="neutral">
                 Session actions

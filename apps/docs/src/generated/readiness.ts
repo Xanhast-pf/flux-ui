@@ -3,12 +3,12 @@ export const readiness = {
   summary: {
     total: 70,
     status: {
-      alpha: 1,
-      beta: 69,
+      alpha: 0,
+      beta: 70,
       stable: 0,
     },
     eligibleForBetaReview: 70,
-    eligibleForStableReview: 69,
+    eligibleForStableReview: 70,
     blocked: 0,
     browserCatalogCoverage: true,
     accessibilityCatalogCoverage: true,
@@ -41,14 +41,6 @@ export const readiness = {
     {
       name: "Avatar",
       slug: "avatar",
-      status: "beta",
-      eligibleForBetaReview: true,
-      eligibleForStableReview: true,
-      blockers: [],
-    },
-    {
-      name: "Badge",
-      slug: "badge",
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,
@@ -225,9 +217,9 @@ export const readiness = {
     {
       name: "Footer",
       slug: "footer",
-      status: "alpha",
+      status: "beta",
       eligibleForBetaReview: true,
-      eligibleForStableReview: false,
+      eligibleForStableReview: true,
       blockers: [],
     },
     {
@@ -465,6 +457,14 @@ export const readiness = {
     {
       name: "Stat",
       slug: "stat",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "StatusBadge",
+      slug: "status-badge",
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,

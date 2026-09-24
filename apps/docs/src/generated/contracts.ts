@@ -104,18 +104,6 @@ export const publicContracts = [
     ],
   },
   {
-    name: "Badge",
-    slug: "badge",
-    parts: [
-      {
-        path: "Badge",
-        kind: "dom",
-        escapeHatches: ["className", "style", "ref"],
-        cssVariables: [],
-      },
-    ],
-  },
-  {
     name: "Box",
     slug: "box",
     parts: [
@@ -1034,6 +1022,18 @@ export const publicContracts = [
     parts: [
       {
         path: "Stat",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
+    name: "StatusBadge",
+    slug: "status-badge",
+    parts: [
+      {
+        path: "StatusBadge",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],

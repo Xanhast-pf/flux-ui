@@ -5,7 +5,7 @@ import {
   type IconCategory,
 } from "@flux-ui/icons/catalog";
 import {
-  Badge,
+  StatusBadge,
   Box,
   Card,
   EmptyState,
@@ -221,7 +221,7 @@ export function IconsPage() {
                 </Stack>
                 <Inline gap="xs" wrap>
                   {selectedEntry.keywords.map((keyword) => (
-                    <Badge key={keyword}>{keyword}</Badge>
+                    <StatusBadge key={keyword}>{keyword}</StatusBadge>
                   ))}
                 </Inline>
                 <CodeBlock

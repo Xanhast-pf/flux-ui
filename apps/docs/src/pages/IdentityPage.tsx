@@ -15,7 +15,7 @@ import {
   getUnsupportedFluxDisplayCharacters,
 } from "@flux-ui/identity";
 import {
-  Badge,
+  StatusBadge,
   Box,
   Card,
   Field,
@@ -67,10 +67,10 @@ export function IdentityPage() {
             </Text>
           </Inline>
           <Inline gap="sm" wrap>
-            <Badge tone="accent">64 original icons</Badge>
-            <Badge>20 × 20 icon grid</Badge>
-            <Badge>{drawnGlyphCount} display glyphs</Badge>
-            <Badge>vector design source</Badge>
+            <StatusBadge tone="accent">64 original icons</StatusBadge>
+            <StatusBadge>20 × 20 icon grid</StatusBadge>
+            <StatusBadge>{drawnGlyphCount} display glyphs</StatusBadge>
+            <StatusBadge>vector design source</StatusBadge>
           </Inline>
         </Stack>
       </Card>

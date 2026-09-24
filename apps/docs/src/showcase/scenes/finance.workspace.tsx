@@ -1,7 +1,7 @@
 import { SearchIcon } from "@flux-ui/icons";
 import {
   Avatar,
-  Badge,
+  StatusBadge,
   Button,
   Callout,
   Card,
@@ -110,7 +110,7 @@ export function FinanceTransactions({ workspace }: { workspace: Workspace }) {
       id: "status",
       header: "Status",
       value: (row) => row.status,
-      renderCell: (row) => <Badge>{row.status}</Badge>,
+      renderCell: (row) => <StatusBadge>{row.status}</StatusBadge>,
     },
     {
       id: "reviewed",
@@ -604,7 +604,7 @@ export function FinanceTeam() {
                   </Table.RowHeader>
                   <Table.Cell>{person.role}</Table.Cell>
                   <Table.Cell>
-                    <Badge>{person.status}</Badge>
+                    <StatusBadge>{person.status}</StatusBadge>
                   </Table.Cell>
                 </Table.Row>
               ))}

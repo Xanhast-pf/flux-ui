@@ -1,6 +1,6 @@
 import { cssVars } from "@flux-ui/tokens";
 import { style } from "@vanilla-extract/css";
-export const badge = style({
+export const statusBadge = style({
   display: "inline-flex",
   alignItems: "center",
   gap: `var(${cssVars.space[1]})`,

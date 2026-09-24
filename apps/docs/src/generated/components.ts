@@ -36,15 +36,6 @@ export const components = [
     sizeClass: "primitive",
   },
   {
-    name: "Badge",
-    slug: "badge",
-    category: "Display",
-    status: "beta",
-    description:
-      "Compact, standalone status labels with semantic tones; not an overlay counter.",
-    sizeClass: "primitive",
-  },
-  {
     name: "Box",
     slug: "box",
     category: "Layout",
@@ -234,7 +225,7 @@ export const components = [
     name: "Footer",
     slug: "footer",
     category: "Layout",
-    status: "alpha",
+    status: "beta",
     description:
       "Semantic page footer that settles at the bottom of flex-column layouts.",
     sizeClass: "primitive",
@@ -500,6 +491,15 @@ export const components = [
     status: "beta",
     description: "A semantic label, value and supporting-note recipe.",
     sizeClass: "composite",
+  },
+  {
+    name: "StatusBadge",
+    slug: "status-badge",
+    category: "Display",
+    status: "beta",
+    description:
+      "Compact, standalone status labels with semantic tones; not an overlay counter.",
+    sizeClass: "primitive",
   },
   {
     name: "Switch",

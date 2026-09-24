@@ -2,7 +2,7 @@ import {
   Accordion,
   AspectRatio,
   Avatar,
-  Badge,
+  StatusBadge,
   Card,
   Grid,
   Heading,
@@ -46,7 +46,7 @@ const projects = [
     initials: "DT",
     category: "Communication",
     detail: "A little more breathing room for messages.",
-    component: "badge",
+    component: "status-badge",
   },
   {
     id: "focus",
@@ -160,7 +160,9 @@ export function CollectionLab() {
             Collection lab
           </Heading>
         </Stack>
-        <Badge tone="accent">{saved.length} saved this session</Badge>
+        <StatusBadge tone="accent">
+          {saved.length} saved this session
+        </StatusBadge>
       </Inline>
       <Text as="p" variant="body" tone="muted">
         Search, save, change the layout, and explore another page. This is
@@ -267,7 +269,7 @@ export function CollectionLab() {
                   </AspectRatio>
                   <Stack gap="md" padding="md">
                     <Inline justify="between" wrap>
-                      <Badge>{project.category}</Badge>
+                      <StatusBadge>{project.category}</StatusBadge>
                       <Toggle
                         pressed={saved.includes(project.id)}
                         aria-label={`Save ${project.title}`}

@@ -11,7 +11,7 @@ export default {
     "Explore Transactions and Team. Filter the ledger, edit a note, or record a local invitation.",
   components: [
     "avatar",
-    "badge",
+    "status-badge",
     "box",
     "button",
     "callout",

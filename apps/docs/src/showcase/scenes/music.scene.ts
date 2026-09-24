@@ -11,7 +11,7 @@ export default {
     "Inspect a track. Adjust its gain or pan. Save a checkpoint, then compare, restore or export UI settings.",
   components: [
     "alert-dialog",
-    "badge",
+    "status-badge",
     "box",
     "button",
     "card",
