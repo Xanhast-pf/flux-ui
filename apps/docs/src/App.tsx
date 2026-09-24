@@ -99,11 +99,6 @@ const IconsPage = lazy(() =>
     default: module.IconsPage,
   })),
 );
-const IdentityPage = lazy(() =>
-  import("./pages/IdentityPage.js").then((module) => ({
-    default: module.IdentityPage,
-  })),
-);
 function RouteView({ route }: { route: string }) {
   if (route.startsWith("components/"))
     return (
@@ -174,18 +169,6 @@ function RouteView({ route }: { route: string }) {
           }
         >
           <IconsPage />
-        </Suspense>
-      );
-    case "identity":
-      return (
-        <Suspense
-          fallback={
-            <Text as="p" variant="body" tone="muted">
-              Loading identity lab…
-            </Text>
-          }
-        >
-          <IdentityPage />
         </Suspense>
       );
     case "tokens":

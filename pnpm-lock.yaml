@@ -163,9 +163,6 @@ importers:
       "@flux-ui/icons":
         specifier: workspace:*
         version: link:../../packages/icons
-      "@flux-ui/identity":
-        specifier: workspace:*
-        version: link:../../packages/identity
       "@flux-ui/react":
         specifier: workspace:*
         version: link:../../packages/react

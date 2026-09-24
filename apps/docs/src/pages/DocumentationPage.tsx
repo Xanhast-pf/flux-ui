@@ -27,7 +27,6 @@ const guides = [
     links: [
       ["#tokens", "Tokens and themes"],
       ["#icons", "Icon browser"],
-      ["#identity", "Brand assets and display prototype"],
     ],
   },
   {

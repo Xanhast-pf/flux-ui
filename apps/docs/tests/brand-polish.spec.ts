@@ -66,23 +66,22 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(trigger).toBeFocused();
   });
 }
-test("brand SVG downloads are vectors and the favicon resolves", async ({
+test("brand SVG assets are vectors and the favicon resolves", async ({
   page,
 }) => {
-  await page.goto("/#identity");
-  await expect(
-    page.getByRole("heading", { name: "The ribbon F." }),
-  ).toBeVisible();
-  for (const name of ["Download SVG", "App icon SVG", "Monochrome SVG"]) {
-    const link = page.getByRole("link", { name, exact: true });
-    const href = await link.getAttribute("href");
-    if (!href) throw new Error("Missing brand asset URL.");
-    const response = await page.request.get(new URL(href, page.url()).href);
+  await page.goto("/");
+  for (const file of [
+    "flux-mark.svg",
+    "flux-app-icon.svg",
+    "flux-mark-mono.svg",
+  ]) {
+    const response = await page.request.get(new URL(file, page.url()).href);
     expect(response.ok()).toBe(true);
     const svg = await response.text();
     expect(svg).toContain('<svg xmlns="http://www.w3.org/2000/svg"');
     expect(svg.match(/<path /gu)).toHaveLength(3);
-    expect(svg).not.toMatch(/<image|<script|<foreignObject|data:image/u);
+    const forbidden = ["<image", "<script", "<foreignObject", "data:image"];
+    for (const marker of forbidden) expect(svg).not.toContain(marker);
   }
   const favicon = await page.locator('link[rel="icon"]').getAttribute("href");
   if (!favicon) throw new Error("Missing favicon.");

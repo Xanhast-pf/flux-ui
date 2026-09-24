@@ -406,7 +406,6 @@ for (const width of [320, 390, 768, 1440]) {
       "components",
       "components/table",
       "icons",
-      "identity",
       "playground",
       "tokens",
       "size",
@@ -429,7 +428,6 @@ for (const route of [
   "rules",
   "install",
   "icons",
-  "identity",
   "tokens",
   "documentation",
 ]) {
@@ -781,24 +779,4 @@ test("icons browser searches intent metadata and changes its presentation", asyn
     "data-view",
     "list",
   );
-});
-
-test("identity lab redraws Flux Display and reports unsupported glyphs", async ({
-  page,
-}) => {
-  await page.goto("/#identity");
-  await expect(
-    page.getByRole("heading", { level: 1, name: "Drawn for the system." }),
-  ).toBeVisible();
-  const specimen = page.getByLabel("Specimen", { exact: true });
-  await specimen.fill("Build lighter");
-  await expect(page.locator(".display-specimen")).toHaveAttribute(
-    "aria-label",
-    "BUILD LIGHTER",
-  );
-  await specimen.fill("Café");
-  await expect(page.getByRole("status")).toContainText("Not drawn yet: É");
-  await expect(
-    page.getByRole("link", { name: /Browse all icons/ }),
-  ).toHaveAttribute("href", "#icons");
 });

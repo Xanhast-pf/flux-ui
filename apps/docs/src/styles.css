@@ -33,42 +33,6 @@
   transform: rotate(-20deg);
   pointer-events: none;
 }
-.identity-hero {
-  position: relative;
-  overflow: hidden;
-  background:
-    linear-gradient(135deg, var(--flux-color-accent-soft), transparent 62%),
-    var(--flux-color-surface);
-}
-.identity-hero::after {
-  content: "";
-  position: absolute;
-  inline-size: 12rem;
-  block-size: 12rem;
-  inset-inline-end: -4rem;
-  inset-block-end: -6rem;
-  border: 0.0625rem solid var(--flux-color-accent);
-  border-radius: 50%;
-  opacity: 0.35;
-  pointer-events: none;
-}
-.display-stage {
-  background-image:
-    linear-gradient(var(--flux-color-border) 0.0625rem, transparent 0.0625rem),
-    linear-gradient(
-      90deg,
-      var(--flux-color-border) 0.0625rem,
-      transparent 0.0625rem
-    );
-  background-size: 1rem 1rem;
-}
-.display-specimen,
-.alphabet-specimen svg {
-  display: block;
-  inline-size: 100%;
-  max-inline-size: 100%;
-  block-size: auto;
-}
 .lab-surface:empty {
   display: none;
 }
@@ -84,16 +48,11 @@
   display: block;
 }
 @media (forced-colors: active) {
-  .collection-art,
-  .identity-hero,
-  .display-stage {
+  .collection-art {
     background: Canvas;
   }
   .collection-art::before {
     border-color: Highlight;
-  }
-  .identity-hero::after {
-    display: none;
   }
 }
 
