@@ -94,16 +94,30 @@ test("overlays are accessible while open", async ({ page }) => {
   await expectNoViolations(page, "dialog[open]", modalWcagTags);
 });
 for (const theme of ["light", "dark"] as const) {
-  for (const accent of ["teal", "rose"] as const) {
-    test(`${accent} workshop preset stays accessible in ${theme}`, async ({
+  for (const palette of [
+    "slate",
+    "indigo",
+    "blue",
+    "cyan",
+    "teal",
+    "emerald",
+    "green",
+    "lime",
+    "amber",
+    "orange",
+    "rose",
+    "violet",
+    "fuchsia",
+  ] as const) {
+    test(`${palette} workshop preset stays accessible in ${theme}`, async ({
       page,
     }) => {
       await page.addInitScript(
         (value) => {
           window.localStorage.setItem("flux-ui-theme", value.theme);
-          window.localStorage.setItem("flux-ui-docs-accent", value.accent);
+          window.localStorage.setItem("flux-ui-docs-palette", value.palette);
         },
-        { theme, accent },
+        { theme, palette },
       );
       await page.goto("/");
       await expectNoViolations(page);

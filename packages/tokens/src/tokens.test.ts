@@ -1,12 +1,33 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { breakpoints, primitiveTokens } from "./index.js";
+import { breakpoints, paletteVars, primitiveTokens } from "./index.js";
 
 const SPATIAL_UNIT_REM = 0.25;
 const MIN_TEXT_CONTRAST = 4.5;
 const MIN_FOCUS_CONTRAST = 3;
 
 const themeCss = readFileSync(new URL("./theme.css", import.meta.url), "utf8");
+const paletteCss = readFileSync(
+  new URL("./palette.css", import.meta.url),
+  "utf8",
+);
+const presetsCss = readFileSync(
+  new URL("./presets.css", import.meta.url),
+  "utf8",
+);
+const paletteSteps = [
+  "50",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+  "950",
+] as const;
 
 function remValue(value: string): number {
   const match = /^(\d+(?:\.\d+)?)rem$/.exec(value);
@@ -251,3 +272,73 @@ describe.each(["light", "dark"] as const)(
     });
   },
 );
+
+function paletteHex(family: string, step: string): string {
+  const variable = `--flux-palette-${family}-${step}`;
+  const match = new RegExp(`${variable}:\\s*(#[0-9a-f]{6});`, "i").exec(
+    paletteCss,
+  );
+  if (match?.[1] === undefined) {
+    throw new Error(`Missing ${variable}.`);
+  }
+  return match[1];
+}
+
+describe("Flux raw palette contract", () => {
+  it("publishes complete CSS ramps for every exported palette family", () => {
+    const families = Object.entries(paletteVars);
+    expect(families.length).toBeGreaterThanOrEqual(12);
+
+    for (const [family, ramp] of families) {
+      expect(Object.keys(ramp), family).toEqual(paletteSteps);
+      for (const variable of Object.values(ramp)) {
+        expect(paletteCss, `${family} is missing ${variable}`).toMatch(
+          new RegExp(`${variable}:\\s*#[0-9a-f]{6};`, "i"),
+        );
+      }
+    }
+  });
+
+  it("provides every palette binding plus shared light and dark mappings", () => {
+    for (const family of Object.keys(paletteVars)) {
+      expect(presetsCss).toContain(`[data-flux-palette="${family}"]`);
+    }
+    for (const theme of ["light", "dark"]) {
+      expect(presetsCss).toContain(
+        `[data-flux-theme="${theme}"][data-flux-palette]`,
+      );
+    }
+  });
+
+  it("keeps every selectable palette readable at its semantic anchor steps", () => {
+    for (const family of Object.keys(paletteVars)) {
+      const lightAccent = paletteHex(family, "700");
+      const lightHover = paletteHex(family, "800");
+      const lightSoft = paletteHex(family, "100");
+      const lightFocus = paletteHex(family, "600");
+      const darkAccent = paletteHex(family, "300");
+      const darkForeground = paletteHex(family, "950");
+
+      expect(
+        contrast(lightAccent, "#ffffff"),
+        `${family} solid`,
+      ).toBeGreaterThanOrEqual(MIN_TEXT_CONTRAST);
+      expect(
+        contrast(lightHover, "#ffffff"),
+        `${family} hover`,
+      ).toBeGreaterThanOrEqual(MIN_TEXT_CONTRAST);
+      expect(
+        contrast(lightAccent, lightSoft),
+        `${family} soft`,
+      ).toBeGreaterThanOrEqual(MIN_TEXT_CONTRAST);
+      expect(
+        contrast(lightFocus, "#ffffff"),
+        `${family} focus`,
+      ).toBeGreaterThanOrEqual(MIN_FOCUS_CONTRAST);
+      expect(
+        contrast(darkAccent, darkForeground),
+        `${family} dark solid`,
+      ).toBeGreaterThanOrEqual(MIN_TEXT_CONTRAST);
+    }
+  });
+});

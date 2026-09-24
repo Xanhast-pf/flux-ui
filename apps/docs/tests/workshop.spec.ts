@@ -93,7 +93,9 @@ test("preferences persist and previews reset without resetting the theme", async
   await page.goto("/#playground");
   await page.locator(".workbench-section summary").click();
   await page.getByRole("tab", { name: "Theme lab", exact: true }).click();
-  await page.getByRole("radio", { name: "teal", exact: true }).check();
+  await page
+    .getByRole("combobox", { name: "Theme palette", exact: true })
+    .selectOption("teal");
   await page
     .getByRole("button", { name: "Toggle navigation", exact: true })
     .click();
@@ -103,7 +105,7 @@ test("preferences persist and previews reset without resetting the theme", async
     .check();
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute(
-    "data-docs-accent",
+    "data-flux-palette",
     "teal",
   );
   await expect(page.locator("html")).toHaveAttribute("data-flux-theme", "dark");
@@ -120,8 +122,65 @@ test("preferences persist and previews reset without resetting the theme", async
     .click();
   await expect(control).toBeChecked();
   await expect(page.locator("html")).toHaveAttribute(
-    "data-docs-accent",
+    "data-flux-palette",
     "teal",
+  );
+});
+
+test("theme palette updates the whole site and exposes raw CSS variables", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText: (text: string) => {
+          window.localStorage.setItem("palette-clipboard-test", text);
+          return Promise.resolve();
+        },
+      },
+    });
+  });
+  await page.goto("/#tokens");
+
+  const palette = page.getByRole("combobox", {
+    name: "Theme palette",
+    exact: true,
+  });
+  await expect(palette.locator("option")).toHaveCount(13);
+  await palette.selectOption("rose");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-palette",
+    "rose",
+  );
+
+  const swatch = page.getByRole("button", {
+    name: "Copy --flux-palette-rose-500",
+    exact: true,
+  });
+  await swatch.hover();
+  await expect(
+    page.getByRole("tooltip").filter({ hasText: "--flux-palette-rose-500" }),
+  ).toBeVisible();
+  await swatch.click();
+  await expect(page.getByRole("status")).toContainText(
+    "Copied --flux-palette-rose-500.",
+  );
+  expect(
+    await page.evaluate(() =>
+      window.localStorage.getItem("palette-clipboard-test"),
+    ),
+  ).toBe("var(--flux-palette-rose-500)");
+
+  await page.goto("/#components/button");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-palette",
+    "rose",
+  );
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-palette",
+    "rose",
   );
 });
 

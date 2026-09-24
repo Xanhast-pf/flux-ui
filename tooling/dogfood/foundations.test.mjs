@@ -28,7 +28,7 @@ test("all optional palettes declare the complete semantic color contract", () =>
     assert.match(block, /--flux-font-body:/u);
   }
 });
-test("forced-color mapping is centralized and wins over docs accent selectors", () => {
+test("forced-color mapping is centralized and palette presets stand down", () => {
   const forced = theme.slice(theme.indexOf("@media (forced-colors: active)"));
   assert.match(
     forced,
@@ -36,6 +36,17 @@ test("forced-color mapping is centralized and wins over docs accent selectors", 
   );
   for (const variable of colors)
     assert.ok(forced.includes(`${variable}:`), variable);
+  const paletteMapping = presets.slice(
+    presets.indexOf("@media (forced-colors: none)"),
+  );
+  assert.match(
+    paletteMapping,
+    /\[data-flux-theme="light"\]\[data-flux-palette\]/u,
+  );
+  assert.match(
+    paletteMapping,
+    /\[data-flux-theme="dark"\]\[data-flux-palette\]/u,
+  );
 });
 test("container layout has an explicit viewport opt-out and static instance resets", () => {
   const result = responsiveStyle({
