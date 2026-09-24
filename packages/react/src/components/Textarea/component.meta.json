@@ -3,6 +3,6 @@
   "slug": "textarea",
   "category": "Inputs",
   "status": "beta",
-  "description": "Styled native multi-line text control that preserves browser semantics, attributes, and refs.",
+  "description": "Styled native multi-line text control with platform field-sizing support through standard style props.",
   "sizeClass": "primitive"
 }

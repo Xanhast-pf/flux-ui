@@ -32,6 +32,15 @@ test("public component contracts derive from the TypeScript export surface", () 
   );
   assert.deepEqual(controllerPaths, declaredControllers.sort());
 
+  const domParts = contracts.flatMap((contract) =>
+    contract.parts.filter((part) => part.kind === "dom"),
+  );
+  assert.ok(domParts.length > 0);
+  assert.equal(
+    domParts.every((part) => part.escapeHatches.includes("ref")),
+    true,
+  );
+
   const slider = contracts.find((contract) => contract.name === "Slider");
   assert.ok(slider);
   assert.deepEqual(slider.parts[0].cssVariables, [

@@ -13,3 +13,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
+
+export const InitiallyOpen: Story = {
+  render: () => (
+    <Tooltip content="Visible from initial owner state." defaultOpen>
+      <button type="button">Owner state</button>
+    </Tooltip>
+  ),
+};

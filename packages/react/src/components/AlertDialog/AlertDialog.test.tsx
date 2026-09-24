@@ -1,7 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { AlertDialog } from "./AlertDialog.js";
+
 describe("AlertDialog", () => {
   it("shares modal labeling, cancels safely and ignores backdrop pointer presses", async () => {
     const user = userEvent.setup();
@@ -34,5 +35,38 @@ describe("AlertDialog", () => {
     await user.click(screen.getByRole("button", { name: "Keep draft" }));
     expect(dialog).not.toHaveAttribute("open");
     await waitFor(() => expect(trigger).toHaveFocus());
+  });
+
+  it("supports controlled destructive-confirmation state without forcing closure", async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    render(
+      <AlertDialog.Root open onOpenChange={onOpenChange}>
+        <AlertDialog.Popup>
+          <AlertDialog.Title>Delete workspace?</AlertDialog.Title>
+          <AlertDialog.Close>Cancel</AlertDialog.Close>
+        </AlertDialog.Popup>
+      </AlertDialog.Root>,
+    );
+    const dialog = screen.getByRole("alertdialog", {
+      name: "Delete workspace?",
+    });
+    await user.click(screen.getByRole("button", { name: "Cancel" }));
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(dialog).toHaveAttribute("open");
+  });
+
+  it("always exposes alertdialog semantics instead of accepting a weaker role", () => {
+    render(
+      <AlertDialog.Root defaultOpen>
+        <AlertDialog.Popup>
+          <AlertDialog.Title>Confirm</AlertDialog.Title>
+        </AlertDialog.Popup>
+      </AlertDialog.Root>,
+    );
+    expect(
+      screen.getByRole("alertdialog", { name: "Confirm" }),
+    ).toHaveAttribute("open");
+    expect(screen.queryByRole("dialog")).toBeNull();
   });
 });

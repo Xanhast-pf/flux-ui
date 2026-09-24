@@ -134,6 +134,29 @@ test("built tabs preserve responsive keyboard activation and controlled selectio
   ).toBeFocused();
 });
 
+test("built autosizing textarea grows through the platform in supported engines", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const textarea = page.getByRole("textbox", {
+    name: "Autosizing consumer notes",
+  });
+  await expect(textarea).toHaveCSS("field-sizing", "content");
+  const initial = await textarea.evaluate(
+    (node) => (node as HTMLTextAreaElement).getBoundingClientRect().height,
+  );
+  await textarea.fill(
+    ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"].join("\n"),
+  );
+  await expect
+    .poll(() =>
+      textarea.evaluate(
+        (node) => (node as HTMLTextAreaElement).getBoundingClientRect().height,
+      ),
+    )
+    .toBeGreaterThan(initial + 16);
+});
+
 test("built Tabs keeps one semantic representation and restores container width", async ({
   page,
 }) => {

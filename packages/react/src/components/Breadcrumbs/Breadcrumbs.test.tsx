@@ -27,6 +27,25 @@ describe("Breadcrumbs", () => {
     for (const separator of screen.getAllByText("/"))
       expect(separator).toHaveAttribute("aria-hidden", "true");
   });
+  it("allows decorative separators to match product language or be omitted", () => {
+    const { container } = render(
+      <Breadcrumbs.Root>
+        <Breadcrumbs.List>
+          <Breadcrumbs.Item separator="›">
+            <Breadcrumbs.Link href="#one">One</Breadcrumbs.Link>
+          </Breadcrumbs.Item>
+          <Breadcrumbs.Item separator={null}>
+            <Breadcrumbs.Current>Two</Breadcrumbs.Current>
+          </Breadcrumbs.Item>
+        </Breadcrumbs.List>
+      </Breadcrumbs.Root>,
+    );
+    const separators = container.querySelectorAll("[aria-hidden='true']");
+    expect(separators).toHaveLength(2);
+    expect(separators[0]).toHaveTextContent("›");
+    expect(separators[1]).toBeEmptyDOMElement();
+  });
+
   it("forwards native refs and class names", () => {
     const ref = createRef<HTMLAnchorElement>();
     render(

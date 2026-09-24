@@ -3,6 +3,6 @@
   "slug": "tooltip",
   "category": "Overlays",
   "status": "beta",
-  "description": "Hoverable, focus-triggered supplemental help without adding a wrapper or a tab stop.",
+  "description": "Controlled or trigger-owned supplemental help without adding a wrapper or a tab stop.",
   "sizeClass": "interactive"
 }

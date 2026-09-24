@@ -8,7 +8,7 @@ export default function Example() {
         <Textarea placeholder="Add context for the team..." rows={4} />
       </Field.Control>
       <Field.Description>
-        Native rows, values, events, and resizing stay available.
+        Native values, events, forms, refs, and resizing remain available.
       </Field.Description>
     </Field.Root>
   );

@@ -30,6 +30,20 @@ describe("Textarea", () => {
     expect(onChange).toHaveBeenCalled();
   });
 
+  it("supports platform content autosizing through the native style escape hatch", () => {
+    render(
+      <Textarea
+        aria-label="Autosizing notes"
+        rows={2}
+        style={{ fieldSizing: "content", maxBlockSize: "12rem" }}
+      />,
+    );
+    const textarea = screen.getByRole("textbox", { name: "Autosizing notes" });
+    expect(textarea.style.getPropertyValue("field-sizing")).toBe("content");
+    expect(textarea.style.maxBlockSize).toBe("12rem");
+    expect(textarea).toHaveAttribute("rows", "2");
+  });
+
   it("forwards refs to the native textarea", () => {
     const ref = createRef<HTMLTextAreaElement>();
     render(<Textarea aria-label="Notes" ref={ref} />);

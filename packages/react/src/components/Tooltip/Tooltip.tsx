@@ -24,6 +24,9 @@ export function Tooltip({
   side = "top",
   align = "center",
   delay = 300,
+  defaultOpen = false,
+  open: controlled,
+  onOpenChange,
   id,
   ref,
   className,
@@ -38,7 +41,8 @@ export function Tooltip({
   const Trigger = child.type;
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const [node, setNode] = useState<HTMLDivElement | null>(null);
-  const [open, setOpen] = useState(false);
+  const [localOpen, setLocalOpen] = useState(defaultOpen);
+  const open = controlled ?? localOpen;
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activity = useRef({
     hover: false,
@@ -78,18 +82,21 @@ export function Tooltip({
     [ref],
   );
   const cancelTimer = useCallback(() => {
-    if (timer.current !== null) clearTimeout(timer.current);
-    timer.current = null;
+    clearTimeout(timer.current!);
   }, []);
   useEffect(() => cancelTimer, [cancelTimer]);
+  function requestOpen(next: boolean) {
+    if (next === open) return;
+    if (controlled === undefined) setLocalOpen(next);
+    onOpenChange?.(next);
+  }
   function schedule(show: boolean, wait: number) {
     cancelTimer();
     timer.current = setTimeout(() => {
-      timer.current = null;
       const current = activity.current;
-      if (show && !current.dismissed) setOpen(true);
+      if (show && !current.dismissed) requestOpen(true);
       else if (!show && !current.hover && !current.focus && !current.popup)
-        setOpen(false);
+        requestOpen(false);
     }, wait);
   }
   useEffect(() => {
@@ -99,21 +106,17 @@ export function Tooltip({
       event.preventDefault();
       cancelTimer();
       activity.current.dismissed = true;
-      setOpen(false);
+      if (controlled === undefined) setLocalOpen(false);
+      onOpenChange?.(false);
     }
     const doc = anchor.ownerDocument;
     doc.addEventListener("keydown", escape);
     return () => doc.removeEventListener("keydown", escape);
-  }, [anchor, open, cancelTimer]);
+  }, [anchor, open, cancelTimer, controlled, onOpenChange]);
   useFloatingSurface(anchor, node, open, side, align);
-  const describedBy = [
-    ...new Set(
-      [
-        ...(childProps["aria-describedby"]?.split(/\s+/) ?? []),
-        tooltipId,
-      ].filter(Boolean),
-    ),
-  ].join(" ");
+  const describedBy = childProps["aria-describedby"]
+    ? `${childProps["aria-describedby"]} ${tooltipId}`
+    : tooltipId;
   return (
     <>
       <Trigger
@@ -139,7 +142,7 @@ export function Tooltip({
           activity.current.focus = true;
           activity.current.dismissed = false;
           cancelTimer();
-          setOpen(true);
+          requestOpen(true);
         }}
         onBlur={(event: FocusEvent<HTMLElement>) => {
           childBlur?.(event);

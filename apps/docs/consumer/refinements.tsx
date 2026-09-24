@@ -14,6 +14,7 @@ import {
   Stack,
   Tabs,
   Text,
+  Textarea,
 } from "@flux-ui/react";
 interface Row {
   id: string;
@@ -129,6 +130,17 @@ export function ConsumerRefinements() {
         <Button type="submit">Submit grouped amount</Button>
         <Text data-testid="submitted-amount">{submitted}</Text>
       </Stack>
+      <Field.Root>
+        <Field.Label>Autosizing consumer notes</Field.Label>
+        <Field.Control>
+          <Textarea
+            defaultValue="One line"
+            rows={1}
+            data-testid="autosizing-consumer-notes"
+            style={{ fieldSizing: "content" }}
+          />
+        </Field.Control>
+      </Field.Root>
       <Checkbox aria-label="Reference checkbox" defaultChecked />
       <DataTable
         label="Themed selection"

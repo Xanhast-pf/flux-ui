@@ -40,7 +40,8 @@ export const components = [
     slug: "badge",
     category: "Display",
     status: "beta",
-    description: "Compact, non-interactive status labels with semantic tones.",
+    description:
+      "Compact, standalone status labels with semantic tones; not an overlay counter.",
     sizeClass: "primitive",
   },
   {
@@ -548,7 +549,7 @@ export const components = [
     category: "Inputs",
     status: "beta",
     description:
-      "Styled native multi-line text control that preserves browser semantics, attributes, and refs.",
+      "Styled native multi-line text control with platform field-sizing support through standard style props.",
     sizeClass: "primitive",
   },
   {
@@ -602,7 +603,7 @@ export const components = [
     category: "Overlays",
     status: "beta",
     description:
-      "Hoverable, focus-triggered supplemental help without adding a wrapper or a tab stop.",
+      "Controlled or trigger-owned supplemental help without adding a wrapper or a tab stop.",
     sizeClass: "interactive",
   },
   {

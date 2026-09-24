@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
 import { createRef } from "react";
+import { render, screen } from "@testing-library/react";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { Footer } from "./Footer.js";
 
@@ -26,5 +27,14 @@ describe("Footer", () => {
     expect(ref.current).toBe(footer);
     expect(footer).toHaveClass("consumer-footer");
     expect(footer).toHaveStyle({ paddingInline: "1rem" });
+  });
+
+  it("renders native server markup without fixed-position behavior", () => {
+    const markup = renderToString(
+      <Footer data-testid="footer">Example</Footer>,
+    );
+    expect(markup).toContain("<footer");
+    expect(markup).toContain("Example");
+    expect(markup).not.toContain("position");
   });
 });
