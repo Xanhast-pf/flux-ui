@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { readdir, readFile } from "node:fs/promises";
+import { components } from "../src/generated/components.js";
 const directory = new URL("../src/perf/scenarios/", import.meta.url);
 const files = (await readdir(directory)).filter((file) =>
   file.endsWith(".json"),
@@ -28,6 +29,61 @@ for (const file of files) {
       expect(Number.isFinite(result?.[key])).toBe(true);
   });
 }
+test("runtime performance page selects the full component catalog in one evidence card", async ({
+  page,
+}) => {
+  await page.goto("/#performance");
+
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Runtime performance" }),
+  ).toBeVisible();
+
+  const component = page.getByLabel("Component", { exact: true });
+  await expect(component.locator("option")).toHaveCount(components.length);
+  await expect(page.locator("main article")).toHaveCount(1);
+
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Button" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Committed CI baseline", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Button committed runtime medians"),
+  ).toBeVisible();
+
+  await component.selectOption("chart");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Chart" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Browser workload", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/does not have a committed historical CI timing/u),
+  ).toBeVisible();
+
+  await component.selectOption("accordion");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Accordion" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Component microbenchmark", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/No dedicated browser runtime scenario/u),
+  ).toBeVisible();
+
+  await component.selectOption("grid");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Grid" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Committed CI baseline", { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText("Grid committed runtime medians")).toBeVisible();
+});
+
 test("data-table lab workload never advertises a fabricated native ratio", async ({
   page,
 }) => {

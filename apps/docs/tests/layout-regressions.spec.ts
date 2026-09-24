@@ -272,7 +272,7 @@ test("sidebar preserves its own scroll position through routing and its toggle s
   ).toBeLessThanOrEqual(1);
 });
 for (const theme of ["light", "dark"]) {
-  test(`responsive shell and benchmark cards retain spacing in ${theme}`, async ({
+  test(`responsive shell and performance card retain spacing in ${theme}`, async ({
     page,
   }) => {
     await page.goto("/#performance");
@@ -284,7 +284,7 @@ for (const theme of ["light", "dark"]) {
       await expect(
         page.getByRole("heading", {
           level: 1,
-          name: "Runtime benchmark health",
+          name: "Runtime performance",
         }),
       ).toBeVisible();
       await expect(page.locator(".desktop-sidebar")).toHaveCount(0);
