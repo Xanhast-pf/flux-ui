@@ -193,3 +193,300 @@
   --flux-color-focus: #a8edb8;
   --flux-font-body: var(--flux-font-mono);
 }
+
+@media (forced-colors: none) {
+  /* Color palette presets: combine with data-flux-theme=light|dark.
+   * --_flux-* variables are implementation details for compact mapping.
+   */
+  [data-flux-palette="slate"] {
+    --_flux-palette-50: var(--flux-palette-slate-50);
+    --_flux-palette-100: var(--flux-palette-slate-100);
+    --_flux-palette-200: var(--flux-palette-slate-200);
+    --_flux-palette-300: var(--flux-palette-slate-300);
+    --_flux-palette-400: var(--flux-palette-slate-400);
+    --_flux-palette-500: var(--flux-palette-slate-500);
+    --_flux-palette-600: var(--flux-palette-slate-600);
+    --_flux-palette-700: var(--flux-palette-slate-700);
+    --_flux-palette-800: var(--flux-palette-slate-800);
+    --_flux-palette-900: var(--flux-palette-slate-900);
+    --_flux-palette-950: var(--flux-palette-slate-950);
+  }
+
+  [data-flux-palette="indigo"] {
+    --_flux-palette-50: var(--flux-palette-indigo-50);
+    --_flux-palette-100: var(--flux-palette-indigo-100);
+    --_flux-palette-200: var(--flux-palette-indigo-200);
+    --_flux-palette-300: var(--flux-palette-indigo-300);
+    --_flux-palette-400: var(--flux-palette-indigo-400);
+    --_flux-palette-500: var(--flux-palette-indigo-500);
+    --_flux-palette-600: var(--flux-palette-indigo-600);
+    --_flux-palette-700: var(--flux-palette-indigo-700);
+    --_flux-palette-800: var(--flux-palette-indigo-800);
+    --_flux-palette-900: var(--flux-palette-indigo-900);
+    --_flux-palette-950: var(--flux-palette-indigo-950);
+  }
+
+  [data-flux-palette="blue"] {
+    --_flux-palette-50: var(--flux-palette-blue-50);
+    --_flux-palette-100: var(--flux-palette-blue-100);
+    --_flux-palette-200: var(--flux-palette-blue-200);
+    --_flux-palette-300: var(--flux-palette-blue-300);
+    --_flux-palette-400: var(--flux-palette-blue-400);
+    --_flux-palette-500: var(--flux-palette-blue-500);
+    --_flux-palette-600: var(--flux-palette-blue-600);
+    --_flux-palette-700: var(--flux-palette-blue-700);
+    --_flux-palette-800: var(--flux-palette-blue-800);
+    --_flux-palette-900: var(--flux-palette-blue-900);
+    --_flux-palette-950: var(--flux-palette-blue-950);
+  }
+
+  [data-flux-palette="cyan"] {
+    --_flux-palette-50: var(--flux-palette-cyan-50);
+    --_flux-palette-100: var(--flux-palette-cyan-100);
+    --_flux-palette-200: var(--flux-palette-cyan-200);
+    --_flux-palette-300: var(--flux-palette-cyan-300);
+    --_flux-palette-400: var(--flux-palette-cyan-400);
+    --_flux-palette-500: var(--flux-palette-cyan-500);
+    --_flux-palette-600: var(--flux-palette-cyan-600);
+    --_flux-palette-700: var(--flux-palette-cyan-700);
+    --_flux-palette-800: var(--flux-palette-cyan-800);
+    --_flux-palette-900: var(--flux-palette-cyan-900);
+    --_flux-palette-950: var(--flux-palette-cyan-950);
+  }
+
+  [data-flux-palette="teal"] {
+    --_flux-palette-50: var(--flux-palette-teal-50);
+    --_flux-palette-100: var(--flux-palette-teal-100);
+    --_flux-palette-200: var(--flux-palette-teal-200);
+    --_flux-palette-300: var(--flux-palette-teal-300);
+    --_flux-palette-400: var(--flux-palette-teal-400);
+    --_flux-palette-500: var(--flux-palette-teal-500);
+    --_flux-palette-600: var(--flux-palette-teal-600);
+    --_flux-palette-700: var(--flux-palette-teal-700);
+    --_flux-palette-800: var(--flux-palette-teal-800);
+    --_flux-palette-900: var(--flux-palette-teal-900);
+    --_flux-palette-950: var(--flux-palette-teal-950);
+  }
+
+  [data-flux-palette="emerald"] {
+    --_flux-palette-50: var(--flux-palette-emerald-50);
+    --_flux-palette-100: var(--flux-palette-emerald-100);
+    --_flux-palette-200: var(--flux-palette-emerald-200);
+    --_flux-palette-300: var(--flux-palette-emerald-300);
+    --_flux-palette-400: var(--flux-palette-emerald-400);
+    --_flux-palette-500: var(--flux-palette-emerald-500);
+    --_flux-palette-600: var(--flux-palette-emerald-600);
+    --_flux-palette-700: var(--flux-palette-emerald-700);
+    --_flux-palette-800: var(--flux-palette-emerald-800);
+    --_flux-palette-900: var(--flux-palette-emerald-900);
+    --_flux-palette-950: var(--flux-palette-emerald-950);
+  }
+
+  [data-flux-palette="green"] {
+    --_flux-palette-50: var(--flux-palette-green-50);
+    --_flux-palette-100: var(--flux-palette-green-100);
+    --_flux-palette-200: var(--flux-palette-green-200);
+    --_flux-palette-300: var(--flux-palette-green-300);
+    --_flux-palette-400: var(--flux-palette-green-400);
+    --_flux-palette-500: var(--flux-palette-green-500);
+    --_flux-palette-600: var(--flux-palette-green-600);
+    --_flux-palette-700: var(--flux-palette-green-700);
+    --_flux-palette-800: var(--flux-palette-green-800);
+    --_flux-palette-900: var(--flux-palette-green-900);
+    --_flux-palette-950: var(--flux-palette-green-950);
+  }
+
+  [data-flux-palette="lime"] {
+    --_flux-palette-50: var(--flux-palette-lime-50);
+    --_flux-palette-100: var(--flux-palette-lime-100);
+    --_flux-palette-200: var(--flux-palette-lime-200);
+    --_flux-palette-300: var(--flux-palette-lime-300);
+    --_flux-palette-400: var(--flux-palette-lime-400);
+    --_flux-palette-500: var(--flux-palette-lime-500);
+    --_flux-palette-600: var(--flux-palette-lime-600);
+    --_flux-palette-700: var(--flux-palette-lime-700);
+    --_flux-palette-800: var(--flux-palette-lime-800);
+    --_flux-palette-900: var(--flux-palette-lime-900);
+    --_flux-palette-950: var(--flux-palette-lime-950);
+  }
+
+  [data-flux-palette="amber"] {
+    --_flux-palette-50: var(--flux-palette-amber-50);
+    --_flux-palette-100: var(--flux-palette-amber-100);
+    --_flux-palette-200: var(--flux-palette-amber-200);
+    --_flux-palette-300: var(--flux-palette-amber-300);
+    --_flux-palette-400: var(--flux-palette-amber-400);
+    --_flux-palette-500: var(--flux-palette-amber-500);
+    --_flux-palette-600: var(--flux-palette-amber-600);
+    --_flux-palette-700: var(--flux-palette-amber-700);
+    --_flux-palette-800: var(--flux-palette-amber-800);
+    --_flux-palette-900: var(--flux-palette-amber-900);
+    --_flux-palette-950: var(--flux-palette-amber-950);
+  }
+
+  [data-flux-palette="orange"] {
+    --_flux-palette-50: var(--flux-palette-orange-50);
+    --_flux-palette-100: var(--flux-palette-orange-100);
+    --_flux-palette-200: var(--flux-palette-orange-200);
+    --_flux-palette-300: var(--flux-palette-orange-300);
+    --_flux-palette-400: var(--flux-palette-orange-400);
+    --_flux-palette-500: var(--flux-palette-orange-500);
+    --_flux-palette-600: var(--flux-palette-orange-600);
+    --_flux-palette-700: var(--flux-palette-orange-700);
+    --_flux-palette-800: var(--flux-palette-orange-800);
+    --_flux-palette-900: var(--flux-palette-orange-900);
+    --_flux-palette-950: var(--flux-palette-orange-950);
+  }
+
+  [data-flux-palette="rose"] {
+    --_flux-palette-50: var(--flux-palette-rose-50);
+    --_flux-palette-100: var(--flux-palette-rose-100);
+    --_flux-palette-200: var(--flux-palette-rose-200);
+    --_flux-palette-300: var(--flux-palette-rose-300);
+    --_flux-palette-400: var(--flux-palette-rose-400);
+    --_flux-palette-500: var(--flux-palette-rose-500);
+    --_flux-palette-600: var(--flux-palette-rose-600);
+    --_flux-palette-700: var(--flux-palette-rose-700);
+    --_flux-palette-800: var(--flux-palette-rose-800);
+    --_flux-palette-900: var(--flux-palette-rose-900);
+    --_flux-palette-950: var(--flux-palette-rose-950);
+  }
+
+  [data-flux-palette="violet"] {
+    --_flux-palette-50: var(--flux-palette-violet-50);
+    --_flux-palette-100: var(--flux-palette-violet-100);
+    --_flux-palette-200: var(--flux-palette-violet-200);
+    --_flux-palette-300: var(--flux-palette-violet-300);
+    --_flux-palette-400: var(--flux-palette-violet-400);
+    --_flux-palette-500: var(--flux-palette-violet-500);
+    --_flux-palette-600: var(--flux-palette-violet-600);
+    --_flux-palette-700: var(--flux-palette-violet-700);
+    --_flux-palette-800: var(--flux-palette-violet-800);
+    --_flux-palette-900: var(--flux-palette-violet-900);
+    --_flux-palette-950: var(--flux-palette-violet-950);
+  }
+
+  [data-flux-palette="fuchsia"] {
+    --_flux-palette-50: var(--flux-palette-fuchsia-50);
+    --_flux-palette-100: var(--flux-palette-fuchsia-100);
+    --_flux-palette-200: var(--flux-palette-fuchsia-200);
+    --_flux-palette-300: var(--flux-palette-fuchsia-300);
+    --_flux-palette-400: var(--flux-palette-fuchsia-400);
+    --_flux-palette-500: var(--flux-palette-fuchsia-500);
+    --_flux-palette-600: var(--flux-palette-fuchsia-600);
+    --_flux-palette-700: var(--flux-palette-fuchsia-700);
+    --_flux-palette-800: var(--flux-palette-fuchsia-800);
+    --_flux-palette-900: var(--flux-palette-fuchsia-900);
+    --_flux-palette-950: var(--flux-palette-fuchsia-950);
+  }
+
+  [data-flux-theme="light"][data-flux-palette] {
+    --flux-color-canvas: color-mix(
+      in oklab,
+      var(--_flux-palette-50) 70%,
+      white
+    );
+    --flux-color-surface: #ffffff;
+    --flux-color-surface-subtle: var(--_flux-palette-50);
+    --flux-color-surface-elevated: #ffffff;
+    --flux-color-text: var(--flux-palette-slate-950);
+    --flux-color-text-muted: var(--flux-palette-slate-600);
+    --flux-color-text-subtle: var(--flux-palette-slate-600);
+    --flux-color-border: var(--_flux-palette-200);
+    --flux-color-border-strong: var(--_flux-palette-600);
+    --flux-color-accent: var(--_flux-palette-700);
+    --flux-color-accent-hover: var(--_flux-palette-800);
+    --flux-color-accent-soft: var(--_flux-palette-100);
+    --flux-color-accent-foreground: #ffffff;
+    --flux-color-success: var(--flux-palette-emerald-700);
+    --flux-color-success-hover: var(--flux-palette-emerald-800);
+    --flux-color-success-soft: var(--flux-palette-emerald-100);
+    --flux-color-success-foreground: #ffffff;
+    --flux-color-warning: var(--flux-palette-amber-800);
+    --flux-color-warning-hover: var(--flux-palette-amber-900);
+    --flux-color-warning-soft: var(--flux-palette-amber-100);
+    --flux-color-warning-foreground: #ffffff;
+    --flux-color-danger: var(--flux-palette-rose-700);
+    --flux-color-danger-hover: var(--flux-palette-rose-800);
+    --flux-color-danger-soft: var(--flux-palette-rose-100);
+    --flux-color-danger-foreground: #ffffff;
+    --flux-color-info: var(--flux-palette-blue-700);
+    --flux-color-info-hover: var(--flux-palette-blue-800);
+    --flux-color-info-soft: var(--flux-palette-blue-100);
+    --flux-color-info-foreground: #ffffff;
+    --flux-color-focus: var(--_flux-palette-600);
+  }
+
+  [data-flux-theme="dark"][data-flux-palette] {
+    --flux-color-canvas: color-mix(
+      in oklab,
+      var(--_flux-palette-950) 52%,
+      #070a0e
+    );
+    --flux-color-surface: color-mix(
+      in oklab,
+      var(--_flux-palette-950) 34%,
+      #111720
+    );
+    --flux-color-surface-subtle: color-mix(
+      in oklab,
+      var(--_flux-palette-900) 38%,
+      #151d28
+    );
+    --flux-color-surface-elevated: color-mix(
+      in oklab,
+      var(--_flux-palette-900) 32%,
+      #18212d
+    );
+    --flux-color-text: var(--flux-palette-slate-50);
+    --flux-color-text-muted: var(--flux-palette-slate-300);
+    --flux-color-text-subtle: var(--flux-palette-slate-400);
+    --flux-color-border: color-mix(
+      in oklab,
+      var(--_flux-palette-700) 38%,
+      #273241
+    );
+    --flux-color-border-strong: var(--_flux-palette-500);
+    --flux-color-accent: var(--_flux-palette-300);
+    --flux-color-accent-hover: var(--_flux-palette-200);
+    --flux-color-accent-soft: color-mix(
+      in oklab,
+      var(--_flux-palette-900) 72%,
+      #111720
+    );
+    --flux-color-accent-foreground: var(--_flux-palette-950);
+    --flux-color-success: var(--flux-palette-emerald-300);
+    --flux-color-success-hover: var(--flux-palette-emerald-200);
+    --flux-color-success-soft: color-mix(
+      in oklab,
+      var(--flux-palette-emerald-900) 70%,
+      #111720
+    );
+    --flux-color-success-foreground: var(--flux-palette-emerald-950);
+    --flux-color-warning: var(--flux-palette-amber-300);
+    --flux-color-warning-hover: var(--flux-palette-amber-200);
+    --flux-color-warning-soft: color-mix(
+      in oklab,
+      var(--flux-palette-amber-900) 68%,
+      #111720
+    );
+    --flux-color-warning-foreground: var(--flux-palette-amber-950);
+    --flux-color-danger: var(--flux-palette-rose-300);
+    --flux-color-danger-hover: var(--flux-palette-rose-200);
+    --flux-color-danger-soft: color-mix(
+      in oklab,
+      var(--flux-palette-rose-900) 70%,
+      #111720
+    );
+    --flux-color-danger-foreground: var(--flux-palette-rose-950);
+    --flux-color-info: var(--flux-palette-blue-300);
+    --flux-color-info-hover: var(--flux-palette-blue-200);
+    --flux-color-info-soft: color-mix(
+      in oklab,
+      var(--flux-palette-blue-900) 70%,
+      #111720
+    );
+    --flux-color-info-foreground: var(--flux-palette-blue-950);
+    --flux-color-focus: var(--_flux-palette-300);
+  }
+}

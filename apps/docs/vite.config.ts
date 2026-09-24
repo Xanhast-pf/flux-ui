@@ -83,6 +83,13 @@ export default defineConfig({
         ),
       },
       {
+        find: "@flux-ui/tokens/palette.css",
+        replacement: resolve(
+          import.meta.dirname,
+          "../../packages/tokens/src/palette.css",
+        ),
+      },
+      {
         find: "@flux-ui/tokens/presets.css",
         replacement: resolve(
           import.meta.dirname,

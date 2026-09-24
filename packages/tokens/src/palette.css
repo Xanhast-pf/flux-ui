@@ -1,0 +1,162 @@
+/* Optional raw color ramps. Import @flux-ui/tokens/palette.css explicitly.
+ * Semantic components continue to consume --flux-color-* roles; these values are
+ * for theme authoring, data visualization, and deliberate brand composition.
+ */
+:root {
+  /* slate */
+  --flux-palette-slate-50: #f8fafc;
+  --flux-palette-slate-100: #f1f5f9;
+  --flux-palette-slate-200: #e2e8f0;
+  --flux-palette-slate-300: #cbd5e1;
+  --flux-palette-slate-400: #94a3b8;
+  --flux-palette-slate-500: #64748b;
+  --flux-palette-slate-600: #475569;
+  --flux-palette-slate-700: #334155;
+  --flux-palette-slate-800: #1e293b;
+  --flux-palette-slate-900: #0f172a;
+  --flux-palette-slate-950: #020617;
+  /* indigo */
+  --flux-palette-indigo-50: #eef2ff;
+  --flux-palette-indigo-100: #e0e7ff;
+  --flux-palette-indigo-200: #c7d2fe;
+  --flux-palette-indigo-300: #a5b4fc;
+  --flux-palette-indigo-400: #818cf8;
+  --flux-palette-indigo-500: #6366f1;
+  --flux-palette-indigo-600: #4f46e5;
+  --flux-palette-indigo-700: #4338ca;
+  --flux-palette-indigo-800: #3730a3;
+  --flux-palette-indigo-900: #312e81;
+  --flux-palette-indigo-950: #1e1b4b;
+  /* blue */
+  --flux-palette-blue-50: #eff6ff;
+  --flux-palette-blue-100: #dbeafe;
+  --flux-palette-blue-200: #bfdbfe;
+  --flux-palette-blue-300: #93c5fd;
+  --flux-palette-blue-400: #60a5fa;
+  --flux-palette-blue-500: #3b82f6;
+  --flux-palette-blue-600: #2563eb;
+  --flux-palette-blue-700: #1d4ed8;
+  --flux-palette-blue-800: #1e40af;
+  --flux-palette-blue-900: #1e3a8a;
+  --flux-palette-blue-950: #172554;
+  /* cyan */
+  --flux-palette-cyan-50: #ecfeff;
+  --flux-palette-cyan-100: #cffafe;
+  --flux-palette-cyan-200: #a5f3fc;
+  --flux-palette-cyan-300: #67e8f9;
+  --flux-palette-cyan-400: #22d3ee;
+  --flux-palette-cyan-500: #06b6d4;
+  --flux-palette-cyan-600: #0891b2;
+  --flux-palette-cyan-700: #0e7490;
+  --flux-palette-cyan-800: #155e75;
+  --flux-palette-cyan-900: #164e63;
+  --flux-palette-cyan-950: #083344;
+  /* teal */
+  --flux-palette-teal-50: #f0fdfa;
+  --flux-palette-teal-100: #ccfbf1;
+  --flux-palette-teal-200: #99f6e4;
+  --flux-palette-teal-300: #5eead4;
+  --flux-palette-teal-400: #2dd4bf;
+  --flux-palette-teal-500: #14b8a6;
+  --flux-palette-teal-600: #0d9488;
+  --flux-palette-teal-700: #0f766e;
+  --flux-palette-teal-800: #115e59;
+  --flux-palette-teal-900: #134e4a;
+  --flux-palette-teal-950: #042f2e;
+  /* emerald */
+  --flux-palette-emerald-50: #ecfdf5;
+  --flux-palette-emerald-100: #d1fae5;
+  --flux-palette-emerald-200: #a7f3d0;
+  --flux-palette-emerald-300: #6ee7b7;
+  --flux-palette-emerald-400: #34d399;
+  --flux-palette-emerald-500: #10b981;
+  --flux-palette-emerald-600: #059669;
+  --flux-palette-emerald-700: #047857;
+  --flux-palette-emerald-800: #065f46;
+  --flux-palette-emerald-900: #064e3b;
+  --flux-palette-emerald-950: #022c22;
+  /* green */
+  --flux-palette-green-50: #f0fdf4;
+  --flux-palette-green-100: #dcfce7;
+  --flux-palette-green-200: #bbf7d0;
+  --flux-palette-green-300: #86efac;
+  --flux-palette-green-400: #4ade80;
+  --flux-palette-green-500: #22c55e;
+  --flux-palette-green-600: #16a34a;
+  --flux-palette-green-700: #15803d;
+  --flux-palette-green-800: #166534;
+  --flux-palette-green-900: #14532d;
+  --flux-palette-green-950: #052e16;
+  /* lime */
+  --flux-palette-lime-50: #f7fee7;
+  --flux-palette-lime-100: #ecfccb;
+  --flux-palette-lime-200: #d9f99d;
+  --flux-palette-lime-300: #bef264;
+  --flux-palette-lime-400: #a3e635;
+  --flux-palette-lime-500: #84cc16;
+  --flux-palette-lime-600: #65a30d;
+  --flux-palette-lime-700: #4d7c0f;
+  --flux-palette-lime-800: #3f6212;
+  --flux-palette-lime-900: #365314;
+  --flux-palette-lime-950: #1a2e05;
+  /* amber */
+  --flux-palette-amber-50: #fffbeb;
+  --flux-palette-amber-100: #fef3c7;
+  --flux-palette-amber-200: #fde68a;
+  --flux-palette-amber-300: #fcd34d;
+  --flux-palette-amber-400: #fbbf24;
+  --flux-palette-amber-500: #f59e0b;
+  --flux-palette-amber-600: #d97706;
+  --flux-palette-amber-700: #b45309;
+  --flux-palette-amber-800: #92400e;
+  --flux-palette-amber-900: #78350f;
+  --flux-palette-amber-950: #451a03;
+  /* orange */
+  --flux-palette-orange-50: #fff7ed;
+  --flux-palette-orange-100: #ffedd5;
+  --flux-palette-orange-200: #fed7aa;
+  --flux-palette-orange-300: #fdba74;
+  --flux-palette-orange-400: #fb923c;
+  --flux-palette-orange-500: #f97316;
+  --flux-palette-orange-600: #ea580c;
+  --flux-palette-orange-700: #c2410c;
+  --flux-palette-orange-800: #9a3412;
+  --flux-palette-orange-900: #7c2d12;
+  --flux-palette-orange-950: #431407;
+  /* rose */
+  --flux-palette-rose-50: #fff1f2;
+  --flux-palette-rose-100: #ffe4e6;
+  --flux-palette-rose-200: #fecdd3;
+  --flux-palette-rose-300: #fda4af;
+  --flux-palette-rose-400: #fb7185;
+  --flux-palette-rose-500: #f43f5e;
+  --flux-palette-rose-600: #e11d48;
+  --flux-palette-rose-700: #be123c;
+  --flux-palette-rose-800: #9f1239;
+  --flux-palette-rose-900: #881337;
+  --flux-palette-rose-950: #4c0519;
+  /* violet */
+  --flux-palette-violet-50: #f5f3ff;
+  --flux-palette-violet-100: #ede9fe;
+  --flux-palette-violet-200: #ddd6fe;
+  --flux-palette-violet-300: #c4b5fd;
+  --flux-palette-violet-400: #a78bfa;
+  --flux-palette-violet-500: #8b5cf6;
+  --flux-palette-violet-600: #7c3aed;
+  --flux-palette-violet-700: #6d28d9;
+  --flux-palette-violet-800: #5b21b6;
+  --flux-palette-violet-900: #4c1d95;
+  --flux-palette-violet-950: #2e1065;
+  /* fuchsia */
+  --flux-palette-fuchsia-50: #fdf4ff;
+  --flux-palette-fuchsia-100: #fae8ff;
+  --flux-palette-fuchsia-200: #f5d0fe;
+  --flux-palette-fuchsia-300: #f0abfc;
+  --flux-palette-fuchsia-400: #e879f9;
+  --flux-palette-fuchsia-500: #d946ef;
+  --flux-palette-fuchsia-600: #c026d3;
+  --flux-palette-fuchsia-700: #a21caf;
+  --flux-palette-fuchsia-800: #86198f;
+  --flux-palette-fuchsia-900: #701a75;
+  --flux-palette-fuchsia-950: #4a044e;
+}

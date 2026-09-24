@@ -365,37 +365,9 @@
     },
     "apps/docs/src/styles.css": {
       "owner": "documentation-shell",
-      "reason": "Reviewed sticky-shell positioning, accent token adapters, original vector specimens and the isolated benchmark frame. No control/layout/typography skins. App-owned viewport and preview native scrollbars mirror Flux theme colors without styling consumer documents.",
+      "reason": "Reviewed sticky-shell positioning, original vector specimens and the isolated benchmark frame. No control/layout/typography skins. App-owned viewport and preview native scrollbars mirror Flux theme colors without styling consumer documents.",
       "maxDeclarations": 347,
       "rules": {
-        "[data-docs-accent=\"teal\"][data-flux-theme=\"light\"]": [
-          "--flux-color-accent",
-          "--flux-color-accent-hover",
-          "--flux-color-accent-soft",
-          "--flux-color-accent-foreground",
-          "--flux-color-focus"
-        ],
-        "[data-docs-accent=\"teal\"][data-flux-theme=\"dark\"]": [
-          "--flux-color-accent",
-          "--flux-color-accent-hover",
-          "--flux-color-accent-soft",
-          "--flux-color-accent-foreground",
-          "--flux-color-focus"
-        ],
-        "[data-docs-accent=\"rose\"][data-flux-theme=\"light\"]": [
-          "--flux-color-accent",
-          "--flux-color-accent-hover",
-          "--flux-color-accent-soft",
-          "--flux-color-accent-foreground",
-          "--flux-color-focus"
-        ],
-        "[data-docs-accent=\"rose\"][data-flux-theme=\"dark\"]": [
-          "--flux-color-accent",
-          "--flux-color-accent-hover",
-          "--flux-color-accent-soft",
-          "--flux-color-accent-foreground",
-          "--flux-color-focus"
-        ],
         ".site-header": ["position", "inset-block-start", "z-index"],
         ".header-inner": ["min-block-size"],
         ".preview-frame": ["overflow"],

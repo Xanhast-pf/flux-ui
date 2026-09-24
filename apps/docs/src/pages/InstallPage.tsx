@@ -79,7 +79,8 @@ export function App() {
         <Text as="p">
           Import foundations once at your application entry. Built public
           components include their component CSS. Icons remain separate, and
-          scoped moods use public tokens rather than private CSS skins.
+          scoped moods and palette presets use public tokens rather than private
+          CSS skins.
         </Text>
       </Stack>
       <Stack gap="md">

@@ -2,34 +2,6 @@
  * Reusable controls, typography, spacing, layout and surfaces belong to public Flux APIs.
  * Exact selector/property contracts are reviewed in tooling/dogfood/ownership.json.
  */
-[data-docs-accent="teal"][data-flux-theme="light"] {
-  --flux-color-accent: #0f766e;
-  --flux-color-accent-hover: #115e59;
-  --flux-color-accent-soft: #f0fdfa;
-  --flux-color-accent-foreground: #ffffff;
-  --flux-color-focus: #0f766e;
-}
-[data-docs-accent="teal"][data-flux-theme="dark"] {
-  --flux-color-accent: #5eead4;
-  --flux-color-accent-hover: #99f6e4;
-  --flux-color-accent-soft: #102e2a;
-  --flux-color-accent-foreground: #042f2e;
-  --flux-color-focus: #5eead4;
-}
-[data-docs-accent="rose"][data-flux-theme="light"] {
-  --flux-color-accent: #be123c;
-  --flux-color-accent-hover: #9f1239;
-  --flux-color-accent-soft: #fff1f2;
-  --flux-color-accent-foreground: #ffffff;
-  --flux-color-focus: #be123c;
-}
-[data-docs-accent="rose"][data-flux-theme="dark"] {
-  --flux-color-accent: #fda4af;
-  --flux-color-accent-hover: #fecdd3;
-  --flux-color-accent-soft: #30151e;
-  --flux-color-accent-foreground: #4c0519;
-  --flux-color-focus: #fda4af;
-}
 .site-header {
   position: sticky;
   inset-block-start: 0;

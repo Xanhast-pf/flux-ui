@@ -12,6 +12,8 @@ if (isPerfRoute) {
     import("react"),
     import("./App.js"),
     import("@flux-ui/tokens/reset.css"),
+    import("@flux-ui/tokens/palette.css"),
+    import("@flux-ui/tokens/presets.css"),
     import("./styles.css"),
   ]);
   createRoot(rootElement).render(

@@ -1,27 +1,14 @@
 import { MoonIcon, SunIcon } from "@flux-ui/icons";
+import { Field, Inline, Select, Stack, Switch, Text } from "@flux-ui/react";
 import {
-  ColorSwatch,
-  Field,
-  Inline,
-  RadioGroup,
-  Stack,
-  Switch,
-  Text,
-} from "@flux-ui/react";
-import { useId } from "react";
-import {
-  isAccent,
-  setAccent,
+  isPalettePreset,
+  palettePresets,
+  setPalettePreset,
   setTheme,
-  useAccent,
+  usePalettePreset,
   useTheme,
 } from "../lib/appearance.js";
-const accentColors = {
-  indigo: "#4f46e5",
-  teal: "#0f766e",
-  rose: "#be185d",
-} as const;
-const accents = ["indigo", "teal", "rose"] as const;
+
 export function ThemeSwitch() {
   const theme = useTheme();
   return (
@@ -39,39 +26,37 @@ export function ThemeSwitch() {
     </Inline>
   );
 }
+
 export function AppearanceControls() {
-  const accent = useAccent();
-  const id = useId();
+  const palette = usePalettePreset();
+  const current =
+    palettePresets.find((preset) => preset.id === palette) ?? palettePresets[1];
+
   return (
     <Stack gap="md">
       <ThemeSwitch />
-      <RadioGroup.Root
-        name={`${id}-accent`}
-        value={accent}
-        onValueChange={(value) => {
-          if (isAccent(value)) setAccent(value);
-        }}
-      >
-        <RadioGroup.Legend>Accent color</RadioGroup.Legend>
-        <Inline gap="sm" wrap>
-          {accents.map((value) => (
-            <Field.Root key={value} controlId={`${id}-${value}`}>
-              <Inline gap="sm">
-                <Field.Control>
-                  <RadioGroup.Item value={value} />
-                </Field.Control>
-                <Field.Label>
-                  <ColorSwatch color={accentColors[value]} size="sm" />
-                  {value}
-                </Field.Label>
-              </Inline>
-            </Field.Root>
-          ))}
-        </Inline>
-      </RadioGroup.Root>
+      <Field.Root>
+        <Field.Label>Theme palette</Field.Label>
+        <Field.Control>
+          <Select
+            value={palette}
+            onChange={(event) => {
+              const value = event.currentTarget.value;
+              if (isPalettePreset(value)) setPalettePreset(value);
+            }}
+          >
+            {palettePresets.map((preset) => (
+              <option key={preset.id} value={preset.id}>
+                {preset.label}
+              </option>
+            ))}
+          </Select>
+        </Field.Control>
+        <Field.Description>{current.description}</Field.Description>
+      </Field.Root>
       <Text as="p" variant="caption" tone="muted">
-        Saved locally. These docs presets change semantic CSS variables, not
-        component APIs.
+        Saved locally. Mode and palette remap semantic CSS variables across the
+        entire documentation site without changing component APIs.
       </Text>
     </Stack>
   );
