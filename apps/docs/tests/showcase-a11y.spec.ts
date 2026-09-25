@@ -4,6 +4,27 @@ import { sceneIds } from "./showcase-fixtures.js";
 
 const primaryPalettes = ["indigo", "teal", "amber", "rose"] as const;
 
+for (const theme of ["light", "dark"] as const) {
+  test(`front-page app grid is axe-clean in ${theme}`, async ({ page }) => {
+    await page.addInitScript((savedTheme) => {
+      localStorage.setItem("flux-ui-theme", savedTheme);
+      localStorage.setItem("flux-ui-docs-palette", "indigo");
+      localStorage.setItem("flux-ui-docs-secondary-palette", "lime");
+    }, theme);
+
+    await page.goto("/#overview");
+    await expect(page.locator("[data-overview-showcase]")).toBeVisible();
+
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(
+      results.violations,
+      results.violations
+        .map((violation) => `${violation.id}: ${violation.help}`)
+        .join("\n"),
+    ).toEqual([]);
+  });
+}
+
 for (const outer of ["light", "dark"] as const) {
   for (const scene of sceneIds) {
     for (const primary of primaryPalettes) {

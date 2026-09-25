@@ -20,7 +20,7 @@ import {
 import { components } from "../generated/components.js";
 import { health } from "../generated/health.js";
 import { formatBytes } from "../lib/format.js";
-import { ProductShowcase } from "../showcase/ProductShowcase.js";
+import { OverviewShowcaseGrid } from "../showcase/OverviewShowcaseGrid.js";
 
 export function OverviewPage() {
   const button = health.size.components.find(
@@ -120,7 +120,7 @@ export function OverviewPage() {
           </Text>
         </Stack>
       </Grid>
-      <ProductShowcase page="overview" />
+      <OverviewShowcaseGrid />
       <Stack aria-labelledby="system-story-title" as="section" gap="xl">
         <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { sceneIds } from "./showcase-fixtures.js";
-test("the landing page leads with a live product, not a documentation rail", async ({
+test("the landing page leads with a live app gallery, not a documentation rail", async ({
   page,
 }) => {
   await page.goto("/");
@@ -8,8 +8,16 @@ test("the landing page leads with a live product, not a documentation rail", asy
     /One system\.\s*Different worlds\./u,
   );
   await expect(page.locator(".desktop-sidebar")).toHaveCount(0);
-  await expect(page.locator("[data-scene]")).toHaveCount(1);
-  await expect(page.locator('[data-scene="finance"]')).toBeVisible();
+  await expect(page.locator("[data-overview-showcase]")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Your team", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Product pulse", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("tablist", { name: "Example templates" }),
+  ).toHaveCount(0);
   await expect(page.locator(".release-room")).toHaveCount(0);
   await page.goto("/#components");
   await expect(page.locator(".desktop-sidebar")).toHaveCount(0);
@@ -102,7 +110,7 @@ test("template tabs use manual activation and palette changes preserve scene sta
   await expect(secondary).toHaveValue("rose");
 });
 
-test("first-page demos visibly compose the optional secondary palette", async ({
+test("front-page app cards visibly compose the optional secondary palette", async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -110,61 +118,24 @@ test("first-page demos visibly compose the optional secondary palette", async ({
     localStorage.setItem("flux-ui-docs-palette", "indigo");
     localStorage.setItem("flux-ui-docs-secondary-palette", "lime");
   });
-  await page.goto("/#overview?scene=finance");
+  await page.goto("/#overview");
 
   const secondary = page.getByLabel("Secondary palette", { exact: true });
-  const worlds = page.getByRole("tablist", { name: "Example templates" });
-  const surface = page.locator(".world-surface");
+  const performance = page.locator('[data-showcase-card="performance"]');
 
-  const pairedSurface = await surface.evaluate((element) =>
-    getComputedStyle(element)
-      .getPropertyValue("--flux-color-surface-subtle")
-      .trim(),
+  const pairedSurface = await performance.evaluate(
+    (element) => getComputedStyle(element).backgroundColor,
   );
   await secondary.selectOption("off");
-  const primaryOnlySurface = await surface.evaluate((element) =>
-    getComputedStyle(element)
-      .getPropertyValue("--flux-color-surface-subtle")
-      .trim(),
+  const primaryOnlySurface = await performance.evaluate(
+    (element) => getComputedStyle(element).backgroundColor,
   );
+
   expect(pairedSurface).not.toBe(primaryOnlySurface);
-
-  const probes = [
-    ["Finance", ".card-orbit", "color"],
-    ["Commerce", ".speaker-controls", "stroke"],
-    ["Social", ".gather-flower", "color"],
-    ["Music / DAW", '[data-channel="two"] .track-color', "background-color"],
-    ["Marketing", ".poster-sculpture", "color"],
-    ["Video", ".video-landscape", "background-color"],
-  ] as const;
-
-  for (const [label, selector, property] of probes) {
-    await worlds.getByRole("tab", { name: label, exact: true }).click();
-    await expect(page.locator("[data-scene]")).toHaveCount(1);
-
-    await secondary.selectOption("lime");
-    const paired = await page
-      .locator(selector)
-      .evaluate(
-        (element, cssProperty) =>
-          getComputedStyle(element).getPropertyValue(cssProperty).trim(),
-        property,
-      );
-
-    await secondary.selectOption("off");
-    const primaryOnly = await page
-      .locator(selector)
-      .evaluate(
-        (element, cssProperty) =>
-          getComputedStyle(element).getPropertyValue(cssProperty).trim(),
-        property,
-      );
-
-    expect(
-      paired,
-      `${label} should visibly react to the secondary palette`,
-    ).not.toBe(primaryOnly);
-  }
+  await expect(
+    page.getByRole("tablist", { name: "Example templates" }),
+  ).toHaveCount(0);
+  await expect(page.locator("[data-scene]")).toHaveCount(0);
 });
 
 test("invalid scene and legacy mood parameters fall back safely", async ({

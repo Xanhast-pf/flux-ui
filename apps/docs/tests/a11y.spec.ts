@@ -14,7 +14,9 @@ async function expectNoViolations(
     await expect(page.locator(".preview-content")).toBeVisible();
   }
   const path = new URL(page.url()).hash.slice(1).split("?", 1)[0] ?? "";
-  if (path === "" || path === "overview" || path === "playground") {
+  if (path === "" || path === "overview") {
+    await expect(page.locator("[data-overview-showcase]")).toBeVisible();
+  } else if (path === "playground") {
     await expect(page.locator("[data-scene]")).toBeVisible();
   }
   const builder = new AxeBuilder({ page });
