@@ -12,22 +12,34 @@ const theme = await readFile(
   "utf8",
 );
 const colors = Object.values(cssVars.color);
-test("all optional palettes declare the complete semantic color contract", () => {
-  for (const name of ["paper", "studio", "bloom", "terminal"]) {
-    const block = new RegExp(
-      `\\[data-flux-theme="${name}"\\]\\s*\\{([^}]+)\\}`,
-      "u",
-    ).exec(presets)?.[1];
-    assert.ok(block, name);
-    for (const variable of colors)
-      assert.match(
-        block,
-        new RegExp(`${variable}:\\s*#[\\da-f]{6}\\s*;`, "iu"),
-        `${name}: ${variable}`,
-      );
-    assert.match(block, /--flux-font-body:/u);
-  }
+test("optional presets are palette-only rather than alternate product themes", () => {
+  for (const name of [
+    "slate",
+    "indigo",
+    "blue",
+    "cyan",
+    "teal",
+    "emerald",
+    "green",
+    "lime",
+    "amber",
+    "orange",
+    "rose",
+    "violet",
+    "fuchsia",
+  ])
+    assert.match(
+      presets,
+      new RegExp(`\\[data-flux-palette="${name}"\\]`, "u"),
+      name,
+    );
+
+  assert.doesNotMatch(
+    presets,
+    /\[data-flux-theme="(?:paper|studio|bloom|terminal)"\]/u,
+  );
 });
+
 test("forced-color mapping is centralized and palette presets stand down", () => {
   const forced = theme.slice(theme.indexOf("@media (forced-colors: active)"));
   assert.match(

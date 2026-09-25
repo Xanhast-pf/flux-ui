@@ -68,7 +68,7 @@ import "@flux-ui/tokens/presets.css";
 
 export function EmbeddedPreview() {
   return (
-    <ThemeScope theme="paper" query>
+    <ThemeScope theme="dark" data-flux-palette="violet" query>
       <Grid columns={{ base: 1, md: 2 }} responsiveTo="container" gap={5}>
         <Card>First panel</Card>
         <Card>Second panel</Card>
@@ -91,10 +91,10 @@ choices. A surface is not a button merely because it has a click handler.
 ## Themes and density
 
 `@flux-ui/tokens/theme.css` remains the base light/dark contract. The separate,
-optional `@flux-ui/tokens/presets.css` exports Paper, Studio, Bloom, and Terminal
-selectors. Each preset defines all 30 semantic color roles, its body font stack,
-and its color scheme rather than relying on unrelated outer page colors.
-`ThemeScope` changes only its own subtree and does not remount child state.
+optional `@flux-ui/tokens/presets.css` maps the public color ramps onto semantic
+roles when `data-flux-palette` is present. Palette presets do not change the body
+font stack or invent another light/dark mode. `ThemeScope` changes only its own
+subtree and does not remount child state.
 
 Forced-colors mappings live in the base token layer. Artwork pigments remain
 separate from semantic foreground, background, focus, and state colors. Token

@@ -9,7 +9,8 @@ export default function ComponentWorkbench() {
   return (
     <Stack gap="lg">
       <Text as="p" variant="caption" tone="muted">
-        Switching labs resets the example. Your theme and accent stay with you.
+        Switching labs resets the example. Your theme and palette pair stay with
+        you.
       </Text>
       <Tabs.Root value={mode} onValueChange={setMode}>
         <Tabs.List aria-label="Playground modes" activateOnFocus wrap>
@@ -33,7 +34,7 @@ export default function ComponentWorkbench() {
               <Card>
                 <Stack gap="lg">
                   <Heading level={2} size="lg">
-                    Set the mood.
+                    Tune the palette.
                   </Heading>
                   <AppearanceControls />
                   <Link href="#tokens">Inspect every token →</Link>

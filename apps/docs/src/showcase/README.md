@@ -1,4 +1,4 @@
-# Product worlds
+# Example templates
 
 The same gallery drives the Overview and Playground. These are docs compositions,
 not new public component APIs.
@@ -40,20 +40,21 @@ Metadata must stay lightweight because it is eagerly loaded. Do not import the
 preview or media assets from the metadata module.
 
 `pnpm flux check docs` rejects missing/orphan pairs and invalid names. Browser fixtures
-discover all pairs, so a new world joins viewport and mood/a11y coverage without a
-second manual list. Add a focused behavior test for its own interactions.
+discover all pairs, so a new world joins viewport and accessibility coverage without
+a second manual list. Add a focused behavior test for its own interactions.
 
 ## State, motion, and trust
 
-Keep scene state in the preview. Mood is inherited through semantic CSS variables;
-do not write docs appearance or root attributes. Scene switches and resets unmount
-the preview. Mood changes do not. Do not add persistence, network calls, media
-permissions, polling, automatic playback, or unbounded lists without designing and
-documenting that behavior explicitly.
+Keep scene state in the preview. Appearance is owned by the shared documentation
+controls; scenes must not write root theme or palette attributes themselves. Scene
+switches and resets unmount the preview. Palette changes do not. Do not add
+persistence, network calls, media permissions, polling, automatic playback, or
+unbounded lists without designing and documenting that behavior explicitly.
 
 Use `Field` labels, accessible names, public native-backed controls, text alternatives for important
-graphics, and visible status feedback. Keep meaningful text readable in all four
-moods and in active/hover/disabled states. Motion must be opt-in and respect
+graphics, and visible status feedback. Keep meaningful text readable across the
+supported themes and palette pairings and in active/hover/disabled states. Motion
+must be opt-in and respect
 reduced motion. Do not rely on clipping to hide unusable controls.
 
 The ingredient list is typed against the generated public catalog. The inspector

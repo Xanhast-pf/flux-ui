@@ -4,7 +4,8 @@ import "@flux-ui/tokens/presets.css";
 export default function Preview() {
   return (
     <ThemeScope
-      theme="paper"
+      theme="dark"
+      data-flux-palette="violet"
       query
       padding={6}
       surface="canvas"
@@ -13,7 +14,9 @@ export default function Preview() {
     >
       <Grid columns={{ base: 1, md: 2 }} responsiveTo="container" gap="md">
         <Card>
-          <Text as="p">Paper is an optional complete palette.</Text>
+          <Text as="p">
+            Violet is scoped through the optional palette preset.
+          </Text>
         </Card>
         <Card>
           <Text as="p">

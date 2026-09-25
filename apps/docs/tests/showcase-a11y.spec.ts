@@ -1,18 +1,35 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
-import { moods } from "../src/showcase/model.js";
 import { sceneIds } from "./showcase-fixtures.js";
+
+const primaryPalettes = ["indigo", "teal", "amber", "rose"] as const;
+
 for (const outer of ["light", "dark"] as const) {
   for (const scene of sceneIds) {
-    for (const mood of moods) {
-      test(`${scene} is axe-clean in ${mood.label} inside ${outer}`, async ({
+    for (const primary of primaryPalettes) {
+      test(`${scene} is axe-clean with recommended ${primary} pairing inside ${outer}`, async ({
         page,
       }) => {
-        await page.goto(`/#playground?scene=${scene}&mood=${mood.id}`);
+        await page.addInitScript(
+          ({ theme, palette }) => {
+            localStorage.setItem("flux-ui-theme", theme);
+            localStorage.setItem("flux-ui-docs-palette", palette);
+            localStorage.removeItem("flux-ui-docs-secondary-palette");
+          },
+          { theme: outer, palette: primary },
+        );
+
+        await page.goto(`/#playground?scene=${scene}`);
         await expect(page.locator(`[data-scene="${scene}"]`)).toBeVisible();
-        await page.locator("html").evaluate((element, theme) => {
-          element.dataset.fluxTheme = theme;
-        }, outer);
+
+        const surface = page.locator(".world-surface");
+        await expect(surface).toHaveAttribute("data-flux-theme", outer);
+        await expect(surface).toHaveAttribute("data-flux-palette", primary);
+        await expect(surface).toHaveAttribute(
+          "data-flux-secondary-palette",
+          /.+/u,
+        );
+
         const results = await new AxeBuilder({ page }).analyze();
         expect(
           results.violations,
@@ -24,11 +41,12 @@ for (const outer of ["light", "dark"] as const) {
     }
   }
 }
+
 test("forced colors preserve scene selection and keyboard-operable controls", async ({
   page,
 }) => {
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
-  await page.goto("/#playground?scene=music&mood=terminal");
+  await page.goto("/#playground?scene=music");
   const mute = page.getByRole("button", {
     name: "Mute Drum machine",
     exact: true,

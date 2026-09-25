@@ -92,7 +92,7 @@ test("brand SVG assets are vectors and the favicon resolves", async ({
 test("finance transaction titles and metadata have distinct lines", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=finance&mood=paper");
+  await page.goto("/#playground?scene=finance");
   const activity = page.getByRole("region", { name: "Recent demo activity" });
   await expectSeparateLines(
     activity.getByText("Studio North", { exact: true }),
@@ -100,7 +100,7 @@ test("finance transaction titles and metadata have distinct lines", async ({
   );
 });
 test("marketing audience copy does not run together", async ({ page }) => {
-  await page.goto("/#playground?scene=marketing&mood=paper");
+  await page.goto("/#playground?scene=marketing");
   await expectSeparateLines(
     page.getByText("Made for your people.", { exact: true }),
     page.getByText("Fictional audience preview", { exact: true }),
@@ -109,7 +109,7 @@ test("marketing audience copy does not run together", async ({ page }) => {
 test("social author metadata is separate and like stays content-sized", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=social&mood=paper");
+  await page.goto("/#playground?scene=social");
   const post = page
     .getByRole("article")
     .filter({ has: page.getByRole("button", { name: "Like post mira" }) });
@@ -124,7 +124,7 @@ test("social author metadata is separate and like stays content-sized", async ({
   expect(button.width).toBeLessThan(card.width - 64);
 });
 test("commerce separates the bag total from its action", async ({ page }) => {
-  await page.goto("/#playground?scene=commerce&mood=paper");
+  await page.goto("/#playground?scene=commerce");
   const summary = page.getByRole("region", { name: "Demo bag summary" });
   const total = await bounds(summary.getByText("$0", { exact: true }));
   const clear = await bounds(
@@ -133,23 +133,21 @@ test("commerce separates the bag total from its action", async ({ page }) => {
   expect(clear.x - total.x - total.width).toBeGreaterThanOrEqual(15);
 });
 for (const outer of ["light", "dark"]) {
-  test(`video headings stay light across all artwork and moods in ${outer}`, async ({
+  test(`video headings stay light across palette-driven artwork in ${outer}`, async ({
     page,
   }) => {
-    for (const mood of ["paper", "studio", "bloom", "terminal"]) {
-      await page.goto(`/#playground?scene=video&mood=${mood}`);
-      await expect(page.locator('[data-scene="video"]')).toBeVisible();
-      await page.locator("html").evaluate((element, theme) => {
-        element.dataset.fluxTheme = theme;
-      }, outer);
-      const clips = page.getByRole("group", { name: "Storyboard clips" });
-      for (const name of ["01 / Coastline", "02 / Dunes", "03 / Afterglow"]) {
-        await clips.getByRole("button", { name: new RegExp(name) }).click();
-        await expect(page.locator(".video-frame h3")).toHaveCSS(
-          "color",
-          "rgb(255, 255, 255)",
-        );
-      }
+    await page.goto("/#playground?scene=video");
+    await expect(page.locator('[data-scene="video"]')).toBeVisible();
+    await page.locator("html").evaluate((element, theme) => {
+      element.dataset.fluxTheme = theme;
+    }, outer);
+    const clips = page.getByRole("group", { name: "Storyboard clips" });
+    for (const name of ["01 / Coastline", "02 / Dunes", "03 / Afterglow"]) {
+      await clips.getByRole("button", { name: new RegExp(name) }).click();
+      await expect(page.locator(".video-frame h3")).toHaveCSS(
+        "color",
+        "rgb(255, 255, 255)",
+      );
     }
   });
 }
@@ -157,7 +155,7 @@ test("video frame control produces the requested geometry", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/#playground?scene=video&mood=paper");
+  await page.goto("/#playground?scene=video");
   const select = page.getByLabel("Frame shape", { exact: true });
   for (const [value, ratio] of [
     ["16 / 9", 16 / 9],
@@ -190,7 +188,7 @@ for (const width of [390, 1440]) {
     page,
   }) => {
     await page.setViewportSize({ width, height: 1000 });
-    await page.goto("/#playground?scene=music&mood=paper");
+    await page.goto("/#playground?scene=music");
     const lanes = page.locator(".track-lane");
     await expect(lanes).toHaveCount(4);
     for (const lane of await lanes.all()) {

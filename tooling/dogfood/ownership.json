@@ -116,7 +116,7 @@
     "apps/docs/src/showcase/scenes/finance.css": {
       "owner": "scene-art",
       "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
-      "maxDeclarations": 54,
+      "maxDeclarations": 55,
       "rules": {
         ".folio-card": [
           "position",
@@ -142,14 +142,15 @@
           "inset",
           "opacity",
           "box-shadow",
-          "pointer-events"
+          "pointer-events",
+          "color"
         ]
       }
     },
     "apps/docs/src/showcase/scenes/marketing.css": {
       "owner": "scene-art",
       "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
-      "maxDeclarations": 46,
+      "maxDeclarations": 47,
       "rules": {
         ".campaign-poster": ["position", "overflow", "background", "color"],
         ".poster-foreground": ["position", "z-index"],
@@ -159,7 +160,8 @@
           "block-size",
           "inset",
           "transform",
-          "pointer-events"
+          "pointer-events",
+          "color"
         ],
         ".poster-sculpture > div": [
           "position",
@@ -230,7 +232,7 @@
     "apps/docs/src/showcase/scenes/social.css": {
       "owner": "scene-art",
       "reason": "Original illustration/data geometry. Ordinary layout, controls, surfaces and typography are composed through public Flux APIs.",
-      "maxDeclarations": 50,
+      "maxDeclarations": 51,
       "rules": {
         ".gather-editorial": ["position", "overflow", "background", "color"],
         ".editorial-foreground": ["position", "z-index"],
@@ -240,7 +242,8 @@
           "block-size",
           "inset",
           "opacity",
-          "pointer-events"
+          "pointer-events",
+          "color"
         ],
         ".gather-flower > span": [
           "position",
@@ -334,28 +337,78 @@
     },
     "apps/docs/src/showcase/showcase.css": {
       "owner": "showcase-staging",
-      "reason": "Original scene palettes and explicitly scoped semantic text colors inside artwork.",
-      "maxDeclarations": 29,
+      "reason": "Showcase artwork maps docs-only illustration channels to the active primary/secondary palette while keeping semantic text colors scoped to artwork.",
+      "maxDeclarations": 40,
       "rules": {
         ".world-surface": [
           "overflow",
+          "--secondary-600",
+          "--secondary-400",
           "--art-canvas",
           "--art-ink",
           "--channel-one",
+          "--channel-three"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"slate\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"indigo\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"blue\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"cyan\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"teal\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"emerald\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"green\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"lime\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"amber\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"orange\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"rose\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"violet\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-secondary-palette=\"fuchsia\"]": [
+          "--secondary-400",
+          "--secondary-600"
+        ],
+        ".world-surface[data-flux-theme=\"light\"]": [
           "--channel-two",
-          "--channel-three",
           "--channel-four"
         ],
-        ".world-surface[data-mood=\"studio\"]": [
-          "--art-canvas",
-          "--art-ink",
-          "--channel-one",
+        ".world-surface[data-flux-theme=\"dark\"]": [
           "--channel-two",
-          "--channel-three",
           "--channel-four"
         ],
-        ".world-surface[data-mood=\"bloom\"]": ["--art-canvas", "--art-ink"],
-        ".world-surface[data-mood=\"terminal\"]": ["--art-canvas", "--art-ink"],
         "[data-artwork-ink]": [
           "--flux-color-text",
           "--flux-color-text-muted",
@@ -365,8 +418,8 @@
     },
     "apps/docs/src/styles.css": {
       "owner": "documentation-shell",
-      "reason": "Reviewed sticky-shell positioning, original collection artwork and the isolated benchmark frame. No control/layout/typography skins. App-owned viewport and preview native scrollbars mirror Flux theme colors without styling consumer documents.",
-      "maxDeclarations": 347,
+      "reason": "Reviewed sticky-shell positioning, original collection artwork, isolated benchmark frame, and docs-only paired-palette theme adapter. The secondary palette remaps shared semantic surfaces/borders on both the docs root and the first-page showcase scope only when explicitly enabled; primary-only mode remains the public preset behavior. No control/layout/typography skins.",
+      "maxDeclarations": 447,
       "rules": {
         ".site-header": ["position", "inset-block-start", "z-index"],
         ".header-inner": ["min-block-size"],
@@ -417,6 +470,130 @@
         "@media (forced-colors: active) / html, .preview-frame, .preview-stage": [
           "scrollbar-color",
           "scrollbar-width"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"slate\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"indigo\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"blue\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"cyan\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"teal\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"emerald\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"green\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"lime\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"amber\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"orange\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"rose\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"violet\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"fuchsia\"]": [
+          "--_docs-secondary-50",
+          "--_docs-secondary-100",
+          "--_docs-secondary-200",
+          "--_docs-secondary-600",
+          "--_docs-secondary-900",
+          "--_docs-secondary-950"
+        ],
+        "@media (forced-colors: none) / :is( html, .world-surface )[data-flux-theme=\"light\"][data-flux-palette][data-flux-secondary-palette]": [
+          "--flux-color-canvas",
+          "--flux-color-surface",
+          "--flux-color-surface-subtle",
+          "--flux-color-surface-elevated",
+          "--flux-color-border",
+          "--flux-color-border-strong",
+          "--flux-color-accent-soft"
+        ],
+        "@media (forced-colors: none) / :is( html, .world-surface )[data-flux-theme=\"dark\"][data-flux-palette][data-flux-secondary-palette]": [
+          "--_docs-pair-950",
+          "--_docs-pair-900",
+          "--flux-color-canvas",
+          "--flux-color-surface",
+          "--flux-color-surface-subtle",
+          "--flux-color-surface-elevated",
+          "--flux-color-border",
+          "--flux-color-border-strong",
+          "--flux-color-accent-soft"
         ]
       }
     }

@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("Folio connects ledger filters, note editing and its persistent navigation", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=finance&mood=paper");
+  await page.goto("/#playground?scene=finance");
   const scene = page.locator('[data-scene="finance"]');
   const navigation = scene.getByRole("complementary", {
     name: "Folio workspace navigation",
@@ -46,7 +46,7 @@ test("Folio connects ledger filters, note editing and its persistent navigation"
 test("Folio records local invitations and exposes recovery states without a backend", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=finance&mood=studio");
+  await page.goto("/#playground?scene=finance");
   const scene = page.locator('[data-scene="finance"]');
   await scene.getByRole("tab", { name: "Team", exact: true }).click();
   await scene.getByRole("button", { name: "Invite teammate" }).click();
@@ -84,7 +84,7 @@ test("Folio records local invitations and exposes recovery states without a back
 test("Afterhours keeps independent track settings and restores local checkpoints", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=music&mood=studio");
+  await page.goto("/#playground?scene=music");
   const scene = page.locator('[data-scene="music"]');
   await expect(
     scene.getByRole("button", { name: "Discard unsaved changes" }),
@@ -125,7 +125,7 @@ test("Afterhours keeps independent track settings and restores local checkpoints
 test("composition exports include helper sources and independent consumer setup", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=finance&mood=paper");
+  await page.goto("/#playground?scene=finance");
   const source = page.getByRole("button", { name: "View source", exact: true });
   await expect(source).not.toBeVisible();
   await page

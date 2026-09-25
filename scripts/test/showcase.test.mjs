@@ -1,15 +1,15 @@
 import assert from "node:assert/strict";
-import { readdir, readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 import { validateShowcaseFiles } from "../docs-catalog.mjs";
+import { rankPalettePairings } from "../../apps/docs/src/lib/paletteHarmony.ts";
 import {
   formatMoney,
   formatTime,
-  isMood,
-  moods,
   readShowcaseRoute,
   showcaseHash,
 } from "../../apps/docs/src/showcase/model.ts";
+
 const sceneDirectory = new URL(
   "../../apps/docs/src/showcase/scenes/",
   import.meta.url,
@@ -18,14 +18,26 @@ const sceneFiles = await readdir(sceneDirectory);
 const sceneIds = sceneFiles
   .filter((name) => name.endsWith(".scene.ts"))
   .map((name) => name.replace(/\.scene\.ts$/u, ""));
-const css = await readFile(
-  new URL("../../packages/tokens/src/presets.css", import.meta.url),
+
+const appearanceSource = await readFile(
+  new URL("../../apps/docs/src/lib/appearance.ts", import.meta.url),
   "utf8",
 );
+const paletteCss = await readFile(
+  new URL("../../packages/tokens/src/palette.css", import.meta.url),
+  "utf8",
+);
+const paletteCandidates = [
+  ...appearanceSource.matchAll(
+    /id: "([a-z]+)",\s+label: "[^"]+",\s+sampleHex: "(#[\da-f]{6})"/giu,
+  ),
+].map((match) => ({ id: match[1], sampleHex: match[2] }));
+
 test("every scene is a convention-based metadata/preview pair", () => {
   assert.deepEqual(validateShowcaseFiles(sceneFiles), []);
   assert.ok(sceneIds.length >= 6);
 });
+
 test("the scene contract rejects missing, orphaned, duplicate, and invalid files", () => {
   assert.match(validateShowcaseFiles([]).join("\n"), /At least one/);
   assert.match(
@@ -51,6 +63,7 @@ test("the scene contract rejects missing, orphaned, duplicate, and invalid files
     /Duplicate showcase filename/,
   );
 });
+
 test("contributors can add a complete scene without changing a central registry", () => {
   assert.deepEqual(
     validateShowcaseFiles([
@@ -61,6 +74,7 @@ test("contributors can add a complete scene without changing a central registry"
     [],
   );
 });
+
 test("unknown and encoded URL values are not treated as component names or CSS", () => {
   for (const value of [
     "",
@@ -74,34 +88,34 @@ test("unknown and encoded URL values are not treated as component names or CSS",
         "finance",
         "music",
       ]),
-      { scene: "finance", mood: "paper" },
+      { scene: "finance" },
     );
   }
   assert.deepEqual(readShowcaseRoute("playground", []), {
     scene: "finance",
-    mood: "paper",
   });
 });
+
 for (const scene of sceneIds) {
-  for (const mood of moods) {
-    test(`${scene}/${mood.id} round-trips through both shareable routes`, () => {
-      for (const page of ["overview", "playground"]) {
-        const hash = showcaseHash(page, scene, mood.id);
-        assert.ok(hash.startsWith(`#${page}?`));
-        assert.deepEqual(readShowcaseRoute(hash.slice(1), sceneIds), {
-          scene,
-          mood: mood.id,
-        });
-      }
-    });
-  }
+  test(`${scene} round-trips through both shareable routes`, () => {
+    for (const page of ["overview", "playground"]) {
+      const hash = showcaseHash(page, scene);
+      assert.ok(hash.startsWith(`#${page}?`));
+      assert.deepEqual(readShowcaseRoute(hash.slice(1), sceneIds), {
+        scene,
+      });
+    }
+  });
 }
-test("mood choices are explicit, unique, and separate from persisted docs appearance", () => {
-  assert.equal(new Set(moods.map((mood) => mood.id)).size, 4);
-  assert.equal(isMood("studio"), true);
-  assert.equal(isMood("Studio"), false);
-  assert.equal(isMood("system"), false);
+
+test("legacy mood query parameters are ignored rather than changing appearance", () => {
+  assert.deepEqual(
+    readShowcaseRoute("playground?scene=music&mood=terminal", sceneIds),
+    { scene: "music" },
+  );
+  assert.equal(showcaseHash("playground", "music"), "#playground?scene=music");
 });
+
 test("demo money and time formatting use deterministic bounded fixture values", () => {
   assert.equal(formatMoney(12900), "$129");
   assert.equal(formatMoney(3 * 12900), "$387");
@@ -112,58 +126,54 @@ test("demo money and time formatting use deterministic bounded fixture values", 
   assert.equal(formatTime(65.9), "01:05");
   assert.equal(formatTime(-1), "00:00");
 });
-function luminance(hex) {
-  const channels = hex
-    .slice(1)
-    .match(/../gu)
-    .map((channel) => Number.parseInt(channel, 16) / 255);
-  const [red, green, blue] = channels.map((channel) =>
-    channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4,
-  );
-  return red * 0.2126 + green * 0.7152 + blue * 0.0722;
-}
-function contrast(first, second) {
-  const a = luminance(first);
-  const b = luminance(second);
-  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
-}
-// Token-pair arithmetic is a design guard, not a replacement for rendered axe scans.
-for (const mood of moods) {
-  test(`${mood.label} text token pairs meet 4.5:1 before rendering`, () => {
-    const body = new RegExp(
-      `\\[data-flux-theme="${mood.id}"\\]\\s*\\{([^}]+)\\}`,
-      "u",
-    ).exec(css)?.[1];
-    assert.ok(body);
-    const tokens = Object.fromEntries(
-      [
-        ...body.matchAll(/--flux-color-([a-z-]+):\s*(#[a-fA-F0-9]{6})\s*;/gu),
-      ].map((match) => [match[1], match[2]]),
+
+test("palette representative colors stay synchronized with the public 500-step ramps", () => {
+  assert.equal(paletteCandidates.length, 13);
+  for (const candidate of paletteCandidates) {
+    assert.ok(
+      paletteCss.includes(
+        `--flux-palette-${candidate.id}-500: ${candidate.sampleHex};`,
+      ),
+      candidate.id,
     );
-    for (const text of ["text", "text-muted", "text-subtle"]) {
-      for (const surface of [
-        "canvas",
-        "surface",
-        "surface-subtle",
-        "surface-elevated",
-      ]) {
-        assert.ok(
-          contrast(tokens[text], tokens[surface]) >= 4.5,
-          `${mood.id}: ${text} on ${surface} is ${contrast(tokens[text], tokens[surface]).toFixed(2)}:1`,
-        );
-      }
-    }
-    for (const [text, surface] of [
-      ["accent-foreground", "accent"],
-      ["accent-foreground", "accent-hover"],
-      ["accent", "accent-soft"],
-      ["success", "success-soft"],
-      ["warning", "warning-soft"],
-    ]) {
-      assert.ok(
-        contrast(tokens[text], tokens[surface]) >= 4.5,
-        `${mood.id}: ${text} on ${surface} is ${contrast(tokens[text], tokens[surface]).toFixed(2)}:1`,
-      );
-    }
-  });
-}
+  }
+});
+
+test("every primary ranks every other palette once with stable perceptual scores", () => {
+  for (const primary of paletteCandidates) {
+    const ranked = rankPalettePairings(primary.id, paletteCandidates);
+    assert.equal(ranked.length, paletteCandidates.length - 1);
+    assert.equal(
+      new Set(ranked.map((pairing) => pairing.id)).size,
+      ranked.length,
+    );
+    assert.equal(
+      ranked.some((pairing) => pairing.id === primary.id),
+      false,
+    );
+
+    for (let index = 1; index < ranked.length; index += 1)
+      assert.ok(ranked[index - 1].score >= ranked[index].score);
+
+    assert.ok(ranked[0].score > 0.5, primary.id);
+    assert.ok(ranked[0].perceptualDistance > 0.1, primary.id);
+  }
+});
+
+test("chromatic primaries prefer separated harmony families over neighboring hues", () => {
+  for (const primary of paletteCandidates.filter(
+    (candidate) => candidate.id !== "slate",
+  )) {
+    const [best] = rankPalettePairings(primary.id, paletteCandidates);
+    assert.ok(best);
+    assert.ok(
+      [
+        "split-complementary",
+        "complementary",
+        "triadic",
+        "contrasting",
+      ].includes(best.harmony),
+      `${primary.id}: ${best.harmony}`,
+    );
+  }
+});

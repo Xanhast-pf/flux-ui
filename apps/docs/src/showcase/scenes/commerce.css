@@ -44,9 +44,9 @@
   fill: none;
 }
 .speaker-led {
-  fill: #427965;
+  fill: var(--secondary-600);
 }
 .speaker-controls {
-  stroke: var(--speaker-line);
+  stroke: var(--secondary-600);
   stroke-width: 2;
 }

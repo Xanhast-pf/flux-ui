@@ -110,7 +110,8 @@ test("recipe consumer setup points to exact local Flux artifacts and includes th
     );
   }
   assert.equal(files.LICENSE, "Test MIT notice");
-  assert.match(files["src/main.tsx"], /ThemeScope/);
+  assert.doesNotMatch(files["src/main.tsx"], /ThemeScope|Application mood/);
+  assert.doesNotMatch(files["src/main.tsx"], /tokens\/presets\.css/);
   assert.match(files["README.md"], /not a release attestation/);
   assert.throws(() => recipeProject("../private", catalog, ""), /Unsafe/);
 });

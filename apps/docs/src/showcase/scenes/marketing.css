@@ -15,6 +15,7 @@
   block-size: 19rem;
   inset: auto -3rem 2rem auto;
   transform: rotate(-25deg);
+  color: var(--secondary-600);
   pointer-events: none;
 }
 .poster-sculpture > div {
@@ -22,15 +23,15 @@
   inset: 0;
   border: 2rem solid currentColor;
   border-radius: 50%;
-  opacity: 0.12;
+  opacity: 0.22;
 }
 .poster-sculpture > div:nth-child(2) {
   transform: translate(-15%, -5%) scale(0.72);
-  opacity: 0.15;
+  opacity: 0.26;
 }
 .poster-sculpture > div:nth-child(3) {
   transform: translate(-25%, -8%) scale(0.45);
-  opacity: 0.18;
+  opacity: 0.3;
 }
 @container flux-layout (min-width: 48rem) {
   .poster-sculpture {

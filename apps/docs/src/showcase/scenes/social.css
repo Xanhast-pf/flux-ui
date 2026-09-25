@@ -14,7 +14,8 @@
   inline-size: 14rem;
   block-size: 14rem;
   inset: 2rem -4rem auto auto;
-  opacity: 0.16;
+  color: var(--secondary-600);
+  opacity: 0.3;
   pointer-events: none;
 }
 .gather-flower > span {
@@ -43,6 +44,6 @@
 }
 @container flux-layout (max-width: 30rem) {
   .gather-flower {
-    opacity: 0.08;
+    opacity: 0.16;
   }
 }

@@ -1,29 +1,97 @@
-/* Original scene palettes, applied to semantic tokens only within artwork. */
+/* Showcase artwork composes the primary semantic palette with an optional
+ * secondary palette. Primary-only mode falls back to the primary palette.
+ */
 .world-surface {
   overflow: clip;
-  --art-canvas: #eddfcf;
-  --art-ink: #382c24;
-  --channel-one: #936cc4;
-  --channel-two: #4b9481;
-  --channel-three: #b37b3e;
-  --channel-four: #5e8fb9;
+  --secondary-400: var(--_flux-palette-400);
+  --secondary-600: var(--_flux-palette-600);
+  --art-canvas: color-mix(
+    in oklab,
+    var(--flux-color-accent-soft) 68%,
+    var(--secondary-400) 32%
+  );
+  --art-ink: var(--flux-color-text);
+  --channel-one: var(--flux-color-accent);
+  --channel-three: color-mix(
+    in oklab,
+    var(--flux-color-accent) 52%,
+    var(--secondary-600) 48%
+  );
 }
 
-.world-surface[data-mood="studio"] {
-  --art-canvas: #b7a5ef;
-  --art-ink: #252038;
-  --channel-one: #b89de5;
-  --channel-two: #75bba2;
-  --channel-three: #dbad78;
-  --channel-four: #8eafd5;
+.world-surface[data-flux-secondary-palette="slate"] {
+  --secondary-400: var(--flux-palette-slate-400);
+  --secondary-600: var(--flux-palette-slate-600);
 }
-.world-surface[data-mood="bloom"] {
-  --art-canvas: #ead2e1;
-  --art-ink: #4a2440;
+
+.world-surface[data-flux-secondary-palette="indigo"] {
+  --secondary-400: var(--flux-palette-indigo-400);
+  --secondary-600: var(--flux-palette-indigo-600);
 }
-.world-surface[data-mood="terminal"] {
-  --art-canvas: #b6d5b8;
-  --art-ink: #243829;
+
+.world-surface[data-flux-secondary-palette="blue"] {
+  --secondary-400: var(--flux-palette-blue-400);
+  --secondary-600: var(--flux-palette-blue-600);
+}
+
+.world-surface[data-flux-secondary-palette="cyan"] {
+  --secondary-400: var(--flux-palette-cyan-400);
+  --secondary-600: var(--flux-palette-cyan-600);
+}
+
+.world-surface[data-flux-secondary-palette="teal"] {
+  --secondary-400: var(--flux-palette-teal-400);
+  --secondary-600: var(--flux-palette-teal-600);
+}
+
+.world-surface[data-flux-secondary-palette="emerald"] {
+  --secondary-400: var(--flux-palette-emerald-400);
+  --secondary-600: var(--flux-palette-emerald-600);
+}
+
+.world-surface[data-flux-secondary-palette="green"] {
+  --secondary-400: var(--flux-palette-green-400);
+  --secondary-600: var(--flux-palette-green-600);
+}
+
+.world-surface[data-flux-secondary-palette="lime"] {
+  --secondary-400: var(--flux-palette-lime-400);
+  --secondary-600: var(--flux-palette-lime-600);
+}
+
+.world-surface[data-flux-secondary-palette="amber"] {
+  --secondary-400: var(--flux-palette-amber-400);
+  --secondary-600: var(--flux-palette-amber-600);
+}
+
+.world-surface[data-flux-secondary-palette="orange"] {
+  --secondary-400: var(--flux-palette-orange-400);
+  --secondary-600: var(--flux-palette-orange-600);
+}
+
+.world-surface[data-flux-secondary-palette="rose"] {
+  --secondary-400: var(--flux-palette-rose-400);
+  --secondary-600: var(--flux-palette-rose-600);
+}
+
+.world-surface[data-flux-secondary-palette="violet"] {
+  --secondary-400: var(--flux-palette-violet-400);
+  --secondary-600: var(--flux-palette-violet-600);
+}
+
+.world-surface[data-flux-secondary-palette="fuchsia"] {
+  --secondary-400: var(--flux-palette-fuchsia-400);
+  --secondary-600: var(--flux-palette-fuchsia-600);
+}
+
+.world-surface[data-flux-theme="light"] {
+  --channel-two: var(--secondary-600);
+  --channel-four: var(--secondary-400);
+}
+
+.world-surface[data-flux-theme="dark"] {
+  --channel-two: var(--secondary-400);
+  --channel-four: var(--secondary-600);
 }
 
 [data-artwork-ink] {

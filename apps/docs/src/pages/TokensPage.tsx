@@ -108,11 +108,11 @@ export function TokensPage() {
     <Stack gap="lg">
       <PageHeader
         title={<>Design tokens</>}
-        eyebrow={<>One language, many moods</>}
+        eyebrow={<>One language, balanced color</>}
       >
         <Text as="p" variant="lead" tone="muted">
-          Choose a palette, flip the lights, and watch the entire workshop
-          respond through the same semantic CSS variables.
+          Choose a primary palette, pair it with a perceptually complementary
+          secondary, flip the lights, and keep semantic roles intact.
         </Text>
       </PageHeader>
 
