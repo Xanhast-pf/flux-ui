@@ -6,7 +6,7 @@ export default {
   previewLayout: "fill",
   code,
   notes: [
-    "Import @flux-ui/tokens/presets.css only when using Paper, Studio, Bloom or Terminal. Custom theme names can be defined in consumer CSS.",
+    "Import @flux-ui/tokens/presets.css when using data-flux-palette. Light/dark remain the built-in theme values; custom theme names can still be defined in consumer CSS.",
     "Changing theme updates inherited variables without changing descendant keys or resetting their React state.",
     'query creates the named ancestor used by responsiveTo="container". The scope does not query its own size.',
   ],

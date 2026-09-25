@@ -30,9 +30,9 @@ export function OverviewPage() {
     {
       id: "tokens",
       label: "01 / Shape the feeling",
-      title: "A mood, not just a color.",
+      title: "Color with a point of view.",
       description:
-        "Semantic surfaces, readable contrast, measured space. Change the atmosphere without changing the components.",
+        "Choose a primary palette, pair it with a perceptually distinct secondary, and keep semantic contrast grounded in the same tokens.",
       action: "Explore the tokens",
     },
     {
@@ -250,7 +250,8 @@ export function OverviewPage() {
                 No. Products, people, and figures are fictional. Actions use
                 in-memory state. Music is visual and silent; the video editor
                 uses illustrated frames. Changing scenes or reloading resets the
-                demo. Scene and mood are shareable in the URL.
+                demo. The selected scene is shareable in the URL; appearance
+                stays with your saved documentation preferences.
               </Text>
             </Collapsible.Content>
           </Collapsible.Root>

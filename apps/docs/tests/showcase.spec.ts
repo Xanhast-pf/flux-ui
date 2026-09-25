@@ -37,23 +37,26 @@ for (const scene of sceneIds) {
     page.on("pageerror", (error) => {
       errors.push(error.message);
     });
-    await page.goto(`/#playground?scene=${scene}&mood=studio`);
+    await page.goto(`/#playground?scene=${scene}`);
     await expect(page.locator(`[data-scene="${scene}"]`)).toBeVisible();
     await expect(page.locator("[data-scene]")).toHaveCount(1);
-    await expect(page.locator(".world-surface")).toHaveAttribute(
-      "data-mood",
-      "studio",
-    );
     await page.reload();
     await expect(page.locator(`[data-scene="${scene}"]`)).toBeVisible();
     expect(errors).toEqual([]);
   });
 }
-test("world tabs have manual keyboard activation; changing mood preserves state and focus", async ({
+
+test("template tabs use manual activation and palette changes preserve scene state", async ({
   page,
 }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("flux-ui-theme", "dark");
+    localStorage.setItem("flux-ui-docs-palette", "indigo");
+    localStorage.removeItem("flux-ui-docs-secondary-palette");
+  });
   await page.goto("/#playground");
-  const worlds = page.getByRole("tablist", { name: "Product worlds" });
+
+  const worlds = page.getByRole("tablist", { name: "Example templates" });
   const finance = worlds.getByRole("tab", { name: "Finance", exact: true });
   await finance.focus();
   await page.keyboard.press("ArrowRight");
@@ -63,78 +66,147 @@ test("world tabs have manual keyboard activation; changing mood preserves state 
   await page.keyboard.press("Enter");
   await expect(page.locator('[data-scene="marketing"]')).toBeVisible();
   await expect(marketing).toBeFocused();
+
   await page
     .getByLabel("Campaign headline", { exact: true })
     .fill("A very good idea.");
-  const rootTheme = await page.locator("html").getAttribute("data-flux-theme");
-  const mood = page
-    .getByRole("group", { name: "Set the mood" })
-    .getByRole("button", { name: "Studio", exact: true });
-  await mood.click();
-  await expect(mood).toBeFocused();
+
+  const surface = page.locator(".world-surface");
+  const primary = page.getByLabel("Primary palette", { exact: true });
+  const secondary = page.getByLabel("Secondary palette", { exact: true });
+
+  await primary.selectOption("teal");
+  await secondary.selectOption("rose");
+
   await expect(
     page.getByLabel("Campaign headline", { exact: true }),
   ).toHaveValue("A very good idea.");
-  expect(await page.locator("html").getAttribute("data-flux-theme")).toBe(
-    rootTheme,
+  await expect(surface).toHaveAttribute("data-flux-theme", "dark");
+  await expect(surface).toHaveAttribute("data-flux-palette", "teal");
+  await expect(surface).toHaveAttribute("data-flux-secondary-palette", "rose");
+
+  const rootAccent = await page
+    .locator("html")
+    .evaluate((element) =>
+      getComputedStyle(element).getPropertyValue("--flux-color-accent").trim(),
+    );
+  const surfaceAccent = await surface.evaluate((element) =>
+    getComputedStyle(element).getPropertyValue("--flux-color-accent").trim(),
   );
+  expect(surfaceAccent).toBe(rootAccent);
+
   await page.getByRole("button", { name: "Reset scene", exact: true }).click();
   await expect(
     page.getByLabel("Campaign headline", { exact: true }),
   ).toHaveValue("Make room for wonder.");
-  await expect(page.locator(".world-surface")).toHaveAttribute(
-    "data-mood",
-    "studio",
-  );
+  await expect(secondary).toHaveValue("rose");
 });
-test("invalid scene and mood parameters fall back safely", async ({ page }) => {
+
+test("first-page demos visibly compose the optional secondary palette", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("flux-ui-theme", "dark");
+    localStorage.setItem("flux-ui-docs-palette", "indigo");
+    localStorage.setItem("flux-ui-docs-secondary-palette", "lime");
+  });
+  await page.goto("/#overview?scene=finance");
+
+  const secondary = page.getByLabel("Secondary palette", { exact: true });
+  const worlds = page.getByRole("tablist", { name: "Example templates" });
+  const surface = page.locator(".world-surface");
+
+  const pairedSurface = await surface.evaluate((element) =>
+    getComputedStyle(element)
+      .getPropertyValue("--flux-color-surface-subtle")
+      .trim(),
+  );
+  await secondary.selectOption("off");
+  const primaryOnlySurface = await surface.evaluate((element) =>
+    getComputedStyle(element)
+      .getPropertyValue("--flux-color-surface-subtle")
+      .trim(),
+  );
+  expect(pairedSurface).not.toBe(primaryOnlySurface);
+
+  const probes = [
+    ["Finance", ".card-orbit", "color"],
+    ["Commerce", ".speaker-controls", "stroke"],
+    ["Social", ".gather-flower", "color"],
+    ["Music / DAW", '[data-channel="two"] .track-color', "background-color"],
+    ["Marketing", ".poster-sculpture", "color"],
+    ["Video", ".video-landscape", "background-color"],
+  ] as const;
+
+  for (const [label, selector, property] of probes) {
+    await worlds.getByRole("tab", { name: label, exact: true }).click();
+    await expect(page.locator("[data-scene]")).toHaveCount(1);
+
+    await secondary.selectOption("lime");
+    const paired = await page
+      .locator(selector)
+      .evaluate(
+        (element, cssProperty) =>
+          getComputedStyle(element).getPropertyValue(cssProperty).trim(),
+        property,
+      );
+
+    await secondary.selectOption("off");
+    const primaryOnly = await page
+      .locator(selector)
+      .evaluate(
+        (element, cssProperty) =>
+          getComputedStyle(element).getPropertyValue(cssProperty).trim(),
+        property,
+      );
+
+    expect(
+      paired,
+      `${label} should visibly react to the secondary palette`,
+    ).not.toBe(primaryOnly);
+  }
+});
+
+test("invalid scene and legacy mood parameters fall back safely", async ({
+  page,
+}) => {
   await page.goto("/#playground?scene=not-a-scene&mood=%3Cscript%3E");
   await expect(page.locator('[data-scene="finance"]')).toBeVisible();
-  await expect(page.locator(".world-surface")).toHaveAttribute(
-    "data-mood",
-    "paper",
-  );
   await expect(
     page.getByRole("heading", { name: "That page wandered off." }),
   ).toHaveCount(0);
 });
-test("back navigation restores scene and mood without resetting the page scroll", async ({
+
+test("back navigation restores scene without rewriting saved appearance", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=finance&mood=paper");
+  await page.addInitScript(() => {
+    localStorage.setItem("flux-ui-docs-palette", "blue");
+  });
+  await page.goto("/#playground?scene=finance");
   await expect(page.locator("[data-scene]")).toBeVisible();
+
   await page.getByRole("tab", { name: "Marketing", exact: true }).click();
   await expect(page.locator('[data-scene="marketing"]')).toBeVisible();
-  await page
-    .getByRole("group", { name: "Set the mood" })
-    .getByRole("button", { name: "Bloom", exact: true })
-    .click();
-  await expect(page.locator(".world-surface")).toHaveAttribute(
-    "data-mood",
-    "bloom",
-  );
-  await page.goBack();
-  await expect(page.locator(".world-surface")).toHaveAttribute(
-    "data-mood",
-    "paper",
-  );
   await page.goBack();
   await expect(page.locator('[data-scene="finance"]')).toBeVisible();
+
   await page.evaluate(() => {
     window.scrollTo({ top: 320, behavior: "instant" });
   });
   const before = await page.evaluate(() => window.scrollY);
   await page.evaluate(() => {
-    window.location.hash = "playground?scene=finance&mood=terminal";
+    window.location.hash = "playground?scene=music";
   });
-  await expect(page.locator(".world-surface")).toHaveAttribute(
-    "data-mood",
-    "terminal",
-  );
+  await expect(page.locator('[data-scene="music"]')).toBeVisible();
   expect(await page.evaluate(() => window.scrollY)).toBe(before);
+  await expect(page.getByLabel("Primary palette", { exact: true })).toHaveValue(
+    "blue",
+  );
 });
+
 test("finance controls change real local state", async ({ page }) => {
-  await page.goto("/#playground?scene=finance&mood=paper");
+  await page.goto("/#playground?scene=finance");
   const scene = page.locator('[data-scene="finance"]');
   await scene
     .getByRole("group", { name: "Cash flow period" })
@@ -156,7 +228,7 @@ test("finance controls change real local state", async ({ page }) => {
 test("marketing rejects empty headlines and only launches locally", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=marketing&mood=paper");
+  await page.goto("/#playground?scene=marketing");
   const scene = page.locator('[data-scene="marketing"]');
   await scene.getByLabel("Campaign headline", { exact: true }).fill("   ");
   await expect(
@@ -182,7 +254,7 @@ test("marketing rejects empty headlines and only launches locally", async ({
 test("social posting is bounded, text-only, and resettable", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=social&mood=bloom");
+  await page.goto("/#playground?scene=social");
   const scene = page.locator('[data-scene="social"]');
   await scene
     .getByRole("button", { name: "Like post mira", exact: true })
@@ -218,7 +290,7 @@ test("music is opt-in, keyboard-operable, silent, and honors reduced motion", as
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/#playground?scene=music&mood=studio");
+  await page.goto("/#playground?scene=music");
   const scene = page.locator('[data-scene="music"]');
   await expect(scene.locator(".sequencer")).toHaveAttribute(
     "data-playing",
@@ -258,7 +330,7 @@ test("music is opt-in, keyboard-operable, silent, and honors reduced motion", as
 test("video selects illustrated clips and exports actual edit notes", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=video&mood=studio");
+  await page.goto("/#playground?scene=video");
   const scene = page.locator('[data-scene="video"]');
   await scene.getByRole("button", { name: /02 \/ Dunes/ }).click();
   await expect(scene.locator(".video-frame h3")).toHaveText(
@@ -290,7 +362,7 @@ test("video selects illustrated clips and exports actual edit notes", async ({
 test("commerce preserves line items, computes totals, and enforces the demo bag limit", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=commerce&mood=paper");
+  await page.goto("/#playground?scene=commerce");
   const scene = page.locator('[data-scene="commerce"]');
   await scene.getByRole("button", { name: "Clay", exact: true }).click();
   await scene.getByLabel("Quantity", { exact: true }).selectOption("3");
@@ -313,7 +385,7 @@ test("commerce preserves line items, computes totals, and enforces the demo bag 
 test("composition details expose real source only on request", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=music&mood=studio");
+  await page.goto("/#playground?scene=music");
   await expect(
     page.getByRole("region", { name: "Composition details" }),
   ).toHaveCount(0);
@@ -341,7 +413,7 @@ test("clipboard failure is honest and the permalink stays usable", async ({
       value: { writeText: () => Promise.reject(new Error("blocked")) },
     });
   });
-  await page.goto("/#playground?scene=music&mood=studio");
+  await page.goto("/#playground?scene=music");
   await page
     .getByRole("button", { name: "Copy scene link", exact: true })
     .click();
@@ -350,7 +422,7 @@ test("clipboard failure is honest and the permalink stays usable", async ({
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Scene permalink ↗", exact: true }),
-  ).toHaveAttribute("href", "#playground?scene=music&mood=studio");
+  ).toHaveAttribute("href", "#playground?scene=music");
 });
 for (const width of [320, 390, 768, 1024, 1440]) {
   test(`every product fits a ${width}px viewport without root overflow`, async ({
@@ -358,7 +430,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
   }) => {
     await page.setViewportSize({ width, height: 900 });
     for (const scene of sceneIds) {
-      await page.goto(`/#playground?scene=${scene}&mood=paper`);
+      await page.goto(`/#playground?scene=${scene}`);
       await expect(page.locator(`[data-scene="${scene}"]`)).toBeVisible();
       expect(
         await page.evaluate(
@@ -402,7 +474,7 @@ test("container-responsive scenes do not inherit wide viewport columns", async (
 }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   for (const scene of ["finance", "marketing", "commerce"]) {
-    await page.goto(`/#playground?scene=${scene}&mood=paper`);
+    await page.goto(`/#playground?scene=${scene}`);
     const root = page.locator(`[data-scene="${scene}"]`);
     await expect(root).toBeVisible();
     await page.locator(".world-surface").evaluate((element) => {
@@ -429,7 +501,7 @@ test("the compact finance table retains a caption and keyboard-scrollable overfl
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 900 });
-  await page.goto("/#playground?scene=finance&mood=paper");
+  await page.goto("/#playground?scene=finance");
   const table = page.getByRole("table");
   await expect(table.locator(":scope > caption")).toHaveCount(1);
   const region = page

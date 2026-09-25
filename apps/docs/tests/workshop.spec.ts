@@ -93,9 +93,13 @@ test("preferences persist and previews reset without resetting the theme", async
   await page.goto("/#playground");
   await page.locator(".workbench-section summary").click();
   await page.getByRole("tab", { name: "Theme lab", exact: true }).click();
-  await page
-    .getByRole("combobox", { name: "Theme palette", exact: true })
+  const themeLab = page.getByRole("tabpanel", { name: "Theme lab" });
+  await themeLab
+    .getByRole("combobox", { name: "Primary palette", exact: true })
     .selectOption("teal");
+  await themeLab
+    .getByRole("combobox", { name: "Secondary palette", exact: true })
+    .selectOption("fuchsia");
   await page
     .getByRole("button", { name: "Toggle navigation", exact: true })
     .click();
@@ -107,6 +111,10 @@ test("preferences persist and previews reset without resetting the theme", async
   await expect(page.locator("html")).toHaveAttribute(
     "data-flux-palette",
     "teal",
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-secondary-palette",
+    "fuchsia",
   );
   await expect(page.locator("html")).toHaveAttribute("data-flux-theme", "dark");
   await page.goto("/#components/switch");
@@ -127,7 +135,7 @@ test("preferences persist and previews reset without resetting the theme", async
   );
 });
 
-test("theme palette updates the whole site and exposes raw CSS variables", async ({
+test("palette pairing updates the whole site and exposes raw CSS variables", async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -144,7 +152,7 @@ test("theme palette updates the whole site and exposes raw CSS variables", async
   await page.goto("/#tokens");
 
   const palette = page.getByRole("combobox", {
-    name: "Theme palette",
+    name: "Primary palette",
     exact: true,
   });
   await expect(palette.locator("option")).toHaveCount(13);
@@ -152,6 +160,57 @@ test("theme palette updates the whole site and exposes raw CSS variables", async
   await expect(page.locator("html")).toHaveAttribute(
     "data-flux-palette",
     "rose",
+  );
+
+  const secondary = page.getByRole("combobox", {
+    name: "Secondary palette",
+    exact: true,
+  });
+  await expect(secondary.locator("option")).toHaveCount(13);
+  await expect(secondary.locator('option[value="off"]')).toHaveText(
+    "Off — Primary only",
+  );
+  const recommended = secondary.locator(
+    'optgroup[label="Recommended matches"] option',
+  );
+  await expect(recommended).toHaveCount(3);
+  await expect(recommended.first()).toHaveAttribute("value", "emerald");
+  await expect(secondary).toHaveValue("emerald");
+  await secondary.selectOption("emerald");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-secondary-palette",
+    "emerald",
+  );
+
+  const pairedSurface = await page
+    .locator("html")
+    .evaluate((element) =>
+      getComputedStyle(element)
+        .getPropertyValue("--flux-color-surface-subtle")
+        .trim(),
+    );
+
+  await secondary.selectOption("off");
+  await expect(page.locator("html")).not.toHaveAttribute(
+    "data-flux-secondary-palette",
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-secondary-palette-mode",
+    "off",
+  );
+  const primaryOnlySurface = await page
+    .locator("html")
+    .evaluate((element) =>
+      getComputedStyle(element)
+        .getPropertyValue("--flux-color-surface-subtle")
+        .trim(),
+    );
+  expect(primaryOnlySurface).not.toBe(pairedSurface);
+
+  await secondary.selectOption("emerald");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-secondary-palette",
+    "emerald",
   );
 
   const swatch = page.getByRole("button", {
@@ -177,10 +236,54 @@ test("theme palette updates the whole site and exposes raw CSS variables", async
     "data-flux-palette",
     "rose",
   );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-secondary-palette",
+    "emerald",
+  );
+  await expect
+    .poll(() =>
+      page
+        .locator("html")
+        .evaluate((element) =>
+          getComputedStyle(element)
+            .getPropertyValue("--flux-color-surface-subtle")
+            .trim(),
+        ),
+    )
+    .toBe(pairedSurface);
+
+  await page.goto("/#tokens");
+  await page
+    .getByRole("combobox", { name: "Secondary palette", exact: true })
+    .selectOption("off");
+  await page.goto("/#components/button");
+  await expect(page.locator("html")).not.toHaveAttribute(
+    "data-flux-secondary-palette",
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-secondary-palette-mode",
+    "off",
+  );
+  await expect
+    .poll(() =>
+      page
+        .locator("html")
+        .evaluate((element) =>
+          getComputedStyle(element)
+            .getPropertyValue("--flux-color-surface-subtle")
+            .trim(),
+        ),
+    )
+    .toBe(primaryOnlySurface);
+
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute(
     "data-flux-palette",
     "rose",
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-secondary-palette-mode",
+    "off",
   );
 });
 

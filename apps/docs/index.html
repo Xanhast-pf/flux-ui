@@ -61,6 +61,23 @@
           // Palette selection is optional when browser storage is unavailable.
         }
         document.documentElement.dataset.fluxPalette = palette;
+
+        try {
+          const secondary = localStorage.getItem(
+            "flux-ui-docs-secondary-palette",
+          );
+          if (secondary === "off") {
+            document.documentElement.dataset.fluxSecondaryPaletteMode = "off";
+          } else if (
+            secondary &&
+            palettes.has(secondary) &&
+            secondary !== palette
+          ) {
+            document.documentElement.dataset.fluxSecondaryPalette = secondary;
+          }
+        } catch {
+          // Secondary palette selection is optional without browser storage.
+        }
       })();
     </script>
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%flux-app-icon.svg" />

@@ -12,7 +12,11 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: #34747d;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-700) 60%,
+    var(--secondary-600) 40%
+  );
   overflow: hidden;
 }
 .landscape-sun {
@@ -21,43 +25,83 @@
   block-size: 4.5rem;
   border-radius: 50%;
   inset: 14% auto auto 58%;
-  background: #ffe0ac;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-100) 65%,
+    var(--secondary-400) 35%
+  );
 }
 .landscape-back,
 .landscape-front {
   position: absolute;
   inset: 36% -30% -50%;
-  background: #164f60;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-900) 70%,
+    var(--secondary-600) 30%
+  );
   border-radius: 50% 50% 0 0;
   transform: rotate(-18deg);
 }
 .landscape-front {
-  background: #163d49;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-950) 75%,
+    var(--secondary-600) 25%
+  );
   inset: 58% -10% -45%;
   transform: rotate(18deg);
 }
 [data-art="dunes"] .video-landscape {
-  background: #a57d61;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-600) 42%,
+    var(--secondary-600) 58%
+  );
 }
 [data-art="dunes"] .landscape-back {
-  background: #755238;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-800) 45%,
+    var(--secondary-600) 55%
+  );
   transform: rotate(22deg);
 }
 [data-art="dunes"] .landscape-front {
-  background: #543b2c;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-950) 50%,
+    var(--secondary-600) 50%
+  );
   transform: rotate(-18deg);
 }
 [data-art="night"] .video-landscape {
-  background: #343153;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-950) 64%,
+    var(--secondary-600) 36%
+  );
 }
 [data-art="night"] .landscape-sun {
-  background: #e2cfe9;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-100) 40%,
+    var(--secondary-400) 60%
+  );
 }
 [data-art="night"] .landscape-back {
-  background: #282540;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-900) 65%,
+    var(--secondary-600) 35%
+  );
 }
 [data-art="night"] .landscape-front {
-  background: #1b2032;
+  background: color-mix(
+    in oklab,
+    var(--_flux-palette-950) 82%,
+    var(--secondary-600) 18%
+  );
 }
 .video-frame::after {
   content: "";
@@ -82,25 +126,28 @@
   border-radius: 0.25rem;
   background: linear-gradient(
     160deg,
-    #689a9c 45%,
-    #346d77 45% 65%,
-    #234f5f 65%
+    var(--_flux-palette-300) 45%,
+    color-mix(in oklab, var(--_flux-palette-600) 55%, var(--secondary-600) 45%)
+      45% 65%,
+    var(--_flux-palette-800) 65%
   );
 }
 [data-art="dunes"] .clip-thumbnail {
   background: linear-gradient(
     150deg,
-    #ccaf8b 45%,
-    #9a7552 45% 65%,
-    #6c4d33 65%
+    var(--secondary-400) 45%,
+    color-mix(in oklab, var(--_flux-palette-600) 45%, var(--secondary-600) 55%)
+      45% 65%,
+    var(--_flux-palette-800) 65%
   );
 }
 [data-art="night"] .clip-thumbnail {
   background: linear-gradient(
     160deg,
-    #777394 45%,
-    #474364 45% 65%,
-    #252c45 65%
+    var(--_flux-palette-700) 45%,
+    color-mix(in oklab, var(--_flux-palette-900) 64%, var(--secondary-600) 36%)
+      45% 65%,
+    var(--_flux-palette-950) 65%
   );
 }
 @container flux-layout (max-width: 30rem) {

@@ -22,7 +22,7 @@ export const showcaseScenes = Object.entries(definitions)
     const loadRecipe = recipes[`../generated/recipes/${id}.json`];
     if (load === undefined || loadRecipe === undefined)
       throw new Error(`Missing showcase preview: ${id}`);
-    // Stable lazy identities preserve scene state when only the mood changes.
+    // Stable lazy identities preserve scene state while appearance changes.
     return { ...definition, id, Preview: lazy(load), loadRecipe };
   })
   .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));

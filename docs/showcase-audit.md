@@ -30,7 +30,7 @@ References:
 | High     | The homepage and playground repeat the Release Room composition.                   | One engineering-oriented dashboard stands in for the entire design system.                                 | Six independently composed product worlds, each with a different task, hierarchy, and editorial identity.                                    |
 | High     | Playground exploration is mostly component/property oriented.                      | Developers can inspect mechanics, but designers have few product-level possibilities to imagine.           | Real, local interactions in finance, marketing, social, music, video, and commerce. The original labs remain available below.                |
 | Medium   | Cards, borders, and explanatory copy have similar visual weight.                   | The page feels like a collection of documentation panels rather than a deliberate opening story.           | Editorial typography, whitespace, a prominent live scene, quieter system principles, and a shorter evidence section.                         |
-| Medium   | A globally saved appearance is not an ideal scratchpad for testing a product mood. | Exploring styles can change the visitor's preferred reading environment.                                   | Four palettes scoped to the active scene; changing mood does not change docs appearance or reset scene state.                                |
+| Medium   | The showcase had a second appearance system that competed with the global palette. | Product examples could disagree with the visitor's selected documentation colors.                          | The showcase now reuses the global theme plus primary/secondary palette controls; scenes never own a separate mood theme.                    |
 | Medium   | The system's future breadth could be mistaken for already-shipped APIs.            | A polished chart or editor can imply product capabilities that do not exist yet.                           | A per-scene composition inspector, typed public-component ingredients, source inspection, and explicit prototype limitations.                |
 | Medium   | More elaborate demos can create startup and accessibility regressions.             | An attractive gallery could become expensive or difficult to operate.                                      | Lazy previews, one mounted scene, manual-activation tabs, bounded state, no autoplay, reduced-motion support, and added regression coverage. |
 
@@ -40,8 +40,9 @@ user study, conversion experiment, or independent accessibility certification.
 ## Page-by-page decisions
 
 **Overview:** Leads with “One system. Different worlds.” Visitors choose a product
-and mood before reaching engineering detail. The rest of the page connects the
-examples to tokens, public components, engineering, evidence, and candid FAQs.
+template and can tune the same global theme/palette controls used by Design Tokens
+before reaching engineering detail. The rest of the page connects the examples
+to tokens, public components, engineering, evidence, and candid FAQs.
 The component count and Button baseline continue to use generated repository data.
 
 **Playground:** Reuses the same product gallery rather than maintaining a second,
@@ -60,7 +61,7 @@ homepage links introduce these pages after the product experience.
 
 **Global navigation:** Adds clear high-level entry points without removing search,
 theme controls, mobile navigation, GitHub, or existing hash routes. Query-only
-scene/mood changes do not trigger the route-level focus and scroll reset.
+scene changes do not trigger the route-level focus and scroll reset.
 
 ## The six product worlds
 
@@ -73,25 +74,28 @@ scene/mood changes do not trigger the route-level focus and scroll reset.
 | Video       | cutroom           | Select illustrated clips, change aspect ratio, toggle titles, scrub a represented position, export real JSON edit notes. | Illustrated storyboard, not decoded video; export does not render video.                                 |
 | Commerce    | objects           | Switch speaker finishes, choose quantity, add per-finish bag items, calculate totals, clear a bounded bag.               | Fictional product and pricing; no stock, payment, checkout, or order service.                            |
 
-The four moods are Paper, Studio, Bloom, and Terminal. They adjust semantic
-surfaces, ink, controls, accents, artwork colors, and—in Terminal—the scene's
-font stack. The surrounding docs theme remains independent. System fonts and
-original CSS/SVG artwork avoid adding asset or font downloads.
+Showcase appearance now uses the global light/dark mode plus a primary and a
+secondary palette. The primary palette continues to remap semantic Flux roles.
+The secondary palette is used only for deliberate supporting artwork channels;
+it does not replace semantic success/warning/danger/info roles. Secondary
+recommendations are ranked in OKLCH using split-complementary, complementary,
+and triadic hue relationships plus perceptual distance. System fonts and original
+CSS/SVG artwork avoid adding asset or font downloads.
 
 ## Interaction and architecture contract
 
-Scene and mood are shareable in the hash query, for example
-`#playground?scene=music&mood=studio`. Unknown values fall back to the first scene
-and Paper. Browser history restores scene and mood, not abandoned demo state.
-Switching worlds, resetting a scene, or reloading discards its transient edits.
-Changing only the mood preserves edits. Copy failures retain a normal permalink.
+Only scene selection is shareable in the hash query, for example
+`#playground?scene=music`. Unknown scene values fall back to the first scene.
+Theme and palette choices are saved documentation preferences rather than URL
+state. Switching worlds, resetting a scene, or reloading discards its transient
+edits. Changing appearance preserves edits. Copy failures retain a normal permalink.
 
 Each world is a `name.scene.ts` metadata file paired with a
 `name.preview.tsx` component. Vite discovers pairs, eagerly loads only metadata,
 and lazily loads previews. There is no manually maintained import registry.
 Public ingredient slugs are typed against the generated component catalog.
 `pnpm docs:check` checks pairs; browser fixtures discover the same filenames.
-Adding a new scene extends the shared viewport and mood/a11y test loops.
+Adding a new scene extends the shared viewport and palette/a11y test loops.
 
 Only the selected preview is mounted. The composition inspector, raw source, and
 legacy workbench load on request. Scene state has explicit bounds. No polling,
@@ -113,8 +117,10 @@ Completed in the implementation environment:
   product scenes.
 - Source syntax/transpilation and an isolated strict check of the pure showcase
   model passed; these are not a substitute for the project's complete typecheck.
-- A source-derived static layout probe exercised six scenes × four moods × five
-  viewport widths (320, 390, 768, 1024, and 1440): 120 combinations. No root
+- The original source-derived static layout probe exercised six scenes × four
+  legacy moods × five viewport widths (320, 390, 768, 1024, and 1440): 120
+  combinations. That historical mood matrix has been retired; current browser
+  coverage exercises global palette pairings instead. No root
   overflow or visible controls extending outside the viewport/scene was found.
   Decorative artwork intentionally clipped inside its own canvas is not counted
   as a misplaced control.
@@ -150,7 +156,7 @@ pnpm check:full
 ```
 
 Review all worlds in light and dark docs appearance, including 320px and 200%
-zoom. Verify manual keyboard tab activation, mood focus retention, native ranges,
+zoom. Verify manual keyboard tab activation, theme/palette controls, native ranges,
 permalinks/history, blocked clipboard handling, local action feedback, JSON
 export, reduced motion, forced colors, and open/closed workbench states. Inspect
 network requests and built chunks to confirm lazy loading in the real build.

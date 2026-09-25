@@ -5,10 +5,6 @@ const css = await readFile(
   new URL("../../packages/tokens/src/theme.css", import.meta.url),
   "utf8",
 );
-const presets = await readFile(
-  new URL("../../packages/tokens/src/presets.css", import.meta.url),
-  "utf8",
-);
 function variables(block) {
   return new Map(
     [...block.matchAll(/--flux-color-([\w-]+):\s*(#[\da-f]{6});/giu)].map(
@@ -27,11 +23,11 @@ function ratio(a, b) {
     dark = luminance(b);
   return (Math.max(light, dark) + 0.05) / (Math.min(light, dark) + 0.05);
 }
-test("all supported ordinary text and syntax-token foregrounds pass on semantic surfaces", () => {
-  const blocks = [...`${css}\n${presets}`.matchAll(/([^{}]+)\{([^{}]+)\}/gu)]
+test("base light and dark semantic foregrounds pass on semantic surfaces", () => {
+  const blocks = [...css.matchAll(/([^{}]+)\{([^{}]+)\}/gu)]
     .map((match) => ({ name: match[1].trim(), colors: variables(match[2]) }))
     .filter((entry) => entry.colors.has("surface") && entry.colors.has("text"));
-  assert.equal(blocks.length, 6);
+  assert.equal(blocks.length, 2);
   let pairs = 0;
   for (const block of blocks)
     for (const foreground of [
@@ -62,5 +58,5 @@ test("all supported ordinary text and syntax-token foregrounds pass on semantic 
         );
         pairs += 1;
       }
-  assert.equal(pairs, 192);
+  assert.equal(pairs, 64);
 });

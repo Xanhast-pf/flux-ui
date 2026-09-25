@@ -2,6 +2,221 @@
  * Reusable controls, typography, spacing, layout and surfaces belong to public Flux APIs.
  * Exact selector/property contracts are reviewed in tooling/dogfood/ownership.json.
  */
+/* Optional secondary palette preview for the Flux docs shell and first-page
+ * showcase scope. Primary-only mode is unchanged because these overrides exist
+ * only while data-flux-secondary-palette is present on the active scope.
+ */
+@media (forced-colors: none) {
+  html[data-flux-secondary-palette="slate"] {
+    --_docs-secondary-50: var(--flux-palette-slate-50);
+    --_docs-secondary-100: var(--flux-palette-slate-100);
+    --_docs-secondary-200: var(--flux-palette-slate-200);
+    --_docs-secondary-600: var(--flux-palette-slate-600);
+    --_docs-secondary-900: var(--flux-palette-slate-900);
+    --_docs-secondary-950: var(--flux-palette-slate-950);
+  }
+
+  html[data-flux-secondary-palette="indigo"] {
+    --_docs-secondary-50: var(--flux-palette-indigo-50);
+    --_docs-secondary-100: var(--flux-palette-indigo-100);
+    --_docs-secondary-200: var(--flux-palette-indigo-200);
+    --_docs-secondary-600: var(--flux-palette-indigo-600);
+    --_docs-secondary-900: var(--flux-palette-indigo-900);
+    --_docs-secondary-950: var(--flux-palette-indigo-950);
+  }
+
+  html[data-flux-secondary-palette="blue"] {
+    --_docs-secondary-50: var(--flux-palette-blue-50);
+    --_docs-secondary-100: var(--flux-palette-blue-100);
+    --_docs-secondary-200: var(--flux-palette-blue-200);
+    --_docs-secondary-600: var(--flux-palette-blue-600);
+    --_docs-secondary-900: var(--flux-palette-blue-900);
+    --_docs-secondary-950: var(--flux-palette-blue-950);
+  }
+
+  html[data-flux-secondary-palette="cyan"] {
+    --_docs-secondary-50: var(--flux-palette-cyan-50);
+    --_docs-secondary-100: var(--flux-palette-cyan-100);
+    --_docs-secondary-200: var(--flux-palette-cyan-200);
+    --_docs-secondary-600: var(--flux-palette-cyan-600);
+    --_docs-secondary-900: var(--flux-palette-cyan-900);
+    --_docs-secondary-950: var(--flux-palette-cyan-950);
+  }
+
+  html[data-flux-secondary-palette="teal"] {
+    --_docs-secondary-50: var(--flux-palette-teal-50);
+    --_docs-secondary-100: var(--flux-palette-teal-100);
+    --_docs-secondary-200: var(--flux-palette-teal-200);
+    --_docs-secondary-600: var(--flux-palette-teal-600);
+    --_docs-secondary-900: var(--flux-palette-teal-900);
+    --_docs-secondary-950: var(--flux-palette-teal-950);
+  }
+
+  html[data-flux-secondary-palette="emerald"] {
+    --_docs-secondary-50: var(--flux-palette-emerald-50);
+    --_docs-secondary-100: var(--flux-palette-emerald-100);
+    --_docs-secondary-200: var(--flux-palette-emerald-200);
+    --_docs-secondary-600: var(--flux-palette-emerald-600);
+    --_docs-secondary-900: var(--flux-palette-emerald-900);
+    --_docs-secondary-950: var(--flux-palette-emerald-950);
+  }
+
+  html[data-flux-secondary-palette="green"] {
+    --_docs-secondary-50: var(--flux-palette-green-50);
+    --_docs-secondary-100: var(--flux-palette-green-100);
+    --_docs-secondary-200: var(--flux-palette-green-200);
+    --_docs-secondary-600: var(--flux-palette-green-600);
+    --_docs-secondary-900: var(--flux-palette-green-900);
+    --_docs-secondary-950: var(--flux-palette-green-950);
+  }
+
+  html[data-flux-secondary-palette="lime"] {
+    --_docs-secondary-50: var(--flux-palette-lime-50);
+    --_docs-secondary-100: var(--flux-palette-lime-100);
+    --_docs-secondary-200: var(--flux-palette-lime-200);
+    --_docs-secondary-600: var(--flux-palette-lime-600);
+    --_docs-secondary-900: var(--flux-palette-lime-900);
+    --_docs-secondary-950: var(--flux-palette-lime-950);
+  }
+
+  html[data-flux-secondary-palette="amber"] {
+    --_docs-secondary-50: var(--flux-palette-amber-50);
+    --_docs-secondary-100: var(--flux-palette-amber-100);
+    --_docs-secondary-200: var(--flux-palette-amber-200);
+    --_docs-secondary-600: var(--flux-palette-amber-600);
+    --_docs-secondary-900: var(--flux-palette-amber-900);
+    --_docs-secondary-950: var(--flux-palette-amber-950);
+  }
+
+  html[data-flux-secondary-palette="orange"] {
+    --_docs-secondary-50: var(--flux-palette-orange-50);
+    --_docs-secondary-100: var(--flux-palette-orange-100);
+    --_docs-secondary-200: var(--flux-palette-orange-200);
+    --_docs-secondary-600: var(--flux-palette-orange-600);
+    --_docs-secondary-900: var(--flux-palette-orange-900);
+    --_docs-secondary-950: var(--flux-palette-orange-950);
+  }
+
+  html[data-flux-secondary-palette="rose"] {
+    --_docs-secondary-50: var(--flux-palette-rose-50);
+    --_docs-secondary-100: var(--flux-palette-rose-100);
+    --_docs-secondary-200: var(--flux-palette-rose-200);
+    --_docs-secondary-600: var(--flux-palette-rose-600);
+    --_docs-secondary-900: var(--flux-palette-rose-900);
+    --_docs-secondary-950: var(--flux-palette-rose-950);
+  }
+
+  html[data-flux-secondary-palette="violet"] {
+    --_docs-secondary-50: var(--flux-palette-violet-50);
+    --_docs-secondary-100: var(--flux-palette-violet-100);
+    --_docs-secondary-200: var(--flux-palette-violet-200);
+    --_docs-secondary-600: var(--flux-palette-violet-600);
+    --_docs-secondary-900: var(--flux-palette-violet-900);
+    --_docs-secondary-950: var(--flux-palette-violet-950);
+  }
+
+  html[data-flux-secondary-palette="fuchsia"] {
+    --_docs-secondary-50: var(--flux-palette-fuchsia-50);
+    --_docs-secondary-100: var(--flux-palette-fuchsia-100);
+    --_docs-secondary-200: var(--flux-palette-fuchsia-200);
+    --_docs-secondary-600: var(--flux-palette-fuchsia-600);
+    --_docs-secondary-900: var(--flux-palette-fuchsia-900);
+    --_docs-secondary-950: var(--flux-palette-fuchsia-950);
+  }
+
+  :is(
+      html,
+      .world-surface
+    )[data-flux-theme="light"][data-flux-palette][data-flux-secondary-palette] {
+    --flux-color-canvas: color-mix(
+      in oklab,
+      var(--_flux-palette-50) 68%,
+      var(--_docs-secondary-50) 32%
+    );
+    --flux-color-surface: color-mix(
+      in oklab,
+      #ffffff 96%,
+      var(--_docs-secondary-50) 4%
+    );
+    --flux-color-surface-subtle: color-mix(
+      in oklab,
+      var(--_flux-palette-50) 62%,
+      var(--_docs-secondary-50) 38%
+    );
+    --flux-color-surface-elevated: color-mix(
+      in oklab,
+      #ffffff 94%,
+      var(--_docs-secondary-100) 6%
+    );
+    --flux-color-border: color-mix(
+      in oklab,
+      var(--_flux-palette-200) 68%,
+      var(--_docs-secondary-200) 32%
+    );
+    --flux-color-border-strong: color-mix(
+      in oklab,
+      var(--_flux-palette-600) 72%,
+      var(--_docs-secondary-600) 28%
+    );
+    --flux-color-accent-soft: color-mix(
+      in oklab,
+      var(--_flux-palette-100) 72%,
+      var(--_docs-secondary-100) 28%
+    );
+  }
+
+  :is(
+      html,
+      .world-surface
+    )[data-flux-theme="dark"][data-flux-palette][data-flux-secondary-palette] {
+    --_docs-pair-950: color-mix(
+      in oklab,
+      var(--_flux-palette-950) 64%,
+      var(--_docs-secondary-950) 36%
+    );
+    --_docs-pair-900: color-mix(
+      in oklab,
+      var(--_flux-palette-900) 64%,
+      var(--_docs-secondary-900) 36%
+    );
+    --flux-color-canvas: color-mix(
+      in oklab,
+      var(--_docs-pair-950) 58%,
+      #070a0e 42%
+    );
+    --flux-color-surface: color-mix(
+      in oklab,
+      var(--_docs-pair-950) 34%,
+      #111720 66%
+    );
+    --flux-color-surface-subtle: color-mix(
+      in oklab,
+      var(--_docs-pair-900) 40%,
+      #151d28 60%
+    );
+    --flux-color-surface-elevated: color-mix(
+      in oklab,
+      var(--_docs-pair-900) 34%,
+      #18212d 66%
+    );
+    --flux-color-border: color-mix(
+      in oklab,
+      var(--_flux-palette-600) 62%,
+      var(--_docs-secondary-600) 38%
+    );
+    --flux-color-border-strong: color-mix(
+      in oklab,
+      var(--_flux-palette-600) 70%,
+      var(--_docs-secondary-600) 30%
+    );
+    --flux-color-accent-soft: color-mix(
+      in oklab,
+      var(--_flux-palette-900) 68%,
+      var(--_docs-secondary-900) 32%
+    );
+  }
+}
+
 .site-header {
   position: sticky;
   inset-block-start: 0;

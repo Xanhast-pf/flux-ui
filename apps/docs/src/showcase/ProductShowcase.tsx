@@ -2,7 +2,6 @@ import { CodeIcon, LinkIcon, RefreshIcon } from "@flux-ui/icons";
 import {
   Box,
   Button,
-  ColorSwatch,
   Grid,
   Heading,
   Inline,
@@ -12,29 +11,32 @@ import {
   Tabs,
   Text,
   ThemeScope,
-  ToggleGroup,
 } from "@flux-ui/react";
-import "@flux-ui/tokens/presets.css";
 import { lazy, Suspense, useId, useState } from "react";
+import {
+  usePalettePreset,
+  useSecondaryPalettePreset,
+  useTheme,
+} from "../lib/appearance.js";
 import { useRoute } from "../lib/routing.js";
+import { AppearanceControls } from "../ui/AppearanceControls.js";
 import { ExampleBoundary } from "../ui/ExampleBoundary.js";
 import { showcaseScenes } from "./catalog.js";
-import { isMood, moods, readShowcaseRoute, showcaseHash } from "./model.js";
+import { readShowcaseRoute, showcaseHash } from "./model.js";
 import "./showcase.css";
+
 const CompositionInspector = lazy(() => import("./CompositionInspector.js"));
-const moodColors = {
-  paper: "#f1eee4",
-  studio: "#383044",
-  bloom: "#f0c8dc",
-  terminal: "#173523",
-} as const;
 const sceneIds = showcaseScenes.map((scene) => scene.id);
-// Stable element identities let a mood update change CSS without rebuilding a scene.
+
 const views = new Map(
   showcaseScenes.map((scene) => [scene.id, <scene.Preview />] as const),
 );
+
 export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
   const route = useRoute();
+  const theme = useTheme();
+  const primary = usePalettePreset();
+  const secondary = useSecondaryPalettePreset();
   const selection = readShowcaseRoute(route, sceneIds);
   const active = showcaseScenes.find((scene) => scene.id === selection.scene);
   const [revision, setRevision] = useState(0);
@@ -44,15 +46,18 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
     success: boolean;
   } | null>(null);
   const id = useId();
+
   if (active === undefined)
     throw new Error("A valid showcase scene is required.");
-  const shareHash = showcaseHash("playground", active.id, selection.mood);
+
+  const shareHash = showcaseHash("playground", active.id);
   const copyMessage =
     copyResult?.hash === shareHash
       ? copyResult.success
         ? "Scene link copied."
         : "Clipboard unavailable. Use the scene permalink."
       : "";
+
   async function copyLink(): Promise<void> {
     const url = new URL(window.location.href);
     url.hash = shareHash;
@@ -63,6 +68,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
       setCopyResult({ hash: shareHash, success: false });
     }
   }
+
   return (
     <Stack
       aria-label="Interactive product showcase"
@@ -76,16 +82,24 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
         value={active.id}
         onValueChange={(value) => {
           if (sceneIds.includes(value))
-            window.location.hash = showcaseHash(page, value, selection.mood);
+            window.location.hash = showcaseHash(page, value);
         }}
       >
         <Box border="block">
-          <Inline justify="between" align="end" wrap gap="lg" paddingBlock={5}>
+          <Grid
+            templateColumns={{
+              base: "minmax(0, 1fr)",
+              lg: "minmax(0, 1fr) minmax(24rem, 32rem)",
+            }}
+            gap="xl"
+            align="start"
+            paddingBlock={5}
+          >
             <Stack gap={3}>
               <Text variant="caption" tone="muted">
-                Choose a world
+                Example template
               </Text>
-              <Tabs.List wrap aria-label="Product worlds">
+              <Tabs.List wrap aria-label="Example templates">
                 {showcaseScenes.map((scene) => (
                   <Tabs.Tab key={scene.id} value={scene.id}>
                     <scene.Icon size={18} />
@@ -94,39 +108,11 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
                 ))}
               </Tabs.List>
             </Stack>
-            <Stack gap={3}>
-              <Text id={`${id}-moods`} variant="caption" tone="muted">
-                Set the mood
-              </Text>
-              <ToggleGroup.Root
-                type="single"
-                value={selection.mood}
-                onValueChange={(value) => {
-                  if (value !== null && isMood(value))
-                    window.location.hash = showcaseHash(page, active.id, value);
-                }}
-                aria-labelledby={`${id}-moods`}
-                size="sm"
-                appearance="quiet"
-              >
-                {moods.map((mood) => (
-                  <ToggleGroup.Item
-                    key={mood.id}
-                    value={mood.id}
-                    title={mood.description}
-                  >
-                    <ColorSwatch
-                      color={moodColors[mood.id]}
-                      selected={mood.id === selection.mood}
-                      size="sm"
-                    />
-                    {mood.label}
-                  </ToggleGroup.Item>
-                ))}
-              </ToggleGroup.Root>
-            </Stack>
-          </Inline>
+
+            <AppearanceControls />
+          </Grid>
         </Box>
+
         <Grid
           templateColumns={{
             base: "minmax(0, 1fr)",
@@ -148,12 +134,14 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
             {active.description}
           </Text>
         </Grid>
+
         {showcaseScenes.map((scene) => (
           <Tabs.Panel key={scene.id} value={scene.id} padding="none">
             {active.id === scene.id ? (
               <ThemeScope
-                theme={selection.mood}
-                data-mood={selection.mood}
+                theme={theme}
+                data-flux-palette={primary}
+                data-flux-secondary-palette={secondary}
                 query
                 border="all"
                 radius="md"
@@ -177,6 +165,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
           </Tabs.Panel>
         ))}
       </Tabs.Root>
+
       <Inline wrap justify="between" gap="md" paddingBlock="md">
         <Text as="p" variant="body">
           <Text as="strong" weight="bold">
@@ -222,6 +211,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
           </Button>
         </Inline>
       </Inline>
+
       <Inline wrap gap="md">
         <Text as="p" variant="body">
           Real Flux components. Fictional products. Custom charts and editors
@@ -230,6 +220,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
         <Link href={shareHash}>Scene permalink ↗</Link>
         <Text role="status">{copyMessage}</Text>
       </Inline>
+
       <Box id={`${id}-inspector`} hidden={!inspect}>
         {inspect ? (
           <ExampleBoundary key={active.id}>

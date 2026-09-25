@@ -57,30 +57,32 @@ pnpm add ./vendor/flux-ui-react.tgz ./vendor/flux-ui-tokens.tgz ./vendor/flux-ui
           label="First public Flux interface"
           code={`import "@flux-ui/tokens/theme.css";
 import "@flux-ui/tokens/reset.css";
-import "@flux-ui/tokens/presets.css"; // Optional product moods.
-import { Button, Container, Field, Input, Stack, ThemeScope } from "@flux-ui/react";
+import "@flux-ui/tokens/presets.css"; // Optional color palette presets.
+import { Button, Container, Field, Input, Stack } from "@flux-ui/react";
 
 export function App() {
   return (
-    <ThemeScope theme="paper" query>
-      <Container as="main" size="sm">
-        <Stack gap="lg" padding="lg">
-          <Field.Root description="Your work address is used for this local example.">
-            <Field.Label>Work email</Field.Label>
-            <Field.Control><Input type="email" /></Field.Control>
-          </Field.Root>
-          <Button>Continue</Button>
-        </Stack>
-      </Container>
-    </ThemeScope>
+    <Container
+      as="main"
+      size="sm"
+      data-flux-theme="light"
+      data-flux-palette="indigo"
+    >
+      <Stack gap="lg" padding="lg">
+        <Field.Root description="Your work address is used for this local example.">
+          <Field.Label>Work email</Field.Label>
+          <Field.Control><Input type="email" /></Field.Control>
+        </Field.Root>
+        <Button>Continue</Button>
+      </Stack>
+    </Container>
   );
 }`}
         />
         <Text as="p">
           Import foundations once at your application entry. Built public
           components include their component CSS. Icons remain separate, and
-          scoped moods and palette presets use public tokens rather than private
-          CSS skins.
+          palette presets use public tokens rather than private CSS skins.
         </Text>
       </Stack>
       <Stack gap="md">

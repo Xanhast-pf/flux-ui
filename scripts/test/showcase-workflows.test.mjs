@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { readFile } from "node:fs/promises";
 import {
   filterTransactions,
   invitationError,
@@ -228,32 +227,4 @@ test("ZIP rejects traversal, absolute paths, control characters and oversized ex
     () => recipeArchive({ "large.txt": "x".repeat(16 * 1024 * 1024) }),
     /16 MiB/,
   );
-});
-test("each mood defines the same on-grid density and hierarchy tokens without changing spacing steps", async () => {
-  const css = await readFile(
-    new URL("../../packages/tokens/src/presets.css", import.meta.url),
-    "utf8",
-  );
-  let expected;
-  for (const mood of ["paper", "studio", "bloom", "terminal"]) {
-    const body = new RegExp(
-      `\\[data-flux-theme="${mood}"\\]\\s*\\{([^}]+)\\}`,
-      "u",
-    ).exec(css)?.[1];
-    assert.ok(body);
-    const dimensions = [
-      ...body.matchAll(
-        /--flux-((?:radius|control|font)-[a-z-]+):\s*([^;]+);/gu,
-      ),
-    ];
-    const names = dimensions.map((match) => match[1]).sort();
-    if (expected === undefined) expected = names;
-    else assert.deepEqual(names, expected);
-    for (const [, name, value] of dimensions) {
-      if (value.endsWith("rem"))
-        assert.equal((Number.parseFloat(value) * 4) % 1, 0, `${mood}/${name}`);
-      if (name.startsWith("control-")) assert.ok(Number.parseFloat(value) >= 2);
-    }
-    assert.equal(/--flux-space-\d+:/u.test(body), false);
-  }
 });
