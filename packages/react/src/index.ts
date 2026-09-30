@@ -43,6 +43,7 @@ export * from "./components/Pagination/index.js";
 export * from "./components/Popover/index.js";
 export * from "./components/Progress/index.js";
 export * from "./components/RadioGroup/index.js";
+export * from "./components/Rating/index.js";
 export * from "./components/ScrollArea/index.js";
 export * from "./components/Select/index.js";
 export * from "./components/Separator/index.js";

@@ -389,6 +389,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Rating",
+    slug: "rating",
+    category: "Inputs",
+    status: "alpha",
+    description:
+      "Form-capable integer rating with native radio semantics and read-only presentation.",
+    sizeClass: "primitive",
+  },
+  {
     name: "ScrollArea",
     slug: "scroll-area",
     category: "Layout",

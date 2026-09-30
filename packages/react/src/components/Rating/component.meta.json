@@ -1,0 +1,8 @@
+{
+  "name": "Rating",
+  "slug": "rating",
+  "category": "Inputs",
+  "status": "alpha",
+  "description": "Form-capable integer rating with native radio semantics and read-only presentation.",
+  "sizeClass": "primitive"
+}

@@ -845,6 +845,19 @@ export const publicContracts = [
     ],
   },
   {
+    name: "Rating",
+    slug: "rating",
+    parts: [
+      {
+        path: "Rating",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+        stateModels: ["value"],
+      },
+    ],
+  },
+  {
     name: "ScrollArea",
     slug: "scroll-area",
     parts: [

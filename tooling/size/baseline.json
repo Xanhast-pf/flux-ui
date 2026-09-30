@@ -1211,6 +1211,27 @@
         "externalImports": ["react", "react/jsx-runtime"]
       }
     },
+    "rating": {
+      "bundled": {
+        "raw": 3043,
+        "gzip": 1432,
+        "brotli": 1222,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 1722,
+            "gzip": 899,
+            "brotli": 800
+          },
+          "css": {
+            "raw": 1321,
+            "gzip": 533,
+            "brotli": 422
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
     "scroll-area": {
       "name": "ScrollArea",
       "sizeClass": "primitive",
@@ -1888,19 +1909,19 @@
     }
   },
   "aggregate": {
-    "componentCount": 70,
-    "rootEntry": { "raw": 5308, "gzip": 1747, "brotli": 1539, "fileCount": 1 },
+    "componentCount": 71,
+    "rootEntry": { "raw": 5389, "gzip": 1772, "brotli": 1559, "fileCount": 1 },
     "runtime": {
-      "raw": 211220,
-      "gzip": 95588,
-      "brotli": 82076,
-      "fileCount": 224
+      "raw": 215358,
+      "gzip": 97468,
+      "brotli": 83701,
+      "fileCount": 227
     },
     "published": {
-      "raw": 1141419,
-      "gzip": 387855,
-      "brotli": 333757,
-      "fileCount": 931
+      "raw": 1159912,
+      "gzip": 395539,
+      "brotli": 340433,
+      "fileCount": 943
     },
     "method": {
       "schemaVersion": 1,
