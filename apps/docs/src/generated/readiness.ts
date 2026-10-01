@@ -3,12 +3,12 @@ export const readiness = {
   summary: {
     total: 72,
     status: {
-      alpha: 2,
-      beta: 70,
+      alpha: 0,
+      beta: 72,
       stable: 0,
     },
     eligibleForBetaReview: 72,
-    eligibleForStableReview: 70,
+    eligibleForStableReview: 72,
     blocked: 0,
     browserCatalogCoverage: true,
     accessibilityCatalogCoverage: true,
@@ -369,9 +369,9 @@ export const readiness = {
     {
       name: "Rating",
       slug: "rating",
-      status: "alpha",
+      status: "beta",
       eligibleForBetaReview: true,
-      eligibleForStableReview: false,
+      eligibleForStableReview: true,
       blockers: [],
     },
     {
@@ -577,9 +577,9 @@ export const readiness = {
     {
       name: "TreeView",
       slug: "tree-view",
-      status: "alpha",
+      status: "beta",
       eligibleForBetaReview: true,
-      eligibleForStableReview: false,
+      eligibleForStableReview: true,
       blockers: [],
     },
     {

@@ -16,10 +16,12 @@ import {
 } from "./budgets.mjs";
 
 // Parse emitted modules instead of treating strings/comments as executable imports.
-// Bare React peers are reported but not charged to each component. Other engines
-// must be bundled or gain an explicit, independently measured packaging contract.
+// React peers and independently measured runtime packages are reported but not
+// charged again to each component. Other engines must be bundled or gain an
+// explicit, independently measured packaging contract.
 import ts from "typescript";
 const allowedPeers = new Set([
+  "@flux-ui/icons",
   "react",
   "react/jsx-runtime",
   "react/jsx-dev-runtime",

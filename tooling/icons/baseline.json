@@ -331,6 +331,24 @@
       "brotli": 758,
       "fileCount": 2
     },
+    "StarEmptyIcon": {
+      "raw": 1649,
+      "gzip": 981,
+      "brotli": 850,
+      "fileCount": 2
+    },
+    "StarFilledIcon": {
+      "raw": 1540,
+      "gzip": 923,
+      "brotli": 802,
+      "fileCount": 2
+    },
+    "StarHalfIcon": {
+      "raw": 1601,
+      "gzip": 961,
+      "brotli": 834,
+      "fileCount": 2
+    },
     "StarIcon": {
       "raw": 1480,
       "gzip": 891,

@@ -43,7 +43,7 @@ test("the root size contract measures icons", () => {
 
 test("icon manifest stays searchable, unique and fully exported", () => {
   const icons = JSON.parse(manifestJson);
-  assert.equal(icons.length, 64);
+  assert.equal(icons.length, 67);
   const names = new Set();
   const geometries = new Set();
   for (const icon of icons) {
@@ -69,7 +69,10 @@ test("icon manifest stays searchable, unique and fully exported", () => {
         `${icon.name} keyword must be lowercase`,
       );
     }
-    const geometry = JSON.stringify(icon.elements);
+    const geometry = JSON.stringify({
+      elements: icon.elements,
+      fill: icon.fill ?? null,
+    });
     assert.equal(
       geometries.has(geometry),
       false,
@@ -77,5 +80,10 @@ test("icon manifest stays searchable, unique and fully exported", () => {
     );
     geometries.add(geometry);
     assert.match(generatedIndex, new RegExp(`export { ${icon.name}Icon }`));
+  }
+
+  for (const name of ["StarEmpty", "StarHalf", "StarFilled"]) {
+    const icon = icons.find((entry) => entry.name === name);
+    assert.equal(icon?.fill, "currentColor");
   }
 });

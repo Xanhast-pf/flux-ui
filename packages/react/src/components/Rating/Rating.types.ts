@@ -23,6 +23,8 @@ type RatingRootProps = Omit<
     max?: number | undefined;
     /** Native radio-group/form field name. */
     name?: string | undefined;
+    /** Selection precision. Defaults to whole stars. */
+    step?: 1 | 0.5 | undefined;
   };
 
 type RatingMode =

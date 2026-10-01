@@ -2,7 +2,7 @@
   "name": "TreeView",
   "slug": "tree-view",
   "category": "Navigation",
-  "status": "alpha",
+  "status": "beta",
   "description": "Hierarchical navigation with expansion state and WAI-ARIA tree keyboard behavior.",
   "sizeClass": "interactive"
 }

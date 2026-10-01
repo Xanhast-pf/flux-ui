@@ -181,7 +181,10 @@ for (const icon of icons) {
   if (icon.fill !== undefined && icon.fill !== "currentColor") {
     throw new Error(`Unsupported icon fill for ${icon.name}: ${icon.fill}`);
   }
-  const geometry = JSON.stringify(icon.elements);
+  const geometry = JSON.stringify({
+    elements: icon.elements,
+    fill: icon.fill ?? null,
+  });
   const duplicateGeometry = geometries.get(geometry);
   if (duplicateGeometry !== undefined) {
     throw new Error(

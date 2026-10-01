@@ -282,6 +282,9 @@ importers:
 
   packages/react:
     dependencies:
+      "@flux-ui/icons":
+        specifier: workspace:^
+        version: link:../icons
       "@flux-ui/tokens":
         specifier: workspace:^
         version: link:../tokens

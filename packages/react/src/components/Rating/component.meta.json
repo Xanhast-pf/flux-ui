@@ -2,7 +2,7 @@
   "name": "Rating",
   "slug": "rating",
   "category": "Inputs",
-  "status": "alpha",
-  "description": "Form-capable integer rating with native radio semantics and read-only presentation.",
+  "status": "beta",
+  "description": "Form-capable rating with native radio semantics, half-star precision and read-only presentation.",
   "sizeClass": "primitive"
 }

@@ -152,7 +152,10 @@ import { realpathSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 assert.equal(process.argv[2], "--filter");
 assert.ok(["@flux-ui/tokens", "@flux-ui/icons", "@flux-ui/identity", "@flux-ui/react"].includes(process.argv[3]));
-assert.equal(process.argv[4], "build");
+assert.equal(
+  process.argv[4],
+  process.argv[3] === "@flux-ui/react" ? "build:package" : "build",
+);
 assert.notEqual(process.cwd(), ${JSON.stringify(fixture)});
 assert.equal(realpathSync("node_modules/@flux-ui/react"), join(process.cwd(), "packages/react"));
 writeFileSync("build-cache-marker", "isolated");

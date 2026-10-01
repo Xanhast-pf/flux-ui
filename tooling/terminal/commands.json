@@ -175,7 +175,7 @@
     ["pnpm", "--filter", "@flux-ui/tokens", "build"],
     ["pnpm", "--filter", "@flux-ui/icons", "build"],
     ["pnpm", "--filter", "@flux-ui/identity", "build"],
-    ["pnpm", "--filter", "@flux-ui/react", "build"]
+    ["pnpm", "--filter", "@flux-ui/react", "build:package"]
   ],
   "storybook": [["pnpm", "--filter", "@flux-ui/storybook", "dev"]],
   "storybook:build": [["pnpm", "--filter", "@flux-ui/storybook", "build"]],

@@ -1,7 +1,12 @@
-import { useId, type ChangeEvent } from "react";
+import { StarEmptyIcon, StarFilledIcon, StarHalfIcon } from "@flux-ui/icons";
+import {
+  useId,
+  type ChangeEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { hidden } from "../../internal/visuallyHidden.css.js";
-import { item, readOnlyValue, root, star } from "./Rating.css.js";
+import { item, readOnlyValue, root, star, target } from "./Rating.css.js";
 import type { RatingProps, RatingValue } from "./Rating.types.js";
 
 const DEFAULT_MAX = 5;
@@ -14,15 +19,16 @@ function defaultItemLabel(value: number, max: number): string {
 function validateValue(
   value: RatingValue | undefined,
   max: number,
+  step: 1 | 0.5,
   name: string,
 ): void {
   if (
     value !== undefined &&
     value !== null &&
-    (!Number.isSafeInteger(value) || value < 1 || value > max)
+    (value < step || value > max || !Number.isInteger(value / step))
   ) {
     throw new RangeError(
-      `Rating ${name} must be null or an integer between 1 and max.`,
+      `Rating ${name} must be null or a valid ${step}-step value between ${step} and max.`,
     );
   }
 }
@@ -46,6 +52,7 @@ export function Rating({
   readOnly = false,
   ref,
   required = false,
+  step = 1,
   value,
   ...fieldsetProps
 }: RatingProps) {
@@ -54,14 +61,29 @@ export function Rating({
       `Rating max must be an integer between 1 and ${MAX_OPTIONS}.`,
     );
   }
-  validateValue(value, max, "value");
-  validateValue(defaultValue, max, "defaultValue");
+  validateValue(value, max, step, "value");
+  validateValue(defaultValue, max, step, "defaultValue");
 
   const generatedName = useId();
   const controlled = value !== undefined;
   const readOnlyValueSelected = controlled ? value : (defaultValue ?? null);
   const groupName = name ?? `${generatedName}-rating`;
-  const values = Array.from({ length: max }, (_, index) => index + 1);
+  const stars = Array.from({ length: max }, (_, index) => index + 1);
+
+  function handleScrub(event: ReactPointerEvent<HTMLSpanElement>): void {
+    if (event.buttons !== 1) return;
+    const input = document
+      .elementFromPoint(event.clientX, event.clientY)
+      ?.closest("label")
+      ?.querySelector<HTMLInputElement>("input");
+    if (
+      input &&
+      !input.checked &&
+      event.currentTarget.parentElement?.contains(input)
+    ) {
+      input.click();
+    }
+  }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     onChange?.(event);
@@ -99,43 +121,52 @@ export function Rating({
                 : getItemLabel(readOnlyValueSelected, max)
             }
           >
-            {values.map((option) => (
-              <span
-                key={option}
-                aria-hidden="true"
-                className={star}
-                data-filled={
-                  readOnlyValueSelected !== null &&
-                  option <= readOnlyValueSelected
-                    ? ""
-                    : undefined
-                }
-              >
-                ★
-              </span>
-            ))}
+            {stars.map((option) =>
+              readOnlyValueSelected === option - 0.5 ? (
+                <StarHalfIcon key={option} className={star} data-fill="" />
+              ) : readOnlyValueSelected !== null &&
+                option <= readOnlyValueSelected ? (
+                <StarFilledIcon key={option} className={star} data-fill="" />
+              ) : (
+                <StarEmptyIcon key={option} className={star} />
+              ),
+            )}
           </span>
         </>
       ) : (
-        values.map((option) => (
-          <label key={option} className={item}>
-            <input
-              aria-label={getItemLabel(option, max)}
-              checked={controlled ? value === option : undefined}
-              className={hidden}
-              defaultChecked={!controlled ? defaultValue === option : undefined}
-              disabled={disabled || undefined}
-              form={form}
-              name={groupName}
-              onChange={handleChange}
-              required={required || undefined}
-              type="radio"
-              value={option}
-            />
-            <span aria-hidden="true" className={star}>
-              ★
-            </span>
-          </label>
+        stars.map((option) => (
+          <span
+            key={option}
+            className={item}
+            data-half={step === 0.5 || undefined}
+            onPointerMove={handleScrub}
+          >
+            <StarEmptyIcon className={star} />
+            <StarHalfIcon className={star} data-fill="half" />
+            <StarFilledIcon className={star} data-fill="full" />
+            {Array.from({ length: 1 / step }, (_, index) => {
+              const optionValue = option - 1 + (index + 1) * step;
+              return (
+                <label key={optionValue} className={target}>
+                  <input
+                    aria-label={getItemLabel(optionValue, max)}
+                    checked={controlled ? value === optionValue : undefined}
+                    className={hidden}
+                    defaultChecked={
+                      !controlled ? defaultValue === optionValue : undefined
+                    }
+                    disabled={disabled || undefined}
+                    form={form}
+                    name={groupName}
+                    onChange={handleChange}
+                    required={required || undefined}
+                    type="radio"
+                    value={optionValue}
+                  />
+                </label>
+              );
+            })}
+          </span>
         ))
       )}
     </fieldset>

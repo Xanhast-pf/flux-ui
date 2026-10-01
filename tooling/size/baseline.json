@@ -1213,23 +1213,23 @@
     },
     "rating": {
       "bundled": {
-        "raw": 3043,
-        "gzip": 1432,
-        "brotli": 1222,
+        "raw": 3993,
+        "gzip": 1791,
+        "brotli": 1532,
         "fileCount": 2,
         "outputs": {
           "js": {
-            "raw": 1722,
-            "gzip": 899,
-            "brotli": 800
+            "raw": 2232,
+            "gzip": 1158,
+            "brotli": 1015
           },
           "css": {
-            "raw": 1321,
-            "gzip": 533,
-            "brotli": 422
+            "raw": 1761,
+            "gzip": 633,
+            "brotli": 517
           }
         },
-        "externalImports": ["react", "react/jsx-runtime"]
+        "externalImports": ["@flux-ui/icons", "react", "react/jsx-runtime"]
       }
     },
     "scroll-area": {
@@ -1962,6 +1962,7 @@
     "splitting": false,
     "minify": true,
     "external": [
+      "@flux-ui/icons",
       "react",
       "react/jsx-runtime",
       "react/jsx-dev-runtime",

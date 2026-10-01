@@ -21,6 +21,14 @@ export const Default: Story = {
   },
 };
 
+export const HalfSteps: Story = {
+  args: {
+    defaultValue: 3.5,
+    name: "quality-half",
+    step: 0.5,
+  },
+};
+
 export const Required: Story = {
   args: {
     name: "quality-required",

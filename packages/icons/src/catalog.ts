@@ -20,6 +20,9 @@ import { SearchIcon } from "./icons/SearchIcon.js";
 import { CommandIcon } from "./icons/CommandIcon.js";
 import { SparkIcon } from "./icons/SparkIcon.js";
 import { StarIcon } from "./icons/StarIcon.js";
+import { StarEmptyIcon } from "./icons/StarEmptyIcon.js";
+import { StarHalfIcon } from "./icons/StarHalfIcon.js";
+import { StarFilledIcon } from "./icons/StarFilledIcon.js";
 import { InfoIcon } from "./icons/InfoIcon.js";
 import { WarningIcon } from "./icons/WarningIcon.js";
 import { ShieldCheckIcon } from "./icons/ShieldCheckIcon.js";
@@ -189,6 +192,24 @@ export const iconCatalog: readonly IconCatalogEntry[] = [
     category: "status",
     keywords: ["favorite","rating","save","featured"],
     component: StarIcon,
+  },
+  {
+    name: "StarEmptyIcon",
+    category: "status",
+    keywords: ["rating","star","empty","unselected"],
+    component: StarEmptyIcon,
+  },
+  {
+    name: "StarHalfIcon",
+    category: "status",
+    keywords: ["rating","star","half","partial"],
+    component: StarHalfIcon,
+  },
+  {
+    name: "StarFilledIcon",
+    category: "status",
+    keywords: ["rating","star","filled","selected"],
+    component: StarFilledIcon,
   },
   {
     name: "InfoIcon",

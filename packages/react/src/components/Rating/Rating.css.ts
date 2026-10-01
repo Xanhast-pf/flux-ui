@@ -9,6 +9,7 @@ export const root = style({
   margin: 0,
   padding: 0,
   border: 0,
+  touchAction: "pan-y",
   selectors: {
     "&:disabled": {
       opacity: 0.62,
@@ -24,11 +25,19 @@ export const item = style({
   cursor: "pointer",
 });
 
+export const target = style({
+  position: "absolute",
+  insetBlock: 0,
+  insetInlineStart: 0,
+  width: "100%",
+});
+
 export const star = style({
   display: "block",
-  fontSize: "1.5rem",
-  lineHeight: 1,
-  userSelect: "none",
+  gridArea: "1 / 1",
+  width: "1.5rem",
+  height: "1.5rem",
+  pointerEvents: "none",
 });
 
 export const readOnlyValue = style({
@@ -37,17 +46,46 @@ export const readOnlyValue = style({
   color: `var(${cssVars.color.textMuted})`,
 });
 
+globalStyle(`${item} ${star}[data-fill]`, {
+  color: `var(${cssVars.color.accent})`,
+  opacity: 0,
+});
+
+globalStyle(`${readOnlyValue} ${star}[data-fill]`, {
+  color: `var(${cssVars.color.accent})`,
+});
+
 globalStyle(
-  `${item}:has(input:checked), ${item}:has(~ ${item} input:checked)`,
+  `${item}[data-half]:has(${target}:first-of-type input:checked) ${star}[data-fill='half']`,
   {
-    color: `var(${cssVars.color.accent})`,
+    opacity: 1,
   },
 );
 
-globalStyle(`${item} > input:focus-visible + ${star}`, {
+globalStyle(
+  `${item}:not([data-half]):has(input:checked) ${star}[data-fill='full'], ${item}[data-half]:has(${target}:last-of-type input:checked) ${star}[data-fill='full'], ${item}:has(~ ${item} input:checked) ${star}[data-fill='full']`,
+  {
+    opacity: 1,
+  },
+);
+
+globalStyle(`${target}:has(+ ${target}), ${target} + ${target}`, {
+  width: "50%",
+});
+
+globalStyle(`${target} + ${target}`, {
+  insetInlineStart: "50%",
+});
+
+globalStyle(`${item}:has(input:focus-visible)`, {
   outline: `0.125rem solid var(${cssVars.color.focus})`,
   outlineOffset: "0.25rem",
   borderRadius: "0.25rem",
+  "@media": {
+    "(forced-colors: active)": {
+      outlineColor: "Highlight",
+    },
+  },
 });
 
 globalStyle(`${item}:hover ${star}`, {
@@ -58,33 +96,13 @@ globalStyle(`${root}:disabled ${item}`, {
   cursor: "not-allowed",
 });
 
-globalStyle(`${readOnlyValue} ${star}[data-filled]`, {
-  color: `var(${cssVars.color.accent})`,
-});
-
 globalStyle(
-  `${root}[aria-invalid='true'] ${star}, ${root}[data-invalid='true'] ${star}`,
+  `${root}[aria-invalid='true'] ${star}, ${root}[data-invalid='true'] ${star}, ${item}:has(input:user-invalid) ${star}`,
   {
     color: `var(${cssVars.color.danger})`,
   },
 );
 
-globalStyle(`${item} > input:user-invalid + ${star}`, {
-  color: `var(${cssVars.color.danger})`,
-});
-
-globalStyle(`${item} > input:disabled + ${star}`, {
-  cursor: "not-allowed",
-});
-
 globalStyle(`${root} ${star}`, {
   forcedColorAdjust: "auto",
-});
-
-globalStyle(`${item} > input:focus-visible + ${star}`, {
-  "@media": {
-    "(forced-colors: active)": {
-      outlineColor: "Highlight",
-    },
-  },
 });

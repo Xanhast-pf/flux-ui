@@ -392,9 +392,9 @@ export const components = [
     name: "Rating",
     slug: "rating",
     category: "Inputs",
-    status: "alpha",
+    status: "beta",
     description:
-      "Form-capable integer rating with native radio semantics and read-only presentation.",
+      "Form-capable rating with native radio semantics, half-star precision and read-only presentation.",
     sizeClass: "primitive",
   },
   {
@@ -619,7 +619,7 @@ export const components = [
     name: "TreeView",
     slug: "tree-view",
     category: "Navigation",
-    status: "alpha",
+    status: "beta",
     description:
       "Hierarchical navigation with expansion state and WAI-ARIA tree keyboard behavior.",
     sizeClass: "interactive",
