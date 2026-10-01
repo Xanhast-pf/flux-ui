@@ -389,6 +389,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Rating",
+    slug: "rating",
+    category: "Inputs",
+    status: "beta",
+    description:
+      "Form-capable rating with native radio semantics, half-star precision and read-only presentation.",
+    sizeClass: "primitive",
+  },
+  {
     name: "ScrollArea",
     slug: "scroll-area",
     category: "Layout",
@@ -604,6 +613,15 @@ export const components = [
     status: "beta",
     description:
       "Controlled or trigger-owned supplemental help without adding a wrapper or a tab stop.",
+    sizeClass: "interactive",
+  },
+  {
+    name: "TreeView",
+    slug: "tree-view",
+    category: "Navigation",
+    status: "beta",
+    description:
+      "Hierarchical navigation with expansion state and WAI-ARIA tree keyboard behavior.",
     sizeClass: "interactive",
   },
   {

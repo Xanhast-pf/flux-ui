@@ -845,6 +845,19 @@ export const publicContracts = [
     ],
   },
   {
+    name: "Rating",
+    slug: "rating",
+    parts: [
+      {
+        path: "Rating",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+        stateModels: ["value"],
+      },
+    ],
+  },
+  {
     name: "ScrollArea",
     slug: "scroll-area",
     parts: [
@@ -1282,6 +1295,25 @@ export const publicContracts = [
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
         stateModels: ["open"],
+      },
+    ],
+  },
+  {
+    name: "TreeView",
+    slug: "tree-view",
+    parts: [
+      {
+        path: "TreeView.Item",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "TreeView.Root",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+        stateModels: ["value"],
       },
     ],
   },

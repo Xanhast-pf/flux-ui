@@ -29,7 +29,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime"],
+      external: ["@flux-ui/icons", "react", "react-dom", "react/jsx-runtime"],
       output: {
         entryFileNames: "[name].js",
         chunkFileNames: "chunks/[name]-[hash].js",

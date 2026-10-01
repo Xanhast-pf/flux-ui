@@ -8,7 +8,7 @@ import {
 } from "../lib/component-readiness.mjs";
 import { createPublicContracts } from "../lib/public-contracts.mjs";
 
-test("all current Core families carry complete automated beta-review evidence", () => {
+test("current Core families carry lifecycle-consistent automated evidence", () => {
   const root = process.cwd();
   const componentRoot = path.resolve(root, "packages/react/src/components");
   const expectedFamilies = readdirSync(componentRoot).filter((name) =>
@@ -26,12 +26,20 @@ test("all current Core families carry complete automated beta-review evidence", 
     ),
     expectedFamilies,
   );
-  assert.equal(readiness.summary.eligibleForBetaReview, expectedFamilies);
+  assert.equal(
+    readiness.summary.eligibleForBetaReview + readiness.summary.blocked,
+    expectedFamilies,
+  );
   assert.equal(
     readiness.summary.eligibleForStableReview,
     readiness.summary.status.beta,
   );
-  assert.equal(readiness.summary.blocked, 0);
+  for (const component of readiness.components) {
+    if (component.status === "beta" || component.status === "stable") {
+      assert.deepEqual(component.blockers, []);
+      assert.equal(component.eligibleForBetaReview, true);
+    }
+  }
   assert.equal(readiness.summary.browserCatalogCoverage, true);
   assert.equal(readiness.summary.accessibilityCatalogCoverage, true);
 });

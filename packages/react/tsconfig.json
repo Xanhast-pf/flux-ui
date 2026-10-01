@@ -3,6 +3,7 @@
   "compilerOptions": {
     "types": ["vitest/globals", "@testing-library/jest-dom"],
     "paths": {
+      "@flux-ui/icons": ["../icons/src/index.ts"],
       "@flux-ui/tokens": ["../tokens/src/index.ts"]
     }
   },

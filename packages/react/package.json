@@ -19,6 +19,7 @@
     "react-dom": ">=19 <20"
   },
   "dependencies": {
+    "@flux-ui/icons": "workspace:^",
     "@flux-ui/tokens": "workspace:^"
   },
   "devDependencies": {
@@ -40,7 +41,8 @@
     "@storybook/react-vite": "catalog:"
   },
   "scripts": {
-    "build": "node ../../scripts/check-portable-paths.mjs && node ../../scripts/clean.mjs packages/react/dist && vite build && tsc -p tsconfig.build.json",
+    "build": "pnpm --filter @flux-ui/tokens build && pnpm --filter @flux-ui/icons build && pnpm run build:package",
+    "build:package": "node ../../scripts/check-portable-paths.mjs && node ../../scripts/clean.mjs packages/react/dist && vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "bench": "vitest bench --run"
