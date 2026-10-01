@@ -616,6 +616,15 @@ export const components = [
     sizeClass: "interactive",
   },
   {
+    name: "TreeView",
+    slug: "tree-view",
+    category: "Navigation",
+    status: "alpha",
+    description:
+      "Hierarchical navigation with expansion state and WAI-ARIA tree keyboard behavior.",
+    sizeClass: "interactive",
+  },
+  {
     name: "VisuallyHidden",
     slug: "visually-hidden",
     category: "Accessibility",

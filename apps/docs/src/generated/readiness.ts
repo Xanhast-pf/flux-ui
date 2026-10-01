@@ -1,13 +1,13 @@
 // GENERATED FILE. Run pnpm flux maintain generate; do not edit manually.
 export const readiness = {
   summary: {
-    total: 71,
+    total: 72,
     status: {
-      alpha: 1,
+      alpha: 2,
       beta: 70,
       stable: 0,
     },
-    eligibleForBetaReview: 71,
+    eligibleForBetaReview: 72,
     eligibleForStableReview: 70,
     blocked: 0,
     browserCatalogCoverage: true,
@@ -572,6 +572,14 @@ export const readiness = {
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "TreeView",
+      slug: "tree-view",
+      status: "alpha",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {

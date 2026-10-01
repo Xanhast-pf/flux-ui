@@ -1880,6 +1880,27 @@
         "externalImports": ["react", "react/jsx-runtime"]
       }
     },
+    "tree-view": {
+      "bundled": {
+        "raw": 5321,
+        "gzip": 2253,
+        "brotli": 1991,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 4403,
+            "gzip": 1834,
+            "brotli": 1658
+          },
+          "css": {
+            "raw": 918,
+            "gzip": 419,
+            "brotli": 333
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
     "visually-hidden": {
       "name": "VisuallyHidden",
       "sizeClass": "primitive",
@@ -1909,19 +1930,19 @@
     }
   },
   "aggregate": {
-    "componentCount": 71,
-    "rootEntry": { "raw": 5389, "gzip": 1772, "brotli": 1559, "fileCount": 1 },
+    "componentCount": 72,
+    "rootEntry": { "raw": 5462, "gzip": 1797, "brotli": 1577, "fileCount": 1 },
     "runtime": {
-      "raw": 215358,
-      "gzip": 97468,
-      "brotli": 83701,
-      "fileCount": 227
+      "raw": 221947,
+      "gzip": 100043,
+      "brotli": 85946,
+      "fileCount": 230
     },
     "published": {
-      "raw": 1159912,
-      "gzip": 395539,
-      "brotli": 340433,
-      "fileCount": 943
+      "raw": 1187829,
+      "gzip": 405515,
+      "brotli": 349101,
+      "fileCount": 955
     },
     "method": {
       "schemaVersion": 1,

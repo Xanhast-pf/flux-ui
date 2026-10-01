@@ -69,4 +69,5 @@ export * from "./components/Toggle/index.js";
 export * from "./components/ToggleGroup/index.js";
 export * from "./components/Toolbar/index.js";
 export * from "./components/Tooltip/index.js";
+export * from "./components/TreeView/index.js";
 export * from "./components/VisuallyHidden/index.js";

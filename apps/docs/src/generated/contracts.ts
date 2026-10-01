@@ -1299,6 +1299,25 @@ export const publicContracts = [
     ],
   },
   {
+    name: "TreeView",
+    slug: "tree-view",
+    parts: [
+      {
+        path: "TreeView.Item",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "TreeView.Root",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+        stateModels: ["value"],
+      },
+    ],
+  },
+  {
     name: "VisuallyHidden",
     slug: "visually-hidden",
     parts: [
