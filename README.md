@@ -93,19 +93,15 @@ Run the isolated component workbench:
 pnpm flux dev storybook
 ```
 
-Before pushing:
-
-```bash
-pnpm flux check
-```
-
-For changes involving browser behavior, accessibility, Storybook, or runtime performance:
+Before pushing, commit the intended tree. Husky pre-push runs the complete local gate automatically, or reuses a matching receipt if you already ran:
 
 ```bash
 pnpm flux check full
 ```
 
-The full gate includes `pnpm flux test consumer`: a separate production consumer that resolves built public exports without the docs source aliases or styles.
+The full gate includes Storybook, broad Chromium checks, focused Chromium/Firefox/WebKit compatibility, performance smoke, release-size checks, and the built public consumer. A passing clean-tree run is bound to the commit and published as a Git note during push.
+
+GitHub branch pushes verify that attestation with a lightweight required job. The expensive Quality and Browser Actions run only when the pushed ref is `main`; ordinary branch pushes and pull requests do not rerun the heavy suite.
 
 See [`docs/development.md`](docs/development.md) for the complete local workflow, baseline rules, troubleshooting, and PR checklist.
 

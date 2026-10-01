@@ -2,9 +2,8 @@ name: CI
 
 on:
   push:
-    branches: [main]
-  pull_request:
-  merge_group:
+    branches:
+      - "**"
   workflow_dispatch:
 
 permissions:
@@ -15,8 +14,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  attestation:
+    name: Local Full Check
+    if: github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+
+      - name: Fetch local full-check attestation
+        run: git fetch --no-tags origin refs/notes/flux-full-check:refs/notes/flux-full-check
+
+      - name: Verify local full-check attestation
+        run: node tooling/attest/verify.mjs "$GITHUB_SHA" --allow-tree-match
+
   quality:
     name: Quality
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -124,6 +147,7 @@ jobs:
 
   browser:
     name: Browser
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -180,20 +204,30 @@ jobs:
   required:
     name: Required
     if: always()
-    needs: [quality, browser]
+    needs: [attestation, quality, browser]
     runs-on: ubuntu-latest
     timeout-minutes: 2
 
     steps:
       - name: Verify required jobs passed
         env:
+          ATTESTATION_RESULT: ${{ needs.attestation.result }}
           QUALITY_RESULT: ${{ needs.quality.result }}
           BROWSER_RESULT: ${{ needs.browser.result }}
+          TARGET_REF: ${{ github.ref }}
         run: |
+          echo "Local full check: $ATTESTATION_RESULT"
           echo "Quality: $QUALITY_RESULT"
           echo "Browser: $BROWSER_RESULT"
-          test "$QUALITY_RESULT" = "success"
-          test "$BROWSER_RESULT" = "success"
+          if [ "$TARGET_REF" = "refs/heads/main" ]; then
+            test "$ATTESTATION_RESULT" = "skipped"
+            test "$QUALITY_RESULT" = "success"
+            test "$BROWSER_RESULT" = "success"
+          else
+            test "$ATTESTATION_RESULT" = "success"
+            test "$QUALITY_RESULT" = "skipped"
+            test "$BROWSER_RESULT" = "skipped"
+          fi
 
   pages-build:
     name: Pages Build

@@ -59,7 +59,7 @@ test("public dispatch preserves existing tasks and argument arrays", () => {
   const cases = [
     ["dev", "dev"],
     ["check", "check"],
-    ["check full", "check:full"],
+    ["check full", "check:full:attest"],
     ["check all", "verify:all"],
     ["check drift", "drift:check"],
     ["test drift", "drift:test"],
