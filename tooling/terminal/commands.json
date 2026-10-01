@@ -113,6 +113,7 @@
     ["node", "tooling/terminal/tasks.mjs", "size"],
     ["node", "tooling/terminal/tasks.mjs", "bible:check"]
   ],
+  "check:full:attest": [["node", "tooling/attest/run-full.mjs"]],
   "check:full": [
     ["node", "tooling/terminal/tasks.mjs", "check"],
     ["node", "tooling/size/check.mjs", "--release"],

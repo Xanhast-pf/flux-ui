@@ -1,1 +1,1 @@
-node tooling/terminal/tasks.mjs check
+node tooling/attest/pre-push.mjs "$@"

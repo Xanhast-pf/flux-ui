@@ -60,19 +60,15 @@ See [`docs/workshop.md`](docs/workshop.md) for the documentation shell and brows
 Run `pnpm flux` for command discovery and `pnpm flux size --help` for focused help.
 `pnpm flux fix` writes generated source and safe lint/format fixes, then runs the normal gate; it never accepts baselines.
 
-Before pushing ordinary changes:
+Before pushing, commit the intended tree. The Husky pre-push hook requires a clean checked-out branch tip. It reuses a matching full-check receipt when one exists; otherwise it runs the complete local gate automatically:
 
 ```bash
-pnpm flux check
-```
-
-For component visuals, browser behavior, accessibility, Storybook, or runtime-sensitive changes:
-
-```bash
-pnpm flux build storybook
 pnpm flux check full
-pnpm flux perf
 ```
+
+That gate includes the normal checks, release-size contracts, Storybook, broad Chromium coverage, focused Chromium/Firefox/WebKit compatibility, performance smoke, and the built-public-export consumer. Running it manually before `git push` is optional but avoids waiting for the hook to do the same work.
+
+Branch pushes run only the lightweight `CI / Local Full Check` attestation verification and `CI / Required` aggregation on GitHub. The expensive `CI / Quality` and `CI / Browser` jobs run again only for `main`. Pull-request and merge-queue events do not start the heavy CI workflow; independent security workflows keep their own triggers.
 
 Keep Coding Bible enabled. Do not hide findings with exclusions merely to make CI green.
 

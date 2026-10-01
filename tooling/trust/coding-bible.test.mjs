@@ -93,6 +93,7 @@ test("live project canary is independent from frozen normal CI", async () => {
     assert.equal(command, "pnpm install --frozen-lockfile");
   assert.doesNotMatch(ci, /pnpm (?:update|bible:refresh)/u);
   assert.match(ci, /run-checks\.mjs quality coding-bible/u);
+  assert.match(ci, /tooling\/attest\/verify\.mjs/u);
 });
 
 test("manual pin preserves other manifest fields and explains the main workflow", async () => {

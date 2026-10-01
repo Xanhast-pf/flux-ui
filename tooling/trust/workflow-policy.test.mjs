@@ -21,27 +21,61 @@ test("external actions remain immutable except the dedicated Coding Bible main c
     }
   }
 });
-test("required browser CI installs and enforces all supported Playwright engines", async () => {
+test("branch CI verifies local full checks while heavy CI stays main-only", async () => {
   const source = await readFile(new URL("ci.yml", workflows), "utf8");
+  assert.match(source, /push:\s+branches:\s+- "\*\*"/u);
+  assert.doesNotMatch(source, /pull_request:|merge_group:/u);
+
+  const attestation = source
+    .split("\n  attestation:")[1]
+    .split("\n  quality:")[0];
+  assert.match(attestation, /if: github\.ref != 'refs\/heads\/main'/u);
+  assert.match(attestation, /tooling\/attest\/verify\.mjs/u);
+  assert.doesNotMatch(attestation, /pnpm install|run-checks\.mjs/u);
+
+  const quality = source.split("\n  quality:")[1].split("\n  browser:")[0];
+  assert.match(quality, /if: github\.ref == 'refs\/heads\/main'/u);
+  assert.match(quality, /tooling\/trust\/run-checks\.mjs quality/u);
+
   const browser = source.split("\n  browser:")[1].split("\n  required:")[0];
+  assert.match(browser, /if: github\.ref == 'refs\/heads\/main'/u);
   assert.match(browser, /run playwright:install:compat/u);
   assert.match(browser, /tooling\/trust\/run-checks\.mjs browser/u);
   assert.match(browser, /consumer-compat-results/u);
 });
-test("Pages consumes same-attempt evidence only after the Required gate", async () => {
+
+test("Required chooses attestation off main and heavy jobs on main", async () => {
   const source = await readFile(new URL("ci.yml", workflows), "utf8");
-  assert.match(source, /needs: \[quality, browser\]/u);
-  assert.match(source, /needs: required/u);
-  assert.match(source, /trust\/generate\.mjs --require-ci/u);
+  const required = source
+    .split("\n  required:")[1]
+    .split("\n  pages-build:")[0];
+  assert.match(required, /needs: \[attestation, quality, browser\]/u);
+  assert.match(required, /TARGET_REF/u);
+  assert.match(required, /test "\$ATTESTATION_RESULT" = "skipped"/u);
+  assert.match(required, /test "\$QUALITY_RESULT" = "success"/u);
+  assert.match(required, /test "\$BROWSER_RESULT" = "success"/u);
+  assert.match(required, /test "\$ATTESTATION_RESULT" = "success"/u);
+  assert.match(required, /test "\$QUALITY_RESULT" = "skipped"/u);
+  assert.match(required, /test "\$BROWSER_RESULT" = "skipped"/u);
+});
+
+test("Pages consumes main-only heavy evidence after Required", async () => {
+  const source = await readFile(new URL("ci.yml", workflows), "utf8");
+  const pages = source
+    .split("\n  pages-build:")[1]
+    .split("\n  pages-deploy:")[0];
+  assert.match(pages, /needs: required/u);
   assert.match(
-    source,
+    pages,
     /evidence-quality-\$\{\{ github\.run_id \}\}-\$\{\{ github\.run_attempt \}\}/u,
   );
   assert.match(
-    source,
+    pages,
     /evidence-browser-\$\{\{ github\.run_id \}\}-\$\{\{ github\.run_attempt \}\}/u,
   );
+  assert.match(pages, /tooling\/trust\/generate\.mjs --require-ci/u);
 });
+
 test("Pages builds its deployed artifact through the docs chunk-budget task", async () => {
   const source = await readFile(new URL("ci.yml", workflows), "utf8");
   const pages = source
@@ -53,6 +87,7 @@ test("Pages builds its deployed artifact through the docs chunk-budget task", as
   );
   assert.doesNotMatch(pages, /pnpm\s+--filter\s+@flux-ui\/docs\s+build/u);
 });
+
 test("release scanning stays outside the signing job and dry-run is the default", async () => {
   const source = await readFile(new URL("release.yml", workflows), "utf8");
   assert.match(source, /dry_run:[\s\S]*?default: true/u);
