@@ -31,7 +31,8 @@ hook. The former script identifiers below are not compatibility aliases.
 | `bible:refresh`         | `pnpm flux maintain bible refresh`               | maintainer         |
 | `bible:pin`             | `pnpm flux maintain bible pin`                   | maintainer         |
 | `check`                 | `pnpm flux check`                                | contributor        |
-| `check:full`            | `pnpm flux check full`                           | contributor        |
+| `check:full:attest`     | `pnpm flux check full`                           | contributor        |
+| `check:full`            | internal full-gate task                          | internal-only task |
 | `check:fix`             | `pnpm flux fix`                                  | contributor        |
 | `changeset`             | `pnpm flux release changeset`                    | maintainer         |
 | `release:version`       | `pnpm flux release version`                      | maintainer         |
@@ -80,7 +81,7 @@ CLI help is authoritative; this migration inventory records the final command pa
 dev → dev
 dev storybook → storybook
 check → check
-check full → check:full
+check full → check:full:attest
 check all → verify:all
 check generated → generate:check
 check docs → docs:check
@@ -152,14 +153,17 @@ help/dispatch tree; `cli.mjs` calls the existing task execution layer in `tasks.
 `commands.mjs` provides task references, progress labels and argument forwarding.
 `runner.mjs` retains output capture, signals, failure summaries and Windows handling.
 
-Normal `check` preserves all twelve ordered gates. `check full` calls it before
-release size, Storybook, browser, performance smoke and built-consumer validation.
-`check all` expands those canonical definitions, continues independent checks,
-blocks size measurements after production build failure and writes a receipt.
+Normal `check` preserves all twelve ordered gates. Public `check full` wraps the
+internal `check:full` task, then records a reusable commit-bound receipt when the tree
+is clean. `check all` expands those canonical definitions, continues independent
+checks, blocks size measurements after production build failure and writes a diagnostic
+receipt.
 
-CI retains individually named evidence checks and their IDs. Hooks retain lint-staged,
-generated drift and staged Coding Bible in pre-commit; pre-push invokes the normal
-internal check. No release permissions, OIDC, publishing or evidence policy changed.
+Hooks retain lint-staged, generated drift and staged Coding Bible in pre-commit.
+Pre-push requires a clean checked-out branch tip, reuses or runs the full local gate,
+and publishes `refs/notes/flux-full-check`. Branch CI verifies that note only; the
+named Quality and Browser evidence jobs run on `main` and continue feeding the Pages
+evidence pipeline there. No release permissions, OIDC or publishing policy changed.
 
 Knip discovers CLI binaries in the structured argv registry and derives Node entry
 files from it through `knip.js`; dependency analysis remains enabled. No dependencies
