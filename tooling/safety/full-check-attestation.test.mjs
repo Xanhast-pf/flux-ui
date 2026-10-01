@@ -143,22 +143,50 @@ test("pre-push publishes a cached receipt as a Git note and reuses the remote no
   }
 });
 
-test("pre-push runs the full gate when no reusable receipt exists", () => {
+test("pre-push synchronizes the frozen install before an uncached full gate", () => {
   const { root, repository } = fixture();
   try {
-    let fullChecks = 0;
+    const events = [];
     const result = runPrePush({
       remote: "origin",
       input: pushInput(repository),
       repositoryRoot: repository,
+      prepareWorkspace() {
+        events.push("install");
+      },
       executeFullCheck() {
-        fullChecks += 1;
+        events.push("full-check");
         const recorded = recordLocalFullCheckReceipt(repository);
         assert.equal(recorded.recorded, true);
       },
     });
     assert.equal(result.reason, "attested");
-    assert.equal(fullChecks, 1);
+    assert.deepEqual(events, ["install", "full-check"]);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("pre-push aborts before the full gate when workspace synchronization fails", () => {
+  const { root, repository } = fixture();
+  try {
+    let fullChecks = 0;
+    assert.throws(
+      () =>
+        runPrePush({
+          remote: "origin",
+          input: pushInput(repository),
+          repositoryRoot: repository,
+          prepareWorkspace() {
+            throw new Error("install failed");
+          },
+          executeFullCheck() {
+            fullChecks += 1;
+          },
+        }),
+      /install failed/u,
+    );
+    assert.equal(fullChecks, 0);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

@@ -1,6 +1,7 @@
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { executableCommand } from "../terminal/executable.mjs";
 import {
   FULL_CHECK_NOTE_REF,
   gitStatus,
@@ -26,6 +27,22 @@ function parseUpdates(input) {
         .split(/\s+/u);
       return { localRef, localOid, remoteRef, remoteOid };
     });
+}
+
+function synchronizeWorkspaceInstall(repositoryRoot = defaultRoot) {
+  const [program, args, executableOptions] = executableCommand([
+    "pnpm",
+    "install",
+    "--frozen-lockfile",
+  ]);
+  const result = spawnSync(program, args, {
+    cwd: repositoryRoot,
+    stdio: "inherit",
+    ...executableOptions,
+  });
+  if (result.error) throw result.error;
+  if (result.status !== 0)
+    throw new Error("Frozen workspace install failed; push aborted.");
 }
 
 function runFullCheck(repositoryRoot = defaultRoot) {
@@ -68,6 +85,7 @@ export function runPrePush({
   remote,
   input,
   repositoryRoot = defaultRoot,
+  prepareWorkspace = synchronizeWorkspaceInstall,
   executeFullCheck = runFullCheck,
 } = {}) {
   if (!remote) throw new Error("pre-push did not receive a remote.");
@@ -112,8 +130,14 @@ export function runPrePush({
   let receipt = readLocalFullCheckReceipt(repositoryRoot);
   if (!validateFullCheckReceipt(receipt, head)) {
     console.log(
-      `No reusable full-check receipt for ${head.commit.slice(0, 12)}; running pnpm flux check full locally before push.`,
+      `No reusable full-check receipt for ${head.commit.slice(0, 12)}; synchronizing the frozen workspace install before running pnpm flux check full locally.`,
     );
+    prepareWorkspace(repositoryRoot);
+    if (!workingTreeIsClean(repositoryRoot)) {
+      throw new Error(
+        "Push blocked: workspace synchronization changed tracked files.",
+      );
+    }
     executeFullCheck(repositoryRoot);
     receipt = readLocalFullCheckReceipt(repositoryRoot);
   }
