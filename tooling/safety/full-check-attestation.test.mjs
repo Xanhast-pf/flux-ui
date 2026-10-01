@@ -11,7 +11,7 @@ import {
   verifyFullCheckNote,
   writeFullCheckNote,
 } from "../attest/full-check.mjs";
-import { runPrePush } from "../attest/pre-push.mjs";
+import { runPrePush, workspaceInstallCommand } from "../attest/pre-push.mjs";
 
 function git(cwd, ...args) {
   return execFileSync("git", args, { cwd, encoding: "utf8" }).trim();
@@ -46,6 +46,19 @@ function pushInput(repository) {
   const commit = git(repository, "rev-parse", "HEAD");
   return `refs/heads/main ${commit} refs/heads/main ${"0".repeat(40)}\n`;
 }
+
+test("workspace install command is fixed and does not interpolate environment paths", () => {
+  assert.deepEqual(workspaceInstallCommand("linux"), [
+    "pnpm",
+    ["install", "--frozen-lockfile"],
+    {},
+  ]);
+  assert.deepEqual(workspaceInstallCommand("win32"), [
+    "cmd.exe",
+    ["/d", "/s", "/c", '"pnpm.cmd ^"install^" ^"--frozen-lockfile^""'],
+    { windowsVerbatimArguments: true },
+  ]);
+});
 
 test("full-check receipt and note bind to the exact commit and ignore commit signing", () => {
   const { root, repository } = fixture();

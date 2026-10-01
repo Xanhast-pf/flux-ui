@@ -1,7 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { executableCommand } from "../terminal/executable.mjs";
 import {
   FULL_CHECK_NOTE_REF,
   gitStatus,
@@ -29,12 +28,19 @@ function parseUpdates(input) {
     });
 }
 
+export function workspaceInstallCommand(platform = process.platform) {
+  if (platform === "win32") {
+    return [
+      "cmd.exe",
+      ["/d", "/s", "/c", '"pnpm.cmd ^"install^" ^"--frozen-lockfile^""'],
+      { windowsVerbatimArguments: true },
+    ];
+  }
+  return ["pnpm", ["install", "--frozen-lockfile"], {}];
+}
+
 function synchronizeWorkspaceInstall(repositoryRoot = defaultRoot) {
-  const [program, args, executableOptions] = executableCommand([
-    "pnpm",
-    "install",
-    "--frozen-lockfile",
-  ]);
+  const [program, args, executableOptions] = workspaceInstallCommand();
   const result = spawnSync(program, args, {
     cwd: repositoryRoot,
     stdio: "inherit",
