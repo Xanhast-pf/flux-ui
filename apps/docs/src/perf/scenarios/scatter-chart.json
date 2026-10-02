@@ -1,0 +1,9 @@
+{
+  "id": "scatter-chart",
+  "label": "ScatterChart",
+  "unit": "source points",
+  "kind": "workload",
+  "maxCount": 20000,
+  "fixtureRevision": 1,
+  "description": "One scatter chart; generate and reduce N source points, then shift the signal."
+}

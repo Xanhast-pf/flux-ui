@@ -1,4 +1,4 @@
-import { PackageIcon } from "@flux-ui/icons";
+import { ShoppingBagIcon } from "@flux-ui/icons";
 import type { SceneDefinition } from "../types.js";
 export default {
   order: 5,
@@ -24,5 +24,5 @@ export default {
   ],
   custom:
     "The product illustration, storefront, and bag are docs-only compositions. This is a fictional product with sample pricing. There is no payment, checkout, or stock service.",
-  Icon: PackageIcon,
+  Icon: ShoppingBagIcon,
 } satisfies SceneDefinition;

@@ -2,7 +2,15 @@
   {
     "name": "ArrowDown",
     "category": "navigation",
-    "keywords": ["down", "south", "move", "direction", "scroll"],
+    "keywords": [
+      "down",
+      "south",
+      "move",
+      "direction",
+      "scroll",
+      "descending",
+      "sort descending"
+    ],
     "elements": [
       {
         "tag": "path",
@@ -35,11 +43,30 @@
   {
     "name": "ArrowUp",
     "category": "navigation",
-    "keywords": ["up", "north", "move", "direction", "scroll"],
+    "keywords": [
+      "up",
+      "north",
+      "move",
+      "direction",
+      "scroll",
+      "ascending",
+      "sort ascending"
+    ],
     "elements": [
       {
         "tag": "path",
         "d": "M10 16V5 M5.5 9.5 10 5l4.5 4.5"
+      }
+    ]
+  },
+  {
+    "name": "ArrowUpDown",
+    "category": "actions",
+    "keywords": ["sort", "sorting", "reorder", "ascending descending"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7 6 10 3l3 3 M10 3v14 M7 14l3 3 3-3"
       }
     ]
   },
@@ -755,6 +782,116 @@
       {
         "tag": "path",
         "d": "M4 5c0-1.1 2.7-2 6-2s6 .9 6 2-2.7 2-6 2-6-.9-6-2Z M4 5v5c0 1.1 2.7 2 6 2s6-.9 6-2V5 M4 10v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"
+      }
+    ]
+  },
+  {
+    "name": "Save",
+    "category": "actions",
+    "keywords": ["save", "disk", "persist", "checkpoint"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 3h10l2 2v12H4V3Z M7 3v5h6V3 M7 13h6v4H7v-4Z"
+      }
+    ]
+  },
+  {
+    "name": "Undo",
+    "category": "actions",
+    "keywords": ["undo", "revert", "restore", "back"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7 5 3 9l4 4 M3.5 9H11a5 5 0 0 1 5 5v1"
+      }
+    ]
+  },
+  {
+    "name": "Play",
+    "category": "actions",
+    "keywords": ["play", "start", "resume", "media"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7 4.5 15 10l-8 5.5v-11Z"
+      }
+    ]
+  },
+  {
+    "name": "Pause",
+    "category": "actions",
+    "keywords": ["pause", "hold", "media", "playback"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7 5v10 M13 5v10"
+      }
+    ]
+  },
+  {
+    "name": "Volume",
+    "category": "actions",
+    "keywords": ["volume", "audio", "sound", "speaker"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 8h3l3-3v10l-3-3H4V8Z M13 7.5a4 4 0 0 1 0 5 M15 5.5a7 7 0 0 1 0 9"
+      }
+    ]
+  },
+  {
+    "name": "VolumeOff",
+    "category": "actions",
+    "keywords": ["mute", "muted", "volume off", "silent", "audio"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M4 8h3l3-3v10l-3-3H4V8Z M13 8l4 4 M17 8l-4 4"
+      }
+    ]
+  },
+  {
+    "name": "Share",
+    "category": "actions",
+    "keywords": ["share", "send", "forward", "distribute"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M14.5 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z M5.5 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z M14.5 12.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z M7.3 9l5.4-3 M7.3 11l5.4 3"
+      }
+    ]
+  },
+  {
+    "name": "UserPlus",
+    "category": "communication",
+    "keywords": ["invite", "add user", "person plus", "member", "follow"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M7.5 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M2.5 17a5 5 0 0 1 10 0 M15 7.5v5 M12.5 10h5"
+      }
+    ]
+  },
+  {
+    "name": "Heart",
+    "category": "actions",
+    "keywords": ["like", "love", "favorite", "heart"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M10 17s-6.5-4.2-6.5-9A3.5 3.5 0 0 1 10 6a3.5 3.5 0 0 1 6.5 2c0 4.8-6.5 9-6.5 9Z"
+      }
+    ]
+  },
+  {
+    "name": "ShoppingBag",
+    "category": "content",
+    "keywords": ["bag", "shopping", "commerce", "cart"],
+    "elements": [
+      {
+        "tag": "path",
+        "d": "M5 7h10l1 10H4L5 7Z M7 8V6a3 3 0 0 1 6 0v2"
       }
     ]
   }

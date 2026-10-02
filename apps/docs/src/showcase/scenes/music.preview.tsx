@@ -22,6 +22,7 @@ import {
   Text,
   Toggle,
 } from "@flux-ui/react";
+import { PauseIcon, PlayIcon } from "@flux-ui/icons";
 import { useId, useState, type CSSProperties } from "react";
 import { SceneHeader, SceneStatus } from "../SceneParts.js";
 import { downloadJson } from "../../lib/download.js";
@@ -203,14 +204,14 @@ function MusicWorkspace() {
           <Inline wrap gap="sm">
             <Button
               size="sm"
+              startIcon={
+                playing ? <PauseIcon size={16} /> : <PlayIcon size={16} />
+              }
               onClick={() => {
                 setPlaying((value) => !value);
               }}
               aria-pressed={playing}
             >
-              <Text aria-hidden="true" variant="caption">
-                {playing ? "Ⅱ" : "▶"}
-              </Text>
               {playing ? "Pause visual loop" : "Play visual loop"}
             </Button>
             <Text variant="caption" numeric>

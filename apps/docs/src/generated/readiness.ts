@@ -1,14 +1,14 @@
 // GENERATED FILE. Run pnpm flux maintain generate; do not edit manually.
 export const readiness = {
   summary: {
-    total: 72,
+    total: 81,
     status: {
       alpha: 0,
-      beta: 72,
+      beta: 81,
       stable: 0,
     },
-    eligibleForBetaReview: 72,
-    eligibleForStableReview: 72,
+    eligibleForBetaReview: 81,
+    eligibleForStableReview: 81,
     blocked: 0,
     browserCatalogCoverage: true,
     accessibilityCatalogCoverage: true,
@@ -65,6 +65,14 @@ export const readiness = {
     {
       name: "Button",
       slug: "button",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "ButtonGroup",
+      slug: "button-group",
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,
@@ -151,8 +159,32 @@ export const readiness = {
       blockers: [],
     },
     {
+      name: "DataGrid",
+      slug: "data-grid",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
       name: "DataTable",
       slug: "data-table",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "DatePicker",
+      slug: "date-picker",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "DateTimePicker",
+      slug: "date-time-picker",
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,
@@ -241,6 +273,14 @@ export const readiness = {
     {
       name: "IconButton",
       slug: "icon-button",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "Indicator",
+      slug: "indicator",
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,
@@ -343,6 +383,14 @@ export const readiness = {
       blockers: [],
     },
     {
+      name: "PieChart",
+      slug: "pie-chart",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
       name: "Popover",
       slug: "popover",
       status: "beta",
@@ -369,6 +417,14 @@ export const readiness = {
     {
       name: "Rating",
       slug: "rating",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "ScatterChart",
+      slug: "scatter-chart",
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,
@@ -479,6 +535,14 @@ export const readiness = {
       blockers: [],
     },
     {
+      name: "Stepper",
+      slug: "stepper",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
       name: "Switch",
       slug: "switch",
       status: "beta",
@@ -529,6 +593,14 @@ export const readiness = {
     {
       name: "ThemeScope",
       slug: "theme-scope",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "TimePicker",
+      slug: "time-picker",
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,

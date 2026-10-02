@@ -1,0 +1,9 @@
+{
+  "id": "pie-chart",
+  "label": "PieChart",
+  "unit": "source slices",
+  "kind": "workload",
+  "maxCount": 256,
+  "fixtureRevision": 1,
+  "description": "One pie chart; generate and render N source slices, then shift their values."
+}

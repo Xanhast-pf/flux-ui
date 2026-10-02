@@ -5,6 +5,7 @@ import { ArrowDownIcon } from "./icons/ArrowDownIcon.js";
 import { ArrowLeftIcon } from "./icons/ArrowLeftIcon.js";
 import { ArrowRightIcon } from "./icons/ArrowRightIcon.js";
 import { ArrowUpIcon } from "./icons/ArrowUpIcon.js";
+import { ArrowUpDownIcon } from "./icons/ArrowUpDownIcon.js";
 import { ArrowUpRightIcon } from "./icons/ArrowUpRightIcon.js";
 import { ChevronDownIcon } from "./icons/ChevronDownIcon.js";
 import { ChevronLeftIcon } from "./icons/ChevronLeftIcon.js";
@@ -68,6 +69,16 @@ import { MailIcon } from "./icons/MailIcon.js";
 import { UserIcon } from "./icons/UserIcon.js";
 import { UsersIcon } from "./icons/UsersIcon.js";
 import { DatabaseIcon } from "./icons/DatabaseIcon.js";
+import { SaveIcon } from "./icons/SaveIcon.js";
+import { UndoIcon } from "./icons/UndoIcon.js";
+import { PlayIcon } from "./icons/PlayIcon.js";
+import { PauseIcon } from "./icons/PauseIcon.js";
+import { VolumeIcon } from "./icons/VolumeIcon.js";
+import { VolumeOffIcon } from "./icons/VolumeOffIcon.js";
+import { ShareIcon } from "./icons/ShareIcon.js";
+import { UserPlusIcon } from "./icons/UserPlusIcon.js";
+import { HeartIcon } from "./icons/HeartIcon.js";
+import { ShoppingBagIcon } from "./icons/ShoppingBagIcon.js";
 
 export type IconCategory = "actions" | "brand" | "communication" | "content" | "developer" | "layout" | "navigation" | "status" | "theme";
 
@@ -82,7 +93,7 @@ export const iconCatalog: readonly IconCatalogEntry[] = [
   {
     name: "ArrowDownIcon",
     category: "navigation",
-    keywords: ["down","south","move","direction","scroll"],
+    keywords: ["down","south","move","direction","scroll","descending","sort descending"],
     component: ArrowDownIcon,
   },
   {
@@ -100,8 +111,14 @@ export const iconCatalog: readonly IconCatalogEntry[] = [
   {
     name: "ArrowUpIcon",
     category: "navigation",
-    keywords: ["up","north","move","direction","scroll"],
+    keywords: ["up","north","move","direction","scroll","ascending","sort ascending"],
     component: ArrowUpIcon,
+  },
+  {
+    name: "ArrowUpDownIcon",
+    category: "actions",
+    keywords: ["sort","sorting","reorder","ascending descending"],
+    component: ArrowUpDownIcon,
   },
   {
     name: "ArrowUpRightIcon",
@@ -480,5 +497,65 @@ export const iconCatalog: readonly IconCatalogEntry[] = [
     category: "developer",
     keywords: ["data","storage","sql","server"],
     component: DatabaseIcon,
+  },
+  {
+    name: "SaveIcon",
+    category: "actions",
+    keywords: ["save","disk","persist","checkpoint"],
+    component: SaveIcon,
+  },
+  {
+    name: "UndoIcon",
+    category: "actions",
+    keywords: ["undo","revert","restore","back"],
+    component: UndoIcon,
+  },
+  {
+    name: "PlayIcon",
+    category: "actions",
+    keywords: ["play","start","resume","media"],
+    component: PlayIcon,
+  },
+  {
+    name: "PauseIcon",
+    category: "actions",
+    keywords: ["pause","hold","media","playback"],
+    component: PauseIcon,
+  },
+  {
+    name: "VolumeIcon",
+    category: "actions",
+    keywords: ["volume","audio","sound","speaker"],
+    component: VolumeIcon,
+  },
+  {
+    name: "VolumeOffIcon",
+    category: "actions",
+    keywords: ["mute","muted","volume off","silent","audio"],
+    component: VolumeOffIcon,
+  },
+  {
+    name: "ShareIcon",
+    category: "actions",
+    keywords: ["share","send","forward","distribute"],
+    component: ShareIcon,
+  },
+  {
+    name: "UserPlusIcon",
+    category: "communication",
+    keywords: ["invite","add user","person plus","member","follow"],
+    component: UserPlusIcon,
+  },
+  {
+    name: "HeartIcon",
+    category: "actions",
+    keywords: ["like","love","favorite","heart"],
+    component: HeartIcon,
+  },
+  {
+    name: "ShoppingBagIcon",
+    category: "content",
+    keywords: ["bag","shopping","commerce","cart"],
+    component: ShoppingBagIcon,
   },
 ];
