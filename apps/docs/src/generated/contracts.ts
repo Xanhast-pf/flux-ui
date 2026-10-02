@@ -164,6 +164,18 @@ export const publicContracts = [
     ],
   },
   {
+    name: "ButtonGroup",
+    slug: "button-group",
+    parts: [
+      {
+        path: "ButtonGroup",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
     name: "Callout",
     slug: "callout",
     parts: [
@@ -298,6 +310,18 @@ export const publicContracts = [
     ],
   },
   {
+    name: "DataGrid",
+    slug: "data-grid",
+    parts: [
+      {
+        path: "DataGrid",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
     name: "DataTable",
     slug: "data-table",
     parts: [
@@ -306,6 +330,32 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+      },
+    ],
+  },
+  {
+    name: "DatePicker",
+    slug: "date-picker",
+    parts: [
+      {
+        path: "DatePicker",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+        stateModels: ["value"],
+      },
+    ],
+  },
+  {
+    name: "DateTimePicker",
+    slug: "date-time-picker",
+    parts: [
+      {
+        path: "DateTimePicker",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+        stateModels: ["value"],
       },
     ],
   },
@@ -589,6 +639,18 @@ export const publicContracts = [
     ],
   },
   {
+    name: "Indicator",
+    slug: "indicator",
+    parts: [
+      {
+        path: "Indicator",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
     name: "Inline",
     slug: "inline",
     parts: [
@@ -777,6 +839,18 @@ export const publicContracts = [
     ],
   },
   {
+    name: "PieChart",
+    slug: "pie-chart",
+    parts: [
+      {
+        path: "PieChart",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
     name: "Popover",
     slug: "popover",
     parts: [
@@ -854,6 +928,18 @@ export const publicContracts = [
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
         stateModels: ["value"],
+      },
+    ],
+  },
+  {
+    name: "ScatterChart",
+    slug: "scatter-chart",
+    parts: [
+      {
+        path: "ScatterChart",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
       },
     ],
   },
@@ -1054,6 +1140,36 @@ export const publicContracts = [
     ],
   },
   {
+    name: "Stepper",
+    slug: "stepper",
+    parts: [
+      {
+        path: "Stepper.Button",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "Stepper.Item",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "Stepper.Link",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "Stepper.Root",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
     name: "Switch",
     slug: "switch",
     parts: [
@@ -1202,6 +1318,19 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+      },
+    ],
+  },
+  {
+    name: "TimePicker",
+    slug: "time-picker",
+    parts: [
+      {
+        path: "TimePicker",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+        stateModels: ["value"],
       },
     ],
   },

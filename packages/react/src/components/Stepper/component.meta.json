@@ -1,0 +1,8 @@
+{
+  "name": "Stepper",
+  "slug": "stepper",
+  "category": "Navigation",
+  "status": "beta",
+  "description": "Ordered workflow progress with current, completed and error semantics.",
+  "sizeClass": "primitive"
+}

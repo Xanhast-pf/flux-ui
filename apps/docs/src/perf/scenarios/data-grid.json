@@ -1,0 +1,9 @@
+{
+  "id": "data-grid",
+  "label": "DataGrid",
+  "unit": "loaded rows",
+  "kind": "workload",
+  "maxCount": 2000,
+  "fixtureRevision": 1,
+  "description": "One ARIA grid; generate and sort N loaded rows, render a bounded page, then reverse the ordering and selection."
+}

@@ -15,6 +15,8 @@ import { SearchIcon, SlidersIcon } from "@flux-ui/icons";
 
 The live `#icons` documentation page searches the icon name, category, and keywords. `/` focuses the icon search when focus is not already inside an editable control.
 
+The latest catalog growth came from actual Flux example gaps rather than parity targets: Save, Undo, Play, Pause, Volume, VolumeOff, Share, UserPlus, ArrowUpDown, Heart, and ShoppingBag. Sort-direction aliases are keywords on the existing ArrowUp/ArrowDown geometry rather than duplicate icons.
+
 ## Accessibility
 
 Icons are decorative by default. If adjacent text or the containing control already communicates the meaning, leave the SVG decorative.

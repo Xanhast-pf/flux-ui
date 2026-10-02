@@ -3,7 +3,7 @@ import {
   CalendarIcon,
   CheckIcon,
   CircleCheckIcon,
-  MailIcon,
+  UserPlusIcon,
   MoreHorizontalIcon,
   UsersIcon,
 } from "@flux-ui/icons";
@@ -114,7 +114,7 @@ function TeamCard() {
           </Field.Root>
           <Button
             size="sm"
-            startIcon={<MailIcon size={14} />}
+            startIcon={<UserPlusIcon size={14} />}
             onClick={() => setStatus("Invitation staged locally")}
           >
             Invite

@@ -61,6 +61,15 @@ export const components = [
     sizeClass: "interactive",
   },
   {
+    name: "ButtonGroup",
+    slug: "button-group",
+    category: "Actions",
+    status: "beta",
+    description:
+      "Semantic attached-edge grouping for buttons without duplicating Button appearance or selection state.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Callout",
     slug: "callout",
     category: "Feedback",
@@ -148,6 +157,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "DataGrid",
+    slug: "data-grid",
+    category: "Data",
+    status: "beta",
+    description:
+      "Interactive ARIA grid with stable cell focus, client transforms, row selection, column visibility, and app-owned inline cell editing.",
+    sizeClass: "data-heavy",
+  },
+  {
     name: "DataTable",
     slug: "data-table",
     category: "Data",
@@ -155,6 +173,24 @@ export const components = [
     description:
       "Windowed, fixed-row-height native table; not an editable spreadsheet or ARIA grid.",
     sizeClass: "data-heavy",
+  },
+  {
+    name: "DatePicker",
+    slug: "date-picker",
+    category: "Forms",
+    status: "beta",
+    description:
+      "Native civil date input with stable ISO serialization and browser-owned validation.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "DateTimePicker",
+    slug: "date-time-picker",
+    category: "Forms",
+    status: "beta",
+    description:
+      "Native local date-time input that deliberately carries no timezone or instant semantics.",
+    sizeClass: "primitive",
   },
   {
     name: "DescriptionList",
@@ -253,6 +289,15 @@ export const components = [
     category: "Actions",
     status: "beta",
     description: "Compact icon actions with a required accessible name.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "Indicator",
+    slug: "indicator",
+    category: "Feedback",
+    status: "beta",
+    description:
+      "Decorative count or dot overlay whose meaningful state stays in the owning control's accessible name.",
     sizeClass: "primitive",
   },
   {
@@ -362,6 +407,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "PieChart",
+    slug: "pie-chart",
+    category: "Data",
+    status: "beta",
+    description:
+      "Bounded pie chart with shared Flux legend semantics and keyboard/pointer slice inspection.",
+    sizeClass: "data-heavy",
+  },
+  {
     name: "Popover",
     slug: "popover",
     category: "Overlays",
@@ -396,6 +450,15 @@ export const components = [
     description:
       "Form-capable rating with native radio semantics, half-star precision and read-only presentation.",
     sizeClass: "primitive",
+  },
+  {
+    name: "ScatterChart",
+    slug: "scatter-chart",
+    category: "Data",
+    status: "beta",
+    description:
+      "Bounded scatter renderer with source-complete keyboard inspection and sampled SVG paths.",
+    sizeClass: "data-heavy",
   },
   {
     name: "ScrollArea",
@@ -511,6 +574,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "Stepper",
+    slug: "stepper",
+    category: "Navigation",
+    status: "beta",
+    description:
+      "Ordered workflow progress with current, completed and error semantics.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Switch",
     slug: "switch",
     category: "Inputs",
@@ -568,6 +640,15 @@ export const components = [
     status: "beta",
     description:
       "Scoped semantic theme application with optional container queries.",
+    sizeClass: "primitive",
+  },
+  {
+    name: "TimePicker",
+    slug: "time-picker",
+    category: "Forms",
+    status: "beta",
+    description:
+      "Native civil time input with browser-owned validation and no timezone semantics.",
     sizeClass: "primitive",
   },
   {

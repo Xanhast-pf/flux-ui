@@ -10,6 +10,7 @@ This directory contains the contributor and engineering documentation for Flux U
 - [Development workflow](development.md) — clone/setup, daily commands, verification, and PR workflow.
 - [Architecture](architecture.md) — package boundaries and tooling architecture.
 - [Component API design](component-api.md) — public API and composition conventions.
+- [Composition recipes](composition-recipes.md) — recipe-first AppBar, gallery, transfer, timeline, floating-action, and loading-overlay patterns.
 - [Design tokens](design-tokens.md) — semantic token and theme conventions.
 - [Performance](performance.md) — runtime measurement philosophy and contracts.
 - [Dogfooding](dogfooding.md) — how the docs app consumes the public system and where exceptions are allowed.
@@ -21,6 +22,8 @@ This directory contains the contributor and engineering documentation for Flux U
 - [Collection components](collection-components.md)
 - [Component refinement](component-refinement.md)
 - [Component ticket validation](component-ticket-validation.md)
+- [DataGrid beta architecture](data-grid-architecture.md)
+- [Menubar architecture evidence](menubar-architecture.md)
 - [Packed consumer](packed-consumer.md)
 - [Checkbox](checkbox.md)
 - [RadioGroup](radio-group.md)

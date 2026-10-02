@@ -29,6 +29,37 @@ for (const file of files) {
       expect(Number.isFinite(result?.[key])).toBe(true);
   });
 }
+
+test("roadmap data-heavy workloads stay finite at their source bounds", async ({
+  page,
+}) => {
+  test.setTimeout(60_000);
+  const scenarios = [
+    ["data-grid", 2_000],
+    ["pie-chart", 256],
+    ["scatter-chart", 20_000],
+  ] as const;
+
+  for (const [scenario, count] of scenarios) {
+    await page.goto(
+      `/?perf=1&scenario=${scenario}&variant=flux&count=${count}`,
+    );
+    await page.waitForFunction(() => window.__FLUX_PERF_RESULT__ !== undefined);
+    const result = await page.evaluate(() => window.__FLUX_PERF_RESULT__);
+    expect(result?.scenario).toBe(scenario);
+    expect(result?.count).toBe(count);
+    expect(result?.domNodes).toBeGreaterThan(0);
+    for (const key of [
+      "mountMs",
+      "mountToFrameMs",
+      "updateMs",
+      "updateToFrameMs",
+      "unmountMs",
+    ] as const)
+      expect(Number.isFinite(result?.[key])).toBe(true);
+  }
+});
+
 test("runtime performance page selects the full component catalog in one evidence card", async ({
   page,
 }) => {
@@ -62,6 +93,23 @@ test("runtime performance page selects the full component catalog in one evidenc
   await expect(
     page.getByText(/does not have a committed historical CI timing/u),
   ).toBeVisible();
+
+  for (const [slug, label] of [
+    ["data-grid", "DataGrid"],
+    ["pie-chart", "PieChart"],
+    ["scatter-chart", "ScatterChart"],
+  ] as const) {
+    await component.selectOption(slug);
+    await expect(
+      page.getByRole("heading", { level: 2, name: label }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Browser workload", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByText(/does not have a committed historical CI timing/u),
+    ).toBeVisible();
+  }
 
   await component.selectOption("accordion");
   await expect(

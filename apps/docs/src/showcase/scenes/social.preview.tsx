@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, PlusIcon, StarIcon } from "@flux-ui/icons";
+import { ArrowUpRightIcon, HeartIcon, UserPlusIcon } from "@flux-ui/icons";
 import {
   AspectRatio,
   Avatar,
@@ -189,7 +189,7 @@ export default function SocialScene() {
                       }}
                       size="sm"
                     >
-                      <StarIcon size={16} />
+                      <HeartIcon size={16} />
                       {post.likes + (post.liked ? 1 : 0)}{" "}
                       <Text variant="caption">
                         {post.liked ? "Liked" : "Like"}
@@ -225,7 +225,7 @@ export default function SocialScene() {
               onPressedChange={setFollowing}
               size="sm"
             >
-              <PlusIcon size={14} />
+              <UserPlusIcon size={14} />
               {following ? "Following Mira" : "Follow Mira"}
             </Toggle>
             <Stack gap="sm" paddingBlock={5}>

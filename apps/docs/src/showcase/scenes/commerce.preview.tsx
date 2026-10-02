@@ -1,4 +1,4 @@
-import { ArrowRightIcon, PackageIcon } from "@flux-ui/icons";
+import { ArrowRightIcon, ShoppingBagIcon } from "@flux-ui/icons";
 import {
   Box,
   Button,
@@ -61,7 +61,7 @@ export default function CommerceScene() {
     <Stack data-scene="commerce" gap={5} padding={5}>
       <SceneHeader brand="objects" context="Fewer things. Better things.">
         <Inline as="span" gap="sm">
-          <PackageIcon size={16} /> Demo bag{" "}
+          <ShoppingBagIcon size={16} /> Demo bag{" "}
           <Text as="strong" weight="bold" variant="caption">
             {count}
           </Text>

@@ -43,7 +43,7 @@ test("the root size contract measures icons", () => {
 
 test("icon manifest stays searchable, unique and fully exported", () => {
   const icons = JSON.parse(manifestJson);
-  assert.equal(icons.length, 67);
+  assert.equal(icons.length, 78);
   const names = new Set();
   const geometries = new Set();
   for (const icon of icons) {

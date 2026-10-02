@@ -1,0 +1,8 @@
+{
+  "name": "ScatterChart",
+  "slug": "scatter-chart",
+  "category": "Data",
+  "status": "beta",
+  "description": "Bounded scatter renderer with source-complete keyboard inspection and sampled SVG paths.",
+  "sizeClass": "data-heavy"
+}

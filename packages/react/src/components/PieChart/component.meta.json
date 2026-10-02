@@ -1,0 +1,8 @@
+{
+  "name": "PieChart",
+  "slug": "pie-chart",
+  "category": "Data",
+  "status": "beta",
+  "description": "Bounded pie chart with shared Flux legend semantics and keyboard/pointer slice inspection.",
+  "sizeClass": "data-heavy"
+}

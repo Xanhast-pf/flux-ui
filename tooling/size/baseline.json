@@ -218,6 +218,27 @@
         "externalImports": ["react/jsx-runtime"]
       }
     },
+    "button-group": {
+      "bundled": {
+        "raw": 955,
+        "gzip": 469,
+        "brotli": 359,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 266,
+            "gzip": 210,
+            "brotli": 166
+          },
+          "css": {
+            "raw": 689,
+            "gzip": 259,
+            "brotli": 193
+          }
+        },
+        "externalImports": ["react/jsx-runtime"]
+      }
+    },
     "callout": {
       "name": "Callout",
       "sizeClass": "primitive",
@@ -488,6 +509,27 @@
         "externalImports": ["react"]
       }
     },
+    "data-grid": {
+      "bundled": {
+        "raw": 11841,
+        "gzip": 4263,
+        "brotli": 3818,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 9915,
+            "gzip": 3635,
+            "brotli": 3307
+          },
+          "css": {
+            "raw": 1926,
+            "gzip": 628,
+            "brotli": 511
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
     "data-table": {
       "name": "DataTable",
       "sizeClass": "data-heavy",
@@ -513,6 +555,48 @@
           }
         },
         "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
+    "date-picker": {
+      "bundled": {
+        "raw": 1555,
+        "gzip": 701,
+        "brotli": 578,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 330,
+            "gzip": 252,
+            "brotli": 205
+          },
+          "css": {
+            "raw": 1225,
+            "gzip": 449,
+            "brotli": 373
+          }
+        },
+        "externalImports": ["react/jsx-runtime"]
+      }
+    },
+    "date-time-picker": {
+      "bundled": {
+        "raw": 1569,
+        "gzip": 711,
+        "brotli": 582,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 344,
+            "gzip": 262,
+            "brotli": 209
+          },
+          "css": {
+            "raw": 1225,
+            "gzip": 449,
+            "brotli": 373
+          }
+        },
+        "externalImports": ["react/jsx-runtime"]
       }
     },
     "description-list": {
@@ -801,6 +885,27 @@
             "raw": 3024,
             "gzip": 902,
             "brotli": 752
+          }
+        },
+        "externalImports": ["react/jsx-runtime"]
+      }
+    },
+    "indicator": {
+      "bundled": {
+        "raw": 2460,
+        "gzip": 1024,
+        "brotli": 853,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 701,
+            "gzip": 442,
+            "brotli": 375
+          },
+          "css": {
+            "raw": 1759,
+            "gzip": 582,
+            "brotli": 478
           }
         },
         "externalImports": ["react/jsx-runtime"]
@@ -1130,6 +1235,27 @@
         "externalImports": ["react", "react/jsx-runtime"]
       }
     },
+    "pie-chart": {
+      "bundled": {
+        "raw": 5660,
+        "gzip": 2473,
+        "brotli": 2165,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 3853,
+            "gzip": 1857,
+            "brotli": 1660
+          },
+          "css": {
+            "raw": 1807,
+            "gzip": 616,
+            "brotli": 505
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
     "popover": {
       "name": "Popover",
       "sizeClass": "overlay",
@@ -1230,6 +1356,27 @@
           }
         },
         "externalImports": ["@flux-ui/icons", "react", "react/jsx-runtime"]
+      }
+    },
+    "scatter-chart": {
+      "bundled": {
+        "raw": 6434,
+        "gzip": 2926,
+        "brotli": 2551,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 4680,
+            "gzip": 2331,
+            "brotli": 2069
+          },
+          "css": {
+            "raw": 1754,
+            "gzip": 595,
+            "brotli": 482
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
       }
     },
     "scroll-area": {
@@ -1556,6 +1703,27 @@
         "externalImports": ["react", "react/jsx-runtime"]
       }
     },
+    "stepper": {
+      "bundled": {
+        "raw": 4480,
+        "gzip": 1530,
+        "brotli": 1251,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 1014,
+            "gzip": 513,
+            "brotli": 423
+          },
+          "css": {
+            "raw": 3466,
+            "gzip": 1017,
+            "brotli": 828
+          }
+        },
+        "externalImports": ["react/jsx-runtime"]
+      }
+    },
     "switch": {
       "name": "Switch",
       "sizeClass": "primitive",
@@ -1745,6 +1913,27 @@
         "externalImports": ["react"]
       }
     },
+    "time-picker": {
+      "bundled": {
+        "raw": 1555,
+        "gzip": 700,
+        "brotli": 573,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 330,
+            "gzip": 251,
+            "brotli": 200
+          },
+          "css": {
+            "raw": 1225,
+            "gzip": 449,
+            "brotli": 373
+          }
+        },
+        "externalImports": ["react/jsx-runtime"]
+      }
+    },
     "toast": {
       "name": "Toast",
       "sizeClass": "interactive",
@@ -1930,19 +2119,19 @@
     }
   },
   "aggregate": {
-    "componentCount": 72,
-    "rootEntry": { "raw": 5462, "gzip": 1797, "brotli": 1577, "fileCount": 1 },
+    "componentCount": 81,
+    "rootEntry": { "raw": 6153, "gzip": 1984, "brotli": 1745, "fileCount": 1 },
     "runtime": {
-      "raw": 221947,
-      "gzip": 100043,
-      "brotli": 85946,
-      "fileCount": 230
+      "raw": 263476,
+      "gzip": 116532,
+      "brotli": 100240,
+      "fileCount": 255
     },
     "published": {
-      "raw": 1187829,
-      "gzip": 405515,
-      "brotli": 349101,
-      "fileCount": 955
+      "raw": 1352281,
+      "gzip": 467743,
+      "brotli": 403614,
+      "fileCount": 1066
     },
     "method": {
       "schemaVersion": 1,

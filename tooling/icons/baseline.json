@@ -19,6 +19,12 @@
       "brotli": 750,
       "fileCount": 2
     },
+    "ArrowUpDownIcon": {
+      "raw": 1449,
+      "gzip": 868,
+      "brotli": 759,
+      "fileCount": 2
+    },
     "ArrowUpIcon": {
       "raw": 1431,
       "gzip": 861,
@@ -205,6 +211,12 @@
       "brotli": 748,
       "fileCount": 2
     },
+    "HeartIcon": {
+      "raw": 1474,
+      "gzip": 885,
+      "brotli": 761,
+      "fileCount": 2
+    },
     "HomeIcon": {
       "raw": 1422,
       "gzip": 861,
@@ -289,6 +301,18 @@
       "brotli": 816,
       "fileCount": 2
     },
+    "PauseIcon": {
+      "raw": 1411,
+      "gzip": 848,
+      "brotli": 738,
+      "fileCount": 2
+    },
+    "PlayIcon": {
+      "raw": 1416,
+      "gzip": 854,
+      "brotli": 739,
+      "fileCount": 2
+    },
     "PlusIcon": {
       "raw": 1409,
       "gzip": 847,
@@ -301,16 +325,34 @@
       "brotli": 783,
       "fileCount": 2
     },
+    "SaveIcon": {
+      "raw": 1438,
+      "gzip": 875,
+      "brotli": 758,
+      "fileCount": 2
+    },
     "SearchIcon": {
       "raw": 1454,
       "gzip": 874,
       "brotli": 751,
       "fileCount": 2
     },
+    "ShareIcon": {
+      "raw": 1536,
+      "gzip": 891,
+      "brotli": 775,
+      "fileCount": 2
+    },
     "ShieldCheckIcon": {
       "raw": 1499,
       "gzip": 909,
       "brotli": 795,
+      "fileCount": 2
+    },
+    "ShoppingBagIcon": {
+      "raw": 1455,
+      "gzip": 873,
+      "brotli": 757,
       "fileCount": 2
     },
     "ShrinkIcon": {
@@ -373,6 +415,12 @@
       "brotli": 770,
       "fileCount": 2
     },
+    "UndoIcon": {
+      "raw": 1430,
+      "gzip": 861,
+      "brotli": 748,
+      "fileCount": 2
+    },
     "UnlockIcon": {
       "raw": 1437,
       "gzip": 870,
@@ -391,10 +439,28 @@
       "brotli": 751,
       "fileCount": 2
     },
+    "UserPlusIcon": {
+      "raw": 1483,
+      "gzip": 892,
+      "brotli": 771,
+      "fileCount": 2
+    },
     "UsersIcon": {
       "raw": 1500,
       "gzip": 899,
       "brotli": 786,
+      "fileCount": 2
+    },
+    "VolumeIcon": {
+      "raw": 1465,
+      "gzip": 887,
+      "brotli": 767,
+      "fileCount": 2
+    },
+    "VolumeOffIcon": {
+      "raw": 1451,
+      "gzip": 876,
+      "brotli": 753,
       "fileCount": 2
     },
     "WarningIcon": {
