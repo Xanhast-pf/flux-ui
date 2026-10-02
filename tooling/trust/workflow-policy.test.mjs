@@ -76,6 +76,25 @@ test("Pages consumes main-only heavy evidence after Required", async () => {
   assert.match(pages, /tooling\/trust\/generate\.mjs --require-ci/u);
 });
 
+test("Pages overrides skipped-attestation propagation without bypassing required success", async () => {
+  const source = await readFile(new URL("ci.yml", workflows), "utf8");
+  const build = source
+    .split("\n  pages-build:")[1]
+    .split("\n  pages-deploy:")[0];
+  const deploy = source.split("\n  pages-deploy:")[1];
+
+  assert.match(
+    build,
+    /if: >-\s+!cancelled\(\) &&\s+needs\.required\.result == 'success'/u,
+  );
+  assert.match(build, /needs: required/u);
+  assert.match(
+    deploy,
+    /if: >-\s+!cancelled\(\) &&\s+needs\.pages-build\.result == 'success'/u,
+  );
+  assert.match(deploy, /needs: pages-build/u);
+});
+
 test("Pages builds its deployed artifact through the docs chunk-budget task", async () => {
   const source = await readFile(new URL("ci.yml", workflows), "utf8");
   const pages = source
