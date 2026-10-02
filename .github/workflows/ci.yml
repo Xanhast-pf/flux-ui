@@ -232,8 +232,12 @@ jobs:
   pages-build:
     name: Pages Build
     if: >-
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+      !cancelled() &&
+      needs.required.result == 'success' &&
+      (
+        (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+        (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+      )
     needs: required
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -292,8 +296,12 @@ jobs:
   pages-deploy:
     name: Pages Deploy
     if: >-
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+      !cancelled() &&
+      needs.pages-build.result == 'success' &&
+      (
+        (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+        (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+      )
     needs: pages-build
     runs-on: ubuntu-latest
     timeout-minutes: 10
