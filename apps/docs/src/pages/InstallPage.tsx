@@ -163,7 +163,7 @@ pnpm flux release consumer`}
         <Text as="p">
           Packed-consumer validation does not publish. It checks the exact
           archives in an isolated application across Chromium, Firefox and
-          WebKit, then builds all six exported recipes. Browser binaries and the
+          WebKit, then builds every exported recipe. Browser binaries and the
           pinned toolchain must be installed. A source-only check does not
           replace that result.
         </Text>

@@ -62,6 +62,7 @@ Component discovery is convention-driven. These committed files are generated:
 
 - `packages/react/src/index.ts`
 - `apps/docs/src/generated/components.ts`
+- `apps/docs/src/generated/component-search.json`
 - `packages/icons/src/index.ts`
 - `packages/icons/src/catalog.ts`
 - `packages/icons/src/icons/*Icon.tsx`

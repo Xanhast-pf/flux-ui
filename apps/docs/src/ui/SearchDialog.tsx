@@ -11,28 +11,30 @@ import {
   Text,
 } from "@flux-ui/react";
 import { useEffect, useState } from "react";
-import { components } from "../generated/components.js";
+import { useComponentSearch } from "../lib/componentSearch.js";
 import { sections } from "../lib/routing.js";
-const entries = [
-  ...sections.map(([id, label]) => ({
-    href: `#${id}`,
-    title: label,
-    detail: "Documentation",
-  })),
-  ...components.map((entry) => ({
-    href: `#components/${entry.slug}`,
-    title: entry.name,
-    detail: `${entry.category} · ${entry.description}${entry.slug === "combobox" ? " · autocomplete searchable selection" : ""}`,
-  })),
-];
+
+const sectionEntries = sections.map(([id, label]) => ({
+  href: `#${id}`,
+  title: label,
+  detail: "Documentation",
+}));
 export function SearchDialog() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const results = entries.filter((entry) =>
-    `${entry.title} ${entry.detail}`
-      .toLowerCase()
-      .includes(query.trim().toLowerCase()),
+  const { ready, results: componentResults } = useComponentSearch(query);
+  const normalizedQuery = query.trim().toLowerCase();
+  const sectionResults = sectionEntries.filter((entry) =>
+    `${entry.title} ${entry.detail}`.toLowerCase().includes(normalizedQuery),
   );
+  const results = [
+    ...sectionResults,
+    ...componentResults.map((entry) => ({
+      href: `#components/${entry.slug}`,
+      title: entry.name,
+      detail: `${entry.category} · ${entry.description}`,
+    })),
+  ];
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent): void {
       if (
@@ -86,7 +88,9 @@ export function SearchDialog() {
             placeholder="Try switch, icons, or performance…"
           />
           <Text role="status" as="p" variant="caption" tone="muted">
-            {results.length} results
+            {ready
+              ? `${results.length} ${results.length === 1 ? "result" : "results"}`
+              : "Searching component pages…"}
           </Text>
           <ScrollArea
             axis="vertical"
@@ -116,7 +120,7 @@ export function SearchDialog() {
               ))}
             </List>
           </ScrollArea>
-          {results.length === 0 ? (
+          {ready && results.length === 0 ? (
             <EmptyState
               title="No matches."
               description="Try a shorter search."

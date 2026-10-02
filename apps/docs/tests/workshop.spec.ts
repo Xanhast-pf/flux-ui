@@ -35,21 +35,21 @@ for (const component of components) {
   });
 }
 
-test("catalog search filters summaries without mounting every demo", async ({
+test("catalog search indexes component-page guidance without mounting every demo", async ({
   page,
 }) => {
   await page.goto("/#components");
   await page
     .getByRole("searchbox", { name: "Filter components", exact: true })
-    .fill("RadioGroup");
+    .fill("older browsers");
   await expect(
     page.getByRole("main").getByRole("heading", { level: 2 }),
   ).toHaveCount(1);
   await page
     .getByRole("main")
-    .getByRole("link", { name: /RadioGroup/ })
+    .getByRole("link", { name: /Accordion/ })
     .click();
-  await expect(page).toHaveURL(/#components\/radio-group$/);
+  await expect(page).toHaveURL(/#components\/accordion$/);
   await page.goBack();
   await expect(
     page.getByRole("heading", {
@@ -58,6 +58,59 @@ test("catalog search filters summaries without mounting every demo", async ({
       exact: true,
     }),
   ).toBeVisible();
+});
+
+test("sidebar component search replaces the component accordion and indexes page guidance", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/#components/card");
+  await page
+    .getByRole("button", { name: "Toggle navigation", exact: true })
+    .click();
+  const sidebar = page.getByRole("complementary", {
+    name: "Documentation sidebar",
+  });
+  await expect(sidebar).toBeVisible();
+  await expect(
+    sidebar.getByRole("button", { name: /All components/u }),
+  ).toHaveCount(0);
+  const search = sidebar.getByRole("searchbox", {
+    name: "Search components",
+    exact: true,
+  });
+  await search.fill("older browsers");
+  await expect(sidebar.getByRole("status")).toHaveText("1 component");
+  await expect(
+    sidebar.getByRole("link", { name: "Accordion", exact: true }),
+  ).toBeVisible();
+  await expect(
+    sidebar.getByRole("link", { name: "Box", exact: true }),
+  ).toHaveCount(0);
+  await sidebar.getByRole("link", { name: "Accordion", exact: true }).click();
+  await expect(page).toHaveURL(/#components\/accordion$/u);
+});
+
+test("mobile component search navigates and closes the documentation drawer", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto("/#components/card");
+  await page
+    .getByRole("button", { name: "Toggle navigation", exact: true })
+    .click();
+  const search = page.getByRole("searchbox", {
+    name: "Search components",
+    exact: true,
+  });
+  await expect(search).toBeVisible();
+  await search.fill("older browsers");
+  await expect(
+    page.getByRole("status").filter({ hasText: "1 component" }),
+  ).toBeVisible();
+  await page.getByRole("link", { name: "Accordion", exact: true }).click();
+  await expect(page).toHaveURL(/#components\/accordion$/u);
+  await expect(search).not.toBeVisible();
 });
 
 test("search keyboard shortcut navigates real links and Escape restores focus", async ({
@@ -74,9 +127,9 @@ test("search keyboard shortcut navigates real links and Escape restores focus", 
     name: "Search documentation",
   });
   await expect(search).toBeFocused();
-  await search.fill("Slider");
-  await dialog.getByRole("link", { name: /^Slider/ }).click();
-  await expect(page).toHaveURL(/#components\/slider$/);
+  await search.fill("older browsers");
+  await dialog.getByRole("link", { name: /^Accordion/ }).click();
+  await expect(page).toHaveURL(/#components\/accordion$/);
   await expect(dialog).not.toBeVisible();
   await expect(page.locator("main")).toBeFocused();
   await trigger.click();
