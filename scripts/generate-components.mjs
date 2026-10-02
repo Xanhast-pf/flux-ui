@@ -10,6 +10,11 @@ const root = process.cwd();
 const componentsDir = resolve(root, "packages/react/src/components");
 const reactIndexPath = resolve(root, "packages/react/src/index.ts");
 const docsRegistryPath = resolve(root, "apps/docs/src/generated/components.ts");
+const docsSearchPath = resolve(
+  root,
+  "apps/docs/src/generated/component-search.json",
+);
+const docsExamplesDir = resolve(root, "apps/docs/src/examples");
 const docsHealthPath = resolve(root, "apps/docs/src/generated/health.ts");
 const docsContractsPath = resolve(root, "apps/docs/src/generated/contracts.ts");
 const docsReadinessPath = resolve(root, "apps/docs/src/generated/readiness.ts");
@@ -68,6 +73,41 @@ const metas = await Promise.all(
   }),
 );
 
+function searchText(...sources) {
+  const tokens = sources
+    .join(" ")
+    .normalize("NFKD")
+    .toLowerCase()
+    .match(/[\p{L}\p{N}]+/gu);
+  return [...new Set((tokens ?? []).filter((token) => token.length > 1))].join(
+    " ",
+  );
+}
+
+const componentSearchIndex = await Promise.all(
+  metas.map(async (meta) => {
+    const contract = publicContracts.find((entry) => entry.slug === meta.slug);
+    const [exampleSource, previewSource] = await Promise.all([
+      readFile(resolve(docsExamplesDir, `${meta.slug}.example.tsx`), "utf8"),
+      readFile(resolve(docsExamplesDir, `${meta.slug}.preview.tsx`), "utf8"),
+    ]);
+    return {
+      slug: meta.slug,
+      text: searchText(
+        meta.name,
+        meta.slug,
+        meta.category,
+        meta.status,
+        meta.description,
+        meta.sizeClass,
+        exampleSource,
+        previewSource,
+        JSON.stringify(contract ?? {}),
+      ),
+    };
+  }),
+);
+
 const [sizeBaseline, perfBaseline] = await Promise.all([
   readJson(sizeBaselinePath),
   readJson(perfBaselinePath),
@@ -92,6 +132,8 @@ const registry = await formatTypeScript(
     "",
   ].join("\n"),
 );
+
+const searchRegistry = `${JSON.stringify(componentSearchIndex, null, 2)}\n`;
 
 const contractsRegistry = await formatTypeScript(
   [
@@ -194,6 +236,7 @@ const results = await Promise.all([
   generateShowcaseRecipes(root, checkOnly),
   ensure(reactIndexPath, index),
   ensure(docsRegistryPath, registry),
+  ensure(docsSearchPath, searchRegistry),
   ensure(docsContractsPath, contractsRegistry),
   ensure(docsReadinessPath, readinessRegistry),
   ensure(docsHealthPath, healthRegistry),

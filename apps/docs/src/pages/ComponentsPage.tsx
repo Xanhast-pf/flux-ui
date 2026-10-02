@@ -13,6 +13,7 @@ import {
   Text,
 } from "@flux-ui/react";
 import { useState } from "react";
+import { useComponentSearch } from "../lib/componentSearch.js";
 import { catalog } from "../lib/examples.js";
 const categories = [
   "All",
@@ -23,13 +24,9 @@ const categories = [
 export function ComponentsPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
-  const search = query.trim().toLowerCase();
-  const visible = catalog.filter(
-    (item) =>
-      (category === "All" || item.category === category) &&
-      `${item.name} ${item.description} ${item.category}`
-        .toLowerCase()
-        .includes(search),
+  const { ready, results } = useComponentSearch(query);
+  const visible = results.filter(
+    (item) => category === "All" || item.category === category,
   );
   return (
     <Stack gap="lg">
@@ -61,8 +58,9 @@ export function ComponentsPage() {
             {category === name ? (
               <>
                 <Text role="status" as="p" variant="caption" tone="muted">
-                  {visible.length}{" "}
-                  {visible.length === 1 ? "component" : "components"}
+                  {ready
+                    ? `${visible.length} ${visible.length === 1 ? "component" : "components"}`
+                    : "Searching component pages…"}
                 </Text>
                 <Grid minColumnWidth="14rem" gap="md">
                   {visible.map((item) => (
@@ -85,12 +83,12 @@ export function ComponentsPage() {
                     </Card>
                   ))}
                 </Grid>
-                {visible.length === 0 ? (
+                {ready && visible.length === 0 ? (
                   <Card>
                     <EmptyState
                       title="No matching components."
                       headingLevel={2}
-                      description="Try a different name or select All categories."
+                      description="Try different words or select All categories."
                     />
                   </Card>
                 ) : null}

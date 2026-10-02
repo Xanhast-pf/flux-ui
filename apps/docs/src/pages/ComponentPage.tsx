@@ -179,9 +179,9 @@ function ComponentDetail({
             Public contract
           </Heading>
           <Text as="p" variant="body" tone="muted">
-            Generated from the published TypeScript component surface.
-            DOM-backed parts keep the listed escape hatches; controller parts
-            intentionally render no customizable DOM node.
+            Generated from the public TypeScript component surface. DOM-backed
+            parts keep the listed escape hatches; controller parts intentionally
+            render no customizable DOM node.
           </Text>
           <ScrollArea
             aria-label={`${entry.name} public contract`}

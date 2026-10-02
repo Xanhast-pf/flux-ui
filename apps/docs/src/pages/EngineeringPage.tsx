@@ -165,13 +165,15 @@ export function EngineeringPage() {
             What blocks a merge?
           </Heading>
           <Text as="p" variant="body">
-            The Required CI job depends on both Quality and Browser. Quality
-            checks generation drift, docs coverage, formatting, lint,
+            The stable Required CI job covers both verification paths. On
+            branches, it verifies the locally generated full-check attestation;
+            on main, it requires the Quality and Browser jobs to succeed.
+            Quality checks generation drift, docs coverage, formatting, lint,
             TypeScript, unused code, tests, builds, size budgets and Coding
             Bible. Browser runs broad Chromium behavior and axe checks, a
             focused Chromium/Firefox/WebKit built-consumer compatibility suite,
             and native-relative performance checks. Pages is built only after
-            those jobs pass. Repository rules must require that check; a YAML
+            Required succeeds. Repository rules must require that check; a YAML
             file cannot enable branch protection.
           </Text>
           <Text as="p" variant="body">
@@ -183,7 +185,8 @@ export function EngineeringPage() {
         <EngineeringRules />
         <Callout>
           Current limits: pre-stable APIs with lifecycle status tracked per
-          component, two runtime benchmark scenarios, broad docs automation that
+          component, a small committed set of historical runtime baselines plus
+          broader registered browser workloads, broad docs automation that
           remains Chromium-focused, and a focused three-engine built-consumer
           compatibility suite. Manual assistive-technology testing and full
           docs-suite parity across browsers remain explicit review work. See the

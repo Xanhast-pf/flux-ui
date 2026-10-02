@@ -48,6 +48,7 @@ Core promise:
 8.  **Generated surfaces are generated.** Never hand-edit
     \`packages/react/src/index.ts\`,
     \`apps/docs/src/generated/components.ts\`,
+    \`apps/docs/src/generated/component-search.json\`,
     \`apps/docs/src/generated/contracts.ts\`, or
     \`apps/docs/src/generated/readiness.ts\`.
 
@@ -752,6 +753,8 @@ The following are generated and committed:
 - \`packages/react/src/index.ts\`
 
 - \`apps/docs/src/generated/components.ts\`
+
+- \`apps/docs/src/generated/component-search.json\`
 
 - \`apps/docs/src/generated/contracts.ts\`
 
