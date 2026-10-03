@@ -165,7 +165,8 @@ const readinessRegistry = await formatTypeScript(
 );
 
 const sizeComponents = metas.map((meta) => {
-  const measurement = sizeBaseline.components?.[meta.slug] ?? null;
+  const baseline = sizeBaseline.components?.[meta.slug] ?? null;
+  const measurement = baseline?.bundled ?? baseline;
   const budget = sizeClasses[meta.sizeClass];
 
   return {

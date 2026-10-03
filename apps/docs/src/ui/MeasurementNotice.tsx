@@ -12,7 +12,7 @@ export function MeasurementNotice() {
     <Callout tone={pending > 0 ? "warning" : "info"}>
       {pending > 0
         ? `${pending} components await their first production measurement. Aggregate numbers still describe the last measured build, not the expanded catalog.`
-        : "Committed build measurements, not a live CI result."}{" "}
+        : "Committed bundled-entry baselines, not a live CI result."}{" "}
       <Link href={`${REPOSITORY_URL}/actions`}>View CI runs</Link>
     </Callout>
   );
