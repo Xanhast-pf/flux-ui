@@ -322,20 +322,20 @@
       "brotli": 3881,
       "fileCount": 4,
       "bundled": {
-        "raw": 9338,
-        "gzip": 4049,
-        "brotli": 3593,
+        "raw": 9952,
+        "gzip": 4450,
+        "brotli": 3996,
         "fileCount": 2,
         "outputs": {
           "js": {
-            "raw": 7252,
-            "gzip": 3362,
-            "brotli": 3014
+            "raw": 8847,
+            "gzip": 3970,
+            "brotli": 3603
           },
           "css": {
-            "raw": 2086,
-            "gzip": 687,
-            "brotli": 579
+            "raw": 1105,
+            "gzip": 480,
+            "brotli": 393
           }
         },
         "externalImports": ["react", "react/jsx-runtime"]
@@ -364,20 +364,20 @@
     },
     "chart-tooltip": {
       "bundled": {
-        "raw": 2592,
-        "gzip": 1243,
-        "brotli": 1058,
+        "raw": 2884,
+        "gzip": 1388,
+        "brotli": 1182,
         "fileCount": 2,
         "outputs": {
           "js": {
-            "raw": 1268,
-            "gzip": 668,
-            "brotli": 592
+            "raw": 1574,
+            "gzip": 829,
+            "brotli": 728
           },
           "css": {
-            "raw": 1324,
-            "gzip": 575,
-            "brotli": 466
+            "raw": 1310,
+            "gzip": 559,
+            "brotli": 454
           }
         },
         "externalImports": ["react", "react/jsx-runtime"]
@@ -1423,20 +1423,20 @@
     },
     "scatter-chart": {
       "bundled": {
-        "raw": 7237,
-        "gzip": 3182,
-        "brotli": 2782,
+        "raw": 7523,
+        "gzip": 3491,
+        "brotli": 3089,
         "fileCount": 2,
         "outputs": {
           "js": {
-            "raw": 4903,
-            "gzip": 2416,
-            "brotli": 2153
+            "raw": 6389,
+            "gzip": 2997,
+            "brotli": 2689
           },
           "css": {
-            "raw": 2334,
-            "gzip": 766,
-            "brotli": 629
+            "raw": 1134,
+            "gzip": 494,
+            "brotli": 400
           }
         },
         "externalImports": ["react", "react/jsx-runtime"]
@@ -2183,17 +2183,17 @@
   },
   "aggregate": {
     "componentCount": 84,
-    "rootEntry": { "raw": 6402, "gzip": 2053, "brotli": 1806, "fileCount": 1 },
+    "rootEntry": { "raw": 6402, "gzip": 2053, "brotli": 1804, "fileCount": 1 },
     "runtime": {
-      "raw": 282446,
-      "gzip": 124947,
-      "brotli": 107664,
+      "raw": 285382,
+      "gzip": 125874,
+      "brotli": 108533,
       "fileCount": 267
     },
     "published": {
-      "raw": 1439112,
-      "gzip": 499841,
-      "brotli": 431591,
+      "raw": 1451624,
+      "gzip": 503310,
+      "brotli": 434650,
       "fileCount": 1111
     },
     "method": {

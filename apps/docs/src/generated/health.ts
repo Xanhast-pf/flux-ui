@@ -8,19 +8,19 @@ export const health = {
       rootEntry: {
         raw: 6402,
         gzip: 2053,
-        brotli: 1806,
+        brotli: 1804,
         fileCount: 1,
       },
       runtime: {
-        raw: 282446,
-        gzip: 124947,
-        brotli: 107664,
+        raw: 285382,
+        gzip: 125874,
+        brotli: 108533,
         fileCount: 267,
       },
       published: {
-        raw: 1439112,
-        gzip: 499841,
-        brotli: 431591,
+        raw: 1451624,
+        gzip: 503310,
+        brotli: 434650,
         fileCount: 1111,
       },
       method: {
