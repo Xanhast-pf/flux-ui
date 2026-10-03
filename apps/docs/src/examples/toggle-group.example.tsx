@@ -13,7 +13,7 @@ export default {
     [
       "value / defaultValue / onValueChange",
       "mode-specific values",
-      "Controlled selection requires onValueChange; uncontrolled selection may use defaultValue. Item values must be unique.",
+      "Controlled selection may be read-only and onValueChange is optional; uncontrolled selection may use defaultValue. Item values must be unique.",
     ],
     [
       "orientation / loopFocus / disabled",

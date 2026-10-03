@@ -155,7 +155,7 @@ export function DataGrid<Row>({
   onSortingChange,
   selectedRowIds,
   defaultSelectedRowIds = [],
-  onSelectionChange,
+  onSelectedRowIdsChange,
   onCellEditCommit,
   className,
   onClick,
@@ -379,7 +379,7 @@ export function DataGrid<Row>({
     else next.add(rowId);
     const ids = [...next];
     if (selectedRowIds === undefined) setLocalSelection(ids);
-    onSelectionChange?.(ids);
+    onSelectedRowIdsChange?.(ids);
   }
 
   function startEditing(identity: CellIdentity): boolean {

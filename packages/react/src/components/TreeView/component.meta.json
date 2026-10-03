@@ -4,5 +4,8 @@
   "category": "Navigation",
   "status": "beta",
   "description": "Hierarchical navigation with expansion state and WAI-ARIA tree keyboard behavior.",
-  "sizeClass": "interactive"
+  "sizeClass": "interactive",
+  "publicDataAttributes": {
+    "TreeView.Item": ["data-expanded"]
+  }
 }

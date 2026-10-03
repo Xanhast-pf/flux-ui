@@ -26,8 +26,10 @@ describe("Final catalog public type contracts", () => {
     const valid = (
       <>
         <Sidebar.Root defaultOpen />
+        <Sidebar.Root open />
         <Sidebar.Root open onOpenChange={() => {}} />
         <SplitPane {...paneBase} defaultValue={50} />
+        <SplitPane {...paneBase} value={50} />
         <SplitPane {...paneBase} value={50} onValueChange={() => {}} />
         <Avatar alt="Team" />
         <Avatar alt="" />
@@ -37,7 +39,6 @@ describe("Final catalog public type contracts", () => {
     );
     expect(valid).toBeDefined();
 
-    // @ts-expect-error Controlled Sidebar state requires an owner callback.
     const ownerlessSidebar: SidebarRootProps = { open: true };
     // @ts-expect-error Controlled Sidebar state cannot also declare a default.
     const ambiguousSidebar: SidebarRootProps = {
@@ -45,7 +46,6 @@ describe("Final catalog public type contracts", () => {
       defaultOpen: true,
       onOpenChange: () => {},
     };
-    // @ts-expect-error Controlled SplitPane state requires an owner callback.
     const ownerlessSplitPane: SplitPaneProps = { ...paneBase, value: 50 };
     // @ts-expect-error Controlled SplitPane state cannot also declare a default.
     const ambiguousSplitPane: SplitPaneProps = {

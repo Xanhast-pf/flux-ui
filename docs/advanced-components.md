@@ -178,7 +178,7 @@ mounted outside that window, with spacer rows preserving geometry. Caption and
 header height are measured on scroll instead of being mistaken for data rows.
 Sorting state is controlled with `sorting`/`onSortingChange`, or initialized with
 `defaultSorting`; controlled selection likewise pairs `selectedRowIds` with
-`onSelectionChange`, while `defaultSelectedRowIds` initializes local selection.
+`onSelectedRowIdsChange`, while `defaultSelectedRowIds` initializes local selection.
 
 For server ordering, set `manualSorting` with `onSortingChange` and fetch a new
 loaded window in response to sorting changes. `totalRows` is informational: it neither fabricates unloaded

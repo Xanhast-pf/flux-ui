@@ -69,6 +69,9 @@ export const components = [
     description:
       "Triggers an immediate action with predictable states and native button semantics.",
     sizeClass: "interactive",
+    publicDataAttributes: {
+      Button: ["data-loading"],
+    },
   },
   {
     name: "ButtonGroup",
@@ -165,6 +168,9 @@ export const components = [
     description:
       "Decorative color sample for composition inside named selection controls.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      ColorSwatch: ["data-selected"],
+    },
   },
   {
     name: "Combobox",
@@ -318,6 +324,9 @@ export const components = [
     status: "beta",
     description: "Compact icon actions with a required accessible name.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      IconButton: ["data-loading"],
+    },
   },
   {
     name: "Indicator",
@@ -453,6 +462,9 @@ export const components = [
       "Non-modal anchored content with native top-layer dismissal and scoped themes.",
     sizeClass: "overlay",
     nonDomParts: ["Popover.Root"],
+    publicDataAttributes: {
+      "Popover.Popup": ["data-state"],
+    },
   },
   {
     name: "Progress",
@@ -479,6 +491,9 @@ export const components = [
     description:
       "Form-capable rating with native radio semantics, half-star precision and read-only presentation.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      Rating: ["data-readonly"],
+    },
   },
   {
     name: "ScatterChart",
@@ -610,6 +625,9 @@ export const components = [
     description:
       "Ordered workflow progress with current, completed and error semantics.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      "Stepper.Item": ["data-status"],
+    },
   },
   {
     name: "Switch",
@@ -724,6 +742,9 @@ export const components = [
     description:
       "Controlled or trigger-owned supplemental help with optional collision-aware decorative arrows.",
     sizeClass: "interactive",
+    publicDataAttributes: {
+      Tooltip: ["data-state"],
+    },
   },
   {
     name: "TreeView",
@@ -733,6 +754,9 @@ export const components = [
     description:
       "Hierarchical navigation with expansion state and WAI-ARIA tree keyboard behavior.",
     sizeClass: "interactive",
+    publicDataAttributes: {
+      "TreeView.Item": ["data-expanded"],
+    },
   },
   {
     name: "VisuallyHidden",

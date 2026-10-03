@@ -18,7 +18,7 @@ export type SplitPaneProps = SplitPaneBaseProps &
     | {
         value: number;
         defaultValue?: never;
-        onValueChange: (value: number) => void;
+        onValueChange?: ((value: number) => void) | undefined;
       }
     | {
         value?: undefined;

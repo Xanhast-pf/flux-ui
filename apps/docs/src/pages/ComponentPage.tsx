@@ -198,6 +198,7 @@ function ComponentDetail({
                   <Table.ColumnHeader>Customization</Table.ColumnHeader>
                   <Table.ColumnHeader>State model</Table.ColumnHeader>
                   <Table.ColumnHeader>CSS variables</Table.ColumnHeader>
+                  <Table.ColumnHeader>Data attributes</Table.ColumnHeader>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -221,6 +222,13 @@ function ComponentDetail({
                         "—"
                       ) : (
                         <Code>{part.cssVariables.join(", ")}</Code>
+                      )}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {"dataAttributes" in part ? (
+                        <Code>{part.dataAttributes.join(", ")}</Code>
+                      ) : (
+                        "—"
                       )}
                     </Table.Cell>
                   </Table.Row>

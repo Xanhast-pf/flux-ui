@@ -4,5 +4,8 @@
   "category": "Display",
   "status": "beta",
   "description": "Decorative color sample for composition inside named selection controls.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "ColorSwatch": ["data-selected"]
+  }
 }

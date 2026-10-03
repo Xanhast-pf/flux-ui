@@ -38,11 +38,9 @@ describe("Action public type contracts", () => {
     expect(valid).toBeDefined();
 
     const ownerlessSingle = (
-      // @ts-expect-error Controlled single groups require an owner callback.
       <ToggleGroup.Root type="single" value="grid" aria-label="View" />
     );
     const ownerlessMultiple = (
-      // @ts-expect-error Controlled multiple groups require an owner callback.
       <ToggleGroup.Root type="multiple" value={["grid"]} aria-label="Modes" />
     );
     const busyButton: ButtonProps = {

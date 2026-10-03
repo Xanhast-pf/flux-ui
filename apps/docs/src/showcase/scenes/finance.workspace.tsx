@@ -374,7 +374,7 @@ export function FinanceTransactions({ workspace }: { workspace: Workspace }) {
               rowHeight={52}
               selectable
               selectedRowIds={selectedVisible}
-              onSelectionChange={setSelected}
+              onSelectedRowIdsChange={setSelected}
               defaultSorting={{ columnId: "date", direction: "descending" }}
             />
           )}

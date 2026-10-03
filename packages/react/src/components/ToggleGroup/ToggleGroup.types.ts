@@ -20,7 +20,7 @@ type Single =
       type: "single";
       value: string | null;
       defaultValue?: never;
-      onValueChange: (value: string | null) => void;
+      onValueChange?: ((value: string | null) => void) | undefined;
     }
   | {
       type: "single";
@@ -33,7 +33,7 @@ type Multiple =
       type: "multiple";
       value: readonly string[];
       defaultValue?: never;
-      onValueChange: (value: readonly string[]) => void;
+      onValueChange?: ((value: readonly string[]) => void) | undefined;
     }
   | {
       type: "multiple";

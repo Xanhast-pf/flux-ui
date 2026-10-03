@@ -23,7 +23,7 @@ export type TreeViewRootProps = TreeViewRootBaseProps &
         /** Controlled expanded item identifiers. */
         expandedItems: readonly string[];
         defaultExpandedItems?: never;
-        onExpandedItemsChange: TreeViewExpandedItemsChangeHandler;
+        onExpandedItemsChange?: TreeViewExpandedItemsChangeHandler | undefined;
       }
   );
 

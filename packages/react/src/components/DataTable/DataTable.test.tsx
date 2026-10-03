@@ -235,24 +235,24 @@ describe("DataTable window boundaries", () => {
 
 it("keeps keyboard selection controlled by the consumer", async () => {
   const user = userEvent.setup();
-  const onSelectionChange = vi.fn();
+  const onSelectedRowIdsChange = vi.fn();
   const props = {
     label: "Owned selection",
     rows: [{ id: "a", value: 1 }],
     columns,
     getRowId,
     selectable: true,
-    onSelectionChange,
+    onSelectedRowIdsChange,
   };
   const view = render(<DataTable {...props} selectedRowIds={[]} />);
   const checkbox = screen.getByRole("checkbox", { name: "Select row a" });
   act(() => checkbox.focus());
   await user.keyboard(" ");
-  expect(onSelectionChange).toHaveBeenCalledExactlyOnceWith(["a"]);
+  expect(onSelectedRowIdsChange).toHaveBeenCalledExactlyOnceWith(["a"]);
   expect(checkbox).not.toBeChecked();
   view.rerender(<DataTable {...props} selectedRowIds={["a"]} />);
   expect(checkbox).toBeChecked();
   await user.keyboard(" ");
-  expect(onSelectionChange).toHaveBeenLastCalledWith([]);
+  expect(onSelectedRowIdsChange).toHaveBeenLastCalledWith([]);
   expect(checkbox).toBeChecked();
 });

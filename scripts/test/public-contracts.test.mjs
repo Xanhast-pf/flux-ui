@@ -84,4 +84,48 @@ test("public component contracts derive from the TypeScript export surface", () 
     treeView?.parts.find((part) => part.path === "TreeView.Root")?.stateModels,
     ["expandedItems"],
   );
+  assert.deepEqual(
+    treeView?.parts.find((part) => part.path === "TreeView.Item")
+      ?.dataAttributes,
+    ["data-expanded"],
+  );
+
+  const chartLegend = contracts.find(
+    (contract) => contract.name === "ChartLegend",
+  );
+  assert.deepEqual(chartLegend?.parts[0]?.stateModels, ["hiddenIds"]);
+
+  const combobox = contracts.find((contract) => contract.name === "Combobox");
+  assert.deepEqual(combobox?.parts[0]?.stateModels, ["query", "value"]);
+
+  const dataGrid = contracts.find((contract) => contract.name === "DataGrid");
+  assert.deepEqual(dataGrid?.parts[0]?.stateModels, [
+    "selectedRowIds",
+    "sorting",
+  ]);
+
+  const dataTable = contracts.find((contract) => contract.name === "DataTable");
+  assert.deepEqual(dataTable?.parts[0]?.stateModels, [
+    "selectedRowIds",
+    "sorting",
+  ]);
+
+  const pagination = contracts.find(
+    (contract) => contract.name === "Pagination",
+  );
+  assert.deepEqual(
+    pagination?.parts.find((part) => part.path === "Pagination.Root")
+      ?.stateModels,
+    ["page"],
+  );
+
+  const button = contracts.find((contract) => contract.name === "Button");
+  assert.deepEqual(button?.parts[0]?.dataAttributes, ["data-loading"]);
+
+  const popover = contracts.find((contract) => contract.name === "Popover");
+  assert.deepEqual(
+    popover?.parts.find((part) => part.path === "Popover.Popup")
+      ?.dataAttributes,
+    ["data-state"],
+  );
 });

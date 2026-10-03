@@ -15,7 +15,7 @@ export default {
     [
       "value / defaultValue",
       "number",
-      "Controlled value requires onValueChange; defaultValue initializes uncontrolled first-pane percentage.",
+      "Controlled value may be read-only; onValueChange is optional. defaultValue initializes uncontrolled first-pane percentage.",
     ],
     ["min / max", "number", "Accessible resizing limits."],
   ],

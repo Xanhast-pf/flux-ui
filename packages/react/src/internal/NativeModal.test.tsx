@@ -1,4 +1,4 @@
-import { act, render } from "@testing-library/react";
+import { act, render, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { NativeModal } from "./NativeModal.js";
 
@@ -79,3 +79,51 @@ for (const realm of ["main", "iframe"] as const) {
     );
   });
 }
+
+describe("NativeModal accessible-name diagnostics", () => {
+  it("warns in development when open modal content has no accessible name", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    try {
+      render(
+        <NativeModal.Root open styles={{ popup: "" }}>
+          <NativeModal.Popup />
+        </NativeModal.Root>,
+      );
+
+      await waitFor(() =>
+        expect(warn).toHaveBeenCalledWith(
+          "Flux UI: modal content requires an accessible name. Render a Title or provide aria-label/aria-labelledby on the Popup.",
+        ),
+      );
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
+  it.each(["aria-label", "title"] as const)(
+    "accepts an accessible name from %s",
+    async (source) => {
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+      try {
+        render(
+          <NativeModal.Root open styles={{ popup: "" }}>
+            <NativeModal.Popup
+              {...(source === "aria-label"
+                ? { "aria-label": "Named modal" }
+                : {})}
+            >
+              {source === "title" ? (
+                <NativeModal.Title>Named modal</NativeModal.Title>
+              ) : null}
+            </NativeModal.Popup>
+          </NativeModal.Root>,
+        );
+
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        expect(warn).not.toHaveBeenCalled();
+      } finally {
+        warn.mockRestore();
+      }
+    },
+  );
+});

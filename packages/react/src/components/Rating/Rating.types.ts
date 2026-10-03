@@ -37,7 +37,7 @@ type RatingValueState =
   | {
       value: RatingValue;
       defaultValue?: never;
-      onValueChange: RatingValueChangeHandler;
+      onValueChange?: RatingValueChangeHandler | undefined;
     }
   | {
       value?: undefined;

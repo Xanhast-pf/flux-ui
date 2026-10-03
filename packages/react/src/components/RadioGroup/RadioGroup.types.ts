@@ -25,7 +25,7 @@ export type RadioGroupRootProps = RadioGroupRootBaseProps &
       }
     | {
         defaultValue?: never;
-        onValueChange: RadioGroupValueChangeHandler;
+        onValueChange?: RadioGroupValueChangeHandler | undefined;
         value: RadioGroupValue;
       }
   );

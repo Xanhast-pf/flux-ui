@@ -15,7 +15,7 @@ export type TabsRootProps = TabsRootBaseProps &
     | {
         defaultValue?: never;
         value: string;
-        onValueChange: (value: string) => void;
+        onValueChange?: ((value: string) => void) | undefined;
       }
   );
 export interface TabsListProps extends Omit<

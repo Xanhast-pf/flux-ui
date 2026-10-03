@@ -44,7 +44,7 @@ export function DataTable<Row>({
   selectable = false,
   selectedRowIds,
   defaultSelectedRowIds = [],
-  onSelectionChange,
+  onSelectedRowIdsChange,
   className,
   ...props
 }: DataTableProps<Row>): ReactElement {
@@ -121,7 +121,7 @@ export function DataTable<Row>({
     else next.delete(id);
     const ids = [...next];
     if (selectedRowIds === undefined) setLocalSelection(ids);
-    onSelectionChange?.(ids);
+    onSelectedRowIdsChange?.(ids);
   }
   for (const index of indexes) {
     const entry = ordered[index];

@@ -416,9 +416,11 @@ Use established patterns:
 
 - \`pressed\` / \`defaultPressed\` / \`onPressedChange\`
 
-Use `value` for a component's single primary value state. When a behavior-heavy component owns multiple orthogonal state domains, an explicitly reviewed descriptive family is allowed when the generic name would become ambiguous. Such families must keep the same controlled/uncontrolled shape and be registered in the compiler-derived public-contract gate. TreeView expansion, for example, uses `expandedItems` / `defaultExpandedItems` / `onExpandedItemsChange` so future selection state remains independently nameable. Do not invent synonyms for an already established state concept.
+Use `value` for a component's single primary value state. When a behavior-heavy component owns multiple orthogonal state domains, an explicitly reviewed descriptive family is allowed when the generic name would become ambiguous. Such families must keep the same `foo` / `defaultFoo` / `onFooChange` shape so the compiler-derived public-contract gate discovers them automatically. TreeView expansion, for example, uses `expandedItems` / `defaultExpandedItems` / `onExpandedItemsChange` so future selection state remains independently nameable. Do not invent synonyms for an already established state concept.
 
-The compiler-derived public-contract gate enforces every approved callback/value family whenever its Flux convenience change callback is exposed.
+The compiler-derived public-contract gate enforces every `onFooChange` callback/value family automatically. Controlled-only state such as Pagination `page` is valid without a `defaultFoo`; uncontrolled-capable state should expose the matching `defaultFoo`.
+
+Normal controlled state may be intentionally read-only, so its `onFooChange` callback is optional. Require a callback only when the API explicitly delegates mandatory work to the application, such as controlled-only Pagination navigation or `DataTable manualSorting={true}`.
 
 Flux convenience change callbacks communicate semantic state only. Use `onValueChange(value)`, `onCheckedChange(checked)`, `onPressedChange(pressed)`, and `onOpenChange(open)` rather than adding a DOM event argument. Consumers that need the native event use the inherited `onChange`, `onClick`, or other platform event handler alongside the Flux convenience callback.
 

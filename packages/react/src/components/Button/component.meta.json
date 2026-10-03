@@ -4,5 +4,8 @@
   "category": "Actions",
   "status": "beta",
   "description": "Triggers an immediate action with predictable states and native button semantics.",
-  "sizeClass": "interactive"
+  "sizeClass": "interactive",
+  "publicDataAttributes": {
+    "Button": ["data-loading"]
+  }
 }
