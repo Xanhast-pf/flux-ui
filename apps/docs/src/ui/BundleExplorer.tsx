@@ -84,9 +84,9 @@ export function BundleExplorer() {
           </Inline>
         </Inline>
         <Text as="p" variant="body" tone="muted">
-          Committed emitted runtime graphs · largest first · shared modules can
-          overlap. React and external packages are excluded. These values are
-          not additive application bundle sizes.
+          Committed bundled-entry measurements · largest first. React and
+          external packages are excluded. These values are component regression
+          baselines, not additive application bundle sizes.
         </Text>
         <Text role="status" as="p" variant="caption" tone="muted">
           {entries.length} matching components

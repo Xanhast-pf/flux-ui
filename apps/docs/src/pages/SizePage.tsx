@@ -29,7 +29,8 @@ export function SizePage() {
         <ScrollArea aria-label="Measurement table" axis="horizontal">
           <Table.Root>
             <Table.Caption>
-              Committed measurements (new entries stay pending until measured)
+              Committed bundled-entry baselines (new entries stay pending until
+              measured)
             </Table.Caption>
             <Table.Header>
               <Table.Row>
