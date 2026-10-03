@@ -26,7 +26,7 @@ describe("Slider", () => {
     expect(slider).toHaveClass("custom");
     expect(slider.style.margin).toBe("0.25rem");
   });
-  it("reports a number and preserves the native change event", () => {
+  it("reports a semantic number after the native change event", () => {
     const native = vi.fn();
     const change = vi.fn();
     render(
@@ -39,10 +39,7 @@ describe("Slider", () => {
     );
     fireEvent.change(screen.getByRole("slider"), { target: { value: "30" } });
     expect(native).toHaveBeenCalledOnce();
-    expect(change).toHaveBeenCalledWith(
-      30,
-      expect.objectContaining({ type: "change" }),
-    );
+    expect(change).toHaveBeenCalledWith(30);
   });
   it("honors native callback cancellation", () => {
     const change = vi.fn();
@@ -187,12 +184,7 @@ describe("Slider refinement", () => {
     change.mockClear();
     fireEvent.doubleClick(input);
     expect(input).toHaveValue("25");
-    expect(change).toHaveBeenCalledExactlyOnceWith(
-      25,
-      expect.objectContaining({
-        type: "change",
-      }),
-    );
+    expect(change).toHaveBeenCalledExactlyOnceWith(25);
     fireEvent.doubleClick(input);
     expect(change).toHaveBeenCalledTimes(1);
   });
@@ -211,12 +203,7 @@ describe("Slider refinement", () => {
     const input = screen.getByRole("slider");
     fireEvent.doubleClick(input);
     expect(native).toHaveBeenCalledOnce();
-    expect(change).toHaveBeenCalledExactlyOnceWith(
-      20,
-      expect.objectContaining({
-        type: "change",
-      }),
-    );
+    expect(change).toHaveBeenCalledExactlyOnceWith(20);
     expect(input).toHaveValue("70");
   });
   it("does not invent a controlled reset target", () => {

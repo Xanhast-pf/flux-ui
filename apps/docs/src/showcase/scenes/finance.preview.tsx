@@ -352,7 +352,7 @@ function FinanceWorkspace() {
           value={view}
           onValueChange={setView}
           orientation="vertical"
-          appearance="pill"
+          variant="pill"
         >
           <Sidebar.Layout>
             <Sidebar.Panel aria-label="Folio workspace navigation">

@@ -7,8 +7,9 @@ emitted-package budgets and first-baseline checks still apply.
 
 ## CodeBlock: plain text first, optional highlighting
 
-Plain `CodeBlock` renders immediately without a language engine. Add the optional
-`tokenizeCode` export for bounded lexical coloring:
+Plain `CodeBlock` renders immediately without a language engine. The supported
+`tokenizeCode` utility provides bounded lexical coloring, while `codeLanguages`
+exports the built-in language identifiers used by that tokenizer:
 
 ```tsx
 import { useMemo } from "react";

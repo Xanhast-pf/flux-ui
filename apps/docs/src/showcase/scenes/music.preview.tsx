@@ -417,7 +417,7 @@ function MusicWorkspace() {
               <Tabs.Root
                 value={inspector}
                 onValueChange={setInspector}
-                appearance="pill"
+                variant="pill"
               >
                 <Tabs.List aria-label="Studio inspector" wrap>
                   <Tabs.Tab value="session">Session</Tabs.Tab>
@@ -596,7 +596,7 @@ function MusicWorkspace() {
             data is deleted.
           </AlertDialog.Description>
           <Inline wrap gap="sm">
-            <AlertDialog.Close>Keep changes</AlertDialog.Close>
+            <AlertDialog.Cancel>Keep changes</AlertDialog.Cancel>
             <Button tone="danger" onClick={restoreCheckpoint}>
               Restore checkpoint
             </Button>

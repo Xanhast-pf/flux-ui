@@ -416,7 +416,22 @@ Use established patterns:
 
 - \`pressed\` / \`defaultPressed\` / \`onPressedChange\`
 
-Do not invent component-specific synonyms. The compiler-derived public-contract gate enforces these callback/value families whenever a Flux convenience change callback is exposed.
+Use `value` for a component's single primary value state. When a behavior-heavy component owns multiple orthogonal state domains, an explicitly reviewed descriptive family is allowed when the generic name would become ambiguous. Such families must keep the same controlled/uncontrolled shape and be registered in the compiler-derived public-contract gate. TreeView expansion, for example, uses `expandedItems` / `defaultExpandedItems` / `onExpandedItemsChange` so future selection state remains independently nameable. Do not invent synonyms for an already established state concept.
+
+The compiler-derived public-contract gate enforces every approved callback/value family whenever its Flux convenience change callback is exposed.
+
+Flux convenience change callbacks communicate semantic state only. Use `onValueChange(value)`, `onCheckedChange(checked)`, `onPressedChange(pressed)`, and `onOpenChange(open)` rather than adding a DOM event argument. Consumers that need the native event use the inherited `onChange`, `onClick`, or other platform event handler alongside the Flux convenience callback.
+
+### Visual option naming is intentional
+
+Use the shared vocabulary consistently:
+
+- `tone` = semantic intent or color role;
+- `size` = component scale;
+- `variant` = visual treatment of the same component;
+- `appearance` = a rendering or platform mode, not an ordinary style variant.
+
+For example, Tabs uses `variant="pill"`, while Slider may use `appearance="native" | "custom"` because that changes how the control is rendered. Do not invent component-specific synonyms for these concepts.
 
 ### Component lifecycle
 

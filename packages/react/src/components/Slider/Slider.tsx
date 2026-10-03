@@ -80,7 +80,7 @@ export function Slider({
     const next = event.currentTarget.valueAsNumber;
     if (showValue && !controlled) setUncontrolledOutput(next);
     onChange?.(event);
-    if (!event.defaultPrevented) onValueChange?.(next, event);
+    if (!event.defaultPrevented) onValueChange?.(next);
   }
 
   const controlledOutput = controlledNumber(value);

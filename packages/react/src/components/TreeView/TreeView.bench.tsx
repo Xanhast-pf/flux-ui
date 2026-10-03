@@ -10,7 +10,7 @@ describe("TreeView SSR", () => {
           <TreeView.Root
             key={index}
             aria-label={`Files ${index + 1}`}
-            defaultValue={["src", "components"]}
+            defaultExpandedItems={["src", "components"]}
           >
             <TreeView.Item value="src" label="src">
               <TreeView.Item value="components" label="components">

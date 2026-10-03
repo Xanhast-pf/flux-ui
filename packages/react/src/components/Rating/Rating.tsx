@@ -88,7 +88,7 @@ export function Rating({
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     onChange?.(event);
     if (event.defaultPrevented || !event.currentTarget.checked) return;
-    onValueChange?.(Number(event.currentTarget.value), event);
+    onValueChange?.(Number(event.currentTarget.value));
   }
 
   return (

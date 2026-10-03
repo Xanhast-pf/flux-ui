@@ -1,17 +1,15 @@
-import type { ComponentPropsWithRef, MouseEvent } from "react";
+import type { ComponentPropsWithRef } from "react";
 import type {
-  SelectionAppearance,
   SelectionSize,
+  SelectionVariant,
 } from "../../internal/selection.types.js";
 export type ToggleProps = Omit<
   ComponentPropsWithRef<"button">,
   "aria-pressed"
 > & {
   size?: SelectionSize | undefined;
-  appearance?: SelectionAppearance | undefined;
-  onPressedChange?:
-    | ((pressed: boolean, event: MouseEvent<HTMLButtonElement>) => void)
-    | undefined;
+  variant?: SelectionVariant | undefined;
+  onPressedChange?: ((pressed: boolean) => void) | undefined;
 } & (
     | { pressed: boolean; defaultPressed?: never }
     | { pressed?: undefined; defaultPressed?: boolean | undefined }

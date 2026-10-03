@@ -45,7 +45,7 @@ describe("TimePicker", () => {
 
     const input = screen.getByLabelText("TimePicker");
     fireEvent.change(input, { target: { value: "15:45" } });
-    expect(onValueChange).toHaveBeenCalledWith("15:45", expect.any(Object));
+    expect(onValueChange).toHaveBeenCalledWith("15:45");
 
     prevent = true;
     fireEvent.change(input, { target: { value: "16:00" } });

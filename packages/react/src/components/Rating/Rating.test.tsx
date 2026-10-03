@@ -1,4 +1,4 @@
-import { createRef, useState, type ChangeEvent } from "react";
+import { createRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -126,11 +126,9 @@ describe("Rating", () => {
   it("calls native onChange before onValueChange and respects preventDefault", async () => {
     const user = userEvent.setup();
     const order: string[] = [];
-    const onValueChange = vi.fn(
-      (_value: number, _event: ChangeEvent<HTMLInputElement>) => {
-        order.push("value");
-      },
-    );
+    const onValueChange = vi.fn((_value: number) => {
+      order.push("value");
+    });
 
     render(
       <Rating

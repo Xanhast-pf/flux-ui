@@ -1,4 +1,4 @@
-import type { ChangeEvent, ComponentPropsWithRef } from "react";
+import type { ComponentPropsWithRef } from "react";
 
 export interface DatePickerProps extends Omit<
   ComponentPropsWithRef<"input">,
@@ -8,6 +8,5 @@ export interface DatePickerProps extends Omit<
   value?: string | undefined;
   /** Initial iso civil date (yyyy-mm-dd). for uncontrolled forms. */
   defaultValue?: string | undefined;
-  onValueChange?:
-    ((value: string, event: ChangeEvent<HTMLInputElement>) => void) | undefined;
+  onValueChange?: ((value: string) => void) | undefined;
 }

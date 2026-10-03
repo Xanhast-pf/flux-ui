@@ -13,7 +13,7 @@ export function NumberField({
     onChange?.(event);
     if (!event.defaultPrevented) {
       const value = event.currentTarget.valueAsNumber;
-      onValueChange?.(Number.isFinite(value) ? value : null, event);
+      onValueChange?.(Number.isFinite(value) ? value : null);
     }
   }
   return (

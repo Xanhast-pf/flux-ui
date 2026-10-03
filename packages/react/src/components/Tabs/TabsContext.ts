@@ -3,7 +3,7 @@ type TabsContextValue = {
   controlled: boolean;
   id: string;
   size: "sm" | "md" | "lg";
-  appearance: "underline" | "pill";
+  variant: "underline" | "pill";
   orientation: "horizontal" | "vertical";
   setValue: (value: string) => void;
   value: string;

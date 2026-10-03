@@ -31,9 +31,9 @@ function ControlledExample({ onCheckedChange, ...args }: CheckboxProps) {
     <Checkbox
       {...args}
       checked={checked}
-      onCheckedChange={(nextChecked, event) => {
+      onCheckedChange={(nextChecked) => {
         setChecked(nextChecked);
-        onCheckedChange?.(nextChecked, event);
+        onCheckedChange?.(nextChecked);
       }}
     />
   );

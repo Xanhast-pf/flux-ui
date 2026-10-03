@@ -4,7 +4,7 @@ import { toggle } from "./Toggle.css.js";
 import type { ToggleProps } from "./Toggle.types.js";
 export function Toggle({
   size,
-  appearance = "outline",
+  variant = "outline",
   className,
   defaultPressed = false,
   disabled,
@@ -20,7 +20,7 @@ export function Toggle({
     onClick?.(event);
     if (event.defaultPrevented || disabled) return;
     if (controlled === undefined) setUncontrolled(!pressed);
-    onPressedChange?.(!pressed, event);
+    onPressedChange?.(!pressed);
   }
   return (
     <button
@@ -30,7 +30,7 @@ export function Toggle({
       disabled={disabled}
       aria-pressed={pressed}
       data-s={size}
-      data-a={appearance === "outline" ? undefined : appearance}
+      data-a={variant === "outline" ? undefined : variant}
       onClick={handleClick}
     />
   );

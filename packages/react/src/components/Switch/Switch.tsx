@@ -12,7 +12,7 @@ export function Switch({
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     const checked = event.currentTarget.checked;
     onChange?.(event);
-    if (!event.defaultPrevented) onCheckedChange?.(checked, event);
+    if (!event.defaultPrevented) onCheckedChange?.(checked);
   }
   return (
     <input

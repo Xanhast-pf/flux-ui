@@ -107,7 +107,7 @@ export function TabsList({
     <div
       {...props}
       data-flux-tabs-managed={overflow.managed || undefined}
-      data-a={context.appearance}
+      data-a={context.variant}
       data-w={wrap || undefined}
       aria-orientation={context.orientation}
       className={joinClassNames(list, className)}

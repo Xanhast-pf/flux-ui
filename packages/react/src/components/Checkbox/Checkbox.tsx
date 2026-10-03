@@ -29,7 +29,7 @@ export function Checkbox({
     // restore it before callbacks, so a consumer's synchronous update wins.
     event.currentTarget.indeterminate = indeterminate;
     onChange?.(event);
-    if (!event.defaultPrevented) onCheckedChange?.(nextChecked, event);
+    if (!event.defaultPrevented) onCheckedChange?.(nextChecked);
   }
 
   return (

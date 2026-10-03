@@ -35,7 +35,13 @@ export const publicContracts = [
     slug: "alert-dialog",
     parts: [
       {
-        path: "AlertDialog.Close",
+        path: "AlertDialog.Action",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "AlertDialog.Cancel",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
@@ -644,12 +650,6 @@ export const publicContracts = [
       },
       {
         path: "Grid.Item",
-        kind: "dom",
-        escapeHatches: ["className", "style", "ref"],
-        cssVariables: [],
-      },
-      {
-        path: "GridItem",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
@@ -1502,7 +1502,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
-        stateModels: ["value"],
+        stateModels: ["expandedItems"],
       },
     ],
   },

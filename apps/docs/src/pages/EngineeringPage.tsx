@@ -108,7 +108,7 @@ export function EngineeringPage() {
             Bundle budgets and native-relative benchmarks gate regressions.
             Neither is a universal claim about application size or speed.
           </Text>
-          <Collapsible.Root appearance="plain">
+          <Collapsible.Root variant="plain">
             <Collapsible.Trigger>
               Measurement scope and limitations
             </Collapsible.Trigger>

@@ -2,7 +2,7 @@ import type { ComponentPropsWithRef } from "react";
 export type TabsOrientation = "horizontal" | "vertical";
 type TabsRootBaseProps = Omit<ComponentPropsWithRef<"div">, "defaultValue"> & {
   size?: "sm" | "md" | "lg" | undefined;
-  appearance?: "underline" | "pill" | undefined;
+  variant?: "underline" | "pill" | undefined;
   orientation?: TabsOrientation | undefined;
 };
 export type TabsRootProps = TabsRootBaseProps &

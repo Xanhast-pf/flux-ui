@@ -56,6 +56,12 @@ const canonicalStateModels = [
     value: "pressed",
     defaultValue: "defaultPressed",
   },
+  {
+    name: "expandedItems",
+    callback: "onExpandedItemsChange",
+    value: "expandedItems",
+    defaultValue: "defaultExpandedItems",
+  },
 ];
 
 function stateModels(checker, propsType, familyName, pathName, errors) {

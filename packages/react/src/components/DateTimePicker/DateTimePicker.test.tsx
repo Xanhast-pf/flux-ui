@@ -45,10 +45,7 @@ describe("DateTimePicker", () => {
 
     const input = screen.getByLabelText("DateTimePicker");
     fireEvent.change(input, { target: { value: "2026-10-01T15:45" } });
-    expect(onValueChange).toHaveBeenCalledWith(
-      "2026-10-01T15:45",
-      expect.any(Object),
-    );
+    expect(onValueChange).toHaveBeenCalledWith("2026-10-01T15:45");
 
     prevent = true;
     fireEvent.change(input, { target: { value: "2026-10-01T16:00" } });

@@ -19,9 +19,9 @@ describe("NumberField", () => {
     );
     const input = screen.getByRole("spinbutton");
     fireEvent.change(input, { target: { value: "140" } });
-    expect(change).toHaveBeenLastCalledWith(140, expect.any(Object));
+    expect(change).toHaveBeenLastCalledWith(140);
     fireEvent.change(input, { target: { value: "" } });
-    expect(change).toHaveBeenLastCalledWith(null, expect.any(Object));
+    expect(change).toHaveBeenLastCalledWith(null);
     expect(input).toHaveAttribute("name", "bpm");
   });
 

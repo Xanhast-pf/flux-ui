@@ -6,7 +6,7 @@ export default {
   Preview,
   code,
   notes: [
-    "TreeView's value/defaultValue is the set of expanded item identifiers. Every TreeView.Item requires a stable unique value.",
+    "TreeView's expandedItems/defaultExpandedItems is the set of expanded item identifiers. Every TreeView.Item requires a stable unique value.",
     "Arrow Up/Down moves through visible items; Home/End jump to the first/last visible item. Arrow Right opens a branch or enters its first child; Arrow Left closes an open branch or returns to its parent. Enter toggles the focused branch.",
     "Clicking a branch label focuses and toggles it. Leaf items remain focusable treeitems but the initial alpha does not freeze selection, activation, editing, drag/drop, async loading, or virtualization APIs.",
     "aria-disabled items are skipped by roving focus and cannot be toggled by pointer input.",
@@ -14,14 +14,14 @@ export default {
   ],
   props: [
     [
-      "Root value / defaultValue",
+      "Root expandedItems / defaultExpandedItems",
       "readonly string[]",
       "Controlled or uncontrolled expanded item values.",
     ],
     [
-      "Root onValueChange",
-      "(value: string[]) => void",
-      "Reports the next expanded-value set.",
+      "Root onExpandedItemsChange",
+      "(expandedItems: readonly string[]) => void",
+      "Reports the next expanded-item set.",
     ],
     [
       "Item value",

@@ -80,22 +80,24 @@ function validateValues(values: readonly string[], name: string): void {
 
 function TreeViewRoot({
   className,
-  defaultValue,
+  defaultExpandedItems,
+  expandedItems: controlledExpandedItems,
+  onExpandedItemsChange,
   onFocus,
   onKeyDown,
-  onValueChange,
   ref,
-  value: controlledValue,
   ...props
 }: TreeViewRootProps) {
-  validateValues(controlledValue ?? [], "value");
-  validateValues(defaultValue ?? [], "defaultValue");
+  validateValues(controlledExpandedItems ?? [], "expandedItems");
+  validateValues(defaultExpandedItems ?? [], "defaultExpandedItems");
 
-  const controlled = controlledValue !== undefined;
-  const [uncontrolledValue, setUncontrolledValue] = useState<string[]>(() => [
-    ...(defaultValue ?? []),
-  ]);
-  const expanded = controlled ? controlledValue : uncontrolledValue;
+  const controlled = controlledExpandedItems !== undefined;
+  const [uncontrolledExpandedItems, setUncontrolledExpandedItems] = useState<
+    string[]
+  >(() => [...(defaultExpandedItems ?? [])]);
+  const expanded = controlled
+    ? controlledExpandedItems
+    : uncontrolledExpandedItems;
   const scope = useRef<HTMLUListElement | null>(null);
   const lastFocused = useRef<HTMLElement | null>(null);
 
@@ -118,8 +120,8 @@ function TreeViewRoot({
     const next = open
       ? [...expanded, itemValue]
       : expanded.filter((candidate) => candidate !== itemValue);
-    if (!controlled) setUncontrolledValue(next);
-    onValueChange?.(next);
+    if (!controlled) setUncontrolledExpandedItems(next);
+    onExpandedItemsChange?.(next);
   }
 
   useLayoutEffect(() => {

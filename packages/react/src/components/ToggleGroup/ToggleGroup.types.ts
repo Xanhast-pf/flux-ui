@@ -1,8 +1,8 @@
 import type { ComponentPropsWithRef } from "react";
 import type { AccessibleName } from "../../internal/accessibility.types.js";
 import type {
-  SelectionAppearance,
   SelectionSize,
+  SelectionVariant,
 } from "../../internal/selection.types.js";
 type RootBase = Omit<
   ComponentPropsWithRef<"div">,
@@ -10,7 +10,7 @@ type RootBase = Omit<
 > &
   AccessibleName & {
     size?: SelectionSize | undefined;
-    appearance?: SelectionAppearance | undefined;
+    variant?: SelectionVariant | undefined;
     orientation?: "horizontal" | "vertical" | undefined;
     loopFocus?: boolean | undefined;
     disabled?: boolean | undefined;

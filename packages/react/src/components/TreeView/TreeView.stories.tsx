@@ -6,7 +6,7 @@ const meta = {
   component: TreeView.Root,
   args: {
     "aria-label": "Project files",
-    defaultValue: ["src"],
+    defaultExpandedItems: ["src"],
   },
 } satisfies Meta<typeof TreeView.Root>;
 
@@ -40,7 +40,7 @@ export const Default: Story = {
 export const FullyExpanded: Story = {
   args: {
     "aria-label": "Expanded project files",
-    defaultValue: ["src", "src/components"],
+    defaultExpandedItems: ["src", "src/components"],
   },
   render: (args) => (
     <TreeView.Root {...args}>

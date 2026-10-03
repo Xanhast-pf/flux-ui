@@ -14,7 +14,7 @@ describe("AlertDialog", () => {
           <AlertDialog.Description>
             This only changes a local draft.
           </AlertDialog.Description>
-          <AlertDialog.Close>Keep draft</AlertDialog.Close>
+          <AlertDialog.Cancel>Keep draft</AlertDialog.Cancel>
           <button type="button">Confirm</button>
         </AlertDialog.Popup>
       </AlertDialog.Root>,
@@ -37,6 +37,27 @@ describe("AlertDialog", () => {
     await waitFor(() => expect(trigger).toHaveFocus());
   });
 
+  it("runs the action handler before closing", async () => {
+    const user = userEvent.setup();
+    const onAction = vi.fn();
+    render(
+      <AlertDialog.Root>
+        <AlertDialog.Trigger>Delete workspace</AlertDialog.Trigger>
+        <AlertDialog.Popup>
+          <AlertDialog.Title>Delete workspace?</AlertDialog.Title>
+          <AlertDialog.Action onClick={onAction}>Delete</AlertDialog.Action>
+        </AlertDialog.Popup>
+      </AlertDialog.Root>,
+    );
+    await user.click(screen.getByRole("button", { name: "Delete workspace" }));
+    const dialog = screen.getByRole("alertdialog", {
+      name: "Delete workspace?",
+    });
+    await user.click(screen.getByRole("button", { name: "Delete" }));
+    expect(onAction).toHaveBeenCalledOnce();
+    expect(dialog).not.toHaveAttribute("open");
+  });
+
   it("supports controlled destructive-confirmation state without forcing closure", async () => {
     const user = userEvent.setup();
     const onOpenChange = vi.fn();
@@ -44,7 +65,7 @@ describe("AlertDialog", () => {
       <AlertDialog.Root open onOpenChange={onOpenChange}>
         <AlertDialog.Popup>
           <AlertDialog.Title>Delete workspace?</AlertDialog.Title>
-          <AlertDialog.Close>Cancel</AlertDialog.Close>
+          <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
         </AlertDialog.Popup>
       </AlertDialog.Root>,
     );

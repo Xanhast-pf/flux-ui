@@ -177,7 +177,7 @@ export function IconsPage() {
         >
           {visibleIcons.map((entry) => (
             <Toggle
-              appearance="tile"
+              variant="tile"
               pressed={selected === entry.name}
               key={entry.name}
               onClick={() => {

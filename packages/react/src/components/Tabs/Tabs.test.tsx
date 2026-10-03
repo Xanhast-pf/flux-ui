@@ -62,14 +62,14 @@ describe("Tabs", () => {
     expect(second).toHaveAttribute("aria-selected", "true");
     expect(screen.getByText("Two panel")).toBeVisible();
   });
-  it("keeps nested orientation, size, appearance and keyboard state local", async () => {
+  it("keeps nested orientation, size, variant and keyboard state local", async () => {
     const user = userEvent.setup();
     render(
       <Tabs.Root
         defaultValue="outer"
         orientation="vertical"
         size="sm"
-        appearance="pill"
+        variant="pill"
       >
         <Tabs.List aria-label="Outer tabs" activateOnFocus>
           <Tabs.Tab value="outer">Outer</Tabs.Tab>

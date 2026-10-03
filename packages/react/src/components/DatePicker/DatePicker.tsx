@@ -12,8 +12,7 @@ export function DatePicker({
 }: DatePickerProps) {
   function change(event: ChangeEvent<HTMLInputElement>) {
     onChange?.(event);
-    if (!event.defaultPrevented)
-      onValueChange?.(event.currentTarget.value, event);
+    if (!event.defaultPrevented) onValueChange?.(event.currentTarget.value);
   }
 
   return (

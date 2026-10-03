@@ -1,4 +1,4 @@
-import { createRef, useState, type ChangeEvent } from "react";
+import { createRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -13,8 +13,7 @@ function BasicGroup({
   onValueChange,
 }: {
   defaultValue?: string | undefined;
-  onValueChange?:
-    ((value: string, event: ChangeEvent<HTMLInputElement>) => void) | undefined;
+  onValueChange?: ((value: string) => void) | undefined;
 }) {
   return (
     <RadioGroup.Root
@@ -67,13 +66,10 @@ describe("RadioGroup", () => {
   it("reports the selected value after the item's native onChange", async () => {
     const user = userEvent.setup();
     const order: string[] = [];
-    const onValueChange = vi.fn(
-      (value: string, event: ChangeEvent<HTMLInputElement>) => {
-        order.push("group");
-        expect(value).toBe("beta");
-        expect(event.currentTarget.checked).toBe(true);
-      },
-    );
+    const onValueChange = vi.fn((value: string) => {
+      order.push("group");
+      expect(value).toBe("beta");
+    });
     render(
       <RadioGroup.Root name="channel" onValueChange={onValueChange}>
         <RadioGroup.Legend>Channel</RadioGroup.Legend>
@@ -91,6 +87,7 @@ describe("RadioGroup", () => {
     await user.click(screen.getByRole("radio", { name: "Beta" }));
     expect(order).toEqual(["item", "group"]);
     expect(onValueChange).toHaveBeenCalledTimes(1);
+    expect(onValueChange.mock.calls[0]).toEqual(["beta"]);
   });
 
   it("does not report a value when the item's onChange prevents default", async () => {

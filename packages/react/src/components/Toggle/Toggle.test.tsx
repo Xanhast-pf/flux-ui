@@ -42,7 +42,7 @@ describe("Toggle", () => {
       </Toggle>,
     );
     await user.click(screen.getByRole("button"));
-    expect(change).toHaveBeenCalledWith(true, expect.anything());
+    expect(change).toHaveBeenCalledWith(true);
     expect(screen.getByRole("button")).toHaveAttribute("aria-pressed", "false");
   });
   it("runs the consumer click first and respects cancellation", async () => {

@@ -78,7 +78,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
     >
       <Tabs.Root
         size="sm"
-        appearance="pill"
+        variant="pill"
         value={active.id}
         onValueChange={(value) => {
           if (sceneIds.includes(value))

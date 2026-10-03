@@ -116,8 +116,8 @@ function Interactions() {
           <AlertDialog.Description>
             This only changes the fixture.
           </AlertDialog.Description>
-          <AlertDialog.Close>Keep local draft</AlertDialog.Close>
-          <AlertDialog.Close>Remove local draft</AlertDialog.Close>
+          <AlertDialog.Cancel>Keep local draft</AlertDialog.Cancel>
+          <AlertDialog.Action>Remove local draft</AlertDialog.Action>
         </AlertDialog.Popup>
       </AlertDialog.Root>
       {tag ? (

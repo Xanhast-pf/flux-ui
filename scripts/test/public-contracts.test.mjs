@@ -78,4 +78,10 @@ test("public component contracts derive from the TypeScript export surface", () 
 
   const toggle = contracts.find((contract) => contract.name === "Toggle");
   assert.deepEqual(toggle?.parts[0]?.stateModels, ["pressed"]);
+
+  const treeView = contracts.find((contract) => contract.name === "TreeView");
+  assert.deepEqual(
+    treeView?.parts.find((part) => part.path === "TreeView.Root")?.stateModels,
+    ["expandedItems"],
+  );
 });

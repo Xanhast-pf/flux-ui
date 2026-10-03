@@ -1,4 +1,4 @@
-import type { ChangeEvent, ComponentPropsWithRef } from "react";
+import type { ComponentPropsWithRef } from "react";
 
 export interface CheckboxProps extends Omit<
   ComponentPropsWithRef<"input">,
@@ -7,7 +7,5 @@ export interface CheckboxProps extends Omit<
   /** Controlled mixed presentation, independent of the submitted checked value. */
   indeterminate?: boolean | undefined;
   /** Runs after onChange unless that event was default-prevented. */
-  onCheckedChange?:
-    | ((checked: boolean, event: ChangeEvent<HTMLInputElement>) => void)
-    | undefined;
+  onCheckedChange?: ((checked: boolean) => void) | undefined;
 }
