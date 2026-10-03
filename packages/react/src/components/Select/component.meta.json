@@ -4,5 +4,8 @@
   "category": "Inputs",
   "status": "beta",
   "description": "Native select, option and optgroup behavior with Flux styling.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Select": ["data-invalid"]
+  }
 }

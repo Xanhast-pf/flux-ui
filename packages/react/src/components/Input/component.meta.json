@@ -4,5 +4,8 @@
   "category": "Inputs",
   "status": "beta",
   "description": "Styled native text-entry control that preserves browser semantics, attributes, and refs.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Input": ["data-invalid"]
+  }
 }

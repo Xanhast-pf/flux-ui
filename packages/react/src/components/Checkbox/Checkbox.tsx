@@ -35,6 +35,7 @@ export function Checkbox({
   return (
     <input
       {...inputProps}
+      data-invalid={inputProps["aria-invalid"]}
       className={joinClassNames(checkbox, className)}
       onChange={indeterminate || onCheckedChange ? handleChange : onChange}
       ref={setInput}

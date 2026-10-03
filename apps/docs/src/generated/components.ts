@@ -137,6 +137,9 @@ export const components = [
     description:
       "Native checkbox with controlled mixed presentation, form semantics, and Field composition.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      Checkbox: ["data-invalid"],
+    },
   },
   {
     name: "Code",
@@ -184,6 +187,9 @@ export const components = [
     description:
       "Searchable single selection with grouped options, controllable query state, loading status, forms and keyboard navigation.",
     sizeClass: "overlay",
+    publicDataAttributes: {
+      Combobox: ["data-invalid"],
+    },
   },
   {
     name: "Container",
@@ -220,6 +226,9 @@ export const components = [
     description:
       "Native civil date input with stable ISO serialization and browser-owned validation.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      DatePicker: ["data-invalid"],
+    },
   },
   {
     name: "DateTimePicker",
@@ -229,6 +238,9 @@ export const components = [
     description:
       "Native local date-time input that deliberately carries no timezone or instant semantics.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      DateTimePicker: ["data-invalid"],
+    },
   },
   {
     name: "DescriptionList",
@@ -296,6 +308,9 @@ export const components = [
       "Accessible form-field composition that wires labels, descriptions, errors, and shared control state.",
     sizeClass: "primitive",
     nonDomParts: ["Field.Control"],
+    publicDataAttributes: {
+      "Field.Root": ["data-disabled", "data-invalid"],
+    },
   },
   {
     name: "Fieldset",
@@ -369,6 +384,9 @@ export const components = [
     description:
       "Styled native text-entry control that preserves browser semantics, attributes, and refs.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      Input: ["data-invalid"],
+    },
   },
   {
     name: "InputGroup",
@@ -378,6 +396,9 @@ export const components = [
     description:
       "Input composition for prefixes, suffixes and actions without replacing the native input contract.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      "InputGroup.Input": ["data-invalid"],
+    },
   },
   {
     name: "Kbd",
@@ -440,6 +461,9 @@ export const components = [
     description:
       "A native number input: form participation, min/max validity and steppers stay with the platform.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      NumberField: ["data-invalid"],
+    },
   },
   {
     name: "PageHeader",
@@ -497,6 +521,10 @@ export const components = [
     description:
       "Native radio group with fieldset semantics, controlled or uncontrolled selection, and Field-compatible options.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      "RadioGroup.Root": ["data-invalid"],
+      "RadioGroup.Item": ["data-invalid"],
+    },
   },
   {
     name: "Rating",
@@ -536,6 +564,9 @@ export const components = [
     description:
       "Native select, option and optgroup behavior with Flux styling.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      Select: ["data-invalid"],
+    },
   },
   {
     name: "Separator",
@@ -651,6 +682,9 @@ export const components = [
     status: "beta",
     description: "Native checkbox form behavior with binary switch semantics.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      Switch: ["data-invalid"],
+    },
   },
   {
     name: "Table",
@@ -694,6 +728,9 @@ export const components = [
     description:
       "Native multi-line text control with optional CSS-native content autosizing and row constraints.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      Textarea: ["data-invalid"],
+    },
   },
   {
     name: "ThemeScope",
@@ -712,6 +749,9 @@ export const components = [
     description:
       "Native civil time input with browser-owned validation and no timezone semantics.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      TimePicker: ["data-invalid"],
+    },
   },
   {
     name: "Toast",

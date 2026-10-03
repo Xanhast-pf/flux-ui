@@ -18,6 +18,7 @@ export function DatePicker({
   return (
     <input
       {...props}
+      data-invalid={props["aria-invalid"]}
       type="date"
       className={joinClassNames(datePicker, className)}
       onChange={onValueChange ? change : onChange}

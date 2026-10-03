@@ -4,5 +4,8 @@
   "category": "Inputs",
   "status": "beta",
   "description": "Searchable single selection with grouped options, controllable query state, loading status, forms and keyboard navigation.",
-  "sizeClass": "overlay"
+  "sizeClass": "overlay",
+  "publicDataAttributes": {
+    "Combobox": ["data-invalid"]
+  }
 }

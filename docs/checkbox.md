@@ -114,8 +114,11 @@ systems; that is intentional. No Flux animation is added. Forced-colors mode kee
 native rendering, with system-color focus and invalid outlines.
 
 Use `className`, `style`, native pseudo-classes (`:checked`, `:indeterminate`,
-`:disabled`, `:focus-visible`), and Field's `data-invalid` / `aria-invalid` state
-for customization. Checkbox does not mirror uncontrolled checkedness into a
+`:disabled`, `:focus-visible`), and the stable `data-invalid` styling hook for
+customization. The `aria-invalid` token remains the semantic source of truth and
+is mirrored verbatim to `data-invalid`; Field applies both when its `invalid`
+state is active.
+Checkbox does not mirror uncontrolled checkedness into a
 potentially stale `data-checked` attribute. Keep an obvious keyboard focus
 indicator and an adequate pointer target when overriding dimensions.
 

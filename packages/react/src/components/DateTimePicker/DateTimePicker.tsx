@@ -18,6 +18,7 @@ export function DateTimePicker({
   return (
     <input
       {...props}
+      data-invalid={props["aria-invalid"]}
       type="datetime-local"
       className={joinClassNames(dateTimePicker, className)}
       onChange={onValueChange ? change : onChange}

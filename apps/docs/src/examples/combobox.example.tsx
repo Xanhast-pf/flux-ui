@@ -9,7 +9,7 @@ export default {
     "Combobox is searchable selection with autocomplete. It commits an existing option key; it is not a free-text search input and unmatched text cannot be submitted as a new option.",
     "For arbitrary search text use Input type=search. The Combobox name and committed-value API remain unchanged.",
     "Options require unique stable values. Contiguous options with the same group render as a semantic listbox group without changing keyboard order. Labels are shown to users; the optional hidden named input submits only a committed, enabled value.",
-    "Typing clears the committed value and filters the local options. Non-empty uncommitted text fails native constraint validation.",
+    "Typing clears the committed value and filters the local options. Non-empty uncommitted text fails native constraint validation; semantic aria-invalid state is mirrored to the stable data-invalid styling hook.",
     "The popup does not move DOM focus from the input. value/query can be owned independently; query=null means show the committed option label. loading exposes aria-busy plus a status message but does not own fetching.",
     "This remains single-select with string keys. Free text, object identity, custom option rendering and multiple selection are intentionally separate problems.",
   ],

@@ -4,5 +4,9 @@
   "category": "Inputs",
   "status": "beta",
   "description": "Native radio group with fieldset semantics, controlled or uncontrolled selection, and Field-compatible options.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "RadioGroup.Root": ["data-invalid"],
+    "RadioGroup.Item": ["data-invalid"]
+  }
 }

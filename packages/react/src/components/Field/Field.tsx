@@ -190,7 +190,8 @@ function FieldRoot({
         {...rootProps}
         className={joinClassNames(root, className)}
         data-d={density === "comfortable" ? undefined : density}
-        data-x={disabled || undefined}
+        data-disabled={disabled || undefined}
+        data-invalid={invalid || undefined}
         id={id}
       >
         {children}

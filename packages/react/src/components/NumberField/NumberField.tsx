@@ -19,6 +19,7 @@ export function NumberField({
   return (
     <input
       {...props}
+      data-invalid={props["aria-invalid"]}
       type="number"
       className={joinClassNames(numberField, className)}
       onChange={onValueChange ? change : onChange}

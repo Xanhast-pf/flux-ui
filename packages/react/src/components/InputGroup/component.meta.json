@@ -4,5 +4,8 @@
   "category": "Inputs",
   "status": "beta",
   "description": "Input composition for prefixes, suffixes and actions without replacing the native input contract.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "InputGroup.Input": ["data-invalid"]
+  }
 }

@@ -4,5 +4,8 @@
   "category": "Inputs",
   "status": "beta",
   "description": "Native multi-line text control with optional CSS-native content autosizing and row constraints.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Textarea": ["data-invalid"]
+  }
 }

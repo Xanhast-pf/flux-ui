@@ -13,7 +13,7 @@ export const root = style({
     "&[hidden]:not([hidden='until-found' i])": {
       display: "none !important",
     },
-    "&[data-x]": {
+    "&[data-disabled='true']": {
       vars: {
         "--f-f-label": "var(--flux-color-text-muted)",
         "--f-f-description": "var(--flux-color-text-subtle)",

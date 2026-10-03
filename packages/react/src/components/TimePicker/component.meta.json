@@ -4,5 +4,8 @@
   "category": "Forms",
   "status": "beta",
   "description": "Native civil time input with browser-owned validation and no timezone semantics.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "TimePicker": ["data-invalid"]
+  }
 }

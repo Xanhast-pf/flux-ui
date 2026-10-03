@@ -4,5 +4,8 @@
   "category": "Forms",
   "status": "beta",
   "description": "Native local date-time input that deliberately carries no timezone or instant semantics.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "DateTimePicker": ["data-invalid"]
+  }
 }

@@ -17,6 +17,7 @@ export function Switch({
   return (
     <input
       {...props}
+      data-invalid={props["aria-invalid"]}
       className={joinClassNames(switchControl, className)}
       onChange={onCheckedChange ? handleChange : onChange}
       role="switch"

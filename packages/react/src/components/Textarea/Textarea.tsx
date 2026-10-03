@@ -23,47 +23,41 @@ export function Textarea({
   style,
   ...textareaProps
 }: TextareaProps) {
-  if (!autoSize) {
-    if (minRows !== undefined || maxRows !== undefined) {
-      throw new TypeError("Textarea minRows/maxRows require autoSize={true}.");
-    }
-    return (
-      <textarea
-        {...textareaProps}
-        className={joinClassNames(textarea, className)}
-        rows={rows}
-        style={style}
-      />
-    );
+  if (!autoSize && (minRows !== undefined || maxRows !== undefined)) {
+    throw new TypeError("Textarea minRows/maxRows require autoSize={true}.");
   }
-
-  if (rows !== undefined) {
+  if (autoSize && rows !== undefined) {
     throw new TypeError("Textarea rows cannot be used with autoSize={true}.");
   }
-
-  validRowCount("minRows", minRows);
-  validRowCount("maxRows", maxRows);
-  if (minRows !== undefined && maxRows !== undefined && maxRows < minRows) {
-    throw new RangeError(
-      "Textarea maxRows must be greater than or equal to minRows.",
-    );
+  if (autoSize) {
+    validRowCount("minRows", minRows);
+    validRowCount("maxRows", maxRows);
+    if (minRows !== undefined && maxRows !== undefined && maxRows < minRows) {
+      throw new RangeError(
+        "Textarea maxRows must be greater than or equal to minRows.",
+      );
+    }
   }
 
-  const autoSizeStyle: AutoSizeStyle = {
-    "--flux-textarea-min-row-size": `${minRows ?? 1}lh`,
-    ...(maxRows === undefined
-      ? {}
-      : { "--flux-textarea-max-row-size": `${maxRows}lh` }),
-    ...style,
-  };
+  const resolvedStyle: AutoSizeStyle | undefined = autoSize
+    ? {
+        "--flux-textarea-min-row-size": `${minRows ?? 1}lh`,
+        ...(maxRows === undefined
+          ? {}
+          : { "--flux-textarea-max-row-size": `${maxRows}lh` }),
+        ...style,
+      }
+    : style;
 
   return (
     <textarea
       {...textareaProps}
       className={joinClassNames(textarea, className)}
-      data-auto-size="true"
-      data-has-max-rows={maxRows === undefined ? undefined : "true"}
-      style={autoSizeStyle}
+      data-auto-size={autoSize ? "true" : undefined}
+      data-has-max-rows={autoSize && maxRows !== undefined ? "true" : undefined}
+      data-invalid={textareaProps["aria-invalid"]}
+      rows={autoSize ? undefined : rows}
+      style={resolvedStyle}
     />
   );
 }

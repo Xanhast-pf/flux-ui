@@ -4,5 +4,8 @@
   "category": "Inputs",
   "status": "beta",
   "description": "Native checkbox form behavior with binary switch semantics.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Switch": ["data-invalid"]
+  }
 }

@@ -178,4 +178,30 @@ test("public component contracts derive from the TypeScript export surface", () 
     "data-side",
     "data-state",
   ]);
+
+  for (const [componentName, partPath, attributes] of [
+    ["Input", "Input", ["data-invalid"]],
+    ["Checkbox", "Checkbox", ["data-invalid"]],
+    ["Select", "Select", ["data-invalid"]],
+    ["Switch", "Switch", ["data-invalid"]],
+    ["Textarea", "Textarea", ["data-invalid"]],
+    ["NumberField", "NumberField", ["data-invalid"]],
+    ["DatePicker", "DatePicker", ["data-invalid"]],
+    ["DateTimePicker", "DateTimePicker", ["data-invalid"]],
+    ["TimePicker", "TimePicker", ["data-invalid"]],
+    ["Rating", "Rating", ["data-readonly"]],
+    ["RadioGroup", "RadioGroup.Root", ["data-invalid"]],
+    ["RadioGroup", "RadioGroup.Item", ["data-invalid"]],
+    ["Field", "Field.Root", ["data-disabled", "data-invalid"]],
+    ["Combobox", "Combobox", ["data-invalid"]],
+    ["InputGroup", "InputGroup.Input", ["data-invalid"]],
+  ]) {
+    const contract = contracts.find(
+      (candidate) => candidate.name === componentName,
+    );
+    assert.deepEqual(
+      contract?.parts.find((part) => part.path === partPath)?.dataAttributes,
+      attributes,
+    );
+  }
 });

@@ -18,6 +18,7 @@ export function TimePicker({
   return (
     <input
       {...props}
+      data-invalid={props["aria-invalid"]}
       type="time"
       className={joinClassNames(timePicker, className)}
       onChange={onValueChange ? change : onChange}
