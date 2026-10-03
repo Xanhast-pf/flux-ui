@@ -8,6 +8,15 @@ import {
   Text,
 } from "@flux-ui/react";
 import { useState } from "react";
+
+const volumeMarks = [
+  { value: 0, label: "Mute" },
+  25,
+  50,
+  75,
+  { value: 100, label: "Max" },
+] as const;
+
 export default function Example() {
   const [value, setValue] = useState(40);
   const [vertical, setVertical] = useState(false);
@@ -39,6 +48,9 @@ export default function Example() {
             appearance="custom"
             orientation={vertical ? "vertical" : "horizontal"}
             resetValue={40}
+            marks={volumeMarks}
+            showValue
+            formatValue={(next) => `${next}%`}
             aria-valuetext={`${value}%`}
           />
         </Field.Control>
@@ -50,7 +62,9 @@ export default function Example() {
         <Button variant="outline" onClick={() => setValue(40)}>
           Reset volume
         </Button>
-        <Text tone="muted">Native range, customizable track and thumb.</Text>
+        <Text tone="muted">
+          Native range with optional marks and value output.
+        </Text>
       </Inline>
     </Stack>
   );

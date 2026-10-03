@@ -5,5 +5,8 @@ export type {
   PaginationPageProps,
   PaginationPreviousProps,
   PaginationNextProps,
+  PaginationFirstProps,
+  PaginationLastProps,
+  PaginationRangeProps,
   PaginationEllipsisProps,
 } from "./Pagination.types.js";

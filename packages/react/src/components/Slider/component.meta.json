@@ -3,6 +3,6 @@
   "slug": "slider",
   "category": "Inputs",
   "status": "beta",
-  "description": "Single-thumb native range input with form and keyboard semantics.",
+  "description": "Single-thumb native range input with form semantics, optional datalist marks, and visual value output.",
   "sizeClass": "primitive"
 }

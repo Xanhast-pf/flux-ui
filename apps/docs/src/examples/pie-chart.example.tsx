@@ -19,12 +19,13 @@ export default {
     [
       "formatValue",
       "(value: number) => string",
-      "Formats inspector values without changing the numeric data model.",
+      "Formats inspector and ChartTooltip values without changing the numeric data model.",
     ],
   ],
   notes: [
-    "PieChart is a specialist family rather than another Chart.type value because its data model is categorical parts-of-a-whole.",
-    "Legend buttons and the data cursor share one active slice. Arrow keys inspect slices; Home/End reach endpoints.",
-    "The SVG is decorative; the slider-style inspector carries the accessible value text.",
+    "PieChart is only the categorical visualization and accessible inspector; visible titles, surfaces, legends and tooltips are composition.",
+    "The example combines toggleable ChartLegend visibility with a click ChartTooltip: hidden slices leave the visible total, percentages recalculate, and formatValue flows into the projected tooltip value.",
+    "ChartTooltip can use hover or click. The SVG and tooltip are visual projections; the slider-style chart inspector remains the accessible value owner.",
+    "Arrow keys inspect slices; Home/End reach endpoints even when no legend or tooltip is composed.",
   ],
 } satisfies ComponentExample;

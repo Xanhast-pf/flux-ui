@@ -57,10 +57,10 @@ test("PieChart and ScatterChart expose keyboard-inspectable values", async ({
   const pie = page
     .locator(".preview-content")
     .getByRole("slider", { name: "Revenue by product data cursor" });
-  await expect(pie).toHaveAttribute("aria-valuetext", /Core: 52/u);
+  await expect(pie).toHaveAttribute("aria-valuetext", "Core: $52k, 52%");
   await pie.focus();
   await page.keyboard.press("ArrowRight");
-  await expect(pie).toHaveAttribute("aria-valuetext", /Pro: 31/u);
+  await expect(pie).toHaveAttribute("aria-valuetext", /Pro: \$31k/u);
   await expectPreviewAxeClean(page);
 
   await page.goto("/#components/scatter-chart");
@@ -68,12 +68,15 @@ test("PieChart and ScatterChart expose keyboard-inspectable values", async ({
   const scatter = preview.getByRole("slider", {
     name: "Latency vs payload data cursor",
   });
-  await expect(scatter).toHaveAttribute("aria-valuetext", "API: 12, 82");
+  await expect(scatter).toHaveAttribute("aria-valuetext", "API: 12 kB, 82 ms");
   await scatter.focus();
   await page.keyboard.press("ArrowRight");
-  await expect(scatter).toHaveAttribute("aria-valuetext", "API: 24, 105");
-  await preview.getByRole("button", { name: /Worker/u }).click();
-  await expect(scatter).toHaveAttribute("aria-valuetext", "Worker: 10, 55");
+  await expect(scatter).toHaveAttribute("aria-valuetext", "API: 24 kB, 105 ms");
+  await page.keyboard.press("ArrowDown");
+  await expect(scatter).toHaveAttribute(
+    "aria-valuetext",
+    "Worker: 28 kB, 78 ms",
+  );
   await expectPreviewAxeClean(page);
 });
 

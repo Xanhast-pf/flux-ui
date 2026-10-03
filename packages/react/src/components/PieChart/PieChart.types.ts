@@ -9,10 +9,12 @@ export interface PieChartDatum {
 }
 
 export interface PieChartProps extends Omit<
-  ComponentPropsWithRef<"figure">,
+  ComponentPropsWithRef<"div">,
   "children" | "dangerouslySetInnerHTML"
 > {
+  /** Accessible chart name. Visible titles belong in normal composition. */
   label: string;
+  /** Accessible description; no visible description block is rendered. */
   description?: string | undefined;
   data: readonly PieChartDatum[];
   /** Hard cap on rendered slices. */

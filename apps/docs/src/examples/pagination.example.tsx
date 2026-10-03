@@ -1,6 +1,7 @@
 import Preview from "./pagination.preview.js";
 import code from "./pagination.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
+
 export default {
   Preview,
   code,
@@ -11,9 +12,19 @@ export default {
       "Controlled one-based paging; values must be valid positive integers.",
     ],
     [
-      "Previous / Next",
+      "First / Previous / Next / Last",
       "button props",
-      "Boundaries disable automatically. Children override labels for localization.",
+      "Boundary controls disable automatically. Children override visible labels for localization.",
+    ],
+    [
+      "Range.siblingCount / boundaryCount",
+      "number",
+      "Generates a bounded current-page window plus start/end boundaries and decorative omission markers.",
+    ],
+    [
+      "Range.getPageLabel",
+      "(page) => string",
+      "Localizes accessible labels for generated page buttons.",
     ],
     [
       "Page.page",
@@ -23,12 +34,13 @@ export default {
     [
       "Ellipsis",
       "span",
-      "Decorative omission marker for caller-selected ranges.",
+      "Decorative omission marker for caller-selected or generated ranges.",
     ],
   ],
   notes: [
-    "This v1 controls local results with buttons; it is not a router or a fetch engine. Use real links for document navigation.",
-    "The caller renders the desired page range, so 10,000 results do not create 10,000 buttons.",
+    "Pagination controls local results with buttons; it is not a router or fetch engine. Use real links for document navigation.",
+    "Range keeps very large result sets bounded instead of creating one button per page.",
+    "Use explicit Page/Ellipsis composition when an application needs a completely custom range or rendering policy.",
     "Use a nearby polite status for result changes and keep keyboard focus on the activated control.",
     "Current-page clicks do not fire another change; disabled and canceled clicks do not change pages.",
   ],

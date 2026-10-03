@@ -3,6 +3,6 @@
   "slug": "combobox",
   "category": "Inputs",
   "status": "beta",
-  "description": "Searchable single selection with committed form values, keyboard navigation and explicit unmatched-input validation.",
+  "description": "Searchable single selection with grouped options, controllable query state, loading status, forms and keyboard navigation.",
   "sizeClass": "overlay"
 }

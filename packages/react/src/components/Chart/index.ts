@@ -1,7 +1,7 @@
 export { Chart } from "./Chart.js";
 export type {
-  ChartProps,
   ChartPoint,
+  ChartProps,
   ChartSeries,
   ChartTone,
 } from "./Chart.types.js";

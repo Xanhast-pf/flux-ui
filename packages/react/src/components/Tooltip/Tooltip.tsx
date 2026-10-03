@@ -13,7 +13,7 @@ import {
 import { attachRef } from "../../internal/attachRef.js";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { useFloatingSurface } from "../../internal/useFloatingSurface.js";
-import { tooltip } from "./Tooltip.css.js";
+import { arrow as arrowClass, tooltip } from "./Tooltip.css.js";
 import type { TooltipProps } from "./Tooltip.types.js";
 type TriggerProps = HTMLAttributes<HTMLElement> & {
   ref?: Ref<HTMLElement>;
@@ -24,6 +24,7 @@ export function Tooltip({
   side = "top",
   align = "center",
   delay = 300,
+  arrow = false,
   defaultOpen = false,
   open: controlled,
   onOpenChange,
@@ -158,6 +159,7 @@ export function Tooltip({
         popover="manual"
         hidden={!open}
         data-state={open ? "open" : "closed"}
+        data-arrow={arrow ? "true" : undefined}
         className={joinClassNames(tooltip, className)}
         onPointerEnter={(event) => {
           onPointerEnter?.(event);
@@ -171,6 +173,7 @@ export function Tooltip({
         }}
       >
         {content}
+        {arrow ? <span aria-hidden="true" className={arrowClass} /> : null}
       </div>
     </>
   );

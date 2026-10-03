@@ -18,11 +18,15 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const AutoSize: Story = {
-  args: {
-    defaultValue: "This textarea grows as more lines are added.",
-    rows: 2,
-    style: { fieldSizing: "content" },
-  },
+  render: () => (
+    <Textarea
+      aria-label="Autosizing project notes"
+      autoSize
+      defaultValue="This textarea grows as more lines are added."
+      minRows={2}
+      maxRows={6}
+    />
+  ),
 };
 
 export const WithField: Story = {

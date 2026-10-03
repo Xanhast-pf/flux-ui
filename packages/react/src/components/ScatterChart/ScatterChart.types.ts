@@ -14,10 +14,12 @@ export interface ScatterChartSeries {
 }
 
 export interface ScatterChartProps extends Omit<
-  ComponentPropsWithRef<"figure">,
+  ComponentPropsWithRef<"div">,
   "children" | "dangerouslySetInnerHTML"
 > {
+  /** Accessible chart name. Visible titles belong in normal composition. */
   label: string;
+  /** Accessible description; no visible description block is rendered. */
   description?: string | undefined;
   series: readonly ScatterChartSeries[];
   /** Maximum rendered points per series; source points remain keyboard inspectable. */

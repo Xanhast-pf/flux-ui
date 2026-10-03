@@ -30,18 +30,68 @@ describe("Textarea", () => {
     expect(onChange).toHaveBeenCalled();
   });
 
-  it("supports platform content autosizing through the native style escape hatch", () => {
+  it("enables platform autosizing with row constraints", () => {
     render(
       <Textarea
         aria-label="Autosizing notes"
-        rows={2}
-        style={{ fieldSizing: "content", maxBlockSize: "12rem" }}
+        autoSize
+        minRows={2}
+        maxRows={6}
       />,
     );
+
     const textarea = screen.getByRole("textbox", { name: "Autosizing notes" });
-    expect(textarea.style.getPropertyValue("field-sizing")).toBe("content");
+    expect(textarea).not.toHaveAttribute("rows");
+    expect(textarea).toHaveAttribute("data-auto-size", "true");
+    expect(textarea).toHaveAttribute("data-has-max-rows", "true");
+    expect(
+      textarea.style.getPropertyValue("--flux-textarea-min-row-size"),
+    ).toBe("2lh");
+    expect(
+      textarea.style.getPropertyValue("--flux-textarea-max-row-size"),
+    ).toBe("6lh");
+  });
+
+  it("keeps the native style escape hatch in autosize mode", () => {
+    render(
+      <Textarea
+        aria-label="Custom autosize notes"
+        autoSize
+        minRows={2}
+        style={{ minBlockSize: "6rem", maxBlockSize: "12rem" }}
+      />,
+    );
+    const textarea = screen.getByRole("textbox", {
+      name: "Custom autosize notes",
+    });
+    expect(textarea.style.minBlockSize).toBe("6rem");
     expect(textarea.style.maxBlockSize).toBe("12rem");
-    expect(textarea).toHaveAttribute("rows", "2");
+  });
+
+  it("rejects contradictory or invalid autosize row contracts", () => {
+    expect(() =>
+      render(
+        // @ts-expect-error Runtime guard covers untyped JavaScript consumers.
+        <Textarea aria-label="Bad fixed rows" minRows={2} />,
+      ),
+    ).toThrow("Textarea minRows/maxRows require autoSize={true}.");
+
+    expect(() =>
+      render(
+        // @ts-expect-error Runtime guard covers untyped JavaScript consumers.
+        <Textarea aria-label="Bad autosize rows" autoSize rows={2} />,
+      ),
+    ).toThrow("Textarea rows cannot be used with autoSize={true}.");
+
+    expect(() =>
+      render(<Textarea aria-label="Bad minimum" autoSize minRows={0} />),
+    ).toThrow("Textarea.minRows must be a positive integer.");
+
+    expect(() =>
+      render(
+        <Textarea aria-label="Bad range" autoSize minRows={4} maxRows={3} />,
+      ),
+    ).toThrow("Textarea maxRows must be greater than or equal to minRows.");
   });
 
   it("forwards refs to the native textarea", () => {

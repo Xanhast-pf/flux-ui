@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Combobox } from "./Combobox.js";
@@ -29,6 +35,89 @@ describe("Combobox", () => {
       />,
     );
     expect(screen.getByRole("combobox", { name: "Team" })).toHaveValue("");
+  });
+
+  it("renders semantic option groups without changing keyboard option order", async () => {
+    const user = userEvent.setup();
+    render(
+      <Combobox
+        aria-label="Destination"
+        options={[
+          { value: "design", label: "Design", group: "Creative" },
+          { value: "research", label: "Research", group: "Creative" },
+          { value: "api", label: "API", group: "Engineering" },
+        ]}
+      />,
+    );
+
+    await user.click(screen.getByRole("combobox"));
+    const creative = screen.getByRole("group", { name: "Creative" });
+    const engineering = screen.getByRole("group", { name: "Engineering" });
+    expect(within(creative).getAllByRole("option")).toHaveLength(2);
+    expect(within(engineering).getByRole("option")).toHaveTextContent("API");
+
+    await user.keyboard("{ArrowDown}{ArrowDown}{ArrowDown}");
+    const input = screen.getByRole("combobox");
+    const active = input.getAttribute("aria-activedescendant");
+    expect(
+      active === null ? null : document.getElementById(active),
+    ).toHaveTextContent("API");
+  });
+
+  it("supports owner-controlled query text without taking committed-value ownership", async () => {
+    const user = userEvent.setup();
+    const onQueryChange = vi.fn();
+    const view = render(
+      <Combobox
+        aria-label="Team"
+        options={options}
+        value={null}
+        query="eng"
+        onQueryChange={onQueryChange}
+      />,
+    );
+
+    const input = screen.getByRole("combobox");
+    expect(input).toHaveValue("eng");
+    await user.click(input);
+    expect(
+      screen.getByRole("option", { name: "Engineering" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("option", { name: "Design" }),
+    ).not.toBeInTheDocument();
+
+    await user.type(input, "x");
+    expect(onQueryChange).toHaveBeenLastCalledWith("engx");
+    expect(input).toHaveValue("eng");
+
+    view.rerender(
+      <Combobox
+        aria-label="Team"
+        options={options}
+        value="engineering"
+        query={null}
+        onQueryChange={onQueryChange}
+      />,
+    );
+    expect(input).toHaveValue("Engineering");
+  });
+
+  it("announces loading without replacing the listbox or its current options", async () => {
+    const user = userEvent.setup();
+    render(
+      <Combobox
+        aria-label="Team"
+        options={options}
+        loading
+        loadingMessage="Fetching teams."
+      />,
+    );
+
+    await user.click(screen.getByRole("combobox"));
+    expect(screen.getByRole("listbox")).toHaveAttribute("aria-busy", "true");
+    expect(screen.getByRole("status")).toHaveTextContent("Fetching teams.");
+    expect(screen.getByRole("option", { name: "Design" })).toBeInTheDocument();
   });
 
   it("filters, keeps input focus and submits a committed key rather than its label", async () => {

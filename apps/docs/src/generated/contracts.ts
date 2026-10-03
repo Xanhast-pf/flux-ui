@@ -104,6 +104,24 @@ export const publicContracts = [
     ],
   },
   {
+    name: "BottomNavigation",
+    slug: "bottom-navigation",
+    parts: [
+      {
+        path: "BottomNavigation",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "BottomNavigation.Item",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
     name: "Box",
     slug: "box",
     parts: [
@@ -205,6 +223,30 @@ export const publicContracts = [
     parts: [
       {
         path: "Chart",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
+    name: "ChartLegend",
+    slug: "chart-legend",
+    parts: [
+      {
+        path: "ChartLegend",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+    ],
+  },
+  {
+    name: "ChartTooltip",
+    slug: "chart-tooltip",
+    parts: [
+      {
+        path: "ChartTooltip",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
@@ -813,6 +855,18 @@ export const publicContracts = [
         cssVariables: [],
       },
       {
+        path: "Pagination.First",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "Pagination.Last",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
         path: "Pagination.Next",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
@@ -828,6 +882,12 @@ export const publicContracts = [
         path: "Pagination.Previous",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "Pagination.Range",
+        kind: "controller",
+        escapeHatches: [],
         cssVariables: [],
       },
       {

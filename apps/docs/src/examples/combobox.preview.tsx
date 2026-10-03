@@ -1,10 +1,15 @@
 import { Combobox, Field } from "@flux-ui/react";
 import { useState } from "react";
 const options = [
-  { value: "design", label: "Design" },
-  { value: "engineering", label: "Engineering" },
-  { value: "research", label: "Research" },
-  { value: "archive", label: "Archived team", disabled: true },
+  { value: "design", label: "Design", group: "Product" },
+  { value: "research", label: "Research", group: "Product" },
+  { value: "engineering", label: "Engineering", group: "Engineering" },
+  {
+    value: "archive",
+    label: "Archived team",
+    group: "Engineering",
+    disabled: true,
+  },
 ];
 export default function Example() {
   const [value, setValue] = useState<string | null>("design");

@@ -3,6 +3,6 @@
   "slug": "pie-chart",
   "category": "Data",
   "status": "beta",
-  "description": "Bounded pie chart with shared Flux legend semantics and keyboard/pointer slice inspection.",
+  "description": "Standalone bounded pie visualization with keyboard/pointer slice inspection and composable legend/tooltip accessories.",
   "sizeClass": "data-heavy"
 }

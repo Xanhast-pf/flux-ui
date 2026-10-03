@@ -8,15 +8,44 @@ import {
 import { attachRef } from "../../internal/attachRef.js";
 import { useFloatingSurface } from "../../internal/useFloatingSurface.js";
 import { Input } from "../Input/Input.js";
-import { empty, option, popup, root } from "./Combobox.css.js";
+import {
+  empty,
+  group,
+  groupLabel,
+  option,
+  popup,
+  root,
+} from "./Combobox.css.js";
 import type { ComboboxOption, ComboboxProps } from "./Combobox.types.js";
+
+type OptionSection = {
+  label: string | null;
+  items: ComboboxOption[];
+};
+
+function groupOptions(options: readonly ComboboxOption[]): OptionSection[] {
+  const sections: OptionSection[] = [];
+  for (const item of options) {
+    const label = item.group ?? null;
+    const previous = sections.at(-1);
+    if (previous?.label === label) previous.items.push(item);
+    else sections.push({ label, items: [item] });
+  }
+  return sections;
+}
+
 export function Combobox({
   options,
   value: controlled,
   defaultValue = null,
   onValueChange,
+  query: controlledQuery,
+  defaultQuery = null,
+  onQueryChange,
   listLabel = "Suggestions",
   emptyMessage = "No matches found.",
+  loading = false,
+  loadingMessage = "Loading suggestions.",
   invalidSelectionMessage = "Choose an option from the list.",
   ref,
   name,
@@ -33,13 +62,14 @@ export function Combobox({
   const listId = `${generated}-list`;
   const [local, setLocal] = useState<string | null>(defaultValue);
   const value = controlled !== undefined ? controlled : local;
+  const [localQuery, setLocalQuery] = useState<string | null>(defaultQuery);
+  const query = controlledQuery !== undefined ? controlledQuery : localQuery;
   const [previousValue, setPreviousValue] = useState(value);
-  const [query, setQuery] = useState<string | null>(null);
-  // An explicit owner selection replaces an unfinished query. Clearing a value
-  // during typing must not erase the text the user just entered.
+  // An explicit owner selection replaces an unfinished local query. Clearing a
+  // value during typing must not erase the text the user just entered.
   if (previousValue !== value) {
     setPreviousValue(value);
-    if (value !== null) setQuery(null);
+    if (value !== null && controlledQuery === undefined) setLocalQuery(null);
   }
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
@@ -55,6 +85,7 @@ export function Combobox({
       : options.filter((item) =>
           item.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
         );
+  const sections = groupOptions(filtered);
   const available = filtered.filter((item) => !item.disabled);
   const highlighted =
     available.find((item) => item.value === active) ?? available[0];
@@ -108,14 +139,18 @@ export function Combobox({
       queueMicrotask(() => {
         if (event.defaultPrevented || !input?.isConnected) return;
         setOpen(false);
-        setQuery(null);
+        if (controlledQuery === undefined) setLocalQuery(defaultQuery);
         setActive(null);
         if (controlled === undefined) setLocal(defaultValue);
       });
     }
     form.addEventListener("reset", reset);
     return () => form.removeEventListener("reset", reset);
-  }, [input, controlled, defaultValue]);
+  }, [input, controlled, defaultValue, controlledQuery, defaultQuery]);
+  function changeQuery(next: string | null) {
+    if (controlledQuery === undefined) setLocalQuery(next);
+    if (query !== next) onQueryChange?.(next);
+  }
   function changeValue(next: string | null) {
     if (controlled === undefined) setLocal(next);
     if (value !== next) onValueChange?.(next);
@@ -123,7 +158,7 @@ export function Combobox({
   function choose(item: ComboboxOption) {
     if (item.disabled || disabled || readOnly) return;
     changeValue(item.value);
-    setQuery(null);
+    changeQuery(null);
     setOpen(false);
     setActive(item.value);
     input?.focus();
@@ -149,7 +184,7 @@ export function Combobox({
         onChange={(event) => {
           onChange?.(event);
           if (event.defaultPrevented || disabled || readOnly) return;
-          setQuery(event.currentTarget.value);
+          changeQuery(event.currentTarget.value);
           setActive(null);
           setOpen(true);
           changeValue(null);
@@ -225,29 +260,55 @@ export function Combobox({
         data-state={expanded ? "open" : "closed"}
         className={popup}
       >
-        <div role="listbox" id={listId} aria-label={listLabel}>
-          {filtered.map((item) => (
-            <button
-              type="button"
-              disabled={item.disabled}
-              key={item.value}
-              id={`${listId}-${encodeURIComponent(item.value)}`}
-              role="option"
-              aria-selected={item.value === highlighted?.value}
-              aria-disabled={item.disabled || undefined}
-              tabIndex={-1}
-              className={option}
-              onPointerDown={(event) => event.preventDefault()}
-              onPointerMove={() => {
-                if (!item.disabled) setActive(item.value);
-              }}
-              onClick={() => choose(item)}
-            >
-              {item.label}
-            </button>
-          ))}
+        <div
+          role="listbox"
+          id={listId}
+          aria-label={listLabel}
+          aria-busy={loading || undefined}
+        >
+          {sections.map((section) => {
+            const buttons = section.items.map((item) => (
+              <button
+                type="button"
+                disabled={item.disabled}
+                key={item.value}
+                id={`${listId}-${encodeURIComponent(item.value)}`}
+                role="option"
+                aria-selected={item.value === highlighted?.value}
+                aria-disabled={item.disabled || undefined}
+                tabIndex={-1}
+                className={option}
+                onPointerDown={(event) => event.preventDefault()}
+                onPointerMove={() => {
+                  if (!item.disabled) setActive(item.value);
+                }}
+                onClick={() => choose(item)}
+              >
+                {item.label}
+              </button>
+            ));
+            return section.label === null ? (
+              buttons
+            ) : (
+              <div
+                key={section.items[0]?.value}
+                role="group"
+                aria-label={section.label}
+                className={group}
+              >
+                <div aria-hidden="true" className={groupLabel}>
+                  {section.label}
+                </div>
+                {buttons}
+              </div>
+            );
+          })}
         </div>
-        {filtered.length === 0 ? (
+        {loading ? (
+          <div className={empty} role="status">
+            {loadingMessage}
+          </div>
+        ) : filtered.length === 0 ? (
           <div className={empty} role="status">
             {emptyMessage}
           </div>

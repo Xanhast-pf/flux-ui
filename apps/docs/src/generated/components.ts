@@ -36,6 +36,15 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "BottomNavigation",
+    slug: "bottom-navigation",
+    category: "Navigation",
+    status: "beta",
+    description:
+      "Semantic destination navigation for compact application shells using real links.",
+    sizeClass: "primitive",
+  },
+  {
     name: "Box",
     slug: "box",
     category: "Layout",
@@ -48,7 +57,8 @@ export const components = [
     slug: "breadcrumbs",
     category: "Navigation",
     status: "beta",
-    description: "Semantic navigation trails with decorative separators.",
+    description:
+      "Semantic navigation trails with decorative separators and optional long-trail disclosure.",
     sizeClass: "primitive",
   },
   {
@@ -91,8 +101,26 @@ export const components = [
     category: "Data",
     status: "beta",
     description:
-      "Line, area and grouped bar renderers share semantic Flux tones and bounded paths per series rather than per-point DOM nodes.",
+      "Standalone line, area and grouped bar visualization with bounded rendering and source-complete keyboard/pointer inspection.",
     sizeClass: "data-heavy",
+  },
+  {
+    name: "ChartLegend",
+    slug: "chart-legend",
+    category: "Data",
+    status: "beta",
+    description:
+      "Optional HTML legend wrapper for Flux charts with independent layout and controlled or uncontrolled series visibility.",
+    sizeClass: "interactive",
+  },
+  {
+    name: "ChartTooltip",
+    slug: "chart-tooltip",
+    category: "Data",
+    status: "beta",
+    description:
+      "Optional pointer-inert visual data tooltip wrapper for Flux charts with hover or click triggers.",
+    sizeClass: "interactive",
   },
   {
     name: "Checkbox",
@@ -144,7 +172,7 @@ export const components = [
     category: "Inputs",
     status: "beta",
     description:
-      "Searchable single selection with committed form values, keyboard navigation and explicit unmatched-input validation.",
+      "Searchable single selection with grouped options, controllable query state, loading status, forms and keyboard navigation.",
     sizeClass: "overlay",
   },
   {
@@ -403,8 +431,9 @@ export const components = [
     category: "Navigation",
     status: "beta",
     description:
-      "Controlled paging controls with native buttons and explicit boundaries.",
+      "Controlled paging controls with native buttons, first/last affordances, and bounded generated ranges.",
     sizeClass: "primitive",
+    nonDomParts: ["Pagination.Range"],
   },
   {
     name: "PieChart",
@@ -412,7 +441,7 @@ export const components = [
     category: "Data",
     status: "beta",
     description:
-      "Bounded pie chart with shared Flux legend semantics and keyboard/pointer slice inspection.",
+      "Standalone bounded pie visualization with keyboard/pointer slice inspection and composable legend/tooltip accessories.",
     sizeClass: "data-heavy",
   },
   {
@@ -457,7 +486,7 @@ export const components = [
     category: "Data",
     status: "beta",
     description:
-      "Bounded scatter renderer with source-complete keyboard inspection and sampled SVG paths.",
+      "Standalone bounded scatter visualization with axes, source-complete inspection and sampled SVG paths.",
     sizeClass: "data-heavy",
   },
   {
@@ -518,7 +547,7 @@ export const components = [
     category: "Inputs",
     status: "beta",
     description:
-      "Single-thumb native range input with form and keyboard semantics.",
+      "Single-thumb native range input with form semantics, optional datalist marks, and visual value output.",
     sizeClass: "primitive",
   },
   {
@@ -630,7 +659,7 @@ export const components = [
     category: "Inputs",
     status: "beta",
     description:
-      "Styled native multi-line text control with platform field-sizing support through standard style props.",
+      "Native multi-line text control with optional CSS-native content autosizing and row constraints.",
     sizeClass: "primitive",
   },
   {
@@ -693,7 +722,7 @@ export const components = [
     category: "Overlays",
     status: "beta",
     description:
-      "Controlled or trigger-owned supplemental help without adding a wrapper or a tab stop.",
+      "Controlled or trigger-owned supplemental help with optional collision-aware decorative arrows.",
     sizeClass: "interactive",
   },
   {

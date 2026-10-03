@@ -1,10 +1,12 @@
 import { cssVars } from "@flux-ui/tokens";
 import { style } from "@vanilla-extract/css";
+
 const track = {
   blockSize: "var(--flux-slider-track-size, 0.25rem)",
   borderRadius: "999px",
   background: `var(${cssVars.color.borderStrong})`,
 };
+
 const thumb = {
   boxSizing: "border-box" as const,
   inlineSize:
@@ -15,6 +17,7 @@ const thumb = {
   borderRadius: "var(--flux-slider-thumb-radius, 50%)",
   background: `var(${cssVars.color.accent})`,
 };
+
 export const slider = style({
   appearance: "auto",
   accentColor: `var(${cssVars.color.accent})`,

@@ -1,16 +1,5 @@
 import { style } from "@vanilla-extract/css";
 
-export {
-  caption,
-  chart,
-  detail,
-  inspector,
-  legend,
-  legendButton,
-  seriesStyle,
-  svg,
-} from "../Chart/Chart.css.js";
-
 export const slice = style({
   stroke: "var(--flux-color-surface)",
   strokeWidth: 2,

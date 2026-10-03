@@ -32,6 +32,27 @@ describe("Tooltip", () => {
     await user.tab();
     expect(screen.getByRole("button", { name: "Next" })).toHaveFocus();
   });
+  it("keeps the optional arrow decorative", () => {
+    const { rerender } = render(
+      <Tooltip content="Arrow help." defaultOpen arrow>
+        <button type="button">Arrow trigger</button>
+      </Tooltip>,
+    );
+    const tooltip = screen.getByRole("tooltip");
+    expect(tooltip).toHaveAttribute("data-arrow", "true");
+    expect(tooltip.querySelector("[aria-hidden='true']")).toBeInTheDocument();
+
+    rerender(
+      <Tooltip content="Plain help." defaultOpen>
+        <button type="button">Plain trigger</button>
+      </Tooltip>,
+    );
+    expect(screen.getByRole("tooltip")).not.toHaveAttribute("data-arrow");
+    expect(
+      screen.getByRole("tooltip").querySelector("[aria-hidden='true']"),
+    ).not.toBeInTheDocument();
+  });
+
   it("supports controlled visibility without mutating owner state", async () => {
     const user = userEvent.setup();
     const onOpenChange = vi.fn();

@@ -9,6 +9,23 @@ export const popup = style([
     padding: "var(--flux-space-1)",
   },
 ]);
+export const group = style({
+  selectors: {
+    "& + &": {
+      borderBlockStart: "1px solid var(--flux-color-border)",
+      marginBlockStart: "var(--flux-space-1)",
+      paddingBlockStart: "var(--flux-space-1)",
+    },
+  },
+});
+
+export const groupLabel = style({
+  padding: "var(--flux-space-1) var(--flux-space-3)",
+  color: "var(--flux-color-text-muted)",
+  fontSize: "var(--flux-font-caption)",
+  fontWeight: 600,
+});
+
 export const option = style({
   width: "100%",
   border: 0,
