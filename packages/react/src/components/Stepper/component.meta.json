@@ -6,6 +6,7 @@
   "description": "Ordered workflow progress with current, completed and error semantics.",
   "sizeClass": "primitive",
   "publicDataAttributes": {
-    "Stepper.Item": ["data-status"]
+    "Stepper.Item": ["data-status"],
+    "Stepper.Root": ["data-orientation"]
   }
 }

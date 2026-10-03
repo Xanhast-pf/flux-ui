@@ -85,6 +85,9 @@ export const components = [
     description:
       "Semantic attached-edge grouping for buttons without duplicating Button appearance or selection state.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      ButtonGroup: ["data-orientation"],
+    },
   },
   {
     name: "Callout",
@@ -426,6 +429,9 @@ export const components = [
     description:
       "A passive labelled meter, not a slider. The application owns updates, peak hold and clip reset.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      LevelMeter: ["data-orientation"],
+    },
   },
   {
     name: "Link",
@@ -575,6 +581,9 @@ export const components = [
     status: "beta",
     description: "Semantic or decorative dividers in either orientation.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      Separator: ["data-orientation"],
+    },
   },
   {
     name: "Sidebar",
@@ -610,6 +619,9 @@ export const components = [
     description:
       "Single-thumb native range input with form semantics, optional datalist marks, and visual value output.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      Slider: ["data-orientation"],
+    },
   },
   {
     name: "Sparkline",
@@ -637,6 +649,9 @@ export const components = [
     description:
       "An in-flow two-pane layout, separate from Sidebar and Drawer.",
     sizeClass: "interactive",
+    publicDataAttributes: {
+      SplitPane: ["data-orientation"],
+    },
   },
   {
     name: "Stack",
@@ -673,6 +688,7 @@ export const components = [
     sizeClass: "primitive",
     publicDataAttributes: {
       "Stepper.Item": ["data-status"],
+      "Stepper.Root": ["data-orientation"],
     },
   },
   {
@@ -788,6 +804,10 @@ export const components = [
     description:
       "Named action groups with one tab stop and arrow-key navigation.",
     sizeClass: "interactive",
+    publicDataAttributes: {
+      "Toolbar.Root": ["data-orientation"],
+      "Toolbar.Separator": ["data-orientation"],
+    },
   },
   {
     name: "Tooltip",
@@ -810,7 +830,7 @@ export const components = [
       "Hierarchical navigation with expansion state and WAI-ARIA tree keyboard behavior.",
     sizeClass: "interactive",
     publicDataAttributes: {
-      "TreeView.Item": ["data-expanded"],
+      "TreeView.Item": ["data-expandable", "data-expanded"],
     },
   },
   {

@@ -4,5 +4,8 @@
   "category": "Audio",
   "status": "beta",
   "description": "A passive labelled meter, not a slider. The application owns updates, peak hold and clip reset.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "LevelMeter": ["data-orientation"]
+  }
 }

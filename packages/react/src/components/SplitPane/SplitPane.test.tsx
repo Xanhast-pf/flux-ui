@@ -38,6 +38,10 @@ describe("SplitPane", () => {
       />,
     );
     const handle = screen.getByRole("separator");
+    expect(handle.parentElement).toHaveAttribute(
+      "data-orientation",
+      "vertical",
+    );
     expect(handle).toHaveAttribute("aria-orientation", "horizontal");
     fireEvent.keyDown(handle, { key: "ArrowDown" });
     expect(change).toHaveBeenCalledWith(55);

@@ -4,5 +4,8 @@
   "category": "Layout",
   "status": "beta",
   "description": "An in-flow two-pane layout, separate from Sidebar and Drawer.",
-  "sizeClass": "interactive"
+  "sizeClass": "interactive",
+  "publicDataAttributes": {
+    "SplitPane": ["data-orientation"]
+  }
 }

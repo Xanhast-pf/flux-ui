@@ -6,6 +6,6 @@
   "description": "Hierarchical navigation with expansion state and WAI-ARIA tree keyboard behavior.",
   "sizeClass": "interactive",
   "publicDataAttributes": {
-    "TreeView.Item": ["data-expanded"]
+    "TreeView.Item": ["data-expandable", "data-expanded"]
   }
 }

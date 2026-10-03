@@ -96,7 +96,7 @@ test("public component contracts derive from the TypeScript export surface", () 
   assert.deepEqual(
     treeView?.parts.find((part) => part.path === "TreeView.Item")
       ?.dataAttributes,
-    ["data-expanded"],
+    ["data-expandable", "data-expanded"],
   );
 
   const chartLegend = contracts.find(
@@ -195,6 +195,14 @@ test("public component contracts derive from the TypeScript export surface", () 
     ["Field", "Field.Root", ["data-disabled", "data-invalid"]],
     ["Combobox", "Combobox", ["data-invalid"]],
     ["InputGroup", "InputGroup.Input", ["data-invalid"]],
+    ["ButtonGroup", "ButtonGroup", ["data-orientation"]],
+    ["LevelMeter", "LevelMeter", ["data-orientation"]],
+    ["Separator", "Separator", ["data-orientation"]],
+    ["Slider", "Slider", ["data-orientation"]],
+    ["SplitPane", "SplitPane", ["data-orientation"]],
+    ["Stepper", "Stepper.Root", ["data-orientation"]],
+    ["Toolbar", "Toolbar.Root", ["data-orientation"]],
+    ["Toolbar", "Toolbar.Separator", ["data-orientation"]],
   ]) {
     const contract = contracts.find(
       (candidate) => candidate.name === componentName,

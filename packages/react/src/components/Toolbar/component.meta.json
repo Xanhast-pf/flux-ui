@@ -4,5 +4,9 @@
   "category": "Actions",
   "status": "beta",
   "description": "Named action groups with one tab stop and arrow-key navigation.",
-  "sizeClass": "interactive"
+  "sizeClass": "interactive",
+  "publicDataAttributes": {
+    "Toolbar.Root": ["data-orientation"],
+    "Toolbar.Separator": ["data-orientation"]
+  }
 }

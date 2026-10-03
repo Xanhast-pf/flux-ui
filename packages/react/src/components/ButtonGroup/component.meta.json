@@ -4,5 +4,8 @@
   "category": "Actions",
   "status": "beta",
   "description": "Semantic attached-edge grouping for buttons without duplicating Button appearance or selection state.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "ButtonGroup": ["data-orientation"]
+  }
 }

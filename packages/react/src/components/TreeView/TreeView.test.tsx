@@ -44,14 +44,17 @@ describe("TreeView", () => {
 
     expect(tree.tagName).toBe("UL");
     expect(src).toHaveAttribute("aria-expanded", "true");
+    expect(src).toHaveAttribute("data-expandable", "true");
+    expect(src).toHaveAttribute("data-expanded", "true");
     expect(components).toHaveAttribute("aria-expanded", "false");
+    expect(components).toHaveAttribute("data-expandable", "true");
     expect(within(src).getByRole("group")).toBeVisible();
     expect(
       within(components).getByRole("group", { hidden: true }),
     ).not.toBeVisible();
-    expect(
-      screen.getByRole("treeitem", { name: "package.json" }),
-    ).not.toHaveAttribute("aria-expanded");
+    const packageItem = screen.getByRole("treeitem", { name: "package.json" });
+    expect(packageItem).not.toHaveAttribute("aria-expanded");
+    expect(packageItem).not.toHaveAttribute("data-expandable");
   });
 
   it("owns uncontrolled expansion through expandedItems/defaultExpandedItems semantics", async () => {

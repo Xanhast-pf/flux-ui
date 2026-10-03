@@ -22,6 +22,7 @@ describe("Slider", () => {
     expect(ref.current).toBe(slider);
     expect(slider).toHaveAttribute("type", "range");
     expect(slider).toHaveAttribute("step", "5");
+    expect(slider).toHaveAttribute("data-orientation", "horizontal");
     expect(slider).toHaveValue("25");
     expect(slider).toHaveClass("custom");
     expect(slider.style.margin).toBe("0.25rem");
