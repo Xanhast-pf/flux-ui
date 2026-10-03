@@ -15,9 +15,12 @@ test("renders the workshop, native form examples, and overlay demos", async ({
     page.getByRole("textbox", { name: "Work email", exact: true }),
   ).toHaveAttribute("required", "");
   await page.goto("/#components/textarea");
-  await expect(
-    page.getByRole("textbox", { name: "Project notes", exact: true }),
-  ).toHaveAttribute("rows", "4");
+  const notes = page.getByRole("textbox", {
+    name: "Project notes",
+    exact: true,
+  });
+  await expect(notes).toHaveAttribute("data-auto-size", "true");
+  await expect(notes).not.toHaveAttribute("rows");
   await page.goto("/#components/tabs");
   const overview = page.getByRole("tab", { name: "Overview", exact: true });
   await overview.focus();

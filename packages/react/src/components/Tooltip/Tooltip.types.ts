@@ -29,4 +29,6 @@ export type TooltipProps = Omit<
     side?: FloatingSide;
     align?: FloatingAlign;
     delay?: number | undefined;
+    /** Adds a decorative pointer that follows the actual side after collision flipping. */
+    arrow?: boolean | undefined;
   };

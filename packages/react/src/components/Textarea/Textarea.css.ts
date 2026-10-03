@@ -51,6 +51,14 @@ export const textarea = style({
     "&:user-invalid": {
       borderColor: `var(${cssVars.color.danger})`,
     },
+    "&[data-auto-size='true']": {
+      fieldSizing: "content",
+      minBlockSize: `calc(var(--flux-textarea-min-row-size) + var(${cssVars.space[2]}) + var(${cssVars.space[2]}) + 0.125rem)`,
+    },
+    "&[data-auto-size='true'][data-has-max-rows='true']": {
+      maxBlockSize: `calc(var(--flux-textarea-max-row-size) + var(${cssVars.space[2]}) + var(${cssVars.space[2]}) + 0.125rem)`,
+      overflowY: "auto",
+    },
   },
   "@media": {
     "(prefers-reduced-motion: reduce)": { transition: "none" },

@@ -3,6 +3,7 @@
   "slug": "pagination",
   "category": "Navigation",
   "status": "beta",
-  "description": "Controlled paging controls with native buttons and explicit boundaries.",
-  "sizeClass": "primitive"
+  "description": "Controlled paging controls with native buttons, first/last affordances, and bounded generated ranges.",
+  "sizeClass": "primitive",
+  "nonDomParts": ["Pagination.Range"]
 }

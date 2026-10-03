@@ -7,11 +7,18 @@ export default {
   code,
   notes: [
     "Native multi-line text entry with Flux styling and Field composition.",
-    'Use style={{ fieldSizing: "content" }} when content-sized growth is appropriate; no measurement runtime is required.',
-    "Use native attributes, className, style and composition for customization.",
+    "autoSize uses the platform field-sizing implementation; it does not add a measurement mirror, ResizeObserver, or JavaScript height loop.",
+    "rows belongs to fixed mode. Autosize mode uses minRows/maxRows so the sizing contract cannot contradict itself.",
+    "Native values, reset behavior, events, form submission, refs, className and style remain available.",
   ],
   props: [
-    ["rows / cols", "number", "Native visible size hints."],
+    ["autoSize", "boolean", "Enables CSS-native content-sized growth."],
+    [
+      "minRows / maxRows",
+      "positive integer",
+      "Optional autosize row bounds. minRows defaults to one; maxRows is unbounded when omitted.",
+    ],
+    ["rows / cols", "number", "Native visible size hints for fixed mode."],
     [
       "value / defaultValue / onChange",
       "Native textarea props",

@@ -3,6 +3,6 @@
   "slug": "scatter-chart",
   "category": "Data",
   "status": "beta",
-  "description": "Bounded scatter renderer with source-complete keyboard inspection and sampled SVG paths.",
+  "description": "Standalone bounded scatter visualization with axes, source-complete inspection and sampled SVG paths.",
   "sizeClass": "data-heavy"
 }

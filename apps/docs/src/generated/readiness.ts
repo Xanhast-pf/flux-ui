@@ -1,14 +1,14 @@
 // GENERATED FILE. Run pnpm flux maintain generate; do not edit manually.
 export const readiness = {
   summary: {
-    total: 81,
+    total: 84,
     status: {
       alpha: 0,
-      beta: 81,
+      beta: 84,
       stable: 0,
     },
-    eligibleForBetaReview: 81,
-    eligibleForStableReview: 81,
+    eligibleForBetaReview: 84,
+    eligibleForStableReview: 84,
     blocked: 0,
     browserCatalogCoverage: true,
     accessibilityCatalogCoverage: true,
@@ -41,6 +41,14 @@ export const readiness = {
     {
       name: "Avatar",
       slug: "avatar",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "BottomNavigation",
+      slug: "bottom-navigation",
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,
@@ -97,6 +105,22 @@ export const readiness = {
     {
       name: "Chart",
       slug: "chart",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "ChartLegend",
+      slug: "chart-legend",
+      status: "beta",
+      eligibleForBetaReview: true,
+      eligibleForStableReview: true,
+      blockers: [],
+    },
+    {
+      name: "ChartTooltip",
+      slug: "chart-tooltip",
       status: "beta",
       eligibleForBetaReview: true,
       eligibleForStableReview: true,

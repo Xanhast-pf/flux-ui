@@ -7,8 +7,8 @@ const meta = {
       <Combobox
         aria-label="Workspace role"
         options={[
-          { value: "member", label: "Member" },
-          { value: "viewer", label: "Viewer" },
+          { value: "member", label: "Member", group: "Active roles" },
+          { value: "viewer", label: "Viewer", group: "Active roles" },
         ]}
         defaultValue="member"
       />
@@ -18,3 +18,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
+
+export const Loading: Story = {
+  render: () => (
+    <Combobox
+      aria-label="Workspace role"
+      options={[
+        { value: "member", label: "Member", group: "Active roles" },
+        { value: "viewer", label: "Viewer", group: "Active roles" },
+      ]}
+      loading
+      loadingMessage="Refreshing roles."
+    />
+  ),
+};

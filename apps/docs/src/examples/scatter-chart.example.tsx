@@ -19,12 +19,13 @@ export default {
     [
       "formatX / formatY",
       "(value: number) => string",
-      "Format inspector and axis values without changing numeric domains.",
+      "Format inspector, axes and ChartTooltip values without changing numeric domains.",
     ],
   ],
   notes: [
-    "ScatterChart uses one SVG path per series rather than one DOM node per data point.",
-    "Legend selection, Arrow/Home/End inspection, pointer inspection and accessible value text follow the existing Chart interaction language.",
-    "Large sources should still be windowed or aggregated upstream when they exceed the documented source budget.",
+    "ScatterChart is only the bounded visualization and accessible inspector; it renders no Card, title, legend or tooltip by itself.",
+    "The example combines toggleable ChartLegend visibility with a hover ChartTooltip; formatX/formatY are shared by the inspector, axes and projected tooltip values.",
+    "Left/Right inspect source points, Up/Down move between series, and Home/End reach endpoints, so keyboard access never depends on the legend.",
+    "ScatterChart uses one SVG path per series rather than one DOM node per data point. Large sources should still be windowed or aggregated upstream beyond the documented source budget.",
   ],
 } satisfies ComponentExample;

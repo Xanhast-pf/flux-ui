@@ -119,7 +119,7 @@ export function scatterModel(
   return { series: models, minY, maxY, x, y };
 }
 
-export function nearestRenderedScatterIndex(
+export function nearestScatterSourceIndex(
   indexes: readonly number[],
   data: readonly ScatterChartPoint[],
   x: number,
@@ -127,11 +127,9 @@ export function nearestRenderedScatterIndex(
   projectX: (value: number) => number,
   projectY: (value: number) => number,
 ): number {
-  let best = 0;
+  let best = indexes[0] ?? 0;
   let distance = Infinity;
-  for (let index = 0; index < indexes.length; index += 1) {
-    const sourceIndex = indexes[index];
-    if (sourceIndex === undefined) continue;
+  for (const sourceIndex of indexes) {
     const point = data[sourceIndex];
     if (!point) continue;
     const dx = projectX(point.x) - x;
@@ -139,7 +137,7 @@ export function nearestRenderedScatterIndex(
     const next = dx * dx + dy * dy;
     if (next < distance) {
       distance = next;
-      best = index;
+      best = sourceIndex;
     }
   }
   return best;

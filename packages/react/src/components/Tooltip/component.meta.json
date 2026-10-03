@@ -3,6 +3,6 @@
   "slug": "tooltip",
   "category": "Overlays",
   "status": "beta",
-  "description": "Controlled or trigger-owned supplemental help without adding a wrapper or a tab stop.",
+  "description": "Controlled or trigger-owned supplemental help with optional collision-aware decorative arrows.",
   "sizeClass": "interactive"
 }

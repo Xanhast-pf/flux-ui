@@ -1,0 +1,8 @@
+{
+  "name": "ChartLegend",
+  "slug": "chart-legend",
+  "category": "Data",
+  "status": "beta",
+  "description": "Optional HTML legend wrapper for Flux charts with independent layout and controlled or uncontrolled series visibility.",
+  "sizeClass": "interactive"
+}

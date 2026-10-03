@@ -1,46 +1,10 @@
 import { style } from "@vanilla-extract/css";
+
 export const chart = style({
-  margin: 0,
-  minInlineSize: 0,
-  color: "var(--flux-color-text)",
-  background: "var(--flux-color-surface)",
-  padding: "var(--flux-space-4)",
-  borderRadius: "var(--flux-radius-md)",
-});
-export const caption = style({
-  fontWeight: "var(--flux-font-medium)",
-  marginBlockEnd: "var(--flux-space-2)",
-});
-export const detail = style({
-  marginBlock: "var(--flux-space-2)",
-  fontSize: "var(--flux-font-caption)",
-  color: "var(--flux-color-text-muted)",
-});
-export const legend = style({
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "var(--flux-space-2)",
-});
-export const legendButton = style({
-  font: "inherit",
-  fontSize: "var(--flux-font-caption)",
-  padding: "var(--flux-space-2)",
-  border: "0.0625rem solid var(--flux-color-border)",
-  borderRadius: "var(--flux-radius-sm)",
-  background: "var(--flux-color-surface)",
-  color: "var(--flux-color-text)",
-  cursor: "pointer",
-  selectors: {
-    "&[aria-pressed='true']": {
-      textDecoration: "underline",
-      borderColor: "var(--flux-color-accent)",
-    },
-    "&:focus-visible": { outline: "0.125rem solid var(--flux-color-focus)" },
-  },
-});
-export const inspector = style({
+  position: "relative",
   minInlineSize: 0,
   direction: "ltr",
+  color: "var(--flux-color-text)",
   selectors: {
     "&:focus-visible": {
       outline: "0.125rem solid var(--flux-color-focus)",
@@ -48,27 +12,53 @@ export const inspector = style({
     },
   },
 });
+
+export const visuallyHidden = style({
+  position: "absolute",
+  inlineSize: "1px",
+  blockSize: "1px",
+  padding: 0,
+  margin: "-1px",
+  overflow: "hidden",
+  clipPath: "inset(50%)",
+  whiteSpace: "nowrap",
+  border: 0,
+});
+
 export const svg = style({
   display: "block",
   inlineSize: "100%",
   overflow: "hidden",
 });
+
 export const axis = style({
   fill: "var(--flux-color-text-muted)",
   fontSize: "12px",
 });
+
 export const cursor = style({
   stroke: "var(--flux-color-text-muted)",
   strokeDasharray: "3 3",
   pointerEvents: "none",
 });
-export const seriesStyle = style({
-  color: "var(--flux-color-accent)",
+
+export const seriesGroup = style({
   selectors: {
-    "&[data-tone='info']": { color: "var(--flux-color-info)" },
-    "&[data-tone='success']": { color: "var(--flux-color-success)" },
-    "&[data-tone='warning']": { color: "var(--flux-color-warning)" },
-    "&[data-tone='danger']": { color: "var(--flux-color-danger)" },
+    "&[data-muted='true']": { opacity: 0.42 },
+  },
+});
+
+export const activeMark = style({
+  fill: "var(--flux-color-surface)",
+  stroke: "currentColor",
+  strokeWidth: 3,
+  pointerEvents: "none",
+  vectorEffect: "non-scaling-stroke",
+  "@media": {
+    "(forced-colors: active)": {
+      fill: "Canvas",
+      stroke: "Highlight",
+    },
   },
 });
 

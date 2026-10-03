@@ -3,6 +3,6 @@
   "slug": "breadcrumbs",
   "category": "Navigation",
   "status": "beta",
-  "description": "Semantic navigation trails with decorative separators.",
+  "description": "Semantic navigation trails with decorative separators and optional long-trail disclosure.",
   "sizeClass": "primitive"
 }

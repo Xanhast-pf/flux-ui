@@ -1,5 +1,5 @@
 import { createRef } from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { Slider } from "./Slider.js";
@@ -71,6 +71,82 @@ describe("Slider", () => {
     form.reset();
     expect(screen.getByRole("slider")).toHaveValue("25");
   });
+  it("renders native datalist marks and mirrors controlled value output", () => {
+    const view = render(
+      <Slider
+        aria-label="Volume"
+        value={40}
+        onChange={() => {}}
+        marks={[0, { value: 50, label: "Half" }, 100]}
+        showValue
+        formatValue={(value) => `${value}%`}
+      />,
+    );
+    const input = screen.getByRole("slider");
+    const listId = input.getAttribute("list");
+    expect(listId).toBeTruthy();
+    const datalist = document.getElementById(listId ?? "");
+    expect(datalist?.tagName).toBe("DATALIST");
+    expect(datalist?.querySelectorAll("option")).toHaveLength(3);
+    expect(datalist?.querySelector("option[value='50']")).toHaveAttribute(
+      "label",
+      "Half",
+    );
+    const output = document.querySelector("output");
+    expect(output).toHaveTextContent("40%");
+    expect(output).toHaveAttribute("aria-hidden", "true");
+
+    fireEvent.change(input, { target: { value: "45" } });
+    expect(output).toHaveTextContent("40%");
+
+    view.rerender(
+      <Slider
+        aria-label="Volume"
+        value={45}
+        onChange={() => {}}
+        marks={[0, { value: 50, label: "Half" }, 100]}
+        showValue
+        formatValue={(value) => `${value}%`}
+      />,
+    );
+    expect(document.querySelector("output")).toHaveTextContent("45%");
+  });
+
+  it("mirrors uncontrolled output and resets it with the native form", async () => {
+    render(
+      <form aria-label="Mixer">
+        <Slider
+          aria-label="Gain"
+          name="gain"
+          defaultValue={20}
+          showValue
+          formatValue={(value) => `${value}%`}
+        />
+      </form>,
+    );
+    const input = screen.getByRole("slider");
+    const output = document.querySelector("output");
+    expect(output).toHaveTextContent("20%");
+
+    fireEvent.change(input, { target: { value: "55" } });
+    expect(output).toHaveTextContent("55%");
+
+    screen.getByRole<HTMLFormElement>("form").reset();
+    expect(input).toHaveValue("20");
+    await waitFor(() => {
+      expect(output).toHaveTextContent("20%");
+    });
+  });
+
+  it("rejects conflicting or invalid native mark contracts", () => {
+    expect(() =>
+      render(<Slider aria-label="Marks" marks={[0, 50]} list="external" />),
+    ).toThrow(TypeError);
+    expect(() =>
+      render(<Slider aria-label="Marks" marks={[0, Number.NaN]} />),
+    ).toThrow(RangeError);
+  });
+
   it("preserves disabled and server-rendered attributes", () => {
     render(<Slider aria-label="Traffic" disabled />);
     expect(screen.getByRole("slider")).toBeDisabled();

@@ -1,9 +1,12 @@
 import type { ComponentPropsWithRef } from "react";
+
 export interface ChartPoint {
   x: number;
   y: number | null;
 }
+
 export type ChartTone = "accent" | "info" | "success" | "warning" | "danger";
+
 export interface ChartSeries {
   id: string;
   label: string;
@@ -11,11 +14,14 @@ export interface ChartSeries {
   data: readonly ChartPoint[];
   tone?: ChartTone | undefined;
 }
+
 export interface ChartProps extends Omit<
-  ComponentPropsWithRef<"figure">,
+  ComponentPropsWithRef<"div">,
   "children" | "dangerouslySetInnerHTML"
 > {
+  /** Accessible chart name. Visible titles belong in normal composition. */
   label: string;
+  /** Accessible description; no visible description block is rendered. */
   description?: string | undefined;
   series: readonly ChartSeries[];
   type?: "line" | "area" | "bar" | undefined;

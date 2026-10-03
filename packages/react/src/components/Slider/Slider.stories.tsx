@@ -1,16 +1,38 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Slider } from "./Slider.js";
+
 const meta = { title: "Inputs/Slider", component: Slider } satisfies Meta<
   typeof Slider
 >;
 export default meta;
 type Story = StoryObj<typeof meta>;
+
 export const Default: Story = {
   args: {},
   render: () => (
     <Slider aria-label="Traffic" min={0} max={100} step={5} defaultValue={25} />
   ),
 };
+
+export const MarksAndValue: Story = {
+  args: {
+    "aria-label": "Volume",
+    min: 0,
+    max: 100,
+    step: 5,
+    defaultValue: 40,
+    marks: [
+      { value: 0, label: "Mute" },
+      25,
+      50,
+      75,
+      { value: 100, label: "Max" },
+    ],
+    showValue: true,
+    formatValue: (value) => `${value}%`,
+  },
+};
+
 export const Disabled: Story = {
   args: {},
   render: () => (
@@ -24,6 +46,7 @@ export const Disabled: Story = {
     />
   ),
 };
+
 export const Vertical: Story = {
   args: {
     "aria-label": "Volume",
@@ -33,6 +56,7 @@ export const Vertical: Story = {
     defaultValue: 40,
   },
 };
+
 export const CustomTrackAndThumb: Story = {
   args: {
     "aria-label": "Mix level",
@@ -47,6 +71,7 @@ export const CustomTrackAndThumb: Story = {
     },
   },
 };
+
 export const ResetShortcut: Story = {
   args: { "aria-label": "Resettable value", defaultValue: 75, resetValue: 25 },
 };

@@ -159,6 +159,13 @@ export function chartModel(
   }
   const width = chartBox.width - chartBox.left - chartBox.right;
   const height = chartBox.height - chartBox.top - chartBox.bottom;
+  const gap = (categorySpacing / (maxX - minX)) * width;
+  const barWidth =
+    type === "bar" ? Math.min(32, (gap * 0.7) / Math.max(1, series.length)) : 0;
+  if (type === "bar" && barWidth < 0.5)
+    throw new RangeError(
+      "Bar categories are too dense for this chart. Aggregate upstream rather than overlapping categories.",
+    );
   const x = (value: number) =>
     chartBox.left + ((value - minX) / (maxX - minX)) * width;
   const y = (value: number) =>
@@ -172,12 +179,6 @@ export function chartModel(
         "Bar charts never discard categories. Increase maxPoints or aggregate upstream.",
       );
     const segments = reduceChartPoints(item.data, maxPoints);
-    const gap = (categorySpacing / (maxX - minX)) * width;
-    const barWidth = Math.min(32, (gap * 0.7) / Math.max(1, series.length));
-    if (type === "bar" && barWidth < 0.5)
-      throw new RangeError(
-        "Bar categories are too dense for this chart. Aggregate upstream rather than overlapping categories.",
-      );
     const baseline = number(y(0));
     const line =
       type !== "bar"
@@ -235,6 +236,7 @@ export function chartModel(
     x,
     y,
     sourcePoints,
+    barWidth,
     renderedPoints: paths.reduce((sum, item) => sum + item.renderedPoints, 0),
   };
 }

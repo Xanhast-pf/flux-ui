@@ -3,6 +3,6 @@
   "slug": "chart",
   "category": "Data",
   "status": "beta",
-  "description": "Line, area and grouped bar renderers share semantic Flux tones and bounded paths per series rather than per-point DOM nodes.",
+  "description": "Standalone line, area and grouped bar visualization with bounded rendering and source-complete keyboard/pointer inspection.",
   "sizeClass": "data-heavy"
 }
