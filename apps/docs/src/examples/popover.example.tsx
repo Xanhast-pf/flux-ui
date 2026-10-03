@@ -8,7 +8,7 @@ export default {
   notes: [
     "Give Popup an accessible name. This is a non-modal dialog, not a modal Drawer.",
     "The native top layer preserves scoped theme ancestry. Escape and outside interaction dismiss; closing from inside returns focus without stealing outside focus.",
-    "Use open/onOpenChange for controlled ownership, initialFocus for an explicit target, and side/align/offset for placement. Keep one Trigger and one Popup per Root.",
+    "Use open/onOpenChange for controlled ownership, initialFocus for an explicit target, and side/align/offset for placement. Popup exposes stable data-state plus collision-resolved data-side and logical data-align styling hooks. Keep one Trigger and one Popup per Root.",
   ],
   props: [
     ["Root: open / defaultOpen", "boolean", "Controlled or local open state."],

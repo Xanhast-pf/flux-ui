@@ -20,8 +20,11 @@ describe("AlertDialog", () => {
       </AlertDialog.Root>,
     );
     const trigger = screen.getByRole("button", { name: "Discard" });
+    expect(trigger).toHaveAttribute("data-state", "closed");
     await user.click(trigger);
+    expect(trigger).toHaveAttribute("data-state", "open");
     const dialog = screen.getByRole("alertdialog", { name: "Discard draft?" });
+    expect(dialog).toHaveAttribute("data-state", "open");
     expect(dialog).toHaveAccessibleDescription(
       "This only changes a local draft.",
     );
@@ -34,6 +37,8 @@ describe("AlertDialog", () => {
     expect(dialog).toHaveAttribute("open");
     await user.click(screen.getByRole("button", { name: "Keep draft" }));
     expect(dialog).not.toHaveAttribute("open");
+    expect(dialog).toHaveAttribute("data-state", "closed");
+    expect(trigger).toHaveAttribute("data-state", "closed");
     await waitFor(() => expect(trigger).toHaveFocus());
   });
 

@@ -5,5 +5,9 @@
   "status": "beta",
   "description": "Modal dialog composition built on the native top layer with automatic labeling and predictable dismissal.",
   "sizeClass": "overlay",
-  "nonDomParts": ["Dialog.Root"]
+  "nonDomParts": ["Dialog.Root"],
+  "publicDataAttributes": {
+    "Dialog.Trigger": ["data-state"],
+    "Dialog.Popup": ["data-state"]
+  }
 }

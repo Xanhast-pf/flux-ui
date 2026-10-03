@@ -5,5 +5,9 @@
   "status": "beta",
   "description": "Edge-aligned modal panel for navigation and secondary workflows with native dialog semantics.",
   "sizeClass": "overlay",
-  "nonDomParts": ["Drawer.Root"]
+  "nonDomParts": ["Drawer.Root"],
+  "publicDataAttributes": {
+    "Drawer.Trigger": ["data-state"],
+    "Drawer.Popup": ["data-side", "data-state"]
+  }
 }

@@ -17,6 +17,10 @@ export const components = [
       "Destructive confirmations using the existing native modal foundation; backdrop clicks do not confirm or dismiss.",
     sizeClass: "overlay",
     nonDomParts: ["AlertDialog.Root"],
+    publicDataAttributes: {
+      "AlertDialog.Trigger": ["data-state"],
+      "AlertDialog.Popup": ["data-state"],
+    },
   },
   {
     name: "AspectRatio",
@@ -243,6 +247,10 @@ export const components = [
       "Modal dialog composition built on the native top layer with automatic labeling and predictable dismissal.",
     sizeClass: "overlay",
     nonDomParts: ["Dialog.Root"],
+    publicDataAttributes: {
+      "Dialog.Trigger": ["data-state"],
+      "Dialog.Popup": ["data-state"],
+    },
   },
   {
     name: "Drawer",
@@ -253,6 +261,10 @@ export const components = [
       "Edge-aligned modal panel for navigation and secondary workflows with native dialog semantics.",
     sizeClass: "overlay",
     nonDomParts: ["Drawer.Root"],
+    publicDataAttributes: {
+      "Drawer.Trigger": ["data-state"],
+      "Drawer.Popup": ["data-side", "data-state"],
+    },
   },
   {
     name: "DropdownMenu",
@@ -263,6 +275,9 @@ export const components = [
       "Flat action menus with roving focus, typeahead, unavailable-item handling and native dismissal.",
     sizeClass: "overlay",
     nonDomParts: ["DropdownMenu.Root"],
+    publicDataAttributes: {
+      "DropdownMenu.Popup": ["data-align", "data-side", "data-state"],
+    },
   },
   {
     name: "EmptyState",
@@ -463,7 +478,7 @@ export const components = [
     sizeClass: "overlay",
     nonDomParts: ["Popover.Root"],
     publicDataAttributes: {
-      "Popover.Popup": ["data-state"],
+      "Popover.Popup": ["data-align", "data-side", "data-state"],
     },
   },
   {
@@ -743,7 +758,7 @@ export const components = [
       "Controlled or trigger-owned supplemental help with optional collision-aware decorative arrows.",
     sizeClass: "interactive",
     publicDataAttributes: {
-      Tooltip: ["data-state"],
+      Tooltip: ["data-align", "data-side", "data-state"],
     },
   },
   {

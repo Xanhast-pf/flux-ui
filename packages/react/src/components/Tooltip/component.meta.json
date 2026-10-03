@@ -6,6 +6,6 @@
   "description": "Controlled or trigger-owned supplemental help with optional collision-aware decorative arrows.",
   "sizeClass": "interactive",
   "publicDataAttributes": {
-    "Tooltip": ["data-state"]
+    "Tooltip": ["data-align", "data-side", "data-state"]
   }
 }

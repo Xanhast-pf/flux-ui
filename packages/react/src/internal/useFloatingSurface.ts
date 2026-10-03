@@ -37,6 +37,7 @@ function positionSurface(
     `${anchor.getBoundingClientRect().width}px`,
   );
   popup.dataset.side = result.side;
+  popup.dataset.align = align;
 }
 
 /** Native top-layer content keeps its DOM ancestry, scoped theme and reading order. */

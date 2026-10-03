@@ -8,7 +8,7 @@ export default {
   notes: [
     "The child must forward native props and its ref. Supply its own visible label or accessible name; the tooltip is supplemental.",
     "Focus opens immediately, pointer hover respects delay, and the tooltip remains hoverable. Escape dismisses without moving focus.",
-    "arrow is decorative and follows the actual side chosen after collision flipping; it never changes tooltip semantics or focus behavior.",
+    "arrow is decorative and follows the actual side chosen after collision flipping. Tooltip exposes stable data-state, collision-resolved data-side and logical data-align styling hooks.",
     "Use open/defaultOpen/onOpenChange only when application state must coordinate visibility; trigger-owned state remains the default.",
     "Content must be non-interactive. For interactive content use Popover. Disabled controls should have a visible explanation instead.",
   ],

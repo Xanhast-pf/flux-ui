@@ -18,6 +18,10 @@ describe("DropdownMenu", () => {
     );
     await user.tab();
     await user.keyboard("{ArrowDown}");
+    const menu = screen.getByRole("menu", { name: "Actions" });
+    expect(menu).toHaveAttribute("data-state", "open");
+    expect(menu).toHaveAttribute("data-side", "bottom");
+    expect(menu).toHaveAttribute("data-align", "start");
     expect(screen.getByRole("menuitem", { name: "Duplicate" })).toHaveFocus();
     await user.keyboard("{ArrowDown}");
     expect(screen.getByRole("menuitem", { name: "Export" })).toHaveFocus();

@@ -72,6 +72,15 @@ test("public component contracts derive from the TypeScript export surface", () 
     dialog?.parts.find((part) => part.path === "Dialog.Root")?.stateModels,
     ["open"],
   );
+  assert.deepEqual(
+    dialog?.parts.find((part) => part.path === "Dialog.Trigger")
+      ?.dataAttributes,
+    ["data-state"],
+  );
+  assert.deepEqual(
+    dialog?.parts.find((part) => part.path === "Dialog.Popup")?.dataAttributes,
+    ["data-state"],
+  );
 
   const checkbox = contracts.find((contract) => contract.name === "Checkbox");
   assert.deepEqual(checkbox?.parts[0]?.stateModels, ["checked"]);
@@ -122,10 +131,51 @@ test("public component contracts derive from the TypeScript export surface", () 
   const button = contracts.find((contract) => contract.name === "Button");
   assert.deepEqual(button?.parts[0]?.dataAttributes, ["data-loading"]);
 
+  const alertDialog = contracts.find(
+    (contract) => contract.name === "AlertDialog",
+  );
+  assert.deepEqual(
+    alertDialog?.parts.find((part) => part.path === "AlertDialog.Trigger")
+      ?.dataAttributes,
+    ["data-state"],
+  );
+  assert.deepEqual(
+    alertDialog?.parts.find((part) => part.path === "AlertDialog.Popup")
+      ?.dataAttributes,
+    ["data-state"],
+  );
+
+  const drawer = contracts.find((contract) => contract.name === "Drawer");
+  assert.deepEqual(
+    drawer?.parts.find((part) => part.path === "Drawer.Trigger")
+      ?.dataAttributes,
+    ["data-state"],
+  );
+  assert.deepEqual(
+    drawer?.parts.find((part) => part.path === "Drawer.Popup")?.dataAttributes,
+    ["data-side", "data-state"],
+  );
+
   const popover = contracts.find((contract) => contract.name === "Popover");
   assert.deepEqual(
     popover?.parts.find((part) => part.path === "Popover.Popup")
       ?.dataAttributes,
-    ["data-state"],
+    ["data-align", "data-side", "data-state"],
   );
+
+  const dropdownMenu = contracts.find(
+    (contract) => contract.name === "DropdownMenu",
+  );
+  assert.deepEqual(
+    dropdownMenu?.parts.find((part) => part.path === "DropdownMenu.Popup")
+      ?.dataAttributes,
+    ["data-align", "data-side", "data-state"],
+  );
+
+  const tooltip = contracts.find((contract) => contract.name === "Tooltip");
+  assert.deepEqual(tooltip?.parts[0]?.dataAttributes, [
+    "data-align",
+    "data-side",
+    "data-state",
+  ]);
 });

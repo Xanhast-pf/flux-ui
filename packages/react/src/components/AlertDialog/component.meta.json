@@ -5,5 +5,9 @@
   "status": "beta",
   "description": "Destructive confirmations using the existing native modal foundation; backdrop clicks do not confirm or dismiss.",
   "sizeClass": "overlay",
-  "nonDomParts": ["AlertDialog.Root"]
+  "nonDomParts": ["AlertDialog.Root"],
+  "publicDataAttributes": {
+    "AlertDialog.Trigger": ["data-state"],
+    "AlertDialog.Popup": ["data-state"]
+  }
 }

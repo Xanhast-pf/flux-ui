@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Popover } from "./Popover.js";
@@ -58,6 +58,21 @@ describe("Popover", () => {
     expect(request).toHaveBeenCalledWith(false);
     expect(screen.getByRole("dialog", { name: "Owned" })).toBeVisible();
   });
+  it("exposes collision-resolved placement state for styling", async () => {
+    render(
+      <Popover.Root defaultOpen>
+        <Popover.Trigger>Placement</Popover.Trigger>
+        <Popover.Popup aria-label="Placement popup" side="right" align="end" />
+      </Popover.Root>,
+    );
+    const popup = screen.getByRole("dialog", { name: "Placement popup" });
+    await waitFor(() => {
+      expect(popup).toHaveAttribute("data-state", "open");
+      expect(popup).toHaveAttribute("data-side", "right");
+      expect(popup).toHaveAttribute("data-align", "end");
+    });
+  });
+
   it("preserves trigger preventDefault and popup customization", async () => {
     const user = userEvent.setup();
     render(

@@ -57,6 +57,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
       {
         path: "AlertDialog.Root",
@@ -76,6 +77,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
     ],
   },
@@ -457,6 +459,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
       {
         path: "Dialog.Root",
@@ -476,6 +479,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
     ],
   },
@@ -500,6 +504,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-side", "data-state"],
       },
       {
         path: "Drawer.Root",
@@ -519,6 +524,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
     ],
   },
@@ -543,6 +549,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-align", "data-side", "data-state"],
       },
       {
         path: "DropdownMenu.Root",
@@ -932,7 +939,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
-        dataAttributes: ["data-state"],
+        dataAttributes: ["data-align", "data-side", "data-state"],
       },
       {
         path: "Popover.Root",
@@ -1493,7 +1500,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
-        dataAttributes: ["data-state"],
+        dataAttributes: ["data-align", "data-side", "data-state"],
         stateModels: ["open"],
       },
     ],

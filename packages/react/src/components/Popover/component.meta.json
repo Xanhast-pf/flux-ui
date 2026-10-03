@@ -7,6 +7,6 @@
   "sizeClass": "overlay",
   "nonDomParts": ["Popover.Root"],
   "publicDataAttributes": {
-    "Popover.Popup": ["data-state"]
+    "Popover.Popup": ["data-align", "data-side", "data-state"]
   }
 }
