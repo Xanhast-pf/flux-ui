@@ -181,6 +181,7 @@ export const components = [
     description:
       "Literal code, optional copy action and accessible clipboard feedback.",
     sizeClass: "composite",
+    publicUtilities: ["codeLanguages", "tokenizeCode"],
   },
   {
     name: "Collapsible",
@@ -836,6 +837,7 @@ export const components = [
       "Scoped notification queues with paused dismissal timers and optional actions.",
     sizeClass: "interactive",
     nonDomParts: ["Toast.Provider"],
+    publicUtilities: ["useToast"],
   },
   {
     name: "Toggle",

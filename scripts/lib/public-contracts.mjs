@@ -218,6 +218,47 @@ export function createPublicContracts(root) {
       continue;
     }
 
+    const moduleExports = checker.getExportsOfModule(moduleSymbol);
+    const publicTypes = moduleExports
+      .filter(
+        (symbol) => resolveSymbol(checker, symbol).flags & ts.SymbolFlags.Type,
+      )
+      .map((symbol) => symbol.name)
+      .sort((left, right) => left.localeCompare(right));
+    const runtimeUtilities = moduleExports
+      .filter((symbol) => {
+        const resolved = resolveSymbol(checker, symbol);
+        return (
+          /^[a-z]/u.test(symbol.name) &&
+          Boolean(resolved.flags & ts.SymbolFlags.Value)
+        );
+      })
+      .map((symbol) => symbol.name)
+      .sort((left, right) => left.localeCompare(right));
+    const declaredUtilities = Array.isArray(meta.publicUtilities)
+      ? meta.publicUtilities
+      : [];
+    if (
+      declaredUtilities.some(
+        (value) =>
+          typeof value !== "string" || !/^[a-z][A-Za-z0-9]*$/u.test(value),
+      ) ||
+      new Set(declaredUtilities).size !== declaredUtilities.length
+    ) {
+      errors.push(
+        `${familyName}: component.meta.json publicUtilities must be unique lower-camel export names.`,
+      );
+    } else if (
+      runtimeUtilities.length !== declaredUtilities.length ||
+      runtimeUtilities.some(
+        (name, index) => name !== [...declaredUtilities].sort()[index],
+      )
+    ) {
+      errors.push(
+        `${familyName}: publicUtilities must exactly classify lowercase runtime exports (${runtimeUtilities.join(", ") || "none"}).`,
+      );
+    }
+
     const declaredNonDom = Array.isArray(meta.nonDomParts)
       ? meta.nonDomParts
       : [];
@@ -387,7 +428,10 @@ export function createPublicContracts(root) {
     contracts.push({
       name: meta.name,
       slug: meta.slug,
+      lifecycle: meta.status,
       parts: contractParts,
+      types: publicTypes,
+      utilities: runtimeUtilities,
       ...(descendantStates.length === 0 ? {} : { descendantStates }),
     });
   }

@@ -41,6 +41,30 @@ test("public component contracts derive from the TypeScript export surface", () 
     true,
   );
 
+  for (const contract of contracts) {
+    const meta = JSON.parse(
+      readFileSync(
+        path.join(componentRoot, contract.name, "component.meta.json"),
+        "utf8",
+      ),
+    );
+    assert.equal(contract.lifecycle, meta.status);
+  }
+
+  const codeBlock = contracts.find((contract) => contract.name === "CodeBlock");
+  assert.deepEqual(codeBlock?.utilities, ["codeLanguages", "tokenizeCode"]);
+  assert.deepEqual(codeBlock?.types, [
+    "CodeBlockProps",
+    "CodeHighlighter",
+    "CodeToken",
+    "CodeTokenKind",
+  ]);
+
+  const toast = contracts.find((contract) => contract.name === "Toast");
+  assert.deepEqual(toast?.utilities, ["useToast"]);
+  assert.ok(toast?.types.includes("ToastProviderProps"));
+  assert.ok(toast?.types.includes("ToastViewportProps"));
+
   const slider = contracts.find((contract) => contract.name === "Slider");
   assert.ok(slider);
   assert.deepEqual(slider.parts[0].cssVariables, [

@@ -131,11 +131,17 @@ For every public callable component or compound part, Flux requires:
 - a named exported `*Props` type matching the runtime export;
 - `className` and `style` together for DOM-backed surfaces;
 - a public family to retain at least one customizable DOM-backed surface;
-- typed `--flux-*` component CSS variables to appear automatically in the generated docs contract.
+- typed `--flux-*` component CSS variables to appear automatically in the generated docs contract;
+- every exported public TypeScript type to be inventoried in that contract;
+- every lowercase runtime utility or hook to be explicitly listed in `component.meta.json` `publicUtilities` rather than entering the package surface accidentally.
 
 State-only roots/providers that intentionally render no DOM node are the exception. They must be listed explicitly in that component's `component.meta.json` `nonDomParts` field. The generator rejects unknown, stale, or unnecessary exceptions.
 
-The docs separate the generated **Public contract** from curated **API highlights**. Highlights teach the common path; the generated contract and linked TypeScript source define the actual public structure.
+The generated contract is also the compatibility boundary used for stable components. Once a component is promoted to `stable`, Flux treats its exported component values and compound parts, exported public types, declared runtime utilities, native-prop surface, controlled/uncontrolled state models, DOM escape hatches, documented CSS custom properties, declared public `data-*` attributes, and declared descendant state selectors as compatibility commitments.
+
+Undocumented DOM ancestry, generated class names, compact/private markers such as `data-flux-*`, undocumented `data-*` attributes, and source-only reducers, contexts, model helpers, or internal hooks remain implementation details. Consumers should not depend on them unless they are deliberately promoted into the generated contract.
+
+The docs separate the generated **Public contract** from curated **API highlights**. Highlights teach the common path; the generated contract and linked TypeScript source define the actual public structure. Beta pages show the intended compatibility inventory while still allowing pre-stable breaking changes; stable pages turn that inventory into the supported compatibility promise.
 
 ## Component lifecycle and promotion evidence
 

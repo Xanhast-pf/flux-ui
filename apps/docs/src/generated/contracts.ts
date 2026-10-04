@@ -3,6 +3,7 @@ export const publicContracts = [
   {
     name: "Accordion",
     slug: "accordion",
+    lifecycle: "beta",
     parts: [
       {
         path: "Accordion.Content",
@@ -30,10 +31,18 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "AccordionContentProps",
+      "AccordionItemProps",
+      "AccordionRootProps",
+      "AccordionTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "AlertDialog",
     slug: "alert-dialog",
+    lifecycle: "beta",
     parts: [
       {
         path: "AlertDialog.Action",
@@ -81,10 +90,21 @@ export const publicContracts = [
         dataAttributes: ["data-state"],
       },
     ],
+    types: [
+      "AlertDialogActionProps",
+      "AlertDialogCancelProps",
+      "AlertDialogDescriptionProps",
+      "AlertDialogPopupProps",
+      "AlertDialogRootProps",
+      "AlertDialogTitleProps",
+      "AlertDialogTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "AspectRatio",
     slug: "aspect-ratio",
+    lifecycle: "beta",
     parts: [
       {
         path: "AspectRatio",
@@ -93,10 +113,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["AspectRatioProps"],
+    utilities: [],
   },
   {
     name: "Avatar",
     slug: "avatar",
+    lifecycle: "beta",
     parts: [
       {
         path: "Avatar",
@@ -111,10 +134,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["AvatarGroupProps", "AvatarProps"],
+    utilities: [],
   },
   {
     name: "BottomNavigation",
     slug: "bottom-navigation",
+    lifecycle: "beta",
     parts: [
       {
         path: "BottomNavigation",
@@ -129,10 +155,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["BottomNavigationItemProps", "BottomNavigationProps"],
+    utilities: [],
   },
   {
     name: "Box",
     slug: "box",
+    lifecycle: "beta",
     parts: [
       {
         path: "Box",
@@ -141,10 +170,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["BoxProps"],
+    utilities: [],
   },
   {
     name: "Breadcrumbs",
     slug: "breadcrumbs",
+    lifecycle: "beta",
     parts: [
       {
         path: "Breadcrumbs.Current",
@@ -177,10 +209,19 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "BreadcrumbsCurrentProps",
+      "BreadcrumbsItemProps",
+      "BreadcrumbsLinkProps",
+      "BreadcrumbsListProps",
+      "BreadcrumbsRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "Button",
     slug: "button",
+    lifecycle: "beta",
     parts: [
       {
         path: "Button",
@@ -190,10 +231,13 @@ export const publicContracts = [
         dataAttributes: ["data-loading"],
       },
     ],
+    types: ["ButtonProps", "ButtonSize", "ButtonTone", "ButtonVariant"],
+    utilities: [],
   },
   {
     name: "ButtonGroup",
     slug: "button-group",
+    lifecycle: "beta",
     parts: [
       {
         path: "ButtonGroup",
@@ -203,10 +247,13 @@ export const publicContracts = [
         dataAttributes: ["data-orientation"],
       },
     ],
+    types: ["ButtonGroupOrientation", "ButtonGroupProps"],
+    utilities: [],
   },
   {
     name: "Callout",
     slug: "callout",
+    lifecycle: "beta",
     parts: [
       {
         path: "Callout",
@@ -215,10 +262,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["CalloutProps", "CalloutTone"],
+    utilities: [],
   },
   {
     name: "Card",
     slug: "card",
+    lifecycle: "beta",
     parts: [
       {
         path: "Card",
@@ -227,10 +277,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["CardProps"],
+    utilities: [],
   },
   {
     name: "Chart",
     slug: "chart",
+    lifecycle: "beta",
     parts: [
       {
         path: "Chart",
@@ -239,6 +292,8 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ChartPoint", "ChartProps", "ChartSeries", "ChartTone"],
+    utilities: [],
     descendantStates: [
       {
         name: "series",
@@ -250,6 +305,7 @@ export const publicContracts = [
   {
     name: "ChartLegend",
     slug: "chart-legend",
+    lifecycle: "beta",
     parts: [
       {
         path: "ChartLegend",
@@ -259,6 +315,8 @@ export const publicContracts = [
         stateModels: ["hiddenIds"],
       },
     ],
+    types: ["ChartLegendItem", "ChartLegendProps"],
+    utilities: [],
     descendantStates: [
       {
         name: "hiddenItem",
@@ -270,6 +328,7 @@ export const publicContracts = [
   {
     name: "ChartTooltip",
     slug: "chart-tooltip",
+    lifecycle: "beta",
     parts: [
       {
         path: "ChartTooltip",
@@ -278,6 +337,8 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ChartTooltipData", "ChartTooltipItem", "ChartTooltipProps"],
+    utilities: [],
     descendantStates: [
       {
         name: "popup",
@@ -289,6 +350,7 @@ export const publicContracts = [
   {
     name: "Checkbox",
     slug: "checkbox",
+    lifecycle: "beta",
     parts: [
       {
         path: "Checkbox",
@@ -299,10 +361,13 @@ export const publicContracts = [
         stateModels: ["checked"],
       },
     ],
+    types: ["CheckboxProps"],
+    utilities: [],
   },
   {
     name: "Code",
     slug: "code",
+    lifecycle: "beta",
     parts: [
       {
         path: "Code",
@@ -311,10 +376,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["CodeProps"],
+    utilities: [],
   },
   {
     name: "CodeBlock",
     slug: "code-block",
+    lifecycle: "beta",
     parts: [
       {
         path: "CodeBlock",
@@ -323,10 +391,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["CodeBlockProps", "CodeHighlighter", "CodeToken", "CodeTokenKind"],
+    utilities: ["codeLanguages", "tokenizeCode"],
   },
   {
     name: "Collapsible",
     slug: "collapsible",
+    lifecycle: "beta",
     parts: [
       {
         path: "Collapsible.Content",
@@ -347,10 +418,17 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "CollapsibleContentProps",
+      "CollapsibleRootProps",
+      "CollapsibleTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "ColorSwatch",
     slug: "color-swatch",
+    lifecycle: "beta",
     parts: [
       {
         path: "ColorSwatch",
@@ -360,10 +438,13 @@ export const publicContracts = [
         dataAttributes: ["data-selected"],
       },
     ],
+    types: ["ColorSwatchProps"],
+    utilities: [],
   },
   {
     name: "Combobox",
     slug: "combobox",
+    lifecycle: "beta",
     parts: [
       {
         path: "Combobox",
@@ -374,6 +455,8 @@ export const publicContracts = [
         stateModels: ["query", "value"],
       },
     ],
+    types: ["ComboboxOption", "ComboboxProps"],
+    utilities: [],
     descendantStates: [
       {
         name: "popup",
@@ -385,6 +468,7 @@ export const publicContracts = [
   {
     name: "Container",
     slug: "container",
+    lifecycle: "beta",
     parts: [
       {
         path: "Container",
@@ -394,10 +478,13 @@ export const publicContracts = [
         dataAttributes: ["data-query"],
       },
     ],
+    types: ["ContainerProps", "ContainerSize"],
+    utilities: [],
   },
   {
     name: "DataGrid",
     slug: "data-grid",
+    lifecycle: "beta",
     parts: [
       {
         path: "DataGrid",
@@ -407,6 +494,16 @@ export const publicContracts = [
         stateModels: ["selectedRowIds", "sorting"],
       },
     ],
+    types: [
+      "DataGridCellEdit",
+      "DataGridCellValue",
+      "DataGridColumn",
+      "DataGridFilter",
+      "DataGridPagination",
+      "DataGridProps",
+      "DataGridSort",
+    ],
+    utilities: [],
     descendantStates: [
       {
         name: "cell",
@@ -423,6 +520,7 @@ export const publicContracts = [
   {
     name: "DataTable",
     slug: "data-table",
+    lifecycle: "beta",
     parts: [
       {
         path: "DataTable",
@@ -432,10 +530,13 @@ export const publicContracts = [
         stateModels: ["selectedRowIds", "sorting"],
       },
     ],
+    types: ["CellValue", "DataColumn", "DataSort", "DataTableProps"],
+    utilities: [],
   },
   {
     name: "DatePicker",
     slug: "date-picker",
+    lifecycle: "beta",
     parts: [
       {
         path: "DatePicker",
@@ -446,10 +547,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["DatePickerProps"],
+    utilities: [],
   },
   {
     name: "DateTimePicker",
     slug: "date-time-picker",
+    lifecycle: "beta",
     parts: [
       {
         path: "DateTimePicker",
@@ -460,10 +564,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["DateTimePickerProps"],
+    utilities: [],
   },
   {
     name: "DescriptionList",
     slug: "description-list",
+    lifecycle: "beta",
     parts: [
       {
         path: "DescriptionList",
@@ -484,10 +591,17 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "DescriptionListDetailsProps",
+      "DescriptionListProps",
+      "DescriptionListTermProps",
+    ],
+    utilities: [],
   },
   {
     name: "Dialog",
     slug: "dialog",
+    lifecycle: "beta",
     parts: [
       {
         path: "Dialog.Close",
@@ -529,10 +643,20 @@ export const publicContracts = [
         dataAttributes: ["data-state"],
       },
     ],
+    types: [
+      "DialogCloseProps",
+      "DialogDescriptionProps",
+      "DialogPopupProps",
+      "DialogRootProps",
+      "DialogTitleProps",
+      "DialogTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "Drawer",
     slug: "drawer",
+    lifecycle: "beta",
     parts: [
       {
         path: "Drawer.Close",
@@ -574,10 +698,21 @@ export const publicContracts = [
         dataAttributes: ["data-state"],
       },
     ],
+    types: [
+      "DrawerCloseProps",
+      "DrawerDescriptionProps",
+      "DrawerPopupProps",
+      "DrawerRootProps",
+      "DrawerSide",
+      "DrawerTitleProps",
+      "DrawerTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "DropdownMenu",
     slug: "dropdown-menu",
+    lifecycle: "beta",
     parts: [
       {
         path: "DropdownMenu.Item",
@@ -618,10 +753,20 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "DropdownMenuItemProps",
+      "DropdownMenuLabelProps",
+      "DropdownMenuPopupProps",
+      "DropdownMenuRootProps",
+      "DropdownMenuSeparatorProps",
+      "DropdownMenuTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "EmptyState",
     slug: "empty-state",
+    lifecycle: "beta",
     parts: [
       {
         path: "EmptyState",
@@ -630,10 +775,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["EmptyStateProps"],
+    utilities: [],
   },
   {
     name: "Field",
     slug: "field",
+    lifecycle: "beta",
     parts: [
       {
         path: "Field.Control",
@@ -667,10 +815,19 @@ export const publicContracts = [
         dataAttributes: ["data-disabled", "data-invalid"],
       },
     ],
+    types: [
+      "FieldControlProps",
+      "FieldDescriptionProps",
+      "FieldErrorProps",
+      "FieldLabelProps",
+      "FieldRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "Fieldset",
     slug: "fieldset",
+    lifecycle: "beta",
     parts: [
       {
         path: "Fieldset",
@@ -685,10 +842,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["FieldsetLegendProps", "FieldsetProps"],
+    utilities: [],
   },
   {
     name: "Footer",
     slug: "footer",
+    lifecycle: "beta",
     parts: [
       {
         path: "Footer",
@@ -697,10 +857,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["FooterProps"],
+    utilities: [],
   },
   {
     name: "Grid",
     slug: "grid",
+    lifecycle: "beta",
     parts: [
       {
         path: "Grid",
@@ -715,10 +878,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["GridItemProps", "GridProps"],
+    utilities: [],
   },
   {
     name: "Heading",
     slug: "heading",
+    lifecycle: "beta",
     parts: [
       {
         path: "Heading",
@@ -727,10 +893,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["HeadingProps"],
+    utilities: [],
   },
   {
     name: "IconButton",
     slug: "icon-button",
+    lifecycle: "beta",
     parts: [
       {
         path: "IconButton",
@@ -740,10 +909,13 @@ export const publicContracts = [
         dataAttributes: ["data-loading"],
       },
     ],
+    types: ["IconButtonProps"],
+    utilities: [],
   },
   {
     name: "Indicator",
     slug: "indicator",
+    lifecycle: "beta",
     parts: [
       {
         path: "Indicator",
@@ -752,10 +924,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["IndicatorPlacement", "IndicatorProps"],
+    utilities: [],
   },
   {
     name: "Inline",
     slug: "inline",
+    lifecycle: "beta",
     parts: [
       {
         path: "Inline",
@@ -764,10 +939,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["InlineProps"],
+    utilities: [],
   },
   {
     name: "Input",
     slug: "input",
+    lifecycle: "beta",
     parts: [
       {
         path: "Input",
@@ -777,10 +955,13 @@ export const publicContracts = [
         dataAttributes: ["data-invalid"],
       },
     ],
+    types: ["InputProps", "InputType"],
+    utilities: [],
   },
   {
     name: "InputGroup",
     slug: "input-group",
+    lifecycle: "beta",
     parts: [
       {
         path: "InputGroup.Addon",
@@ -802,10 +983,17 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "InputGroupAddonProps",
+      "InputGroupInputProps",
+      "InputGroupRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "Kbd",
     slug: "kbd",
+    lifecycle: "beta",
     parts: [
       {
         path: "Kbd",
@@ -814,10 +1002,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["KbdProps"],
+    utilities: [],
   },
   {
     name: "Knob",
     slug: "knob",
+    lifecycle: "beta",
     parts: [
       {
         path: "Knob",
@@ -827,10 +1018,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["KnobProps"],
+    utilities: [],
   },
   {
     name: "LevelMeter",
     slug: "level-meter",
+    lifecycle: "beta",
     parts: [
       {
         path: "LevelMeter",
@@ -840,10 +1034,13 @@ export const publicContracts = [
         dataAttributes: ["data-orientation"],
       },
     ],
+    types: ["LevelMeterProps"],
+    utilities: [],
   },
   {
     name: "Link",
     slug: "link",
+    lifecycle: "beta",
     parts: [
       {
         path: "Link",
@@ -852,10 +1049,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["LinkProps"],
+    utilities: [],
   },
   {
     name: "List",
     slug: "list",
+    lifecycle: "beta",
     parts: [
       {
         path: "List",
@@ -870,10 +1070,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ListItemProps", "ListProps"],
+    utilities: [],
   },
   {
     name: "Meter",
     slug: "meter",
+    lifecycle: "beta",
     parts: [
       {
         path: "Meter",
@@ -882,10 +1085,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["MeterProps"],
+    utilities: [],
   },
   {
     name: "NumberField",
     slug: "number-field",
+    lifecycle: "beta",
     parts: [
       {
         path: "NumberField",
@@ -896,10 +1102,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["NumberFieldProps"],
+    utilities: [],
   },
   {
     name: "PageHeader",
     slug: "page-header",
+    lifecycle: "beta",
     parts: [
       {
         path: "PageHeader",
@@ -908,10 +1117,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["PageHeaderProps"],
+    utilities: [],
   },
   {
     name: "Pagination",
     slug: "pagination",
+    lifecycle: "beta",
     parts: [
       {
         path: "Pagination.Ellipsis",
@@ -963,10 +1175,23 @@ export const publicContracts = [
         stateModels: ["page"],
       },
     ],
+    types: [
+      "PaginationButtonProps",
+      "PaginationEllipsisProps",
+      "PaginationFirstProps",
+      "PaginationLastProps",
+      "PaginationNextProps",
+      "PaginationPageProps",
+      "PaginationPreviousProps",
+      "PaginationRangeProps",
+      "PaginationRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "PieChart",
     slug: "pie-chart",
+    lifecycle: "beta",
     parts: [
       {
         path: "PieChart",
@@ -975,6 +1200,8 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["PieChartDatum", "PieChartProps"],
+    utilities: [],
     descendantStates: [
       {
         name: "slice",
@@ -986,6 +1213,7 @@ export const publicContracts = [
   {
     name: "Popover",
     slug: "popover",
+    lifecycle: "beta",
     parts: [
       {
         path: "Popover.Close",
@@ -1014,10 +1242,18 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "PopoverCloseProps",
+      "PopoverPopupProps",
+      "PopoverRootProps",
+      "PopoverTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "Progress",
     slug: "progress",
+    lifecycle: "beta",
     parts: [
       {
         path: "Progress",
@@ -1026,10 +1262,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ProgressProps"],
+    utilities: [],
   },
   {
     name: "RadioGroup",
     slug: "radio-group",
+    lifecycle: "beta",
     parts: [
       {
         path: "RadioGroup.Item",
@@ -1053,10 +1292,19 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: [
+      "RadioGroupItemProps",
+      "RadioGroupLegendProps",
+      "RadioGroupRootProps",
+      "RadioGroupValue",
+      "RadioGroupValueChangeHandler",
+    ],
+    utilities: [],
   },
   {
     name: "Rating",
     slug: "rating",
+    lifecycle: "beta",
     parts: [
       {
         path: "Rating",
@@ -1067,10 +1315,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["RatingProps", "RatingValue", "RatingValueChangeHandler"],
+    utilities: [],
   },
   {
     name: "ScatterChart",
     slug: "scatter-chart",
+    lifecycle: "beta",
     parts: [
       {
         path: "ScatterChart",
@@ -1079,6 +1330,8 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ScatterChartPoint", "ScatterChartProps", "ScatterChartSeries"],
+    utilities: [],
     descendantStates: [
       {
         name: "series",
@@ -1090,6 +1343,7 @@ export const publicContracts = [
   {
     name: "ScrollArea",
     slug: "scroll-area",
+    lifecycle: "beta",
     parts: [
       {
         path: "ScrollArea",
@@ -1099,10 +1353,13 @@ export const publicContracts = [
         dataAttributes: ["data-axis"],
       },
     ],
+    types: ["ScrollAreaProps"],
+    utilities: [],
   },
   {
     name: "Select",
     slug: "select",
+    lifecycle: "beta",
     parts: [
       {
         path: "Select",
@@ -1112,10 +1369,13 @@ export const publicContracts = [
         dataAttributes: ["data-invalid"],
       },
     ],
+    types: ["SelectProps"],
+    utilities: [],
   },
   {
     name: "Separator",
     slug: "separator",
+    lifecycle: "beta",
     parts: [
       {
         path: "Separator",
@@ -1125,10 +1385,13 @@ export const publicContracts = [
         dataAttributes: ["data-orientation"],
       },
     ],
+    types: ["SeparatorProps"],
+    utilities: [],
   },
   {
     name: "Sidebar",
     slug: "sidebar",
+    lifecycle: "beta",
     parts: [
       {
         path: "Sidebar.Close",
@@ -1168,10 +1431,20 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "SidebarCloseProps",
+      "SidebarContentProps",
+      "SidebarLayoutProps",
+      "SidebarPanelProps",
+      "SidebarRootProps",
+      "SidebarToggleProps",
+    ],
+    utilities: [],
   },
   {
     name: "Skeleton",
     slug: "skeleton",
+    lifecycle: "beta",
     parts: [
       {
         path: "Skeleton",
@@ -1180,10 +1453,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["SkeletonProps"],
+    utilities: [],
   },
   {
     name: "SkipLink",
     slug: "skip-link",
+    lifecycle: "beta",
     parts: [
       {
         path: "SkipLink",
@@ -1192,10 +1468,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["SkipLinkProps"],
+    utilities: [],
   },
   {
     name: "Slider",
     slug: "slider",
+    lifecycle: "beta",
     parts: [
       {
         path: "Slider",
@@ -1213,10 +1492,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["SliderMark", "SliderProps"],
+    utilities: [],
   },
   {
     name: "Sparkline",
     slug: "sparkline",
+    lifecycle: "beta",
     parts: [
       {
         path: "Sparkline",
@@ -1225,10 +1507,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["SparklineProps"],
+    utilities: [],
   },
   {
     name: "Spinner",
     slug: "spinner",
+    lifecycle: "beta",
     parts: [
       {
         path: "Spinner",
@@ -1237,10 +1522,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["SpinnerProps"],
+    utilities: [],
   },
   {
     name: "SplitPane",
     slug: "split-pane",
+    lifecycle: "beta",
     parts: [
       {
         path: "SplitPane",
@@ -1251,10 +1539,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["SplitPaneProps"],
+    utilities: [],
   },
   {
     name: "Stack",
     slug: "stack",
+    lifecycle: "beta",
     parts: [
       {
         path: "Stack",
@@ -1263,10 +1554,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["StackProps"],
+    utilities: [],
   },
   {
     name: "Stat",
     slug: "stat",
+    lifecycle: "beta",
     parts: [
       {
         path: "Stat",
@@ -1275,10 +1569,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["StatProps"],
+    utilities: [],
   },
   {
     name: "StatusBadge",
     slug: "status-badge",
+    lifecycle: "beta",
     parts: [
       {
         path: "StatusBadge",
@@ -1287,10 +1584,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["StatusBadgeProps", "StatusBadgeTone"],
+    utilities: [],
   },
   {
     name: "Stepper",
     slug: "stepper",
+    lifecycle: "beta",
     parts: [
       {
         path: "Stepper.Button",
@@ -1319,10 +1619,20 @@ export const publicContracts = [
         dataAttributes: ["data-orientation"],
       },
     ],
+    types: [
+      "StepperButtonProps",
+      "StepperItemProps",
+      "StepperLinkProps",
+      "StepperOrientation",
+      "StepperRootProps",
+      "StepperStatus",
+    ],
+    utilities: [],
   },
   {
     name: "Switch",
     slug: "switch",
+    lifecycle: "beta",
     parts: [
       {
         path: "Switch",
@@ -1333,10 +1643,13 @@ export const publicContracts = [
         stateModels: ["checked"],
       },
     ],
+    types: ["SwitchProps"],
+    utilities: [],
   },
   {
     name: "Table",
     slug: "table",
+    lifecycle: "beta",
     parts: [
       {
         path: "Table.Body",
@@ -1393,10 +1706,23 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "TableBodyProps",
+      "TableCaptionProps",
+      "TableCellProps",
+      "TableColumnHeaderProps",
+      "TableFooterProps",
+      "TableHeaderProps",
+      "TableRootProps",
+      "TableRowHeaderProps",
+      "TableRowProps",
+    ],
+    utilities: [],
   },
   {
     name: "Tabs",
     slug: "tabs",
+    lifecycle: "beta",
     parts: [
       {
         path: "Tabs.List",
@@ -1424,10 +1750,19 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "TabsListProps",
+      "TabsOrientation",
+      "TabsPanelProps",
+      "TabsRootProps",
+      "TabsTabProps",
+    ],
+    utilities: [],
   },
   {
     name: "Tag",
     slug: "tag",
+    lifecycle: "beta",
     parts: [
       {
         path: "Tag",
@@ -1436,10 +1771,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["TagProps"],
+    utilities: [],
   },
   {
     name: "Text",
     slug: "text",
+    lifecycle: "beta",
     parts: [
       {
         path: "Text",
@@ -1448,10 +1786,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["TextProps"],
+    utilities: [],
   },
   {
     name: "Textarea",
     slug: "textarea",
+    lifecycle: "beta",
     parts: [
       {
         path: "Textarea",
@@ -1461,10 +1802,13 @@ export const publicContracts = [
         dataAttributes: ["data-auto-size", "data-invalid"],
       },
     ],
+    types: ["TextareaProps"],
+    utilities: [],
   },
   {
     name: "ThemeScope",
     slug: "theme-scope",
+    lifecycle: "beta",
     parts: [
       {
         path: "ThemeScope",
@@ -1474,10 +1818,13 @@ export const publicContracts = [
         dataAttributes: ["data-query"],
       },
     ],
+    types: ["ThemeScopeProps"],
+    utilities: [],
   },
   {
     name: "TimePicker",
     slug: "time-picker",
+    lifecycle: "beta",
     parts: [
       {
         path: "TimePicker",
@@ -1488,10 +1835,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["TimePickerProps"],
+    utilities: [],
   },
   {
     name: "Toast",
     slug: "toast",
+    lifecycle: "beta",
     parts: [
       {
         path: "Toast.Provider",
@@ -1506,10 +1856,18 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "ToastController",
+      "ToastOptions",
+      "ToastProviderProps",
+      "ToastViewportProps",
+    ],
+    utilities: ["useToast"],
   },
   {
     name: "Toggle",
     slug: "toggle",
+    lifecycle: "beta",
     parts: [
       {
         path: "Toggle",
@@ -1519,10 +1877,13 @@ export const publicContracts = [
         stateModels: ["pressed"],
       },
     ],
+    types: ["ToggleProps"],
+    utilities: [],
   },
   {
     name: "ToggleGroup",
     slug: "toggle-group",
+    lifecycle: "beta",
     parts: [
       {
         path: "ToggleGroup.Item",
@@ -1538,10 +1899,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["ToggleGroupItemProps", "ToggleGroupRootProps"],
+    utilities: [],
   },
   {
     name: "Toolbar",
     slug: "toolbar",
+    lifecycle: "beta",
     parts: [
       {
         path: "Toolbar.Button",
@@ -1570,10 +1934,18 @@ export const publicContracts = [
         dataAttributes: ["data-orientation"],
       },
     ],
+    types: [
+      "ToolbarButtonProps",
+      "ToolbarLinkProps",
+      "ToolbarRootProps",
+      "ToolbarSeparatorProps",
+    ],
+    utilities: [],
   },
   {
     name: "Tooltip",
     slug: "tooltip",
+    lifecycle: "beta",
     parts: [
       {
         path: "Tooltip",
@@ -1584,10 +1956,13 @@ export const publicContracts = [
         stateModels: ["open"],
       },
     ],
+    types: ["TooltipProps"],
+    utilities: [],
   },
   {
     name: "TreeView",
     slug: "tree-view",
+    lifecycle: "beta",
     parts: [
       {
         path: "TreeView.Item",
@@ -1604,10 +1979,17 @@ export const publicContracts = [
         stateModels: ["expandedItems"],
       },
     ],
+    types: [
+      "TreeViewExpandedItemsChangeHandler",
+      "TreeViewItemProps",
+      "TreeViewRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "VisuallyHidden",
     slug: "visually-hidden",
+    lifecycle: "beta",
     parts: [
       {
         path: "VisuallyHidden",
@@ -1616,6 +1998,8 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["VisuallyHiddenProps"],
+    utilities: [],
   },
 ] as const;
 

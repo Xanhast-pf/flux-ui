@@ -4,5 +4,6 @@
   "category": "Typography",
   "status": "beta",
   "description": "Literal code, optional copy action and accessible clipboard feedback.",
-  "sizeClass": "composite"
+  "sizeClass": "composite",
+  "publicUtilities": ["codeLanguages", "tokenizeCode"]
 }

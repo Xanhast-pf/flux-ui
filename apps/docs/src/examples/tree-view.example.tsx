@@ -8,7 +8,7 @@ export default {
   notes: [
     "TreeView's expandedItems/defaultExpandedItems is the set of expanded item identifiers. Every TreeView.Item requires a stable unique value.",
     "Arrow Up/Down moves through visible items; Home/End jump to the first/last visible item. Arrow Right opens a branch or enters its first child; Arrow Left closes an open branch or returns to its parent. Enter toggles the focused branch.",
-    "Clicking a branch label focuses and toggles it. Leaf items remain focusable treeitems but the initial alpha does not freeze selection, activation, editing, drag/drop, async loading, or virtualization APIs.",
+    "Clicking a branch label focuses and toggles it. Leaf items remain focusable treeitems, but the current Beta API does not freeze selection, activation, editing, drag/drop, async loading, or virtualization contracts.",
     "aria-disabled items are skipped by roving focus and cannot be toggled by pointer input.",
     "Nested TreeView.Item children become role=group automatically; do not add interactive controls inside the label content.",
   ],

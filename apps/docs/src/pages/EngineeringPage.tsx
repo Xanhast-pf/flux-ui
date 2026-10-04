@@ -102,6 +102,23 @@ export function EngineeringPage() {
         </Grid>
         <Stack as="section" gap="lg">
           <Heading level={2} size="lg">
+            API compatibility boundary
+          </Heading>
+          <Text as="p" variant="body">
+            Component pages expose a generated inventory of public parts, types,
+            runtime utilities, CSS variables and documented state hooks. Beta
+            components may still change before promotion; stable components
+            carry that published surface as their compatibility promise.
+          </Text>
+          <Text as="p" variant="body">
+            Undocumented DOM structure, generated classes, internal markers and
+            source-only helpers remain implementation details. Lowercase runtime
+            exports must be explicitly classified before entering the supported
+            package surface.
+          </Text>
+        </Stack>
+        <Stack as="section" gap="lg">
+          <Heading level={2} size="lg">
             The measurement contract
           </Heading>
           <Text as="p" variant="body">

@@ -183,6 +183,23 @@ function ComponentDetail({
             parts keep the listed escape hatches; controller parts intentionally
             render no customizable DOM node.
           </Text>
+          <Callout tone="info">
+            Lifecycle: <Code>{publicContract.lifecycle}</Code>. This generated
+            inventory defines the intended public compatibility surface. Beta
+            components may still change before promotion; once stable, that
+            published surface is the compatibility promise.
+          </Callout>
+          <Text as="p" variant="body" tone="muted">
+            Public TypeScript exports:{" "}
+            <Code>{publicContract.types.join(", ")}</Code>
+            {publicContract.utilities.length === 0 ? null : (
+              <>
+                {" "}
+                · Runtime utilities:{" "}
+                <Code>{publicContract.utilities.join(", ")}</Code>
+              </>
+            )}
+          </Text>
           <ScrollArea
             aria-label={`${entry.name} public contract`}
             axis="horizontal"
