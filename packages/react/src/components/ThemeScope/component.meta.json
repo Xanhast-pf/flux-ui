@@ -4,5 +4,8 @@
   "category": "Layout",
   "status": "beta",
   "description": "Scoped semantic theme application with optional container queries.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "ThemeScope": ["data-query"]
+  }
 }

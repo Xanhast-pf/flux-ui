@@ -7,6 +7,9 @@ export const components = [
     status: "beta",
     description: "Grouped native disclosures with automatic exclusive naming.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      "Accordion.Root": ["data-type"],
+    },
   },
   {
     name: "AlertDialog",
@@ -113,6 +116,12 @@ export const components = [
     description:
       "Standalone line, area and grouped bar visualization with bounded rendering and source-complete keyboard/pointer inspection.",
     sizeClass: "data-heavy",
+    publicDescendantDataAttributes: {
+      series: {
+        selector: "[data-muted]",
+        dataAttributes: ["data-muted"],
+      },
+    },
   },
   {
     name: "ChartLegend",
@@ -122,6 +131,12 @@ export const components = [
     description:
       "Optional HTML legend wrapper for Flux charts with independent layout and controlled or uncontrolled series visibility.",
     sizeClass: "interactive",
+    publicDescendantDataAttributes: {
+      hiddenItem: {
+        selector: "[data-hidden]",
+        dataAttributes: ["data-hidden"],
+      },
+    },
   },
   {
     name: "ChartTooltip",
@@ -131,6 +146,12 @@ export const components = [
     description:
       "Optional pointer-inert visual data tooltip wrapper for Flux charts with hover or click triggers.",
     sizeClass: "interactive",
+    publicDescendantDataAttributes: {
+      popup: {
+        selector: "[data-align]",
+        dataAttributes: ["data-align", "data-side"],
+      },
+    },
   },
   {
     name: "Checkbox",
@@ -193,6 +214,12 @@ export const components = [
     publicDataAttributes: {
       Combobox: ["data-invalid"],
     },
+    publicDescendantDataAttributes: {
+      popup: {
+        selector: "[data-state]",
+        dataAttributes: ["data-state"],
+      },
+    },
   },
   {
     name: "Container",
@@ -202,6 +229,9 @@ export const components = [
     description:
       "Centered page-width primitive with consistent responsive gutters.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      Container: ["data-query"],
+    },
   },
   {
     name: "DataGrid",
@@ -211,6 +241,16 @@ export const components = [
     description:
       "Interactive ARIA grid with stable cell focus, client transforms, row selection, column visibility, and app-owned inline cell editing.",
     sizeClass: "data-heavy",
+    publicDescendantDataAttributes: {
+      cell: {
+        selector: '[role="gridcell"]',
+        dataAttributes: ["data-editable", "data-editing"],
+      },
+      row: {
+        selector: '[role="row"]',
+        dataAttributes: ["data-selected"],
+      },
+    },
   },
   {
     name: "DataTable",
@@ -497,6 +537,12 @@ export const components = [
     description:
       "Standalone bounded pie visualization with keyboard/pointer slice inspection and composable legend/tooltip accessories.",
     sizeClass: "data-heavy",
+    publicDescendantDataAttributes: {
+      slice: {
+        selector: "[data-active]",
+        dataAttributes: ["data-active"],
+      },
+    },
   },
   {
     name: "Popover",
@@ -552,6 +598,12 @@ export const components = [
     description:
       "Standalone bounded scatter visualization with axes, source-complete inspection and sampled SVG paths.",
     sizeClass: "data-heavy",
+    publicDescendantDataAttributes: {
+      series: {
+        selector: "[data-muted]",
+        dataAttributes: ["data-muted"],
+      },
+    },
   },
   {
     name: "ScrollArea",
@@ -561,6 +613,9 @@ export const components = [
     description:
       "Named native overflow region with overflow-aware keyboard focus.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      ScrollArea: ["data-axis"],
+    },
   },
   {
     name: "Select",
@@ -620,7 +675,7 @@ export const components = [
       "Single-thumb native range input with form semantics, optional datalist marks, and visual value output.",
     sizeClass: "primitive",
     publicDataAttributes: {
-      Slider: ["data-orientation"],
+      Slider: ["data-appearance", "data-orientation"],
     },
   },
   {
@@ -745,7 +800,7 @@ export const components = [
       "Native multi-line text control with optional CSS-native content autosizing and row constraints.",
     sizeClass: "primitive",
     publicDataAttributes: {
-      Textarea: ["data-invalid"],
+      Textarea: ["data-auto-size", "data-invalid"],
     },
   },
   {
@@ -756,6 +811,9 @@ export const components = [
     description:
       "Scoped semantic theme application with optional container queries.",
     sizeClass: "primitive",
+    publicDataAttributes: {
+      ThemeScope: ["data-query"],
+    },
   },
   {
     name: "TimePicker",

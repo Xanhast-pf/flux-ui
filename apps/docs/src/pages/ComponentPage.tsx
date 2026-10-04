@@ -236,6 +236,51 @@ function ComponentDetail({
               </Table.Body>
             </Table.Root>
           </ScrollArea>
+          {"descendantStates" in publicContract ? (
+            <>
+              <Heading level={3} size="md">
+                Descendant state hooks
+              </Heading>
+              <Text as="p" variant="body" tone="muted">
+                These selectors identify stable state on implementation-owned
+                descendants. They are styling contracts only: they do not create
+                public React parts or imply className, style, ref, or DOM
+                ancestry.
+              </Text>
+              <ScrollArea
+                aria-label={`${entry.name} descendant state hooks`}
+                axis="horizontal"
+              >
+                <Table.Root>
+                  <Table.Caption>
+                    Stable state hooks on non-exported descendant surfaces.
+                  </Table.Caption>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.ColumnHeader>Surface</Table.ColumnHeader>
+                      <Table.ColumnHeader>Stable selector</Table.ColumnHeader>
+                      <Table.ColumnHeader>Data attributes</Table.ColumnHeader>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {publicContract.descendantStates.map((surface) => (
+                      <Table.Row key={surface.name}>
+                        <Table.RowHeader>
+                          <Code>{surface.name}</Code>
+                        </Table.RowHeader>
+                        <Table.Cell>
+                          <Code>{surface.selector}</Code>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Code>{surface.dataAttributes.join(", ")}</Code>
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table.Root>
+              </ScrollArea>
+            </>
+          ) : null}
           <Heading level={2} size="lg">
             API highlights
           </Heading>

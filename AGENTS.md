@@ -462,7 +462,7 @@ appropriate combination of:
 
 - inline \`style\` when the platform element supports it;
 
-- stable \`data-\*\` state attributes;
+- stable \`data-\*\` state and behavior-mode attributes;
 
 - documented component CSS custom properties;
 
@@ -477,6 +477,15 @@ and `style` together, and every runtime component export must have a named
 public `*Props` type. State-only controller/provider parts must be declared
 locally through `component.meta.json` `nonDomParts`; do not add central
 exception registries.
+
+When stable styling state lives on an implementation-owned descendant rather
+than an exported React part, declare it through
+`component.meta.json` `publicDescendantDataAttributes`. Each entry must use a
+simple stable attribute selector and descriptive `data-*` state names. This is
+a styling-only compatibility promise: it does not create a public React part,
+imply `className` / `style` / `ref`, or freeze DOM ancestry. Do not use
+descendant contracts to expose compact selectors, `data-flux-*` markers,
+identity plumbing, or arbitrary implementation structure.
 
 Do **not** expose internal reducers, private refs,
 implementation-specific state machines or styling internals as public

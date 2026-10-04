@@ -91,4 +91,26 @@ describe("Popover", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(screen.getByTestId("popup")).toHaveClass("consumer-popup");
   });
+
+  it("accepts forwarded undefined open-state options", () => {
+    render(
+      <Popover.Root
+        open={undefined}
+        defaultOpen={undefined}
+        onOpenChange={undefined}
+      >
+        <Popover.Trigger>Optional popover</Popover.Trigger>
+        <Popover.Popup
+          aria-label="Optional popup"
+          side={undefined}
+          align={undefined}
+          offset={undefined}
+          initialFocus={undefined}
+        />
+      </Popover.Root>,
+    );
+    expect(
+      screen.getByRole("button", { name: "Optional popover" }),
+    ).toHaveAttribute("aria-expanded", "false");
+  });
 });

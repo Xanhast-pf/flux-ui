@@ -4,5 +4,11 @@
   "category": "Data",
   "status": "beta",
   "description": "Standalone bounded pie visualization with keyboard/pointer slice inspection and composable legend/tooltip accessories.",
-  "sizeClass": "data-heavy"
+  "sizeClass": "data-heavy",
+  "publicDescendantDataAttributes": {
+    "slice": {
+      "selector": "[data-active]",
+      "dataAttributes": ["data-active"]
+    }
+  }
 }

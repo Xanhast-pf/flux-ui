@@ -6,6 +6,6 @@
   "description": "Native multi-line text control with optional CSS-native content autosizing and row constraints.",
   "sizeClass": "primitive",
   "publicDataAttributes": {
-    "Textarea": ["data-invalid"]
+    "Textarea": ["data-auto-size", "data-invalid"]
   }
 }

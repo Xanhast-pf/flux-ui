@@ -90,6 +90,22 @@ describe("Tooltip", () => {
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });
 
+  it("accepts forwarded undefined open-state options", () => {
+    render(
+      <Tooltip
+        content="Optional help."
+        open={undefined}
+        defaultOpen={undefined}
+        onOpenChange={undefined}
+        side={undefined}
+        align={undefined}
+      >
+        <button type="button">Optional trigger</button>
+      </Tooltip>,
+    );
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+  });
+
   it("can start open while keeping trigger-owned state", async () => {
     const user = userEvent.setup();
     render(

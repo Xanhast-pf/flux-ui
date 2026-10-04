@@ -36,6 +36,20 @@ describe("ChartLegend", () => {
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 
+  it("accepts forwarded undefined visibility state", () => {
+    render(
+      <ChartLegend
+        items={series}
+        hiddenIds={undefined}
+        defaultHiddenIds={undefined}
+        onHiddenIdsChange={undefined}
+      >
+        <Chart label="Finance" series={series} />
+      </ChartLegend>,
+    );
+    expect(screen.getByRole("list", { name: "Chart legend" })).toBeVisible();
+  });
+
   it("owns optional uncontrolled visibility and updates the wrapped chart", () => {
     const onHiddenIdsChange = vi.fn();
     render(
@@ -52,6 +66,7 @@ describe("ChartLegend", () => {
     fireEvent.click(revenue);
 
     expect(revenue).toHaveAttribute("aria-pressed", "false");
+    expect(revenue).toHaveAttribute("data-hidden", "true");
     expect(onHiddenIdsChange).toHaveBeenLastCalledWith(["revenue"]);
     expect(screen.getByRole("slider")).toHaveAttribute(
       "aria-valuetext",
@@ -74,6 +89,7 @@ describe("ChartLegend", () => {
 
     const revenue = screen.getByRole("button", { name: "Revenue" });
     expect(revenue).toHaveAttribute("aria-pressed", "false");
+    expect(revenue).toHaveAttribute("data-hidden", "true");
     fireEvent.click(revenue);
     expect(onHiddenIdsChange).toHaveBeenLastCalledWith([]);
     expect(revenue).toHaveAttribute("aria-pressed", "false");

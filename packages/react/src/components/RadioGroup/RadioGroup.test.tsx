@@ -36,6 +36,22 @@ function BasicGroup({
 }
 
 describe("RadioGroup", () => {
+  it("accepts a forwarded undefined value without conditional spreads", () => {
+    render(
+      <RadioGroup.Root
+        value={undefined}
+        defaultValue={undefined}
+        onValueChange={undefined}
+      >
+        <RadioGroup.Legend>Optional channel</RadioGroup.Legend>
+        <RadioGroup.Item aria-label="Stable" value="stable" />
+      </RadioGroup.Root>,
+    );
+    expect(
+      screen.getByRole("group", { name: "Optional channel" }),
+    ).toBeInTheDocument();
+  });
+
   it("renders a native fieldset, legend, and same-name radio inputs", () => {
     render(<BasicGroup defaultValue="stable" />);
     const group = screen.getByRole("group", { name: "Release channel" });

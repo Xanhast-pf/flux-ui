@@ -4,5 +4,8 @@
   "category": "Disclosure",
   "status": "beta",
   "description": "Grouped native disclosures with automatic exclusive naming.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Accordion.Root": ["data-type"]
+  }
 }

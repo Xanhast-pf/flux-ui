@@ -31,6 +31,21 @@ function hasProperty(checker, type, name) {
   );
 }
 
+function validPublicDataAttributes(attributes) {
+  return (
+    Array.isArray(attributes) &&
+    attributes.length > 0 &&
+    attributes.every(
+      (attribute) =>
+        typeof attribute === "string" &&
+        /^data-[a-z][a-z0-9-]*$/u.test(attribute) &&
+        !/^data-[a-z]$/u.test(attribute) &&
+        !attribute.startsWith("data-flux-"),
+    ) &&
+    new Set(attributes).size === attributes.length
+  );
+}
+
 function stateModels(checker, propsType, familyName, pathName, errors) {
   const apparent = checker.getApparentType(propsType);
   const models = [];
@@ -225,22 +240,77 @@ export function createPublicContracts(root) {
     for (const [pathName, attributes] of Object.entries(
       declaredDataAttributes,
     )) {
-      if (
-        !Array.isArray(attributes) ||
-        attributes.some(
-          (attribute) =>
-            typeof attribute !== "string" ||
-            !/^data-[a-z][a-z0-9-]*$/u.test(attribute) ||
-            /^data-[a-z]$/u.test(attribute) ||
-            attribute.startsWith("data-flux-"),
-        ) ||
-        new Set(attributes).size !== attributes.length
-      ) {
+      if (!validPublicDataAttributes(attributes)) {
         errors.push(
           `${familyName}: publicDataAttributes[${JSON.stringify(pathName)}] must contain unique descriptive data-* attribute names; compact and data-flux-* markers stay internal.`,
         );
       }
     }
+
+    const declaredDescendantDataAttributes =
+      meta.publicDescendantDataAttributes !== null &&
+      typeof meta.publicDescendantDataAttributes === "object" &&
+      !Array.isArray(meta.publicDescendantDataAttributes)
+        ? meta.publicDescendantDataAttributes
+        : {};
+    const descendantStates = [];
+    for (const [name, declaration] of Object.entries(
+      declaredDescendantDataAttributes,
+    )) {
+      if (!/^[a-z][A-Za-z0-9]*$/u.test(name)) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes keys must be lower-camel identifiers.`,
+        );
+        continue;
+      }
+      if (
+        declaration === null ||
+        typeof declaration !== "object" ||
+        Array.isArray(declaration)
+      ) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes[${JSON.stringify(name)}] must be an object.`,
+        );
+        continue;
+      }
+      const selector = declaration.selector;
+      const attributes = declaration.dataAttributes;
+      if (
+        typeof selector !== "string" ||
+        !/^(?:\[[^\]]+\])+$/u.test(selector) ||
+        selector.includes("data-flux-")
+      ) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes[${JSON.stringify(name)}].selector must be a simple stable attribute selector without private data-flux-* markers.`,
+        );
+        continue;
+      }
+      if (!validPublicDataAttributes(attributes)) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes[${JSON.stringify(name)}].dataAttributes must contain unique descriptive data-* attribute names.`,
+        );
+        continue;
+      }
+      const selectorDataAttributes = [
+        ...selector.matchAll(/data-[a-z][a-z0-9-]*/gu),
+      ].map((match) => match[0]);
+      if (
+        selectorDataAttributes.some(
+          (attribute) => !attributes.includes(attribute),
+        )
+      ) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes[${JSON.stringify(name)}].selector references a data-* attribute that is not listed in dataAttributes.`,
+        );
+        continue;
+      }
+      descendantStates.push({
+        name,
+        selector,
+        dataAttributes: [...attributes].sort(),
+      });
+    }
+    descendantStates.sort((left, right) => left.name.localeCompare(right.name));
 
     const parts = componentParts(checker, moduleSymbol, familyName, errors);
     if (parts.length === 0) {
@@ -318,6 +388,7 @@ export function createPublicContracts(root) {
       name: meta.name,
       slug: meta.slug,
       parts: contractParts,
+      ...(descendantStates.length === 0 ? {} : { descendantStates }),
     });
   }
 

@@ -9,7 +9,7 @@ type TooltipStateProps = {
 } & (
   | {
       defaultOpen?: boolean | undefined;
-      open?: never;
+      open?: undefined;
     }
   | {
       defaultOpen?: never;
@@ -26,8 +26,8 @@ export type TooltipProps = Omit<
     children: ReactElement;
     /** Non-interactive supplemental text, not a replacement for the control's label. */
     content: ReactNode;
-    side?: FloatingSide;
-    align?: FloatingAlign;
+    side?: FloatingSide | undefined;
+    align?: FloatingAlign | undefined;
     delay?: number | undefined;
     /** Adds a decorative pointer that follows the actual side after collision flipping. */
     arrow?: boolean | undefined;

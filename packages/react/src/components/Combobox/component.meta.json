@@ -7,5 +7,11 @@
   "sizeClass": "overlay",
   "publicDataAttributes": {
     "Combobox": ["data-invalid"]
+  },
+  "publicDescendantDataAttributes": {
+    "popup": {
+      "selector": "[data-state]",
+      "dataAttributes": ["data-state"]
+    }
   }
 }

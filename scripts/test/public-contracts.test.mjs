@@ -103,14 +103,80 @@ test("public component contracts derive from the TypeScript export surface", () 
     (contract) => contract.name === "ChartLegend",
   );
   assert.deepEqual(chartLegend?.parts[0]?.stateModels, ["hiddenIds"]);
+  assert.deepEqual(chartLegend?.descendantStates, [
+    {
+      name: "hiddenItem",
+      selector: "[data-hidden]",
+      dataAttributes: ["data-hidden"],
+    },
+  ]);
+
+  const chartTooltip = contracts.find(
+    (contract) => contract.name === "ChartTooltip",
+  );
+  assert.deepEqual(chartTooltip?.descendantStates, [
+    {
+      name: "popup",
+      selector: "[data-align]",
+      dataAttributes: ["data-align", "data-side"],
+    },
+  ]);
+
+  const chart = contracts.find((contract) => contract.name === "Chart");
+  assert.deepEqual(chart?.descendantStates, [
+    {
+      name: "series",
+      selector: "[data-muted]",
+      dataAttributes: ["data-muted"],
+    },
+  ]);
+
+  const scatterChart = contracts.find(
+    (contract) => contract.name === "ScatterChart",
+  );
+  assert.deepEqual(scatterChart?.descendantStates, [
+    {
+      name: "series",
+      selector: "[data-muted]",
+      dataAttributes: ["data-muted"],
+    },
+  ]);
+
+  const pieChart = contracts.find((contract) => contract.name === "PieChart");
+  assert.deepEqual(pieChart?.descendantStates, [
+    {
+      name: "slice",
+      selector: "[data-active]",
+      dataAttributes: ["data-active"],
+    },
+  ]);
 
   const combobox = contracts.find((contract) => contract.name === "Combobox");
   assert.deepEqual(combobox?.parts[0]?.stateModels, ["query", "value"]);
+  assert.deepEqual(combobox?.descendantStates, [
+    {
+      name: "popup",
+      selector: "[data-state]",
+      dataAttributes: ["data-state"],
+    },
+  ]);
 
   const dataGrid = contracts.find((contract) => contract.name === "DataGrid");
   assert.deepEqual(dataGrid?.parts[0]?.stateModels, [
     "selectedRowIds",
     "sorting",
+  ]);
+  assert.deepEqual(dataGrid?.descendantStates, [
+    {
+      name: "cell",
+      selector: '[role="gridcell"]',
+      dataAttributes: ["data-editable", "data-editing"],
+    },
+    {
+      name: "row",
+      selector: '[role="row"]',
+      dataAttributes: ["data-selected"],
+    },
   ]);
 
   const dataTable = contracts.find((contract) => contract.name === "DataTable");
@@ -184,7 +250,7 @@ test("public component contracts derive from the TypeScript export surface", () 
     ["Checkbox", "Checkbox", ["data-invalid"]],
     ["Select", "Select", ["data-invalid"]],
     ["Switch", "Switch", ["data-invalid"]],
-    ["Textarea", "Textarea", ["data-invalid"]],
+    ["Textarea", "Textarea", ["data-auto-size", "data-invalid"]],
     ["NumberField", "NumberField", ["data-invalid"]],
     ["DatePicker", "DatePicker", ["data-invalid"]],
     ["DateTimePicker", "DateTimePicker", ["data-invalid"]],
@@ -195,13 +261,17 @@ test("public component contracts derive from the TypeScript export surface", () 
     ["Field", "Field.Root", ["data-disabled", "data-invalid"]],
     ["Combobox", "Combobox", ["data-invalid"]],
     ["InputGroup", "InputGroup.Input", ["data-invalid"]],
+    ["Accordion", "Accordion.Root", ["data-type"]],
     ["ButtonGroup", "ButtonGroup", ["data-orientation"]],
+    ["Container", "Container", ["data-query"]],
     ["LevelMeter", "LevelMeter", ["data-orientation"]],
     ["Separator", "Separator", ["data-orientation"]],
-    ["Slider", "Slider", ["data-orientation"]],
+    ["ScrollArea", "ScrollArea", ["data-axis"]],
+    ["Slider", "Slider", ["data-appearance", "data-orientation"]],
     ["SplitPane", "SplitPane", ["data-orientation"]],
     ["Stepper", "Stepper.Root", ["data-orientation"]],
     ["Toolbar", "Toolbar.Root", ["data-orientation"]],
+    ["ThemeScope", "ThemeScope", ["data-query"]],
     ["Toolbar", "Toolbar.Separator", ["data-orientation"]],
   ]) {
     const contract = contracts.find(

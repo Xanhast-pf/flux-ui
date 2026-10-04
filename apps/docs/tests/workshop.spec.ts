@@ -35,6 +35,23 @@ for (const component of components) {
   });
 }
 
+test("generated contracts distinguish descendant state hooks from public parts", async ({
+  page,
+}) => {
+  await page.goto("/#components/data-grid");
+  await expect(
+    page.getByRole("heading", { name: "Descendant state hooks", exact: true }),
+  ).toBeVisible();
+  const section = page
+    .getByRole("heading", { name: "Descendant state hooks", exact: true })
+    .locator("..");
+  await expect(section).toContainText('[role="gridcell"]');
+  await expect(section).toContainText("data-editable");
+  await expect(section).toContainText("data-editing");
+  await expect(section).toContainText('[role="row"]');
+  await expect(section).toContainText("data-selected");
+});
+
 test("catalog search indexes component-page guidance without mounting every demo", async ({
   page,
 }) => {

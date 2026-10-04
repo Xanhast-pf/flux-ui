@@ -27,7 +27,9 @@ describe("Combobox", () => {
       <Combobox
         aria-label="Team"
         options={[{ value: "design", label: "Design", disabled }]}
+        value={undefined}
         defaultValue={defaultValue}
+        query={undefined}
         listLabel={listLabel}
         emptyMessage={emptyMessage}
         invalidSelectionMessage={invalidSelectionMessage}
@@ -51,6 +53,8 @@ describe("Combobox", () => {
     );
 
     await user.click(screen.getByRole("combobox"));
+    const listbox = screen.getByRole("listbox");
+    expect(listbox.parentElement).toHaveAttribute("data-state", "open");
     const creative = screen.getByRole("group", { name: "Creative" });
     const engineering = screen.getByRole("group", { name: "Engineering" });
     expect(within(creative).getAllByRole("option")).toHaveLength(2);

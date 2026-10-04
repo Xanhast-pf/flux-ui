@@ -13,7 +13,7 @@ type LegendHiddenState =
       defaultHiddenIds?: never;
     }
   | {
-      hiddenIds?: never;
+      hiddenIds?: undefined;
       defaultHiddenIds?: readonly string[] | undefined;
     };
 

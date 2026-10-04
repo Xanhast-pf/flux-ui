@@ -91,15 +91,18 @@ test("DataGrid preserves focus while editing, sorting and selecting in the brows
   await expect(grid).toHaveAttribute("aria-readonly", "false");
   await expect(grid).toHaveAttribute("aria-multiselectable", "true");
   await expect(grid.getByRole("gridcell")).toHaveCount(12);
-  await expect(
-    grid.getByRole("row", { name: /MSFT 7 Pending/u }),
-  ).toHaveAttribute("aria-selected", "true");
+  const selectedRow = grid.getByRole("row", { name: /MSFT 7 Pending/u });
+  await expect(selectedRow).toHaveAttribute("aria-selected", "true");
+  await expect(selectedRow).toHaveAttribute("data-selected", "true");
 
   await aapl.focus();
   await page.keyboard.press("ArrowRight");
-  await expect(grid.getByRole("gridcell", { name: "12" })).toBeFocused();
+  const editableCell = grid.getByRole("gridcell", { name: "12" });
+  await expect(editableCell).toBeFocused();
+  await expect(editableCell).toHaveAttribute("data-editable", "true");
 
   await page.keyboard.press("F2");
+  await expect(editableCell).toHaveAttribute("data-editing", "true");
   const editor = grid.getByRole("spinbutton", {
     name: "Edit Quantity, row 1",
   });

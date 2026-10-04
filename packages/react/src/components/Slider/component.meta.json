@@ -6,6 +6,6 @@
   "description": "Single-thumb native range input with form semantics, optional datalist marks, and visual value output.",
   "sizeClass": "primitive",
   "publicDataAttributes": {
-    "Slider": ["data-orientation"]
+    "Slider": ["data-appearance", "data-orientation"]
   }
 }

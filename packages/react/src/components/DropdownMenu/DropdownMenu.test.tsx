@@ -13,6 +13,9 @@ describe("DropdownMenu", () => {
           <DropdownMenu.Item>Duplicate</DropdownMenu.Item>
           <DropdownMenu.Item disabled>Delete</DropdownMenu.Item>
           <DropdownMenu.Item onSelect={selected}>Export</DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={undefined} tone={undefined}>
+            Archive
+          </DropdownMenu.Item>
         </DropdownMenu.Popup>
       </DropdownMenu.Root>,
     );

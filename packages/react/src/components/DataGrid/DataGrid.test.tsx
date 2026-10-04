@@ -211,9 +211,9 @@ describe("DataGrid", () => {
 
     const grid = screen.getByRole("grid", { name: "Selectable positions" });
     expect(grid).toHaveAttribute("aria-multiselectable", "true");
-    expect(
-      screen.getByRole("row", { name: /MSFT 7 Pending/u }),
-    ).toHaveAttribute("aria-selected", "true");
+    const msftRow = screen.getByRole("row", { name: /MSFT 7 Pending/u });
+    expect(msftRow).toHaveAttribute("aria-selected", "true");
+    expect(msftRow).toHaveAttribute("data-selected", "true");
 
     const aapl = screen.getByRole("gridcell", { name: "AAPL" });
     await user.click(aapl);
@@ -252,8 +252,11 @@ describe("DataGrid", () => {
 
     const quantity = screen.getByRole("gridcell", { name: "12" });
     expect(quantity).toHaveAttribute("aria-readonly", "false");
+    expect(quantity).toHaveAttribute("data-editable", "true");
+    expect(quantity).not.toHaveAttribute("data-editing");
     quantity.focus();
     await user.keyboard("{F2}");
+    expect(quantity).toHaveAttribute("data-editing", "true");
 
     const editor = screen.getByRole("spinbutton", {
       name: "Edit Quantity, row 1",

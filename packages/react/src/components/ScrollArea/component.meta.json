@@ -4,5 +4,8 @@
   "category": "Layout",
   "status": "beta",
   "description": "Named native overflow region with overflow-aware keyboard focus.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "ScrollArea": ["data-axis"]
+  }
 }

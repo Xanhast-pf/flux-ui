@@ -4,5 +4,11 @@
   "category": "Data",
   "status": "beta",
   "description": "Standalone line, area and grouped bar visualization with bounded rendering and source-complete keyboard/pointer inspection.",
-  "sizeClass": "data-heavy"
+  "sizeClass": "data-heavy",
+  "publicDescendantDataAttributes": {
+    "series": {
+      "selector": "[data-muted]",
+      "dataAttributes": ["data-muted"]
+    }
+  }
 }

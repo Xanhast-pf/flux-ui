@@ -21,6 +21,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-type"],
       },
       {
         path: "Accordion.Trigger",
@@ -238,6 +239,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    descendantStates: [
+      {
+        name: "series",
+        selector: "[data-muted]",
+        dataAttributes: ["data-muted"],
+      },
+    ],
   },
   {
     name: "ChartLegend",
@@ -251,6 +259,13 @@ export const publicContracts = [
         stateModels: ["hiddenIds"],
       },
     ],
+    descendantStates: [
+      {
+        name: "hiddenItem",
+        selector: "[data-hidden]",
+        dataAttributes: ["data-hidden"],
+      },
+    ],
   },
   {
     name: "ChartTooltip",
@@ -261,6 +276,13 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+      },
+    ],
+    descendantStates: [
+      {
+        name: "popup",
+        selector: "[data-align]",
+        dataAttributes: ["data-align", "data-side"],
       },
     ],
   },
@@ -352,6 +374,13 @@ export const publicContracts = [
         stateModels: ["query", "value"],
       },
     ],
+    descendantStates: [
+      {
+        name: "popup",
+        selector: "[data-state]",
+        dataAttributes: ["data-state"],
+      },
+    ],
   },
   {
     name: "Container",
@@ -362,6 +391,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-query"],
       },
     ],
   },
@@ -375,6 +405,18 @@ export const publicContracts = [
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
         stateModels: ["selectedRowIds", "sorting"],
+      },
+    ],
+    descendantStates: [
+      {
+        name: "cell",
+        selector: '[role="gridcell"]',
+        dataAttributes: ["data-editable", "data-editing"],
+      },
+      {
+        name: "row",
+        selector: '[role="row"]',
+        dataAttributes: ["data-selected"],
       },
     ],
   },
@@ -933,6 +975,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    descendantStates: [
+      {
+        name: "slice",
+        selector: "[data-active]",
+        dataAttributes: ["data-active"],
+      },
+    ],
   },
   {
     name: "Popover",
@@ -1030,6 +1079,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    descendantStates: [
+      {
+        name: "series",
+        selector: "[data-muted]",
+        dataAttributes: ["data-muted"],
+      },
+    ],
   },
   {
     name: "ScrollArea",
@@ -1040,6 +1096,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-axis"],
       },
     ],
   },
@@ -1152,7 +1209,7 @@ export const publicContracts = [
           "--flux-slider-thumb-size",
           "--flux-slider-track-size",
         ],
-        dataAttributes: ["data-orientation"],
+        dataAttributes: ["data-appearance", "data-orientation"],
         stateModels: ["value"],
       },
     ],
@@ -1401,7 +1458,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
-        dataAttributes: ["data-invalid"],
+        dataAttributes: ["data-auto-size", "data-invalid"],
       },
     ],
   },
@@ -1414,6 +1471,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-query"],
       },
     ],
   },
