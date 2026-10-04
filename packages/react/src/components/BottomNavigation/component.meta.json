@@ -2,7 +2,8 @@
   "name": "BottomNavigation",
   "slug": "bottom-navigation",
   "category": "Navigation",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Semantic destination navigation for compact application shells using real links.",
   "sizeClass": "primitive"
 }

@@ -2,7 +2,8 @@
   "name": "Skeleton",
   "slug": "skeleton",
   "category": "Feedback",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Static decorative placeholders for loading layouts.",
   "sizeClass": "primitive"
 }

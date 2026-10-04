@@ -3,7 +3,7 @@ export const publicContracts = [
   {
     name: "Accordion",
     slug: "accordion",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Accordion.Content",
@@ -42,7 +42,7 @@ export const publicContracts = [
   {
     name: "AlertDialog",
     slug: "alert-dialog",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "AlertDialog.Action",
@@ -104,7 +104,7 @@ export const publicContracts = [
   {
     name: "AspectRatio",
     slug: "aspect-ratio",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "AspectRatio",
@@ -119,7 +119,7 @@ export const publicContracts = [
   {
     name: "Avatar",
     slug: "avatar",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Avatar",
@@ -140,7 +140,7 @@ export const publicContracts = [
   {
     name: "BottomNavigation",
     slug: "bottom-navigation",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "BottomNavigation",
@@ -161,7 +161,7 @@ export const publicContracts = [
   {
     name: "Box",
     slug: "box",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Box",
@@ -176,7 +176,7 @@ export const publicContracts = [
   {
     name: "Breadcrumbs",
     slug: "breadcrumbs",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Breadcrumbs.Current",
@@ -221,7 +221,7 @@ export const publicContracts = [
   {
     name: "Button",
     slug: "button",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Button",
@@ -237,7 +237,7 @@ export const publicContracts = [
   {
     name: "ButtonGroup",
     slug: "button-group",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "ButtonGroup",
@@ -253,7 +253,7 @@ export const publicContracts = [
   {
     name: "Callout",
     slug: "callout",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Callout",
@@ -268,7 +268,7 @@ export const publicContracts = [
   {
     name: "Card",
     slug: "card",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Card",
@@ -350,7 +350,7 @@ export const publicContracts = [
   {
     name: "Checkbox",
     slug: "checkbox",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Checkbox",
@@ -367,7 +367,7 @@ export const publicContracts = [
   {
     name: "Code",
     slug: "code",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Code",
@@ -382,7 +382,7 @@ export const publicContracts = [
   {
     name: "CodeBlock",
     slug: "code-block",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "CodeBlock",
@@ -397,7 +397,7 @@ export const publicContracts = [
   {
     name: "Collapsible",
     slug: "collapsible",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Collapsible.Content",
@@ -428,7 +428,7 @@ export const publicContracts = [
   {
     name: "ColorSwatch",
     slug: "color-swatch",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "ColorSwatch",
@@ -468,7 +468,7 @@ export const publicContracts = [
   {
     name: "Container",
     slug: "container",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Container",
@@ -536,7 +536,7 @@ export const publicContracts = [
   {
     name: "DatePicker",
     slug: "date-picker",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "DatePicker",
@@ -553,7 +553,7 @@ export const publicContracts = [
   {
     name: "DateTimePicker",
     slug: "date-time-picker",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "DateTimePicker",
@@ -570,7 +570,7 @@ export const publicContracts = [
   {
     name: "DescriptionList",
     slug: "description-list",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "DescriptionList",
@@ -601,7 +601,7 @@ export const publicContracts = [
   {
     name: "Dialog",
     slug: "dialog",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Dialog.Close",
@@ -656,7 +656,7 @@ export const publicContracts = [
   {
     name: "Drawer",
     slug: "drawer",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Drawer.Close",
@@ -712,7 +712,7 @@ export const publicContracts = [
   {
     name: "DropdownMenu",
     slug: "dropdown-menu",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "DropdownMenu.Item",
@@ -766,7 +766,7 @@ export const publicContracts = [
   {
     name: "EmptyState",
     slug: "empty-state",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "EmptyState",
@@ -781,7 +781,7 @@ export const publicContracts = [
   {
     name: "Field",
     slug: "field",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Field.Control",
@@ -827,7 +827,7 @@ export const publicContracts = [
   {
     name: "Fieldset",
     slug: "fieldset",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Fieldset",
@@ -848,7 +848,7 @@ export const publicContracts = [
   {
     name: "Footer",
     slug: "footer",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Footer",
@@ -863,7 +863,7 @@ export const publicContracts = [
   {
     name: "Grid",
     slug: "grid",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Grid",
@@ -884,7 +884,7 @@ export const publicContracts = [
   {
     name: "Heading",
     slug: "heading",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Heading",
@@ -899,7 +899,7 @@ export const publicContracts = [
   {
     name: "IconButton",
     slug: "icon-button",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "IconButton",
@@ -915,7 +915,7 @@ export const publicContracts = [
   {
     name: "Indicator",
     slug: "indicator",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Indicator",
@@ -930,7 +930,7 @@ export const publicContracts = [
   {
     name: "Inline",
     slug: "inline",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Inline",
@@ -945,7 +945,7 @@ export const publicContracts = [
   {
     name: "Input",
     slug: "input",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Input",
@@ -961,7 +961,7 @@ export const publicContracts = [
   {
     name: "InputGroup",
     slug: "input-group",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "InputGroup.Addon",
@@ -993,7 +993,7 @@ export const publicContracts = [
   {
     name: "Kbd",
     slug: "kbd",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Kbd",
@@ -1008,7 +1008,7 @@ export const publicContracts = [
   {
     name: "Knob",
     slug: "knob",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Knob",
@@ -1024,7 +1024,7 @@ export const publicContracts = [
   {
     name: "LevelMeter",
     slug: "level-meter",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "LevelMeter",
@@ -1040,7 +1040,7 @@ export const publicContracts = [
   {
     name: "Link",
     slug: "link",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Link",
@@ -1055,7 +1055,7 @@ export const publicContracts = [
   {
     name: "List",
     slug: "list",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "List",
@@ -1076,7 +1076,7 @@ export const publicContracts = [
   {
     name: "Meter",
     slug: "meter",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Meter",
@@ -1091,7 +1091,7 @@ export const publicContracts = [
   {
     name: "NumberField",
     slug: "number-field",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "NumberField",
@@ -1108,7 +1108,7 @@ export const publicContracts = [
   {
     name: "PageHeader",
     slug: "page-header",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "PageHeader",
@@ -1123,7 +1123,7 @@ export const publicContracts = [
   {
     name: "Pagination",
     slug: "pagination",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Pagination.Ellipsis",
@@ -1213,7 +1213,7 @@ export const publicContracts = [
   {
     name: "Popover",
     slug: "popover",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Popover.Close",
@@ -1253,7 +1253,7 @@ export const publicContracts = [
   {
     name: "Progress",
     slug: "progress",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Progress",
@@ -1268,7 +1268,7 @@ export const publicContracts = [
   {
     name: "RadioGroup",
     slug: "radio-group",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "RadioGroup.Item",
@@ -1343,7 +1343,7 @@ export const publicContracts = [
   {
     name: "ScrollArea",
     slug: "scroll-area",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "ScrollArea",
@@ -1359,7 +1359,7 @@ export const publicContracts = [
   {
     name: "Select",
     slug: "select",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Select",
@@ -1375,7 +1375,7 @@ export const publicContracts = [
   {
     name: "Separator",
     slug: "separator",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Separator",
@@ -1391,7 +1391,7 @@ export const publicContracts = [
   {
     name: "Sidebar",
     slug: "sidebar",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Sidebar.Close",
@@ -1444,7 +1444,7 @@ export const publicContracts = [
   {
     name: "Skeleton",
     slug: "skeleton",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Skeleton",
@@ -1459,7 +1459,7 @@ export const publicContracts = [
   {
     name: "SkipLink",
     slug: "skip-link",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "SkipLink",
@@ -1474,7 +1474,7 @@ export const publicContracts = [
   {
     name: "Slider",
     slug: "slider",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Slider",
@@ -1498,7 +1498,7 @@ export const publicContracts = [
   {
     name: "Sparkline",
     slug: "sparkline",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Sparkline",
@@ -1513,7 +1513,7 @@ export const publicContracts = [
   {
     name: "Spinner",
     slug: "spinner",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Spinner",
@@ -1528,7 +1528,7 @@ export const publicContracts = [
   {
     name: "SplitPane",
     slug: "split-pane",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "SplitPane",
@@ -1545,7 +1545,7 @@ export const publicContracts = [
   {
     name: "Stack",
     slug: "stack",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Stack",
@@ -1560,7 +1560,7 @@ export const publicContracts = [
   {
     name: "Stat",
     slug: "stat",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Stat",
@@ -1575,7 +1575,7 @@ export const publicContracts = [
   {
     name: "StatusBadge",
     slug: "status-badge",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "StatusBadge",
@@ -1590,7 +1590,7 @@ export const publicContracts = [
   {
     name: "Stepper",
     slug: "stepper",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Stepper.Button",
@@ -1632,7 +1632,7 @@ export const publicContracts = [
   {
     name: "Switch",
     slug: "switch",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Switch",
@@ -1649,7 +1649,7 @@ export const publicContracts = [
   {
     name: "Table",
     slug: "table",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Table.Body",
@@ -1722,7 +1722,7 @@ export const publicContracts = [
   {
     name: "Tabs",
     slug: "tabs",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Tabs.List",
@@ -1762,7 +1762,7 @@ export const publicContracts = [
   {
     name: "Tag",
     slug: "tag",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Tag",
@@ -1777,7 +1777,7 @@ export const publicContracts = [
   {
     name: "Text",
     slug: "text",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Text",
@@ -1792,7 +1792,7 @@ export const publicContracts = [
   {
     name: "Textarea",
     slug: "textarea",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Textarea",
@@ -1808,7 +1808,7 @@ export const publicContracts = [
   {
     name: "ThemeScope",
     slug: "theme-scope",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "ThemeScope",
@@ -1824,7 +1824,7 @@ export const publicContracts = [
   {
     name: "TimePicker",
     slug: "time-picker",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "TimePicker",
@@ -1841,7 +1841,7 @@ export const publicContracts = [
   {
     name: "Toast",
     slug: "toast",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Toast.Provider",
@@ -1867,7 +1867,7 @@ export const publicContracts = [
   {
     name: "Toggle",
     slug: "toggle",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Toggle",
@@ -1883,7 +1883,7 @@ export const publicContracts = [
   {
     name: "ToggleGroup",
     slug: "toggle-group",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "ToggleGroup.Item",
@@ -1905,7 +1905,7 @@ export const publicContracts = [
   {
     name: "Toolbar",
     slug: "toolbar",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Toolbar.Button",
@@ -1945,7 +1945,7 @@ export const publicContracts = [
   {
     name: "Tooltip",
     slug: "tooltip",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "Tooltip",
@@ -1989,7 +1989,7 @@ export const publicContracts = [
   {
     name: "VisuallyHidden",
     slug: "visually-hidden",
-    lifecycle: "beta",
+    lifecycle: "stable",
     parts: [
       {
         path: "VisuallyHidden",

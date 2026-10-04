@@ -17,7 +17,7 @@ for (const component of components) {
         exact: true,
       }),
     ).toBeVisible();
-    await expect(page.locator(".preview-content")).toBeVisible();
+    await expect(page.locator(".preview-content").first()).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Public contract", exact: true }),
     ).toBeVisible();
@@ -34,6 +34,30 @@ for (const component of components) {
     expect(errors).toEqual([]);
   });
 }
+
+test("component previews show curated variations only when declared", async ({
+  page,
+}) => {
+  await page.goto("/#components/button");
+  const buttonFrame = page.locator(".preview-frame");
+  await expect(
+    buttonFrame.getByText("Button examples", { exact: true }),
+  ).toBeVisible();
+  await expect(buttonFrame.locator(".preview-content")).toHaveCount(4);
+  for (const title of ["Variants", "Tones", "Sizes", "States"]) {
+    await expect(buttonFrame.getByText(title, { exact: true })).toBeVisible();
+  }
+
+  await page.goto("/#components/switch");
+  const switchFrame = page.locator(".preview-frame");
+  await expect(
+    switchFrame.getByText("Live Switch", { exact: true }),
+  ).toBeVisible();
+  await expect(switchFrame.locator(".preview-content")).toHaveCount(1);
+  await expect(switchFrame.getByText("Default", { exact: true })).toHaveCount(
+    0,
+  );
+});
 
 test("generated contracts distinguish descendant state hooks from public parts", async ({
   page,

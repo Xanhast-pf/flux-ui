@@ -2,7 +2,8 @@
   "name": "Toggle",
   "slug": "toggle",
   "category": "Actions",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "A native pressed-state button for reversible actions.",
   "sizeClass": "primitive"
 }

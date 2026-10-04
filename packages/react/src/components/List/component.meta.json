@@ -2,7 +2,8 @@
   "name": "List",
   "slug": "list",
   "category": "Typography",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Styled native content lists, not an ARIA menu.",
   "sizeClass": "primitive"
 }

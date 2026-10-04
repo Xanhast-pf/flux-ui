@@ -2,7 +2,8 @@
   "name": "Tooltip",
   "slug": "tooltip",
   "category": "Overlays",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Controlled or trigger-owned supplemental help with optional collision-aware decorative arrows.",
   "sizeClass": "interactive",
   "publicDataAttributes": {

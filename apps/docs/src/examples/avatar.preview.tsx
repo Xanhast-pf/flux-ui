@@ -1,25 +1,22 @@
 import { Avatar, Button, Inline, Stack, Text } from "@flux-ui/react";
 import { useState } from "react";
+
 const illustration =
   "data:image/svg+xml," +
   encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" fill="#334155"/><circle cx="48" cy="34" r="17" fill="#e2e8f0"/><path d="M14 96V84a34 34 0 0 1 68 0v12" fill="#e2e8f0"/></svg>',
   );
-export default function Example() {
+
+export default function AvatarImageFallback() {
   const [broken, setBroken] = useState(false);
   return (
     <Stack gap="md">
-      <Inline gap="md" wrap>
-        <Avatar
-          src={broken ? "data:image/png;base64,broken" : illustration}
-          alt="Demo teammate"
-          fallback="FL"
-          size="lg"
-        />
-        <Avatar alt="Design team" fallback="DS" />
-        <Avatar alt="" fallback="QA" size="sm" />
-        <Text>QA team (named by this text)</Text>
-      </Inline>
+      <Avatar
+        src={broken ? "data:image/png;base64,broken" : illustration}
+        alt="Demo teammate"
+        fallback="FL"
+        size="lg"
+      />
       <Button
         variant="outline"
         tone="neutral"
@@ -30,5 +27,17 @@ export default function Example() {
         {broken ? "Restore avatar image" : "Break avatar image"}
       </Button>
     </Stack>
+  );
+}
+
+export function AvatarFallbacksAndSizes() {
+  return (
+    <Inline gap="md" wrap>
+      <Avatar alt="Small teammate" fallback="SM" size="sm" />
+      <Avatar alt="Medium teammate" fallback="MD" size="md" />
+      <Avatar alt="Large teammate" fallback="LG" size="lg" />
+      <Avatar alt="" fallback="QA" size="sm" />
+      <Text>QA team</Text>
+    </Inline>
   );
 }

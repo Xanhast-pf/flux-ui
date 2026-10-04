@@ -2,7 +2,8 @@
   "name": "NumberField",
   "slug": "number-field",
   "category": "Forms",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "A native number input: form participation, min/max validity and steppers stay with the platform.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

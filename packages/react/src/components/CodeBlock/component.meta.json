@@ -2,7 +2,8 @@
   "name": "CodeBlock",
   "slug": "code-block",
   "category": "Typography",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Literal code, optional copy action and accessible clipboard feedback.",
   "sizeClass": "composite",
   "publicUtilities": ["codeLanguages", "tokenizeCode"]

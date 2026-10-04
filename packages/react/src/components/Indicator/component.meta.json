@@ -2,7 +2,8 @@
   "name": "Indicator",
   "slug": "indicator",
   "category": "Feedback",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Decorative count or dot overlay whose meaningful state stays in the owning control's accessible name.",
   "sizeClass": "primitive"
 }

@@ -1,8 +1,19 @@
 import type { ComponentExample } from "../lib/examples.js";
-import Preview from "./link.preview.js";
+import Preview, { LinkActionTreatments } from "./link.preview.js";
 import code from "./link.preview.tsx?raw";
 export default {
   Preview,
+  previewTitle: "Text and navigation",
+  previewDescription:
+    "Lightweight link treatments stay visually distinct from action-like links.",
+  variations: [
+    {
+      title: "Action treatments",
+      description:
+        "Action-style variants still render native anchors and keep navigation behavior.",
+      Preview: LinkActionTreatments,
+    },
+  ],
   code,
   notes: [
     "Every treatment renders an anchor: href, download, context-menu and browser navigation remain native.",

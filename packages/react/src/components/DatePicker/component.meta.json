@@ -2,7 +2,8 @@
   "name": "DatePicker",
   "slug": "date-picker",
   "category": "Forms",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native civil date input with stable ISO serialization and browser-owned validation.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

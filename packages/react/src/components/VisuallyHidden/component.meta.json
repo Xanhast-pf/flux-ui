@@ -2,7 +2,8 @@
   "name": "VisuallyHidden",
   "slug": "visually-hidden",
   "category": "Accessibility",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Screen-reader text without an extra visual box.",
   "sizeClass": "primitive"
 }

@@ -2,7 +2,8 @@
   "name": "Toolbar",
   "slug": "toolbar",
   "category": "Actions",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Named action groups with one tab stop and arrow-key navigation.",
   "sizeClass": "interactive",
   "publicDataAttributes": {

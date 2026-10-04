@@ -1,10 +1,21 @@
-import Preview from "./callout.preview.js";
+import Preview, { LiveStatusCallout } from "./callout.preview.js";
 import code from "./callout.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
   previewLayout: "fill",
+  previewTitle: "Static tones",
+  previewDescription:
+    "Tone communicates intent without changing announcement behavior.",
+  variations: [
+    {
+      title: "Live status update",
+      description:
+        "Use an explicit live-region role only when content changes after user interaction.",
+      Preview: LiveStatusCallout,
+    },
+  ],
   code,
   notes: [
     "The default role is note. Static callouts do not interrupt assistive technology.",

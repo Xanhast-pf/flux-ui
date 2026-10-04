@@ -1,9 +1,20 @@
-import Preview from "./rating.preview.js";
+import Preview, { ReadOnlyRating } from "./rating.preview.js";
 import code from "./rating.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
+  previewTitle: "Interactive half-star rating",
+  previewDescription:
+    "Controlled selection supports half-star precision and native radio-group behavior.",
+  variations: [
+    {
+      title: "Read-only rating",
+      description:
+        "Use readOnly for non-interactive score presentation without changing the value model.",
+      Preview: ReadOnlyRating,
+    },
+  ],
   code,
   notes: [
     "Rating uses native same-name radio inputs, so arrow-key behavior, required validation, form submission and reset stay structural.",

@@ -2,7 +2,8 @@
   "name": "Stepper",
   "slug": "stepper",
   "category": "Navigation",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Ordered workflow progress with current, completed and error semantics.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

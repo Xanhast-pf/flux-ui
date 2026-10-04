@@ -2,7 +2,8 @@
   "name": "TimePicker",
   "slug": "time-picker",
   "category": "Forms",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native civil time input with browser-owned validation and no timezone semantics.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

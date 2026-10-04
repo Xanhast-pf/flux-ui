@@ -1,9 +1,20 @@
 import type { ComponentExample } from "../lib/examples.js";
-import Preview from "./heading.preview.js";
+import Preview, { HeadingSizeScale } from "./heading.preview.js";
 import code from "./heading.preview.tsx?raw";
 export default {
   Preview,
   previewLayout: "fill",
+  previewTitle: "Semantic level vs visual size",
+  previewDescription:
+    "Document outline level and visual scale are intentionally independent.",
+  variations: [
+    {
+      title: "Size scale",
+      description:
+        "One semantic heading level shown across the visual size tokens.",
+      Preview: HeadingSizeScale,
+    },
+  ],
   code,
   notes: [
     "The required level controls h1–h6 semantics. Size never chooses the document outline.",

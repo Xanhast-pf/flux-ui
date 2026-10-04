@@ -2,7 +2,8 @@
   "name": "DescriptionList",
   "slug": "description-list",
   "category": "Typography",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Semantic term/detail pairs with shared layout.",
   "sizeClass": "primitive"
 }

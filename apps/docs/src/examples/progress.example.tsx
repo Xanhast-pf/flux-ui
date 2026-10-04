@@ -1,10 +1,20 @@
-import Preview from "./progress.preview.js";
+import Preview, { IndeterminateProgress } from "./progress.preview.js";
 import code from "./progress.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
   previewLayout: "fill",
+  previewTitle: "Determinate progress",
+  previewDescription: "A finite value communicates measurable task completion.",
+  variations: [
+    {
+      title: "Indeterminate progress",
+      description:
+        "Omit value when the operation is active but completion cannot yet be measured.",
+      Preview: IndeterminateProgress,
+    },
+  ],
   code,
   notes: [
     "A progressbar requires an accessible name. Text placed inside a native progress element is not a substitute for labeling it.",

@@ -1,12 +1,4 @@
-import {
-  Button,
-  Field,
-  Inline,
-  Select,
-  Slider,
-  Stack,
-  Text,
-} from "@flux-ui/react";
+import { Button, Field, Inline, Slider, Stack, Text } from "@flux-ui/react";
 import { useState } from "react";
 
 const volumeMarks = [
@@ -17,25 +9,10 @@ const volumeMarks = [
   { value: 100, label: "Max" },
 ] as const;
 
-export default function Example() {
+export default function CustomHorizontalSlider() {
   const [value, setValue] = useState(40);
-  const [vertical, setVertical] = useState(false);
   return (
     <Stack gap="md">
-      <Field.Root>
-        <Field.Label>Slider orientation</Field.Label>
-        <Field.Control>
-          <Select
-            value={vertical ? "vertical" : "horizontal"}
-            onChange={(event) =>
-              setVertical(event.currentTarget.value === "vertical")
-            }
-          >
-            <option value="horizontal">Horizontal</option>
-            <option value="vertical">Vertical</option>
-          </Select>
-        </Field.Control>
-      </Field.Root>
       <Field.Root>
         <Field.Label>Preview volume</Field.Label>
         <Field.Control>
@@ -46,7 +23,6 @@ export default function Example() {
             value={value}
             onValueChange={setValue}
             appearance="custom"
-            orientation={vertical ? "vertical" : "horizontal"}
             resetValue={40}
             marks={volumeMarks}
             showValue
@@ -58,14 +34,38 @@ export default function Example() {
           Volume: {value}%. Use arrow keys; double-click to reset to 40%.
         </Field.Description>
       </Field.Root>
-      <Inline gap="md">
-        <Button variant="outline" onClick={() => setValue(40)}>
-          Reset volume
-        </Button>
-        <Text tone="muted">
-          Native range with optional marks and value output.
-        </Text>
-      </Inline>
+      <Button variant="outline" onClick={() => setValue(40)}>
+        Reset volume
+      </Button>
+    </Stack>
+  );
+}
+
+export function VerticalSlider() {
+  const [value, setValue] = useState(65);
+  return (
+    <Inline gap="md">
+      <Slider
+        aria-label="Vertical level"
+        min={0}
+        max={100}
+        value={value}
+        onValueChange={setValue}
+        appearance="custom"
+        orientation="vertical"
+        showValue
+        formatValue={(next) => `${next}%`}
+      />
+      <Text tone="muted">Minimum is at the bottom.</Text>
+    </Inline>
+  );
+}
+
+export function NativeSlider() {
+  return (
+    <Stack gap="sm">
+      <Text>Browser-native appearance</Text>
+      <Slider aria-label="Native range example" defaultValue={60} />
     </Stack>
   );
 }

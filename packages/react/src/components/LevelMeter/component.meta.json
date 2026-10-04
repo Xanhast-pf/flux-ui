@@ -2,7 +2,8 @@
   "name": "LevelMeter",
   "slug": "level-meter",
   "category": "Audio",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "A passive labelled meter, not a slider. The application owns updates, peak hold and clip reset.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

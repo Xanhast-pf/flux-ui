@@ -6,6 +6,7 @@ import {
   Fieldset,
   Inline,
   Stack,
+  Text,
 } from "@flux-ui/react";
 import { useState } from "react";
 const initialChannels = { email: true, push: false };
@@ -128,5 +129,32 @@ export function CheckboxDemo() {
         </Inline>
       </Stack>
     </Box>
+  );
+}
+
+export function CheckboxStateOverview() {
+  return (
+    <Stack gap="sm">
+      <Inline gap="sm">
+        <Checkbox aria-label="Unchecked checkbox example" />
+        <Text>Unchecked</Text>
+      </Inline>
+      <Inline gap="sm">
+        <Checkbox aria-label="Checked checkbox example" defaultChecked />
+        <Text>Checked</Text>
+      </Inline>
+      <Inline gap="sm">
+        <Checkbox aria-label="Mixed checkbox example" indeterminate />
+        <Text>Mixed / indeterminate</Text>
+      </Inline>
+      <Inline gap="sm">
+        <Checkbox
+          aria-label="Disabled checkbox example"
+          disabled
+          defaultChecked
+        />
+        <Text tone="muted">Disabled</Text>
+      </Inline>
+    </Stack>
   );
 }

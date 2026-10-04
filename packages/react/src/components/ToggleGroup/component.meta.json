@@ -2,7 +2,8 @@
   "name": "ToggleGroup",
   "slug": "toggle-group",
   "category": "Actions",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Single or multiple toggle selection with scoped roving focus.",
   "sizeClass": "interactive"
 }

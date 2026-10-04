@@ -22,3 +22,20 @@ export default function Preview() {
     </Box>
   );
 }
+
+export function ReadOnlyRating() {
+  return (
+    <Stack gap="sm">
+      <Text as="strong">Average customer rating</Text>
+      <Rating
+        aria-label="Average customer rating"
+        value={4.5}
+        step={0.5}
+        readOnly
+      />
+      <Text as="p" variant="caption" tone="muted">
+        4.5 of 5 stars from verified reviews.
+      </Text>
+    </Stack>
+  );
+}

@@ -2,7 +2,8 @@
   "name": "RadioGroup",
   "slug": "radio-group",
   "category": "Inputs",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native radio group with fieldset semantics, controlled or uncontrolled selection, and Field-compatible options.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

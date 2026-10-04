@@ -2,7 +2,8 @@
   "name": "Checkbox",
   "slug": "checkbox",
   "category": "Inputs",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native checkbox with controlled mixed presentation, form semantics, and Field composition.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

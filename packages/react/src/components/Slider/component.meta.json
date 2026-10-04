@@ -2,7 +2,8 @@
   "name": "Slider",
   "slug": "slider",
   "category": "Inputs",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Single-thumb native range input with form semantics, optional datalist marks, and visual value output.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

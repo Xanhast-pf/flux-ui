@@ -2,7 +2,8 @@
   "name": "Avatar",
   "slug": "avatar",
   "category": "Data display",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Identity images with a named, resilient fallback.",
   "sizeClass": "primitive"
 }

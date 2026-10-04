@@ -6,7 +6,8 @@ test("Slider marks and value output preserve native range behavior", async ({
 }) => {
   await page.goto("/#components/slider");
 
-  const preview = page.locator(".preview-content");
+  const previews = page.locator(".preview-content");
+  const preview = previews.first();
   const slider = preview.getByRole("slider", { name: "Preview volume" });
   const output = preview.locator("output");
   const datalist = preview.locator("datalist");
@@ -34,13 +35,14 @@ test("Slider marks and value output preserve native range behavior", async ({
   await expect(slider).toHaveValue("40");
   await expect(output).toHaveText("40%");
 
-  await preview
-    .getByRole("combobox", { name: "Slider orientation" })
-    .selectOption("vertical");
-  await expect(slider).toHaveAttribute("aria-orientation", "vertical");
+  const verticalSlider = previews
+    .nth(1)
+    .getByRole("slider", { name: "Vertical level" });
+  await expect(verticalSlider).toHaveAttribute("aria-orientation", "vertical");
+  await expect(verticalSlider).toHaveValue("65");
 
   expect(
-    (await new AxeBuilder({ page }).include(".preview-content").analyze())
+    (await new AxeBuilder({ page }).include(".preview-frame").analyze())
       .violations,
   ).toEqual([]);
 });

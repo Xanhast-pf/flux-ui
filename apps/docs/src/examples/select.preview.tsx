@@ -28,3 +28,22 @@ export default function Example() {
     </Field.Root>
   );
 }
+
+export function MultipleSelect() {
+  return (
+    <Field.Root>
+      <Field.Label>Visible environments</Field.Label>
+      <Field.Control>
+        <Select multiple size={3} defaultValue={["preview", "staging"]}>
+          <option value="preview">Preview</option>
+          <option value="staging">Staging</option>
+          <option value="production">Production</option>
+        </Select>
+      </Field.Control>
+      <Field.Description>
+        Native multiple selection remains available when the platform listbox is
+        appropriate.
+      </Field.Description>
+    </Field.Root>
+  );
+}

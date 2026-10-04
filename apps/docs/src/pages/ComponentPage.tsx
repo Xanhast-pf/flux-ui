@@ -61,6 +61,65 @@ export function ComponentPage({ slug }: { slug: string }) {
     </ExampleBoundary>
   );
 }
+
+function PreviewExample({
+  Preview,
+  title,
+  description,
+  previewLayout,
+  previewWidth,
+  compact,
+  resetKey,
+  framed,
+}: {
+  Preview: ComponentExample["Preview"];
+  title: string;
+  description: string | undefined;
+  previewLayout: "center" | "fill";
+  previewWidth: "standard" | "wide";
+  compact: boolean;
+  resetKey: string;
+  framed: boolean;
+}) {
+  const content = (
+    <Container size={compact ? "xs" : previewWidth === "wide" ? "full" : "sm"}>
+      <Stack
+        align={previewLayout === "fill" ? "stretch" : "center"}
+        data-compact={compact || undefined}
+        className="preview-content"
+      >
+        <Preview key={resetKey} />
+      </Stack>
+    </Container>
+  );
+
+  if (!framed) return content;
+
+  return (
+    <Stack gap="sm">
+      <Stack gap={1}>
+        <Text as="strong" weight="medium">
+          {title}
+        </Text>
+        {description === undefined ? null : (
+          <Text as="p" variant="caption" tone="muted">
+            {description}
+          </Text>
+        )}
+      </Stack>
+      <Box
+        surface="default"
+        border="all"
+        radius="md"
+        paddingBlock="lg"
+        paddingInline="md"
+      >
+        {content}
+      </Box>
+    </Stack>
+  );
+}
+
 function ComponentDetail({
   entry,
   example,
@@ -75,7 +134,18 @@ function ComponentDetail({
   const publicContract = publicContracts.find((item) => item.slug === slug);
   if (publicContract === undefined)
     throw new Error(`Missing generated public contract for ${slug}.`);
-  const { Preview, code, props, notes, previewLayout = "center" } = example;
+  const {
+    Preview,
+    code,
+    props,
+    notes,
+    previewLayout = "center",
+    previewWidth = "standard",
+    previewTitle = "Default",
+    previewDescription,
+    variations = [],
+  } = example;
+  const hasVariations = variations.length > 0;
   return (
     <Stack gap="lg">
       <Breadcrumbs.Root>
@@ -119,7 +189,11 @@ function ComponentDetail({
               paddingBlock={3}
             >
               <Inline justify="between" wrap>
-                <Text>Live {entry.name}</Text>
+                <Text>
+                  {hasVariations
+                    ? entry.name + " examples"
+                    : "Live " + entry.name}
+                </Text>
                 <Inline gap="sm" wrap>
                   <Toggle pressed={compact} onPressedChange={setCompact}>
                     Compact preview
@@ -145,23 +219,44 @@ function ComponentDetail({
               paddingInline="md"
               className="preview-stage"
             >
-              <Container
-                size={
-                  compact
-                    ? "xs"
-                    : example.previewWidth === "wide"
-                      ? "full"
-                      : "sm"
-                }
-              >
-                <Stack
-                  align={previewLayout === "fill" ? "stretch" : "center"}
-                  data-compact={compact || undefined}
-                  className="preview-content"
-                >
-                  <Preview key={version} />
+              {hasVariations ? (
+                <Stack gap="xl">
+                  <PreviewExample
+                    Preview={Preview}
+                    title={previewTitle}
+                    description={previewDescription}
+                    previewLayout={previewLayout}
+                    previewWidth={previewWidth}
+                    compact={compact}
+                    resetKey={String(version) + "-primary"}
+                    framed
+                  />
+                  {variations.map((variation, index) => (
+                    <PreviewExample
+                      key={variation.title}
+                      Preview={variation.Preview}
+                      title={variation.title}
+                      description={variation.description}
+                      previewLayout={variation.previewLayout ?? previewLayout}
+                      previewWidth={variation.previewWidth ?? previewWidth}
+                      compact={compact}
+                      resetKey={String(version) + "-" + String(index)}
+                      framed
+                    />
+                  ))}
                 </Stack>
-              </Container>
+              ) : (
+                <PreviewExample
+                  Preview={Preview}
+                  title={previewTitle}
+                  description={previewDescription}
+                  previewLayout={previewLayout}
+                  previewWidth={previewWidth}
+                  compact={compact}
+                  resetKey={String(version)}
+                  framed={false}
+                />
+              )}
             </Box>
           </Box>
         </Tabs.Panel>

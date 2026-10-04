@@ -11,7 +11,7 @@ async function expectNoViolations(
   // Wait for lazy preview content; auditing a Suspense fallback misses the control.
   await expect(page.locator("main h1")).toBeVisible();
   if (page.url().includes("#components/")) {
-    await expect(page.locator(".preview-content")).toBeVisible();
+    await expect(page.locator(".preview-content").first()).toBeVisible();
   }
   const path = new URL(page.url()).hash.slice(1).split("?", 1)[0] ?? "";
   if (path === "" || path === "overview") {

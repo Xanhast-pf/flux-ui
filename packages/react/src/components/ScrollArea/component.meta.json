@@ -2,7 +2,8 @@
   "name": "ScrollArea",
   "slug": "scroll-area",
   "category": "Layout",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Named native overflow region with overflow-aware keyboard focus.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

@@ -7,13 +7,21 @@ export default function Example() {
         A semantic break between ideas.
       </Text>
       <Separator />
-      <Inline gap="md">
-        <Text>Compose</Text>
-        <Separator decorative orientation="vertical" />
-        <Text>Customize</Text>
-        <Separator decorative orientation="vertical" />
-        <Text>Ship</Text>
-      </Inline>
+      <Text as="p" variant="body" tone="muted">
+        The next idea starts after a real separator in the document structure.
+      </Text>
     </Stack>
+  );
+}
+
+export function DecorativeVerticalSeparators() {
+  return (
+    <Inline gap="md">
+      <Text>Compose</Text>
+      <Separator decorative orientation="vertical" />
+      <Text>Customize</Text>
+      <Separator decorative orientation="vertical" />
+      <Text>Ship</Text>
+    </Inline>
   );
 }

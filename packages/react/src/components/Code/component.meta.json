@@ -2,7 +2,8 @@
   "name": "Code",
   "slug": "code",
   "category": "Typography",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Literal inline code with shared monospace styling.",
   "sizeClass": "primitive"
 }

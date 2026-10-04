@@ -79,14 +79,11 @@ test("Slider and Knob previews demonstrate reset, sizing and native keyboard con
   page,
 }) => {
   await page.goto("/#components/slider");
-  const preview = page.locator(".preview-content");
-  await preview
-    .getByRole("combobox", { name: "Slider orientation" })
-    .selectOption("vertical");
+  const previews = page.locator(".preview-content");
+  const preview = previews.first();
   const slider = preview.getByRole("slider", { name: "Preview volume" });
-  await expect(slider).toHaveAttribute("aria-orientation", "vertical");
   await slider.focus();
-  await page.keyboard.press("ArrowUp");
+  await page.keyboard.press("ArrowRight");
   await expect(slider).toHaveValue("45");
   await slider.dblclick();
   await expect(slider).toHaveValue("40");
@@ -95,11 +92,23 @@ test("Slider and Knob previews demonstrate reset, sizing and native keyboard con
   await expect(slider).toHaveValue("100");
   await preview.getByRole("button", { name: "Reset volume" }).click();
   await expect(slider).toHaveValue("40");
+
+  const verticalSlider = previews
+    .nth(1)
+    .getByRole("slider", { name: "Vertical level" });
+  await expect(verticalSlider).toHaveAttribute("aria-orientation", "vertical");
+  await verticalSlider.focus();
+  await page.keyboard.press("ArrowUp");
+  await expect(verticalSlider).toHaveValue("66");
+
   await page.goto("/#components/knob");
-  const knob = preview.getByRole("slider", { name: "Filter cutoff" });
-  await preview.getByRole("combobox", { name: "Knob size" }).selectOption("lg");
+  const knobPreview = page.locator(".preview-content").first();
+  const knob = knobPreview.getByRole("slider", { name: "Filter cutoff" });
+  await knobPreview
+    .getByRole("combobox", { name: "Knob size" })
+    .selectOption("lg");
   await expect(knob).toHaveAttribute("data-size", "lg");
-  await preview
+  await knobPreview
     .getByRole("spinbutton", { name: "Exact cutoff (Hz)" })
     .fill("2000");
   await knob.dblclick();

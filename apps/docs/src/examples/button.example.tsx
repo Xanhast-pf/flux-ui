@@ -1,9 +1,35 @@
-import Preview from "./button.preview.js";
+import Preview, {
+  ButtonSizes,
+  ButtonStates,
+  ButtonTones,
+} from "./button.preview.js";
 import code from "./button.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
+  previewTitle: "Variants",
+  previewDescription:
+    "Choose the treatment independently from semantic tone and control size.",
+  variations: [
+    {
+      title: "Tones",
+      description: "Accent, neutral, and danger communicate action intent.",
+      Preview: ButtonTones,
+    },
+    {
+      title: "Sizes",
+      description:
+        "The same action treatment scales through three control sizes.",
+      Preview: ButtonSizes,
+    },
+    {
+      title: "States",
+      description:
+        "Disabled and loading states preserve native button semantics.",
+      Preview: ButtonStates,
+    },
+  ],
   code,
   notes: [
     "Native button semantics with Flux variants, tones, sizes, and states.",

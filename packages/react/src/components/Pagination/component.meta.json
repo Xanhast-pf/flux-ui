@@ -2,7 +2,8 @@
   "name": "Pagination",
   "slug": "pagination",
   "category": "Navigation",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Controlled paging controls with native buttons, first/last affordances, and bounded generated ranges.",
   "sizeClass": "primitive",
   "nonDomParts": ["Pagination.Range"]

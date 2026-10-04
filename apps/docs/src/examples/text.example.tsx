@@ -1,9 +1,20 @@
 import type { ComponentExample } from "../lib/examples.js";
-import Preview from "./text.preview.js";
+import Preview, { TextToneAndEmphasis } from "./text.preview.js";
 import code from "./text.preview.tsx?raw";
 export default {
   Preview,
   previewLayout: "fill",
+  previewTitle: "Semantic roles",
+  previewDescription:
+    "Body, supporting, metric, and time content can each use the right native element.",
+  variations: [
+    {
+      title: "Tone and emphasis",
+      description:
+        "Finite tone, weight, italic, and decoration choices stay independent from semantics.",
+      Preview: TextToneAndEmphasis,
+    },
+  ],
   code,
   notes: [
     "Semantic element and visual role are independent. A large number is not automatically a heading.",

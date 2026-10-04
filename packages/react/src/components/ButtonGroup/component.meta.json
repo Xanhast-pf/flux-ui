@@ -2,7 +2,8 @@
   "name": "ButtonGroup",
   "slug": "button-group",
   "category": "Actions",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Semantic attached-edge grouping for buttons without duplicating Button appearance or selection state.",
   "sizeClass": "primitive",
   "publicDataAttributes": {

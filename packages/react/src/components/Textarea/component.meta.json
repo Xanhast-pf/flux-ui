@@ -2,7 +2,8 @@
   "name": "Textarea",
   "slug": "textarea",
   "category": "Inputs",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native multi-line text control with optional CSS-native content autosizing and row constraints.",
   "sizeClass": "primitive",
   "publicDataAttributes": {
