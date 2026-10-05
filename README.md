@@ -29,13 +29,13 @@ The repository already enforces the same quality contracts intended for the matu
 
 The public docs app is a real consumer of the public library, not just a health dashboard. Explore the original Flux icon set, a local release-room demo, the collection lab, component customization, theme/accent presets, Ctrl/Cmd+K search, and dedicated component pages with live previews, copyable source, API notes and measured size information.
 
-The component catalog does not mount every demo. Individual examples load on demand; the displayed code is imported from the same TSX source as the rendered preview. Search uses Flux Dialog; persistent documentation navigation uses the public non-modal Sidebar. It pushes content on wider screens and stacks above it on narrow screens, without closing on route changes. Drawer remains available for temporary modal tasks. Component pages use Breadcrumbs, Toggle and IconButton; loading examples use Skeleton and Spinner, and keyboard shortcuts remain available through Ctrl/Cmd+K. Existing health, size, performance, install and token deep links remain available; the legacy rules route opens Engineering.
+The component catalog does not mount every demo. Individual examples load on demand; the displayed code is imported from the same TSX source as the rendered preview. Search uses Flux Dialog. At 48rem and above, persistent documentation navigation uses the public non-modal Sidebar and keeps its desktop open preference across route changes. Below 48rem, the same semantic navigation is composed inside the public Drawer, closes on navigation, and follows the Drawer focus/escape contract. Component pages use Breadcrumbs, Toggle and IconButton; loading examples use Skeleton and Spinner, and keyboard shortcuts remain available through Ctrl/Cmd+K. Existing health, size, performance, install and token deep links remain available; the legacy rules route opens Engineering.
 
 Demos do not deploy anything or send messages. Only theme and accent preferences persist locally. Size figures are committed measurements, not live CI results; newly added components show **Pending baseline** until measured.
 
 See [`docs/workshop.md`](docs/workshop.md) for routes, source conventions, scope, and browser verification.
 
-The default examples and docs compose public layout, typography, surfaces, scoped themes, and native-backed controls. [`docs/dogfooding.md`](docs/dogfooding.md) describes the ownership guardrail, constrained semantic APIs, and deliberate artwork/performance exceptions. This is not a zero-CSS claim or a replacement for browser validation.
+The default examples and docs compose public layout, typography, surfaces, scoped themes, and native-backed controls. `pnpm flux check dogfood` audits every regular docs source file and every docs stylesheet; whole-source exceptions are restricted to isolated native performance fixtures, while artwork and shell-integration CSS remain exact, reviewed ownership contracts. [`docs/dogfooding.md`](docs/dogfooding.md) describes the guardrail and what “100% Flux” means. This is not a zero-CSS claim or a replacement for browser validation.
 
 ## Clone and run
 

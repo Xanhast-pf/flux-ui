@@ -187,7 +187,7 @@ follow-on. Existing cash-flow SVG and creative-tool geometry stay explicitly doc
 Bundle/performance rows use public Grid, Text, Card, Meter and ScrollArea. They are not a public charting library, audio
 engine, video player, or evidence of real financial/media operations.
 
-## Persistent Sidebar, not a modal Drawer
+## Sidebar component and responsive docs navigation
 
 `Sidebar.Root` owns controlled (`open`/`onOpenChange`) or uncontrolled
 (`defaultOpen`) state. Compose `Sidebar.Toggle`, `Sidebar.Layout`,
@@ -212,22 +212,25 @@ inside it for navigation links; this is not an ARIA menu.
 </Sidebar.Root>
 ```
 
-Keep Root, Panel and Layout **outside** the keyed route/Suspense content.
-Open state, child state, and panel scrolling then survive route transitions.
-The closed panel stays mounted but is hidden and not keyboard-reachable.
-There is no backdrop, modal role, focus trap, body scroll lock, or automatic
-close on Escape/navigation. Closing while focus is inside returns focus to an
-external toggle; opening never takes focus away from the user.
+Keep Root, Panel and Layout **outside** keyed route/Suspense content when Sidebar
+is the persistent application navigation. Open state, child state, and panel
+scrolling then survive route transitions. The closed panel stays mounted but is
+hidden and not keyboard-reachable. Sidebar itself has no backdrop, modal role,
+focus trap, body scroll lock, router, storage, or automatic close on
+Escape/navigation. Closing while focus is inside returns focus to an external
+toggle; opening never takes focus away from the user.
 
-At `48rem` and above, the panel occupies a column and pushes content sideways.
-Below `48rem` it stacks in flow above the content, with a bounded native scroll
-area. It does **not** become an overlay or leave the content a few pixels wide.
-`--flux-sidebar-width` and `--flux-sidebar-offset` on Layout are optional public
-integration hooks. The component owns no router or storage. The docs keep the
-state for the current session; a full reload starts closed.
+The standalone Sidebar's responsive fallback still stacks its panel in flow below
+`48rem`; that is a component behavior, not the docs site's mobile integration.
+The docs deliberately render `Sidebar.Panel` only at desktop widths and use a
+separate public `Drawer.Popup` below 48rem. Mobile Drawer state closes on route/hash
+navigation and breakpoint changes, while the desktop Sidebar preference survives.
+The same semantic `Box as="nav"` content is used in either host.
 
-`Drawer` remains a native modal dialog for temporary workflows. Its Escape,
-focus containment, backdrop and focus restoration contracts are unchanged.
+`Drawer` remains the native modal contract for temporary surfaces, including the
+docs mobile-navigation host. Its Escape, focus containment, backdrop, scroll-lock,
+and focus-restoration behavior stay distinct from Sidebar rather than turning
+Sidebar itself into a modal.
 
 ## Defaults, rhythm, and instance boundaries
 
@@ -254,9 +257,19 @@ for the hosted preview.
 
 All **ordinary reusable UI** in the live pages and default examples must be
 expressible using public Flux components and props. A `Box` surrounding an
-app-owned control skin does not qualify. Custom SVG drawings, plotted values,
-brand assets, native options, and deliberately isolated native benchmarks are
-not alternate UI libraries; their ownership is explicit and narrowly bounded.
+app-owned control skin does not qualify. The ownership gate permits no whole-file
+UI exceptions: full-source exceptions are restricted to isolated
+`apps/docs/src/perf/scenarios/*.fixture.tsx` native benchmark references. Page,
+UI-composition, demo, and default-example directories cannot add their own owned
+stylesheets; their controls, layout, typography, surfaces, fields, overflow, and
+feedback must come from public Flux.
+
+Docs-owned CSS is limited to the reviewed top-level shell integration, original
+showcase/collection artwork and data geometry, and isolated benchmark reference
+styling. Every such stylesheet still has an exact selector/property contract and
+a declaration ceiling. Custom SVG drawings, plotted values, brand assets, native
+`option`/`optgroup` elements, and deliberately isolated native benchmarks are not
+alternate UI libraries; their ownership is explicit and narrowly bounded.
 
 This remains a reviewed architectural requirement, not a claim that an AST
 checker can prove arbitrary JavaScript correct. Unknown new styling/imports fail

@@ -90,11 +90,16 @@ unneeded publishing credentials. No npm token secret is used by this workflow.
 
 ## 4. Prepare real versions and perform a dry run
 
-The uploaded baseline's public package versions are `0.0.0`. Packing deliberately
-rejects that placeholder and incompatible version/tag combinations. For the alpha
-channel, enter Changesets prerelease mode before versioning:
+Public package versions are owned by the individual package manifests and
+Changesets; do not infer them from the private root package or copy a historical
+version into this guide. Before versioning, inspect the current release plan with
+`pnpm exec changeset status --verbose`. Packing deliberately rejects any public
+workspace that still has the `0.0.0` placeholder and rejects incompatible
+version/tag combinations. For the alpha channel, enter Changesets prerelease mode
+before versioning:
 
 ```sh
+pnpm exec changeset status --verbose
 pnpm exec changeset pre enter alpha
 pnpm flux release version
 pnpm install --lockfile-only
