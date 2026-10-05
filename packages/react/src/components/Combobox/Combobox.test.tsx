@@ -197,6 +197,26 @@ describe("Combobox", () => {
     expect(changed).toHaveBeenCalledWith("engineering");
     expect(screen.getByRole("combobox")).toHaveValue("Design");
   });
+  it("preserves a committed disabled option as display and form state", () => {
+    render(
+      <form aria-label="Team form">
+        <Combobox
+          aria-label="Team"
+          options={options}
+          value="legacy"
+          name="team"
+        />
+      </form>,
+    );
+
+    expect(screen.getByRole("combobox", { name: "Team" })).toHaveValue(
+      "Engineering legacy",
+    );
+    expect(
+      new FormData(screen.getByRole<HTMLFormElement>("form")).get("team"),
+    ).toBe("legacy");
+  });
+
   it("resets an uncontrolled form and hides the active descendant when disabled", async () => {
     const user = userEvent.setup();
     const view = render(

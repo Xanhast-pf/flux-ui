@@ -75,9 +75,7 @@ export function Combobox({
   const [active, setActive] = useState<string | null>(null);
   const [input, setInput] = useState<HTMLInputElement | null>(null);
   const [surface, setSurface] = useState<HTMLDivElement | null>(null);
-  const selected = options.find(
-    (item) => item.value === value && !item.disabled,
-  );
+  const selected = options.find((item) => item.value === value);
   const text = query ?? selected?.label ?? "";
   const filtered =
     query === null

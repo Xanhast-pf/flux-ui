@@ -32,6 +32,14 @@ function useTree(): TreeContextValue {
   return context;
 }
 
+function isHtmlElement(
+  value: unknown,
+  owner: HTMLElement,
+): value is HTMLElement {
+  const Type = owner.ownerDocument.defaultView?.HTMLElement;
+  return Type !== undefined && value instanceof Type;
+}
+
 function allTreeItems(tree: HTMLElement): HTMLElement[] {
   return [...tree.querySelectorAll<HTMLElement>('[role="treeitem"]')].filter(
     (node) => node.closest('[role="tree"]') === tree,
@@ -44,18 +52,18 @@ function visibleTreeItems(tree: HTMLElement): HTMLElement[] {
 
 function parentTreeItem(node: HTMLElement): HTMLElement | null {
   const parent = node.parentElement?.closest('[role="treeitem"]');
-  return parent instanceof HTMLElement ? parent : null;
+  return isHtmlElement(parent, node) ? parent : null;
 }
 
 function firstChildTreeItem(node: HTMLElement): HTMLElement | null {
   const nestedGroup = [...node.children].find(
     (child) => child.getAttribute("role") === "group",
   );
-  if (!(nestedGroup instanceof HTMLElement)) return null;
+  if (!isHtmlElement(nestedGroup, node)) return null;
   const first = [...nestedGroup.children].find(
     (child) => child.getAttribute("role") === "treeitem",
   );
-  return first instanceof HTMLElement ? first : null;
+  return isHtmlElement(first, node) ? first : null;
 }
 
 function setTabStop(
@@ -131,7 +139,7 @@ function TreeViewRoot({
     const active = tree.ownerDocument.activeElement;
 
     if (
-      active instanceof HTMLElement &&
+      isHtmlElement(active, tree) &&
       active.getAttribute("role") === "treeitem" &&
       active.closest('[role="tree"]') === tree
     ) {
@@ -166,7 +174,7 @@ function TreeViewRoot({
     const tree = event.currentTarget;
     const target = event.target;
     if (
-      target instanceof HTMLElement &&
+      isHtmlElement(target, tree) &&
       target.getAttribute("role") === "treeitem" &&
       target.closest('[role="tree"]') === tree
     ) {
@@ -190,7 +198,7 @@ function TreeViewRoot({
     const tree = event.currentTarget;
     const target = event.target;
     if (
-      !(target instanceof HTMLElement) ||
+      !isHtmlElement(target, tree) ||
       target.getAttribute("role") !== "treeitem" ||
       target.closest('[role="tree"]') !== tree
     ) {
@@ -292,8 +300,10 @@ function TreeViewItem({
     onClick?.(event);
     if (event.defaultPrevented || disabled) return;
     const target = event.target;
+    const Type = event.currentTarget.ownerDocument.defaultView?.Element;
     if (
-      !(target instanceof Element) ||
+      Type === undefined ||
+      !(target instanceof Type) ||
       target.closest("[data-flux-tree-label]")?.closest('[role="treeitem"]') !==
         event.currentTarget
     ) {

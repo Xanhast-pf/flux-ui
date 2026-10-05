@@ -1,9 +1,10 @@
 import { createRef } from "react";
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { DataGrid } from "./DataGrid.js";
+import type { DataGridSort } from "./DataGrid.types.js";
 
 const rows = [
   { id: "aapl", symbol: "AAPL", quantity: 12, state: "Open" },
@@ -100,6 +101,31 @@ describe("DataGrid", () => {
     expect(screen.getByRole("button", { name: "After" })).toHaveFocus();
   });
 
+  it("keeps keyboard navigation in the grid owner document", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const rendered = render(<Example />, { container });
+
+    try {
+      const cells =
+        container.querySelectorAll<HTMLElement>('[role="gridcell"]');
+      const first = cells[0];
+      const second = cells[1];
+      if (first === undefined || second === undefined)
+        throw new Error("Missing grid cells.");
+      first.focus();
+      fireEvent.keyDown(first, { key: "ArrowRight" });
+      expect(ownerDocument.activeElement).toBe(second);
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
+  });
+
   it("preserves the focused stable cell across ordinary rerenders", () => {
     const { rerender } = render(<Example />);
     const pending = screen.getByRole("gridcell", { name: "Pending" });
@@ -156,6 +182,23 @@ describe("DataGrid", () => {
         />,
       ),
     ).toThrow(/non-empty headers/u);
+
+    const invalidSorting: DataGridSort = {
+      columnId: "quantity",
+      direction: "ascending",
+    };
+    Object.defineProperty(invalidSorting, "direction", { value: "sideways" });
+    expect(() =>
+      render(
+        <DataGrid
+          label="Bad sorting"
+          rows={rows}
+          columns={columns}
+          getRowId={(row) => row.id}
+          sorting={invalidSorting}
+        />,
+      ),
+    ).toThrow(/sort direction/u);
   });
 
   it("supports pointer and keyboard sorting without adding header tab stops", async () => {

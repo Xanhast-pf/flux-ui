@@ -221,7 +221,8 @@ export function DataTable<Row>({
         }}
         onBlurCapture={(event) => {
           if (
-            event.relatedTarget instanceof Node &&
+            event.relatedTarget instanceof
+              event.currentTarget.ownerDocument.defaultView!.Node &&
             !event.currentTarget.contains(event.relatedTarget)
           )
             setFocusedId(null);

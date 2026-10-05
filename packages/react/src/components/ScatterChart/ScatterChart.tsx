@@ -172,7 +172,7 @@ export function ScatterChart({
     const position = pointerPosition(clientX, clientY, node);
     if (!position) return null;
 
-    const hitSeriesIndex = chartSeriesIndexFromTarget(target);
+    const hitSeriesIndex = chartSeriesIndexFromTarget(target, node);
     if (
       hitSeriesIndex !== null &&
       hitSeriesIndex >= 0 &&

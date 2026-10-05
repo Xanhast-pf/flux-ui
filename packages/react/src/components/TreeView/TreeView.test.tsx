@@ -1,6 +1,6 @@
 import { createRef } from "react";
 import { renderToString } from "react-dom/server";
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { TreeView } from "./TreeView.js";
@@ -202,6 +202,37 @@ describe("TreeView", () => {
     alpha.focus();
     await user.keyboard("{ArrowDown}");
     expect(screen.getByRole("treeitem", { name: "Gamma" })).toHaveFocus();
+  });
+
+  it("keeps keyboard navigation in the tree owner document", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const rendered = render(
+      <TreeView.Root aria-label="Files">
+        <TreeView.Item value="a" label="Alpha" />
+        <TreeView.Item value="b" label="Beta" />
+      </TreeView.Root>,
+      { container },
+    );
+
+    try {
+      const items =
+        container.querySelectorAll<HTMLElement>('[role="treeitem"]');
+      const alpha = items[0];
+      const beta = items[1];
+      if (alpha === undefined || beta === undefined)
+        throw new Error("Missing tree items.");
+      alpha.focus();
+      fireEvent.keyDown(alpha, { key: "ArrowDown" });
+      expect(ownerDocument.activeElement).toBe(beta);
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
   });
 
   it("forwards root/item escape hatches and refs", () => {

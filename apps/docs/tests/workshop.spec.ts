@@ -154,6 +154,41 @@ test("mobile component search navigates and closes the documentation drawer", as
   await expect(search).not.toBeVisible();
 });
 
+test("mobile navigation opens as a viewport drawer while scrolled", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto("/#components/card");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Card", exact: true }),
+  ).toBeVisible();
+  await page.evaluate(() => {
+    const spacer = document.createElement("div");
+    spacer.style.height = "200vh";
+    document.body.append(spacer);
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "instant",
+    });
+  });
+  const before = await page.evaluate(() => window.scrollY);
+  expect(before).toBeGreaterThan(0);
+
+  const trigger = page.getByRole("button", {
+    name: "Toggle navigation",
+    exact: true,
+  });
+  await expect(trigger).toBeVisible();
+  await trigger.evaluate((node: HTMLButtonElement) => node.click());
+
+  const drawer = page.getByRole("dialog", { name: "Documentation" });
+  await expect(drawer).toBeVisible();
+  const box = await drawer.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.y).toBe(0);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(before);
+});
+
 test("search keyboard shortcut navigates real links and Escape restores focus", async ({
   page,
 }) => {

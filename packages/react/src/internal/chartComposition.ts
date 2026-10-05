@@ -5,8 +5,10 @@ export type ChartTooltipEvent = "hover" | "click";
 
 export function chartSeriesIndexFromTarget(
   target: EventTarget | null,
+  owner: Element,
 ): number | null {
-  if (!(target instanceof Element)) return null;
+  const Type = owner.ownerDocument.defaultView?.Element;
+  if (!Type || !(target instanceof Type)) return null;
   const value = target
     .closest("[data-chart-series]")
     ?.getAttribute("data-chart-series");
