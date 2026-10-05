@@ -157,6 +157,11 @@ describe("DataTable hardening", () => {
       if (checkbox === null || region === null)
         throw new Error("Missing DataTable focus targets.");
       checkbox.focus();
+      fireEvent.scroll(region, { target: { scrollTop: 40000 } });
+      expect(
+        container.querySelector("[data-row-id='row-0']"),
+      ).toBeInTheDocument();
+
       outside.focus();
       fireEvent.scroll(region, { target: { scrollTop: 40000 } });
       expect(

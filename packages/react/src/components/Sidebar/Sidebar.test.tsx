@@ -105,6 +105,35 @@ describe("Sidebar", () => {
     await user.click(external);
     expect(external).toHaveFocus();
   });
+  it("restores focus in the sidebar owner document after a controlled close", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const renderSidebar = (open: boolean) => (
+      <Sidebar.Root open={open}>
+        <Sidebar.Toggle>Iframe toggle</Sidebar.Toggle>
+        <Sidebar.Panel aria-label="Iframe navigation">
+          <button type="button">Inside iframe</button>
+        </Sidebar.Panel>
+      </Sidebar.Root>
+    );
+    const rendered = render(renderSidebar(true), { container });
+
+    try {
+      const controls = within(container);
+      const toggle = controls.getByRole("button", { name: "Iframe toggle" });
+      controls.getByRole("button", { name: "Inside iframe" }).focus();
+      rendered.rerender(renderSidebar(false));
+      expect(ownerDocument.activeElement).toBe(toggle);
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
+  });
+
   it("isolates independent roots and preserves an external page state", async () => {
     const user = userEvent.setup();
     function Example() {

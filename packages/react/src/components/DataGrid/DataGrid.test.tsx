@@ -101,14 +101,29 @@ describe("DataGrid", () => {
     expect(screen.getByRole("button", { name: "After" })).toHaveFocus();
   });
 
-  it("keeps keyboard navigation in the grid owner document", () => {
+  it("keeps keyboard and pointer interaction in the grid owner document", () => {
     const iframe = document.createElement("iframe");
     document.body.append(iframe);
     const ownerDocument = iframe.contentDocument;
     if (ownerDocument === null) throw new Error("Missing iframe document.");
     const container = ownerDocument.createElement("div");
     ownerDocument.body.append(container);
-    const rendered = render(<Example />, { container });
+    const editableColumns = columns.map((column) =>
+      column.id === "symbol"
+        ? { ...column, editable: true, sortable: false }
+        : column,
+    );
+    const rendered = render(
+      <DataGrid
+        label="Realm grid"
+        rows={rows}
+        columns={editableColumns}
+        getRowId={(row) => row.id}
+        selectable
+        onCellEditCommit={vi.fn()}
+      />,
+      { container },
+    );
 
     try {
       const cells =
@@ -120,6 +135,19 @@ describe("DataGrid", () => {
       first.focus();
       fireEvent.keyDown(first, { key: "ArrowRight" });
       expect(ownerDocument.activeElement).toBe(second);
+
+      fireEvent.click(first);
+      expect(first.closest('[role="row"]')).toHaveAttribute(
+        "aria-selected",
+        "true",
+      );
+
+      fireEvent.doubleClick(first);
+      const editor = container.querySelector<HTMLInputElement>(
+        'input[aria-label="Edit Symbol, row 1"]',
+      );
+      expect(editor).not.toBeNull();
+      expect(ownerDocument.activeElement).toBe(editor);
     } finally {
       rendered.unmount();
       iframe.remove();

@@ -248,6 +248,43 @@ describe("Combobox", () => {
     );
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
   });
+  it("closes on an outside pointer target in the combobox owner document", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const rendered = render(
+      <>
+        <Combobox aria-label="Realm team" options={options} />
+        <p data-testid="realm-outside">Outside</p>
+      </>,
+      { container },
+    );
+
+    try {
+      const input =
+        container.querySelector<HTMLInputElement>('[role="combobox"]');
+      const outside = container.querySelector<HTMLElement>(
+        '[data-testid="realm-outside"]',
+      );
+      if (input === null || outside === null)
+        throw new Error("Missing combobox realm targets.");
+      fireEvent.focus(input);
+      const listbox = container.querySelector<HTMLElement>('[role="listbox"]');
+      const surface = listbox?.parentElement;
+      if (surface === null || surface === undefined)
+        throw new Error("Missing combobox popup.");
+      expect(surface).not.toHaveAttribute("hidden");
+      fireEvent.pointerDown(outside);
+      expect(surface).toHaveAttribute("hidden");
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
+  });
+
   it("closes on a non-focusable outside pointer target", async () => {
     const user = userEvent.setup();
     render(

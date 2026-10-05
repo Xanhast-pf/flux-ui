@@ -232,7 +232,7 @@ function PopoverPopup({
     function outside(event: Event) {
       const target = event.target;
       if (
-        target instanceof Node &&
+        target instanceof doc.defaultView!.Node &&
         !node?.contains(target) &&
         !trigger?.contains(target)
       )
@@ -240,7 +240,7 @@ function PopoverPopup({
     }
     function escape(event: KeyboardEvent) {
       if (
-        event.target instanceof Element &&
+        event.target instanceof doc.defaultView!.Element &&
         event.target.closest("[data-flux-popover]") !== node
       )
         return;

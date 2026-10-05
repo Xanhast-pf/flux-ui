@@ -45,7 +45,8 @@ export function TabsList({
   );
   useLayoutEffect(() => {
     const node = scope.current;
-    if (!node) return;
+    const view = node?.ownerDocument.defaultView;
+    if (!node || !view) return;
     const reconcile = () => {
       const candidates = tabs(node);
       const all = candidates.filter((tab) => isRovingItemAvailable(tab, node));
@@ -69,14 +70,14 @@ export function TabsList({
     };
     const focus = (event: FocusEvent) => {
       if (
-        event.target instanceof HTMLButtonElement &&
+        event.target instanceof view.HTMLButtonElement &&
         event.target.closest('[role="tablist"]') === node
       )
         focused.current = event.target;
     };
     const blur = (event: FocusEvent) => {
       if (
-        event.relatedTarget instanceof Node &&
+        event.relatedTarget instanceof view.Node &&
         !node.contains(event.relatedTarget)
       )
         focused.current = null;
@@ -117,13 +118,15 @@ export function TabsList({
       onKeyDown={(event) => {
         onKeyDown?.(event);
         const node = event.currentTarget;
+        const Type = node.ownerDocument.defaultView?.Element;
         if (
           event.defaultPrevented ||
           event.altKey ||
           event.ctrlKey ||
           event.metaKey ||
           event.nativeEvent.isComposing ||
-          !(event.target instanceof Element) ||
+          !Type ||
+          !(event.target instanceof Type) ||
           event.target.closest('[role="tablist"]') !== node
         )
           return;
@@ -137,7 +140,7 @@ export function TabsList({
           {
             orientation: context.orientation,
             direction:
-              node.ownerDocument.defaultView?.getComputedStyle(node)
+              node.ownerDocument.defaultView.getComputedStyle(node)
                 .direction === "rtl"
                 ? "rtl"
                 : "ltr",

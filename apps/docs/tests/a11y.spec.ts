@@ -94,6 +94,17 @@ test("overlays are accessible while open", async ({ page }) => {
   await page.getByRole("button", { name: /Search docs/ }).click();
   await expectNoViolations(page, "dialog[open]", modalWcagTags);
 });
+
+test("visible toast is accessible", async ({ page }) => {
+  await page.goto("/#components/toast");
+  await page
+    .getByRole("button", { name: "Save local draft", exact: true })
+    .click();
+  const status = page.getByRole("status");
+  await expect(status).toBeVisible();
+  await status.hover();
+  await expectNoViolations(page);
+});
 for (const theme of ["light", "dark"] as const) {
   for (const palette of [
     "slate",

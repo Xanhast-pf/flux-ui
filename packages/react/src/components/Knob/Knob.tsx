@@ -54,7 +54,7 @@ export function Knob({
   const [localValue, setLocalValue] = useState(defaultValue);
   const state = useRef<{
     reset: number;
-    key: boolean;
+    key: number | null;
     pointer: null | {
       id: number;
       y: number;
@@ -62,7 +62,7 @@ export function Knob({
       start: number;
       value: number;
     };
-  }>({ reset: defaultValue, key: false, pointer: null }).current;
+  }>({ reset: defaultValue, key: null, pointer: null }).current;
   if (resetValue !== undefined && !Number.isFinite(resetValue))
     throw new RangeError("Knob.resetValue must be finite.");
   const raw = controlled ?? localValue;
@@ -78,9 +78,10 @@ export function Knob({
     if (commit) onValueCommit?.(next);
   }
   function finishKey(commit: boolean) {
-    if (!state.key) return;
-    state.key = false;
-    if (commit && !disabled) onValueCommit?.(value);
+    const next = state.key;
+    if (next === null) return;
+    state.key = null;
+    if (commit && !disabled) onValueCommit?.(next);
   }
   function cancelPointer(event: PointerEvent<HTMLDivElement>) {
     const pointer = state.pointer;
@@ -118,7 +119,7 @@ export function Knob({
           return;
         const pointer = state.pointer;
         state.pointer = null;
-        state.key = false;
+        state.key = null;
         if (pointer && event.currentTarget.hasPointerCapture(pointer.id))
           event.currentTarget.releasePointerCapture(pointer.id);
         publish(snapKnob(resetValue ?? state.reset, min, max, step), true);
@@ -212,10 +213,15 @@ export function Knob({
         const ticks = keySteps[event.key];
         if (typeof ticks !== "number") return;
         event.preventDefault();
-        state.key = true;
-        publish(
-          stepKnob(value, min, max, event.shiftKey ? step / 10 : step, ticks),
+        const next = stepKnob(
+          value,
+          min,
+          max,
+          event.shiftKey ? step / 10 : step,
+          ticks,
         );
+        state.key = next;
+        publish(next);
       }}
       onKeyUp={(event) => {
         onKeyUp?.(event);

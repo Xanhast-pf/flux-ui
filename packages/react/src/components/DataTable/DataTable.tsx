@@ -213,7 +213,10 @@ export function DataTable<Row>({
         }}
         onFocusCapture={(event) => {
           const target = event.target;
-          if (target instanceof Element)
+          if (
+            target instanceof
+            event.currentTarget.ownerDocument.defaultView!.Element
+          )
             setFocusedId(
               target.closest<HTMLElement>("[data-row-id]")?.dataset.rowId ??
                 null,

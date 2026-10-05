@@ -492,7 +492,7 @@ export function DataGrid<Row>({
     onClick?.(event);
     if (event.defaultPrevented || !selectable) return;
     const target = event.target;
-    if (!(target instanceof Element)) return;
+    if (!isHtmlElement(target, event.currentTarget)) return;
     if (target.closest('[data-flux-grid-editor="true"]')) return;
     const cellElement = target.closest<HTMLElement>('[role="gridcell"]');
     if (cellElement === null || !event.currentTarget.contains(cellElement))
@@ -505,7 +505,7 @@ export function DataGrid<Row>({
     onDoubleClick?.(event);
     if (event.defaultPrevented) return;
     const target = event.target;
-    if (!(target instanceof Element)) return;
+    if (!isHtmlElement(target, event.currentTarget)) return;
     const cellElement = target.closest<HTMLElement>('[role="gridcell"]');
     if (cellElement === null || !event.currentTarget.contains(cellElement))
       return;

@@ -27,6 +27,15 @@ interface ToastState extends ToastController {
   dismissLabel: string;
 }
 const Context = createContext<ToastState | null>(null);
+
+function deepActiveElement(owner: Document = document): HTMLElement | null {
+  const active = owner.activeElement;
+  const nested = (active as HTMLIFrameElement | null)?.contentDocument;
+  if (nested) return deepActiveElement(nested);
+  const Type = owner.defaultView?.HTMLElement;
+  return Type && active instanceof Type ? active : null;
+}
+
 function useContextValue(): ToastState {
   const context = useContext(Context);
   if (context === null)
@@ -52,11 +61,8 @@ function Provider({
     (options: ToastOptions): string => {
       sequence.current += 1;
       const id = `${prefix}-toast-${sequence.current}`;
-      if (
-        typeof document !== "undefined" &&
-        document.activeElement instanceof HTMLElement
-      )
-        origins.current.set(id, document.activeElement);
+      const active = deepActiveElement();
+      if (active !== null) origins.current.set(id, active);
       const requested = options.duration ?? duration;
       const timeout = Number.isFinite(requested)
         ? Math.max(0, Math.min(2147483647, requested))
@@ -70,9 +76,7 @@ function Provider({
     [prefix, duration],
   );
   const dismiss = useCallback((id: string) => {
-    const node =
-      typeof document === "undefined" ? null : document.getElementById(id);
-    const focused = node?.contains(node.ownerDocument.activeElement);
+    const focused = deepActiveElement()?.closest(`[id="${id}"]`) != null;
     const origin = origins.current.get(id);
     origins.current.delete(id);
     setNotices((current) => current.filter((notice) => notice.id !== id));

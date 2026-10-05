@@ -25,6 +25,27 @@ describe("SplitPane", () => {
     fireEvent.keyDown(handle, { key: "End" });
     expect(handle).toHaveAttribute("aria-valuenow", "75");
   });
+  it("commits the proposed keyboard value while controlled", () => {
+    const change = vi.fn();
+    const commit = vi.fn();
+    render(
+      <SplitPane
+        label="Resize"
+        first="First"
+        second="Second"
+        value={50}
+        onValueChange={change}
+        onValueCommit={commit}
+      />,
+    );
+    const handle = screen.getByRole("separator");
+    fireEvent.keyDown(handle, { key: "ArrowRight" });
+    expect(change).toHaveBeenCalledExactlyOnceWith(55);
+    fireEvent.keyUp(handle, { key: "ArrowRight" });
+    expect(commit).toHaveBeenCalledExactlyOnceWith(55);
+    expect(handle).toHaveAttribute("aria-valuenow", "50");
+  });
+
   it("preserves a controlled value and changes the separator axis for stacked panes", () => {
     const change = vi.fn();
     render(

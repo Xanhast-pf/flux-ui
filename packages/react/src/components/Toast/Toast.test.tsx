@@ -91,6 +91,45 @@ describe("Toast", () => {
     await act(() => vi.advanceTimersByTime(1));
     expect(screen.queryByRole("status")).not.toBeInTheDocument();
   });
+  it("restores focus to an iframe trigger after dismissing a focused toast", async () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const rendered = render(
+      <Toast.Provider duration={0}>
+        <Producer />
+        <Toast.Viewport placement="inline" />
+      </Toast.Provider>,
+      { container },
+    );
+
+    try {
+      const trigger = container.querySelector<HTMLButtonElement>("button");
+      if (trigger === null) throw new Error("Missing toast trigger.");
+      trigger.focus();
+      fireEvent.click(trigger);
+      const dismiss = container.querySelector<HTMLButtonElement>(
+        'button[aria-label="Dismiss notification"]',
+      );
+      if (dismiss === null) throw new Error("Missing toast dismiss button.");
+      dismiss.focus();
+      expect(ownerDocument.activeElement).toBe(dismiss);
+
+      fireEvent.click(dismiss);
+      await act(async () => {
+        await Promise.resolve();
+      });
+
+      expect(ownerDocument.activeElement).toBe(trigger);
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
+  });
+
   it("keeps zero-duration notices until explicitly dismissed", async () => {
     vi.useFakeTimers();
     render(

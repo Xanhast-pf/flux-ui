@@ -108,16 +108,16 @@ export function Combobox({
   useFloatingSurface(input, surface, expanded);
   useEffect(() => {
     if (!expanded || input === null) return;
+    const doc = input.ownerDocument;
     function outside(event: PointerEvent) {
       const target = event.target;
       if (
-        target instanceof Node &&
+        target instanceof doc.defaultView!.Node &&
         !input?.contains(target) &&
         !surface?.contains(target)
       )
         setOpen(false);
     }
-    const doc = input.ownerDocument;
     doc.addEventListener("pointerdown", outside);
     return () => doc.removeEventListener("pointerdown", outside);
   }, [expanded, input, surface]);

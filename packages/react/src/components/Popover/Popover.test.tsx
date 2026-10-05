@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Popover } from "./Popover.js";
@@ -25,6 +25,49 @@ describe("Popover", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(trigger).toHaveFocus();
   });
+  it("dismisses outside in the popover owner document", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const rendered = render(
+      <>
+        <Popover.Root>
+          <Popover.Trigger>Open realm popover</Popover.Trigger>
+          <Popover.Popup aria-label="Realm popover">
+            <Popover.Close>Done</Popover.Close>
+          </Popover.Popup>
+        </Popover.Root>
+        <button type="button">Outside realm popover</button>
+      </>,
+      { container },
+    );
+
+    try {
+      const trigger = container.querySelector<HTMLButtonElement>(
+        'button[aria-haspopup="dialog"]',
+      );
+      const outside = [
+        ...container.querySelectorAll<HTMLButtonElement>("button"),
+      ].find((button) => button.textContent === "Outside realm popover");
+      if (trigger === null || outside === undefined)
+        throw new Error("Missing popover realm targets.");
+      fireEvent.click(trigger);
+      expect(container.querySelector('[role="dialog"]')).not.toHaveAttribute(
+        "hidden",
+      );
+      fireEvent.pointerDown(outside);
+      expect(container.querySelector('[role="dialog"]')).toHaveAttribute(
+        "hidden",
+      );
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
+  });
+
   it("dismisses outside without stealing focus from the chosen control", async () => {
     const user = userEvent.setup();
     render(

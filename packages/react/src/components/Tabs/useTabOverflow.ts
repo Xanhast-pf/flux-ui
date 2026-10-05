@@ -146,7 +146,7 @@ export function useTabOverflow(
           : next,
       );
       // Make the trigger focusable before React commits the new membership.
-      if (focused instanceof HTMLButtonElement && hidden.has(focused)) {
+      if (focused instanceof view.HTMLButtonElement && hidden.has(focused)) {
         node.parentElement?.setAttribute("data-active", "");
         button.removeAttribute("aria-hidden");
         button.focus({ preventScroll: true });
