@@ -147,6 +147,10 @@ export function Combobox({
     form.addEventListener("reset", reset);
     return () => form.removeEventListener("reset", reset);
   }, [input, controlled, defaultValue, controlledQuery, defaultQuery]);
+
+  if (new Set(options.map((item) => item.value)).size !== options.length)
+    throw new RangeError("Combobox option values must be unique.");
+
   function changeQuery(next: string | null) {
     if (controlledQuery === undefined) setLocalQuery(next);
     if (query !== next) onQueryChange?.(next);

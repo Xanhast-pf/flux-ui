@@ -27,7 +27,7 @@ export default {
       "number | null",
       "Controlled or uncontrolled selection aligned to step.",
     ],
-    ["onValueChange", "(value, event) => void", "Reports a selected rating."],
+    ["onValueChange", "(value: number) => void", "Reports a selected rating."],
     ["max", "1..10", "Number of stars; defaults to 5."],
     ["step", "1 | 0.5", "Selection precision; defaults to 1."],
     ["name", "string", "Native form field/radio-group name."],

@@ -173,9 +173,12 @@ export function DataGrid<Row>({
   const columnIds = columns.map((column) => column.id);
   if (
     columnIds.some((id) => id.length === 0) ||
-    new Set(columnIds).size !== columnIds.length
+    new Set(columnIds).size !== columnIds.length ||
+    columns.some((column) => column.header.length === 0)
   )
-    throw new RangeError("DataGrid columns need unique non-empty IDs.");
+    throw new RangeError(
+      "DataGrid columns need unique non-empty IDs and non-empty headers.",
+    );
 
   const entries = useMemo(
     () => rows.map((row) => ({ row, id: getRowId(row) })),

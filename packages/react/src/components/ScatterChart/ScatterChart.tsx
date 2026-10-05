@@ -72,6 +72,8 @@ export function ScatterChart({
     () => series.filter((item) => !hiddenIds.has(item.id)),
     [series, hiddenIds],
   );
+  const toneForSeries = (item: ScatterChartSeries): ChartTone =>
+    toneFor(item, series.indexOf(item));
   const model = useMemo(
     () => scatterModel(visibleSeries, maxPoints),
     [visibleSeries, maxPoints],
@@ -198,7 +200,7 @@ export function ScatterChart({
                 id: hitSeries.id,
                 label: hitSeries.label,
                 value: formatY(hitPoint.y),
-                tone: toneFor(hitSeries, hitSeriesIndex),
+                tone: toneForSeries(hitSeries),
               },
             ],
             x: (model.x(hitPoint.x) / chartBox.width) * 100,
@@ -225,7 +227,7 @@ export function ScatterChart({
               id: item.id,
               label: item.label,
               value: formatY(itemPoint.y),
-              tone: toneFor(item, itemIndex),
+              tone: toneForSeries(item),
             },
           ]
         : [];
@@ -368,7 +370,7 @@ export function ScatterChart({
             }
             data-tone={
               visibleSeries[nextSeriesIndex]
-                ? toneFor(visibleSeries[nextSeriesIndex], nextSeriesIndex)
+                ? toneForSeries(visibleSeries[nextSeriesIndex])
                 : "accent"
             }
           >
@@ -377,10 +379,7 @@ export function ScatterChart({
         ))}
 
         {selected && point ? (
-          <g
-            className={chartTone}
-            data-tone={toneFor(selected, activeSeriesIndex)}
-          >
+          <g className={chartTone} data-tone={toneForSeries(selected)}>
             <circle
               className={activeMark}
               cx={model.x(point.x)}

@@ -68,6 +68,8 @@ export function Chart({
     () => series.filter((item) => !hiddenIds.has(item.id)),
     [series, hiddenIds],
   );
+  const toneForSeries = (item: ChartSeries): ChartTone =>
+    toneFor(item, series.indexOf(item));
   const model = useMemo(
     () => chartModel(visibleSeries, maxPoints, type),
     [visibleSeries, maxPoints, type],
@@ -182,7 +184,7 @@ export function Chart({
                 id: hitSeries.id,
                 label: hitSeries.label,
                 value: formatY(hitPoint.y),
-                tone: toneFor(hitSeries, hitSeriesIndex),
+                tone: toneForSeries(hitSeries),
               },
             ],
             x: (model.x(hitPoint.x) / chartBox.width) * 100,
@@ -199,7 +201,7 @@ export function Chart({
     const bucketPoint = visibleSeries[next[0]]?.data[next[1]];
     if (!bucketPoint) return null;
     const bucketX = bucketPoint.x;
-    const items = visibleSeries.flatMap((item, itemIndex) => {
+    const items = visibleSeries.flatMap((item) => {
       if (item.data.length === 0) return [];
       const itemPoint = item.data[nearestChartIndex(item.data, bucketX)];
       if (!itemPoint) return [];
@@ -208,7 +210,7 @@ export function Chart({
           id: item.id,
           label: item.label,
           value: itemPoint.y === null ? "No value" : formatY(itemPoint.y),
-          tone: toneFor(item, itemIndex),
+          tone: toneForSeries(item),
         },
       ];
     });
@@ -349,7 +351,7 @@ export function Chart({
             }
             data-tone={
               visibleSeries[nextSeriesIndex]
-                ? toneFor(visibleSeries[nextSeriesIndex], nextSeriesIndex)
+                ? toneForSeries(visibleSeries[nextSeriesIndex])
                 : "accent"
             }
           >
@@ -381,10 +383,7 @@ export function Chart({
         selected &&
         point?.y !== null &&
         point ? (
-          <g
-            className={chartTone}
-            data-tone={toneFor(selected, activeSeriesIndex)}
-          >
+          <g className={chartTone} data-tone={toneForSeries(selected)}>
             <circle
               className={activeMark}
               cx={directX}

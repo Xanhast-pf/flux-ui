@@ -145,6 +145,17 @@ describe("DataGrid", () => {
         />,
       ),
     ).toThrow(/unique non-empty IDs/u);
+
+    expect(() =>
+      render(
+        <DataGrid
+          label="Bad header"
+          rows={rows}
+          columns={[{ ...columns[0], header: "" }]}
+          getRowId={(row) => row.id}
+        />,
+      ),
+    ).toThrow(/non-empty headers/u);
   });
 
   it("supports pointer and keyboard sorting without adding header tab stops", async () => {

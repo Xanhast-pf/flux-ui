@@ -14,6 +14,20 @@ const options = [
   { value: "legacy", label: "Engineering legacy", disabled: true },
 ];
 describe("Combobox", () => {
+  it("rejects duplicate option values before they create ambiguous option IDs", () => {
+    expect(() =>
+      render(
+        <Combobox
+          aria-label="Team"
+          options={[
+            { value: "design", label: "Design" },
+            { value: "design", label: "Design archive" },
+          ]}
+        />,
+      ),
+    ).toThrow(/unique/u);
+  });
+
   it("accepts optional application values without conditional-spread workarounds", () => {
     const disabled: boolean | undefined = undefined;
     const listLabel: string | undefined = undefined;
