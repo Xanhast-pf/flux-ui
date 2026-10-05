@@ -31,7 +31,7 @@ test("native temporal pickers preserve civil-string and constraint semantics", a
       type: "datetime-local",
       value: "2026-10-01T14:30",
       min: "2026-10-01T09:00",
-      max: "2026-10-01T18:00",
+      max: "2026-10-31T18:00",
     },
   ]) {
     await page.goto(`/#components/${example.slug}`);
