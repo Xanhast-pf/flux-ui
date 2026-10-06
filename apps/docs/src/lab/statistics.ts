@@ -38,12 +38,28 @@ export function median(values: readonly number[]): number {
   return (previous + value) / 2;
 }
 
-export function validateConfig(count: number, iterations: number): void {
+export function workUnitOptions(maxCount: number): number[] {
+  if (!Number.isInteger(maxCount) || maxCount < INSTANCE_COUNTS[0])
+    throw new Error(
+      "Scenario workload limit must be a supported positive bound.",
+    );
+  const options: number[] = INSTANCE_COUNTS.filter(
+    (value) => value <= maxCount,
+  );
+  if (!options.some((value) => value === maxCount)) options.push(maxCount);
+  return options.sort((left, right) => left - right);
+}
+
+export function validateConfig(
+  count: number,
+  iterations: number,
+  maxCount = INSTANCE_COUNTS.at(-1) ?? 0,
+): void {
   if (
-    !INSTANCE_COUNTS.some((value) => value === count) ||
+    !workUnitOptions(maxCount).some((value) => value === count) ||
     !ITERATION_COUNTS.some((value) => value === iterations)
   ) {
-    throw new Error("Choose a supported instance count and sample count.");
+    throw new Error("Choose a supported work-unit count and sample count.");
   }
 }
 

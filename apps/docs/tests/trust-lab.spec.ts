@@ -34,7 +34,7 @@ test("the lab is opt-in and produces finite local paired results", async ({
   ).toBeVisible({ timeout: 45_000 });
   await expect(
     page.getByRole("region", { name: "Benchmark results", exact: true }),
-  ).toContainText("button × 100");
+  ).toContainText("Button × 100");
   await expect(page.locator(".lab-surface iframe")).toHaveCount(0);
   const downloaded = page.waitForEvent("download");
   await page
@@ -42,6 +42,14 @@ test("the lab is opt-in and produces finite local paired results", async ({
     .click();
   expect((await downloaded).suggestedFilename()).toBe(
     "flux-ui-live-benchmark.json",
+  );
+
+  await page.getByLabel("Scenario", { exact: true }).selectOption("checkbox");
+  await expect(
+    page.getByRole("region", { name: "Benchmark results", exact: true }),
+  ).toHaveCount(0);
+  await expect(page.getByRole("status")).toContainText(
+    "Configuration changed. Start benchmark to measure this setup.",
   );
 });
 
@@ -58,6 +66,9 @@ test("stop removes the active frame and navigation abandons the run", async ({
   await expect(
     page.getByRole("button", { name: "Start benchmark", exact: true }),
   ).toBeEnabled();
+  await expect(page.getByRole("status")).toContainText(
+    "Measurement stopped. No partial result was published.",
+  );
   await expect(page.locator(".lab-surface iframe")).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "Export raw results", exact: true }),

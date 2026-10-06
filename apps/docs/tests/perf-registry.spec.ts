@@ -77,7 +77,7 @@ test("runtime performance page selects the full component catalog in one evidenc
     page.getByRole("heading", { level: 2, name: "Button" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Committed CI baseline", { exact: true }),
+    page.getByText("Committed benchmark baseline", { exact: true }),
   ).toBeVisible();
   await expect(
     page.getByText("Button committed runtime medians"),
@@ -91,7 +91,7 @@ test("runtime performance page selects the full component catalog in one evidenc
     page.getByText("Browser workload", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText(/does not have a committed historical CI timing/u),
+    page.getByText(/does not have a committed benchmark baseline/u),
   ).toBeVisible();
 
   for (const [slug, label] of [
@@ -107,7 +107,7 @@ test("runtime performance page selects the full component catalog in one evidenc
       page.getByText("Browser workload", { exact: true }),
     ).toBeVisible();
     await expect(
-      page.getByText(/does not have a committed historical CI timing/u),
+      page.getByText(/does not have a committed benchmark baseline/u),
     ).toBeVisible();
   }
 
@@ -116,7 +116,7 @@ test("runtime performance page selects the full component catalog in one evidenc
     page.getByRole("heading", { level: 2, name: "Accordion" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Component microbenchmark", { exact: true }),
+    page.getByText("Microbenchmark coverage", { exact: true }),
   ).toBeVisible();
   await expect(
     page.getByText(/No dedicated browser runtime scenario/u),
@@ -127,9 +127,55 @@ test("runtime performance page selects the full component catalog in one evidenc
     page.getByRole("heading", { level: 2, name: "Grid" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Committed CI baseline", { exact: true }),
+    page.getByText("Committed benchmark baseline", { exact: true }),
   ).toBeVisible();
   await expect(page.getByText("Grid committed runtime medians")).toBeVisible();
+});
+
+test("performance and lab deep links preserve a bounded workload", async ({
+  page,
+}) => {
+  await page.goto("/#performance?component=pie-chart");
+  const component = page.getByLabel("Component", { exact: true });
+  await expect(component).toHaveValue("pie-chart");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "PieChart" }),
+  ).toBeVisible();
+
+  const labLink = page.getByRole("link", {
+    name: "Run PieChart in the Stress Lab →",
+    exact: true,
+  });
+  await expect(labLink).toHaveAttribute("href", "#lab?scenario=pie-chart");
+  await labLink.click();
+
+  const scenario = page.getByLabel("Scenario", { exact: true });
+  const workUnits = page.getByLabel("Work units", { exact: true });
+  await expect(scenario).toHaveValue("pie-chart");
+  await expect(workUnits).toHaveValue("256");
+  await expect(workUnits.locator('option[value="256"]')).toHaveText("256");
+
+  await page.getByLabel("Samples", { exact: true }).selectOption("3");
+  await page
+    .getByRole("button", { name: "Start benchmark", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Export raw results", exact: true }),
+  ).toBeVisible({ timeout: 45_000 });
+  await expect(
+    page.getByRole("region", { name: "Benchmark results", exact: true }),
+  ).toContainText("PieChart × 256 source slices");
+
+  const performanceLink = page.getByRole("link", {
+    name: "Inspect PieChart runtime evidence →",
+    exact: true,
+  });
+  await expect(performanceLink).toHaveAttribute(
+    "href",
+    "#performance?component=pie-chart",
+  );
+  await performanceLink.click();
+  await expect(component).toHaveValue("pie-chart");
 });
 
 test("data-table lab workload never advertises a fabricated native ratio", async ({

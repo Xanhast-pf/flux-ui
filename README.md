@@ -269,16 +269,17 @@ The docs homepage introduces the design language and live product examples. New
 routes make the engineering inspectable without shipping a charting library in
 the component package:
 
-| Route                    | What it shows                                                                                                                                      |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `#lab`                   | Opt-in Button/Grid native-React comparisons; bounded instance counts, alternating sample pairs, scaling sweeps, stop controls and raw JSON export. |
-| `#engineering`           | Token/component architecture, contribution conventions, API escape hatches, measurement scope and explicit limitations.                            |
-| `#trust`                 | Same-build CI receipts when available, raw reports, hashes, security workflow links and honest external-enrollment status.                         |
-| `#accessibility`         | On-demand, locally bundled axe scanning of a demo, an intentional missing-name defect, repair and real findings/export.                            |
-| `#size` / `#performance` | Searchable compression-aware bundle bars and native/Flux timing charts alongside the existing budgets and detailed tables.                         |
+| Route                    | What it shows                                                                                                                                                          |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `#lab`                   | Opt-in registered browser workloads: matched Button/Grid native-React comparisons plus bounded Flux-only scenarios, scaling sweeps, stop controls and raw JSON export. |
+| `#engineering`           | Token/component architecture, contribution conventions, API escape hatches, measurement scope and explicit limitations.                                                |
+| `#trust`                 | Same-build CI receipts when available, raw reports, hashes, security workflow links and honest external-enrollment status.                                             |
+| `#accessibility`         | On-demand, locally bundled axe scanning of a demo, an intentional missing-name defect, repair and real findings/export.                                                |
+| `#size` / `#performance` | Component-wide bundle measurements and runtime evidence tiers: committed comparison baselines, registered workloads, and explicit microbenchmark-only coverage.        |
 
-Local measurements are not committed CI baselines. Baselines are not live
-measurements. Passing checks are not independent certification. Component graph
+Live-lab measurements are device-local and are not the committed benchmark
+baseline. The committed Chromium baseline is the CI regression contract, not a
+live measurement or independent certification. Component graph
 sizes exclude externals and overlap; do not sum them into an application bundle.
 The live lab and axe engine load on demand; benchmark and scan results stay local.
 
