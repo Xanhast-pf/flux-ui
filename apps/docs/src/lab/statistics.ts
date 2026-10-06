@@ -39,7 +39,7 @@ export function median(values: readonly number[]): number {
 }
 
 export function workUnitOptions(maxCount: number): number[] {
-  if (!Number.isInteger(maxCount) || maxCount < INSTANCE_COUNTS[0])
+  if (!Number.isInteger(maxCount) || maxCount < 1)
     throw new Error(
       "Scenario workload limit must be a supported positive bound.",
     );

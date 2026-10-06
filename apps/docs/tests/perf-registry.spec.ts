@@ -5,6 +5,10 @@ const directory = new URL("../src/perf/scenarios/", import.meta.url);
 const files = (await readdir(directory)).filter((file) =>
   file.endsWith(".json"),
 );
+const dedicatedIds = new Set(files.map((file) => file.slice(0, -5)));
+const previewFallbacks = components.filter(
+  (component) => !dedicatedIds.has(component.slug),
+);
 for (const file of files) {
   // File names are the discovered scenario IDs; browser assertions validate the matching manifest.
   const id = file.slice(0, -5);
@@ -29,6 +33,32 @@ for (const file of files) {
       expect(Number.isFinite(result?.[key])).toBe(true);
   });
 }
+
+test("representative preview workloads cover every remaining public component", async ({
+  page,
+}) => {
+  test.setTimeout(180_000);
+
+  for (const component of previewFallbacks) {
+    await page.goto(`/?perf=1&scenario=${component.slug}&variant=flux&count=1`);
+    await page.waitForFunction(() => window.__FLUX_PERF_RESULT__ !== undefined);
+    const result = await page.evaluate(() => window.__FLUX_PERF_RESULT__);
+
+    expect(result?.scenario).toBe(component.slug);
+    expect(result?.count).toBe(1);
+    expect(result?.variant).toBe("flux");
+    expect(result?.fixtureRevision).toBe(1);
+    expect(result?.domNodes, component.slug).toBeGreaterThan(0);
+    for (const key of [
+      "mountMs",
+      "mountToFrameMs",
+      "updateMs",
+      "updateToFrameMs",
+      "unmountMs",
+    ] as const)
+      expect(Number.isFinite(result?.[key])).toBe(true);
+  }
+});
 
 test("roadmap data-heavy workloads stay finite at their source bounds", async ({
   page,
@@ -116,11 +146,17 @@ test("runtime performance page selects the full component catalog in one evidenc
     page.getByRole("heading", { level: 2, name: "Accordion" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Microbenchmark coverage", { exact: true }),
+    page.getByText("Representative browser workload", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText(/No dedicated browser runtime scenario/u),
+    page.getByText(/backed by its default public docs preview/u),
   ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "Run Accordion representative workload →",
+      exact: true,
+    }),
+  ).toHaveAttribute("href", "#lab?scenario=accordion");
 
   await component.selectOption("grid");
   await expect(
@@ -176,6 +212,48 @@ test("performance and lab deep links preserve a bounded workload", async ({
   );
   await performanceLink.click();
   await expect(component).toHaveValue("pie-chart");
+});
+
+test("representative preview workload produces a local runtime report", async ({
+  page,
+}) => {
+  await page.goto("/#performance?component=scroll-area");
+  await expect(
+    page.getByText("Representative browser workload", { exact: true }),
+  ).toBeVisible();
+
+  await page
+    .getByRole("link", {
+      name: "Run ScrollArea representative workload →",
+      exact: true,
+    })
+    .click();
+
+  await expect(page.getByLabel("Scenario", { exact: true })).toHaveValue(
+    "scroll-area",
+  );
+  const workUnits = page.getByLabel("Work units", { exact: true });
+  await expect(workUnits).toHaveValue("1");
+  await expect(workUnits.locator("option")).toHaveCount(1);
+  await expect(
+    page.getByLabel("Scaling sweep up to this count", { exact: true }),
+  ).toBeDisabled();
+
+  await page.getByLabel("Samples", { exact: true }).selectOption("3");
+  await page
+    .getByRole("button", { name: "Start benchmark", exact: true })
+    .click();
+
+  const results = page.getByRole("region", {
+    name: "Benchmark results",
+    exact: true,
+  });
+  await expect(results).toContainText(
+    "ScrollArea × 1 public preview composition",
+    { timeout: 45_000 },
+  );
+  await expect(results).toContainText("Flux-only");
+  await expect(results.getByRole("row", { name: /^mount\b/u })).toBeVisible();
 });
 
 test("data-table lab workload never advertises a fabricated native ratio", async ({

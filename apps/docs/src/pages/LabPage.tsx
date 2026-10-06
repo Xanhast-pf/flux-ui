@@ -163,6 +163,8 @@ export function LabPage() {
                       setCount((current) =>
                         supportedWorkUnits(current, next.maxCount),
                       );
+                      if (workUnitOptions(next.maxCount).length === 1)
+                        setSweep(false);
                       invalidateResult();
                     }}
                   >
@@ -171,7 +173,9 @@ export function LabPage() {
                         {entry.label} —{" "}
                         {entry.kind === "comparison"
                           ? "matched reference"
-                          : "Flux workload"}
+                          : entry.source === "preview"
+                            ? "representative preview"
+                            : "Flux workload"}
                       </option>
                     ))}
                   </Select>
@@ -179,8 +183,11 @@ export function LabPage() {
               </Field.Root>
               <Text tone="muted">
                 {definition.description} Count means {definition.unit}, not
-                necessarily component instances. Fixture revision{" "}
-                {definition.fixtureRevision}.
+                necessarily component instances.{" "}
+                {definition.source === "preview"
+                  ? "Preview workloads render one public docs composition and are not isolated component benchmarks. "
+                  : ""}
+                Fixture revision {definition.fixtureRevision}.
               </Text>
               <Field.Root controlId="lab-instances">
                 <Field.Label>Work units</Field.Label>
@@ -229,6 +236,7 @@ export function LabPage() {
                 <Field.Control>
                   <Checkbox
                     checked={sweep}
+                    disabled={workUnitOptions(definition.maxCount).length === 1}
                     onChange={(event) => {
                       setSweep(event.target.checked);
                       invalidateResult();
@@ -411,10 +419,12 @@ export function LabPage() {
           </Heading>
           <Text as="p" variant="body">
             One warm-up is discarded for each variant and count. Button and Grid
-            use layout-matched native references and alternating pairs. The
-            other scenarios are Flux-only workloads, not claims against simpler
-            native elements. Code, chart and table transformations are included
-            where stated; input latency, streaming and memory are separate
+            use layout-matched native references and alternating pairs. Other
+            purpose-built scenarios are Flux-only workloads. Components without
+            a dedicated scenario use one representative public docs preview.
+            Neither workload type claims equivalence to a simpler native
+            element. Code, chart and table transformations are included where
+            stated; input latency, streaming and memory are separate
             measurements. Next-frame timing is not paint. Power saving, other
             tabs, extensions, temperature, viewport and browser all affect
             results.

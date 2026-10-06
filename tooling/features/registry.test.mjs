@@ -5,6 +5,14 @@ const directory = new URL(
   "../../apps/docs/src/perf/scenarios/",
   import.meta.url,
 );
+const componentsDirectory = new URL(
+  "../../packages/react/src/components/",
+  import.meta.url,
+);
+const examplesDirectory = new URL(
+  "../../apps/docs/src/examples/",
+  import.meta.url,
+);
 test("performance discovery has unique paired bounded manifests and fixtures", async () => {
   const files = await readdir(directory);
   const manifests = files.filter((file) => file.endsWith(".json"));
@@ -28,4 +36,48 @@ test("performance discovery has unique paired bounded manifests and fixtures", a
     files.filter((file) => file.endsWith(".fixture.tsx")).length,
     manifests.length,
   );
+});
+
+test("every public component has dedicated or representative browser workload coverage", async () => {
+  const [scenarioFiles, exampleFiles, componentEntries] = await Promise.all([
+    readdir(directory),
+    readdir(examplesDirectory),
+    readdir(componentsDirectory, { withFileTypes: true }),
+  ]);
+  const dedicated = new Set(
+    scenarioFiles
+      .filter((file) => file.endsWith(".json"))
+      .map((file) => file.slice(0, -5)),
+  );
+  const previews = new Set(
+    exampleFiles.filter((file) => file.endsWith(".preview.tsx")),
+  );
+  const examples = new Set(
+    exampleFiles.filter((file) => file.endsWith(".example.tsx")),
+  );
+  const componentNames = componentEntries
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name);
+
+  let fallbackCount = 0;
+  for (const name of componentNames) {
+    const meta = JSON.parse(
+      await readFile(
+        new URL(`${name}/component.meta.json`, componentsDirectory),
+        "utf8",
+      ),
+    );
+    if (dedicated.has(meta.slug)) continue;
+    fallbackCount += 1;
+    assert.ok(
+      examples.has(`${meta.slug}.example.tsx`),
+      `Missing representative example workload for ${meta.slug}`,
+    );
+    assert.ok(
+      previews.has(`${meta.slug}.preview.tsx`),
+      `Missing representative preview source for ${meta.slug}`,
+    );
+  }
+
+  assert.equal(dedicated.size + fallbackCount, componentNames.length);
 });

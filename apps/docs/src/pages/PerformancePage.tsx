@@ -24,6 +24,10 @@ import { formatMs, formatRatio, MAX_PERF_RATIO_METER } from "../lib/format.js";
 import { scenarioCatalog } from "../perf/registry.js";
 
 const DEFAULT_COMPONENT_SLUG = "button";
+const dedicatedScenarioCount = scenarioCatalog.filter(
+  (entry) => entry.source === "dedicated",
+).length;
+const previewScenarioCount = scenarioCatalog.length - dedicatedScenarioCount;
 
 function RuntimeComparison({
   label,
@@ -92,6 +96,7 @@ export function PerformancePage() {
   const baselineIsCurrent =
     recorded !== undefined &&
     definition !== undefined &&
+    definition.source === "dedicated" &&
     Number(recorded.fixtureRevision) === definition.fixtureRevision;
   const baseline = baselineIsCurrent ? recorded : undefined;
 
@@ -101,32 +106,35 @@ export function PerformancePage() {
       : definition !== undefined
         ? definition.kind === "comparison"
           ? "Browser comparison"
-          : "Browser workload"
+          : definition.source === "preview"
+            ? "Representative browser workload"
+            : "Browser workload"
         : "Microbenchmark coverage";
 
   return (
     <Stack className="reference-page" as="section" gap="lg">
       <PageHeader title={<>Runtime performance</>}>
         <Text as="p" variant="body">
-          Choose any public component. Flux shows the strongest browser evidence
-          actually available for it: a committed comparison baseline, a
-          registered browser workload, or an honest notice when only required
-          microbenchmark coverage exists.
+          Choose any public component. Every component has a browser workload:
+          purpose-built scenarios where Flux has a meaningful stress or matched
+          comparison fixture, otherwise one representative mount/update/unmount
+          of the component&apos;s default public docs preview.
         </Text>
       </PageHeader>
 
       <Text as="p" variant="caption" tone="muted">
-        {components.length} public components · {scenarioCatalog.length} browser
-        scenarios · {health.performance.scenarios.length} committed regression
-        baselines. The checked-in Chromium values are the CI regression
-        contract; the baseline file does not record runner or acceptance-date
-        provenance.{" "}
+        {components.length} public components · {dedicatedScenarioCount}{" "}
+        purpose-built browser scenarios · {previewScenarioCount} representative
+        preview workloads · {health.performance.scenarios.length} committed
+        regression baselines. Preview workloads are device-local representative
+        compositions, not isolated component-cost or native-equivalence claims.
+        The checked-in Chromium values remain the CI regression contract.{" "}
         <Link
           href={
             definition === undefined ? "#lab" : `#lab?scenario=${definition.id}`
           }
         >
-          Run a browser experiment →
+          Run this browser workload →
         </Link>
       </Text>
 
@@ -382,12 +390,24 @@ export function PerformancePage() {
           ) : definition !== undefined ? (
             <Stack gap="md">
               <Callout>
-                This component has a registered browser{" "}
-                {definition.kind === "comparison"
-                  ? "comparison"
-                  : "workload scenario"}
-                , but it does not have a committed benchmark baseline. Flux does
-                not invent a native-relative ratio where none has been reviewed.
+                {definition.source === "preview" ? (
+                  <>
+                    This component has a representative browser workload backed
+                    by its default public docs preview, but no committed
+                    benchmark baseline. It measures the composition as shown,
+                    not the component in isolation.
+                  </>
+                ) : (
+                  <>
+                    This component has a registered browser{" "}
+                    {definition.kind === "comparison"
+                      ? "comparison"
+                      : "workload scenario"}
+                    , but it does not have a committed benchmark baseline. Flux
+                    does not invent a native-relative ratio where none has been
+                    reviewed.
+                  </>
+                )}
               </Callout>
               <DescriptionList>
                 <DescriptionList.Term>Browser scenario</DescriptionList.Term>
@@ -398,7 +418,9 @@ export function PerformancePage() {
                 <DescriptionList.Details>
                   {definition.kind === "comparison"
                     ? "Matched browser comparison"
-                    : "Flux workload"}
+                    : definition.source === "preview"
+                      ? "Representative public preview"
+                      : "Flux workload"}
                 </DescriptionList.Details>
                 <DescriptionList.Term>Work unit</DescriptionList.Term>
                 <DescriptionList.Details>
@@ -413,7 +435,11 @@ export function PerformancePage() {
                 {definition.description}
               </Text>
               <Link href={`#lab?scenario=${definition.id}`}>
-                Run {definition.label} in the Stress Lab →
+                Run {definition.label}{" "}
+                {definition.source === "preview"
+                  ? "representative workload"
+                  : "in the Stress Lab"}{" "}
+                →
               </Link>
             </Stack>
           ) : (

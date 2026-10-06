@@ -68,6 +68,14 @@ Do not run `perf:update` simply because `perf` failed. Investigate the regressio
 scenarios; only comparisons may claim native-relative ratios. It also defines
 units, limits, and `fixtureRevision`. Pairing and uniqueness have source tests.
 
+Every public component resolves to a browser workload. Components without a
+purpose-built scenario fall back to one mount/update/unmount of their required
+default docs preview. These preview workloads are deliberately count=1 and
+Flux-only: they provide representative browser composition evidence without
+duplicating IDs/portals or pretending the docs composition is an isolated
+component benchmark. They are not eligible for committed comparison baselines;
+promotion to a regression contract requires a dedicated reviewed fixture.
+
 The Lab prepares fixtures before timing, but counts their render/data-model work
 inside the run. Flux-only scenarios use median absolute work timings; they are
 not benchmarked against an unrelated simpler element. DOM counts remain visible.

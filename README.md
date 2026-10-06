@@ -269,17 +269,20 @@ The docs homepage introduces the design language and live product examples. New
 routes make the engineering inspectable without shipping a charting library in
 the component package:
 
-| Route                    | What it shows                                                                                                                                                          |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `#lab`                   | Opt-in registered browser workloads: matched Button/Grid native-React comparisons plus bounded Flux-only scenarios, scaling sweeps, stop controls and raw JSON export. |
-| `#engineering`           | Token/component architecture, contribution conventions, API escape hatches, measurement scope and explicit limitations.                                                |
-| `#trust`                 | Same-build CI receipts when available, raw reports, hashes, security workflow links and honest external-enrollment status.                                             |
-| `#accessibility`         | On-demand, locally bundled axe scanning of a demo, an intentional missing-name defect, repair and real findings/export.                                                |
-| `#size` / `#performance` | Component-wide bundle measurements and runtime evidence tiers: committed comparison baselines, registered workloads, and explicit microbenchmark-only coverage.        |
+| Route                    | What it shows                                                                                                                                                           |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `#lab`                   | Opt-in browser workloads for every public component: matched Button/Grid comparisons, bounded dedicated workloads, and representative public-preview fallbacks.         |
+| `#engineering`           | Token/component architecture, contribution conventions, API escape hatches, measurement scope and explicit limitations.                                                 |
+| `#trust`                 | Same-build CI receipts when available, raw reports, hashes, security workflow links and honest external-enrollment status.                                              |
+| `#accessibility`         | On-demand, locally bundled axe scanning of a demo, an intentional missing-name defect, repair and real findings/export.                                                 |
+| `#size` / `#performance` | Component-wide bundle measurements plus runtime evidence for every component, while keeping accepted comparison baselines distinct from device-local preview workloads. |
 
 Live-lab measurements are device-local and are not the committed benchmark
-baseline. The committed Chromium baseline is the CI regression contract, not a
-live measurement or independent certification. Component graph
+baseline. Components without a dedicated performance fixture use one copy of
+their default public docs preview as a representative mount/update/unmount
+workload; that is composition evidence, not isolated component cost or native
+equivalence. The committed Chromium baseline is the CI regression contract, not
+a live measurement or independent certification. Component graph
 sizes exclude externals and overlap; do not sum them into an application bundle.
 The live lab and axe engine load on demand; benchmark and scan results stay local.
 

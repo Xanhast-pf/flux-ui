@@ -39,6 +39,9 @@ test("lab configuration refuses unbounded or fractional work", () => {
   validateConfig(5000, 7);
   validateConfig(256, 3, 256);
   assert.deepEqual(workUnitOptions(256), [100, 256]);
+  validateConfig(1, 3, 1);
+  assert.deepEqual(workUnitOptions(1), [1]);
+  assert.throws(() => validateConfig(2, 3, 1));
   assert.throws(() => validateConfig(257, 3, 256));
 });
 test("ratios are calculated per pair, not from unrelated median values", () => {
