@@ -130,6 +130,53 @@ describe("Toast", () => {
     }
   });
 
+  it("pauses auto-dismissal while the toast owner document is hidden", async () => {
+    vi.useFakeTimers();
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe realm.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const hidden = vi
+      .spyOn(ownerDocument, "hidden", "get")
+      .mockReturnValue(false);
+    const rendered = render(
+      <Toast.Provider duration={1000}>
+        <Producer />
+        <Toast.Viewport placement="inline" />
+      </Toast.Provider>,
+      { container },
+    );
+
+    try {
+      const trigger = container.querySelector<HTMLButtonElement>("button");
+      if (trigger === null) throw new Error("Missing toast trigger.");
+      fireEvent.click(trigger);
+      await act(() => vi.advanceTimersByTime(400));
+
+      hidden.mockReturnValue(true);
+      act(() => {
+        ownerDocument.dispatchEvent(new Event("visibilitychange"));
+      });
+      await act(() => vi.advanceTimersByTime(5000));
+      expect(container.querySelector('[role="status"]')).not.toBeNull();
+
+      hidden.mockReturnValue(false);
+      act(() => {
+        ownerDocument.dispatchEvent(new Event("visibilitychange"));
+      });
+      await act(() => vi.advanceTimersByTime(599));
+      expect(container.querySelector('[role="status"]')).not.toBeNull();
+      await act(() => vi.advanceTimersByTime(1));
+      expect(container.querySelector('[role="status"]')).toBeNull();
+    } finally {
+      rendered.unmount();
+      hidden.mockRestore();
+      iframe.remove();
+    }
+  });
+
   it("keeps zero-duration notices until explicitly dismissed", async () => {
     vi.useFakeTimers();
     render(

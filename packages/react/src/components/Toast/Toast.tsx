@@ -6,7 +6,6 @@ import {
   useId,
   useRef,
   useState,
-  useSyncExternalStore,
 } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { Button } from "../Button/Button.js";
@@ -100,25 +99,20 @@ function Provider({
     </Context>
   );
 }
-function subscribeVisibility(listener: () => void) {
-  document.addEventListener("visibilitychange", listener);
-  return () => document.removeEventListener("visibilitychange", listener);
-}
-function hiddenSnapshot() {
-  return document.hidden;
-}
-function serverHiddenSnapshot() {
-  return false;
-}
 function Item({ notice }: { notice: Notice }) {
   const { dismiss, dismissLabel } = useContextValue();
+  const item = useRef<HTMLLIElement>(null);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
-  const hidden = useSyncExternalStore(
-    subscribeVisibility,
-    hiddenSnapshot,
-    serverHiddenSnapshot,
-  );
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    const owner = item.current?.ownerDocument;
+    if (owner === undefined) return;
+    const update = () => setHidden(owner.hidden);
+    update();
+    owner.addEventListener("visibilitychange", update);
+    return () => owner.removeEventListener("visibilitychange", update);
+  }, []);
   const remaining = useRef(notice.duration);
   const paused = hovered || focused || hidden;
   useEffect(() => {
@@ -135,6 +129,7 @@ function Item({ notice }: { notice: Notice }) {
   }, [paused, notice.duration, notice.id, dismiss]);
   return (
     <li
+      ref={item}
       id={notice.id}
       className={styles.item}
       data-tone={notice.tone ?? "neutral"}

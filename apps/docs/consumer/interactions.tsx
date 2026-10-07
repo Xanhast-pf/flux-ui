@@ -118,6 +118,21 @@ function Interactions() {
           </AlertDialog.Description>
           <AlertDialog.Cancel>Keep local draft</AlertDialog.Cancel>
           <AlertDialog.Action>Remove local draft</AlertDialog.Action>
+          <Tooltip content="Nested alert tooltip">
+            <Button>Nested alert help</Button>
+          </Tooltip>
+          <Popover.Root>
+            <Popover.Trigger>Nested alert popover</Popover.Trigger>
+            <Popover.Popup aria-label="Nested alert popover panel">
+              <Popover.Close>Close nested alert popover</Popover.Close>
+            </Popover.Popup>
+          </Popover.Root>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>Nested alert menu</DropdownMenu.Trigger>
+            <DropdownMenu.Popup aria-label="Nested alert menu">
+              <DropdownMenu.Item>Nested menu item</DropdownMenu.Item>
+            </DropdownMenu.Popup>
+          </DropdownMenu.Root>
         </AlertDialog.Popup>
       </AlertDialog.Root>
       {tag ? (
