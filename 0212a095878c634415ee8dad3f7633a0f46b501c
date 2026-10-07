@@ -1,0 +1,1 @@
+{"schemaVersion":1,"kind":"flux-full-check","status":"passed","command":"pnpm flux check full","commit":"0212a095878c634415ee8dad3f7633a0f46b501c","tree":"79eb9023b981954766858ff8802fc9ac4f196d2d","pipelineSha256":"861cad250ed46ba90ef1d11626ee49cc9e9fb9155305ab4dc8c4bdd1ff3f70f3","nodeVersion":"v24.21.0","finishedAt":"2026-10-07T13:27:28.963Z"}
