@@ -7,13 +7,10 @@ import type { ColorPickerProps } from "./ColorPicker.types.js";
 const FALLBACK_COLOR = "#6366f1";
 
 function normalizeHex(value: string): string | null {
-  const trimmed = value.trim();
-  const short = /^#([\da-f])([\da-f])([\da-f])$/iu.exec(trimmed);
-  if (short) {
-    const [, red = "0", green = "0", blue = "0"] = short;
-    return `#${red}${red}${green}${green}${blue}${blue}`.toLowerCase();
-  }
-  return /^#[\da-f]{6}$/iu.test(trimmed) ? trimmed.toLowerCase() : null;
+  const hex = value.trim().toLowerCase();
+  if (/^#[\da-f]{6}$/u.test(hex)) return hex;
+  if (!/^#[\da-f]{3}$/u.test(hex)) return null;
+  return hex.replace(/[\da-f]/gu, "$&$&");
 }
 
 export function ColorPicker({
@@ -21,7 +18,7 @@ export function ColorPicker({
   "aria-labelledby": ariaLabelledBy,
   className,
   defaultValue = FALLBACK_COLOR,
-  disabled = false,
+  disabled,
   form,
   name,
   onValueChange,
@@ -31,13 +28,24 @@ export function ColorPicker({
 }: ColorPickerProps) {
   const controlled = value !== undefined;
   const normalizedDefault = normalizeHex(defaultValue) ?? FALLBACK_COLOR;
-  const normalizedControlled =
-    value === undefined ? undefined : (normalizeHex(value) ?? FALLBACK_COLOR);
   const [localValue, setLocalValue] = useState(normalizedDefault);
-  const resolvedValue = normalizedControlled ?? localValue;
+  const resolvedValue =
+    value === undefined ? localValue : (normalizeHex(value) ?? FALLBACK_COLOR);
   const [draft, setDraft] = useState<string | null>(null);
   const displayedValue = draft ?? resolvedValue;
-  const validDraft = normalizeHex(displayedValue);
+  function setNativeInput(node: HTMLInputElement | null) {
+    const ownerForm = node?.form;
+    if (!ownerForm) return;
+    function reset(event: Event): void {
+      queueMicrotask(() => {
+        if (event.defaultPrevented) return;
+        setDraft(null);
+        setLocalValue(normalizedDefault);
+      });
+    }
+    ownerForm.addEventListener("reset", reset);
+    return () => ownerForm.removeEventListener("reset", reset);
+  }
 
   function commit(next: string): void {
     if (!controlled) setLocalValue(next);
@@ -46,35 +54,30 @@ export function ColorPicker({
 
   function handleNativeChange(event: ChangeEvent<HTMLInputElement>): void {
     const next = normalizeHex(event.currentTarget.value);
-    if (next === null) return;
+    if (!next) return;
     setDraft(null);
     commit(next);
   }
 
   function handleTextChange(event: ChangeEvent<HTMLInputElement>): void {
     const nextDraft = event.currentTarget.value;
-    if (/^#[\da-f]{6}$/iu.test(nextDraft.trim())) {
-      commit(nextDraft.trim().toLowerCase());
+    const next = normalizeHex(nextDraft);
+    if (next && nextDraft.trim().length > 4) {
+      commit(next);
       setDraft(null);
     } else setDraft(nextDraft);
   }
 
   function commitDraft(): void {
-    if (draft !== null) {
-      const next = normalizeHex(draft);
-      if (next !== null) commit(next);
-    }
-    setDraft(null);
-  }
-
-  function restoreDraft(): void {
+    const next = normalizeHex(draft ?? "");
+    if (next) commit(next);
     setDraft(null);
   }
 
   function handleTextKeyDown(event: KeyboardEvent<HTMLInputElement>): void {
     if (event.key === "Escape") {
       event.preventDefault();
-      restoreDraft();
+      setDraft(null);
       event.currentTarget.select();
     }
   }
@@ -96,11 +99,12 @@ export function ColorPicker({
         form={form}
         name={name}
         onChange={handleNativeChange}
+        ref={setNativeInput}
         type="color"
         value={resolvedValue}
       />
       <Input
-        aria-invalid={validDraft === null || undefined}
+        aria-invalid={!normalizeHex(displayedValue) || undefined}
         aria-label="Hex color"
         autoComplete="off"
         className={hexInput}

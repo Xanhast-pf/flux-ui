@@ -32,6 +32,31 @@ test("built ColorPicker keeps native and editable values synchronized", async ({
   await expect(native).toHaveValue("#aabbcc");
 });
 
+test("built ColorPicker restores its uncontrolled default on form reset", async ({
+  page,
+}) => {
+  const picker = page.getByRole("group", {
+    name: "Resettable consumer color",
+  });
+  const hex = picker.getByRole("textbox", { name: "Hex color" });
+  const native = picker.getByLabel("Choose color");
+
+  await hex.fill("#abcdef");
+  await expect(native).toHaveValue("#abcdef");
+  await hex.fill("#12");
+  await expect(hex).toHaveAttribute("aria-invalid", "true");
+
+  await page.getByRole("button", { name: "Reset consumer color" }).click();
+  await expect(hex).toHaveValue("#123456");
+  await expect(native).toHaveValue("#123456");
+  await expect(hex).not.toHaveAttribute("aria-invalid");
+
+  const formValue = await page
+    .getByRole("form", { name: "Resettable consumer color form" })
+    .evaluate((form) => new FormData(form as HTMLFormElement).get("accent"));
+  expect(formValue).toBe("#123456");
+});
+
 test("built Tabs recover selection without stealing an external action's focus", async ({
   page,
 }) => {

@@ -2,7 +2,7 @@
   "name": "Chart",
   "slug": "chart",
   "category": "Data",
-  "status": "beta",
+  "status": "alpha",
   "description": "Standalone line, area and grouped bar visualization with bounded rendering and source-complete keyboard/pointer inspection.",
   "sizeClass": "data-heavy",
   "publicDescendantDataAttributes": {

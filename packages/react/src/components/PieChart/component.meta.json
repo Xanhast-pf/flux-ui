@@ -2,7 +2,7 @@
   "name": "PieChart",
   "slug": "pie-chart",
   "category": "Data",
-  "status": "beta",
+  "status": "alpha",
   "description": "Standalone bounded pie visualization with keyboard/pointer slice inspection and composable legend/tooltip accessories.",
   "sizeClass": "data-heavy",
   "publicDescendantDataAttributes": {

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -48,6 +48,42 @@ describe("ColorPicker", () => {
     await user.type(hex, "#fff");
     await user.tab();
     expect(hex).toHaveValue("#ffffff");
+  });
+
+  it("restores its uncontrolled default on native form reset", async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <form id="theme-form" aria-label="Theme form">
+          <button type="reset">Reset theme</button>
+        </form>
+        <ColorPicker
+          aria-label="Accent"
+          defaultValue="#123456"
+          form="theme-form"
+          name="accent"
+        />
+      </>,
+    );
+
+    const hex = screen.getByRole("textbox", { name: "Hex color" });
+    const native = screen.getByLabelText("Choose color");
+    fireEvent.change(native, { target: { value: "#abcdef" } });
+    expect(hex).toHaveValue("#abcdef");
+
+    await user.clear(hex);
+    await user.type(hex, "#12");
+    expect(hex).toHaveAttribute("aria-invalid", "true");
+
+    await user.click(screen.getByRole("button", { name: "Reset theme" }));
+    await waitFor(() => expect(hex).toHaveValue("#123456"));
+    expect(native).toHaveValue("#123456");
+    expect(hex).not.toHaveAttribute("aria-invalid");
+    expect(
+      new FormData(
+        screen.getByRole<HTMLFormElement>("form", { name: "Theme form" }),
+      ).get("accent"),
+    ).toBe("#123456");
   });
 
   it("keeps controlled ownership authoritative", async () => {

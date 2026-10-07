@@ -8,7 +8,7 @@ export default {
   notes: [
     "ColorPicker composes the browser's native color chooser with an editable six-digit hex field; alpha and design-tool channels are intentionally out of scope.",
     "The root is a named group. Its native color input owns form participation while the hex field mirrors the same committed value.",
-    "Use value/onValueChange for controlled state or defaultValue for browser-local state.",
+    "Use value/onValueChange for controlled state or defaultValue for local state. Uncontrolled values and in-progress hex drafts return to defaultValue on native form reset.",
   ],
   props: [
     [

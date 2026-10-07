@@ -121,6 +121,30 @@ describe("Combobox", () => {
     expect(input).toHaveValue("Engineering");
   });
 
+  it("keeps committed selection separate from keyboard highlight", async () => {
+    const user = userEvent.setup();
+    render(
+      <Combobox aria-label="Team" options={options} defaultValue="design" />,
+    );
+
+    const input = screen.getByRole("combobox", { name: "Team" });
+    await user.click(input);
+    const design = screen.getByRole("option", { name: "Design" });
+    const engineering = screen.getByRole("option", { name: "Engineering" });
+    expect(design).toHaveAttribute("aria-selected", "true");
+    expect(engineering).toHaveAttribute("aria-selected", "false");
+
+    await user.keyboard("{ArrowDown}");
+    expect(input).toHaveAttribute("aria-activedescendant", engineering.id);
+    expect(design).toHaveAttribute("aria-selected", "true");
+    expect(engineering).toHaveAttribute("aria-selected", "false");
+
+    await user.keyboard("{Enter}");
+    await user.click(input);
+    expect(design).toHaveAttribute("aria-selected", "false");
+    expect(engineering).toHaveAttribute("aria-selected", "true");
+  });
+
   it("announces loading without replacing the listbox or its current options", async () => {
     const user = userEvent.setup();
     render(

@@ -28,6 +28,14 @@ test("Combobox groups preserve flat keyboard navigation and selection", async ({
   ).toHaveCount(1);
 
   await input.press("ArrowDown");
+  const engineeringOption = listbox.getByRole("option", {
+    name: "Engineering",
+  });
+  await expect(engineeringOption).toHaveAttribute("aria-selected", "false");
+  const engineeringId = await engineeringOption.getAttribute("id");
+  expect(engineeringId).not.toBeNull();
+  if (engineeringId === null) throw new Error("Missing combobox option ID.");
+  await expect(input).toHaveAttribute("aria-activedescendant", engineeringId);
   await input.press("Enter");
   await expect(input).toHaveValue("Engineering");
   await expect(input).toHaveAttribute("aria-expanded", "false");

@@ -276,7 +276,7 @@ export function Combobox({
                 key={item.value}
                 id={`${listId}-${encodeURIComponent(item.value)}`}
                 role="option"
-                aria-selected={item.value === highlighted?.value}
+                aria-selected={item.value === value}
                 aria-disabled={item.disabled || undefined}
                 tabIndex={-1}
                 className={option}

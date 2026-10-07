@@ -56,6 +56,21 @@ function Interactions() {
           onValueChange={setColor}
         />
       </Stack>
+      <form
+        id="consumer-color-reset-form"
+        aria-label="Resettable consumer color form"
+      >
+        <Stack gap="xs">
+          <Text weight="bold">Resettable consumer color</Text>
+          <ColorPicker
+            aria-label="Resettable consumer color"
+            defaultValue="#123456"
+            form="consumer-color-reset-form"
+            name="accent"
+          />
+          <Button type="reset">Reset consumer color</Button>
+        </Stack>
+      </form>
       <Tabs.Root defaultValue="removed">
         <Tabs.List aria-label="Dynamic tabs">
           <Tabs.Tab value="one">Dynamic one</Tabs.Tab>

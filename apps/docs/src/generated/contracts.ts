@@ -283,7 +283,7 @@ export const publicContracts = [
   {
     name: "Chart",
     slug: "chart",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "Chart",
@@ -305,7 +305,7 @@ export const publicContracts = [
   {
     name: "ChartLegend",
     slug: "chart-legend",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "ChartLegend",
@@ -328,7 +328,7 @@ export const publicContracts = [
   {
     name: "ChartTooltip",
     slug: "chart-tooltip",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "ChartTooltip",
@@ -428,7 +428,7 @@ export const publicContracts = [
   {
     name: "ColorPicker",
     slug: "color-picker",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "ColorPicker",
@@ -461,7 +461,7 @@ export const publicContracts = [
   {
     name: "Combobox",
     slug: "combobox",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "Combobox",
@@ -501,7 +501,7 @@ export const publicContracts = [
   {
     name: "DataGrid",
     slug: "data-grid",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "DataGrid",
@@ -537,7 +537,7 @@ export const publicContracts = [
   {
     name: "DataTable",
     slug: "data-table",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "DataTable",
@@ -1208,7 +1208,7 @@ export const publicContracts = [
   {
     name: "PieChart",
     slug: "pie-chart",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "PieChart",
@@ -1321,7 +1321,7 @@ export const publicContracts = [
   {
     name: "Rating",
     slug: "rating",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "Rating",
@@ -1338,7 +1338,7 @@ export const publicContracts = [
   {
     name: "ScatterChart",
     slug: "scatter-chart",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "ScatterChart",
@@ -1983,7 +1983,7 @@ export const publicContracts = [
   {
     name: "TreeView",
     slug: "tree-view",
-    lifecycle: "beta",
+    lifecycle: "alpha",
     parts: [
       {
         path: "TreeView.Item",

@@ -3,12 +3,12 @@ export const readiness = {
   summary: {
     total: 85,
     status: {
-      alpha: 0,
-      beta: 11,
+      alpha: 11,
+      beta: 0,
       stable: 74,
     },
     eligibleForBetaReview: 85,
-    eligibleForStableReview: 11,
+    eligibleForStableReview: 0,
     blocked: 0,
     browserCatalogCoverage: true,
     accessibilityCatalogCoverage: true,
@@ -116,25 +116,25 @@ export const readiness = {
     {
       name: "Chart",
       slug: "chart",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
       name: "ChartLegend",
       slug: "chart-legend",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
       name: "ChartTooltip",
       slug: "chart-tooltip",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
@@ -176,9 +176,9 @@ export const readiness = {
     {
       name: "ColorPicker",
       slug: "color-picker",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
@@ -193,9 +193,9 @@ export const readiness = {
     {
       name: "Combobox",
       slug: "combobox",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
@@ -210,17 +210,17 @@ export const readiness = {
     {
       name: "DataGrid",
       slug: "data-grid",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
       name: "DataTable",
       slug: "data-table",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
@@ -460,9 +460,9 @@ export const readiness = {
     {
       name: "PieChart",
       slug: "pie-chart",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
@@ -495,17 +495,17 @@ export const readiness = {
     {
       name: "Rating",
       slug: "rating",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
       name: "ScatterChart",
       slug: "scatter-chart",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {
@@ -754,9 +754,9 @@ export const readiness = {
     {
       name: "TreeView",
       slug: "tree-view",
-      status: "beta",
+      status: "alpha",
       eligibleForBetaReview: true,
-      eligibleForStableReview: true,
+      eligibleForStableReview: false,
       blockers: [],
     },
     {

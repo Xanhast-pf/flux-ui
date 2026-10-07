@@ -123,7 +123,7 @@ export const components = [
     name: "Chart",
     slug: "chart",
     category: "Data",
-    status: "beta",
+    status: "alpha",
     description:
       "Standalone line, area and grouped bar visualization with bounded rendering and source-complete keyboard/pointer inspection.",
     sizeClass: "data-heavy",
@@ -138,7 +138,7 @@ export const components = [
     name: "ChartLegend",
     slug: "chart-legend",
     category: "Data",
-    status: "beta",
+    status: "alpha",
     description:
       "Optional HTML legend wrapper for Flux charts with independent layout and controlled or uncontrolled series visibility.",
     sizeClass: "interactive",
@@ -153,7 +153,7 @@ export const components = [
     name: "ChartTooltip",
     slug: "chart-tooltip",
     category: "Data",
-    status: "beta",
+    status: "alpha",
     description:
       "Optional pointer-inert visual data tooltip wrapper for Flux charts with hover or click triggers.",
     sizeClass: "interactive",
@@ -211,7 +211,7 @@ export const components = [
     name: "ColorPicker",
     slug: "color-picker",
     category: "Inputs",
-    status: "beta",
+    status: "alpha",
     description:
       "Native color selection paired with validated editable hex input and controlled or uncontrolled value state.",
     sizeClass: "primitive",
@@ -236,7 +236,7 @@ export const components = [
     name: "Combobox",
     slug: "combobox",
     category: "Inputs",
-    status: "beta",
+    status: "alpha",
     description:
       "Searchable single selection with grouped options, controllable query state, loading status, forms and keyboard navigation.",
     sizeClass: "overlay",
@@ -267,7 +267,7 @@ export const components = [
     name: "DataGrid",
     slug: "data-grid",
     category: "Data",
-    status: "beta",
+    status: "alpha",
     description:
       "Interactive ARIA grid with stable cell focus, client transforms, row selection, column visibility, and app-owned inline cell editing.",
     sizeClass: "data-heavy",
@@ -286,7 +286,7 @@ export const components = [
     name: "DataTable",
     slug: "data-table",
     category: "Data",
-    status: "beta",
+    status: "alpha",
     description:
       "Windowed, fixed-row-height native table; not an editable spreadsheet or ARIA grid.",
     sizeClass: "data-heavy",
@@ -589,7 +589,7 @@ export const components = [
     name: "PieChart",
     slug: "pie-chart",
     category: "Data",
-    status: "beta",
+    status: "alpha",
     description:
       "Standalone bounded pie visualization with keyboard/pointer slice inspection and composable legend/tooltip accessories.",
     sizeClass: "data-heavy",
@@ -641,7 +641,7 @@ export const components = [
     name: "Rating",
     slug: "rating",
     category: "Inputs",
-    status: "beta",
+    status: "alpha",
     description:
       "Form-capable rating with native radio semantics, half-star precision and read-only presentation.",
     sizeClass: "primitive",
@@ -653,7 +653,7 @@ export const components = [
     name: "ScatterChart",
     slug: "scatter-chart",
     category: "Data",
-    status: "beta",
+    status: "alpha",
     description:
       "Standalone bounded scatter visualization with axes, source-complete inspection and sampled SVG paths.",
     sizeClass: "data-heavy",
@@ -970,7 +970,7 @@ export const components = [
     name: "TreeView",
     slug: "tree-view",
     category: "Navigation",
-    status: "beta",
+    status: "alpha",
     description:
       "Hierarchical navigation with expansion state and WAI-ARIA tree keyboard behavior.",
     sizeClass: "interactive",

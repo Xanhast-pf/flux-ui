@@ -2,7 +2,7 @@
   "name": "Combobox",
   "slug": "combobox",
   "category": "Inputs",
-  "status": "beta",
+  "status": "alpha",
   "description": "Searchable single selection with grouped options, controllable query state, loading status, forms and keyboard navigation.",
   "sizeClass": "overlay",
   "publicDataAttributes": {
