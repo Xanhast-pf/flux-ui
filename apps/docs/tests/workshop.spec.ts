@@ -264,7 +264,7 @@ test("preferences persist and previews reset without resetting the theme", async
   );
 });
 
-test("palette pairing updates the whole site and exposes raw CSS variables", async ({
+test("palette selection persists without implicit blending and exposes raw CSS variables", async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -334,7 +334,7 @@ test("palette pairing updates the whole site and exposes raw CSS variables", asy
         .getPropertyValue("--flux-color-surface-subtle")
         .trim(),
     );
-  expect(primaryOnlySurface).not.toBe(pairedSurface);
+  expect(primaryOnlySurface).toBe(pairedSurface);
 
   await secondary.selectOption("emerald");
   await expect(page.locator("html")).toHaveAttribute(

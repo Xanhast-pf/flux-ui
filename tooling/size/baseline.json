@@ -491,6 +491,27 @@
         "externalImports": ["react/jsx-runtime"]
       }
     },
+    "color-picker": {
+      "bundled": {
+        "raw": 3800,
+        "gzip": 1541,
+        "brotli": 1346,
+        "fileCount": 2,
+        "outputs": {
+          "js": {
+            "raw": 1642,
+            "gzip": 840,
+            "brotli": 746
+          },
+          "css": {
+            "raw": 2158,
+            "gzip": 701,
+            "brotli": 600
+          }
+        },
+        "externalImports": ["react", "react/jsx-runtime"]
+      }
+    },
     "color-swatch": {
       "name": "ColorSwatch",
       "sizeClass": "primitive",
@@ -2182,19 +2203,19 @@
     }
   },
   "aggregate": {
-    "componentCount": 84,
-    "rootEntry": { "raw": 6402, "gzip": 2053, "brotli": 1804, "fileCount": 1 },
+    "componentCount": 85,
+    "rootEntry": { "raw": 6456, "gzip": 2059, "brotli": 1803, "fileCount": 1 },
     "runtime": {
-      "raw": 285382,
-      "gzip": 125874,
-      "brotli": 108533,
-      "fileCount": 267
+      "raw": 290005,
+      "gzip": 128008,
+      "brotli": 110359,
+      "fileCount": 270
     },
     "published": {
-      "raw": 1451624,
-      "gzip": 503310,
-      "brotli": 434650,
-      "fileCount": 1111
+      "raw": 1472030,
+      "gzip": 510873,
+      "brotli": 441105,
+      "fileCount": 1123
     },
     "method": {
       "schemaVersion": 1,

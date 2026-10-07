@@ -18,6 +18,11 @@ export default {
     ],
     ["query", "boolean", "Opt into a named inline-size query container."],
     [
+      "colorOverrides",
+      "Partial semantic color map",
+      "Override scoped public semantic variables such as --flux-color-accent without mutating the document theme.",
+    ],
+    [
       "Surface / native props",
       "Semantic element and surface options",
       "Supports padding, paddingBlock, paddingInline, surface, border, radius, native ref and attributes.",

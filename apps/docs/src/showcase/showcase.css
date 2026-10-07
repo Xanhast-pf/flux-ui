@@ -5,18 +5,10 @@
   overflow: clip;
   --secondary-400: var(--_flux-palette-400);
   --secondary-600: var(--_flux-palette-600);
-  --art-canvas: color-mix(
-    in oklab,
-    var(--flux-color-accent-soft) 68%,
-    var(--secondary-400) 32%
-  );
+  --art-canvas: var(--flux-color-accent-soft);
   --art-ink: var(--flux-color-text);
   --channel-one: var(--flux-color-accent);
-  --channel-three: color-mix(
-    in oklab,
-    var(--flux-color-accent) 52%,
-    var(--secondary-600) 48%
-  );
+  --channel-three: var(--secondary-600);
 }
 
 .world-surface[data-flux-secondary-palette="slate"] {

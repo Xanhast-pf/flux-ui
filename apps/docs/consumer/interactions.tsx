@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import {
   AlertDialog,
   Button,
+  ColorPicker,
   Combobox,
   DropdownMenu,
   Field,
@@ -23,6 +24,7 @@ function WrappedHelp() {
 function Interactions() {
   const notifyButton = useRef<HTMLButtonElement>(null);
   const [showSelected, setShowSelected] = useState(true);
+  const [color, setColor] = useState("#336699");
   const [selected, setSelected] = useState<string | null>(null);
   const [tag, setTag] = useState(true);
   const [action, setAction] = useState("No menu action");
@@ -46,6 +48,14 @@ function Interactions() {
           </Field.Control>
         </InputGroup.Root>
       </Field.Root>
+      <Stack gap="xs">
+        <Text weight="bold">Consumer brand color</Text>
+        <ColorPicker
+          aria-label="Consumer brand color"
+          value={color}
+          onValueChange={setColor}
+        />
+      </Stack>
       <Tabs.Root defaultValue="removed">
         <Tabs.List aria-label="Dynamic tabs">
           <Tabs.Tab value="one">Dynamic one</Tabs.Tab>

@@ -12,6 +12,26 @@ test("built Field associates opaque and root-owned descriptions", async ({
     page.getByRole("textbox", { name: "Root slot field" }),
   ).toHaveAccessibleDescription("Root-owned server description.");
 });
+test("built ColorPicker keeps native and editable values synchronized", async ({
+  page,
+}) => {
+  const picker = page.getByRole("group", { name: "Consumer brand color" });
+  const hex = picker.getByRole("textbox", { name: "Hex color" });
+  const native = picker.getByLabel("Choose color");
+
+  await expect(hex).toHaveValue("#336699");
+  await expect(native).toHaveValue("#336699");
+
+  await hex.fill("#abcdef");
+  await expect(hex).toHaveValue("#abcdef");
+  await expect(native).toHaveValue("#abcdef");
+
+  await hex.fill("#abc");
+  await hex.press("Tab");
+  await expect(hex).toHaveValue("#aabbcc");
+  await expect(native).toHaveValue("#aabbcc");
+});
+
 test("built Tabs recover selection without stealing an external action's focus", async ({
   page,
 }) => {

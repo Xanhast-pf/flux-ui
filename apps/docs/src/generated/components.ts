@@ -208,6 +208,18 @@ export const components = [
     sizeClass: "primitive",
   },
   {
+    name: "ColorPicker",
+    slug: "color-picker",
+    category: "Inputs",
+    status: "beta",
+    description:
+      "Native color selection paired with validated editable hex input and controlled or uncontrolled value state.",
+    sizeClass: "primitive",
+    publicDataAttributes: {
+      ColorPicker: ["data-disabled"],
+    },
+  },
+  {
     name: "ColorSwatch",
     slug: "color-swatch",
     category: "Display",

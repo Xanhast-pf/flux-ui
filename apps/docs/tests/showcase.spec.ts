@@ -110,7 +110,7 @@ test("template tabs use manual activation and palette changes preserve scene sta
   await expect(secondary).toHaveValue("rose");
 });
 
-test("front-page app cards visibly compose the optional secondary palette", async ({
+test("secondary palette selection no longer blends front-page semantic surfaces", async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -131,11 +131,92 @@ test("front-page app cards visibly compose the optional secondary palette", asyn
     (element) => getComputedStyle(element).backgroundColor,
   );
 
-  expect(pairedSurface).not.toBe(primaryOnlySurface);
+  expect(pairedSurface).toBe(primaryOnlySurface);
   await expect(
     page.getByRole("tablist", { name: "Example templates" }),
   ).toHaveCount(0);
   await expect(page.locator("[data-scene]")).toHaveCount(0);
+});
+
+test("theme configurator routes tokens independently and exports light/dark CSS", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("flux-ui-theme", "light");
+    localStorage.setItem("flux-ui-docs-palette", "indigo");
+    localStorage.setItem("flux-ui-docs-secondary-palette", "amber");
+  });
+  await page.goto("/#overview");
+
+  await page.getByText(/Advanced token routing/u).click();
+
+  const subtle = page.locator('[data-theme-token="surfaceSubtle"]');
+  await subtle.getByRole("radio", { name: "Secondary", exact: true }).check();
+
+  const lightPreview = page.locator('[data-theme-preview="light"]');
+  const darkPreview = page.locator('[data-theme-preview="dark"]');
+  await expect
+    .poll(() =>
+      lightPreview.evaluate((element) =>
+        element.style.getPropertyValue("--flux-color-surface-subtle").trim(),
+      ),
+    )
+    .toBe("var(--flux-palette-amber-100)");
+  await expect
+    .poll(() =>
+      darkPreview.evaluate((element) =>
+        element.style.getPropertyValue("--flux-color-surface-subtle").trim(),
+      ),
+    )
+    .toBe("var(--flux-palette-amber-900)");
+
+  const accent = page.locator('[data-theme-token="accent"]');
+  await accent.getByRole("radio", { name: "Custom", exact: true }).check();
+  await accent
+    .getByRole("button", { name: "Edit light & dark", exact: true })
+    .click();
+
+  const customEditor = page.getByRole("dialog", {
+    name: "Custom Accent colors",
+  });
+  await customEditor
+    .getByRole("group", { name: "Accent light color" })
+    .getByRole("textbox", { name: "Hex color" })
+    .fill("#123456");
+  await customEditor
+    .getByRole("group", { name: "Accent dark color" })
+    .getByRole("textbox", { name: "Hex color" })
+    .fill("#abcdef");
+
+  await expect
+    .poll(() =>
+      lightPreview.evaluate((element) =>
+        element.style.getPropertyValue("--flux-color-accent").trim(),
+      ),
+    )
+    .toBe("#123456");
+  await expect
+    .poll(() =>
+      darkPreview.evaluate((element) =>
+        element.style.getPropertyValue("--flux-color-accent").trim(),
+      ),
+    )
+    .toBe("#abcdef");
+
+  await page
+    .getByRole("button", { name: "Export palette", exact: true })
+    .click();
+  const exported = page.getByRole("region", {
+    name: "Your Flux theme CSS",
+  });
+  await expect(exported).toContainText(
+    "--flux-color-surface-subtle: var(--flux-palette-amber-100);",
+  );
+  await expect(exported).toContainText("--flux-color-accent: #123456;");
+  await expect(exported).toContainText(
+    '.flux-custom-theme[data-flux-theme="dark"]',
+  );
+  await expect(exported).toContainText("--flux-color-accent: #abcdef;");
 });
 
 test("invalid scene and legacy mood parameters fall back safely", async ({

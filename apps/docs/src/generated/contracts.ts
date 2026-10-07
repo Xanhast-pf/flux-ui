@@ -426,6 +426,23 @@ export const publicContracts = [
     utilities: [],
   },
   {
+    name: "ColorPicker",
+    slug: "color-picker",
+    lifecycle: "beta",
+    parts: [
+      {
+        path: "ColorPicker",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+        dataAttributes: ["data-disabled"],
+        stateModels: ["value"],
+      },
+    ],
+    types: ["ColorPickerProps"],
+    utilities: [],
+  },
+  {
     name: "ColorSwatch",
     slug: "color-swatch",
     lifecycle: "stable",
@@ -1818,7 +1835,11 @@ export const publicContracts = [
         dataAttributes: ["data-query"],
       },
     ],
-    types: ["ThemeScopeProps"],
+    types: [
+      "ThemeScopeColorOverrides",
+      "ThemeScopeColorVariable",
+      "ThemeScopeProps",
+    ],
     utilities: [],
   },
   {

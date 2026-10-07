@@ -63,6 +63,30 @@ for (const outer of ["light", "dark"] as const) {
   }
 }
 
+test("theme configurator and custom light/dark editor are axe-clean", async ({
+  page,
+}) => {
+  await page.goto("/#overview");
+  await page.getByText(/Advanced token routing/u).click();
+
+  const accent = page.locator('[data-theme-token="accent"]');
+  await accent.getByRole("radio", { name: "Custom", exact: true }).check();
+  await accent
+    .getByRole("button", { name: "Edit light & dark", exact: true })
+    .click();
+  await expect(
+    page.getByRole("dialog", { name: "Custom Accent colors" }),
+  ).toBeVisible();
+
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(
+    results.violations,
+    results.violations
+      .map((violation) => `${violation.id}: ${violation.help}`)
+      .join("\n"),
+  ).toEqual([]);
+});
+
 test("forced colors preserve scene selection and keyboard-operable controls", async ({
   page,
 }) => {

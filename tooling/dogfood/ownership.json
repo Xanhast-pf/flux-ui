@@ -418,8 +418,8 @@
     },
     "apps/docs/src/styles.css": {
       "owner": "documentation-shell",
-      "reason": "Reviewed sticky-shell positioning, original collection artwork, isolated benchmark frame, and docs-only paired-palette theme adapter. The secondary palette remaps shared semantic surfaces/borders on both the docs root and the first-page showcase scope only when explicitly enabled; primary-only mode remains the public preset behavior. No control/layout/typography skins.",
-      "maxDeclarations": 447,
+      "reason": "Reviewed sticky-shell positioning, original collection artwork, isolated benchmark frame, and scrollbar adapters. Secondary palette semantics are now routed explicitly through the public token contract instead of docs-only hue blending. No control/layout/typography skins.",
+      "maxDeclarations": 48,
       "rules": {
         ".site-header": ["position", "inset-block-start", "z-index"],
         ".header-inner": ["min-block-size"],
@@ -470,130 +470,6 @@
         "@media (forced-colors: active) / html, .preview-frame, .preview-stage": [
           "scrollbar-color",
           "scrollbar-width"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"slate\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"indigo\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"blue\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"cyan\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"teal\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"emerald\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"green\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"lime\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"amber\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"orange\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"rose\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"violet\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / html[data-flux-secondary-palette=\"fuchsia\"]": [
-          "--_docs-secondary-50",
-          "--_docs-secondary-100",
-          "--_docs-secondary-200",
-          "--_docs-secondary-600",
-          "--_docs-secondary-900",
-          "--_docs-secondary-950"
-        ],
-        "@media (forced-colors: none) / :is( html, .world-surface )[data-flux-theme=\"light\"][data-flux-palette][data-flux-secondary-palette]": [
-          "--flux-color-canvas",
-          "--flux-color-surface",
-          "--flux-color-surface-subtle",
-          "--flux-color-surface-elevated",
-          "--flux-color-border",
-          "--flux-color-border-strong",
-          "--flux-color-accent-soft"
-        ],
-        "@media (forced-colors: none) / :is( html, .world-surface )[data-flux-theme=\"dark\"][data-flux-palette][data-flux-secondary-palette]": [
-          "--_docs-pair-950",
-          "--_docs-pair-900",
-          "--flux-color-canvas",
-          "--flux-color-surface",
-          "--flux-color-surface-subtle",
-          "--flux-color-surface-elevated",
-          "--flux-color-border",
-          "--flux-color-border-strong",
-          "--flux-color-accent-soft"
         ]
       }
     }
