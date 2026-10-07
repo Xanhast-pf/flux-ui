@@ -520,6 +520,8 @@ function AdvancedThemeConfigurator({
   setRouting: (routing: Map<SemanticTokenId, TokenRoute>) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [selectedTokenId, setSelectedTokenId] =
+    useState<SemanticTokenId>("accent");
   const [previewMode, setPreviewMode] = useState<PreviewMode>("split");
   const [showExport, setShowExport] = useState(false);
   const exportCode = useMemo(
@@ -536,6 +538,9 @@ function AdvancedThemeConfigurator({
   const overridden = [...routing.values()].filter(
     (route) => route.source !== "primary",
   ).length;
+  const selectedToken =
+    semanticColorTokens.find((token) => token.id === selectedTokenId) ??
+    semanticColorTokens[0];
 
   return (
     <Accordion.Root type="single">
@@ -557,29 +562,56 @@ function AdvancedThemeConfigurator({
                 primary-secondary hue blending is performed.
               </Callout>
 
-              {semanticTokenGroups.map((group) => (
-                <Stack key={group} gap="md">
-                  <Heading level={3} size="sm">
-                    {group}
-                  </Heading>
-                  <Stack gap="lg">
-                    {semanticColorTokens
-                      .filter((token) => token.group === group)
-                      .map((token) => (
-                        <TokenRouteRow
-                          key={token.id}
-                          tokenId={token.id}
-                          label={token.label}
-                          variable={token.variable}
-                          primary={primary}
-                          secondary={secondary}
-                          route={routeFor(routing, token.id)}
-                          onChange={(route) => updateRoute(token.id, route)}
-                        />
-                      ))}
-                  </Stack>
-                </Stack>
-              ))}
+              <Field.Root>
+                <Field.Label>Token to customize</Field.Label>
+                <Field.Control>
+                  <Select
+                    aria-label="Token to customize"
+                    value={selectedTokenId}
+                    onChange={(event) => {
+                      const selected = semanticColorTokens.find(
+                        (token) => token.id === event.currentTarget.value,
+                      );
+                      if (selected !== undefined)
+                        setSelectedTokenId(selected.id);
+                    }}
+                  >
+                    {semanticTokenGroups.map((group) => (
+                      <optgroup key={group} label={group}>
+                        {semanticColorTokens
+                          .filter((token) => token.group === group)
+                          .map((token) => {
+                            const route = routeFor(routing, token.id);
+                            const suffix =
+                              route.source === "primary"
+                                ? ""
+                                : ` — ${route.source === "secondary" ? "Secondary" : "Custom"}`;
+                            return (
+                              <option key={token.id} value={token.id}>
+                                {token.label}
+                                {suffix}
+                              </option>
+                            );
+                          })}
+                      </optgroup>
+                    ))}
+                  </Select>
+                </Field.Control>
+                <Field.Description>
+                  Choose one semantic token at a time. Customized tokens are
+                  marked in the menu.
+                </Field.Description>
+              </Field.Root>
+
+              <TokenRouteRow
+                tokenId={selectedToken.id}
+                label={selectedToken.label}
+                variable={selectedToken.variable}
+                primary={primary}
+                secondary={secondary}
+                route={routeFor(routing, selectedToken.id)}
+                onChange={(route) => updateRoute(selectedToken.id, route)}
+              />
 
               <Inline gap="sm" wrap>
                 <Button
@@ -610,7 +642,7 @@ function AdvancedThemeConfigurator({
               <Stack gap="md">
                 <Inline justify="between" gap="md" align="center" wrap>
                   <Stack gap="xs">
-                    <Heading level={4} size="sm">
+                    <Heading level={3} size="sm">
                       Live component preview
                     </Heading>
                     <Text variant="caption" tone="muted">

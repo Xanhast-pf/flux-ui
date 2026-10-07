@@ -150,8 +150,17 @@ test("theme configurator routes tokens independently and exports light/dark CSS"
 
   await page.getByText(/Advanced token routing/u).click();
 
+  const tokenSelect = page.getByRole("combobox", {
+    name: "Token to customize",
+  });
+  await expect(page.locator("[data-theme-token]")).toHaveCount(1);
+  await tokenSelect.selectOption("surfaceSubtle");
+
   const subtle = page.locator('[data-theme-token="surfaceSubtle"]');
   await subtle.getByRole("radio", { name: "Secondary", exact: true }).check();
+  await expect(tokenSelect.locator('option[value="surfaceSubtle"]')).toHaveText(
+    "Surface subtle — Secondary",
+  );
 
   const lightPreview = page.locator('[data-theme-preview="light"]');
   const darkPreview = page.locator('[data-theme-preview="dark"]');
@@ -170,8 +179,12 @@ test("theme configurator routes tokens independently and exports light/dark CSS"
     )
     .toBe("var(--flux-palette-amber-900)");
 
+  await tokenSelect.selectOption("accent");
   const accent = page.locator('[data-theme-token="accent"]');
   await accent.getByRole("radio", { name: "Custom", exact: true }).check();
+  await expect(tokenSelect.locator('option[value="accent"]')).toHaveText(
+    "Accent — Custom",
+  );
   await accent
     .getByRole("button", { name: "Edit light & dark", exact: true })
     .click();
