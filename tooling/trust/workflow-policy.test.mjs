@@ -41,7 +41,9 @@ test("branch CI verifies local full checks while heavy CI stays main-only", asyn
   assert.match(browser, /if: github\.ref == 'refs\/heads\/main'/u);
   assert.match(browser, /run playwright:install:compat/u);
   assert.match(browser, /tooling\/trust\/run-checks\.mjs browser/u);
-  assert.match(browser, /consumer-compat-results/u);
+  // The compatibility task is checked in evidence.test.mjs; Pages needs the receipt.
+  assert.match(browser, /name: evidence-browser-\$\{\{ github\.run_id \}\}/u);
+  assert.match(browser, /path: \.cache\/trust\/browser\//u);
 });
 
 test("Required chooses attestation off main and heavy jobs on main", async () => {
