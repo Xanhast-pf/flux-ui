@@ -61,16 +61,16 @@ jobs:
           path: .cache/release/
           include-hidden-files: true
           if-no-files-found: error
-          retention-days: 90
+          retention-days: 7
       - name: Preserve executed check evidence
-        if: always()
+        if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release-checks-${{ github.run_id }}-${{ github.run_attempt }}
           path: .cache/trust/
           include-hidden-files: true
           if-no-files-found: warn
-          retention-days: 90
+          retention-days: 1
 
   inventory:
     name: Inventory (${{ matrix.package.name }})
@@ -115,7 +115,7 @@ jobs:
           path: .cache/release/${{ matrix.package.file }}.spdx.json
           include-hidden-files: true
           if-no-files-found: error
-          retention-days: 90
+          retention-days: 7
 
   publish:
     name: ${{ inputs.dry_run && 'Dry run' || 'Publish' }} (${{ matrix.package.name }})
@@ -180,4 +180,4 @@ jobs:
             ${{ steps.provenance.outputs.bundle-path }}
             ${{ steps.inventory.outputs.bundle-path }}
           if-no-files-found: error
-          retention-days: 90
+          retention-days: 7
