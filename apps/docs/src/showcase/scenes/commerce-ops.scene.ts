@@ -5,12 +5,9 @@ export default {
   order: 2,
   label: "Commerce",
   brand: "Mercantile",
-  headline:
-    "Orders, inventory, and customer quality in one operations cockpit.",
-  description:
-    "A commerce-operations dashboard with an editable grid, bulk selection, fulfillment detail, restock controls, and customer-quality signals.",
-  prompt:
-    "Search inventory, edit a quantity, open order details, page the queue, and change local fulfillment settings.",
+  headline: "Manage orders and inventory.",
+  description: "Edit stock, review orders, and track customers.",
+  prompt: "Search stock, edit quantities, and open an order.",
   components: [
     "alert-dialog",
     "avatar",
@@ -36,7 +33,6 @@ export default {
     "switch",
     "text",
   ],
-  custom:
-    "Only fictional order and inventory data plus local state. Every visible application surface and control is a public Flux component; there is no custom scene stylesheet.",
+  custom: "Fictional data and local state. UI uses public Flux components.",
   Icon: ShoppingBagIcon,
 } satisfies SceneDefinition;

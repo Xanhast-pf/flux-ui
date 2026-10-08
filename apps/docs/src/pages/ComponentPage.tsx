@@ -50,7 +50,7 @@ export function ComponentPage({ slug }: { slug: string }) {
           Component not found
         </Heading>
         <Text as="p" variant="body">
-          This URL does not match the current catalog.
+          Check the component name or browse the catalog.
         </Text>
         <Link href="#components">Browse components</Link>
       </Stack>
@@ -265,8 +265,7 @@ function ComponentDetail({
         </Tabs.Panel>
       </Tabs.Root>
       <Callout tone="info">
-        This preview uses the same public Flux exports as your app. Reset
-        remounts only this example; it does not change your theme.
+        Uses public Flux components. Reset affects only this preview.
       </Callout>
       <Stack as="section" gap="lg">
         <Stack gap="md">
@@ -274,15 +273,13 @@ function ComponentDetail({
             Public contract
           </Heading>
           <Text as="p" variant="body" tone="muted">
-            Generated from the public TypeScript component surface. DOM-backed
-            parts keep the listed escape hatches; controller parts intentionally
-            render no customizable DOM node.
+            Generated from public TypeScript APIs. Controller parts render no
+            DOM.
           </Text>
           <Callout tone="info">
             Lifecycle: <Code>{publicContract.lifecycle}</Code>. This generated
-            inventory defines the intended public compatibility surface. Beta
-            components may still change before promotion; once stable, that
-            published surface is the compatibility promise.
+            inventory lists the public API. Beta APIs may change; stable APIs
+            are the published contract.
           </Callout>
           <Text as="p" variant="body" tone="muted">
             Public TypeScript exports:{" "}
@@ -301,8 +298,7 @@ function ComponentDetail({
           >
             <Table.Root>
               <Table.Caption>
-                Public component parts and customization escape hatches derived
-                from TypeScript.
+                Public parts and customization options.
               </Table.Caption>
               <Table.Header>
                 <Table.Row>
@@ -327,11 +323,11 @@ function ComponentDetail({
                     <Table.Cell>
                       {"stateModels" in part
                         ? part.stateModels.join(" · ")
-                        : "—"}
+                        : "None"}
                     </Table.Cell>
                     <Table.Cell>
                       {part.cssVariables.length === 0 ? (
-                        "—"
+                        "None"
                       ) : (
                         <Code>{part.cssVariables.join(", ")}</Code>
                       )}
@@ -340,7 +336,7 @@ function ComponentDetail({
                       {"dataAttributes" in part ? (
                         <Code>{part.dataAttributes.join(", ")}</Code>
                       ) : (
-                        "—"
+                        "None"
                       )}
                     </Table.Cell>
                   </Table.Row>
@@ -354,10 +350,7 @@ function ComponentDetail({
                 Descendant state hooks
               </Heading>
               <Text as="p" variant="body" tone="muted">
-                These selectors identify stable state on implementation-owned
-                descendants. They are styling contracts only: they do not create
-                public React parts or imply className, style, ref, or DOM
-                ancestry.
+                These selectors are styling hooks, not public React parts.
               </Text>
               <ScrollArea
                 aria-label={`${entry.name} descendant state hooks`}
@@ -365,7 +358,7 @@ function ComponentDetail({
               >
                 <Table.Root>
                   <Table.Caption>
-                    Stable state hooks on non-exported descendant surfaces.
+                    Stable descendant state selectors.
                   </Table.Caption>
                   <Table.Header>
                     <Table.Row>
@@ -399,9 +392,7 @@ function ComponentDetail({
           <ScrollArea aria-label={`${entry.name} props`} axis="horizontal">
             <Table.Root>
               <Table.Caption>
-                Curated common props and composition points. The generated
-                public contract above and linked TypeScript source are
-                authoritative.
+                Common props. See the public contract for full details.
               </Table.Caption>
               <Table.Header>
                 <Table.Row>
@@ -428,13 +419,13 @@ function ComponentDetail({
           <Link
             href={`${REPOSITORY_URL}/blob/main/packages/react/src/components/${entry.name}/${entry.name}.types.ts`}
           >
-            Read the full TypeScript API ↗
+            View TypeScript API ↗
           </Link>
         </Stack>
       </Stack>
       <Stack as="section" gap="lg">
         <Heading level={2} size="lg">
-          Usage & accessibility
+          Usage and accessibility
         </Heading>
         <List variant="marker" gap={3}>
           {notes.map((note) => (

@@ -44,10 +44,10 @@ export function BundleExplorer() {
         <Inline wrap justify="between" gap="lg">
           <Stack gap="xs">
             <Text as="p" variant="eyebrow" tone="muted">
-              Anatomy of a lightweight system
+              Bundle sizes
             </Text>
             <Heading level={2} size="lg">
-              Every component, in perspective.
+              Compare components
             </Heading>
           </Stack>
           <Inline wrap gap="md">
@@ -84,9 +84,8 @@ export function BundleExplorer() {
           </Inline>
         </Inline>
         <Text as="p" variant="body" tone="muted">
-          Committed bundled-entry measurements · largest first. React and
-          external packages are excluded. These values are component regression
-          baselines, not additive application bundle sizes.
+          Saved measurements, largest first. Excludes React and dependencies.
+          Component sizes cannot be added to estimate an app bundle.
         </Text>
         <Text role="status" as="p" variant="caption" tone="muted">
           {entries.length} matching components

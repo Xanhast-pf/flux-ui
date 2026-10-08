@@ -133,13 +133,13 @@ function SecondaryPaletteSelect({
         else if (next !== primary && isPalettePreset(next)) onChange(next);
       }}
     >
-      <option value="off">Off — Primary only</option>
+      <option value="off">Off (primary only)</option>
       <optgroup label="Recommended matches">
         {recommended.map((entry) => (
           <option key={entry.palette} value={entry.palette}>
             {palettePresets.find((item) => item.id === entry.palette)?.label ??
               entry.palette}
-            {" — "}
+            {" · "}
             {entry.relationshipLabel}
           </option>
         ))}
@@ -274,8 +274,7 @@ function CustomColorEditor({
             </Button>
           </Inline>
           <Text variant="caption" tone="muted">
-            Custom values bypass the preset contrast guarantees. Review both
-            previews before exporting.
+            Custom colors are not contrast-checked. Review both themes.
           </Text>
           <Text variant="caption" tone="muted">
             Token: {tokenId}
@@ -436,7 +435,7 @@ function ThemePreview({
               {theme === "light" ? "Light" : "Dark"} preview
             </Heading>
             <Text variant="caption" tone="muted">
-              Public Flux components under the resolved semantic tokens.
+              Flux components with these colors.
             </Text>
           </Stack>
           <StatusBadge tone="accent">Live</StatusBadge>
@@ -499,10 +498,7 @@ function ThemePreview({
         </Inline>
 
         <Progress aria-label="Theme preview progress" value={72} max={100} />
-        <Callout tone="info">
-          Info surfaces expose soft, foreground, border, text, and focus tokens
-          together.
-        </Callout>
+        <Callout tone="info">Semantic colors applied to components.</Callout>
       </Stack>
     </ThemeScope>
   );
@@ -556,10 +552,8 @@ function AdvancedThemeConfigurator({
           {open ? (
             <Stack gap="xl">
               <Callout tone="accent">
-                Route each semantic color independently. Primary keeps the
-                normal Flux preset, Secondary uses the selected secondary ramp
-                directly, and Custom owns an explicit Light/Dark pair. No
-                primary-secondary hue blending is performed.
+                Assign each token to a palette or custom light/dark color.
+                Palettes are not blended.
               </Callout>
 
               <Field.Root>
@@ -585,7 +579,7 @@ function AdvancedThemeConfigurator({
                             const suffix =
                               route.source === "primary"
                                 ? ""
-                                : ` — ${route.source === "secondary" ? "Secondary" : "Custom"}`;
+                                : ` (${route.source === "secondary" ? "Secondary" : "Custom"})`;
                             return (
                               <option key={token.id} value={token.id}>
                                 {token.label}
@@ -598,8 +592,7 @@ function AdvancedThemeConfigurator({
                   </Select>
                 </Field.Control>
                 <Field.Description>
-                  Choose one semantic token at a time. Customized tokens are
-                  marked in the menu.
+                  Choose a token to edit. Custom tokens are marked.
                 </Field.Description>
               </Field.Root>
 
@@ -646,8 +639,7 @@ function AdvancedThemeConfigurator({
                       Live component preview
                     </Heading>
                     <Text variant="caption" tone="muted">
-                      Compare both theme modes without changing the surrounding
-                      docs page.
+                      Compare light and dark without changing the docs theme.
                     </Text>
                   </Stack>
                   <ToggleGroup.Root
@@ -803,15 +795,15 @@ export function AppearanceControls() {
           </Inline>
           <Field.Description>
             {secondary === null
-              ? "Primary only. Secondary token choices are disabled."
-              : `${selectedSecondary?.label ?? secondary} is available as an independent token source; it is not blended into the primary palette.`}
+              ? "Only primary tokens are active."
+              : `${selectedSecondary?.label ?? secondary} can be assigned to individual tokens.`}
           </Field.Description>
         </Field.Root>
       </Grid>
 
       <Stack gap="xs">
         <Text variant="caption" tone="muted">
-          Recommended secondary matches
+          Suggested color pairings
         </Text>
         <Inline gap="md" wrap>
           {recommendations.map((entry) => {
@@ -834,10 +826,7 @@ export function AppearanceControls() {
       </Stack>
 
       <Text variant="caption" tone="muted">
-        Suggestions combine perceptual OKLab/OKLCH distance with
-        split-complementary, complementary, and triadic hue relationships.
-        Select a secondary palette, then decide exactly which semantic tokens
-        should use it.
+        Pairings are suggestions. Assign colors to tokens below.
       </Text>
 
       <AdvancedThemeConfigurator
@@ -848,9 +837,7 @@ export function AppearanceControls() {
       />
 
       <Text variant="caption" tone="muted">
-        Current docs theme: {theme}. The advanced preview is scoped and does not
-        rewrite your saved global token configuration until you export and apply
-        it in your project.
+        Docs mode: {theme}. Token edits stay in this preview until exported.
       </Text>
     </Stack>
   );

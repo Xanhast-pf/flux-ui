@@ -30,10 +30,9 @@ export function ComponentsPage() {
   );
   return (
     <Stack gap="lg">
-      <PageHeader title={<>Components</>} eyebrow={<>The building blocks</>}>
+      <PageHeader title={<>Components</>} eyebrow={<>Component catalog</>}>
         <Text as="p" variant="lead" tone="muted">
-          {catalog.length} families. A preview, example, API notes, and size
-          contract for every one.
+          {catalog.length} components with previews, code, and API notes.
         </Text>
       </PageHeader>
       <Input
@@ -43,7 +42,7 @@ export function ComponentsPage() {
         onChange={(event) => {
           setQuery(event.currentTarget.value);
         }}
-        placeholder="Find a component, a behavior, a possibility…"
+        placeholder="Search components…"
       />
       <Tabs.Root value={category} onValueChange={setCategory}>
         <Tabs.List aria-label="Component categories" activateOnFocus>
@@ -60,7 +59,7 @@ export function ComponentsPage() {
                 <Text role="status" as="p" variant="caption" tone="muted">
                   {ready
                     ? `${visible.length} ${visible.length === 1 ? "component" : "components"}`
-                    : "Searching component pages…"}
+                    : "Searching…"}
                 </Text>
                 <Grid minColumnWidth="14rem" gap="md">
                   {visible.map((item) => (
@@ -86,9 +85,9 @@ export function ComponentsPage() {
                 {ready && visible.length === 0 ? (
                   <Card>
                     <EmptyState
-                      title="No matching components."
+                      title="No components found."
                       headingLevel={2}
-                      description="Try different words or select All categories."
+                      description="Try another search or category."
                     />
                   </Card>
                 ) : null}

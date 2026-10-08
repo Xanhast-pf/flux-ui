@@ -22,9 +22,7 @@ export function HealthPage() {
       <Stack gap="md">
         <PageHeader title={<>Repository health</>}>
           <Text as="p" variant="body">
-            A snapshot of catalog coverage, package weight, and quality gates.
-            Explore individual bundle and runtime measurements from the Inspect
-            menu.
+            Component status, package size, and quality checks.
           </Text>
         </PageHeader>
         <MeasurementNotice />
@@ -45,11 +43,7 @@ export function HealthPage() {
                   {readiness.summary.total}
                 </>
               }
-              note={
-                <>
-                  Automated prerequisites; promotion stays a maintainer decision
-                </>
-              }
+              note={<>Automated checks only. Promotion is manual.</>}
             />
           </Card>
           <Card>
@@ -99,23 +93,16 @@ export function HealthPage() {
         <Card>
           <Stack gap="md">
             <Heading level={2} size="lg">
-              Read this snapshot
+              About these numbers
             </Heading>
             <Text as="p" tone="muted">
-              Catalog coverage and lifecycle readiness are generated from the
-              current public contract, docs, tests, browser/a11y catalog
-              coverage, and reviewed size baselines. Eligibility means the
-              automated prerequisites are present; it is not an automatic
-              promotion or a blanket production-readiness claim.
+              Status comes from code, docs, tests, and baselines. Passing checks
+              does not mean a component is production-ready.
             </Text>
-            <Link href="#size">
-              Inspect component-by-component bundle measurements
-            </Link>
-            <Link href="#performance">
-              Inspect committed runtime measurements
-            </Link>
-            <Link href="#engineering">How the quality gates work</Link>
-            <Link href="#trust">Build and security evidence</Link>
+            <Link href="#size">Component sizes</Link>
+            <Link href="#performance">Runtime performance</Link>
+            <Link href="#engineering">Quality checks</Link>
+            <Link href="#trust">Build and security</Link>
           </Stack>
         </Card>
       </Stack>

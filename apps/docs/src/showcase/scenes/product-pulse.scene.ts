@@ -5,11 +5,9 @@ export default {
   order: 1,
   label: "Product",
   brand: "Beacon",
-  headline: "See what users love, where they struggle, and what to ship next.",
-  description:
-    "A product-intelligence dashboard blending adoption, cohorts, experiments, qualitative confidence, and performance signals.",
-  prompt:
-    "Filter a team, change confidence, toggle chart series, inspect an experiment, and adjust guardrails.",
+  headline: "Understand product performance.",
+  description: "Explore usage, experiments, and feedback.",
+  prompt: "Filter teams, inspect experiments, and adjust limits.",
   components: [
     "accordion",
     "button",
@@ -41,7 +39,6 @@ export default {
     "toggle-group",
     "tooltip",
   ],
-  custom:
-    "Only fictional analytics data and local state. Every visible control, chart, disclosure, surface, and overlay is a public Flux component.",
+  custom: "Fictional data and local state. UI uses public Flux components.",
   Icon: SparkIcon,
 } satisfies SceneDefinition;

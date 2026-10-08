@@ -33,7 +33,7 @@ function ServiceWorkspace() {
   const { notify } = useToast();
   const [priority, setPriority] = useState("high");
   const [reply, setReply] = useState(
-    "Thanks for the detailed report — I’m checking the sync logs now.",
+    "Thanks for the report. I’m checking the sync logs.",
   );
   const [closed, setClosed] = useState(false);
   const [status, setStatus] = useState(

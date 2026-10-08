@@ -15,32 +15,28 @@ import { CodeBlock } from "../ui/CodeBlock.js";
 const contracts = [
   {
     title: "Native first",
-    body: "Native semantics, keyboard behavior, and accessible names before custom abstractions.",
+    body: "Native semantics and accessible controls.",
   },
   {
     title: "Static by design",
-    body: "Emitted CSS and semantic theme variables. No runtime CSS-in-JS engine.",
+    body: "Static CSS with semantic tokens.",
   },
   {
     title: "Convention over registration",
-    body: "Component-local behavior, styles, tests, and metadata. Generators discover the public catalog.",
+    body: "Local files. Automatic discovery.",
   },
   {
     title: "Small API, real escape hatches",
-    body: "Sensible defaults for ordinary work. Native props, className, style, documented variables and compound composition for the uncommon case.",
+    body: "Small APIs with native props and composition.",
   },
 ];
 export function EngineeringPage() {
   return (
     <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="lg">
-        <PageHeader
-          title={<>A system beneath the surface.</>}
-          eyebrow={<>Built to be inspected</>}
-        >
+        <PageHeader title={<>Engineering</>} eyebrow={<>How Flux works</>}>
           <Text as="p" variant="lead" tone="muted">
-            Performance and accessibility are engineering contracts, not the
-            last line of a launch page.
+            Accessibility and performance are built in.
           </Text>
         </PageHeader>
         <Grid
@@ -66,7 +62,7 @@ export function EngineeringPage() {
               "03",
               "Real interfaces",
               "Docs consume Flux",
-              "The public API in every example",
+              "Public components in every example",
             ],
           ].map(([step, title, description, detail]) => (
             <Card key={step}>
@@ -105,16 +101,11 @@ export function EngineeringPage() {
             API compatibility boundary
           </Heading>
           <Text as="p" variant="body">
-            Component pages expose a generated inventory of public parts, types,
-            runtime utilities, CSS variables and documented state hooks. Beta
-            components may still change before promotion; stable components
-            carry that published surface as their compatibility promise.
+            Component pages list public APIs and styling hooks. Beta APIs may
+            change; stable APIs are supported contracts.
           </Text>
           <Text as="p" variant="body">
-            Undocumented DOM structure, generated classes, internal markers and
-            source-only helpers remain implementation details. Lowercase runtime
-            exports must be explicitly classified before entering the supported
-            package surface.
+            Internal DOM, classes, and helpers are not public APIs.
           </Text>
         </Stack>
         <Stack as="section" gap="lg">
@@ -122,8 +113,8 @@ export function EngineeringPage() {
             The measurement contract
           </Heading>
           <Text as="p" variant="body">
-            Bundle budgets and native-relative benchmarks gate regressions.
-            Neither is a universal claim about application size or speed.
+            Size budgets and benchmarks catch regressions, not predict app
+            speed.
           </Text>
           <Collapsible.Root variant="plain">
             <Collapsible.Trigger>
@@ -132,19 +123,12 @@ export function EngineeringPage() {
             <Collapsible.Content>
               <Stack gap="md">
                 <Text as="p" variant="body">
-                  Per-component emitted runtime graphs have raw, gzip and Brotli
-                  budgets, plus historical regression checks. Shared graphs
-                  overlap: adding every component’s compressed size is not an
-                  application bundle estimate. React and external packages are
-                  outside these graph measurements.
+                  Component graphs have raw, gzip, and Brotli budgets. Shared
+                  code overlaps; totals exclude React and other packages.
                 </Text>
                 <Text as="p" variant="body">
-                  Runtime checks compare synchronous mount, update and unmount
-                  against equivalent native React implementations. Paired
-                  medians reduce order bias; absolute cost accompanies ratios.
-                  Next-frame diagnostics are not paint or input-latency
-                  measurements. The live lab is an experiment, not a claim to be
-                  the fastest library.
+                  Runtime checks compare synchronous React work. Frame timings
+                  are diagnostics, not paint or input latency.
                 </Text>
               </Stack>
             </Collapsible.Content>
@@ -157,11 +141,7 @@ export function EngineeringPage() {
         <Heading level={2} size="lg">
           Contributor workflow
         </Heading>
-        <Text as="p">
-          Contributors use Node 24+ and pnpm 10.34.5. One small human command
-          surface keeps the strict internal quality gates unchanged. No
-          additional system task runner is required.
-        </Text>
+        <Text as="p">Contributors need Node 24+ and pnpm 10.34.5.</Text>
         <CodeBlock
           label="Contributor workflow"
           code={
@@ -169,29 +149,20 @@ export function EngineeringPage() {
           }
         />
         <Text as="p">
-          Run pnpm flux for command discovery or pnpm flux size --help for
-          focused size help. Use pnpm flux check full for browser and
-          runtime-sensitive changes; pnpm flux check all continues independent
-          checks and writes a local diagnostic receipt.
+          Use pnpm flux for commands. Run pnpm flux check full for browser
+          changes.
           <Link href={`${REPOSITORY_URL}/blob/main/docs/development.md`}>
             Contributor setup and command reference
           </Link>
         </Text>
         <Stack as="section" gap="lg">
           <Heading level={2} size="lg">
-            What blocks a merge?
+            Release checks
           </Heading>
           <Text as="p" variant="body">
-            The stable Required CI job covers both verification paths. On
-            branches, it verifies the locally generated full-check attestation;
-            on main, it requires the Quality and Browser jobs to succeed.
-            Quality checks generation drift, docs coverage, formatting, lint,
-            TypeScript, unused code, tests, builds, size budgets and Coding
-            Bible. Browser runs broad Chromium behavior and axe checks, a
-            focused Chromium/Firefox/WebKit built-consumer compatibility suite,
-            and native-relative performance checks. Pages is built only after
-            Required succeeds. Repository rules must require that check; a YAML
-            file cannot enable branch protection.
+            Branches verify local full-check attestations. Main requires Quality
+            and Browser checks. These cover code, docs, accessibility, size, and
+            compatibility. Branch protection must require the Required job.
           </Text>
           <Text as="p" variant="body">
             <Link href={`${REPOSITORY_URL}/blob/main/AGENTS.md`}>
@@ -201,13 +172,9 @@ export function EngineeringPage() {
         </Stack>
         <EngineeringRules />
         <Callout>
-          Current limits: pre-stable APIs with lifecycle status tracked per
-          component, a small committed set of historical runtime baselines plus
-          broader registered browser workloads, broad docs automation that
-          remains Chromium-focused, and a focused three-engine built-consumer
-          compatibility suite. Manual assistive-technology testing and full
-          docs-suite parity across browsers remain explicit review work. See the
-          Trust Center before adopting Flux for a production-critical interface.
+          Flux is pre-stable. Full docs tests run mainly in Chromium;
+          compatibility checks cover three engines. Manual accessibility testing
+          is still needed for production use.
         </Callout>
         <Link href="#trust" variant="solid">
           Open the Trust Center →

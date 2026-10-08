@@ -50,13 +50,12 @@ export default function RecipeSource({
             }
           }}
         >
-          Download complete recipe
+          Download recipe
         </Button>
       </Inline>
       <Text variant="caption" tone="muted">
-        {Object.keys(recipe.files).length} files, including dashboard source,
-        license and consumer setup. Supply the approved Flux package archives as
-        described in README.md; this is not a release attestation.
+        {Object.keys(recipe.files).length} files. Add approved package archives
+        as described in README.md.
       </Text>
       {error !== null ? (
         <Text role="alert" tone="danger">

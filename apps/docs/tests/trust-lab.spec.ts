@@ -49,7 +49,7 @@ test("the lab is opt-in and produces finite local paired results", async ({
     page.getByRole("region", { name: "Benchmark results", exact: true }),
   ).toHaveCount(0);
   await expect(page.getByRole("status")).toContainText(
-    "Configuration changed. Start benchmark to measure this setup.",
+    "Settings changed. Run again.",
   );
 });
 
@@ -66,9 +66,7 @@ test("stop removes the active frame and navigation abandons the run", async ({
   await expect(
     page.getByRole("button", { name: "Start benchmark", exact: true }),
   ).toBeEnabled();
-  await expect(page.getByRole("status")).toContainText(
-    "Measurement stopped. No partial result was published.",
-  );
+  await expect(page.getByRole("status")).toContainText("Benchmark stopped.");
   await expect(page.locator(".lab-surface iframe")).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "Export raw results", exact: true }),
@@ -79,9 +77,7 @@ test("stop removes the active frame and navigation abandons the run", async ({
   await page.evaluate(() => {
     window.location.hash = "engineering";
   });
-  await expect(page.locator("main h1")).toContainText(
-    "A system beneath the surface.",
-  );
+  await expect(page.locator("main h1")).toContainText("Engineering");
   await expect(page.locator("iframe")).toHaveCount(0);
 });
 
@@ -112,13 +108,13 @@ test("the live axe demo detects the intentional defect and its repair", async ({
 }) => {
   test.setTimeout(60_000);
   await page.goto("/#accessibility");
-  await expect(page.getByRole("status")).toContainText("Not scanned");
+  await expect(page.getByRole("status")).toContainText("Ready to scan");
   await page.getByRole("button", { name: "Run axe scan", exact: true }).click();
   await expect(page.getByRole("status")).toContainText("0 violation rules", {
     timeout: 20_000,
   });
   const defect = page.getByRole("checkbox", {
-    name: "Introduce an intentional missing button name",
+    name: "Remove button label",
   });
   await defect.check();
   await page.getByRole("button", { name: "Run axe scan", exact: true }).click();

@@ -63,7 +63,7 @@ function ThemePreview() {
             Live theme preview
           </Heading>
           <Text as="p" variant="caption" tone="muted">
-            These are ordinary Flux components using semantic tokens.
+            Flux components using semantic colors.
           </Text>
         </Stack>
         <Inline gap="sm" wrap align="center">
@@ -82,9 +82,7 @@ function ThemePreview() {
           aria-label="Theme preview input"
           placeholder="Search the palette…"
         />
-        <Callout tone="info">
-          Semantic info, success, warning, and danger tones stay meaningful.
-        </Callout>
+        <Callout tone="info">Semantic status colors in action.</Callout>
       </Grid>
     </Stack>
   );
@@ -106,13 +104,9 @@ export function TokensPage() {
 
   return (
     <Stack gap="lg">
-      <PageHeader
-        title={<>Design tokens</>}
-        eyebrow={<>One language, balanced color</>}
-      >
+      <PageHeader title={<>Design tokens</>} eyebrow={<>Themes and colors</>}>
         <Text as="p" variant="lead" tone="muted">
-          Choose a primary palette, pair it with a perceptually complementary
-          secondary, flip the lights, and keep semantic roles intact.
+          Choose colors and preview light and dark themes.
         </Text>
       </PageHeader>
 
@@ -127,13 +121,12 @@ export function TokensPage() {
       <Stack as="section" gap="lg">
         <Stack gap="sm">
           <Heading level={2} size="lg">
-            Full color palette
+            Color palette
           </Heading>
           <Text as="p" variant="body">
-            {paletteEntries.length} balanced ramps,{" "}
-            {paletteEntries.length * paletteSteps.length} colors. Hover or focus
-            a swatch to reveal its CSS variable; activate it to copy the
-            variable reference.
+            {paletteEntries.length} palettes,{" "}
+            {paletteEntries.length * paletteSteps.length} colors. Select a
+            swatch to copy its CSS variable.
           </Text>
         </Stack>
 
@@ -194,9 +187,7 @@ export function TokensPage() {
             Semantic color roles
           </Heading>
           <Text as="p" variant="body">
-            Components consume these roles rather than hard-coded palette
-            shades. Their computed values update with the active mode and
-            palette.
+            Components use these tokens. Values change with the theme.
           </Text>
         </Stack>
         <Grid minColumnWidth="11rem" gap="sm">
@@ -212,8 +203,7 @@ export function TokensPage() {
             Spatial rhythm
           </Heading>
           <Text as="p" variant="body">
-            Explicit quarter-rem steps. A 1rem default gap. A 0.25rem default
-            radius. No mystery geometry.
+            Quarter-rem steps. Default gap: 1rem. Default radius: 0.25rem.
           </Text>
           <Grid minColumnWidth="14rem" gap="md">
             {Object.entries(primitiveTokens.space).map(([step, value]) => (

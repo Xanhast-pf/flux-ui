@@ -3,26 +3,21 @@ import { CodeBlock } from "../ui/CodeBlock.js";
 export function InstallPage() {
   return (
     <Stack className="reference-page" as="section" gap="lg">
-      <PageHeader title="Install & onboarding">
-        <Text as="p">
-          Build a consumer app, reuse a complete recipe, or contribute to Flux.
-        </Text>
+      <PageHeader title="Installation">
+        <Text as="p">Set up Flux for your app or this repository.</Text>
       </PageHeader>
       <Callout tone="warning">
-        Flux UI is pre-stable. Check the component catalog for individual
-        lifecycle status. Public package versions in this source may still be
-        unreleased. Use an explicitly approved release or candidate archive; do
-        not assume a stable npm package exists.
+        Flux UI is pre-stable. Check component status before use. Install only
+        an approved release or candidate archive; npm versions may be
+        unavailable.
       </Callout>
       <Stack gap="md">
         <Heading level={2} size="lg">
-          Use Flux in an application
+          Use Flux in your app
         </Heading>
         <Text as="p">
-          The current source targets React 19.2 and Node 24 or newer for its
-          build toolchain. The example below uses exact candidate archives, not
-          workspace aliases. Copy all three approved archives into your
-          application first.
+          Use React 19.2 and Node 24+ for builds. Copy the three approved
+          candidate archives into your app.
         </Text>
         <CodeBlock
           language="bash"
@@ -48,9 +43,8 @@ pnpm add ./vendor/flux-ui-react.tgz ./vendor/flux-ui-tokens.tgz ./vendor/flux-ui
 }`}
         />
         <Text as="p">
-          Add the override configuration before installing when the candidate
-          versions are not on the registry. Once packages are published, replace
-          local paths with the explicitly approved matching versions.
+          Use these overrides for unpublished candidates. Switch to matching
+          approved versions when published.
         </Text>
         <CodeBlock
           language="tsx"
@@ -80,54 +74,45 @@ export function App() {
 }`}
         />
         <Text as="p">
-          Import foundations once at your application entry. Built public
-          components include their component CSS. Icons remain separate, and
-          palette presets use public tokens rather than private CSS skins.
+          Import tokens once. Component styles are included; icons stay
+          separate.
         </Text>
       </Stack>
       <Stack gap="md">
         <Heading level={2} size="lg">
-          Start from a complete application recipe
+          Use a dashboard recipe
         </Heading>
         <Text as="p">
-          Open a product scene in the Playground, expand its composition
-          inspector, and choose Download complete recipe. The ZIP includes its
-          source dependencies, artwork, license, entrypoint, package manifest
-          and TypeScript/Vite setup. Supply the candidate packages, then run the
-          included install and build commands.
+          In Playground, select a dashboard and download its recipe. The ZIP
+          includes source, artwork, license, and Vite setup. Add the approved
+          package archives before installing.
         </Text>
         <Callout>
-          Finance transactions, invitations and studio checkpoints are local
-          simulations. Recipes do not include a backend, audio processing,
-          persistence after reload, or a release attestation.
+          Dashboard actions are local demos. Recipes have no backend,
+          persistence, or release attestation.
         </Callout>
       </Stack>
       <Stack gap="md">
         <Heading level={2} size="lg">
-          Server rendering and framework boundaries
+          Server rendering
         </Heading>
         <Text as="p">
-          Field Root description/error slots provide deterministic initial
-          server relationships. Opaque helper components register their compound
-          parts after rendering; use root-owned slots when the initial server
-          markup must include that relationship.
+          Use Field root slots when server markup needs description or error
+          relationships.
         </Text>
         <Text as="p">
-          The repository has hydration coverage, but that is not a general
-          framework certification. Next.js and React Server Components consumer
-          support remains unverified for this candidate. Validate the intended
-          client boundary and packed package before promising framework
-          compatibility.
+          Hydration is tested, but Next.js and React Server Components remain
+          unverified for this candidate. Test your framework and client
+          boundary.
         </Text>
       </Stack>
       <Stack gap="md">
         <Heading level={2} size="lg">
-          Contribute to the source
+          Contribute
         </Heading>
         <Text as="p">
-          Repository contributors need Node 24+ and pnpm 10.34.5. Library
-          consumers do not need the developer CLI. Run pnpm flux to discover
-          commands and pnpm flux size --help for focused help.
+          Contributors need Node 24+ and pnpm 10.34.5. Run pnpm flux for
+          commands.
         </Text>
         <CodeBlock
           language="bash"
@@ -161,11 +146,8 @@ pnpm flux release pack
 pnpm flux release consumer`}
         />
         <Text as="p">
-          Packed-consumer validation does not publish. It checks the exact
-          archives in an isolated application across Chromium, Firefox and
-          WebKit, then builds every exported recipe. Browser binaries and the
-          pinned toolchain must be installed. A source-only check does not
-          replace that result.
+          Packed-consumer checks test exact archives in Chromium, Firefox, and
+          WebKit and build the exported recipes. These checks do not publish.
         </Text>
       </Stack>
     </Stack>

@@ -66,10 +66,9 @@ export function SearchDialog() {
         <SearchIcon aria-hidden="true" size={20} />
       </IconButton>
       <Dialog.Popup>
-        <Dialog.Title>Find your next building block.</Dialog.Title>
+        <Dialog.Title>Search docs</Dialog.Title>
         <Dialog.Description>
-          Search components and documentation. Use Tab to follow links and
-          Escape to close.
+          Find components and guides. Press Escape to close.
         </Dialog.Description>
         <Stack gap="sm">
           <Input
@@ -85,12 +84,12 @@ export function SearchDialog() {
               event.stopPropagation();
               setOpen(false);
             }}
-            placeholder="Try switch, icons, or performance…"
+            placeholder="Search components or guides…"
           />
           <Text role="status" as="p" variant="caption" tone="muted">
             {ready
               ? `${results.length} ${results.length === 1 ? "result" : "results"}`
-              : "Searching component pages…"}
+              : "Searching…"}
           </Text>
           <ScrollArea
             axis="vertical"

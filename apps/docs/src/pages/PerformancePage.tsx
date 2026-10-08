@@ -115,20 +115,15 @@ export function PerformancePage() {
     <Stack className="reference-page" as="section" gap="lg">
       <PageHeader title={<>Runtime performance</>}>
         <Text as="p" variant="body">
-          Choose any public component. Every component has a browser workload:
-          purpose-built scenarios where Flux has a meaningful stress or matched
-          comparison fixture, otherwise one representative mount/update/unmount
-          of the component&apos;s default public docs preview.
+          Choose a component to view its browser workload and measurements.
         </Text>
       </PageHeader>
 
       <Text as="p" variant="caption" tone="muted">
         {components.length} public components · {dedicatedScenarioCount}{" "}
-        purpose-built browser scenarios · {previewScenarioCount} representative
-        preview workloads · {health.performance.scenarios.length} committed
-        regression baselines. Preview workloads are device-local representative
-        compositions, not isolated component-cost or native-equivalence claims.
-        The checked-in Chromium values remain the CI regression contract.{" "}
+        dedicated scenarios · {previewScenarioCount} preview workloads ·
+        {health.performance.scenarios.length} baselines. Preview workloads
+        measure full examples, not isolated component cost.{" "}
         <Link
           href={
             definition === undefined ? "#lab" : `#lab?scenario=${definition.id}`
@@ -157,7 +152,7 @@ export function PerformancePage() {
               </Select>
             </Field.Control>
             <Field.Description>
-              Select from the complete generated component catalog.
+              Choose a component to inspect.
             </Field.Description>
           </Field.Root>
 
@@ -189,10 +184,8 @@ export function PerformancePage() {
           {recorded !== undefined && !baselineIsCurrent ? (
             <Stack gap="md">
               <Callout tone="warning">
-                The committed benchmark timing uses an older browser fixture and
-                is not comparable to the current implementation. No historical
-                ratio is shown until a deliberately reviewed baseline is
-                accepted.
+                The saved benchmark uses an older fixture. Results are not
+                comparable until a new baseline is reviewed.
               </Callout>
               {definition !== undefined && (
                 <DescriptionList>
@@ -392,20 +385,16 @@ export function PerformancePage() {
               <Callout>
                 {definition.source === "preview" ? (
                   <>
-                    This component has a representative browser workload backed
-                    by its default public docs preview, but no committed
-                    benchmark baseline. It measures the composition as shown,
-                    not the component in isolation.
+                    A browser workload is available, but no baseline is
+                    approved. It measures the full preview.
                   </>
                 ) : (
                   <>
-                    This component has a registered browser{" "}
+                    A browser{" "}
                     {definition.kind === "comparison"
                       ? "comparison"
-                      : "workload scenario"}
-                    , but it does not have a committed benchmark baseline. Flux
-                    does not invent a native-relative ratio where none has been
-                    reviewed.
+                      : "workload"}{" "}
+                    is available, but has no approved baseline.
                   </>
                 )}
               </Callout>
@@ -445,10 +434,9 @@ export function PerformancePage() {
           ) : (
             <Stack gap="md">
               <Callout>
-                No dedicated browser runtime scenario has been committed for{" "}
-                {component.name} yet. The component still has the repository's
-                required microbenchmark coverage, but this page does not turn
-                that diagnostic benchmark into a browser-runtime claim.
+                No dedicated browser workload is available for {component.name}{" "}
+                yet. A microbenchmark exists, but it does not measure browser
+                runtime.
               </Callout>
               <DescriptionList>
                 <DescriptionList.Term>Component benchmark</DescriptionList.Term>

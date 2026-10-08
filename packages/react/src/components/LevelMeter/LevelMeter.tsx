@@ -50,7 +50,7 @@ export function LevelMeter({
         <span className={peakStyle} />
       </span>
       <span className={clip} aria-hidden="true">
-        {clipped ? "CLIP" : "—"}
+        {clipped ? "CLIP" : "-"}
       </span>
     </div>
   );

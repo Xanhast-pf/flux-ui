@@ -168,7 +168,7 @@ test("dashboard recipe export is self-contained and has no scene stylesheet", as
   await expect(source).not.toBeVisible();
 
   await page
-    .getByRole("button", { name: "Inspect composition", exact: true })
+    .getByRole("button", { name: "View components", exact: true })
     .click();
   await source.click();
 
@@ -182,7 +182,7 @@ test("dashboard recipe export is self-contained and has no scene stylesheet", as
   ).toContainText("pnpm");
 
   const pending = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Download complete recipe" }).click();
+  await page.getByRole("button", { name: "Download recipe" }).click();
   expect((await pending).suggestedFilename()).toBe(
     "flux-deploy-control-recipe.zip",
   );

@@ -5,11 +5,9 @@ export default {
   order: 0,
   label: "Revenue",
   brand: "Northstar",
-  headline: "Run the business from one clear revenue picture.",
-  description:
-    "An executive revenue workspace with trends, product mix, accounts, forecasting, and real filtering controls.",
-  prompt:
-    "Change the reporting window, inspect the charts, open the forecast dialog, and select accounts.",
+  headline: "Track revenue at a glance.",
+  description: "Explore trends, accounts, and forecasts.",
+  prompt: "Change dates, inspect charts, and open forecasts.",
   components: [
     "avatar",
     "breadcrumbs",
@@ -37,7 +35,6 @@ export default {
     "text",
     "toggle-group",
   ],
-  custom:
-    "Only fictional business data and local React state. Every visible dashboard surface is composed from public Flux components with no scene-specific stylesheet or private UI primitive.",
+  custom: "Fictional data and local state. UI uses public Flux components.",
   Icon: GaugeIcon,
 } satisfies SceneDefinition;

@@ -71,7 +71,7 @@ test("search recovers from no matches and preserves a usable deep link after rel
   await trigger.focus();
   await page.keyboard.press("Control+k");
   const dialog = page.getByRole("dialog", {
-    name: "Find your next building block.",
+    name: "Search docs",
   });
   const input = dialog.getByRole("searchbox", { name: "Search documentation" });
   await expect(input).toBeFocused();
@@ -95,9 +95,9 @@ test("unknown routes provide keyboard-accessible recovery and legacy links still
 }) => {
   await page.goto("/#missing-route");
   await expect(
-    page.getByRole("heading", { name: "That page wandered off." }),
+    page.getByRole("heading", { name: "Page not found" }),
   ).toBeVisible();
-  const recovery = page.getByRole("link", { name: "Back to the workshop" });
+  const recovery = page.getByRole("link", { name: "Back to home" });
   await recovery.focus();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/#overview$/u);
@@ -225,10 +225,10 @@ test("object-prototype route names and malformed encoding cannot break navigatio
   for (const route of ["constructor", "toString", "__proto__", "%ZZ"]) {
     await page.goto(`/#${route}`);
     await expect(
-      page.getByRole("heading", { name: "That page wandered off." }),
+      page.getByRole("heading", { name: "Page not found" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("link", { name: "Back to the workshop" }),
+      page.getByRole("link", { name: "Back to home" }),
     ).toBeVisible();
   }
   expect(errors).toEqual([]);

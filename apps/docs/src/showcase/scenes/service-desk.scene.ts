@@ -5,12 +5,9 @@ export default {
   order: 3,
   label: "Service",
   brand: "Relay",
-  headline:
-    "A support command center that feels calm even when the queue is not.",
-  description:
-    "A customer-service workspace with queue navigation, ticket context, SLA progress, structured triage, reply composition, and incident workflow.",
-  prompt:
-    "Navigate the queue, expand context, change priority, schedule follow-up, send a local reply, or close the demo ticket.",
+  headline: "Keep support moving.",
+  description: "Triage tickets, track SLAs, and reply to customers.",
+  prompt: "Open a ticket, change priority, and send a reply.",
   components: [
     "accordion",
     "alert-dialog",
@@ -37,7 +34,6 @@ export default {
     "toolbar",
     "tree-view",
   ],
-  custom:
-    "Only fictional ticket data and local state. The queue, ticket surface, triage form, overlays, and notifications are all public Flux components with no scene-specific stylesheet.",
+  custom: "Fictional data and local state. UI uses public Flux components.",
   Icon: UsersIcon,
 } satisfies SceneDefinition;

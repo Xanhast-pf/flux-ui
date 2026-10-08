@@ -106,7 +106,7 @@ function trackWidth(width: DataGridColumn<unknown>["width"]) {
 function displayValue(value: DataGridCellValue): string | number {
   if (typeof value === "number" && !Number.isFinite(value))
     throw new RangeError("DataGrid numeric cell values must be finite.");
-  return value ?? "—";
+  return value ?? "-";
 }
 
 function compareValues(a: DataGridCellValue, b: DataGridCellValue): number {

@@ -157,7 +157,7 @@ export function DataTable<Row>({
               >
                 {column.renderCell
                   ? column.renderCell(entry.row, value)
-                  : (value ?? "—")}
+                  : (value ?? "-")}
               </div>
             </td>
           );

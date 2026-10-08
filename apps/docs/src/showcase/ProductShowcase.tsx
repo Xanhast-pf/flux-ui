@@ -86,7 +86,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
         <Box border="block">
           <Stack gap={3} paddingBlock={5}>
             <Text variant="caption" tone="muted">
-              Dashboard gallery
+              Dashboards
             </Text>
             <Tabs.List wrap aria-label="Dashboard examples">
               {showcaseScenes.map((scene) => (
@@ -155,7 +155,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
       <Inline wrap justify="between" gap="md" paddingBlock="md">
         <Text as="p" variant="body">
           <Text as="strong" weight="bold">
-            Try it.
+            Try:
           </Text>{" "}
           {active.prompt}
         </Text>
@@ -169,7 +169,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
               setRevision((value) => value + 1);
             }}
           >
-            Reset dashboard
+            Reset
           </Button>
           <Button
             size="sm"
@@ -182,7 +182,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
               setInspect((value) => !value);
             }}
           >
-            Inspect composition
+            View components
           </Button>
           <Button
             size="sm"
@@ -193,18 +193,13 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
               void copyLink();
             }}
           >
-            Copy dashboard link
+            Copy link
           </Button>
         </Inline>
       </Inline>
 
       <Inline wrap gap="md">
-        <Text as="p" variant="body">
-          Five complete fictional dashboards, composed from public Flux
-          components. No scene-specific UI stylesheet or private component layer
-          is hiding underneath.
-        </Text>
-        <Link href={shareHash}>Dashboard permalink ↗</Link>
+        <Link href={shareHash}>Open dashboard ↗</Link>
         <Text role="status">{copyMessage}</Text>
       </Inline>
 
@@ -214,7 +209,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
             <Suspense
               fallback={
                 <Text role="status" as="p" variant="body">
-                  Loading composition details…
+                  Loading source…
                 </Text>
               }
             >

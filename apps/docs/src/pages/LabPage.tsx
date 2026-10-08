@@ -58,9 +58,7 @@ export function LabPage() {
   const [iterations, setIterations] = useState(5);
   const [sweep, setSweep] = useState(false);
   const [running, setRunning] = useState(false);
-  const [message, setMessage] = useState(
-    "Ready. Nothing runs until you press Start benchmark.",
-  );
+  const [message, setMessage] = useState("Ready. Select Start benchmark.");
   const [report, setReport] = useState<LabReport | null>(null);
   const surface = useRef<HTMLDivElement>(null);
   const activeRun = useRef<AbortController | null>(null);
@@ -73,25 +71,19 @@ export function LabPage() {
   );
   function invalidateResult(): void {
     setReport(null);
-    setMessage("Configuration changed. Start benchmark to measure this setup.");
+    setMessage("Settings changed. Run again.");
   }
   async function start(): Promise<void> {
     if (activeRun.current !== null || surface.current === null) return;
     const controller = new AbortController();
     activeRun.current = controller;
     const deadline = window.setTimeout(() => {
-      controller.abort(
-        new Error(
-          "Benchmark stopped after the 60-second run budget. Try a smaller workload.",
-        ),
-      );
+      controller.abort(new Error("60-second limit reached. Try less work."));
     }, 60000);
     const onVisibility = () => {
       if (document.hidden)
         controller.abort(
-          new Error(
-            "Benchmark stopped because the tab was hidden. Keep it visible while measuring.",
-          ),
+          new Error("Benchmark stopped. Keep this tab visible."),
         );
     };
     document.addEventListener("visibilitychange", onVisibility);
@@ -108,7 +100,7 @@ export function LabPage() {
       );
       if (activeRun.current === controller) {
         setReport(result);
-        setMessage("Complete. Results describe this browser session only.");
+        setMessage("Complete. Results are local to this browser.");
       }
     } catch (error) {
       if (activeRun.current === controller)
@@ -129,23 +121,19 @@ export function LabPage() {
       <Stack gap="lg">
         <PageHeader
           title={<>Live Stress Lab</>}
-          eyebrow={<>Measure, don’t assume</>}
+          eyebrow={<>Local performance tests</>}
         >
           <Text as="p" variant="lead" tone="muted">
-            Your device. Real components. Matched comparisons and clearly
-            labelled workloads.
+            Measure component workloads in your browser.
           </Text>
         </PageHeader>
         <Callout>
-          Opt-in CPU work, capped by each scenario and a 60-second run budget.
-          Stop works between synchronous render tasks; a busy task cannot be
-          interrupted. Leaving this page or hiding this tab stops the run. No
-          results are uploaded.
+          Tests run locally for up to 60 seconds. Stop takes effect between
+          tasks. Hiding the tab or leaving stops the test. Nothing is uploaded.
         </Callout>
         {!import.meta.env.PROD && (
           <Callout tone="warning">
-            Development build: timings include development overhead. Use the
-            production preview for meaningful measurements.
+            Development mode affects timing. Use a production build.
           </Callout>
         )}
         <Card>
@@ -170,7 +158,7 @@ export function LabPage() {
                   >
                     {scenarioCatalog.map((entry) => (
                       <option key={entry.id} value={entry.id}>
-                        {entry.label} —{" "}
+                        {entry.label} ·{" "}
                         {entry.kind === "comparison"
                           ? "matched reference"
                           : entry.source === "preview"
@@ -182,10 +170,9 @@ export function LabPage() {
                 </Field.Control>
               </Field.Root>
               <Text tone="muted">
-                {definition.description} Count means {definition.unit}, not
-                necessarily component instances.{" "}
+                {definition.description} Each work unit means {definition.unit}.{" "}
                 {definition.source === "preview"
-                  ? "Preview workloads render one public docs composition and are not isolated component benchmarks. "
+                  ? "Preview workloads measure the full example, not an isolated component. "
                   : ""}
                 Fixture revision {definition.fixtureRevision}.
               </Text>
@@ -259,11 +246,7 @@ export function LabPage() {
                 tone="neutral"
                 disabled={!running}
                 onClick={() => {
-                  activeRun.current?.abort(
-                    new Error(
-                      "Measurement stopped. No partial result was published.",
-                    ),
-                  );
+                  activeRun.current?.abort(new Error("Benchmark stopped."));
                 }}
               >
                 Stop benchmark
@@ -294,7 +277,7 @@ export function LabPage() {
           <Stack aria-label="Benchmark results" as="section" gap="lg">
             <Stack gap="lg">
               <Heading level={2} size="lg">
-                Measured here, not promised everywhere.
+                Local results
               </Heading>
               <Text as="p" variant="body" tone="muted">
                 {report.methodology} Measured{" "}
@@ -308,8 +291,8 @@ export function LabPage() {
                       {summary.count.toLocaleString()} {report.definition.unit}
                     </Heading>
                     <Text tone="muted">
-                      Flux-only. {summary.domNodes.toLocaleString()} mounted
-                      descendants. No native comparison.
+                      Flux only · {summary.domNodes.toLocaleString()} DOM nodes
+                      · No native comparison.
                     </Text>
                     <Table.Root>
                       <Table.Caption>
@@ -415,19 +398,12 @@ export function LabPage() {
         )}
         <Stack as="section" gap="lg">
           <Heading level={2} size="lg">
-            What the lab does—and doesn’t—measure.
+            Measurement limits
           </Heading>
           <Text as="p" variant="body">
-            One warm-up is discarded for each variant and count. Button and Grid
-            use layout-matched native references and alternating pairs. Other
-            purpose-built scenarios are Flux-only workloads. Components without
-            a dedicated scenario use one representative public docs preview.
-            Neither workload type claims equivalence to a simpler native
-            element. Code, chart and table transformations are included where
-            stated; input latency, streaming and memory are separate
-            measurements. Next-frame timing is not paint. Power saving, other
-            tabs, extensions, temperature, viewport and browser all affect
-            results.
+            Button and Grid use matched native references. Other tests measure
+            Flux workloads or example previews. Results vary by browser and
+            device. Input latency, memory, and paint are not measured here.
           </Text>
           <Text as="p" variant="body">
             <Link href={`#performance?component=${definition.id}`}>

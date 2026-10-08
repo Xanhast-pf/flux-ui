@@ -79,14 +79,10 @@ export function IconsPage() {
   return (
     <Stack gap="xl">
       <Inline wrap justify="between" gap="lg">
-        <PageHeader
-          title={<>Icons that speak Flux.</>}
-          eyebrow={<>@flux-ui/icons</>}
-        >
+        <PageHeader title={<>Icons</>} eyebrow={<>@flux-ui/icons</>}>
           <Text as="p" variant="lead" tone="muted">
-            {iconCatalog.length} original marks on one 20 × 20 grid. Search by
-            name or intent, inspect them at real UI sizes, and copy the import
-            you actually need.
+            {iconCatalog.length} icons on a 20 × 20 grid. Search and copy an
+            import.
           </Text>
         </PageHeader>
         <Card aria-hidden="true" surface="subtle" padding="md">
@@ -107,7 +103,7 @@ export function IconsPage() {
                 onChange={(event) => {
                   setQuery(event.currentTarget.value);
                 }}
-                placeholder="Try delete, settings, team, external…"
+                placeholder="Search names or actions…"
               />
               <Kbd aria-hidden="true">/</Kbd>
             </Inline>
@@ -242,28 +238,8 @@ export function IconsPage() {
         <Card>
           <EmptyState
             headingLevel={2}
-            title="No icon by that name yet."
-            description={
-              <>
-                Search by intent too—terms such as{" "}
-                <Text as="strong" weight="bold">
-                  delete
-                </Text>
-                ,{" "}
-                <Text as="strong" weight="bold">
-                  team
-                </Text>
-                ,{" "}
-                <Text as="strong" weight="bold">
-                  settings
-                </Text>
-                , and{" "}
-                <Text as="strong" weight="bold">
-                  external
-                </Text>{" "}
-                are indexed.
-              </>
-            }
+            title="No icons found."
+            description="Try delete, team, settings, or external."
           />
         </Card>
       ) : null}

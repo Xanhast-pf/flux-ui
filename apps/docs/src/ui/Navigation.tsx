@@ -70,12 +70,12 @@ function Navigation({
             onChange={(event) => {
               setQuery(event.currentTarget.value);
             }}
-            placeholder="Search behavior, API, category…"
+            placeholder="Search components and APIs…"
           />
           <Text role="status" as="p" variant="caption" tone="muted">
             {ready
               ? `${results.length} ${results.length === 1 ? "component" : "components"}`
-              : "Searching component pages…"}
+              : "Searching…"}
           </Text>
           <List as="ul" variant="plain">
             {results.map((entry) => (

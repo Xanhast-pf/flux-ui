@@ -117,9 +117,7 @@ test("dashboard tabs use manual activation and reset local state", async ({
   );
   expect(surfaceAccent).toBe(rootAccent);
 
-  await page
-    .getByRole("button", { name: "Reset dashboard", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Reset", exact: true }).click();
   await dashboard
     .getByRole("tab", { name: "Experiments", exact: true })
     .click();
@@ -186,7 +184,7 @@ test("design-token theme configurator routes tokens independently and exports li
   const subtle = page.locator('[data-theme-token="surfaceSubtle"]');
   await subtle.getByRole("radio", { name: "Secondary", exact: true }).check();
   await expect(tokenSelect.locator('option[value="surfaceSubtle"]')).toHaveText(
-    "Surface subtle — Secondary",
+    "Surface subtle (Secondary)",
   );
 
   const lightPreview = page.locator('[data-theme-preview="light"]');
@@ -210,7 +208,7 @@ test("design-token theme configurator routes tokens independently and exports li
   const accent = page.locator('[data-theme-token="accent"]');
   await accent.getByRole("radio", { name: "Custom", exact: true }).check();
   await expect(tokenSelect.locator('option[value="accent"]')).toHaveText(
-    "Accent — Custom",
+    "Accent (Custom)",
   );
   await accent
     .getByRole("button", { name: "Edit light & dark", exact: true })
@@ -335,11 +333,11 @@ test("composition details expose dashboard source only on request", async ({
     page.getByRole("region", { name: "Composition details" }),
   ).toHaveCount(0);
   await page
-    .getByRole("button", { name: "Inspect composition", exact: true })
+    .getByRole("button", { name: "View components", exact: true })
     .click();
 
   const inspector = page.getByRole("region", { name: "Composition details" });
-  await expect(inspector).toContainText("no scene-specific stylesheet");
+  await expect(inspector).toContainText("UI uses public Flux components.");
   await inspector
     .getByRole("button", { name: "View source", exact: true })
     .click();
@@ -361,14 +359,12 @@ test("clipboard failure is honest and the dashboard permalink stays usable", asy
     });
   });
   await page.goto("/#playground?scene=deploy-control");
-  await page
-    .getByRole("button", { name: "Copy dashboard link", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Copy link", exact: true }).click();
   await expect(
     page.getByRole("status").filter({ hasText: "Clipboard unavailable" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Dashboard permalink ↗", exact: true }),
+    page.getByRole("link", { name: "Open dashboard ↗", exact: true }),
   ).toHaveAttribute("href", "#playground?scene=deploy-control");
 });
 

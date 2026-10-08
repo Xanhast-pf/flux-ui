@@ -197,7 +197,7 @@ test("search keyboard shortcut navigates real links and Escape restores focus", 
   await trigger.focus();
   await page.keyboard.press("Control+k");
   const dialog = page.getByRole("dialog", {
-    name: "Find your next building block.",
+    name: "Search docs",
   });
   const search = dialog.getByRole("searchbox", {
     name: "Search documentation",
@@ -294,7 +294,7 @@ test("palette selection persists without implicit blending and exposes raw CSS v
   });
   await expect(secondary.locator("option")).toHaveCount(13);
   await expect(secondary.locator('option[value="off"]')).toHaveText(
-    "Off — Primary only",
+    "Off (primary only)",
   );
   const recommended = secondary.locator(
     'optgroup[label="Recommended matches"] option',
@@ -981,7 +981,7 @@ test("icons browser searches intent metadata and changes its presentation", asyn
 }) => {
   await page.goto("/#icons");
   await expect(
-    page.getByRole("heading", { level: 1, name: "Icons that speak Flux." }),
+    page.getByRole("heading", { level: 1, name: "Icons" }),
   ).toBeVisible();
   const filter = page.getByRole("searchbox", {
     name: "Filter Flux icons",

@@ -13,7 +13,7 @@ for (const [route, title] of [
     await expect(page.locator("main h1")).toBeVisible();
     if (route === "rules")
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-        "A system beneath the surface.",
+        "Engineering",
       );
   });
 }
@@ -22,10 +22,10 @@ test("getting-started consumer and contributor guidance preserves content and sp
 }) => {
   await page.goto("/#install");
   for (const name of [
-    "Use Flux in an application",
-    "Start from a complete application recipe",
-    "Server rendering and framework boundaries",
-    "Contribute to the source",
+    "Use Flux in your app",
+    "Use a dashboard recipe",
+    "Server rendering",
+    "Contribute",
   ]) {
     const heading = page.getByRole("heading", { name, exact: true });
     await expect(heading).toBeVisible();
