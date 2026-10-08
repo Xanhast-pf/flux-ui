@@ -27,7 +27,6 @@ import {
   Text,
 } from "@flux-ui/react";
 import { useId, useState } from "react";
-import { AppearanceControls } from "../ui/AppearanceControls.js";
 
 const members = [
   { name: "Maya Chen", initials: "MC", role: "Design" },
@@ -533,10 +532,6 @@ export function OverviewShowcaseGrid() {
           enough to scan, concrete enough to imagine in your own product.
         </Text>
       </Stack>
-
-      <Card padding={5} radius="md" surface="subtle">
-        <AppearanceControls />
-      </Card>
 
       <Grid columns={{ base: 1, xl: 3 }} gap="md" align="start">
         <Stack gap="md">

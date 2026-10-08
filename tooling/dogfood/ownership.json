@@ -126,6 +126,18 @@
       "reason": "Connects the public Sidebar offset hook to the sticky header height."
     },
     {
+      "file": "apps/docs/src/showcase/scenes/deploy-control.preview.tsx",
+      "components": ["Sidebar.Layout"],
+      "properties": ["alignItems"],
+      "reason": "The dashboard service rail stretches to the height of its application workspace while Sidebar continues to own navigation behavior and presentation."
+    },
+    {
+      "file": "apps/docs/src/showcase/scenes/deploy-control.preview.tsx",
+      "components": ["Sidebar.Panel"],
+      "properties": ["maxBlockSize", "position"],
+      "reason": "The nested dashboard rail participates in the showcase workspace rather than the sticky documentation viewport, so its height follows that local layout."
+    },
+    {
       "file": "apps/docs/src/demos/CollectionLab.tsx",
       "components": ["Skeleton"],
       "properties": ["width"],

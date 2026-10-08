@@ -432,7 +432,7 @@ function ThemePreview({
       <Stack gap="lg">
         <Inline justify="between" align="center" gap="md" wrap>
           <Stack gap="xs">
-            <Heading level={4} size="sm">
+            <Heading level={3} size="sm">
               {theme === "light" ? "Light" : "Dark"} preview
             </Heading>
             <Text variant="caption" tone="muted">
@@ -642,7 +642,7 @@ function AdvancedThemeConfigurator({
               <Stack gap="md">
                 <Inline justify="between" gap="md" align="center" wrap>
                   <Stack gap="xs">
-                    <Heading level={3} size="sm">
+                    <Heading level={2} size="sm">
                       Live component preview
                     </Heading>
                     <Text variant="caption" tone="muted">

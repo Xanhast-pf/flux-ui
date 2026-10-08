@@ -219,14 +219,11 @@ test("search keyboard shortcut navigates real links and Escape restores focus", 
 test("preferences persist and previews reset without resetting the theme", async ({
   page,
 }) => {
-  await page.goto("/#playground");
-  await page.locator(".workbench-section summary").click();
-  await page.getByRole("tab", { name: "Theme lab", exact: true }).click();
-  const themeLab = page.getByRole("tabpanel", { name: "Theme lab" });
-  await themeLab
+  await page.goto("/#tokens");
+  await page
     .getByRole("combobox", { name: "Primary palette", exact: true })
     .selectOption("teal");
-  await themeLab
+  await page
     .getByRole("combobox", { name: "Secondary palette", exact: true })
     .selectOption("fuchsia");
   await page

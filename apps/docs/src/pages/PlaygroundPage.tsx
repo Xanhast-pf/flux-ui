@@ -32,8 +32,8 @@ export function PlaygroundPage() {
           eyebrow={<>Five dashboards. One public component system.</>}
         >
           <Text as="p" variant="lead" tone="muted">
-            Explore complete application dashboards, use the interactions,
-            switch the theme, then inspect every source file.
+            Explore complete application dashboards, use the interactions, then
+            inspect every source file and public component behind them.
           </Text>
         </PageHeader>
         <Link href="#components" variant="ghost">

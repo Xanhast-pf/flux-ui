@@ -57,7 +57,7 @@ for (const scene of sceneIds) {
   });
 }
 
-test("dashboard tabs use manual activation and appearance changes preserve local state", async ({
+test("dashboard tabs use manual activation and reset local state", async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -96,16 +96,16 @@ test("dashboard tabs use manual activation and appearance changes preserve local
   await expect(confidence).toHaveValue("83");
 
   const surface = page.locator(".world-surface");
-  const primary = page.getByLabel("Primary palette", { exact: true });
-  const secondary = page.getByLabel("Secondary palette", { exact: true });
-
-  await primary.selectOption("teal");
-  await secondary.selectOption("rose");
+  await expect(page.getByLabel("Primary palette", { exact: true })).toHaveCount(
+    0,
+  );
+  await expect(
+    page.getByLabel("Secondary palette", { exact: true }),
+  ).toHaveCount(0);
 
   await expect(confidence).toHaveValue("83");
   await expect(surface).toHaveAttribute("data-flux-theme", "dark");
-  await expect(surface).toHaveAttribute("data-flux-palette", "teal");
-  await expect(surface).toHaveAttribute("data-flux-secondary-palette", "rose");
+  await expect(surface).toHaveAttribute("data-flux-palette", "indigo");
 
   const rootAccent = await page
     .locator("html")
@@ -126,7 +126,6 @@ test("dashboard tabs use manual activation and appearance changes preserve local
   await expect(
     dashboard.getByRole("slider", { name: /Decision confidence/u }),
   ).toHaveValue("82");
-  await expect(secondary).toHaveValue("rose");
 });
 
 test("secondary palette selection no longer blends front-page semantic surfaces", async ({
@@ -139,13 +138,22 @@ test("secondary palette selection no longer blends front-page semantic surfaces"
   });
   await page.goto("/#overview");
 
-  const secondary = page.getByLabel("Secondary palette", { exact: true });
   const performance = page.locator('[data-showcase-card="performance"]');
-
   const pairedSurface = await performance.evaluate(
     (element) => getComputedStyle(element).backgroundColor,
   );
-  await secondary.selectOption("off");
+  await expect(page.getByLabel("Primary palette", { exact: true })).toHaveCount(
+    0,
+  );
+  await expect(
+    page.getByLabel("Secondary palette", { exact: true }),
+  ).toHaveCount(0);
+
+  await page.goto("/#tokens");
+  await page
+    .getByLabel("Secondary palette", { exact: true })
+    .selectOption("off");
+  await page.goto("/#overview");
   const primaryOnlySurface = await performance.evaluate(
     (element) => getComputedStyle(element).backgroundColor,
   );
@@ -157,7 +165,7 @@ test("secondary palette selection no longer blends front-page semantic surfaces"
   await expect(page.locator("[data-scene]")).toHaveCount(0);
 });
 
-test("theme configurator routes tokens independently and exports light/dark CSS", async ({
+test("design-token theme configurator routes tokens independently and exports light/dark CSS", async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -165,7 +173,7 @@ test("theme configurator routes tokens independently and exports light/dark CSS"
     localStorage.setItem("flux-ui-docs-palette", "indigo");
     localStorage.setItem("flux-ui-docs-secondary-palette", "amber");
   });
-  await page.goto("/#overview");
+  await page.goto("/#tokens");
 
   await page.getByText(/Advanced token routing/u).click();
 
@@ -284,9 +292,39 @@ test("back navigation restores dashboards without rewriting saved appearance", a
   });
   await expect(page.locator('[data-scene="deploy-control"]')).toBeVisible();
   expect(await page.evaluate(() => window.scrollY)).toBe(before);
-  await expect(page.getByLabel("Primary palette", { exact: true })).toHaveValue(
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flux-palette",
     "blue",
   );
+  await expect(page.getByLabel("Primary palette", { exact: true })).toHaveCount(
+    0,
+  );
+});
+
+test("deploy service rail fills its layout and preserves a content gutter", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/#playground?scene=deploy-control");
+
+  const dashboard = page.locator('[data-scene="deploy-control"]');
+  const rail = dashboard.getByRole("complementary", {
+    name: "Service navigation",
+  });
+  const layout = rail.locator("..");
+  const heading = dashboard.getByRole("heading", {
+    name: "web / production",
+    exact: true,
+  });
+  const railBox = await rail.boundingBox();
+  const layoutBox = await layout.boundingBox();
+  const headingBox = await heading.boundingBox();
+
+  if (railBox === null || layoutBox === null || headingBox === null)
+    throw new Error("Deploy sidebar geometry could not be measured.");
+
+  expect(Math.abs(railBox.height - layoutBox.height)).toBeLessThanOrEqual(1);
+  expect(headingBox.x - (railBox.x + railBox.width)).toBeGreaterThanOrEqual(16);
 });
 
 test("composition details expose dashboard source only on request", async ({

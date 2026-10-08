@@ -66,7 +66,7 @@ for (const outer of ["light", "dark"] as const) {
 test("theme configurator and custom light/dark editor are axe-clean", async ({
   page,
 }) => {
-  await page.goto("/#overview");
+  await page.goto("/#tokens");
   await page.getByText(/Advanced token routing/u).click();
 
   const accent = page.locator('[data-theme-token="accent"]');

@@ -125,8 +125,11 @@ export default function DeployControlScene() {
           </DropdownMenu.Root>
         </SceneHeader>
 
-        <Sidebar.Layout>
-          <Sidebar.Panel aria-label="Service navigation">
+        <Sidebar.Layout style={{ alignItems: "stretch" }}>
+          <Sidebar.Panel
+            aria-label="Service navigation"
+            style={{ maxBlockSize: "none", position: "static" }}
+          >
             <Stack gap="md">
               <Text variant="eyebrow" tone="muted">
                 Services
@@ -153,7 +156,7 @@ export default function DeployControlScene() {
           </Sidebar.Panel>
 
           <Sidebar.Content>
-            <Stack gap="lg">
+            <Stack gap="lg" paddingInline={5}>
               <Inline justify="between" wrap gap="md">
                 <Stack gap="xs">
                   <Inline wrap gap="sm">
