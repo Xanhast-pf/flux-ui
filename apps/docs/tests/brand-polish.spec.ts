@@ -89,87 +89,71 @@ test("brand SVG assets are vectors and the favicon resolves", async ({
     true,
   );
 });
-test("finance transaction titles and metadata have distinct lines", async ({
+test("Revenue keeps executive context on distinct lines", async ({ page }) => {
+  await page.goto("/#playground?scene=revenue-command");
+  const dashboard = page.locator('[data-scene="revenue-command"]');
+  await expectSeparateLines(
+    dashboard.getByRole("heading", { name: "Revenue overview" }),
+    dashboard.getByText("Fictional data · updated moments ago", {
+      exact: true,
+    }),
+  );
+});
+
+test("Product Pulse keeps research context readable inside dense cards", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=finance");
-  const activity = page.getByRole("region", { name: "Recent demo activity" });
+  await page.goto("/#playground?scene=product-pulse");
+  await page.getByRole("tab", { name: "Experiments" }).click();
+  const dashboard = page.locator('[data-scene="product-pulse"]');
   await expectSeparateLines(
-    activity.getByText("Studio North", { exact: true }),
-    activity.getByText("Invoice · 1042", { exact: true }),
+    dashboard.getByRole("heading", { name: "Research confidence" }),
+    dashboard.getByText("4 of 5 from the local research review.", {
+      exact: true,
+    }),
   );
 });
-test("marketing audience copy does not run together", async ({ page }) => {
-  await page.goto("/#playground?scene=marketing");
-  await expectSeparateLines(
-    page.getByText("Made for your people.", { exact: true }),
-    page.getByText("Fictional audience preview", { exact: true }),
-  );
-});
-test("social author metadata is separate and like stays content-sized", async ({
+
+test("Commerce Ops keeps customer metadata separate and actions content-sized", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=social");
-  const post = page
-    .getByRole("article")
-    .filter({ has: page.getByRole("button", { name: "Like post mira" }) });
+  await page.goto("/#playground?scene=commerce-ops");
+  const dashboard = page.locator('[data-scene="commerce-ops"]');
   await expectSeparateLines(
-    post.getByText("Mira Chen", { exact: true }),
-    post.getByText("Designer · fictional profile", { exact: true }),
+    dashboard.getByText("Maya Chen", { exact: true }),
+    dashboard.getByText("Priority customer · Montreal", { exact: true }),
   );
-  const button = await bounds(
-    post.getByRole("button", { name: "Like post mira" }),
+  const action = await bounds(
+    dashboard.getByRole("button", { name: "Open order details" }),
   );
-  const card = await bounds(post);
-  expect(button.width).toBeLessThan(card.width - 64);
+  const canvas = await bounds(dashboard);
+  expect(action.width).toBeLessThan(canvas.width / 2);
 });
-test("commerce separates the bag total from its action", async ({ page }) => {
-  await page.goto("/#playground?scene=commerce");
-  const summary = page.getByRole("region", { name: "Demo bag summary" });
-  const total = await bounds(summary.getByText("$0", { exact: true }));
-  const clear = await bounds(
-    summary.getByRole("button", { name: "Clear demo bag" }),
-  );
-  expect(clear.x - total.x - total.width).toBeGreaterThanOrEqual(15);
-});
-for (const outer of ["light", "dark"]) {
-  test(`video headings stay light across palette-driven artwork in ${outer}`, async ({
-    page,
-  }) => {
-    await page.goto("/#playground?scene=video");
-    await expect(page.locator('[data-scene="video"]')).toBeVisible();
-    await page.locator("html").evaluate((element, theme) => {
-      element.dataset.fluxTheme = theme;
-    }, outer);
-    const clips = page.getByRole("group", { name: "Storyboard clips" });
-    for (const name of ["01 / Coastline", "02 / Dunes", "03 / Afterglow"]) {
-      await clips.getByRole("button", { name: new RegExp(name) }).click();
-      await expect(page.locator(".video-frame h3")).toHaveCSS(
-        "color",
-        "rgb(255, 255, 255)",
-      );
-    }
-  });
-}
-test("video frame control produces the requested geometry", async ({
+
+test("Relay keeps ticket identity and customer metadata on distinct lines", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/#playground?scene=video");
-  const select = page.getByLabel("Frame shape", { exact: true });
-  for (const [value, ratio] of [
-    ["16 / 9", 16 / 9],
-    ["1 / 1", 1],
-    ["9 / 16", 9 / 16],
-  ] as const) {
-    await select.selectOption(value);
-    await expect
-      .poll(async () => {
-        const rect = await bounds(page.locator(".video-frame"));
-        return Math.abs(rect.width / rect.height - ratio);
-      })
-      .toBeLessThan(0.01);
-  }
+  await page.goto("/#playground?scene=service-desk");
+  const dashboard = page.locator('[data-scene="service-desk"]');
+  await expectSeparateLines(
+    dashboard.getByRole("heading", {
+      name: "Sync stopped after workspace migration",
+    }),
+    dashboard.getByText("Mara Li · Northwind Studio · 12 minutes ago", {
+      exact: true,
+    }),
+  );
+});
+
+test("Launchpad keeps service identity and deploy metadata on distinct lines", async ({
+  page,
+}) => {
+  await page.goto("/#playground?scene=deploy-control");
+  const dashboard = page.locator('[data-scene="deploy-control"]');
+  await expectSeparateLines(
+    dashboard.getByRole("heading", { name: "web / production" }),
+    dashboard.getByText(/Commit 5e806d1/),
+  );
 });
 test("workbench tabs wrap at narrow widths", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
@@ -183,26 +167,3 @@ test("workbench tabs wrap at narrow widths", async ({ page }) => {
     expect(rect.x + rect.width).toBeLessThanOrEqual(321);
   }
 });
-for (const width of [390, 1440]) {
-  test(`music playhead starts with the track lanes at ${width}px`, async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width, height: 1000 });
-    await page.goto("/#playground?scene=music");
-    const lanes = page.locator(".track-lane");
-    await expect(lanes).toHaveCount(4);
-    for (const lane of await lanes.all()) {
-      const track = await bounds(lane);
-      const playhead = await bounds(lane.locator(".sequencer-playhead"));
-      expect(Math.abs(playhead.y - track.y)).toBeLessThan(1);
-      expect(playhead.x).toBeGreaterThanOrEqual(track.x - 1);
-      expect(playhead.x + playhead.width).toBeLessThanOrEqual(
-        track.x + track.width + 1,
-      );
-    }
-    const rows = page.locator(".track-row");
-    const first = await bounds(rows.nth(0));
-    const second = await bounds(rows.nth(1));
-    expect(Math.abs(second.y - first.y - first.height)).toBeLessThan(1);
-  });
-}

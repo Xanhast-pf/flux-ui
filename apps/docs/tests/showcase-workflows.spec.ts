@@ -1,151 +1,189 @@
 import { expect, test } from "@playwright/test";
 
-test("Folio connects ledger filters, note editing and its persistent navigation", async ({
+test("Revenue connects reporting controls, forecasting and local status", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=finance");
-  const scene = page.locator('[data-scene="finance"]');
-  const navigation = scene.getByRole("complementary", {
-    name: "Folio workspace navigation",
-  });
-  await scene.getByRole("tab", { name: "Transactions", exact: true }).click();
-  await expect(navigation).toBeVisible();
-  const search = scene.getByRole("searchbox", { name: "Search transactions" });
-  await search.fill("packaging");
-  await scene
-    .getByRole("button", { name: "Objects Studio", exact: true })
-    .click();
-  const details = scene.getByRole("dialog", { name: "Transaction details" });
-  await expect(details).toBeVisible();
-  await details
-    .getByRole("textbox", { name: "Transaction note" })
-    .fill("Packaging approved for production");
-  await details.getByRole("button", { name: "Save transaction note" }).click();
-  await expect(details).not.toBeVisible();
-  await expect(
-    scene.getByText("Transaction note saved", { exact: true }),
-  ).toBeVisible();
-  await search.fill("approved for production");
-  await expect(
-    scene.getByRole("button", { name: "Objects Studio", exact: true }),
-  ).toBeVisible();
-  await scene.getByRole("button", { name: "Clear transaction search" }).click();
-  await expect(search).toBeFocused();
-  await expect(search).toHaveValue("");
-  await scene.getByRole("tab", { name: "Team", exact: true }).click();
-  await expect(navigation).toBeVisible();
-  await page.keyboard.press("Escape");
-  await expect(navigation).toBeVisible();
-  await scene.getByRole("button", { name: "Close Folio navigation" }).click();
-  await expect(navigation).not.toBeVisible();
-  await expect(
-    scene.getByRole("button", { name: "Folio navigation", exact: true }),
-  ).toBeFocused();
-});
+  await page.goto("/#playground?scene=revenue-command");
+  const dashboard = page.locator('[data-scene="revenue-command"]');
 
-test("Folio records local invitations and exposes recovery states without a backend", async ({
-  page,
-}) => {
-  await page.goto("/#playground?scene=finance");
-  const scene = page.locator('[data-scene="finance"]');
-  await scene.getByRole("tab", { name: "Team", exact: true }).click();
-  await scene.getByRole("button", { name: "Invite teammate" }).click();
-  const dialog = scene.getByRole("dialog", { name: "Invite a teammate" });
-  await dialog.getByRole("button", { name: "Record invitation" }).click();
-  await expect(
-    dialog.getByRole("textbox", { name: "Teammate email" }),
-  ).toHaveAttribute("aria-invalid", "true");
+  await dashboard
+    .getByRole("group", { name: "Revenue period" })
+    .getByRole("button", { name: "30 days", exact: true })
+    .click();
+
+  await dashboard
+    .getByRole("button", { name: "Build forecast", exact: true })
+    .click();
+  const dialog = dashboard.getByRole("dialog", {
+    name: "Forecast next quarter",
+  });
+  await dialog.getByLabel("Scenario", { exact: true }).selectOption("upside");
+  await dialog.getByLabel("Expected growth (%)", { exact: true }).fill("24");
   await dialog
-    .getByRole("textbox", { name: "Teammate email" })
-    .fill("new@example.test");
-  await dialog.getByRole("combobox", { name: "Workspace role" }).fill("Viewer");
-  await page.keyboard.press("Enter");
-  await dialog.getByRole("button", { name: "Record invitation" }).click();
-  await expect(dialog).not.toBeVisible();
-  await expect(
-    scene.getByRole("row", { name: /new@example.test.*Viewer.*Invited/u }),
-  ).toBeVisible();
-  await expect(
-    scene.getByText("Demo invitation recorded", { exact: true }),
-  ).toBeVisible();
-  await scene.getByRole("tab", { name: "Transactions", exact: true }).click();
-  await scene
-    .getByRole("button", { name: "Ledger actions", exact: true })
+    .getByRole("button", { name: "Apply scenario", exact: true })
     .click();
-  await scene
-    .getByRole("menuitem", { name: "Simulate connection error" })
-    .click();
-  await scene.getByRole("button", { name: "Retry demo load" }).click();
+
   await expect(
-    scene.getByRole("button", { name: "Studio North", exact: true }),
-  ).toBeVisible();
+    dashboard.getByRole("status").filter({ hasText: "upside forecast" }),
+  ).toContainText("24% locally");
 });
 
-test("Afterhours keeps independent track settings and restores local checkpoints", async ({
+test("Product Pulse combines experiment confidence, ratings and guardrails", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=music");
-  const scene = page.locator('[data-scene="music"]');
-  await expect(
-    scene.getByRole("button", { name: "Discard unsaved changes" }),
-  ).toBeDisabled();
-  await scene.getByRole("button", { name: "Inspect Drum machine" }).click();
-  const pan = scene.getByRole("slider", { name: "Track pan", exact: true });
-  await pan.press("ArrowRight");
-  await expect(pan).toHaveValue("1");
-  await scene.getByRole("button", { name: "Inspect Sub bass" }).click();
-  await expect(pan).toHaveValue("0");
-  await scene.getByRole("button", { name: "Inspect Drum machine" }).click();
-  await expect(pan).toHaveValue("1");
-  await scene
-    .getByRole("button", { name: "Session actions", exact: true })
+  await page.goto("/#playground?scene=product-pulse");
+  const dashboard = page.locator('[data-scene="product-pulse"]');
+
+  await dashboard
+    .getByRole("tab", { name: "Experiments", exact: true })
     .click();
-  await scene.getByRole("menuitem", { name: "Save local checkpoint" }).click();
-  await expect(
-    scene.getByRole("button", { name: "Discard unsaved changes" }),
-  ).toBeDisabled();
-  await pan.press("ArrowRight");
-  await scene.getByRole("button", { name: "Discard unsaved changes" }).click();
-  const confirmation = scene.getByRole("alertdialog", {
-    name: "Discard unsaved interface changes?",
+  const confidence = dashboard.getByRole("slider", {
+    name: /Decision confidence/u,
   });
-  await expect(
-    confirmation.getByRole("button", { name: "Keep changes" }),
-  ).toBeFocused();
-  await confirmation
-    .getByRole("button", { name: "Restore checkpoint" })
+  await confidence.press("ArrowRight");
+  await expect(confidence).toHaveValue("83");
+
+  await dashboard
+    .getByRole("button", { name: "Mark ready for review", exact: true })
     .click();
-  await expect(pan).toHaveValue("1");
   await expect(
-    scene.getByRole("button", { name: "Discard unsaved changes" }),
-  ).toBeDisabled();
-  await expect(page.locator("audio, video, iframe")).toHaveCount(0);
+    dashboard
+      .getByRole("status")
+      .filter({ hasText: "Experiment marked ready" }),
+  ).toContainText("83% confidence");
+
+  await dashboard
+    .getByRole("button", { name: "Guardrails", exact: true })
+    .click();
+  const guardrails = page.getByRole("dialog", {
+    name: "Experiment guardrails",
+  });
+  const stopOnSpike = guardrails.getByRole("switch", {
+    name: "Stop on error spike",
+  });
+  await expect(stopOnSpike).toBeChecked();
+  await stopOnSpike.uncheck();
+  await expect(stopOnSpike).not.toBeChecked();
 });
 
-test("composition exports include helper sources and independent consumer setup", async ({
+test("Commerce Ops filters inventory and opens order details", async ({
   page,
 }) => {
-  await page.goto("/#playground?scene=finance");
+  await page.goto("/#playground?scene=commerce-ops");
+  const dashboard = page.locator('[data-scene="commerce-ops"]');
+
+  const search = dashboard.getByLabel("Search inventory", { exact: true });
+  await search.fill("HL-031");
+  await expect(
+    dashboard.getByText("Halo Desk Lamp", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    dashboard.getByText("Canvas Weekender", { exact: true }),
+  ).toHaveCount(0);
+
+  await search.fill("");
+  const autoRestock = dashboard.getByRole("switch", {
+    name: "Auto-restock",
+  });
+  await expect(autoRestock).toBeChecked();
+  await autoRestock.uncheck();
+  await expect(autoRestock).not.toBeChecked();
+
+  await dashboard
+    .getByRole("button", { name: "Open order details", exact: true })
+    .click();
+  const details = page.getByRole("dialog", { name: "Order #8421" });
+  await expect(details).toContainText("Express shipping");
+  await details
+    .getByRole("button", { name: "Close details", exact: true })
+    .click();
+  await expect(details).not.toBeVisible();
+});
+
+test("Relay triage, reply and close-ticket flow is fully local", async ({
+  page,
+}) => {
+  await page.goto("/#playground?scene=service-desk");
+  const dashboard = page.locator('[data-scene="service-desk"]');
+
+  await dashboard.getByRole("radio", { name: "Urgent", exact: true }).check();
+  await dashboard
+    .getByRole("button", { name: "Send demo reply", exact: true })
+    .click();
+  await expect(
+    page.getByText("Reply sent locally", { exact: true }),
+  ).toBeVisible();
+
+  await dashboard
+    .getByRole("button", { name: "Close ticket", exact: true })
+    .click();
+  const confirmation = page.getByRole("alertdialog", {
+    name: "Close this fictional ticket?",
+  });
+  await confirmation
+    .getByRole("button", { name: "Close ticket", exact: true })
+    .click();
+  await expect(dashboard.getByText("Closed", { exact: true })).toBeVisible();
+  await expect(
+    dashboard.getByRole("status").filter({ hasText: "Ticket closed locally" }),
+  ).toContainText("Priority: urgent");
+});
+
+test("Launchpad switches services, controls a canary and exposes build logs", async ({
+  page,
+}) => {
+  await page.goto("/#playground?scene=deploy-control");
+  const dashboard = page.locator('[data-scene="deploy-control"]');
+
+  await dashboard.getByRole("button", { name: "Worker", exact: true }).click();
+  await expect(
+    dashboard.getByRole("heading", { name: "worker / production" }),
+  ).toBeVisible();
+
+  await dashboard
+    .getByRole("button", { name: "Canary enabled", exact: true })
+    .click();
+  const traffic = dashboard.getByRole("slider", {
+    name: /Canary traffic/u,
+  });
+  await expect(traffic).toBeDisabled();
+
+  await dashboard
+    .getByRole("button", { name: "Canary disabled", exact: true })
+    .click();
+  await traffic.press("ArrowRight");
+  await expect(traffic).toHaveValue("25");
+
+  await dashboard.getByRole("tab", { name: "Build log", exact: true }).click();
+  await expect(
+    dashboard.getByRole("region", { name: "Production build log" }),
+  ).toContainText("production ready");
+});
+
+test("dashboard recipe export is self-contained and has no scene stylesheet", async ({
+  page,
+}) => {
+  await page.goto("/#playground?scene=deploy-control");
   const source = page.getByRole("button", { name: "View source", exact: true });
   await expect(source).not.toBeVisible();
+
   await page
     .getByRole("button", { name: "Inspect composition", exact: true })
     .click();
-  await expect(source).toBeVisible();
   await source.click();
+
   const files = page.getByRole("combobox", { name: "Recipe file" });
   await expect(files).toBeVisible();
-  await files.selectOption("src/showcase/scenes/finance.workspace.tsx");
-  await expect(
-    page.getByRole("region", {
-      name: "src/showcase/scenes/finance.workspace.tsx source",
-    }),
-  ).toContainText("FinanceTransactions");
+  await expect(files.locator('option[value$=".css"]')).toHaveCount(0);
+
   await files.selectOption("package.json");
   await expect(
     page.getByRole("region", { name: "package.json source", exact: true }),
   ).toContainText("pnpm");
+
   const pending = page.waitForEvent("download");
   await page.getByRole("button", { name: "Download complete recipe" }).click();
-  expect((await pending).suggestedFilename()).toBe("flux-finance-recipe.zip");
+  expect((await pending).suggestedFilename()).toBe(
+    "flux-deploy-control-recipe.zip",
+  );
 });

@@ -60,8 +60,8 @@ export default function CompositionInspector({
           </Text>
           <Text as="p" variant="caption" tone="muted">
             Inspect every source file, then export the complete consumer recipe.
-            Helpers and approved artwork are included; no private Flux imports
-            or hidden docs styling are required. Package archives are supplied
+            The dashboard interface uses public Flux components with no scene UI
+            stylesheet or private Flux primitive. Package archives are supplied
             separately so an unreleased version is never presented as
             installable.
           </Text>

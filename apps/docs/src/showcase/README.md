@@ -1,9 +1,9 @@
-# Example templates
+# Dashboard gallery
 
-The same gallery drives the Overview and Playground. These are docs compositions,
-not new public component APIs.
+The Playground is a gallery of complete fictional dashboard applications built from
+public Flux UI components. The dashboards are compositions, not new public APIs.
 
-## Add a world
+## Add a dashboard
 
 Create a pair under `scenes/`: `support-desk.scene.ts` and
 `support-desk.preview.tsx`. Use lowercase words separated by single hyphens.
@@ -13,9 +13,9 @@ import { UsersIcon } from "@flux-ui/icons";
 import type { SceneDefinition } from "../types.js";
 
 export default {
-  order: 6,
+  order: 5,
   label: "Support",
-  brand: "hello",
+  brand: "Relay",
   headline: "A little help goes a long way.",
   description: "A focused place to help your customers.",
   prompt: "Open a sample request. Write a local reply.",
@@ -31,17 +31,17 @@ controls, layout, typography, surfaces, fields, and overflow. Compose `Stack`,
 scene CSS. Use `Text` and `Heading` for ordinary typography, and use
 `responsiveTo="container"` for layouts inside the gallery canvas.
 
-Keep genuinely scene-specific SVG/CSS artwork small and isolated. Import its
-stylesheet from the lazy preview module, not the application entry or shared
-gallery. Declare its precise ownership in `tooling/dogfood/ownership.json`; a
-visual-art exception must not hide an ordinary raw control. No registry/import
-list edit is needed.
+Dashboard UI should not add a scene stylesheet. Use public Flux layout, surface,
+typography, data, feedback, form, navigation, and overlay components instead.
+If a future dashboard genuinely requires non-interface artwork, it needs a narrow
+reviewed dogfood exception; artwork must never become a second component system.
+No registry/import list edit is needed.
 Metadata must stay lightweight because it is eagerly loaded. Do not import the
 preview or media assets from the metadata module.
 
 `pnpm flux check docs` rejects missing/orphan pairs and invalid names. Browser fixtures
-discover all pairs, so a new world joins viewport and accessibility coverage without
-a second manual list. Add a focused behavior test for its own interactions.
+discover all pairs, so a new dashboard joins viewport and accessibility coverage
+without a second manual list. Add a focused behavior test for its own interactions.
 
 ## State, motion, and trust
 

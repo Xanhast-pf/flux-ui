@@ -29,14 +29,15 @@ export function PlaygroundPage() {
       >
         <PageHeader
           title={<>Playground</>}
-          eyebrow={<>A small space for big ideas</>}
+          eyebrow={<>Five dashboards. One public component system.</>}
         >
           <Text as="p" variant="lead" tone="muted">
-            Try a scene, switch its theme, then inspect the code.
+            Explore complete application dashboards, use the interactions,
+            switch the theme, then inspect every source file.
           </Text>
         </PageHeader>
         <Link href="#components" variant="ghost">
-          Meet the ingredients <ArrowUpRightIcon size={16} />
+          Browse all components <ArrowUpRightIcon size={16} />
         </Link>
       </Inline>
       <ProductShowcase page="playground" />
@@ -48,14 +49,14 @@ export function PlaygroundPage() {
       >
         <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
-            Prefer to tinker with the parts?
+            Want to isolate the building blocks?
           </Text>
           <Heading level={2} size="lg">
-            Try individual components.
+            The component workbench is still here.
           </Heading>
           <Text as="p" variant="body">
-            Open a focused lab for buttons, themes, collections, or a release
-            workflow.
+            After exploring the dashboards, open the focused lab for
+            component-level experiments.
           </Text>
         </Stack>
         <Collapsible.Root

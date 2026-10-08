@@ -54,7 +54,7 @@ export default function RecipeSource({
         </Button>
       </Inline>
       <Text variant="caption" tone="muted">
-        {Object.keys(recipe.files).length} files, including helpers, artwork,
+        {Object.keys(recipe.files).length} files, including dashboard source,
         license and consumer setup. Supply the approved Flux package archives as
         described in README.md; this is not a release attestation.
       </Text>

@@ -87,18 +87,21 @@ test("theme configurator and custom light/dark editor are axe-clean", async ({
   ).toEqual([]);
 });
 
-test("forced colors preserve scene selection and keyboard-operable controls", async ({
+test("forced colors preserve dashboard selection and keyboard-operable controls", async ({
   page,
 }) => {
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
-  await page.goto("/#playground?scene=music");
-  const mute = page.getByRole("button", {
-    name: "Mute Drum machine",
+  await page.goto("/#playground?scene=deploy-control");
+  const canary = page.getByRole("button", {
+    name: "Canary enabled",
     exact: true,
   });
-  await expect(mute).toBeVisible();
-  await mute.press("Space");
-  await expect(mute).toHaveAttribute("aria-pressed", "true");
+  await expect(canary).toBeVisible();
+  await canary.press("Space");
+  await expect(
+    page.getByRole("button", { name: "Canary disabled", exact: true }),
+  ).toHaveAttribute("aria-pressed", "false");
+
   expect(
     await page.locator("html").evaluate((element) => {
       const style = getComputedStyle(element);
@@ -117,8 +120,7 @@ test("forced colors preserve scene selection and keyboard-operable controls", as
     canvas: "Canvas",
     text: "CanvasText",
   });
-  // In forced-colors mode the OS owns contrast through system colors. Headless
-  // WebKit's synthetic Highlight palette is not a meaningful author-color audit.
+
   const results = await new AxeBuilder({ page })
     .disableRules(["color-contrast"])
     .analyze();
