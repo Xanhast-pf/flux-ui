@@ -120,9 +120,7 @@ test("runtime performance page selects the full component catalog in one evidenc
   await expect(
     page.getByText("Browser workload", { exact: true }),
   ).toBeVisible();
-  await expect(
-    page.getByText(/does not have a committed benchmark baseline/u),
-  ).toBeVisible();
+  await expect(page.getByText(/has no approved baseline/u)).toBeVisible();
 
   for (const [slug, label] of [
     ["data-grid", "DataGrid"],
@@ -136,9 +134,7 @@ test("runtime performance page selects the full component catalog in one evidenc
     await expect(
       page.getByText("Browser workload", { exact: true }),
     ).toBeVisible();
-    await expect(
-      page.getByText(/does not have a committed benchmark baseline/u),
-    ).toBeVisible();
+    await expect(page.getByText(/has no approved baseline/u)).toBeVisible();
   }
 
   await component.selectOption("accordion");
@@ -149,7 +145,7 @@ test("runtime performance page selects the full component catalog in one evidenc
     page.getByText("Representative browser workload", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText(/backed by its default public docs preview/u),
+    page.getByText(/no baseline is approved\. It measures the full preview\./u),
   ).toBeVisible();
   await expect(
     page.getByRole("link", {
