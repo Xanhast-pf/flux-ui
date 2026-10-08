@@ -1,8 +1,19 @@
-import Preview from "./toggle-group.preview.js";
+import Preview, { SingleToggleGroup } from "./toggle-group.preview.js";
 import code from "./toggle-group.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 export default {
   Preview,
+  previewTitle: "Multiple selection",
+  previewDescription:
+    "Formatting controls can keep several independent toggle values selected.",
+  variations: [
+    {
+      title: "Single selection",
+      description:
+        "Single mode is useful when the choices represent one mutually exclusive presentation setting.",
+      Preview: SingleToggleGroup,
+    },
+  ],
   code,
   props: [
     [
@@ -13,7 +24,7 @@ export default {
     [
       "value / defaultValue / onValueChange",
       "mode-specific values",
-      "Controlled selection requires onValueChange; uncontrolled selection may use defaultValue. Item values must be unique.",
+      "Controlled selection may be read-only and onValueChange is optional; uncontrolled selection may use defaultValue. Item values must be unique.",
     ],
     [
       "orientation / loopFocus / disabled",

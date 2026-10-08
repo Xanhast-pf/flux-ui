@@ -12,13 +12,13 @@ export function TimePicker({
 }: TimePickerProps) {
   function change(event: ChangeEvent<HTMLInputElement>) {
     onChange?.(event);
-    if (!event.defaultPrevented)
-      onValueChange?.(event.currentTarget.value, event);
+    if (!event.defaultPrevented) onValueChange?.(event.currentTarget.value);
   }
 
   return (
     <input
       {...props}
+      data-invalid={props["aria-invalid"]}
       type="time"
       className={joinClassNames(timePicker, className)}
       onChange={onValueChange ? change : onChange}

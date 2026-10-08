@@ -25,6 +25,25 @@ describe("Knob", () => {
     fireEvent.keyDown(knob, { key: "Home" });
     expect(knob).toHaveAttribute("aria-valuenow", "-100");
   });
+  it("commits the proposed keyboard value while controlled", () => {
+    const change = vi.fn();
+    const commit = vi.fn();
+    render(
+      <Knob
+        aria-label="Gain"
+        value={40}
+        onValueChange={change}
+        onValueCommit={commit}
+      />,
+    );
+    const knob = screen.getByRole("slider");
+    fireEvent.keyDown(knob, { key: "ArrowUp" });
+    expect(change).toHaveBeenCalledExactlyOnceWith(41);
+    fireEvent.keyUp(knob, { key: "ArrowUp" });
+    expect(commit).toHaveBeenCalledExactlyOnceWith(41);
+    expect(knob).toHaveAttribute("aria-valuenow", "40");
+  });
+
   it("does not mutate a controlled value and ignores disabled input", () => {
     const change = vi.fn();
     const view = render(

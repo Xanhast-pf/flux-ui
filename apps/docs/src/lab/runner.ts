@@ -3,11 +3,11 @@ import type { ScenarioDefinition } from "../perf/scenario.types.js";
 import type { PerfResult, PerfVariant } from "../perf/PerfApp.js";
 import type { PerfScenario } from "../perf/scenario.types.js";
 import {
-  INSTANCE_COUNTS,
   assertReferenceEquivalence,
   summarize,
   validateConfig,
   summarizeWorkload,
+  workUnitOptions,
   type WorkloadSummary,
   type LabSummary,
   type SamplePair,
@@ -70,7 +70,9 @@ function measure(
     const onAbort = () => {
       cleanup();
       reject(
-        new Error("Measurement stopped. No partial result was published."),
+        signal.reason instanceof Error
+          ? signal.reason
+          : new Error("Measurement stopped. No partial result was published."),
       );
     };
     const interval = window.setInterval(() => {
@@ -78,7 +80,7 @@ function measure(
         signal.throwIfAborted();
         if (performance.now() - startedAt > 10_000)
           throw new Error(
-            "A sample exceeded its time budget. Try fewer instances.",
+            "A sample exceeded its time budget. Try fewer work units.",
           );
         const result = frame.contentWindow?.__FLUX_PERF_RESULT__;
         if (result === undefined) return;
@@ -126,13 +128,13 @@ export async function runLab(
   signal: AbortSignal,
   progress: (message: string) => void,
 ): Promise<LabReport> {
-  validateConfig(config.count, config.iterations);
   const definition = getScenario(config.scenario);
-  if (config.count > definition.maxCount)
-    throw new Error("Scenario workload limit exceeded.");
+  validateConfig(config.count, config.iterations, definition.maxCount);
   const workloads: WorkloadSummary[] = [];
   const counts = config.sweep
-    ? INSTANCE_COUNTS.filter((count) => count <= config.count)
+    ? workUnitOptions(definition.maxCount).filter(
+        (count) => count <= config.count,
+      )
     : [config.count];
   const summaries: LabSummary[] = [];
   let renderViewport = { width: 0, height: 0 };

@@ -24,6 +24,10 @@ import { formatMs, formatRatio, MAX_PERF_RATIO_METER } from "../lib/format.js";
 import { scenarioCatalog } from "../perf/registry.js";
 
 const DEFAULT_COMPONENT_SLUG = "button";
+const dedicatedScenarioCount = scenarioCatalog.filter(
+  (entry) => entry.source === "dedicated",
+).length;
+const previewScenarioCount = scenarioCatalog.length - dedicatedScenarioCount;
 
 function RuntimeComparison({
   label,
@@ -71,8 +75,17 @@ function getComponent(slug: string) {
   return component;
 }
 
+function initialComponentSlug(): string {
+  const query = window.location.hash.split("?", 2)[1] ?? "";
+  const requested = new URLSearchParams(query).get("component");
+  return requested !== null &&
+    components.some((entry) => entry.slug === requested)
+    ? requested
+    : DEFAULT_COMPONENT_SLUG;
+}
+
 export function PerformancePage() {
-  const [componentSlug, setComponentSlug] = useState(DEFAULT_COMPONENT_SLUG);
+  const [componentSlug, setComponentSlug] = useState(initialComponentSlug);
   const component = getComponent(componentSlug);
   const definition = scenarioCatalog.find(
     (entry) => entry.id === componentSlug,
@@ -83,33 +96,41 @@ export function PerformancePage() {
   const baselineIsCurrent =
     recorded !== undefined &&
     definition !== undefined &&
+    definition.source === "dedicated" &&
     Number(recorded.fixtureRevision) === definition.fixtureRevision;
   const baseline = baselineIsCurrent ? recorded : undefined;
 
   const evidenceLabel =
     baseline !== undefined
-      ? "Committed CI baseline"
+      ? "Committed benchmark baseline"
       : definition !== undefined
         ? definition.kind === "comparison"
           ? "Browser comparison"
-          : "Browser workload"
-        : "Component microbenchmark";
+          : definition.source === "preview"
+            ? "Representative browser workload"
+            : "Browser workload"
+        : "Microbenchmark coverage";
 
   return (
     <Stack className="reference-page" as="section" gap="lg">
       <PageHeader title={<>Runtime performance</>}>
         <Text as="p" variant="body">
-          Choose any public component. Flux shows the strongest runtime evidence
-          actually available for it: committed browser baselines, registered
-          browser workloads, or the required component microbenchmark.
+          Choose a component to view its browser workload and measurements.
         </Text>
       </PageHeader>
 
       <Text as="p" variant="caption" tone="muted">
-        {components.length} public components · {scenarioCatalog.length} browser
-        scenarios · {health.performance.scenarios.length} committed historical
-        CI baselines. Timings are committed measurements, not measurements of
-        this page. <Link href="#lab">Run a browser experiment →</Link>
+        {components.length} public components · {dedicatedScenarioCount}{" "}
+        dedicated scenarios · {previewScenarioCount} preview workloads ·
+        {health.performance.scenarios.length} baselines. Preview workloads
+        measure full examples, not isolated component cost.{" "}
+        <Link
+          href={
+            definition === undefined ? "#lab" : `#lab?scenario=${definition.id}`
+          }
+        >
+          Run this browser workload →
+        </Link>
       </Text>
 
       <Card as="article" padding={6}>
@@ -131,7 +152,7 @@ export function PerformancePage() {
               </Select>
             </Field.Control>
             <Field.Description>
-              Select from the complete generated component catalog.
+              Choose a component to inspect.
             </Field.Description>
           </Field.Root>
 
@@ -163,9 +184,8 @@ export function PerformancePage() {
           {recorded !== undefined && !baselineIsCurrent ? (
             <Stack gap="md">
               <Callout tone="warning">
-                The committed timing uses an older browser fixture and is not
-                comparable to the current implementation. No historical ratio is
-                shown until a deliberately reviewed baseline is accepted.
+                The saved benchmark uses an older fixture. Results are not
+                comparable until a new baseline is reviewed.
               </Callout>
               {definition !== undefined && (
                 <DescriptionList>
@@ -177,20 +197,28 @@ export function PerformancePage() {
                   <DescriptionList.Details>
                     {definition.unit}
                   </DescriptionList.Details>
+                  <DescriptionList.Term>Committed fixture</DescriptionList.Term>
+                  <DescriptionList.Details>
+                    Revision {recorded.fixtureRevision}
+                  </DescriptionList.Details>
                   <DescriptionList.Term>Current fixture</DescriptionList.Term>
                   <DescriptionList.Details>
                     Revision {definition.fixtureRevision}
                   </DescriptionList.Details>
                 </DescriptionList>
               )}
-              <Link href="#lab">Measure the current workload locally →</Link>
+              {definition !== undefined && (
+                <Link href={`#lab?scenario=${definition.id}`}>
+                  Measure the current workload locally →
+                </Link>
+              )}
             </Stack>
           ) : baseline !== undefined && definition !== undefined ? (
             <Stack gap="lg">
               <DescriptionList>
                 <DescriptionList.Term>Evidence</DescriptionList.Term>
                 <DescriptionList.Details>
-                  Native-relative Chromium CI baseline
+                  Native-relative Chromium baseline · CI regression contract
                 </DescriptionList.Details>
                 <DescriptionList.Term>Workload</DescriptionList.Term>
                 <DescriptionList.Details>
@@ -198,7 +226,11 @@ export function PerformancePage() {
                 </DescriptionList.Details>
                 <DescriptionList.Term>Reference</DescriptionList.Term>
                 <DescriptionList.Details>
-                  {baseline.reference}
+                  Matched native React
+                </DescriptionList.Details>
+                <DescriptionList.Term>Policy</DescriptionList.Term>
+                <DescriptionList.Details>
+                  v{health.performance.policyVersion}
                 </DescriptionList.Details>
                 <DescriptionList.Term>Fixture</DescriptionList.Term>
                 <DescriptionList.Details>
@@ -351,13 +383,20 @@ export function PerformancePage() {
           ) : definition !== undefined ? (
             <Stack gap="md">
               <Callout>
-                This component has a registered browser{" "}
-                {definition.kind === "comparison"
-                  ? "comparison"
-                  : "workload scenario"}
-                , but it does not have a committed historical CI timing. Flux
-                does not invent a native-relative ratio where none has been
-                reviewed.
+                {definition.source === "preview" ? (
+                  <>
+                    A browser workload is available, but no baseline is
+                    approved. It measures the full preview.
+                  </>
+                ) : (
+                  <>
+                    A browser{" "}
+                    {definition.kind === "comparison"
+                      ? "comparison"
+                      : "workload"}{" "}
+                    is available, but has no approved baseline.
+                  </>
+                )}
               </Callout>
               <DescriptionList>
                 <DescriptionList.Term>Browser scenario</DescriptionList.Term>
@@ -368,7 +407,9 @@ export function PerformancePage() {
                 <DescriptionList.Details>
                   {definition.kind === "comparison"
                     ? "Matched browser comparison"
-                    : "Flux workload"}
+                    : definition.source === "preview"
+                      ? "Representative public preview"
+                      : "Flux workload"}
                 </DescriptionList.Details>
                 <DescriptionList.Term>Work unit</DescriptionList.Term>
                 <DescriptionList.Details>
@@ -382,17 +423,20 @@ export function PerformancePage() {
               <Text as="p" variant="body" tone="muted">
                 {definition.description}
               </Text>
-              <Link href="#lab">
-                Run {definition.label} in the Stress Lab →
+              <Link href={`#lab?scenario=${definition.id}`}>
+                Run {definition.label}{" "}
+                {definition.source === "preview"
+                  ? "representative workload"
+                  : "in the Stress Lab"}{" "}
+                →
               </Link>
             </Stack>
           ) : (
             <Stack gap="md">
               <Callout>
-                No dedicated browser runtime scenario has been committed for{" "}
-                {component.name} yet. The component still has the repository's
-                required microbenchmark coverage, but this page does not turn
-                that diagnostic benchmark into a browser-runtime claim.
+                No dedicated browser workload is available for {component.name}{" "}
+                yet. A microbenchmark exists, but it does not measure browser
+                runtime.
               </Callout>
               <DescriptionList>
                 <DescriptionList.Term>Component benchmark</DescriptionList.Term>
@@ -404,9 +448,9 @@ export function PerformancePage() {
                   Not registered
                 </DescriptionList.Details>
                 <DescriptionList.Term>
-                  Historical CI timing
+                  Committed browser baseline
                 </DescriptionList.Term>
-                <DescriptionList.Details>Not committed</DescriptionList.Details>
+                <DescriptionList.Details>Not available</DescriptionList.Details>
               </DescriptionList>
               <Inline gap="md" wrap>
                 <Link href={`#components/${component.slug}`}>

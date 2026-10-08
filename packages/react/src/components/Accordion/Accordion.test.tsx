@@ -24,6 +24,8 @@ describe("Accordion", () => {
         <Items />
       </Accordion.Root>,
     );
+    const root = container.firstElementChild;
+    expect(root).toHaveAttribute("data-type", "single");
     const items = Array.from(container.querySelectorAll("details"));
     expect(items).toHaveLength(2);
     expect(items[0]?.getAttribute("name")).toBeTruthy();
@@ -50,6 +52,7 @@ describe("Accordion", () => {
       items[2]?.getAttribute("name"),
     );
     expect(items[4]).not.toHaveAttribute("name");
+    expect(items[4]?.parentElement).toHaveAttribute("data-type", "multiple");
   });
   it("preserves native open, toggle, refs and consumer styling", () => {
     const ref = createRef<HTMLDetailsElement>();

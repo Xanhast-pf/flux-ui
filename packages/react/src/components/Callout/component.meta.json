@@ -2,7 +2,8 @@
   "name": "Callout",
   "slug": "callout",
   "category": "Feedback",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Informational notes with optional status or alert semantics.",
   "sizeClass": "primitive"
 }

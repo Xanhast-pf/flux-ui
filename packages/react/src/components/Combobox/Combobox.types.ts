@@ -29,7 +29,7 @@ type ValueState =
       defaultValue?: never;
     }
   | {
-      value?: never;
+      value?: undefined;
       defaultValue?: string | null | undefined;
     };
 
@@ -39,7 +39,7 @@ type QueryState =
       defaultQuery?: never;
     }
   | {
-      query?: never;
+      query?: undefined;
       defaultQuery?: string | null | undefined;
     };
 

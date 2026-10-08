@@ -1,4 +1,4 @@
-import { createRef, useState, type ChangeEvent } from "react";
+import { createRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -126,11 +126,9 @@ describe("Rating", () => {
   it("calls native onChange before onValueChange and respects preventDefault", async () => {
     const user = userEvent.setup();
     const order: string[] = [];
-    const onValueChange = vi.fn(
-      (_value: number, _event: ChangeEvent<HTMLInputElement>) => {
-        order.push("value");
-      },
-    );
+    const onValueChange = vi.fn((_value: number) => {
+      order.push("value");
+    });
 
     render(
       <Rating
@@ -187,6 +185,73 @@ describe("Rating", () => {
     await user.click(fourth);
     expect(onValueChange).not.toHaveBeenCalled();
     expect(screen.getByRole("radio", { name: "2 of 5 stars" })).toBeChecked();
+  });
+
+  it("uses its owner document when drag-scrubbing", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const onValueChange = vi.fn();
+    const rendered = render(
+      <Rating
+        aria-label="Quality rating"
+        step={0.5}
+        onValueChange={onValueChange}
+      />,
+      { container },
+    );
+    const input =
+      container.querySelector<HTMLInputElement>('input[value="2.5"]');
+    const hitTarget = input?.closest("label");
+    const scrubTarget = input?.closest("span");
+    if (!hitTarget || !scrubTarget)
+      throw new Error("Missing rating scrub targets.");
+
+    const ownerDescriptor = Object.getOwnPropertyDescriptor(
+      ownerDocument,
+      "elementFromPoint",
+    );
+    const globalDescriptor = Object.getOwnPropertyDescriptor(
+      document,
+      "elementFromPoint",
+    );
+    const elementFromPoint = vi.fn(() => hitTarget);
+    Object.defineProperty(ownerDocument, "elementFromPoint", {
+      configurable: true,
+      value: elementFromPoint,
+    });
+    Object.defineProperty(document, "elementFromPoint", {
+      configurable: true,
+      value: () => {
+        throw new Error("Rating scrubbed against the wrong document.");
+      },
+    });
+
+    try {
+      fireEvent.pointerMove(scrubTarget, {
+        buttons: 1,
+        clientX: 24,
+        clientY: 12,
+      });
+      expect(elementFromPoint).toHaveBeenCalledExactlyOnceWith(24, 12);
+      expect(onValueChange).toHaveBeenCalledExactlyOnceWith(2.5);
+    } finally {
+      rendered.unmount();
+      if (ownerDescriptor)
+        Object.defineProperty(
+          ownerDocument,
+          "elementFromPoint",
+          ownerDescriptor,
+        );
+      else Reflect.deleteProperty(ownerDocument, "elementFromPoint");
+      if (globalDescriptor)
+        Object.defineProperty(document, "elementFromPoint", globalDescriptor);
+      else Reflect.deleteProperty(document, "elementFromPoint");
+      iframe.remove();
+    }
   });
 
   it("renders read-only half stars without interactive radios and preserves named form data", () => {

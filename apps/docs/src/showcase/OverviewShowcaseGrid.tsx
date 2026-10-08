@@ -27,7 +27,6 @@ import {
   Text,
 } from "@flux-ui/react";
 import { useId, useState } from "react";
-import { AppearanceControls } from "../ui/AppearanceControls.js";
 
 const members = [
   { name: "Maya Chen", initials: "MC", role: "Design" },
@@ -99,7 +98,7 @@ function TeamCard() {
               Your team
             </Heading>
             <Text variant="caption" tone="muted">
-              Invite and manage collaborators.
+              Invite team members.
             </Text>
           </Stack>
           <StatusBadge tone="accent">Workspace</StatusBadge>
@@ -175,7 +174,7 @@ function SignInCard() {
             Welcome back
           </Heading>
           <Text variant="caption" tone="muted">
-            A compact account surface.
+            Local sign-in demo.
           </Text>
         </Stack>
 
@@ -231,7 +230,7 @@ function PerformanceCard() {
               Product pulse
             </Heading>
             <Text variant="caption" tone="muted">
-              A small operating snapshot.
+              Key metrics.
             </Text>
           </Stack>
           <StatusBadge tone="success">Healthy</StatusBadge>
@@ -277,7 +276,7 @@ function NotificationCard() {
             Notifications
           </Heading>
           <Text variant="caption" tone="muted">
-            Tune the signal, not the noise.
+            Choose updates.
           </Text>
         </Stack>
 
@@ -418,7 +417,7 @@ function ActivityCard() {
               Recent activity
             </Heading>
             <Text variant="caption" tone="muted">
-              What changed while you were away.
+              Latest updates.
             </Text>
           </Stack>
           <Button
@@ -475,10 +474,10 @@ function PlanCard() {
       <Stack gap={4}>
         <Stack gap="xs">
           <Heading id={`${id}-title`} level={3} size="sm">
-            Plans that scale with you
+            Plans
           </Heading>
           <Text variant="caption" tone="muted">
-            Clear choices, no comparison maze.
+            Simple monthly pricing.
           </Text>
         </Stack>
 
@@ -523,20 +522,15 @@ export function OverviewShowcaseGrid() {
     >
       <Stack gap="sm">
         <Text as="p" variant="eyebrow" tone="muted">
-          Built from the same public pieces
+          Flux in action
         </Text>
         <Heading id="overview-showcase-title" level={2} size="md">
-          Real app patterns, right on the front page.
+          App examples
         </Heading>
         <Text as="p" tone="muted">
-          Accounts, teams, billing, projects, metrics, and settings — compact
-          enough to scan, concrete enough to imagine in your own product.
+          Accounts, teams, billing, and metrics in one place.
         </Text>
       </Stack>
-
-      <Card padding={5} radius="md" surface="subtle">
-        <AppearanceControls />
-      </Card>
 
       <Grid columns={{ base: 1, xl: 3 }} gap="md" align="start">
         <Stack gap="md">
@@ -556,7 +550,7 @@ export function OverviewShowcaseGrid() {
       </Grid>
 
       <Text as="p" variant="caption" tone="muted">
-        Fictional data. Interactive controls stay local to this page.
+        Fictional data. Interactions run locally.
       </Text>
     </Stack>
   );

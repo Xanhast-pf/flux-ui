@@ -1,4 +1,4 @@
-import Preview from "./slider.preview.js";
+import Preview, { NativeSlider, VerticalSlider } from "./slider.preview.js";
 import code from "./slider.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 
@@ -6,6 +6,22 @@ export default {
   Preview,
   code,
   previewLayout: "fill",
+  previewTitle: "Custom horizontal slider",
+  previewDescription:
+    "A styled native range with marks, value output, reset behavior, and normal keyboard interaction.",
+  variations: [
+    {
+      title: "Vertical slider",
+      description:
+        "Vertical orientation uses native range geometry with the minimum at the bottom.",
+      Preview: VerticalSlider,
+    },
+    {
+      title: "Native appearance",
+      description: "Keep browser rendering when Flux styling is not needed.",
+      Preview: NativeSlider,
+    },
+  ],
   notes: [
     "One native range owns pointer, keyboard, validation and form behavior. Vertical sliders put the minimum at the bottom; no rotation or drag engine is needed.",
     "marks uses the platform range+datalist relationship. Flux does not replace the thumb or keyboard model to draw tick marks.",

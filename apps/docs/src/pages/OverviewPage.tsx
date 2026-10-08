@@ -29,34 +29,32 @@ export function OverviewPage() {
   const principles = [
     {
       id: "tokens",
-      label: "01 / Shape the feeling",
-      title: "Color with a point of view.",
-      description:
-        "Choose a primary palette, pair it with a perceptually distinct secondary, and keep semantic contrast grounded in the same tokens.",
-      action: "Explore the tokens",
+      label: "01 / Themes",
+      title: "Choose your colors.",
+      description: "Mix palettes with semantic tokens.",
+      action: "Explore tokens",
     },
     {
       id: "components",
-      label: "02 / Find your building blocks",
-      title: "Small pieces. Real possibilities.",
-      description: `${components.length} discoverable component families. Native props, composition, and escape hatches when your idea needs more.`,
-      action: "Open the catalog",
+      label: "02 / Components",
+      title: "Build with components.",
+      description: `${components.length} component families with native props and flexible composition.`,
+      action: "Browse components",
     },
     {
       id: "engineering",
-      label: "03 / Keep your freedom",
-      title: "Yours, beyond the demo.",
-      description:
-        "Static styling and simple APIs. The docs compose the same public components available to your application.",
-      action: "Read the engineering",
+      label: "03 / Engineering",
+      title: "Built to adapt.",
+      description: "Simple APIs, static CSS, and public components.",
+      action: "Engineering details",
     },
   ];
   const evidence = [
     {
       id: "lab",
       Icon: GaugeIcon,
-      title: "Put it under pressure.",
-      description: "Run the opt-in, native-relative Stress Lab.",
+      title: "Stress test",
+      description: "Compare workloads locally.",
     },
     {
       id: "size",
@@ -67,14 +65,14 @@ export function OverviewPage() {
     {
       id: "trust",
       Icon: ShieldCheckIcon,
-      title: "Follow the evidence.",
-      description: "Build receipts, security workflows, and their limits.",
+      title: "Verification",
+      description: "Build and security checks.",
     },
     {
       id: "accessibility",
       Icon: ShieldCheckIcon,
-      title: "Don’t just read about accessibility.",
-      description: "Introduce a defect. Run axe. Inspect the repair.",
+      title: "Accessibility",
+      description: "Run an axe scan on a live example.",
     },
   ];
   return (
@@ -101,18 +99,17 @@ export function OverviewPage() {
         />
         <Stack gap="md">
           <Text as="p" variant="lead">
-            For everything you haven’t built yet.
+            Build with Flux.
           </Text>
           <Text as="p" tone="muted">
-            From your next big launch to your next great track. Thoughtful
-            components, with room for your point of view.
+            Accessible React components with flexible themes.
           </Text>
           <Inline wrap gap="md">
             <Link href="#install" variant="solid">
               Start building <ArrowUpRightIcon size={16} />
             </Link>
             <Link href="#components" variant="ghost">
-              Meet the components <ArrowRightIcon size={16} />
+              Browse components <ArrowRightIcon size={16} />
             </Link>
           </Inline>
           <Text variant="caption" tone="muted">
@@ -124,14 +121,13 @@ export function OverviewPage() {
       <Stack aria-labelledby="system-story-title" as="section" gap="xl">
         <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
-            A point of view. Not a straitjacket.
+            Flexible by design
           </Text>
           <Heading id="system-story-title" level={2} size="lg">
-            Expressive on the surface. Considered underneath.
+            One foundation. Many uses.
           </Heading>
           <Text as="p" tone="muted">
-            The examples change. The foundations don’t. Build with the same
-            primitives, then make the result unmistakably yours.
+            Use the same components across different apps.
           </Text>
         </Stack>
         <Grid columns={{ base: 1, lg: 3 }} gap="lg">
@@ -170,13 +166,13 @@ export function OverviewPage() {
         >
           <Stack gap="md">
             <Text as="p" variant="eyebrow" tone="muted">
-              Nothing up our sleeves
+              Open by design
             </Text>
             <Heading level={2} size="lg">
-              Looks good. Show your work.
+              See the evidence.
             </Heading>
             <Text as="p" tone="muted">
-              Inspect what’s measured, what’s tested, and what still needs work.
+              Explore tests, measurements, and limits.
             </Text>
           </Stack>
           <Stack gap="lg">
@@ -203,13 +199,13 @@ export function OverviewPage() {
       >
         <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
-            Still becoming
+            FAQs
           </Text>
           <Heading level={2} size="lg">
-            A few honest answers.
+            Common questions
           </Heading>
           <Text as="p" tone="muted">
-            Open source. Open about the details.
+            Short answers about Flux.
           </Text>
         </Stack>
         <Stack gap="sm">
@@ -219,10 +215,8 @@ export function OverviewPage() {
             </Collapsible.Trigger>
             <Collapsible.Content>
               <Text as="p">
-                Reusable controls, typography, surfaces, and layout use public
-                Flux exports. Original illustrations and data geometry are
-                authored for each scene. Inspect the scene’s ingredients and the
-                ownership policy in Engineering.
+                Yes. The UI uses public Flux components. Scene artwork and data
+                are custom.
               </Text>
             </Collapsible.Content>
           </Collapsible.Root>
@@ -233,11 +227,10 @@ export function OverviewPage() {
             <Collapsible.Content>
               <Stack gap="md">
                 <Text as="p">
-                  Flux is pre-stable. Lifecycle status varies by component, and
-                  APIs may still evolve. Passing checks and measured components
-                  are evidence, not a blanket production-readiness guarantee.
+                  Flux is pre-stable. Check each component’s lifecycle and test
+                  it in your app.
                 </Text>
-                <Link href="#trust">Review the actual trust evidence →</Link>
+                <Link href="#trust">View trust evidence →</Link>
               </Stack>
             </Collapsible.Content>
           </Collapsible.Root>
@@ -247,11 +240,8 @@ export function OverviewPage() {
             </Collapsible.Trigger>
             <Collapsible.Content>
               <Text as="p">
-                No. Products, people, and figures are fictional. Actions use
-                in-memory state. Music is visual and silent; the video editor
-                uses illustrated frames. Changing scenes or reloading resets the
-                demo. The selected scene is shareable in the URL; appearance
-                stays with your saved documentation preferences.
+                No. The data is fictional and actions run locally. Reloading
+                resets the demos.
               </Text>
             </Collapsible.Content>
           </Collapsible.Root>
@@ -261,9 +251,8 @@ export function OverviewPage() {
             </Collapsible.Trigger>
             <Collapsible.Content>
               <Text as="p">
-                We do not claim a universal ranking. Published size snapshots,
-                native-relative benchmarks, and a local Stress Lab expose what
-                we can measure, with their limitations.
+                No universal ranking. Review the size checks and performance
+                tests.
               </Text>
             </Collapsible.Content>
           </Collapsible.Root>
@@ -272,13 +261,13 @@ export function OverviewPage() {
       <Separator />
       <Stack align="center" gap="md" paddingBlock="xl">
         <Text variant="eyebrow" tone="muted">
-          The next world is yours
+          Get started
         </Text>
         <Heading level={2} size="lg">
-          What will you make of it?
+          Build something.
         </Heading>
         <Link href="#install" variant="solid">
-          Find your starting point <ArrowUpRightIcon size={16} />
+          Start building <ArrowUpRightIcon size={16} />
         </Link>
       </Stack>
     </Stack>

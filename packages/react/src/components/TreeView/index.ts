@@ -2,5 +2,5 @@ export { TreeView } from "./TreeView.js";
 export type {
   TreeViewItemProps,
   TreeViewRootProps,
-  TreeViewValueChangeHandler,
+  TreeViewExpandedItemsChangeHandler,
 } from "./TreeView.types.js";

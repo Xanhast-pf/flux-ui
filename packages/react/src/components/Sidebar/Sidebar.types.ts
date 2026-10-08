@@ -8,7 +8,7 @@ export type SidebarRootProps = {
   | {
       open: boolean;
       defaultOpen?: never;
-      onOpenChange: (open: boolean) => void;
+      onOpenChange?: ((open: boolean) => void) | undefined;
     }
   | {
       open?: undefined;

@@ -90,11 +90,16 @@ unneeded publishing credentials. No npm token secret is used by this workflow.
 
 ## 4. Prepare real versions and perform a dry run
 
-The uploaded baseline's public package versions are `0.0.0`. Packing deliberately
-rejects that placeholder and incompatible version/tag combinations. For the alpha
-channel, enter Changesets prerelease mode before versioning:
+Public package versions are owned by the individual package manifests and
+Changesets; do not infer them from the private root package or copy a historical
+version into this guide. Before versioning, inspect the current release plan with
+`pnpm exec changeset status --verbose`. Packing deliberately rejects any public
+workspace that still has the `0.0.0` placeholder and rejects incompatible
+version/tag combinations. For the alpha channel, enter Changesets prerelease mode
+before versioning:
 
 ```sh
+pnpm exec changeset status --verbose
 pnpm exec changeset pre enter alpha
 pnpm flux release version
 pnpm install --lockfile-only
@@ -147,9 +152,13 @@ of defects, reproducibility, or a SLSA certification.
 The SPDX inventory describes packages discoverable in an individual distributed
 tarball. It does **not** include the entire build-tool dependency closure or the
 consumer application's resolved React/peer dependency graph. Dependency audits
-cover a separate, broader lockfile scope. Workflow artifacts have 90-day retention;
-archive release evidence longer when your release policy requires it. No GitHub
-Release entry or assets are automatically created.
+cover a separate, broader lockfile scope. Release tarballs, package inventories
+and verification bundles expire from Actions storage after 7 days; failed
+release-check evidence expires after 1 day. Approve the npm environment before
+the handoff artifacts expire. If they expire, rerun the complete workflow from
+the intended commit and verify immutable package contents again. Archive long-term
+release evidence outside Actions storage. No GitHub Release entry or assets are
+automatically created.
 
 ## 6. Apply for OpenSSF Best Practices
 
@@ -191,7 +200,7 @@ bypass permissions are intentional, and that package-publishing environments and
 trusted publishers match the release workflow. Source archives cannot verify
 those settings or establish the current advisory status of a dependency tree.
 
-Run the configured complete-lockfile audit and review its saved result before
-release. Do not treat the safer source-archive script as a credential audit of
+Run the configured complete-lockfile audit and review its job log before
+release. Dependency-audit reports are not uploaded to Actions artifact storage. Do not treat the safer source-archive script as a credential audit of
 existing repository history. No security-score or certification claim follows
 from this checklist alone.

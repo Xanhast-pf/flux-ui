@@ -1,4 +1,4 @@
-import type { ChangeEvent, ComponentPropsWithRef, CSSProperties } from "react";
+import type { ComponentPropsWithRef, CSSProperties } from "react";
 
 export type SliderMark =
   | number
@@ -22,8 +22,7 @@ export interface SliderProps extends Omit<
   showValue?: boolean | undefined;
   /** Formats the optional visual output. */
   formatValue?: ((value: number) => string) | undefined;
-  onValueChange?:
-    ((value: number, event: ChangeEvent<HTMLInputElement>) => void) | undefined;
+  onValueChange?: ((value: number) => void) | undefined;
   style?:
     | (CSSProperties & {
         "--flux-slider-length"?: string | undefined;

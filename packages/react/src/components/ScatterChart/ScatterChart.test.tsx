@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import { ChartLegend } from "../ChartLegend/ChartLegend.js";
 import { ChartTooltip } from "../ChartTooltip/ChartTooltip.js";
 import { ScatterChart } from "./ScatterChart.js";
 
@@ -63,6 +64,30 @@ describe("ScatterChart", () => {
     expect(cursor).toHaveAttribute("aria-valuetext", "Worker: 20, 80");
     fireEvent.keyDown(cursor, { key: "End" });
     expect(cursor).toHaveAttribute("aria-valuetext", "Worker: 30, 100");
+  });
+
+  it("keeps automatic series tones stable when earlier series are hidden", () => {
+    const implicit = [
+      { id: "first", label: "First", data: [{ x: 0, y: 1 }] },
+      { id: "second", label: "Second", data: [{ x: 0, y: 2 }] },
+    ] as const;
+    render(
+      <ChartLegend items={implicit} toggleVisibility>
+        <ScatterChart label="Stable tones" series={implicit} />
+      </ChartLegend>,
+    );
+
+    const chart = screen.getByRole("slider");
+    expect(chart.querySelector("[data-chart-series='1']")).toHaveAttribute(
+      "data-tone",
+      "info",
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "First" }));
+    expect(chart.querySelector("[data-chart-series='0']")).toHaveAttribute(
+      "data-tone",
+      "info",
+    );
   });
 
   it("renders bounded point paths instead of one node per source point", () => {

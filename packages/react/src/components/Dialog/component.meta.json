@@ -2,8 +2,13 @@
   "name": "Dialog",
   "slug": "dialog",
   "category": "Overlays",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Modal dialog composition built on the native top layer with automatic labeling and predictable dismissal.",
   "sizeClass": "overlay",
-  "nonDomParts": ["Dialog.Root"]
+  "nonDomParts": ["Dialog.Root"],
+  "publicDataAttributes": {
+    "Dialog.Trigger": ["data-state"],
+    "Dialog.Popup": ["data-state"]
+  }
 }

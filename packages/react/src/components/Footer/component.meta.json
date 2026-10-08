@@ -2,7 +2,8 @@
   "name": "Footer",
   "slug": "footer",
   "category": "Layout",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Semantic page footer that settles at the bottom of flex-column layouts.",
   "sizeClass": "primitive"
 }

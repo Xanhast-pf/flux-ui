@@ -41,6 +41,14 @@ interface EditState {
   error: string | null;
 }
 
+function isHtmlElement(
+  value: unknown,
+  owner: HTMLElement,
+): value is HTMLElement {
+  const Type = owner.ownerDocument.defaultView?.HTMLElement;
+  return !!Type && value instanceof Type;
+}
+
 function allCells(scope: HTMLElement): HTMLElement[] {
   return [...scope.querySelectorAll<HTMLElement>('[role="gridcell"]')];
 }
@@ -98,7 +106,7 @@ function trackWidth(width: DataGridColumn<unknown>["width"]) {
 function displayValue(value: DataGridCellValue): string | number {
   if (typeof value === "number" && !Number.isFinite(value))
     throw new RangeError("DataGrid numeric cell values must be finite.");
-  return value ?? "—";
+  return value ?? "-";
 }
 
 function compareValues(a: DataGridCellValue, b: DataGridCellValue): number {
@@ -155,7 +163,7 @@ export function DataGrid<Row>({
   onSortingChange,
   selectedRowIds,
   defaultSelectedRowIds = [],
-  onSelectionChange,
+  onSelectedRowIdsChange,
   onCellEditCommit,
   className,
   onClick,
@@ -173,9 +181,12 @@ export function DataGrid<Row>({
   const columnIds = columns.map((column) => column.id);
   if (
     columnIds.some((id) => id.length === 0) ||
-    new Set(columnIds).size !== columnIds.length
+    new Set(columnIds).size !== columnIds.length ||
+    columns.some((column) => column.header.length === 0)
   )
-    throw new RangeError("DataGrid columns need unique non-empty IDs.");
+    throw new RangeError(
+      "DataGrid columns need unique non-empty IDs and non-empty headers.",
+    );
 
   const entries = useMemo(
     () => rows.map((row) => ({ row, id: getRowId(row) })),
@@ -242,6 +253,8 @@ export function DataGrid<Row>({
   );
 
   if (activeSort !== null) {
+    if (!["ascending", "descending"].includes(activeSort.direction))
+      throw new RangeError("Invalid DataGrid sort direction.");
     const sortColumn = columnsById.get(activeSort.columnId);
     if (sortColumn === undefined)
       throw new RangeError(
@@ -352,7 +365,7 @@ export function DataGrid<Row>({
 
     const active = gridElement.ownerDocument.activeElement;
     if (
-      active instanceof HTMLElement &&
+      isHtmlElement(active, gridElement) &&
       active.getAttribute("role") === "gridcell" &&
       gridElement.contains(active)
     ) {
@@ -379,7 +392,7 @@ export function DataGrid<Row>({
     else next.add(rowId);
     const ids = [...next];
     if (selectedRowIds === undefined) setLocalSelection(ids);
-    onSelectionChange?.(ids);
+    onSelectedRowIdsChange?.(ids);
   }
 
   function startEditing(identity: CellIdentity): boolean {
@@ -479,7 +492,7 @@ export function DataGrid<Row>({
     onClick?.(event);
     if (event.defaultPrevented || !selectable) return;
     const target = event.target;
-    if (!(target instanceof Element)) return;
+    if (!isHtmlElement(target, event.currentTarget)) return;
     if (target.closest('[data-flux-grid-editor="true"]')) return;
     const cellElement = target.closest<HTMLElement>('[role="gridcell"]');
     if (cellElement === null || !event.currentTarget.contains(cellElement))
@@ -492,7 +505,7 @@ export function DataGrid<Row>({
     onDoubleClick?.(event);
     if (event.defaultPrevented) return;
     const target = event.target;
-    if (!(target instanceof Element)) return;
+    if (!isHtmlElement(target, event.currentTarget)) return;
     const cellElement = target.closest<HTMLElement>('[role="gridcell"]');
     if (cellElement === null || !event.currentTarget.contains(cellElement))
       return;
@@ -504,7 +517,7 @@ export function DataGrid<Row>({
     onFocusCapture?.(event);
     const target = event.target;
     if (
-      target instanceof HTMLElement &&
+      isHtmlElement(target, event.currentTarget) &&
       target.getAttribute("role") === "gridcell" &&
       event.currentTarget.contains(target)
     ) {
@@ -525,7 +538,7 @@ export function DataGrid<Row>({
 
     const target = event.target;
     if (
-      !(target instanceof HTMLElement) ||
+      !isHtmlElement(target, event.currentTarget) ||
       target.getAttribute("role") !== "gridcell"
     )
       return;

@@ -62,7 +62,7 @@ export function Grid({
   });
 }
 
-export function GridItem({
+function GridItem({
   as = "div",
   responsiveTo,
   alignSelf,

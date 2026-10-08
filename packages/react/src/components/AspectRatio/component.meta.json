@@ -2,7 +2,8 @@
   "name": "AspectRatio",
   "slug": "aspect-ratio",
   "category": "Layout",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "A responsive CSS aspect-ratio frame with no measurement code.",
   "sizeClass": "primitive"
 }

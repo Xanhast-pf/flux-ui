@@ -18,9 +18,7 @@ export function SizePage() {
       <Stack gap="md">
         <PageHeader title={<>Bundle-size health</>}>
           <Text as="p" variant="body">
-            Every public component has an absolute complexity-class budget and a
-            historical regression baseline. The meters below show Brotli size
-            against each component&apos;s absolute budget.
+            Compare component Brotli size with its budget and saved baseline.
           </Text>
         </PageHeader>
         <MeasurementNotice />
@@ -29,8 +27,7 @@ export function SizePage() {
         <ScrollArea aria-label="Measurement table" axis="horizontal">
           <Table.Root>
             <Table.Caption>
-              Committed bundled-entry baselines (new entries stay pending until
-              measured)
+              Saved bundle baselines. New components show Pending baseline.
             </Table.Caption>
             <Table.Header>
               <Table.Row>
@@ -76,7 +73,7 @@ export function SizePage() {
         </ScrollArea>
 
         <Text as="p" variant="body">
-          Last measured aggregate runtime:{" "}
+          Measured runtime:{" "}
           <Text as="strong" weight="bold">
             {formatBytes(runtimeBrotli)}
           </Text>

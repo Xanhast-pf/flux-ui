@@ -1,9 +1,19 @@
-import Preview from "./accordion.preview.js";
+import Preview, { MultipleAccordion } from "./accordion.preview.js";
 import code from "./accordion.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 export default {
   Preview,
   previewLayout: "fill",
+  previewTitle: "Single disclosure",
+  previewDescription:
+    "Single mode uses the native named-details behavior to keep one item open.",
+  variations: [
+    {
+      title: "Multiple disclosures",
+      description: "Multiple mode lets independent details stay open together.",
+      Preview: MultipleAccordion,
+    },
+  ],
   code,
   props: [
     [

@@ -6,6 +6,7 @@ export function Input({ className, type = "text", ...inputProps }: InputProps) {
   return (
     <input
       {...inputProps}
+      data-invalid={inputProps["aria-invalid"]}
       className={joinClassNames(input, className)}
       type={type}
     />

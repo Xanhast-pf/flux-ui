@@ -2,7 +2,13 @@
   "name": "ScatterChart",
   "slug": "scatter-chart",
   "category": "Data",
-  "status": "beta",
+  "status": "alpha",
   "description": "Standalone bounded scatter visualization with axes, source-complete inspection and sampled SVG paths.",
-  "sizeClass": "data-heavy"
+  "sizeClass": "data-heavy",
+  "publicDescendantDataAttributes": {
+    "series": {
+      "selector": "[data-muted]",
+      "dataAttributes": ["data-muted"]
+    }
+  }
 }

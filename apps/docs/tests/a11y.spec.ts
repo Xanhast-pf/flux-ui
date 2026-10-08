@@ -11,7 +11,7 @@ async function expectNoViolations(
   // Wait for lazy preview content; auditing a Suspense fallback misses the control.
   await expect(page.locator("main h1")).toBeVisible();
   if (page.url().includes("#components/")) {
-    await expect(page.locator(".preview-content")).toBeVisible();
+    await expect(page.locator(".preview-content").first()).toBeVisible();
   }
   const path = new URL(page.url()).hash.slice(1).split("?", 1)[0] ?? "";
   if (path === "" || path === "overview") {
@@ -93,6 +93,17 @@ test("overlays are accessible while open", async ({ page }) => {
   await page.getByRole("button", { name: "Close drawer", exact: true }).click();
   await page.getByRole("button", { name: /Search docs/ }).click();
   await expectNoViolations(page, "dialog[open]", modalWcagTags);
+});
+
+test("visible toast is accessible", async ({ page }) => {
+  await page.goto("/#components/toast");
+  await page
+    .getByRole("button", { name: "Save local draft", exact: true })
+    .click();
+  const status = page.getByRole("status");
+  await expect(status).toBeVisible();
+  await status.hover();
+  await expectNoViolations(page);
 });
 for (const theme of ["light", "dark"] as const) {
   for (const palette of [

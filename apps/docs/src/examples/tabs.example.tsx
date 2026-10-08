@@ -19,7 +19,7 @@ export default {
     [
       "Root",
       "value / defaultValue / onValueChange",
-      "Selection state; an initial value is required. Controlled value requires onValueChange.",
+      "Selection state; an initial value is required. Controlled value may be read-only and onValueChange is optional.",
     ],
     [
       "Root.orientation",

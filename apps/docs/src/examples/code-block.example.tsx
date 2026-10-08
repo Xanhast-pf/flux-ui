@@ -8,7 +8,7 @@ export default {
   notes: [
     "Literal code remains selectable even when clipboard permission is unavailable. No HTML or code is executed.",
     "Copy feedback is associated with the exact code string, so a late result cannot claim success for new content.",
-    "Optional lexical coloring supports 19 language names and common aliases. Unknown languages stay plain; this is not a compiler or semantic highlighter.",
+    "Optional lexical coloring supports 19 language names and common aliases. tokenizeCode and codeLanguages are supported package exports; unknown languages stay plain and the helper remains lexical rather than semantic.",
     "For static pages, pass build-time tokens. A highlighter adapter can load richer grammars lazily; stale async results are discarded.",
     "Disable copyable for read-only code displays; no copy action is rendered.",
   ],

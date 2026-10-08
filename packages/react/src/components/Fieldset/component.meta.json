@@ -2,7 +2,8 @@
   "name": "Fieldset",
   "slug": "fieldset",
   "category": "Forms",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native grouped controls and legend; browser-owned group disabling.",
   "sizeClass": "primitive"
 }

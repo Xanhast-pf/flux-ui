@@ -70,16 +70,28 @@ test("Sidebar is distinct from the native modal implementation and lives outside
   assert.match(nav, /onNavigate=\{onNavigate\}/u);
   assert.doesNotMatch(sidebar, /Drawer|setOpen\(false\).*route/u);
 });
-test("default examples have exact ownership and consumer build cannot silently use sources", async () => {
+test("regular docs UI has no ownership escape and consumer build cannot silently use sources", async () => {
   const policy = JSON.parse(await source("tooling/dogfood/ownership.json"));
   assert.equal(policy.schemaVersion, 2);
   assert.equal("teachingFixtures" in policy, false);
   assert.ok(
     policy.sourceExceptions.every(
       (entry) =>
-        entry.file && !entry.prefix && !entry.file.includes("examples/"),
+        entry.file?.startsWith("apps/docs/src/perf/scenarios/") &&
+        entry.file.endsWith(".fixture.tsx") &&
+        !entry.prefix,
     ),
   );
+  for (const file of Object.keys(policy.stylesheets))
+    assert.ok(
+      ![
+        "apps/docs/src/pages/",
+        "apps/docs/src/ui/",
+        "apps/docs/src/demos/",
+        "apps/docs/src/examples/",
+      ].some((prefix) => file.startsWith(prefix)),
+      `${file} must not become a docs-only UI stylesheet`,
+    );
   const config = await source("apps/docs/consumer/vite.config.ts");
   assert.doesNotMatch(config, /alias:|vanillaExtractPlugin/u);
   assert.match(config, /Consumer bypassed a public built export/u);

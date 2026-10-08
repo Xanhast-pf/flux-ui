@@ -6,7 +6,7 @@ import type {
   CollapsibleTriggerProps,
 } from "./Collapsible.types.js";
 function CollapsibleRoot({
-  appearance = "surface",
+  variant = "surface",
   density = "comfortable",
   className,
   ...props
@@ -14,7 +14,7 @@ function CollapsibleRoot({
   return (
     <details
       {...props}
-      data-a={appearance === "surface" ? undefined : appearance}
+      data-a={variant === "surface" ? undefined : variant}
       data-d={density === "comfortable" ? undefined : density}
       className={joinClassNames(root, className)}
     />

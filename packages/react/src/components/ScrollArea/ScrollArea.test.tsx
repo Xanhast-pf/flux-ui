@@ -12,6 +12,7 @@ describe("ScrollArea", () => {
     );
     const region = screen.getByRole("region", { name: "Results" });
     expect(region).toBe(ref.current);
+    expect(region).toHaveAttribute("data-axis", "horizontal");
     expect(region).toHaveAttribute("tabindex", "-1");
     Object.defineProperties(region, {
       clientWidth: { configurable: true, value: 100 },
@@ -33,6 +34,7 @@ describe("ScrollArea", () => {
       </ScrollArea>,
     );
     const region = screen.getByRole("region");
+    expect(region).toHaveAttribute("data-axis", "vertical");
     Object.defineProperties(region, {
       clientWidth: { configurable: true, value: 100 },
       scrollWidth: { configurable: true, value: 200 },

@@ -77,7 +77,7 @@ export function ReleaseRoom() {
           <Inline justify="between" wrap>
             <Stack gap="md">
               <Text as="p" variant="eyebrow" tone="muted">
-                Your next good idea
+                Local release demo
               </Text>
               <Heading level={2} size="lg">
                 Release room
@@ -88,13 +88,12 @@ export function ReleaseRoom() {
             </StatusBadge>
           </Inline>
           <Text as="p" variant="body" tone="muted">
-            A tiny workspace made entirely from Flux pieces. Check things off.
-            Turn things on. Ship a pretend release.
+            Complete tasks and simulate a release.
           </Text>
           <Stack gap={3}>
             <Inline justify="between">
               <Text as="strong" weight="bold">
-                Ready when you are
+                Checklist
               </Text>
               <Text>
                 {complete} / {tasks.length}

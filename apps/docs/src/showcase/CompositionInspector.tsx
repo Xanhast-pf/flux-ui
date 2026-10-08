@@ -37,10 +37,10 @@ export default function CompositionInspector({
       <Grid columns={{ base: 1, md: 2 }} gap="lg">
         <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
-            Built with the real thing
+            Flux components
           </Text>
           <Heading level={3} size="md">
-            The ingredients, not the illusion.
+            Components used
           </Heading>
           <Inline wrap gap="sm">
             {scene.components.map((slug) => (
@@ -53,17 +53,14 @@ export default function CompositionInspector({
         </Stack>
         <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
-            What is custom here?
+            Custom data
           </Text>
           <Text as="p" variant="body">
             {scene.custom}
           </Text>
           <Text as="p" variant="caption" tone="muted">
-            Inspect every source file, then export the complete consumer recipe.
-            Helpers and approved artwork are included; no private Flux imports
-            or hidden docs styling are required. Package archives are supplied
-            separately so an unreleased version is never presented as
-            installable.
+            View source or download a recipe. Package archives are provided
+            separately.
           </Text>
           <Inline wrap gap="sm">
             <Button
@@ -78,7 +75,7 @@ export default function CompositionInspector({
               {source ? "Hide source" : "View source"}
             </Button>
             <Link href={`${REPOSITORY_URL}/tree/main/apps/docs/src/showcase`}>
-              Browse the showcase source ↗
+              Browse source ↗
             </Link>
           </Inline>
         </Stack>

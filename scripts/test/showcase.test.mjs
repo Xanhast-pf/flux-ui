@@ -35,7 +35,7 @@ const paletteCandidates = [
 
 test("every scene is a convention-based metadata/preview pair", () => {
   assert.deepEqual(validateShowcaseFiles(sceneFiles), []);
-  assert.ok(sceneIds.length >= 6);
+  assert.equal(sceneIds.length, 5);
 });
 
 test("the scene contract rejects missing, orphaned, duplicate, and invalid files", () => {
@@ -85,14 +85,14 @@ test("unknown and encoded URL values are not treated as component names or CSS",
   ]) {
     assert.deepEqual(
       readShowcaseRoute(`playground?scene=${value}&mood=${value}`, [
-        "finance",
-        "music",
+        "revenue-command",
+        "deploy-control",
       ]),
-      { scene: "finance" },
+      { scene: "revenue-command" },
     );
   }
   assert.deepEqual(readShowcaseRoute("playground", []), {
-    scene: "finance",
+    scene: "revenue-command",
   });
 });
 
@@ -110,10 +110,13 @@ for (const scene of sceneIds) {
 
 test("legacy mood query parameters are ignored rather than changing appearance", () => {
   assert.deepEqual(
-    readShowcaseRoute("playground?scene=music&mood=terminal", sceneIds),
-    { scene: "music" },
+    readShowcaseRoute("playground?scene=commerce-ops&mood=terminal", sceneIds),
+    { scene: "commerce-ops" },
   );
-  assert.equal(showcaseHash("playground", "music"), "#playground?scene=music");
+  assert.equal(
+    showcaseHash("playground", "commerce-ops"),
+    "#playground?scene=commerce-ops",
+  );
 });
 
 test("demo money and time formatting use deterministic bounded fixture values", () => {

@@ -187,12 +187,12 @@ function RouteView({ route }: { route: string }) {
       return (
         <Stack as="section" gap="lg">
           <Heading level={1} size="xl">
-            That page wandered off.
+            Page not found
           </Heading>
           <Text as="p" variant="body">
-            The URL does not match a page in this version of the docs.
+            Check the URL or return home.
           </Text>
-          <Link href="#overview">Back to the workshop →</Link>
+          <Link href="#overview">Back to home →</Link>
         </Stack>
       );
   }

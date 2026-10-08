@@ -2,7 +2,8 @@
   "name": "Progress",
   "slug": "progress",
   "category": "Feedback",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native determinate and indeterminate progress.",
   "sizeClass": "primitive"
 }

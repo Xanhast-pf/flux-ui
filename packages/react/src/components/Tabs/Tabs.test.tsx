@@ -62,14 +62,61 @@ describe("Tabs", () => {
     expect(second).toHaveAttribute("aria-selected", "true");
     expect(screen.getByText("Two panel")).toBeVisible();
   });
-  it("keeps nested orientation, size, appearance and keyboard state local", async () => {
+  it("keeps keyboard navigation and recovery in the tab owner document", async () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const tree = (secondDisabled = false) => (
+      <Tabs.Root defaultValue="one">
+        <Tabs.List aria-label="Realm tabs" activateOnFocus>
+          <Tabs.Tab value="one">One</Tabs.Tab>
+          <Tabs.Tab value="two" disabled={secondDisabled}>
+            Two
+          </Tabs.Tab>
+          <Tabs.Tab value="three">Three</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="one">One panel</Tabs.Panel>
+        <Tabs.Panel value="two">Two panel</Tabs.Panel>
+        <Tabs.Panel value="three">Three panel</Tabs.Panel>
+      </Tabs.Root>
+    );
+    const rendered = render(tree(), { container });
+
+    try {
+      const tabs =
+        container.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+      const first = tabs[0];
+      const second = tabs[1];
+      if (first === undefined || second === undefined)
+        throw new Error("Missing tabs.");
+      first.focus();
+      fireEvent.keyDown(first, { key: "ArrowRight" });
+      expect(ownerDocument.activeElement).toBe(second);
+
+      rendered.rerender(tree(true));
+      await waitFor(() => {
+        const third = container.querySelector<HTMLButtonElement>(
+          '[role="tab"][data-flux-tab-value="three"]',
+        );
+        expect(ownerDocument.activeElement).toBe(third);
+      });
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
+  });
+
+  it("keeps nested orientation, size, variant and keyboard state local", async () => {
     const user = userEvent.setup();
     render(
       <Tabs.Root
         defaultValue="outer"
         orientation="vertical"
         size="sm"
-        appearance="pill"
+        variant="pill"
       >
         <Tabs.List aria-label="Outer tabs" activateOnFocus>
           <Tabs.Tab value="outer">Outer</Tabs.Tab>

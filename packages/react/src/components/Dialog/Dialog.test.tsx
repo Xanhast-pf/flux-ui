@@ -17,14 +17,20 @@ describe("Dialog", () => {
       </Dialog.Root>,
     );
 
-    await user.click(screen.getByRole("button", { name: "Open settings" }));
+    const trigger = screen.getByRole("button", { name: "Open settings" });
+    expect(trigger).toHaveAttribute("data-state", "closed");
+    await user.click(trigger);
+    expect(trigger).toHaveAttribute("data-state", "open");
 
     const dialog = screen.getByRole("dialog", { name: "Settings" });
     expect(dialog).toHaveAttribute("open");
+    expect(dialog).toHaveAttribute("data-state", "open");
     expect(dialog).toHaveAccessibleDescription("Update workspace preferences.");
 
     await user.click(screen.getByRole("button", { name: "Done" }));
     expect(dialog).not.toHaveAttribute("open");
+    expect(dialog).toHaveAttribute("data-state", "closed");
+    expect(trigger).toHaveAttribute("data-state", "closed");
   });
 
   it("supports controlled open state", async () => {

@@ -35,3 +35,16 @@ export default function Example() {
     </Stack>
   );
 }
+
+export function SkeletonShapes() {
+  return (
+    <Stack gap="md">
+      <Inline gap="md">
+        <Skeleton shape="circle" />
+        <Skeleton shape="block" style={{ width: "5rem" }} />
+      </Inline>
+      <Skeleton shape="line" />
+      <Skeleton shape="line" style={{ width: "70%" }} />
+    </Stack>
+  );
+}

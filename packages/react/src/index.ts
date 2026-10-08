@@ -17,6 +17,7 @@ export * from "./components/Checkbox/index.js";
 export * from "./components/Code/index.js";
 export * from "./components/CodeBlock/index.js";
 export * from "./components/Collapsible/index.js";
+export * from "./components/ColorPicker/index.js";
 export * from "./components/ColorSwatch/index.js";
 export * from "./components/Combobox/index.js";
 export * from "./components/Container/index.js";

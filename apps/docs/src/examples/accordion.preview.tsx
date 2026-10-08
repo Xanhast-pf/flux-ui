@@ -25,3 +25,22 @@ export default function Example() {
     </Accordion.Root>
   );
 }
+
+export function MultipleAccordion() {
+  return (
+    <Accordion.Root type="multiple">
+      <Accordion.Item open>
+        <Accordion.Trigger>First disclosure</Accordion.Trigger>
+        <Accordion.Content>
+          Multiple mode allows this item to stay open.
+        </Accordion.Content>
+      </Accordion.Item>
+      <Accordion.Item open>
+        <Accordion.Trigger>Second disclosure</Accordion.Trigger>
+        <Accordion.Content>
+          This item can remain open at the same time.
+        </Accordion.Content>
+      </Accordion.Item>
+    </Accordion.Root>
+  );
+}

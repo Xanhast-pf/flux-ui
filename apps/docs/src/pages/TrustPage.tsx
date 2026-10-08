@@ -19,42 +19,40 @@ const controls = [
     title: "OpenSSF Scorecard",
     status: "Workflow configured",
     detail:
-      "Automated repository-practice checks. Open the external report for its score, assessed commit and date. No score is fabricated or treated as certification.",
+      "Automated repository checks. Verify the score and commit in the report.",
     href: "https://scorecard.dev/viewer/?uri=github.com/Xanhast-pf/flux-ui",
   },
   {
     title: "CodeQL + dependency review",
     status: "Workflow configured",
-    detail:
-      "JavaScript/TypeScript and Actions analysis, pull-request dependency review, and scheduled lockfile audits. A green scan only covers the tool’s scope at that time.",
+    detail: "Code, Actions, and dependency scans. Each covers a limited scope.",
     href: `${REPOSITORY_URL}/actions/workflows/codeql.yml`,
   },
   {
     title: "npm trusted publishing",
     status: "Owner setup required",
     detail:
-      "OIDC publishing workflow and package metadata are prepared. Each npm package must authorize this repository, workflow and environment before the first automated release.",
+      "Publishing is configured, but npm owner approval is still required.",
     href: `${REPOSITORY_URL}/blob/main/docs/trust/SETUP.md`,
   },
   {
     title: "Artifact attestations + SBOM",
     status: "Generated on release",
     detail:
-      "The release pipeline signs packed package digests and produces package-scoped SPDX inventories. Inspect and verify an actual release; a workflow file is not a signed artifact.",
+      "Release builds produce attestations and SBOMs. Verify released files.",
     href: `${REPOSITORY_URL}/actions/workflows/release.yml`,
   },
   {
     title: "OpenSSF Best Practices",
     status: "Application prepared · not submitted",
-    detail:
-      "An evidence-backed application worksheet is in the repository. Submission and honest maintainer answers still require an account. No badge has been claimed.",
+    detail: "Application drafted, not submitted. No badge is claimed.",
     href: `${REPOSITORY_URL}/blob/main/docs/trust/BEST-PRACTICES.md`,
   },
   {
     title: "Accessibility",
     status: "Automated + manual scope",
     detail:
-      "Broad Chromium axe and behavior checks plus focused Firefox/WebKit built-consumer compatibility accompany keyboard, focus and reduced-motion contracts. Automated tests and the live demo do not certify WCAG conformance.",
+      "Axe and browser checks run automatically. Manual WCAG testing is still needed.",
     href: "#accessibility",
   },
 ];
@@ -129,18 +127,16 @@ export function TrustPage() {
     <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="lg">
         <PageHeader
-          title={<>Evidence, not badges.</>}
-          eyebrow={<>Trust is inspectable</>}
+          title={<>Trust and security</>}
+          eyebrow={<>Checks and limits</>}
         >
           <Text as="p" variant="lead" tone="muted">
-            What we check. What we can prove. What still needs work.
+            Security checks and build evidence.
           </Text>
         </PageHeader>
         <Callout tone="warning">
-          Flux UI is pre-stable; component lifecycle status varies by family. No
-          independent security certification, audit, OpenSSF badge or blanket
-          accessibility guarantee is claimed. Configured controls, observed CI
-          results and externally awarded recognition are different things.
+          Flux UI is pre-stable. Security workflows and test results are not
+          independent certification or an accessibility guarantee.
         </Callout>
         <Card>
           <Stack gap="md">
@@ -167,16 +163,12 @@ export function TrustPage() {
                 </StatusBadge>
                 {!matchingBuild && (
                   <Callout tone="warning">
-                    This artifact is local or does not match the displayed build
-                    commit. It must not be used as proof that this version
-                    passed CI.
+                    This evidence does not match this build. CI status is
+                    unverified.
                   </Callout>
                 )}
                 {historical && (
-                  <Callout>
-                    Historical evidence: this run is more than seven days old.
-                    It describes that revision, not the latest repository state.
-                  </Callout>
+                  <Callout>This evidence is over seven days old.</Callout>
                 )}
                 <Text as="p" variant="body">
                   Recorded {new Date(evidence.generatedAt).toLocaleString()} ·
@@ -211,9 +203,8 @@ export function TrustPage() {
                     Raw reports and SHA-256 digests
                   </Collapsible.Trigger>
                   <Text as="p" variant="body">
-                    Hashes detect altered report bytes when compared with a
-                    trusted manifest. This page does not cryptographically
-                    verify signatures.
+                    Compare hashes with a trusted manifest. Signatures are not
+                    verified here.
                   </Text>
                   {evidence.files.map((file) => (
                     <Text key={file.name} variant="caption" as="p">
@@ -232,9 +223,8 @@ export function TrustPage() {
               </>
             )}
             <Text as="p" variant="body" tone="muted">
-              Only quality and required browser checks from the same commit,
-              workflow run and attempt are combined. Independent security
-              workflows have their own results below.
+              Build results share one commit and workflow run. Security scans
+              are separate.
             </Text>
           </Stack>
         </Card>
@@ -251,19 +241,18 @@ export function TrustPage() {
                 <Text as="p" variant="body">
                   {control.detail}
                 </Text>
-                <Link href={control.href}>Inspect source evidence →</Link>
+                <Link href={control.href}>View evidence →</Link>
               </Stack>
             </Card>
           ))}
         </Grid>
         <Stack as="section" gap="lg">
           <Heading level={2} size="lg">
-            Report a vulnerability privately.
+            Report a vulnerability
           </Heading>
           <Text as="p" variant="body">
-            Do not post exploit details in a public issue. Use GitHub’s private
-            vulnerability reporting when enabled, or contact the maintainer to
-            arrange a private channel as described in the security policy.
+            Use private vulnerability reporting. Never post exploit details
+            publicly.
           </Text>
           <Text as="p" variant="body">
             <Link href={`${REPOSITORY_URL}/security/policy`}>

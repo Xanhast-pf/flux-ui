@@ -29,14 +29,14 @@ export function PlaygroundPage() {
       >
         <PageHeader
           title={<>Playground</>}
-          eyebrow={<>A small space for big ideas</>}
+          eyebrow={<>Five interactive dashboards</>}
         >
           <Text as="p" variant="lead" tone="muted">
-            Try a scene, switch its theme, then inspect the code.
+            Try the dashboards. Inspect their components and source.
           </Text>
         </PageHeader>
         <Link href="#components" variant="ghost">
-          Meet the ingredients <ArrowUpRightIcon size={16} />
+          Browse components <ArrowUpRightIcon size={16} />
         </Link>
       </Inline>
       <ProductShowcase page="playground" />
@@ -48,14 +48,13 @@ export function PlaygroundPage() {
       >
         <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
-            Prefer to tinker with the parts?
+            More examples
           </Text>
           <Heading level={2} size="lg">
-            Try individual components.
+            Interactive component labs
           </Heading>
           <Text as="p" variant="body">
-            Open a focused lab for buttons, themes, collections, or a release
-            workflow.
+            Try individual components and states.
           </Text>
         </Stack>
         <Collapsible.Root
@@ -72,7 +71,7 @@ export function PlaygroundPage() {
                 <Suspense
                   fallback={
                     <Text role="status" as="p" variant="body">
-                      Opening the workbench…
+                      Loading workbench…
                     </Text>
                   }
                 >

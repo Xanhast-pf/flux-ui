@@ -1,7 +1,7 @@
 import { Button, Inline, Progress, Stack, Text } from "@flux-ui/react";
 import { useState } from "react";
 
-export default function Example() {
+export default function DeterminateProgress() {
   const [value, setValue] = useState(25);
   return (
     <Stack gap="md">
@@ -27,8 +27,15 @@ export default function Example() {
           Reset progress
         </Button>
       </Inline>
+    </Stack>
+  );
+}
+
+export function IndeterminateProgress() {
+  return (
+    <Stack gap="sm">
       <Text as="p" variant="body">
-        Indeterminate (no value supplied)
+        Waiting for the operation to report measurable progress.
       </Text>
       <Progress aria-label="Waiting for progress" />
     </Stack>

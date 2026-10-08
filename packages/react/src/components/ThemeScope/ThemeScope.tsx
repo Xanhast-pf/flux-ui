@@ -9,6 +9,7 @@ export function ThemeScope({
   as = "div",
   theme,
   query = false,
+  colorOverrides,
   padding,
   surface,
   border,
@@ -27,6 +28,11 @@ export function ThemeScope({
     "data-fs": surface,
     "data-fb": border,
     "data-fr": radius,
-    style: surfaceStyle(padding, paddingBlock, paddingInline, style),
+    style: surfaceStyle(
+      padding,
+      paddingBlock,
+      paddingInline,
+      colorOverrides === undefined ? style : { ...colorOverrides, ...style },
+    ),
   });
 }

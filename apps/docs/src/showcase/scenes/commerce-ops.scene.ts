@@ -1,0 +1,38 @@
+import { ShoppingBagIcon } from "@flux-ui/icons";
+import type { SceneDefinition } from "../types.js";
+
+export default {
+  order: 2,
+  label: "Commerce",
+  brand: "Mercantile",
+  headline: "Manage orders and inventory.",
+  description: "Edit stock, review orders, and track customers.",
+  prompt: "Search stock, edit quantities, and open an order.",
+  components: [
+    "alert-dialog",
+    "avatar",
+    "button",
+    "button-group",
+    "card",
+    "checkbox",
+    "color-swatch",
+    "data-grid",
+    "drawer",
+    "field",
+    "grid",
+    "heading",
+    "inline",
+    "input",
+    "input-group",
+    "number-field",
+    "pagination",
+    "rating",
+    "select",
+    "stack",
+    "status-badge",
+    "switch",
+    "text",
+  ],
+  custom: "Fictional data and local state. UI uses public Flux components.",
+  Icon: ShoppingBagIcon,
+} satisfies SceneDefinition;

@@ -49,7 +49,7 @@ describe("DatePicker", () => {
     const input = screen.getByLabelText("DatePicker");
     fireEvent.change(input, { target: { value: "" } });
     expect(changes).toBe(1);
-    expect(onValueChange).toHaveBeenCalledWith("", expect.any(Object));
+    expect(onValueChange).toHaveBeenCalledWith("");
 
     prevent = true;
     fireEvent.change(input, { target: { value: "2026-10-01" } });

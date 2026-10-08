@@ -6,10 +6,9 @@ describe("LevelMeter", () => {
     render(
       <LevelMeter aria-label="Bus" value={3} min={-60} max={0} peak={4} />,
     );
-    expect(screen.getByRole("meter", { name: "Bus" })).toHaveAttribute(
-      "aria-valuenow",
-      "0",
-    );
+    const meter = screen.getByRole("meter", { name: "Bus" });
+    expect(meter).toHaveAttribute("aria-valuenow", "0");
+    expect(meter).toHaveAttribute("data-orientation", "vertical");
     expect(screen.getByText("CLIP")).toBeInTheDocument();
     expect(screen.queryByRole("slider")).toBeNull();
     expect(screen.queryByRole("status")).toBeNull();
@@ -20,12 +19,12 @@ describe("LevelMeter", () => {
         aria-label="Bus"
         value={-12}
         aria-valuetext="minus 12 decibels"
+        orientation="horizontal"
       />,
     );
-    expect(screen.getByRole("meter")).toHaveAttribute(
-      "aria-valuetext",
-      "minus 12 decibels",
-    );
+    const meter = screen.getByRole("meter");
+    expect(meter).toHaveAttribute("aria-valuetext", "minus 12 decibels");
+    expect(meter).toHaveAttribute("data-orientation", "horizontal");
     expect(() =>
       render(<LevelMeter aria-label="Invalid" value={0} min={1} max={0} />),
     ).toThrow(RangeError);

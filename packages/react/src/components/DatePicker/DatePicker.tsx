@@ -12,13 +12,13 @@ export function DatePicker({
 }: DatePickerProps) {
   function change(event: ChangeEvent<HTMLInputElement>) {
     onChange?.(event);
-    if (!event.defaultPrevented)
-      onValueChange?.(event.currentTarget.value, event);
+    if (!event.defaultPrevented) onValueChange?.(event.currentTarget.value);
   }
 
   return (
     <input
       {...props}
+      data-invalid={props["aria-invalid"]}
       type="date"
       className={joinClassNames(datePicker, className)}
       onChange={onValueChange ? change : onChange}

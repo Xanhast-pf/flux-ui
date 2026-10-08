@@ -3,7 +3,8 @@ export type {
   AlertDialogRootProps,
   AlertDialogPopupProps,
   AlertDialogTriggerProps,
-  AlertDialogCloseProps,
+  AlertDialogActionProps,
+  AlertDialogCancelProps,
   AlertDialogTitleProps,
   AlertDialogDescriptionProps,
 } from "./AlertDialog.types.js";

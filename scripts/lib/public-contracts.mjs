@@ -31,48 +31,51 @@ function hasProperty(checker, type, name) {
   );
 }
 
-const canonicalStateModels = [
-  {
-    name: "value",
-    callback: "onValueChange",
-    value: "value",
-    defaultValue: "defaultValue",
-  },
-  {
-    name: "open",
-    callback: "onOpenChange",
-    value: "open",
-    defaultValue: "defaultOpen",
-  },
-  {
-    name: "checked",
-    callback: "onCheckedChange",
-    value: "checked",
-    defaultValue: "defaultChecked",
-  },
-  {
-    name: "pressed",
-    callback: "onPressedChange",
-    value: "pressed",
-    defaultValue: "defaultPressed",
-  },
-];
+function validPublicDataAttributes(attributes) {
+  return (
+    Array.isArray(attributes) &&
+    attributes.length > 0 &&
+    attributes.every(
+      (attribute) =>
+        typeof attribute === "string" &&
+        /^data-[a-z][a-z0-9-]*$/u.test(attribute) &&
+        !/^data-[a-z]$/u.test(attribute) &&
+        !attribute.startsWith("data-flux-"),
+    ) &&
+    new Set(attributes).size === attributes.length
+  );
+}
 
 function stateModels(checker, propsType, familyName, pathName, errors) {
+  const apparent = checker.getApparentType(propsType);
   const models = [];
-  for (const model of canonicalStateModels) {
-    if (!hasProperty(checker, propsType, model.callback)) continue;
-    const missing = [model.value, model.defaultValue].filter(
-      (name) => !hasProperty(checker, propsType, name),
+
+  for (const property of checker.getPropertiesOfType(apparent)) {
+    const match = /^on([A-Z][A-Za-z0-9]*)Change$/u.exec(property.name);
+    if (match === null) continue;
+    const declaredByFlux = (property.getDeclarations() ?? []).some(
+      (declaration) =>
+        declaration
+          .getSourceFile()
+          .fileName.includes(
+            `${path.sep}packages${path.sep}react${path.sep}src${path.sep}`,
+          ),
     );
-    if (missing.length > 0) {
+    if (!declaredByFlux) continue;
+
+    const stem = match[1];
+    const stateName = stem[0].toLowerCase() + stem.slice(1);
+    if (!hasProperty(checker, propsType, stateName)) {
       errors.push(
-        `${familyName}: ${pathName} exposes ${model.callback} but is missing canonical ${missing.join(" / ")} state props.`,
+        `${familyName}: ${pathName} exposes ${property.name} but is missing canonical ${stateName} state prop.`,
       );
+      continue;
     }
-    models.push(model.name);
+
+    models.push(stateName);
   }
-  return models;
+
+  return models.sort((left, right) => left.localeCompare(right));
 }
 
 function customProperties(checker, propsType) {
@@ -215,6 +218,47 @@ export function createPublicContracts(root) {
       continue;
     }
 
+    const moduleExports = checker.getExportsOfModule(moduleSymbol);
+    const publicTypes = moduleExports
+      .filter(
+        (symbol) => resolveSymbol(checker, symbol).flags & ts.SymbolFlags.Type,
+      )
+      .map((symbol) => symbol.name)
+      .sort((left, right) => left.localeCompare(right));
+    const runtimeUtilities = moduleExports
+      .filter((symbol) => {
+        const resolved = resolveSymbol(checker, symbol);
+        return (
+          /^[a-z]/u.test(symbol.name) &&
+          Boolean(resolved.flags & ts.SymbolFlags.Value)
+        );
+      })
+      .map((symbol) => symbol.name)
+      .sort((left, right) => left.localeCompare(right));
+    const declaredUtilities = Array.isArray(meta.publicUtilities)
+      ? meta.publicUtilities
+      : [];
+    if (
+      declaredUtilities.some(
+        (value) =>
+          typeof value !== "string" || !/^[a-z][A-Za-z0-9]*$/u.test(value),
+      ) ||
+      new Set(declaredUtilities).size !== declaredUtilities.length
+    ) {
+      errors.push(
+        `${familyName}: component.meta.json publicUtilities must be unique lower-camel export names.`,
+      );
+    } else if (
+      runtimeUtilities.length !== declaredUtilities.length ||
+      runtimeUtilities.some(
+        (name, index) => name !== [...declaredUtilities].sort()[index],
+      )
+    ) {
+      errors.push(
+        `${familyName}: publicUtilities must exactly classify lowercase runtime exports (${runtimeUtilities.join(", ") || "none"}).`,
+      );
+    }
+
     const declaredNonDom = Array.isArray(meta.nonDomParts)
       ? meta.nonDomParts
       : [];
@@ -228,12 +272,99 @@ export function createPublicContracts(root) {
       continue;
     }
 
+    const declaredDataAttributes =
+      meta.publicDataAttributes !== null &&
+      typeof meta.publicDataAttributes === "object" &&
+      !Array.isArray(meta.publicDataAttributes)
+        ? meta.publicDataAttributes
+        : {};
+    for (const [pathName, attributes] of Object.entries(
+      declaredDataAttributes,
+    )) {
+      if (!validPublicDataAttributes(attributes)) {
+        errors.push(
+          `${familyName}: publicDataAttributes[${JSON.stringify(pathName)}] must contain unique descriptive data-* attribute names; compact and data-flux-* markers stay internal.`,
+        );
+      }
+    }
+
+    const declaredDescendantDataAttributes =
+      meta.publicDescendantDataAttributes !== null &&
+      typeof meta.publicDescendantDataAttributes === "object" &&
+      !Array.isArray(meta.publicDescendantDataAttributes)
+        ? meta.publicDescendantDataAttributes
+        : {};
+    const descendantStates = [];
+    for (const [name, declaration] of Object.entries(
+      declaredDescendantDataAttributes,
+    )) {
+      if (!/^[a-z][A-Za-z0-9]*$/u.test(name)) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes keys must be lower-camel identifiers.`,
+        );
+        continue;
+      }
+      if (
+        declaration === null ||
+        typeof declaration !== "object" ||
+        Array.isArray(declaration)
+      ) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes[${JSON.stringify(name)}] must be an object.`,
+        );
+        continue;
+      }
+      const selector = declaration.selector;
+      const attributes = declaration.dataAttributes;
+      if (
+        typeof selector !== "string" ||
+        !/^(?:\[[^\]]+\])+$/u.test(selector) ||
+        selector.includes("data-flux-")
+      ) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes[${JSON.stringify(name)}].selector must be a simple stable attribute selector without private data-flux-* markers.`,
+        );
+        continue;
+      }
+      if (!validPublicDataAttributes(attributes)) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes[${JSON.stringify(name)}].dataAttributes must contain unique descriptive data-* attribute names.`,
+        );
+        continue;
+      }
+      const selectorDataAttributes = [
+        ...selector.matchAll(/data-[a-z][a-z0-9-]*/gu),
+      ].map((match) => match[0]);
+      if (
+        selectorDataAttributes.some(
+          (attribute) => !attributes.includes(attribute),
+        )
+      ) {
+        errors.push(
+          `${familyName}: publicDescendantDataAttributes[${JSON.stringify(name)}].selector references a data-* attribute that is not listed in dataAttributes.`,
+        );
+        continue;
+      }
+      descendantStates.push({
+        name,
+        selector,
+        dataAttributes: [...attributes].sort(),
+      });
+    }
+    descendantStates.sort((left, right) => left.name.localeCompare(right.name));
+
     const parts = componentParts(checker, moduleSymbol, familyName, errors);
     if (parts.length === 0) {
       errors.push(`${familyName}: no public callable component surface found.`);
       continue;
     }
     const knownPaths = new Set(parts.map((part) => part.path));
+    for (const pathName of Object.keys(declaredDataAttributes)) {
+      if (!knownPaths.has(pathName))
+        errors.push(
+          `${familyName}: publicDataAttributes contains unknown public part ${JSON.stringify(pathName)}.`,
+        );
+    }
     for (const pathName of declaredNonDom) {
       if (!knownPaths.has(pathName))
         errors.push(
@@ -280,6 +411,9 @@ export function createPublicContracts(root) {
           ...(part.ref ? ["ref"] : []),
         ],
         cssVariables: part.cssVariables,
+        ...(declaredDataAttributes[part.path]?.length
+          ? { dataAttributes: [...declaredDataAttributes[part.path]].sort() }
+          : {}),
         ...(part.stateModels.length === 0
           ? {}
           : { stateModels: part.stateModels }),
@@ -294,7 +428,11 @@ export function createPublicContracts(root) {
     contracts.push({
       name: meta.name,
       slug: meta.slug,
+      lifecycle: meta.status,
       parts: contractParts,
+      types: publicTypes,
+      utilities: runtimeUtilities,
+      ...(descendantStates.length === 0 ? {} : { descendantStates }),
     });
   }
 

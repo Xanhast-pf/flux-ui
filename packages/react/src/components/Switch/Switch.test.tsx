@@ -60,15 +60,12 @@ describe("Switch", () => {
     await user.click(screen.getByRole("switch"));
     expect(callback).not.toHaveBeenCalled();
   });
-  it("passes the next value and native event", async () => {
+  it("passes the semantic next value", async () => {
     const callback = vi.fn();
     const user = userEvent.setup();
     render(<Switch aria-label="Alerts" onCheckedChange={callback} />);
     await user.click(screen.getByRole("switch"));
-    expect(callback).toHaveBeenCalledWith(
-      true,
-      expect.objectContaining({ type: "change" }),
-    );
+    expect(callback).toHaveBeenCalledWith(true);
   });
   it("composes with Field labels, required, disabled and descriptions", () => {
     render(

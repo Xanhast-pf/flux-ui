@@ -1,13 +1,23 @@
 import { Button, Callout, Stack } from "@flux-ui/react";
 import { useState } from "react";
 
-export default function Example() {
+export default function StaticCallouts() {
+  return (
+    <Stack gap="sm">
+      <Callout tone="info">Informational guidance for this section.</Callout>
+      <Callout tone="success">The operation completed successfully.</Callout>
+      <Callout tone="warning">Review this setting before continuing.</Callout>
+      <Callout tone="danger">
+        This action has a destructive consequence.
+      </Callout>
+    </Stack>
+  );
+}
+
+export function LiveStatusCallout() {
   const [saved, setSaved] = useState(false);
   return (
     <Stack gap="md">
-      <Callout tone="info">
-        Static information is a note, not an urgent announcement.
-      </Callout>
       <Button
         onClick={() => {
           setSaved(true);

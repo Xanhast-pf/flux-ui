@@ -7,7 +7,7 @@ export function readShowcaseRoute(route: string, sceneIds: readonly string[]) {
   const requestedScene = query.get("scene") ?? "";
   const scene = sceneIds.includes(requestedScene)
     ? requestedScene
-    : (sceneIds[0] ?? "finance");
+    : (sceneIds[0] ?? "revenue-command");
   return { scene };
 }
 

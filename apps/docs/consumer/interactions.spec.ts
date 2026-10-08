@@ -12,6 +12,51 @@ test("built Field associates opaque and root-owned descriptions", async ({
     page.getByRole("textbox", { name: "Root slot field" }),
   ).toHaveAccessibleDescription("Root-owned server description.");
 });
+test("built ColorPicker keeps native and editable values synchronized", async ({
+  page,
+}) => {
+  const picker = page.getByRole("group", { name: "Consumer brand color" });
+  const hex = picker.getByRole("textbox", { name: "Hex color" });
+  const native = picker.getByLabel("Choose color");
+
+  await expect(hex).toHaveValue("#336699");
+  await expect(native).toHaveValue("#336699");
+
+  await hex.fill("#abcdef");
+  await expect(hex).toHaveValue("#abcdef");
+  await expect(native).toHaveValue("#abcdef");
+
+  await hex.fill("#abc");
+  await hex.press("Tab");
+  await expect(hex).toHaveValue("#aabbcc");
+  await expect(native).toHaveValue("#aabbcc");
+});
+
+test("built ColorPicker restores its uncontrolled default on form reset", async ({
+  page,
+}) => {
+  const picker = page.getByRole("group", {
+    name: "Resettable consumer color",
+  });
+  const hex = picker.getByRole("textbox", { name: "Hex color" });
+  const native = picker.getByLabel("Choose color");
+
+  await hex.fill("#abcdef");
+  await expect(native).toHaveValue("#abcdef");
+  await hex.fill("#12");
+  await expect(hex).toHaveAttribute("aria-invalid", "true");
+
+  await page.getByRole("button", { name: "Reset consumer color" }).click();
+  await expect(hex).toHaveValue("#123456");
+  await expect(native).toHaveValue("#123456");
+  await expect(hex).not.toHaveAttribute("aria-invalid");
+
+  const formValue = await page
+    .getByRole("form", { name: "Resettable consumer color form" })
+    .evaluate((form) => new FormData(form as HTMLFormElement).get("accent"));
+  expect(formValue).toBe("#123456");
+});
+
 test("built Tabs recover selection without stealing an external action's focus", async ({
   page,
 }) => {
@@ -54,6 +99,57 @@ test("built popover and menu follow keyboard focus and preserve native actions",
   await expect(page.getByText("Rename chosen", { exact: true })).toBeVisible();
   await expect(menu).toBeFocused();
 });
+test("nested overlays consume Escape before their parent alert dialog", async ({
+  page,
+}) => {
+  const destructive = page.getByRole("button", {
+    name: "Consumer destructive action",
+  });
+  await destructive.click();
+  const alert = page.getByRole("alertdialog", {
+    name: "Remove the local draft?",
+  });
+  await expect(alert).toBeVisible();
+
+  const help = page.getByRole("button", { name: "Nested alert help" });
+  await help.focus();
+  await expect(page.getByRole("tooltip")).toHaveText("Nested alert tooltip");
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("tooltip")).toHaveCount(0);
+  await expect(alert).toBeVisible();
+  await expect(help).toBeFocused();
+
+  const popoverTrigger = page.getByRole("button", {
+    name: "Nested alert popover",
+  });
+  await popoverTrigger.click();
+  const nestedPopover = page.getByRole("dialog", {
+    name: "Nested alert popover panel",
+  });
+  await expect(nestedPopover).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(nestedPopover).toHaveCount(0);
+  await expect(alert).toBeVisible();
+  await expect(popoverTrigger).toBeFocused();
+
+  const menuTrigger = page.getByRole("button", { name: "Nested alert menu" });
+  await menuTrigger.focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(
+    page.getByRole("menuitem", { name: "Nested menu item" }),
+  ).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("menu", { name: "Nested alert menu" }),
+  ).toHaveCount(0);
+  await expect(alert).toBeVisible();
+  await expect(menuTrigger).toBeFocused();
+
+  await page.keyboard.press("Escape");
+  await expect(alert).toHaveCount(0);
+  await expect(destructive).toBeFocused();
+});
+
 test("built combobox, tooltip, alert and notification compose", async ({
   page,
 }) => {

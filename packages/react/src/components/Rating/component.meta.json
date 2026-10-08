@@ -2,7 +2,10 @@
   "name": "Rating",
   "slug": "rating",
   "category": "Inputs",
-  "status": "beta",
+  "status": "alpha",
   "description": "Form-capable rating with native radio semantics, half-star precision and read-only presentation.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Rating": ["data-readonly"]
+  }
 }

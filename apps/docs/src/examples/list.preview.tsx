@@ -9,3 +9,13 @@ export default function Preview() {
     </List>
   );
 }
+
+export function PlainList() {
+  return (
+    <List variant="plain" gap={3}>
+      <List.Item>No decorative marker.</List.Item>
+      <List.Item>Native list semantics remain intact.</List.Item>
+      <List.Item>Spacing still uses shared layout tokens.</List.Item>
+    </List>
+  );
+}

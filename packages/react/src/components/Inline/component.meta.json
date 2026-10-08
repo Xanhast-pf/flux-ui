@@ -2,7 +2,8 @@
   "name": "Inline",
   "slug": "inline",
   "category": "Layout",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Token-driven horizontal layout for toolbars, actions, and inline groups.",
   "sizeClass": "primitive"
 }

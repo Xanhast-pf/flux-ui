@@ -2,7 +2,8 @@
   "name": "SkipLink",
   "slug": "skip-link",
   "category": "Navigation",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Focus-revealed native skip navigation.",
   "sizeClass": "primitive"
 }

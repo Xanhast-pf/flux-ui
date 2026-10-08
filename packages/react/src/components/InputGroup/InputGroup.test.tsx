@@ -53,5 +53,5 @@ it("composes NumberField without replacing numeric events, refs or Field associa
   expect(input).toHaveAccessibleDescription("Price in dollars.");
   expect(ref.current).toBe(input);
   fireEvent.change(input, { target: { value: "" } });
-  expect(change).toHaveBeenLastCalledWith(null, expect.any(Object));
+  expect(change).toHaveBeenLastCalledWith(null);
 });

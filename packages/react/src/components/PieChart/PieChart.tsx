@@ -57,6 +57,8 @@ export function PieChart({
     () => data.filter((item) => !hiddenIds.has(item.id)),
     [data, hiddenIds],
   );
+  const toneForDatum = (item: PieChartDatum): ChartTone =>
+    toneFor(item, data.indexOf(item));
   const model = useMemo(
     () => pieModel(visibleData, maxSlices),
     [visibleData, maxSlices],
@@ -93,7 +95,7 @@ export function PieChart({
           id: nextDatum.id,
           label: nextDatum.label,
           value: `${formatValue(nextDatum.value)} · ${nextPercent}%`,
-          tone: toneFor(nextDatum, nextIndex),
+          tone: toneForDatum(nextDatum),
         },
       ],
       x: (x / pieBox.width) * 100,
@@ -211,7 +213,7 @@ export function PieChart({
             <g
               key={item.id}
               className={chartTone}
-              data-tone={toneFor(item, itemIndex)}
+              data-tone={toneForDatum(item)}
             >
               {path ? (
                 <path

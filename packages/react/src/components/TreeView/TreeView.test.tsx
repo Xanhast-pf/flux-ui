@@ -1,23 +1,27 @@
 import { createRef } from "react";
 import { renderToString } from "react-dom/server";
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { TreeView } from "./TreeView.js";
 
 function ExampleTree({
-  value,
-  onValueChange,
+  expandedItems,
+  onExpandedItemsChange,
 }: {
-  value?: readonly string[] | undefined;
-  onValueChange?: ((value: string[]) => void) | undefined;
+  expandedItems?: readonly string[] | undefined;
+  onExpandedItemsChange?:
+    ((expandedItems: readonly string[]) => void) | undefined;
 }) {
   return (
     <TreeView.Root
       aria-label="Project files"
-      {...(value === undefined
-        ? { defaultValue: ["src"] }
-        : { value, onValueChange: onValueChange ?? (() => {}) })}
+      {...(expandedItems === undefined
+        ? { defaultExpandedItems: ["src"] }
+        : {
+            expandedItems,
+            onExpandedItemsChange: onExpandedItemsChange ?? (() => {}),
+          })}
     >
       <TreeView.Item value="src" label="src">
         <TreeView.Item value="src/components" label="components">
@@ -40,25 +44,28 @@ describe("TreeView", () => {
 
     expect(tree.tagName).toBe("UL");
     expect(src).toHaveAttribute("aria-expanded", "true");
+    expect(src).toHaveAttribute("data-expandable", "true");
+    expect(src).toHaveAttribute("data-expanded", "true");
     expect(components).toHaveAttribute("aria-expanded", "false");
+    expect(components).toHaveAttribute("data-expandable", "true");
     expect(within(src).getByRole("group")).toBeVisible();
     expect(
       within(components).getByRole("group", { hidden: true }),
     ).not.toBeVisible();
-    expect(
-      screen.getByRole("treeitem", { name: "package.json" }),
-    ).not.toHaveAttribute("aria-expanded");
+    const packageItem = screen.getByRole("treeitem", { name: "package.json" });
+    expect(packageItem).not.toHaveAttribute("aria-expanded");
+    expect(packageItem).not.toHaveAttribute("data-expandable");
   });
 
-  it("owns uncontrolled expansion through value/defaultValue semantics", async () => {
+  it("owns uncontrolled expansion through expandedItems/defaultExpandedItems semantics", async () => {
     const user = userEvent.setup();
-    const onValueChange = vi.fn();
+    const onExpandedItemsChange = vi.fn();
 
     render(
       <TreeView.Root
         aria-label="Files"
-        defaultValue={[]}
-        onValueChange={onValueChange}
+        defaultExpandedItems={[]}
+        onExpandedItemsChange={onExpandedItemsChange}
       >
         <TreeView.Item value="src" label="src">
           <TreeView.Item value="index" label="index.ts" />
@@ -71,27 +78,35 @@ describe("TreeView", () => {
 
     await user.click(screen.getByText("src"));
     expect(src).toHaveAttribute("aria-expanded", "true");
-    expect(onValueChange).toHaveBeenLastCalledWith(["src"]);
+    expect(onExpandedItemsChange).toHaveBeenLastCalledWith(["src"]);
 
     await user.click(screen.getByText("src"));
     expect(src).toHaveAttribute("aria-expanded", "false");
-    expect(onValueChange).toHaveBeenLastCalledWith([]);
+    expect(onExpandedItemsChange).toHaveBeenLastCalledWith([]);
   });
 
   it("reports controlled expansion without taking state ownership", async () => {
     const user = userEvent.setup();
-    const onValueChange = vi.fn();
+    const onExpandedItemsChange = vi.fn();
     const { rerender } = render(
-      <ExampleTree value={[]} onValueChange={onValueChange} />,
+      <ExampleTree
+        expandedItems={[]}
+        onExpandedItemsChange={onExpandedItemsChange}
+      />,
     );
 
     const src = screen.getByRole("treeitem", { name: "src" });
     await user.click(screen.getByText("src"));
 
-    expect(onValueChange).toHaveBeenCalledWith(["src"]);
+    expect(onExpandedItemsChange).toHaveBeenCalledWith(["src"]);
     expect(src).toHaveAttribute("aria-expanded", "false");
 
-    rerender(<ExampleTree value={["src"]} onValueChange={onValueChange} />);
+    rerender(
+      <ExampleTree
+        expandedItems={["src"]}
+        onExpandedItemsChange={onExpandedItemsChange}
+      />,
+    );
     expect(src).toHaveAttribute("aria-expanded", "true");
   });
 
@@ -152,11 +167,11 @@ describe("TreeView", () => {
   });
 
   it("moves focus back to a visible ancestor after controlled collapse", () => {
-    const onValueChange = vi.fn();
+    const onExpandedItemsChange = vi.fn();
     const { rerender } = render(
       <ExampleTree
-        value={["src", "src/components"]}
-        onValueChange={onValueChange}
+        expandedItems={["src", "src/components"]}
+        onExpandedItemsChange={onExpandedItemsChange}
       />,
     );
 
@@ -164,7 +179,12 @@ describe("TreeView", () => {
     button.focus();
     expect(button).toHaveFocus();
 
-    rerender(<ExampleTree value={[]} onValueChange={onValueChange} />);
+    rerender(
+      <ExampleTree
+        expandedItems={[]}
+        onExpandedItemsChange={onExpandedItemsChange}
+      />,
+    );
     expect(screen.getByRole("treeitem", { name: "src" })).toHaveFocus();
   });
 
@@ -182,6 +202,37 @@ describe("TreeView", () => {
     alpha.focus();
     await user.keyboard("{ArrowDown}");
     expect(screen.getByRole("treeitem", { name: "Gamma" })).toHaveFocus();
+  });
+
+  it("keeps keyboard navigation in the tree owner document", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const rendered = render(
+      <TreeView.Root aria-label="Files">
+        <TreeView.Item value="a" label="Alpha" />
+        <TreeView.Item value="b" label="Beta" />
+      </TreeView.Root>,
+      { container },
+    );
+
+    try {
+      const items =
+        container.querySelectorAll<HTMLElement>('[role="treeitem"]');
+      const alpha = items[0];
+      const beta = items[1];
+      if (alpha === undefined || beta === undefined)
+        throw new Error("Missing tree items.");
+      alpha.focus();
+      fireEvent.keyDown(alpha, { key: "ArrowDown" });
+      expect(ownerDocument.activeElement).toBe(beta);
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
   });
 
   it("forwards root/item escape hatches and refs", () => {
@@ -225,16 +276,16 @@ describe("TreeView", () => {
       render(
         <TreeView.Root
           aria-label="Files"
-          value={["src", "src"]}
-          onValueChange={() => {}}
+          expandedItems={["src", "src"]}
+          onExpandedItemsChange={() => {}}
         />,
       ),
-    ).toThrow(/value must contain unique item values/u);
+    ).toThrow(/expandedItems must contain unique item values/u);
   });
 
   it("does not leak Flux-only state props into server markup", () => {
     const markup = renderToString(
-      <TreeView.Root aria-label="Files" defaultValue={["src"]}>
+      <TreeView.Root aria-label="Files" defaultExpandedItems={["src"]}>
         <TreeView.Item value="src" label="src">
           <TreeView.Item value="index" label="index.ts" />
         </TreeView.Item>
@@ -244,8 +295,8 @@ describe("TreeView", () => {
     expect(markup).toContain('role="tree"');
     expect(markup).toContain('role="treeitem"');
     expect(markup).toContain('aria-expanded="true"');
-    expect(markup).not.toContain("defaultValue=");
-    expect(markup).not.toContain("onValueChange");
+    expect(markup).not.toContain("defaultExpandedItems=");
+    expect(markup).not.toContain("onExpandedItemsChange");
     expect(markup).not.toMatch(/\svalue=/u);
     expect(markup).not.toMatch(/\slabel=/u);
   });

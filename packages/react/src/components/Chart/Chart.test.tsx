@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { Chart } from "./Chart.js";
 import { ChartLegend } from "../ChartLegend/ChartLegend.js";
 import { ChartTooltip } from "../ChartTooltip/ChartTooltip.js";
+import { chartSeriesIndexFromTarget } from "../../internal/chartComposition.js";
 
 const series = [
   {
@@ -41,6 +42,23 @@ function setChartRect(element: HTMLElement): void {
 }
 
 describe("Chart", () => {
+  it("resolves direct series hits in the chart owner document", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const group = ownerDocument.createElement("g");
+    group.setAttribute("data-chart-series", "2");
+    const path = ownerDocument.createElement("path");
+    group.append(path);
+
+    try {
+      expect(chartSeriesIndexFromTarget(path, group)).toBe(2);
+    } finally {
+      iframe.remove();
+    }
+  });
+
   it("renders only the visualization while keeping every series keyboard inspectable", () => {
     const { container } = render(
       <Chart
@@ -89,6 +107,30 @@ describe("Chart", () => {
     fireEvent.click(visits);
     expect(visits).toHaveAttribute("aria-pressed", "true");
     expect(cursor).toHaveAttribute("aria-valuetext", "Visits: 0, 4");
+  });
+
+  it("keeps automatic series tones stable when earlier series are hidden", () => {
+    const implicit = [
+      { id: "first", label: "First", data: [{ x: 0, y: 1 }] },
+      { id: "second", label: "Second", data: [{ x: 0, y: 2 }] },
+    ] as const;
+    render(
+      <ChartLegend items={implicit} toggleVisibility>
+        <Chart label="Stable tones" series={implicit} />
+      </ChartLegend>,
+    );
+
+    const chart = screen.getByRole("slider");
+    expect(chart.querySelector("[data-chart-series='1']")).toHaveAttribute(
+      "data-tone",
+      "info",
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "First" }));
+    expect(chart.querySelector("[data-chart-series='0']")).toHaveAttribute(
+      "data-tone",
+      "info",
+    );
   });
 
   it("lets ChartTooltip project hover or click data without changing chart semantics", () => {

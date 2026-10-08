@@ -6,7 +6,6 @@ import {
   useId,
   useRef,
   useState,
-  useSyncExternalStore,
 } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { Button } from "../Button/Button.js";
@@ -27,6 +26,15 @@ interface ToastState extends ToastController {
   dismissLabel: string;
 }
 const Context = createContext<ToastState | null>(null);
+
+function deepActiveElement(owner: Document = document): HTMLElement | null {
+  const active = owner.activeElement;
+  const nested = (active as HTMLIFrameElement | null)?.contentDocument;
+  if (nested) return deepActiveElement(nested);
+  const Type = owner.defaultView?.HTMLElement;
+  return Type && active instanceof Type ? active : null;
+}
+
 function useContextValue(): ToastState {
   const context = useContext(Context);
   if (context === null)
@@ -52,11 +60,8 @@ function Provider({
     (options: ToastOptions): string => {
       sequence.current += 1;
       const id = `${prefix}-toast-${sequence.current}`;
-      if (
-        typeof document !== "undefined" &&
-        document.activeElement instanceof HTMLElement
-      )
-        origins.current.set(id, document.activeElement);
+      const active = deepActiveElement();
+      if (active !== null) origins.current.set(id, active);
       const requested = options.duration ?? duration;
       const timeout = Number.isFinite(requested)
         ? Math.max(0, Math.min(2147483647, requested))
@@ -70,9 +75,7 @@ function Provider({
     [prefix, duration],
   );
   const dismiss = useCallback((id: string) => {
-    const node =
-      typeof document === "undefined" ? null : document.getElementById(id);
-    const focused = node?.contains(node.ownerDocument.activeElement);
+    const focused = deepActiveElement()?.closest(`[id="${id}"]`) != null;
     const origin = origins.current.get(id);
     origins.current.delete(id);
     setNotices((current) => current.filter((notice) => notice.id !== id));
@@ -96,25 +99,20 @@ function Provider({
     </Context>
   );
 }
-function subscribeVisibility(listener: () => void) {
-  document.addEventListener("visibilitychange", listener);
-  return () => document.removeEventListener("visibilitychange", listener);
-}
-function hiddenSnapshot() {
-  return document.hidden;
-}
-function serverHiddenSnapshot() {
-  return false;
-}
 function Item({ notice }: { notice: Notice }) {
   const { dismiss, dismissLabel } = useContextValue();
+  const item = useRef<HTMLLIElement>(null);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
-  const hidden = useSyncExternalStore(
-    subscribeVisibility,
-    hiddenSnapshot,
-    serverHiddenSnapshot,
-  );
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    const owner = item.current?.ownerDocument;
+    if (owner === undefined) return;
+    const update = () => setHidden(owner.hidden);
+    update();
+    owner.addEventListener("visibilitychange", update);
+    return () => owner.removeEventListener("visibilitychange", update);
+  }, []);
   const remaining = useRef(notice.duration);
   const paused = hovered || focused || hidden;
   useEffect(() => {
@@ -131,6 +129,7 @@ function Item({ notice }: { notice: Notice }) {
   }, [paused, notice.duration, notice.id, dismiss]);
   return (
     <li
+      ref={item}
       id={notice.id}
       className={styles.item}
       data-tone={notice.tone ?? "neutral"}

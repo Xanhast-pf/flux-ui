@@ -2,7 +2,11 @@
   "name": "IconButton",
   "slug": "icon-button",
   "category": "Actions",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Compact icon actions with a required accessible name.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "IconButton": ["data-loading"]
+  }
 }

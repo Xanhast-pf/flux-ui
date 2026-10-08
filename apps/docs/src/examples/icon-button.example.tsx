@@ -1,8 +1,21 @@
-import Preview from "./icon-button.preview.js";
+import Preview, {
+  IconButtonScaleAndTreatments,
+} from "./icon-button.preview.js";
 import code from "./icon-button.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 export default {
   Preview,
+  previewTitle: "Interactive icon actions",
+  previewDescription:
+    "Icon-only controls keep their accessible name independent from the visible glyph.",
+  variations: [
+    {
+      title: "Sizes and treatments",
+      description:
+        "IconButton shares Button's size, variant, and tone vocabulary.",
+      Preview: IconButtonScaleAndTreatments,
+    },
+  ],
   code,
   props: [
     [

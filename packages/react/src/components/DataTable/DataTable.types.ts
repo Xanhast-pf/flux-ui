@@ -33,7 +33,7 @@ type DataTableSortingProps =
   | {
       sorting: DataSort | null;
       defaultSorting?: never;
-      onSortingChange: (sorting: DataSort | null) => void;
+      onSortingChange?: ((sorting: DataSort | null) => void) | undefined;
       manualSorting?: boolean | undefined;
     }
   | {
@@ -54,12 +54,14 @@ type DataTableSelectionProps =
   | {
       selectedRowIds: readonly string[];
       defaultSelectedRowIds?: never;
-      onSelectionChange: (rowIds: readonly string[]) => void;
+      onSelectedRowIdsChange?:
+        ((rowIds: readonly string[]) => void) | undefined;
     }
   | {
       selectedRowIds?: undefined;
       defaultSelectedRowIds?: readonly string[] | undefined;
-      onSelectionChange?: ((rowIds: readonly string[]) => void) | undefined;
+      onSelectedRowIdsChange?:
+        ((rowIds: readonly string[]) => void) | undefined;
     };
 
 export type DataTableProps<Row> = DataTableBaseProps<Row> &

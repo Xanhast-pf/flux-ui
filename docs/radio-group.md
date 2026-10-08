@@ -58,7 +58,7 @@ const [channel, setChannel] = useState<RadioGroupValue>("stable");
 </RadioGroup.Root>;
 ```
 
-Use `value={null}` for a controlled group with no current selection. Controlled mode requires `onValueChange` so React never receives a checked radio group without an update path.
+Use `value={null}` for a controlled group with no current selection. `onValueChange` is optional in controlled mode, so a group can intentionally be read-only while native form and keyboard semantics remain intact.
 
 ## Keyboard and accessibility behavior
 

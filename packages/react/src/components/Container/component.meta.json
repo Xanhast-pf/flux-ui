@@ -2,7 +2,11 @@
   "name": "Container",
   "slug": "container",
   "category": "Layout",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Centered page-width primitive with consistent responsive gutters.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Container": ["data-query"]
+  }
 }

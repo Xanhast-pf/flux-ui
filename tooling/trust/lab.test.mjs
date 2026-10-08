@@ -4,6 +4,7 @@ import {
   median,
   summarize,
   validateConfig,
+  workUnitOptions,
 } from "../../apps/docs/src/lab/statistics.ts";
 
 function sample(variant, timing) {
@@ -36,6 +37,12 @@ test("lab configuration refuses unbounded or fractional work", () => {
   for (const iterations of [0, 1, 2, 50, Infinity])
     assert.throws(() => validateConfig(100, iterations));
   validateConfig(5000, 7);
+  validateConfig(256, 3, 256);
+  assert.deepEqual(workUnitOptions(256), [100, 256]);
+  validateConfig(1, 3, 1);
+  assert.deepEqual(workUnitOptions(1), [1]);
+  assert.throws(() => validateConfig(2, 3, 1));
+  assert.throws(() => validateConfig(257, 3, 256));
 });
 test("ratios are calculated per pair, not from unrelated median values", () => {
   const result = summarize("button", 100, [

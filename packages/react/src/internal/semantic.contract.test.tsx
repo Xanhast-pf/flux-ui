@@ -67,7 +67,6 @@ describe("Public semantic type contracts", () => {
         Docs
       </Link>
     );
-    // @ts-expect-error Controlled knobs require an owner callback.
     const ownerlessKnob = <Knob aria-label="Ownerless gain" value={30} />;
     const ambiguousKnob = (
       // @ts-expect-error Controlled knobs cannot also declare an uncontrolled default.

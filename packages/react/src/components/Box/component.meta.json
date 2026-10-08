@@ -2,7 +2,8 @@
   "name": "Box",
   "slug": "box",
   "category": "Layout",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Single-element semantic spacing and surface primitive.",
   "sizeClass": "primitive"
 }

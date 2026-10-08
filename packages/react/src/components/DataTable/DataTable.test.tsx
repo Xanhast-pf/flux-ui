@@ -126,6 +126,53 @@ describe("DataTable", () => {
   });
 });
 describe("DataTable hardening", () => {
+  it("releases focused rows when focus leaves in the table owner document", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    const outside = ownerDocument.createElement("button");
+    ownerDocument.body.append(container, outside);
+    const rows = Array.from({ length: 2000 }, (_, i) => ({
+      id: `row-${i}`,
+      value: i,
+    }));
+    const rendered = render(
+      <DataTable
+        label="Rows"
+        rows={rows}
+        columns={columns}
+        getRowId={getRowId}
+        selectable
+      />,
+      { container },
+    );
+
+    try {
+      const checkbox = container.querySelector<HTMLInputElement>(
+        'input[aria-label="Select row row-0"]',
+      );
+      const region = container.querySelector<HTMLElement>('[role="region"]');
+      if (checkbox === null || region === null)
+        throw new Error("Missing DataTable focus targets.");
+      checkbox.focus();
+      fireEvent.scroll(region, { target: { scrollTop: 40000 } });
+      expect(
+        container.querySelector("[data-row-id='row-0']"),
+      ).toBeInTheDocument();
+
+      outside.focus();
+      fireEvent.scroll(region, { target: { scrollTop: 40000 } });
+      expect(
+        container.querySelector("[data-row-id='row-0']"),
+      ).not.toBeInTheDocument();
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
+  });
+
   it("keeps nonempty rows mounted when filtering invalidates a distant scroll offset", () => {
     const rows = Array.from({ length: 2000 }, (_, i) => ({
       id: `row-${i}`,
@@ -235,24 +282,24 @@ describe("DataTable window boundaries", () => {
 
 it("keeps keyboard selection controlled by the consumer", async () => {
   const user = userEvent.setup();
-  const onSelectionChange = vi.fn();
+  const onSelectedRowIdsChange = vi.fn();
   const props = {
     label: "Owned selection",
     rows: [{ id: "a", value: 1 }],
     columns,
     getRowId,
     selectable: true,
-    onSelectionChange,
+    onSelectedRowIdsChange,
   };
   const view = render(<DataTable {...props} selectedRowIds={[]} />);
   const checkbox = screen.getByRole("checkbox", { name: "Select row a" });
   act(() => checkbox.focus());
   await user.keyboard(" ");
-  expect(onSelectionChange).toHaveBeenCalledExactlyOnceWith(["a"]);
+  expect(onSelectedRowIdsChange).toHaveBeenCalledExactlyOnceWith(["a"]);
   expect(checkbox).not.toBeChecked();
   view.rerender(<DataTable {...props} selectedRowIds={["a"]} />);
   expect(checkbox).toBeChecked();
   await user.keyboard(" ");
-  expect(onSelectionChange).toHaveBeenLastCalledWith([]);
+  expect(onSelectedRowIdsChange).toHaveBeenLastCalledWith([]);
   expect(checkbox).toBeChecked();
 });

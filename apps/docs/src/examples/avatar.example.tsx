@@ -1,8 +1,19 @@
-import Preview from "./avatar.preview.js";
+import Preview, { AvatarFallbacksAndSizes } from "./avatar.preview.js";
 import code from "./avatar.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 export default {
   Preview,
+  previewTitle: "Image fallback recovery",
+  previewDescription:
+    "A failed image source falls back without changing the public identity semantics.",
+  variations: [
+    {
+      title: "Fallbacks and sizes",
+      description:
+        "Text fallbacks use the same size tokens; an empty alt can defer naming to adjacent text.",
+      Preview: AvatarFallbacksAndSizes,
+    },
+  ],
   code,
   props: [
     [

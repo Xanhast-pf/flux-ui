@@ -1,4 +1,4 @@
-import { AlertDialog, Button, Inline, Stack, Text } from "@flux-ui/react";
+import { AlertDialog, Inline, Stack, Text } from "@flux-ui/react";
 import { useState } from "react";
 export default function Example() {
   const [open, setOpen] = useState(false);
@@ -13,16 +13,14 @@ export default function Example() {
             This changes the local example only. There is no remote deletion.
           </AlertDialog.Description>
           <Inline wrap gap="sm">
-            <AlertDialog.Close>Keep draft</AlertDialog.Close>
-            <Button
-              tone="danger"
+            <AlertDialog.Cancel>Keep draft</AlertDialog.Cancel>
+            <AlertDialog.Action
               onClick={() => {
                 setDiscarded(true);
-                setOpen(false);
               }}
             >
               Discard draft
-            </Button>
+            </AlertDialog.Action>
           </Inline>
         </AlertDialog.Popup>
       </AlertDialog.Root>

@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import {
   createContext,
   useCallback,
@@ -223,6 +224,20 @@ function NativeModalRoot({
         } else {
           dialogNode.setAttribute("open", "");
         }
+      }
+      if (import.meta.env.DEV) {
+        const warningTimeout = view.setTimeout(() => {
+          if (
+            dialogNode.isConnected &&
+            !dialogNode.getAttribute("aria-label") &&
+            !dialogNode.getAttribute("aria-labelledby")
+          ) {
+            console.warn(
+              "Flux UI: modal content requires an accessible name. Render a Title or provide aria-label/aria-labelledby on the Popup.",
+            );
+          }
+        }, 0);
+        return () => view.clearTimeout(warningTimeout);
       }
       return;
     }

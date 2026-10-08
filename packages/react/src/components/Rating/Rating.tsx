@@ -72,7 +72,7 @@ export function Rating({
 
   function handleScrub(event: ReactPointerEvent<HTMLSpanElement>): void {
     if (event.buttons !== 1) return;
-    const input = document
+    const input = event.currentTarget.ownerDocument
       .elementFromPoint(event.clientX, event.clientY)
       ?.closest("label")
       ?.querySelector<HTMLInputElement>("input");
@@ -88,7 +88,7 @@ export function Rating({
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     onChange?.(event);
     if (event.defaultPrevented || !event.currentTarget.checked) return;
-    onValueChange?.(Number(event.currentTarget.value), event);
+    onValueChange?.(Number(event.currentTarget.value));
   }
 
   return (
@@ -155,11 +155,10 @@ export function Rating({
                     defaultChecked={
                       !controlled ? defaultValue === optionValue : undefined
                     }
-                    disabled={disabled || undefined}
                     form={form}
                     name={groupName}
                     onChange={handleChange}
-                    required={required || undefined}
+                    required={required}
                     type="radio"
                     value={optionValue}
                   />

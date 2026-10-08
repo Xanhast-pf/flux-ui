@@ -12,11 +12,12 @@ export function Switch({
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     const checked = event.currentTarget.checked;
     onChange?.(event);
-    if (!event.defaultPrevented) onCheckedChange?.(checked, event);
+    if (!event.defaultPrevented) onCheckedChange?.(checked);
   }
   return (
     <input
       {...props}
+      data-invalid={props["aria-invalid"]}
       className={joinClassNames(switchControl, className)}
       onChange={onCheckedChange ? handleChange : onChange}
       role="switch"

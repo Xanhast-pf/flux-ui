@@ -19,11 +19,9 @@ import {
   useTheme,
 } from "../lib/appearance.js";
 import { useRoute } from "../lib/routing.js";
-import { AppearanceControls } from "../ui/AppearanceControls.js";
 import { ExampleBoundary } from "../ui/ExampleBoundary.js";
 import { showcaseScenes } from "./catalog.js";
 import { readShowcaseRoute, showcaseHash } from "./model.js";
-import "./showcase.css";
 
 const CompositionInspector = lazy(() => import("./CompositionInspector.js"));
 const sceneIds = showcaseScenes.map((scene) => scene.id);
@@ -54,8 +52,8 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
   const copyMessage =
     copyResult?.hash === shareHash
       ? copyResult.success
-        ? "Scene link copied."
-        : "Clipboard unavailable. Use the scene permalink."
+        ? "Dashboard link copied."
+        : "Clipboard unavailable. Use the dashboard permalink."
       : "";
 
   async function copyLink(): Promise<void> {
@@ -71,14 +69,14 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
 
   return (
     <Stack
-      aria-label="Interactive product showcase"
+      aria-label="Interactive dashboard showcase"
       className="product-showcase"
       as="section"
       gap="lg"
     >
       <Tabs.Root
         size="sm"
-        appearance="pill"
+        variant="pill"
         value={active.id}
         onValueChange={(value) => {
           if (sceneIds.includes(value))
@@ -86,31 +84,19 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
         }}
       >
         <Box border="block">
-          <Grid
-            templateColumns={{
-              base: "minmax(0, 1fr)",
-              lg: "minmax(0, 1fr) minmax(24rem, 32rem)",
-            }}
-            gap="xl"
-            align="start"
-            paddingBlock={5}
-          >
-            <Stack gap={3}>
-              <Text variant="caption" tone="muted">
-                Example template
-              </Text>
-              <Tabs.List wrap aria-label="Example templates">
-                {showcaseScenes.map((scene) => (
-                  <Tabs.Tab key={scene.id} value={scene.id}>
-                    <scene.Icon size={18} />
-                    <Text>{scene.label}</Text>
-                  </Tabs.Tab>
-                ))}
-              </Tabs.List>
-            </Stack>
-
-            <AppearanceControls />
-          </Grid>
+          <Stack gap={3} paddingBlock={5}>
+            <Text variant="caption" tone="muted">
+              Dashboards
+            </Text>
+            <Tabs.List wrap aria-label="Dashboard examples">
+              {showcaseScenes.map((scene) => (
+                <Tabs.Tab key={scene.id} value={scene.id}>
+                  <scene.Icon size={18} />
+                  <Text>{scene.label}</Text>
+                </Tabs.Tab>
+              ))}
+            </Tabs.List>
+          </Stack>
         </Box>
 
         <Grid
@@ -169,7 +155,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
       <Inline wrap justify="between" gap="md" paddingBlock="md">
         <Text as="p" variant="body">
           <Text as="strong" weight="bold">
-            Try it.
+            Try:
           </Text>{" "}
           {active.prompt}
         </Text>
@@ -183,7 +169,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
               setRevision((value) => value + 1);
             }}
           >
-            Reset scene
+            Reset
           </Button>
           <Button
             size="sm"
@@ -196,7 +182,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
               setInspect((value) => !value);
             }}
           >
-            Inspect composition
+            View components
           </Button>
           <Button
             size="sm"
@@ -207,17 +193,13 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
               void copyLink();
             }}
           >
-            Copy scene link
+            Copy link
           </Button>
         </Inline>
       </Inline>
 
       <Inline wrap gap="md">
-        <Text as="p" variant="body">
-          Real Flux components. Fictional products. Custom charts and editors
-          are demo compositions, not published component APIs.
-        </Text>
-        <Link href={shareHash}>Scene permalink ↗</Link>
+        <Link href={shareHash}>Open dashboard ↗</Link>
         <Text role="status">{copyMessage}</Text>
       </Inline>
 
@@ -227,7 +209,7 @@ export function ProductShowcase({ page }: { page: "overview" | "playground" }) {
             <Suspense
               fallback={
                 <Text role="status" as="p" variant="body">
-                  Loading composition details…
+                  Loading source…
                 </Text>
               }
             >

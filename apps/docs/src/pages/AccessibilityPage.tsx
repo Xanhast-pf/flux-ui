@@ -23,9 +23,7 @@ export function AccessibilityPage() {
   const [broken, setBroken] = useState(false);
   const [running, setRunning] = useState(false);
   const [result, setResult] = useState<AxeResults | null>(null);
-  const [message, setMessage] = useState(
-    "Not scanned. The axe engine loads only when you run a scan.",
-  );
+  const [message, setMessage] = useState("Ready to scan.");
   useEffect(() => {
     mounted.current = true;
     return () => {
@@ -37,7 +35,7 @@ export function AccessibilityPage() {
     active.current = true;
     setRunning(true);
     setResult(null);
-    setMessage("Loading axe and scanning this demo…");
+    setMessage("Scanning demo…");
     try {
       const { default: axe } = await import("axe-core");
       const target = sample.current;
@@ -59,7 +57,7 @@ export function AccessibilityPage() {
       if (mounted.current) {
         setResult(results);
         setMessage(
-          `Scan complete: ${results.violations.length} violation rules, ${results.incomplete.length} checks needing review. This is not a certification.`,
+          `Found ${results.violations.length} violation rules and ${results.incomplete.length} checks to review.`,
         );
       }
     } catch (error) {
@@ -78,17 +76,16 @@ export function AccessibilityPage() {
     <Stack className="reference-page" as="section" gap="lg">
       <Stack gap="lg">
         <PageHeader
-          title={<>Run a real accessibility scan.</>}
-          eyebrow={<>Accessibility you can inspect</>}
+          title={<>Accessibility testing</>}
+          eyebrow={<>Live axe scan</>}
         >
           <Text as="p" variant="lead" tone="muted">
-            A working demo. A real axe engine. Findings you can reproduce.
+            Scan a working UI example.
           </Text>
         </PageHeader>
         <Callout>
-          Scans run locally on the sample below, not the whole site or your
-          application. Zero detected violations is not WCAG compliance. Manual
-          keyboard, screen-reader and interaction testing still matters.
+          The scan checks only this demo. No violations does not mean WCAG
+          compliance. Also test with a keyboard and screen reader.
         </Callout>
         <Card>
           <Stack gap="md">
@@ -101,16 +98,14 @@ export function AccessibilityPage() {
               <Stack gap="lg">
                 <Stack gap="md">
                   <Heading id="axe-sample-title" level={2} size="lg">
-                    A small settings panel
+                    Settings demo
                   </Heading>
                   <Field.Root id="axe-demo-name">
                     <Field.Label>Display name</Field.Label>
                     <Field.Control>
                       <Input defaultValue="Alex" />
                     </Field.Control>
-                    <Field.Description>
-                      Visible to your teammates.
-                    </Field.Description>
+                    <Field.Description>Shown to teammates.</Field.Description>
                   </Field.Root>
                   <Inline gap="sm" wrap>
                     <Button>Save preferences</Button>
@@ -126,9 +121,7 @@ export function AccessibilityPage() {
               </Stack>
             </Card>
             <Field.Root>
-              <Field.Label>
-                Introduce an intentional missing button name
-              </Field.Label>
+              <Field.Label>Remove button label</Field.Label>
               <Field.Control>
                 <Checkbox
                   checked={broken}
@@ -136,17 +129,14 @@ export function AccessibilityPage() {
                   onChange={(event) => {
                     setBroken(event.target.checked);
                     setResult(null);
-                    setMessage(
-                      "Demo changed. Run another scan for current results.",
-                    );
+                    setMessage("Demo updated. Scan again.");
                   }}
                 />
               </Field.Control>
             </Field.Root>
             {broken && (
               <Callout tone="warning">
-                Intentional teaching defect: the icon-only button above now has
-                no accessible name. Turn off this switch to repair it.
+                The icon button has no accessible name. Uncheck to fix it.
               </Callout>
             )}
             <Inline gap="sm" wrap>
@@ -189,8 +179,8 @@ export function AccessibilityPage() {
               </Text>
               {result.violations.length === 0 && (
                 <Callout>
-                  No violations detected in this sample under these rules.
-                  Review incomplete checks and test manually.
+                  No violations detected. Review incomplete checks and test
+                  manually.
                 </Callout>
               )}
               {[
@@ -232,14 +222,11 @@ export function AccessibilityPage() {
         )}
         <Stack as="section" gap="lg">
           <Heading level={2} size="lg">
-            Continue with a keyboard.
+            Test with a keyboard
           </Heading>
           <Text as="p" variant="body">
-            Tab through the panel, identify every control’s name, check the
-            visible focus ring, operate controls without a pointer, then repeat
-            in your screen reader. Test zoom, high contrast, reduced motion and
-            the actual interaction states your product uses. Accessibility is a
-            user experience, not a score.
+            Check Tab order, focus, labels, keyboard actions, and screen
+            readers. Also test zoom, contrast, and reduced motion.
           </Text>
         </Stack>
       </Stack>

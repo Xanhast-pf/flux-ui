@@ -1,7 +1,7 @@
 import type { ComponentPropsWithRef } from "react";
 /** Native details semantics: open, name and onToggle are passed through. */
 export type CollapsibleRootProps = ComponentPropsWithRef<"details"> & {
-  appearance?: "surface" | "plain" | undefined;
+  variant?: "surface" | "plain" | undefined;
   density?: "comfortable" | "compact" | undefined;
 };
 export type CollapsibleTriggerProps = ComponentPropsWithRef<"summary">;

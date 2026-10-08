@@ -1,10 +1,21 @@
-import Preview from "./separator.preview.js";
+import Preview, { DecorativeVerticalSeparators } from "./separator.preview.js";
 import code from "./separator.preview.tsx?raw";
 import type { ComponentExample } from "../lib/examples.js";
 
 export default {
   Preview,
   previewLayout: "fill",
+  previewTitle: "Semantic separator",
+  previewDescription:
+    "The default horizontal rule creates a real semantic break between ideas.",
+  variations: [
+    {
+      title: "Decorative vertical separators",
+      description:
+        "Purely visual separators can support inline layout without entering the accessibility tree.",
+      Preview: DecorativeVerticalSeparators,
+    },
+  ],
   code,
   notes: [
     "The default horizontal hr is a semantic separator.",

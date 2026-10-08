@@ -38,7 +38,7 @@ export function SplitPane({
     latest: number;
     direction: number;
   } | null>(null);
-  const keyboard = useRef(false);
+  const keyboard = useRef<number | null>(null);
   const horizontal = orientation === "horizontal";
   function change(next: number) {
     const clamped = Math.max(min, Math.min(max, next));
@@ -105,12 +105,11 @@ export function SplitPane({
             next += step * direction;
           else return;
           event.preventDefault();
-          keyboard.current = true;
-          change(next);
+          keyboard.current = change(next);
         }}
         onKeyUp={(event) => {
           if (
-            keyboard.current &&
+            keyboard.current !== null &&
             [
               "Home",
               "End",
@@ -120,14 +119,16 @@ export function SplitPane({
               "ArrowDown",
             ].includes(event.key)
           ) {
-            keyboard.current = false;
-            onValueCommit?.(resolved);
+            const next = keyboard.current;
+            keyboard.current = null;
+            onValueCommit?.(next);
           }
         }}
         onBlur={() => {
-          if (keyboard.current) {
-            keyboard.current = false;
-            onValueCommit?.(resolved);
+          if (keyboard.current !== null) {
+            const next = keyboard.current;
+            keyboard.current = null;
+            onValueCommit?.(next);
           }
         }}
         onPointerDown={(event) => {

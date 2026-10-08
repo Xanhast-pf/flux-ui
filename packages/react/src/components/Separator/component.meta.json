@@ -2,7 +2,11 @@
   "name": "Separator",
   "slug": "separator",
   "category": "Layout",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Semantic or decorative dividers in either orientation.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Separator": ["data-orientation"]
+  }
 }

@@ -26,7 +26,6 @@ describe("Navigation public type contracts", () => {
     );
     expect(valid).toBeDefined();
 
-    // @ts-expect-error Controlled Tabs require an owner callback.
     const ownerlessTabs = <Tabs.Root value="one" />;
     // @ts-expect-error Tablist role is owned by Tabs.
     const listRole = <Tabs.List role="listbox" />;

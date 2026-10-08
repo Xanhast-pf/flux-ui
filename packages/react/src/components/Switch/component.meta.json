@@ -2,7 +2,11 @@
   "name": "Switch",
   "slug": "switch",
   "category": "Inputs",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native checkbox form behavior with binary switch semantics.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Switch": ["data-invalid"]
+  }
 }

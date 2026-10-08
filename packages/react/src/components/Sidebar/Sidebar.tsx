@@ -23,7 +23,7 @@ type SidebarState = {
   open: boolean;
   panelId: string;
   setOpen: (open: boolean) => void;
-  setPanelFocused: (focused: boolean) => void;
+  setPanelFocused: (focused: boolean, owner?: Document) => void;
 };
 
 const SidebarContext = createContext<SidebarState | null>(null);
@@ -46,6 +46,7 @@ function SidebarRoot({
   const open = controlledOpen ?? localOpen;
   const panelId = `${useId()}-sidebar`;
   const panelFocused = useRef(false);
+  const panelDocument = useRef<Document | null>(null);
   const previousOpen = useRef(open);
 
   function setOpen(next: boolean): void {
@@ -58,13 +59,12 @@ function SidebarRoot({
   // moves focus, traps it, locks scrolling, or makes the page inert.
   useLayoutEffect(() => {
     if (previousOpen.current && !open && panelFocused.current) {
-      const element = document.getElementById(panelId);
-      if (
-        document.activeElement === document.body ||
-        element?.contains(document.activeElement)
-      ) {
+      const owner = panelDocument.current;
+      const element = owner?.getElementById(panelId);
+      const active = owner?.activeElement ?? null;
+      if (owner && (active === owner.body || element?.contains(active))) {
         const trigger = Array.from(
-          document.querySelectorAll<HTMLButtonElement>("button[aria-controls]"),
+          owner.querySelectorAll<HTMLButtonElement>("button[aria-controls]"),
         ).find(
           (button) =>
             button.getAttribute("aria-controls") === panelId &&
@@ -78,8 +78,9 @@ function SidebarRoot({
     previousOpen.current = open;
   }, [open, panelId]);
 
-  function setPanelFocused(focused: boolean): void {
+  function setPanelFocused(focused: boolean, owner?: Document): void {
     panelFocused.current = focused;
+    if (focused && owner) panelDocument.current = owner;
   }
 
   return (
@@ -107,14 +108,14 @@ function SidebarPanel({
       hidden={!state.open}
       className={joinClassNames(panel, className)}
       onFocusCapture={(event) => {
-        state.setPanelFocused(true);
+        state.setPanelFocused(true, event.currentTarget.ownerDocument);
         onFocusCapture?.(event);
       }}
       onBlurCapture={(event) => {
         // Hiding can move focus to body before the layout effect restores it.
         if (
           event.relatedTarget !== null &&
-          event.relatedTarget !== document.body
+          event.relatedTarget !== event.currentTarget.ownerDocument.body
         ) {
           state.setPanelFocused(
             event.currentTarget.contains(event.relatedTarget),

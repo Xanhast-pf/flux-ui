@@ -29,13 +29,15 @@ describe("Data public type contracts", () => {
     const valid = (
       <>
         <DataTable {...base} defaultSorting={null} />
+        <DataTable {...base} sorting={null} />
         <DataTable {...base} sorting={null} onSortingChange={() => {}} />
         <DataTable {...base} manualSorting onSortingChange={() => {}} />
+        <DataTable {...base} selectable selectedRowIds={[]} />
         <DataTable
           {...base}
           selectable
           selectedRowIds={[]}
-          onSelectionChange={() => {}}
+          onSelectedRowIdsChange={() => {}}
         />
         <LevelMeter aria-label="Bus" value={-12} />
         <Sparkline label="Trend" values={[1, 2]} />
@@ -44,7 +46,6 @@ describe("Data public type contracts", () => {
     );
     expect(valid).toBeDefined();
 
-    // @ts-expect-error Controlled sorting requires an owner callback.
     const ownerlessSort: DataTableProps<Row> = {
       ...base,
       sorting: { columnId: "value", direction: "ascending" },
@@ -61,7 +62,6 @@ describe("Data public type contracts", () => {
       ...base,
       manualSorting: true,
     };
-    // @ts-expect-error Controlled selection requires an owner callback.
     const ownerlessSelection: DataTableProps<Row> = {
       ...base,
       selectedRowIds: [],
@@ -71,7 +71,7 @@ describe("Data public type contracts", () => {
       ...base,
       selectedRowIds: [],
       defaultSelectedRowIds: [],
-      onSelectionChange: () => {},
+      onSelectedRowIdsChange: () => {},
     };
     // @ts-expect-error Exposed sparklines require a label.
     const unnamedSparkline = <Sparkline values={[1, 2]} />;

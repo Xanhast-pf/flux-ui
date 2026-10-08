@@ -8,7 +8,7 @@ export default {
     "The input family shares one visual foundation: Input for native types, InputGroup for adornments, NumberField for a number-or-null callback. Choose by behavior rather than appearance.",
     "Input already supports type=number. NumberField is optional when the application needs parsed numeric changes; InputGroup accepts either control.",
     "Native text-entry semantics with Flux styling and escape hatches.",
-    "Use native attributes, className, style and composition for customization.",
+    "Use native attributes, className, style and composition for customization. The aria-invalid token is mirrored verbatim to the stable data-invalid styling hook across the shared native-input family.",
   ],
   props: [
     [

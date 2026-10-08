@@ -1,6 +1,7 @@
 import { IconButton, Inline, Text } from "@flux-ui/react";
 import { useState } from "react";
-export default function Example() {
+
+export default function InteractiveIconButtons() {
   const [count, setCount] = useState(0);
   return (
     <Inline gap="md" wrap>
@@ -23,6 +24,34 @@ export default function Example() {
         <Text aria-hidden="true">↺</Text>
       </IconButton>
       <Text role="status">{count} sparks</Text>
+    </Inline>
+  );
+}
+
+export function IconButtonScaleAndTreatments() {
+  return (
+    <Inline gap="sm" wrap>
+      <IconButton aria-label="Small solid action" size="sm">
+        <Text aria-hidden="true">+</Text>
+      </IconButton>
+      <IconButton aria-label="Medium soft action" size="md" variant="soft">
+        <Text aria-hidden="true">+</Text>
+      </IconButton>
+      <IconButton
+        aria-label="Large outline action"
+        size="lg"
+        variant="outline"
+        tone="neutral"
+      >
+        <Text aria-hidden="true">+</Text>
+      </IconButton>
+      <IconButton
+        aria-label="Ghost danger action"
+        variant="ghost"
+        tone="danger"
+      >
+        <Text aria-hidden="true">×</Text>
+      </IconButton>
     </Inline>
   );
 }

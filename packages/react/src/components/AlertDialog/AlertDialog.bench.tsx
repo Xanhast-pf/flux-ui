@@ -24,7 +24,7 @@ describe("AlertDialog representative SSR", () => {
             <AlertDialog.Description>
               This example does not delete remote data.
             </AlertDialog.Description>
-            <AlertDialog.Close>Keep draft</AlertDialog.Close>
+            <AlertDialog.Cancel>Keep draft</AlertDialog.Cancel>
           </AlertDialog.Popup>
         </AlertDialog.Root>
       </>,

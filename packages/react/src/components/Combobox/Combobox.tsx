@@ -75,9 +75,7 @@ export function Combobox({
   const [active, setActive] = useState<string | null>(null);
   const [input, setInput] = useState<HTMLInputElement | null>(null);
   const [surface, setSurface] = useState<HTMLDivElement | null>(null);
-  const selected = options.find(
-    (item) => item.value === value && !item.disabled,
-  );
+  const selected = options.find((item) => item.value === value);
   const text = query ?? selected?.label ?? "";
   const filtered =
     query === null
@@ -110,16 +108,16 @@ export function Combobox({
   useFloatingSurface(input, surface, expanded);
   useEffect(() => {
     if (!expanded || input === null) return;
+    const doc = input.ownerDocument;
     function outside(event: PointerEvent) {
       const target = event.target;
       if (
-        target instanceof Node &&
+        target instanceof doc.defaultView!.Node &&
         !input?.contains(target) &&
         !surface?.contains(target)
       )
         setOpen(false);
     }
-    const doc = input.ownerDocument;
     doc.addEventListener("pointerdown", outside);
     return () => doc.removeEventListener("pointerdown", outside);
   }, [expanded, input, surface]);
@@ -147,6 +145,10 @@ export function Combobox({
     form.addEventListener("reset", reset);
     return () => form.removeEventListener("reset", reset);
   }, [input, controlled, defaultValue, controlledQuery, defaultQuery]);
+
+  if (new Set(options.map((item) => item.value)).size !== options.length)
+    throw new RangeError("Combobox option values must be unique.");
+
   function changeQuery(next: string | null) {
     if (controlledQuery === undefined) setLocalQuery(next);
     if (query !== next) onQueryChange?.(next);
@@ -274,7 +276,7 @@ export function Combobox({
                 key={item.value}
                 id={`${listId}-${encodeURIComponent(item.value)}`}
                 role="option"
-                aria-selected={item.value === highlighted?.value}
+                aria-selected={item.value === value}
                 aria-disabled={item.disabled || undefined}
                 tabIndex={-1}
                 className={option}

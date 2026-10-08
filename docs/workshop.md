@@ -7,16 +7,22 @@ and native performance references; those have explicit, narrow ownership rules.
 ## Navigation and page responsibilities
 
 `Sidebar.Root` lives in the stable shell, outside route content and Suspense.
-The app-bar toggle opens a named, non-modal navigation panel. It occupies a column
-beside the page at layout widths of 48rem and above, and stacks above the page below that
-breakpoint. Links, browser Back/Forward, and Escape do not close it. Explicit close
-returns focus to an outside toggle when focus would otherwise be hidden. The
-panel remains mounted, retaining its scroll position and local state. A reload
-starts closed; route persistence does not require localStorage.
+At layout widths of 48rem and above, the app-bar toggle controls the named,
+non-modal `Sidebar.Panel`. It occupies a column beside the page; links, browser
+Back/Forward, route changes, and Escape do not close the desktop Sidebar. Its
+state remains above route content so panel state and scrolling survive navigation.
+
+Below 48rem, the desktop panel is not rendered. A separate mobile-open state drives
+`Drawer.Root` / `Drawer.Popup`, containing the same semantic documentation
+navigation. Mobile navigation closes on link/hash navigation (including browser
+Back/Forward), Escape/backdrop dismissal follows the Drawer contract, and focus
+returns through the mobile trigger when appropriate. Breakpoint changes close the
+mobile Drawer without rewriting the desktop Sidebar preference.
 
 Search is a separate modal `Dialog`. Its button and Ctrl/Cmd+K shortcut open it;
-Escape closes it and restores focus. `Drawer` remains available for temporary
-modal tasks, not persistent documentation navigation.
+Escape closes it and restores focus. The docs therefore dogfood both navigation
+primitives for the jobs they are designed to own: persistent desktop Sidebar and
+temporary modal mobile Drawer.
 
 | Route                | Responsibility                                              |
 | -------------------- | ----------------------------------------------------------- |

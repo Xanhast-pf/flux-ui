@@ -46,7 +46,7 @@ export function ButtonLab() {
       <Card>
         <Stack gap="md">
           <Heading level={2} size="lg">
-            Make a button your button.
+            Button settings
           </Heading>
           <Field.Root>
             <Field.Label>Button label</Field.Label>

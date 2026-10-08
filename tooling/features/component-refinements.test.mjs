@@ -74,7 +74,10 @@ test("selection reuses public controls and vertical ranges use Slider directly",
   assert.doesNotMatch(table, /type=["']checkbox["']/u);
   const publicIndex = await source("packages/react/src/index.ts");
   assert.doesNotMatch(publicIndex, /components\/Fader/u);
-  const music = await source("apps/docs/src/showcase/scenes/music.preview.tsx");
-  assert.doesNotMatch(music, /\bFader\b/u);
-  assert.match(music, /orientation="vertical"/u);
+  const sliderExample = await source(
+    "apps/docs/src/examples/slider.preview.tsx",
+  );
+  assert.doesNotMatch(sliderExample, /\bFader\b/u);
+  assert.match(sliderExample, /<Slider/u);
+  assert.match(sliderExample, /orientation="vertical"/u);
 });

@@ -2,8 +2,8 @@ import { createContext, useContext, useState, type MouseEvent } from "react";
 import { joinClassNames } from "../../internal/joinClassNames.js";
 import { RovingFocus, useRovingItem } from "../../internal/RovingFocus.js";
 import type {
-  SelectionAppearance,
   SelectionSize,
+  SelectionVariant,
 } from "../../internal/selection.types.js";
 import { item, root } from "./ToggleGroup.css.js";
 import type {
@@ -14,7 +14,7 @@ type Selection = string | null | readonly string[];
 const ToggleGroupContext = createContext<{
   selected: Selection;
   size: SelectionSize | undefined;
-  appearance: SelectionAppearance;
+  variant: SelectionVariant;
   disabled: boolean;
   toggle: (value: string) => void;
 } | null>(null);
@@ -25,7 +25,7 @@ function includes(selected: Selection, value: string): boolean {
 }
 function ToggleGroupRoot({
   size,
-  appearance = "outline",
+  variant = "outline",
   className,
   children,
   defaultValue,
@@ -58,9 +58,7 @@ function ToggleGroupRoot({
     }
   }
   return (
-    <ToggleGroupContext
-      value={{ selected, disabled, toggle, size, appearance }}
-    >
+    <ToggleGroupContext value={{ selected, disabled, toggle, size, variant }}>
       <RovingFocus orientation={orientation} loopFocus={loopFocus}>
         <div
           {...props}
@@ -118,7 +116,7 @@ function ToggleGroupItem({
       disabled={isDisabled}
       aria-pressed={pressed}
       data-s={context.size}
-      data-a={context.appearance === "outline" ? undefined : context.appearance}
+      data-a={context.variant === "outline" ? undefined : context.variant}
       data-flux-roving-preferred={pressed || undefined}
       onClick={handleClick}
     />

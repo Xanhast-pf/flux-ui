@@ -1,9 +1,10 @@
 import { createRef } from "react";
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { DataGrid } from "./DataGrid.js";
+import type { DataGridSort } from "./DataGrid.types.js";
 
 const rows = [
   { id: "aapl", symbol: "AAPL", quantity: 12, state: "Open" },
@@ -100,6 +101,59 @@ describe("DataGrid", () => {
     expect(screen.getByRole("button", { name: "After" })).toHaveFocus();
   });
 
+  it("keeps keyboard and pointer interaction in the grid owner document", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const editableColumns = columns.map((column) =>
+      column.id === "symbol"
+        ? { ...column, editable: true, sortable: false }
+        : column,
+    );
+    const rendered = render(
+      <DataGrid
+        label="Realm grid"
+        rows={rows}
+        columns={editableColumns}
+        getRowId={(row) => row.id}
+        selectable
+        onCellEditCommit={vi.fn()}
+      />,
+      { container },
+    );
+
+    try {
+      const cells =
+        container.querySelectorAll<HTMLElement>('[role="gridcell"]');
+      const first = cells[0];
+      const second = cells[1];
+      if (first === undefined || second === undefined)
+        throw new Error("Missing grid cells.");
+      first.focus();
+      fireEvent.keyDown(first, { key: "ArrowRight" });
+      expect(ownerDocument.activeElement).toBe(second);
+
+      fireEvent.click(first);
+      expect(first.closest('[role="row"]')).toHaveAttribute(
+        "aria-selected",
+        "true",
+      );
+
+      fireEvent.doubleClick(first);
+      const editor = container.querySelector<HTMLInputElement>(
+        'input[aria-label="Edit Symbol, row 1"]',
+      );
+      expect(editor).not.toBeNull();
+      expect(ownerDocument.activeElement).toBe(editor);
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
+  });
+
   it("preserves the focused stable cell across ordinary rerenders", () => {
     const { rerender } = render(<Example />);
     const pending = screen.getByRole("gridcell", { name: "Pending" });
@@ -145,6 +199,34 @@ describe("DataGrid", () => {
         />,
       ),
     ).toThrow(/unique non-empty IDs/u);
+
+    expect(() =>
+      render(
+        <DataGrid
+          label="Bad header"
+          rows={rows}
+          columns={[{ ...columns[0], header: "" }]}
+          getRowId={(row) => row.id}
+        />,
+      ),
+    ).toThrow(/non-empty headers/u);
+
+    const invalidSorting: DataGridSort = {
+      columnId: "quantity",
+      direction: "ascending",
+    };
+    Object.defineProperty(invalidSorting, "direction", { value: "sideways" });
+    expect(() =>
+      render(
+        <DataGrid
+          label="Bad sorting"
+          rows={rows}
+          columns={columns}
+          getRowId={(row) => row.id}
+          sorting={invalidSorting}
+        />,
+      ),
+    ).toThrow(/sort direction/u);
   });
 
   it("supports pointer and keyboard sorting without adding header tab stops", async () => {
@@ -211,9 +293,9 @@ describe("DataGrid", () => {
 
     const grid = screen.getByRole("grid", { name: "Selectable positions" });
     expect(grid).toHaveAttribute("aria-multiselectable", "true");
-    expect(
-      screen.getByRole("row", { name: /MSFT 7 Pending/u }),
-    ).toHaveAttribute("aria-selected", "true");
+    const msftRow = screen.getByRole("row", { name: /MSFT 7 Pending/u });
+    expect(msftRow).toHaveAttribute("aria-selected", "true");
+    expect(msftRow).toHaveAttribute("data-selected", "true");
 
     const aapl = screen.getByRole("gridcell", { name: "AAPL" });
     await user.click(aapl);
@@ -252,8 +334,11 @@ describe("DataGrid", () => {
 
     const quantity = screen.getByRole("gridcell", { name: "12" });
     expect(quantity).toHaveAttribute("aria-readonly", "false");
+    expect(quantity).toHaveAttribute("data-editable", "true");
+    expect(quantity).not.toHaveAttribute("data-editing");
     quantity.focus();
     await user.keyboard("{F2}");
+    expect(quantity).toHaveAttribute("data-editing", "true");
 
     const editor = screen.getByRole("spinbutton", {
       name: "Edit Quantity, row 1",

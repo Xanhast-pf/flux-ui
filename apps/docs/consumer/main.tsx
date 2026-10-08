@@ -222,7 +222,7 @@ function Consumer() {
               <Tabs.Root
                 defaultValue="outer"
                 orientation="vertical"
-                appearance="pill"
+                variant="pill"
                 size="sm"
               >
                 <Tabs.List aria-label="Outer tabs">

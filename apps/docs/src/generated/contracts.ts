@@ -3,6 +3,7 @@ export const publicContracts = [
   {
     name: "Accordion",
     slug: "accordion",
+    lifecycle: "stable",
     parts: [
       {
         path: "Accordion.Content",
@@ -21,6 +22,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-type"],
       },
       {
         path: "Accordion.Trigger",
@@ -29,13 +31,27 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "AccordionContentProps",
+      "AccordionItemProps",
+      "AccordionRootProps",
+      "AccordionTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "AlertDialog",
     slug: "alert-dialog",
+    lifecycle: "stable",
     parts: [
       {
-        path: "AlertDialog.Close",
+        path: "AlertDialog.Action",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+      },
+      {
+        path: "AlertDialog.Cancel",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
@@ -51,6 +67,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
       {
         path: "AlertDialog.Root",
@@ -70,12 +87,24 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
     ],
+    types: [
+      "AlertDialogActionProps",
+      "AlertDialogCancelProps",
+      "AlertDialogDescriptionProps",
+      "AlertDialogPopupProps",
+      "AlertDialogRootProps",
+      "AlertDialogTitleProps",
+      "AlertDialogTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "AspectRatio",
     slug: "aspect-ratio",
+    lifecycle: "stable",
     parts: [
       {
         path: "AspectRatio",
@@ -84,10 +113,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["AspectRatioProps"],
+    utilities: [],
   },
   {
     name: "Avatar",
     slug: "avatar",
+    lifecycle: "stable",
     parts: [
       {
         path: "Avatar",
@@ -102,10 +134,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["AvatarGroupProps", "AvatarProps"],
+    utilities: [],
   },
   {
     name: "BottomNavigation",
     slug: "bottom-navigation",
+    lifecycle: "stable",
     parts: [
       {
         path: "BottomNavigation",
@@ -120,10 +155,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["BottomNavigationItemProps", "BottomNavigationProps"],
+    utilities: [],
   },
   {
     name: "Box",
     slug: "box",
+    lifecycle: "stable",
     parts: [
       {
         path: "Box",
@@ -132,10 +170,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["BoxProps"],
+    utilities: [],
   },
   {
     name: "Breadcrumbs",
     slug: "breadcrumbs",
+    lifecycle: "stable",
     parts: [
       {
         path: "Breadcrumbs.Current",
@@ -168,34 +209,51 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "BreadcrumbsCurrentProps",
+      "BreadcrumbsItemProps",
+      "BreadcrumbsLinkProps",
+      "BreadcrumbsListProps",
+      "BreadcrumbsRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "Button",
     slug: "button",
+    lifecycle: "stable",
     parts: [
       {
         path: "Button",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-loading"],
       },
     ],
+    types: ["ButtonProps", "ButtonSize", "ButtonTone", "ButtonVariant"],
+    utilities: [],
   },
   {
     name: "ButtonGroup",
     slug: "button-group",
+    lifecycle: "stable",
     parts: [
       {
         path: "ButtonGroup",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-orientation"],
       },
     ],
+    types: ["ButtonGroupOrientation", "ButtonGroupProps"],
+    utilities: [],
   },
   {
     name: "Callout",
     slug: "callout",
+    lifecycle: "stable",
     parts: [
       {
         path: "Callout",
@@ -204,10 +262,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["CalloutProps", "CalloutTone"],
+    utilities: [],
   },
   {
     name: "Card",
     slug: "card",
+    lifecycle: "stable",
     parts: [
       {
         path: "Card",
@@ -216,10 +277,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["CardProps"],
+    utilities: [],
   },
   {
     name: "Chart",
     slug: "chart",
+    lifecycle: "alpha",
     parts: [
       {
         path: "Chart",
@@ -228,22 +292,43 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ChartPoint", "ChartProps", "ChartSeries", "ChartTone"],
+    utilities: [],
+    descendantStates: [
+      {
+        name: "series",
+        selector: "[data-muted]",
+        dataAttributes: ["data-muted"],
+      },
+    ],
   },
   {
     name: "ChartLegend",
     slug: "chart-legend",
+    lifecycle: "alpha",
     parts: [
       {
         path: "ChartLegend",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        stateModels: ["hiddenIds"],
+      },
+    ],
+    types: ["ChartLegendItem", "ChartLegendProps"],
+    utilities: [],
+    descendantStates: [
+      {
+        name: "hiddenItem",
+        selector: "[data-hidden]",
+        dataAttributes: ["data-hidden"],
       },
     ],
   },
   {
     name: "ChartTooltip",
     slug: "chart-tooltip",
+    lifecycle: "alpha",
     parts: [
       {
         path: "ChartTooltip",
@@ -252,23 +337,37 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ChartTooltipData", "ChartTooltipItem", "ChartTooltipProps"],
+    utilities: [],
+    descendantStates: [
+      {
+        name: "popup",
+        selector: "[data-align]",
+        dataAttributes: ["data-align", "data-side"],
+      },
+    ],
   },
   {
     name: "Checkbox",
     slug: "checkbox",
+    lifecycle: "stable",
     parts: [
       {
         path: "Checkbox",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
         stateModels: ["checked"],
       },
     ],
+    types: ["CheckboxProps"],
+    utilities: [],
   },
   {
     name: "Code",
     slug: "code",
+    lifecycle: "stable",
     parts: [
       {
         path: "Code",
@@ -277,10 +376,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["CodeProps"],
+    utilities: [],
   },
   {
     name: "CodeBlock",
     slug: "code-block",
+    lifecycle: "stable",
     parts: [
       {
         path: "CodeBlock",
@@ -289,10 +391,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["CodeBlockProps", "CodeHighlighter", "CodeToken", "CodeTokenKind"],
+    utilities: ["codeLanguages", "tokenizeCode"],
   },
   {
     name: "Collapsible",
     slug: "collapsible",
+    lifecycle: "stable",
     parts: [
       {
         path: "Collapsible.Content",
@@ -313,97 +418,176 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "CollapsibleContentProps",
+      "CollapsibleRootProps",
+      "CollapsibleTriggerProps",
+    ],
+    utilities: [],
+  },
+  {
+    name: "ColorPicker",
+    slug: "color-picker",
+    lifecycle: "alpha",
+    parts: [
+      {
+        path: "ColorPicker",
+        kind: "dom",
+        escapeHatches: ["className", "style", "ref"],
+        cssVariables: [],
+        dataAttributes: ["data-disabled"],
+        stateModels: ["value"],
+      },
+    ],
+    types: ["ColorPickerProps"],
+    utilities: [],
   },
   {
     name: "ColorSwatch",
     slug: "color-swatch",
+    lifecycle: "stable",
     parts: [
       {
         path: "ColorSwatch",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-selected"],
       },
     ],
+    types: ["ColorSwatchProps"],
+    utilities: [],
   },
   {
     name: "Combobox",
     slug: "combobox",
+    lifecycle: "alpha",
     parts: [
       {
         path: "Combobox",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
-        stateModels: ["value"],
+        dataAttributes: ["data-invalid"],
+        stateModels: ["query", "value"],
+      },
+    ],
+    types: ["ComboboxOption", "ComboboxProps"],
+    utilities: [],
+    descendantStates: [
+      {
+        name: "popup",
+        selector: "[data-state]",
+        dataAttributes: ["data-state"],
       },
     ],
   },
   {
     name: "Container",
     slug: "container",
+    lifecycle: "stable",
     parts: [
       {
         path: "Container",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-query"],
       },
     ],
+    types: ["ContainerProps", "ContainerSize"],
+    utilities: [],
   },
   {
     name: "DataGrid",
     slug: "data-grid",
+    lifecycle: "alpha",
     parts: [
       {
         path: "DataGrid",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        stateModels: ["selectedRowIds", "sorting"],
+      },
+    ],
+    types: [
+      "DataGridCellEdit",
+      "DataGridCellValue",
+      "DataGridColumn",
+      "DataGridFilter",
+      "DataGridPagination",
+      "DataGridProps",
+      "DataGridSort",
+    ],
+    utilities: [],
+    descendantStates: [
+      {
+        name: "cell",
+        selector: '[role="gridcell"]',
+        dataAttributes: ["data-editable", "data-editing"],
+      },
+      {
+        name: "row",
+        selector: '[role="row"]',
+        dataAttributes: ["data-selected"],
       },
     ],
   },
   {
     name: "DataTable",
     slug: "data-table",
+    lifecycle: "alpha",
     parts: [
       {
         path: "DataTable",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        stateModels: ["selectedRowIds", "sorting"],
       },
     ],
+    types: ["CellValue", "DataColumn", "DataSort", "DataTableProps"],
+    utilities: [],
   },
   {
     name: "DatePicker",
     slug: "date-picker",
+    lifecycle: "stable",
     parts: [
       {
         path: "DatePicker",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
         stateModels: ["value"],
       },
     ],
+    types: ["DatePickerProps"],
+    utilities: [],
   },
   {
     name: "DateTimePicker",
     slug: "date-time-picker",
+    lifecycle: "stable",
     parts: [
       {
         path: "DateTimePicker",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
         stateModels: ["value"],
       },
     ],
+    types: ["DateTimePickerProps"],
+    utilities: [],
   },
   {
     name: "DescriptionList",
     slug: "description-list",
+    lifecycle: "stable",
     parts: [
       {
         path: "DescriptionList",
@@ -424,10 +608,17 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "DescriptionListDetailsProps",
+      "DescriptionListProps",
+      "DescriptionListTermProps",
+    ],
+    utilities: [],
   },
   {
     name: "Dialog",
     slug: "dialog",
+    lifecycle: "stable",
     parts: [
       {
         path: "Dialog.Close",
@@ -446,6 +637,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
       {
         path: "Dialog.Root",
@@ -465,12 +657,23 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
     ],
+    types: [
+      "DialogCloseProps",
+      "DialogDescriptionProps",
+      "DialogPopupProps",
+      "DialogRootProps",
+      "DialogTitleProps",
+      "DialogTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "Drawer",
     slug: "drawer",
+    lifecycle: "stable",
     parts: [
       {
         path: "Drawer.Close",
@@ -489,6 +692,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-side", "data-state"],
       },
       {
         path: "Drawer.Root",
@@ -508,12 +712,24 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-state"],
       },
     ],
+    types: [
+      "DrawerCloseProps",
+      "DrawerDescriptionProps",
+      "DrawerPopupProps",
+      "DrawerRootProps",
+      "DrawerSide",
+      "DrawerTitleProps",
+      "DrawerTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "DropdownMenu",
     slug: "dropdown-menu",
+    lifecycle: "stable",
     parts: [
       {
         path: "DropdownMenu.Item",
@@ -532,6 +748,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-align", "data-side", "data-state"],
       },
       {
         path: "DropdownMenu.Root",
@@ -553,10 +770,20 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "DropdownMenuItemProps",
+      "DropdownMenuLabelProps",
+      "DropdownMenuPopupProps",
+      "DropdownMenuRootProps",
+      "DropdownMenuSeparatorProps",
+      "DropdownMenuTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "EmptyState",
     slug: "empty-state",
+    lifecycle: "stable",
     parts: [
       {
         path: "EmptyState",
@@ -565,10 +792,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["EmptyStateProps"],
+    utilities: [],
   },
   {
     name: "Field",
     slug: "field",
+    lifecycle: "stable",
     parts: [
       {
         path: "Field.Control",
@@ -599,12 +829,22 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-disabled", "data-invalid"],
       },
     ],
+    types: [
+      "FieldControlProps",
+      "FieldDescriptionProps",
+      "FieldErrorProps",
+      "FieldLabelProps",
+      "FieldRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "Fieldset",
     slug: "fieldset",
+    lifecycle: "stable",
     parts: [
       {
         path: "Fieldset",
@@ -619,10 +859,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["FieldsetLegendProps", "FieldsetProps"],
+    utilities: [],
   },
   {
     name: "Footer",
     slug: "footer",
+    lifecycle: "stable",
     parts: [
       {
         path: "Footer",
@@ -631,10 +874,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["FooterProps"],
+    utilities: [],
   },
   {
     name: "Grid",
     slug: "grid",
+    lifecycle: "stable",
     parts: [
       {
         path: "Grid",
@@ -648,17 +894,14 @@ export const publicContracts = [
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
       },
-      {
-        path: "GridItem",
-        kind: "dom",
-        escapeHatches: ["className", "style", "ref"],
-        cssVariables: [],
-      },
     ],
+    types: ["GridItemProps", "GridProps"],
+    utilities: [],
   },
   {
     name: "Heading",
     slug: "heading",
+    lifecycle: "stable",
     parts: [
       {
         path: "Heading",
@@ -667,22 +910,29 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["HeadingProps"],
+    utilities: [],
   },
   {
     name: "IconButton",
     slug: "icon-button",
+    lifecycle: "stable",
     parts: [
       {
         path: "IconButton",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-loading"],
       },
     ],
+    types: ["IconButtonProps"],
+    utilities: [],
   },
   {
     name: "Indicator",
     slug: "indicator",
+    lifecycle: "stable",
     parts: [
       {
         path: "Indicator",
@@ -691,10 +941,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["IndicatorPlacement", "IndicatorProps"],
+    utilities: [],
   },
   {
     name: "Inline",
     slug: "inline",
+    lifecycle: "stable",
     parts: [
       {
         path: "Inline",
@@ -703,22 +956,29 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["InlineProps"],
+    utilities: [],
   },
   {
     name: "Input",
     slug: "input",
+    lifecycle: "stable",
     parts: [
       {
         path: "Input",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
       },
     ],
+    types: ["InputProps", "InputType"],
+    utilities: [],
   },
   {
     name: "InputGroup",
     slug: "input-group",
+    lifecycle: "stable",
     parts: [
       {
         path: "InputGroup.Addon",
@@ -731,6 +991,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
       },
       {
         path: "InputGroup.Root",
@@ -739,10 +1000,17 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "InputGroupAddonProps",
+      "InputGroupInputProps",
+      "InputGroupRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "Kbd",
     slug: "kbd",
+    lifecycle: "stable",
     parts: [
       {
         path: "Kbd",
@@ -751,10 +1019,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["KbdProps"],
+    utilities: [],
   },
   {
     name: "Knob",
     slug: "knob",
+    lifecycle: "stable",
     parts: [
       {
         path: "Knob",
@@ -764,22 +1035,29 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["KnobProps"],
+    utilities: [],
   },
   {
     name: "LevelMeter",
     slug: "level-meter",
+    lifecycle: "stable",
     parts: [
       {
         path: "LevelMeter",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-orientation"],
       },
     ],
+    types: ["LevelMeterProps"],
+    utilities: [],
   },
   {
     name: "Link",
     slug: "link",
+    lifecycle: "stable",
     parts: [
       {
         path: "Link",
@@ -788,10 +1066,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["LinkProps"],
+    utilities: [],
   },
   {
     name: "List",
     slug: "list",
+    lifecycle: "stable",
     parts: [
       {
         path: "List",
@@ -806,10 +1087,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ListItemProps", "ListProps"],
+    utilities: [],
   },
   {
     name: "Meter",
     slug: "meter",
+    lifecycle: "stable",
     parts: [
       {
         path: "Meter",
@@ -818,23 +1102,30 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["MeterProps"],
+    utilities: [],
   },
   {
     name: "NumberField",
     slug: "number-field",
+    lifecycle: "stable",
     parts: [
       {
         path: "NumberField",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
         stateModels: ["value"],
       },
     ],
+    types: ["NumberFieldProps"],
+    utilities: [],
   },
   {
     name: "PageHeader",
     slug: "page-header",
+    lifecycle: "stable",
     parts: [
       {
         path: "PageHeader",
@@ -843,10 +1134,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["PageHeaderProps"],
+    utilities: [],
   },
   {
     name: "Pagination",
     slug: "pagination",
+    lifecycle: "stable",
     parts: [
       {
         path: "Pagination.Ellipsis",
@@ -895,12 +1189,26 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        stateModels: ["page"],
       },
     ],
+    types: [
+      "PaginationButtonProps",
+      "PaginationEllipsisProps",
+      "PaginationFirstProps",
+      "PaginationLastProps",
+      "PaginationNextProps",
+      "PaginationPageProps",
+      "PaginationPreviousProps",
+      "PaginationRangeProps",
+      "PaginationRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "PieChart",
     slug: "pie-chart",
+    lifecycle: "alpha",
     parts: [
       {
         path: "PieChart",
@@ -909,10 +1217,20 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["PieChartDatum", "PieChartProps"],
+    utilities: [],
+    descendantStates: [
+      {
+        name: "slice",
+        selector: "[data-active]",
+        dataAttributes: ["data-active"],
+      },
+    ],
   },
   {
     name: "Popover",
     slug: "popover",
+    lifecycle: "stable",
     parts: [
       {
         path: "Popover.Close",
@@ -925,6 +1243,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-align", "data-side", "data-state"],
       },
       {
         path: "Popover.Root",
@@ -940,10 +1259,18 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "PopoverCloseProps",
+      "PopoverPopupProps",
+      "PopoverRootProps",
+      "PopoverTriggerProps",
+    ],
+    utilities: [],
   },
   {
     name: "Progress",
     slug: "progress",
+    lifecycle: "stable",
     parts: [
       {
         path: "Progress",
@@ -952,16 +1279,20 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ProgressProps"],
+    utilities: [],
   },
   {
     name: "RadioGroup",
     slug: "radio-group",
+    lifecycle: "stable",
     parts: [
       {
         path: "RadioGroup.Item",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
       },
       {
         path: "RadioGroup.Legend",
@@ -974,26 +1305,40 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
         stateModels: ["value"],
       },
     ],
+    types: [
+      "RadioGroupItemProps",
+      "RadioGroupLegendProps",
+      "RadioGroupRootProps",
+      "RadioGroupValue",
+      "RadioGroupValueChangeHandler",
+    ],
+    utilities: [],
   },
   {
     name: "Rating",
     slug: "rating",
+    lifecycle: "alpha",
     parts: [
       {
         path: "Rating",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-readonly"],
         stateModels: ["value"],
       },
     ],
+    types: ["RatingProps", "RatingValue", "RatingValueChangeHandler"],
+    utilities: [],
   },
   {
     name: "ScatterChart",
     slug: "scatter-chart",
+    lifecycle: "alpha",
     parts: [
       {
         path: "ScatterChart",
@@ -1002,46 +1347,68 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["ScatterChartPoint", "ScatterChartProps", "ScatterChartSeries"],
+    utilities: [],
+    descendantStates: [
+      {
+        name: "series",
+        selector: "[data-muted]",
+        dataAttributes: ["data-muted"],
+      },
+    ],
   },
   {
     name: "ScrollArea",
     slug: "scroll-area",
+    lifecycle: "stable",
     parts: [
       {
         path: "ScrollArea",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-axis"],
       },
     ],
+    types: ["ScrollAreaProps"],
+    utilities: [],
   },
   {
     name: "Select",
     slug: "select",
+    lifecycle: "stable",
     parts: [
       {
         path: "Select",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
       },
     ],
+    types: ["SelectProps"],
+    utilities: [],
   },
   {
     name: "Separator",
     slug: "separator",
+    lifecycle: "stable",
     parts: [
       {
         path: "Separator",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-orientation"],
       },
     ],
+    types: ["SeparatorProps"],
+    utilities: [],
   },
   {
     name: "Sidebar",
     slug: "sidebar",
+    lifecycle: "stable",
     parts: [
       {
         path: "Sidebar.Close",
@@ -1081,10 +1448,20 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "SidebarCloseProps",
+      "SidebarContentProps",
+      "SidebarLayoutProps",
+      "SidebarPanelProps",
+      "SidebarRootProps",
+      "SidebarToggleProps",
+    ],
+    utilities: [],
   },
   {
     name: "Skeleton",
     slug: "skeleton",
+    lifecycle: "stable",
     parts: [
       {
         path: "Skeleton",
@@ -1093,10 +1470,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["SkeletonProps"],
+    utilities: [],
   },
   {
     name: "SkipLink",
     slug: "skip-link",
+    lifecycle: "stable",
     parts: [
       {
         path: "SkipLink",
@@ -1105,10 +1485,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["SkipLinkProps"],
+    utilities: [],
   },
   {
     name: "Slider",
     slug: "slider",
+    lifecycle: "stable",
     parts: [
       {
         path: "Slider",
@@ -1122,13 +1505,17 @@ export const publicContracts = [
           "--flux-slider-thumb-size",
           "--flux-slider-track-size",
         ],
+        dataAttributes: ["data-appearance", "data-orientation"],
         stateModels: ["value"],
       },
     ],
+    types: ["SliderMark", "SliderProps"],
+    utilities: [],
   },
   {
     name: "Sparkline",
     slug: "sparkline",
+    lifecycle: "stable",
     parts: [
       {
         path: "Sparkline",
@@ -1137,10 +1524,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["SparklineProps"],
+    utilities: [],
   },
   {
     name: "Spinner",
     slug: "spinner",
+    lifecycle: "stable",
     parts: [
       {
         path: "Spinner",
@@ -1149,23 +1539,30 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["SpinnerProps"],
+    utilities: [],
   },
   {
     name: "SplitPane",
     slug: "split-pane",
+    lifecycle: "stable",
     parts: [
       {
         path: "SplitPane",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-orientation"],
         stateModels: ["value"],
       },
     ],
+    types: ["SplitPaneProps"],
+    utilities: [],
   },
   {
     name: "Stack",
     slug: "stack",
+    lifecycle: "stable",
     parts: [
       {
         path: "Stack",
@@ -1174,10 +1571,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["StackProps"],
+    utilities: [],
   },
   {
     name: "Stat",
     slug: "stat",
+    lifecycle: "stable",
     parts: [
       {
         path: "Stat",
@@ -1186,10 +1586,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["StatProps"],
+    utilities: [],
   },
   {
     name: "StatusBadge",
     slug: "status-badge",
+    lifecycle: "stable",
     parts: [
       {
         path: "StatusBadge",
@@ -1198,10 +1601,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["StatusBadgeProps", "StatusBadgeTone"],
+    utilities: [],
   },
   {
     name: "Stepper",
     slug: "stepper",
+    lifecycle: "stable",
     parts: [
       {
         path: "Stepper.Button",
@@ -1214,6 +1620,7 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-status"],
       },
       {
         path: "Stepper.Link",
@@ -1226,25 +1633,40 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-orientation"],
       },
     ],
+    types: [
+      "StepperButtonProps",
+      "StepperItemProps",
+      "StepperLinkProps",
+      "StepperOrientation",
+      "StepperRootProps",
+      "StepperStatus",
+    ],
+    utilities: [],
   },
   {
     name: "Switch",
     slug: "switch",
+    lifecycle: "stable",
     parts: [
       {
         path: "Switch",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
         stateModels: ["checked"],
       },
     ],
+    types: ["SwitchProps"],
+    utilities: [],
   },
   {
     name: "Table",
     slug: "table",
+    lifecycle: "stable",
     parts: [
       {
         path: "Table.Body",
@@ -1301,10 +1723,23 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "TableBodyProps",
+      "TableCaptionProps",
+      "TableCellProps",
+      "TableColumnHeaderProps",
+      "TableFooterProps",
+      "TableHeaderProps",
+      "TableRootProps",
+      "TableRowHeaderProps",
+      "TableRowProps",
+    ],
+    utilities: [],
   },
   {
     name: "Tabs",
     slug: "tabs",
+    lifecycle: "stable",
     parts: [
       {
         path: "Tabs.List",
@@ -1332,10 +1767,19 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "TabsListProps",
+      "TabsOrientation",
+      "TabsPanelProps",
+      "TabsRootProps",
+      "TabsTabProps",
+    ],
+    utilities: [],
   },
   {
     name: "Tag",
     slug: "tag",
+    lifecycle: "stable",
     parts: [
       {
         path: "Tag",
@@ -1344,10 +1788,13 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["TagProps"],
+    utilities: [],
   },
   {
     name: "Text",
     slug: "text",
+    lifecycle: "stable",
     parts: [
       {
         path: "Text",
@@ -1356,47 +1803,66 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["TextProps"],
+    utilities: [],
   },
   {
     name: "Textarea",
     slug: "textarea",
+    lifecycle: "stable",
     parts: [
       {
         path: "Textarea",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-auto-size", "data-invalid"],
       },
     ],
+    types: ["TextareaProps"],
+    utilities: [],
   },
   {
     name: "ThemeScope",
     slug: "theme-scope",
+    lifecycle: "stable",
     parts: [
       {
         path: "ThemeScope",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-query"],
       },
     ],
+    types: [
+      "ThemeScopeColorOverrides",
+      "ThemeScopeColorVariable",
+      "ThemeScopeProps",
+    ],
+    utilities: [],
   },
   {
     name: "TimePicker",
     slug: "time-picker",
+    lifecycle: "stable",
     parts: [
       {
         path: "TimePicker",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-invalid"],
         stateModels: ["value"],
       },
     ],
+    types: ["TimePickerProps"],
+    utilities: [],
   },
   {
     name: "Toast",
     slug: "toast",
+    lifecycle: "stable",
     parts: [
       {
         path: "Toast.Provider",
@@ -1411,10 +1877,18 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: [
+      "ToastController",
+      "ToastOptions",
+      "ToastProviderProps",
+      "ToastViewportProps",
+    ],
+    utilities: ["useToast"],
   },
   {
     name: "Toggle",
     slug: "toggle",
+    lifecycle: "stable",
     parts: [
       {
         path: "Toggle",
@@ -1424,10 +1898,13 @@ export const publicContracts = [
         stateModels: ["pressed"],
       },
     ],
+    types: ["ToggleProps"],
+    utilities: [],
   },
   {
     name: "ToggleGroup",
     slug: "toggle-group",
+    lifecycle: "stable",
     parts: [
       {
         path: "ToggleGroup.Item",
@@ -1443,10 +1920,13 @@ export const publicContracts = [
         stateModels: ["value"],
       },
     ],
+    types: ["ToggleGroupItemProps", "ToggleGroupRootProps"],
+    utilities: [],
   },
   {
     name: "Toolbar",
     slug: "toolbar",
+    lifecycle: "stable",
     parts: [
       {
         path: "Toolbar.Button",
@@ -1465,50 +1945,72 @@ export const publicContracts = [
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-orientation"],
       },
       {
         path: "Toolbar.Separator",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-orientation"],
       },
     ],
+    types: [
+      "ToolbarButtonProps",
+      "ToolbarLinkProps",
+      "ToolbarRootProps",
+      "ToolbarSeparatorProps",
+    ],
+    utilities: [],
   },
   {
     name: "Tooltip",
     slug: "tooltip",
+    lifecycle: "stable",
     parts: [
       {
         path: "Tooltip",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-align", "data-side", "data-state"],
         stateModels: ["open"],
       },
     ],
+    types: ["TooltipProps"],
+    utilities: [],
   },
   {
     name: "TreeView",
     slug: "tree-view",
+    lifecycle: "alpha",
     parts: [
       {
         path: "TreeView.Item",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
+        dataAttributes: ["data-expandable", "data-expanded"],
       },
       {
         path: "TreeView.Root",
         kind: "dom",
         escapeHatches: ["className", "style", "ref"],
         cssVariables: [],
-        stateModels: ["value"],
+        stateModels: ["expandedItems"],
       },
     ],
+    types: [
+      "TreeViewExpandedItemsChangeHandler",
+      "TreeViewItemProps",
+      "TreeViewRootProps",
+    ],
+    utilities: [],
   },
   {
     name: "VisuallyHidden",
     slug: "visually-hidden",
+    lifecycle: "stable",
     parts: [
       {
         path: "VisuallyHidden",
@@ -1517,6 +2019,8 @@ export const publicContracts = [
         cssVariables: [],
       },
     ],
+    types: ["VisuallyHiddenProps"],
+    utilities: [],
   },
 ] as const;
 

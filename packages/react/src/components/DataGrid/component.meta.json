@@ -2,7 +2,17 @@
   "name": "DataGrid",
   "slug": "data-grid",
   "category": "Data",
-  "status": "beta",
+  "status": "alpha",
   "description": "Interactive ARIA grid with stable cell focus, client transforms, row selection, column visibility, and app-owned inline cell editing.",
-  "sizeClass": "data-heavy"
+  "sizeClass": "data-heavy",
+  "publicDescendantDataAttributes": {
+    "cell": {
+      "selector": "[role=\"gridcell\"]",
+      "dataAttributes": ["data-editable", "data-editing"]
+    },
+    "row": {
+      "selector": "[role=\"row\"]",
+      "dataAttributes": ["data-selected"]
+    }
+  }
 }

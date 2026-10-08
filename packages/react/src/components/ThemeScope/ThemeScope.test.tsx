@@ -56,6 +56,10 @@ describe("ThemeScope", () => {
         padding="md"
         aria-label="Preview theme"
         className="consumer"
+        colorOverrides={{
+          "--flux-color-accent": "#123456",
+          "--flux-color-surface-subtle": "#f0f0f0",
+        }}
         style={{ margin: "1rem" }}
       />,
     );
@@ -65,15 +69,25 @@ describe("ThemeScope", () => {
     expect(scope).toHaveAttribute("data-fs", "subtle");
     expect(scope).toHaveClass("consumer");
     expect(scope.style.margin).toBe("1rem");
+    expect(scope.style.getPropertyValue("--flux-color-accent")).toBe("#123456");
+    expect(scope.style.getPropertyValue("--flux-color-surface-subtle")).toBe(
+      "#f0f0f0",
+    );
   });
 
   it("renders scoped theme state on the server without touching the root document", () => {
     const markup = renderToString(
-      <ThemeScope as="section" theme="paper" query>
+      <ThemeScope
+        as="section"
+        theme="paper"
+        query
+        colorOverrides={{ "--flux-color-accent": "#123456" }}
+      >
         Preview
       </ThemeScope>,
     );
     expect(markup).toContain('data-flux-theme="paper"');
     expect(markup).toContain('data-query="true"');
+    expect(markup).toContain("--flux-color-accent:#123456");
   });
 });

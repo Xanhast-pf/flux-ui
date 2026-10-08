@@ -1,16 +1,21 @@
-import { Inline, Spinner, Stack, Text } from "@flux-ui/react";
-export default function Example() {
+import { Inline, Spinner, Text } from "@flux-ui/react";
+
+export default function NamedSpinner() {
   return (
-    <Stack gap="md">
-      <Inline gap="md">
-        <Spinner label="Loading preview" />
-        <Text>Preparing your preview</Text>
-      </Inline>
-      <Inline gap="md">
-        <Spinner size="sm" label={null} />
-        <Spinner size="lg" label={null} />
-        <Text>Decorative sizes share the status above.</Text>
-      </Inline>
-    </Stack>
+    <Inline gap="md">
+      <Spinner label="Loading preview" />
+      <Text>Preparing your preview</Text>
+    </Inline>
+  );
+}
+
+export function SpinnerSizes() {
+  return (
+    <Inline gap="md" wrap>
+      <Spinner size="sm" label={null} />
+      <Spinner size="md" label={null} />
+      <Spinner size="lg" label={null} />
+      <Text>Decorative sizes can share a status owned by their parent.</Text>
+    </Inline>
   );
 }

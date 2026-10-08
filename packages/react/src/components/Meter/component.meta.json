@@ -2,7 +2,8 @@
   "name": "Meter",
   "slug": "meter",
   "category": "Feedback",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native bounded measurement; unknown data is never presented as zero.",
   "sizeClass": "primitive"
 }

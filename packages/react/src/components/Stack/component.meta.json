@@ -2,7 +2,8 @@
   "name": "Stack",
   "slug": "stack",
   "category": "Layout",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Token-driven vertical layout with responsive spacing.",
   "sizeClass": "primitive"
 }

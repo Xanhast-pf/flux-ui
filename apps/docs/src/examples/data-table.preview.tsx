@@ -63,7 +63,7 @@ export default function Preview() {
         height={400}
         selectable
         selectedRowIds={selected}
-        onSelectionChange={setSelected}
+        onSelectedRowIdsChange={setSelected}
       />
       <Text tone="muted">
         {selected.length} selected IDs. Sorting preserves identity. Only a

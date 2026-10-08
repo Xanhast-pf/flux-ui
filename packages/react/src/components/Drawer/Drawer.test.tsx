@@ -19,13 +19,19 @@ describe("Drawer", () => {
       </Drawer.Root>,
     );
 
-    await user.click(screen.getByRole("button", { name: "Open navigation" }));
+    const trigger = screen.getByRole("button", { name: "Open navigation" });
+    expect(trigger).toHaveAttribute("data-state", "closed");
+    await user.click(trigger);
+    expect(trigger).toHaveAttribute("data-state", "open");
     const drawer = screen.getByRole("dialog", { name: "Navigation" });
     expect(drawer).toHaveAttribute("data-side", "left");
+    expect(drawer).toHaveAttribute("data-state", "open");
     expect(drawer).toHaveAttribute("open");
 
     await user.click(screen.getByRole("button", { name: "Close navigation" }));
     expect(drawer).not.toHaveAttribute("open");
+    expect(drawer).toHaveAttribute("data-state", "closed");
+    expect(trigger).toHaveAttribute("data-state", "closed");
   });
 
   it("measures the classic scrollbar before opening", async () => {

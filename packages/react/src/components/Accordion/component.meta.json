@@ -2,7 +2,11 @@
   "name": "Accordion",
   "slug": "accordion",
   "category": "Disclosure",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Grouped native disclosures with automatic exclusive naming.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "Accordion.Root": ["data-type"]
+  }
 }

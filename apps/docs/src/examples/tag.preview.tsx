@@ -1,6 +1,16 @@
 import { Button, Inline, Tag, Text } from "@flux-ui/react";
 import { useRef, useState } from "react";
-export default function Example() {
+
+export default function PassiveTags() {
+  return (
+    <Inline wrap gap="sm">
+      <Tag>Design</Tag>
+      <Tag tone="accent">Frontend</Tag>
+    </Inline>
+  );
+}
+
+export function RemovableTag() {
   const [removed, setRemoved] = useState(false);
   const reset = useRef<HTMLButtonElement>(null);
   return (

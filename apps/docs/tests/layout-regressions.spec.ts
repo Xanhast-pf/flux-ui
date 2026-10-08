@@ -61,7 +61,7 @@ for (const slug of [
   }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(`/#components/${slug}`);
-    const preview = page.locator(".preview-content");
+    const preview = page.locator(".preview-content").first();
     await expect(preview).toBeVisible();
     for (const compact of [false, true]) {
       if (compact)

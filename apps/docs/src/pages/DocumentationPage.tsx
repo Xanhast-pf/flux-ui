@@ -14,7 +14,7 @@ import { REPOSITORY_URL } from "../lib/format.js";
 const guides = [
   {
     title: "Start building",
-    description: "Run the workspace and find the right building block.",
+    description: "Set up Flux and explore components.",
     links: [
       ["#install", "Local setup"],
       ["#components", "Component APIs"],
@@ -23,7 +23,7 @@ const guides = [
   },
   {
     title: "Make it yours",
-    description: "Shape the theme without forking the components.",
+    description: "Customize colors and icons.",
     links: [
       ["#tokens", "Tokens and themes"],
       ["#icons", "Icon browser"],
@@ -31,7 +31,7 @@ const guides = [
   },
   {
     title: "Contribute",
-    description: "Understand the architecture and its review contracts.",
+    description: "Read the contribution guide.",
     links: [
       [
         `${REPOSITORY_URL}/blob/main/docs/development.md`,
@@ -50,7 +50,7 @@ export function DocumentationPage() {
     <Stack className="reference-page" as="section" gap="lg">
       <PageHeader title={<>Guides & FAQ</>}>
         <Text as="p" variant="lead" tone="muted">
-          Start with a task. Keep the reference close.
+          Guides and common questions.
         </Text>
       </PageHeader>
       <Grid minColumnWidth="17rem" gap="md">
@@ -86,7 +86,8 @@ export function DocumentationPage() {
               its API and preview, then run{" "}
               <Code>pnpm flux component doctor Name</Code>,{" "}
               <Code>pnpm flux maintain generate</Code> and{" "}
-              <Code>pnpm flux check</Code>. Registration is convention-based.
+              <Code>pnpm flux check</Code>. Components are discovered
+              automatically.
             </Accordion.Content>
           </Accordion.Item>
           <Accordion.Item>
@@ -94,10 +95,9 @@ export function DocumentationPage() {
               Does a green demo mean production-ready?
             </Accordion.Trigger>
             <Accordion.Content>
-              No. Flux is pre-stable, and lifecycle status varies by component.
-              A preview is one integration check, not certification. Review the{" "}
-              <Link href="#trust">Trust Center</Link> for evidence and known
-              limits.
+              No. Flux is pre-stable. Check component status and test your app.
+              See the <Link href="#trust">Trust Center</Link> for evidence and
+              known limits.
             </Accordion.Content>
           </Accordion.Item>
           <Accordion.Item>
@@ -105,23 +105,19 @@ export function DocumentationPage() {
               Why does a size entry say Pending baseline?
             </Accordion.Trigger>
             <Accordion.Content>
-              No reviewed production baseline is committed for that entry. Run{" "}
+              No baseline has been approved. Run{" "}
               <Code>pnpm flux size baseline review</Code> to inspect the
-              proposed component baseline. Only after explicit review may
-              maintainers run <Code>pnpm flux size baseline accept</Code>.
-              Aggregate review and acceptance use{" "}
-              <Code>pnpm flux size aggregate review</Code> and{" "}
+              proposed component baseline. After review, maintainers can run{" "}
+              <Code>pnpm flux size baseline accept</Code>. Aggregate review and
+              acceptance use <Code>pnpm flux size aggregate review</Code> and{" "}
               <Code>pnpm flux size aggregate accept</Code> separately; icons use{" "}
-              <Code>pnpm flux size icons accept</Code>. Review is read-only;
-              accept writes the accepted baseline. Absolute budgets remain
-              enforced.
+              <Code>pnpm flux size icons accept</Code>. Review is read-only.
+              Acceptance saves a baseline; budgets still apply.
             </Accordion.Content>
           </Accordion.Item>
         </Accordion.Root>
       </Stack>
-      <Link href={`${REPOSITORY_URL}/tree/main/docs`}>
-        All repository guides →
-      </Link>
+      <Link href={`${REPOSITORY_URL}/tree/main/docs`}>More guides →</Link>
     </Stack>
   );
 }

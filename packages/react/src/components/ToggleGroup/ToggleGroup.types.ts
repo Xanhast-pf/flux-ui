@@ -1,8 +1,8 @@
 import type { ComponentPropsWithRef } from "react";
 import type { AccessibleName } from "../../internal/accessibility.types.js";
 import type {
-  SelectionAppearance,
   SelectionSize,
+  SelectionVariant,
 } from "../../internal/selection.types.js";
 type RootBase = Omit<
   ComponentPropsWithRef<"div">,
@@ -10,7 +10,7 @@ type RootBase = Omit<
 > &
   AccessibleName & {
     size?: SelectionSize | undefined;
-    appearance?: SelectionAppearance | undefined;
+    variant?: SelectionVariant | undefined;
     orientation?: "horizontal" | "vertical" | undefined;
     loopFocus?: boolean | undefined;
     disabled?: boolean | undefined;
@@ -20,7 +20,7 @@ type Single =
       type: "single";
       value: string | null;
       defaultValue?: never;
-      onValueChange: (value: string | null) => void;
+      onValueChange?: ((value: string | null) => void) | undefined;
     }
   | {
       type: "single";
@@ -33,7 +33,7 @@ type Multiple =
       type: "multiple";
       value: readonly string[];
       defaultValue?: never;
-      onValueChange: (value: readonly string[]) => void;
+      onValueChange?: ((value: readonly string[]) => void) | undefined;
     }
   | {
       type: "multiple";

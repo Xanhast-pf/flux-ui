@@ -2,7 +2,13 @@
   "name": "ChartTooltip",
   "slug": "chart-tooltip",
   "category": "Data",
-  "status": "beta",
+  "status": "alpha",
   "description": "Optional pointer-inert visual data tooltip wrapper for Flux charts with hover or click triggers.",
-  "sizeClass": "interactive"
+  "sizeClass": "interactive",
+  "publicDescendantDataAttributes": {
+    "popup": {
+      "selector": "[data-align]",
+      "dataAttributes": ["data-align", "data-side"]
+    }
+  }
 }

@@ -111,7 +111,7 @@ function RadioGroupItem({
       event.currentTarget.checked &&
       context.onValueChange !== undefined
     ) {
-      context.onValueChange(value, event);
+      context.onValueChange(value);
     }
   }
 

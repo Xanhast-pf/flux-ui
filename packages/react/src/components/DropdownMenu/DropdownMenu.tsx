@@ -53,7 +53,8 @@ function Popup({
       onBlurCapture={(event) => {
         onBlurCapture?.(event);
         if (
-          event.relatedTarget instanceof Node &&
+          event.relatedTarget instanceof
+            event.currentTarget.ownerDocument.defaultView!.Node &&
           !event.currentTarget.contains(event.relatedTarget)
         )
           context.request(false);
@@ -70,7 +71,7 @@ function Popup({
           return;
         const scope = event.currentTarget;
         if (
-          !(event.target instanceof Element) ||
+          !(event.target instanceof scope.ownerDocument.defaultView!.Element) ||
           event.target.closest('[role="menu"]') !== scope
         )
           return;

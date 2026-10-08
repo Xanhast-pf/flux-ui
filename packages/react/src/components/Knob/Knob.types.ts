@@ -30,7 +30,7 @@ type KnobUncontrolledProps = {
 type KnobControlledProps = {
   value: number;
   defaultValue?: never;
-  onValueChange: (value: number) => void;
+  onValueChange?: ((value: number) => void) | undefined;
 };
 
 export type KnobProps = KnobBaseProps &

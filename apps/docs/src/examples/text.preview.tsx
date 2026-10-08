@@ -1,6 +1,6 @@
 import { Stack, Text } from "@flux-ui/react";
 
-export default function Preview() {
+export default function TextRoles() {
   return (
     <Stack gap={3}>
       <Text as="p" variant="body">
@@ -15,6 +15,23 @@ export default function Preview() {
       <Text as="time" dateTime="2026-09-11" variant="caption">
         September 11, 2026
       </Text>
+    </Stack>
+  );
+}
+
+export function TextToneAndEmphasis() {
+  return (
+    <Stack gap={3}>
+      <Text tone="muted">Muted supporting text</Text>
+      <Text tone="accent" weight="medium">
+        Accent emphasis
+      </Text>
+      <Text tone="danger" weight="bold">
+        Danger emphasis
+      </Text>
+      <Text italic>Italic emphasis without changing semantics</Text>
+      <Text decoration="underline">Underlined text</Text>
+      <Text decoration="line-through">Deprecated value</Text>
     </Stack>
   );
 }

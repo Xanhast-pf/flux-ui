@@ -28,7 +28,7 @@ export default {
     [
       "value / defaultValue",
       "number",
-      "Choose one ownership mode: controlled value requires onValueChange; uncontrolled mode may use defaultValue.",
+      "Choose one ownership mode: controlled value may be read-only; onValueChange is optional. Uncontrolled mode may use defaultValue.",
     ],
     [
       "min / max / step",

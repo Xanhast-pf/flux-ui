@@ -10,7 +10,7 @@ import type {
 } from "./Tabs.types.js";
 function TabsRoot({
   size = "md",
-  appearance = "underline",
+  variant = "underline",
   className,
   defaultValue,
   onValueChange,
@@ -34,7 +34,7 @@ function TabsRoot({
         controlled: controlledValue !== undefined,
         id: generatedId,
         size,
-        appearance,
+        variant,
         orientation,
         setValue,
         value,
@@ -69,7 +69,7 @@ function TabsTab({
       aria-controls={`${context.id}-panel-${suffix}`}
       aria-selected={selected}
       className={joinClassNames(tab, className)}
-      data-a={context.appearance}
+      data-a={context.variant}
       data-o={context.orientation}
       data-s={context.size}
       data-flux-tab-value={value}

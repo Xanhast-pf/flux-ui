@@ -2,7 +2,8 @@
   "name": "Tabs",
   "slug": "tabs",
   "category": "Navigation",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Responsive tabbed navigation with automatic overflow menus and keyboard-accessible panels.",
   "sizeClass": "composite"
 }

@@ -29,3 +29,22 @@ export default function Example() {
     </Stack>
   );
 }
+
+export function SingleToggleGroup() {
+  return (
+    <Stack gap="md">
+      <ToggleGroup.Root
+        type="single"
+        defaultValue="center"
+        aria-label="Text alignment"
+      >
+        <ToggleGroup.Item value="left">Left</ToggleGroup.Item>
+        <ToggleGroup.Item value="center">Center</ToggleGroup.Item>
+        <ToggleGroup.Item value="right">Right</ToggleGroup.Item>
+      </ToggleGroup.Root>
+      <Text as="p" variant="body" tone="muted">
+        Single mode keeps at most one item selected.
+      </Text>
+    </Stack>
+  );
+}

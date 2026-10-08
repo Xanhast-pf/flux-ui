@@ -17,7 +17,7 @@ for (const component of components) {
         exact: true,
       }),
     ).toBeVisible();
-    await expect(page.locator(".preview-content")).toBeVisible();
+    await expect(page.locator(".preview-content").first()).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Public contract", exact: true }),
     ).toBeVisible();
@@ -34,6 +34,47 @@ for (const component of components) {
     expect(errors).toEqual([]);
   });
 }
+
+test("component previews show curated variations only when declared", async ({
+  page,
+}) => {
+  await page.goto("/#components/button");
+  const buttonFrame = page.locator(".preview-frame");
+  await expect(
+    buttonFrame.getByText("Button examples", { exact: true }),
+  ).toBeVisible();
+  await expect(buttonFrame.locator(".preview-content")).toHaveCount(4);
+  for (const title of ["Variants", "Tones", "Sizes", "States"]) {
+    await expect(buttonFrame.getByText(title, { exact: true })).toBeVisible();
+  }
+
+  await page.goto("/#components/switch");
+  const switchFrame = page.locator(".preview-frame");
+  await expect(
+    switchFrame.getByText("Live Switch", { exact: true }),
+  ).toBeVisible();
+  await expect(switchFrame.locator(".preview-content")).toHaveCount(1);
+  await expect(switchFrame.getByText("Default", { exact: true })).toHaveCount(
+    0,
+  );
+});
+
+test("generated contracts distinguish descendant state hooks from public parts", async ({
+  page,
+}) => {
+  await page.goto("/#components/data-grid");
+  await expect(
+    page.getByRole("heading", { name: "Descendant state hooks", exact: true }),
+  ).toBeVisible();
+  const section = page
+    .getByRole("heading", { name: "Descendant state hooks", exact: true })
+    .locator("..");
+  await expect(section).toContainText('[role="gridcell"]');
+  await expect(section).toContainText("data-editable");
+  await expect(section).toContainText("data-editing");
+  await expect(section).toContainText('[role="row"]');
+  await expect(section).toContainText("data-selected");
+});
 
 test("catalog search indexes component-page guidance without mounting every demo", async ({
   page,
@@ -113,6 +154,41 @@ test("mobile component search navigates and closes the documentation drawer", as
   await expect(search).not.toBeVisible();
 });
 
+test("mobile navigation opens as a viewport drawer while scrolled", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto("/#components/card");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Card", exact: true }),
+  ).toBeVisible();
+  await page.evaluate(() => {
+    const spacer = document.createElement("div");
+    spacer.style.height = "200vh";
+    document.body.append(spacer);
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "instant",
+    });
+  });
+  const before = await page.evaluate(() => window.scrollY);
+  expect(before).toBeGreaterThan(0);
+
+  const trigger = page.getByRole("button", {
+    name: "Toggle navigation",
+    exact: true,
+  });
+  await expect(trigger).toBeVisible();
+  await trigger.evaluate((node: HTMLButtonElement) => node.click());
+
+  const drawer = page.getByRole("dialog", { name: "Documentation" });
+  await expect(drawer).toBeVisible();
+  const box = await drawer.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.y).toBe(0);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(before);
+});
+
 test("search keyboard shortcut navigates real links and Escape restores focus", async ({
   page,
 }) => {
@@ -121,7 +197,7 @@ test("search keyboard shortcut navigates real links and Escape restores focus", 
   await trigger.focus();
   await page.keyboard.press("Control+k");
   const dialog = page.getByRole("dialog", {
-    name: "Find your next building block.",
+    name: "Search docs",
   });
   const search = dialog.getByRole("searchbox", {
     name: "Search documentation",
@@ -143,14 +219,11 @@ test("search keyboard shortcut navigates real links and Escape restores focus", 
 test("preferences persist and previews reset without resetting the theme", async ({
   page,
 }) => {
-  await page.goto("/#playground");
-  await page.locator(".workbench-section summary").click();
-  await page.getByRole("tab", { name: "Theme lab", exact: true }).click();
-  const themeLab = page.getByRole("tabpanel", { name: "Theme lab" });
-  await themeLab
+  await page.goto("/#tokens");
+  await page
     .getByRole("combobox", { name: "Primary palette", exact: true })
     .selectOption("teal");
-  await themeLab
+  await page
     .getByRole("combobox", { name: "Secondary palette", exact: true })
     .selectOption("fuchsia");
   await page
@@ -188,7 +261,7 @@ test("preferences persist and previews reset without resetting the theme", async
   );
 });
 
-test("palette pairing updates the whole site and exposes raw CSS variables", async ({
+test("palette selection persists without implicit blending and exposes raw CSS variables", async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -221,7 +294,7 @@ test("palette pairing updates the whole site and exposes raw CSS variables", asy
   });
   await expect(secondary.locator("option")).toHaveCount(13);
   await expect(secondary.locator('option[value="off"]')).toHaveText(
-    "Off — Primary only",
+    "Off (primary only)",
   );
   const recommended = secondary.locator(
     'optgroup[label="Recommended matches"] option',
@@ -258,7 +331,7 @@ test("palette pairing updates the whole site and exposes raw CSS variables", asy
         .getPropertyValue("--flux-color-surface-subtle")
         .trim(),
     );
-  expect(primaryOnlySurface).not.toBe(pairedSurface);
+  expect(primaryOnlySurface).toBe(pairedSurface);
 
   await secondary.selectOption("emerald");
   await expect(page.locator("html")).toHaveAttribute(
@@ -908,7 +981,7 @@ test("icons browser searches intent metadata and changes its presentation", asyn
 }) => {
   await page.goto("/#icons");
   await expect(
-    page.getByRole("heading", { level: 1, name: "Icons that speak Flux." }),
+    page.getByRole("heading", { level: 1, name: "Icons" }),
   ).toBeVisible();
   const filter = page.getByRole("searchbox", {
     name: "Filter Flux icons",

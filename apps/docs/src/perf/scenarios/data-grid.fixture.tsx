@@ -43,7 +43,7 @@ export default function Fixture({ count, revision }: ScenarioProps) {
         pagination={{ pageIndex: 0, pageSize: Math.min(100, count) }}
         selectable
         selectedRowIds={selectedRowIds}
-        onSelectionChange={ignoreSelectionChange}
+        onSelectedRowIdsChange={ignoreSelectionChange}
       />
     </Box>
   );

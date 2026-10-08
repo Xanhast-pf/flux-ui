@@ -1,11 +1,8 @@
-import type { ChangeEvent, ComponentPropsWithRef } from "react";
+import type { ComponentPropsWithRef } from "react";
 
 export type RadioGroupValue = string | null;
 
-export type RadioGroupValueChangeHandler = (
-  value: string,
-  event: ChangeEvent<HTMLInputElement>,
-) => void;
+export type RadioGroupValueChangeHandler = (value: string) => void;
 
 type RadioGroupRootBaseProps = Omit<
   ComponentPropsWithRef<"fieldset">,
@@ -24,11 +21,11 @@ export type RadioGroupRootProps = RadioGroupRootBaseProps &
     | {
         defaultValue?: string | undefined;
         onValueChange?: RadioGroupValueChangeHandler | undefined;
-        value?: never;
+        value?: undefined;
       }
     | {
         defaultValue?: never;
-        onValueChange: RadioGroupValueChangeHandler;
+        onValueChange?: RadioGroupValueChangeHandler | undefined;
         value: RadioGroupValue;
       }
   );

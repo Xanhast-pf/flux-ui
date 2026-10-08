@@ -44,7 +44,7 @@ export function DataTable<Row>({
   selectable = false,
   selectedRowIds,
   defaultSelectedRowIds = [],
-  onSelectionChange,
+  onSelectedRowIdsChange,
   className,
   ...props
 }: DataTableProps<Row>): ReactElement {
@@ -121,7 +121,7 @@ export function DataTable<Row>({
     else next.delete(id);
     const ids = [...next];
     if (selectedRowIds === undefined) setLocalSelection(ids);
-    onSelectionChange?.(ids);
+    onSelectedRowIdsChange?.(ids);
   }
   for (const index of indexes) {
     const entry = ordered[index];
@@ -157,7 +157,7 @@ export function DataTable<Row>({
               >
                 {column.renderCell
                   ? column.renderCell(entry.row, value)
-                  : (value ?? "—")}
+                  : (value ?? "-")}
               </div>
             </td>
           );
@@ -213,7 +213,10 @@ export function DataTable<Row>({
         }}
         onFocusCapture={(event) => {
           const target = event.target;
-          if (target instanceof Element)
+          if (
+            target instanceof
+            event.currentTarget.ownerDocument.defaultView!.Element
+          )
             setFocusedId(
               target.closest<HTMLElement>("[data-row-id]")?.dataset.rowId ??
                 null,
@@ -221,7 +224,8 @@ export function DataTable<Row>({
         }}
         onBlurCapture={(event) => {
           if (
-            event.relatedTarget instanceof Node &&
+            event.relatedTarget instanceof
+              event.currentTarget.ownerDocument.defaultView!.Node &&
             !event.currentTarget.contains(event.relatedTarget)
           )
             setFocusedId(null);

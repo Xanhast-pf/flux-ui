@@ -1,4 +1,4 @@
-import { createRef, StrictMode, useState, type ChangeEvent } from "react";
+import { createRef, StrictMode, useState } from "react";
 import { flushSync } from "react-dom";
 import { renderToString } from "react-dom/server";
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -38,16 +38,13 @@ describe("Checkbox", () => {
     expect(onChange).toHaveBeenCalledTimes(2);
   });
 
-  it("reports the native boolean after onChange, without hiding the event", async () => {
+  it("reports the semantic boolean after the native onChange", async () => {
     const user = userEvent.setup();
     const order: string[] = [];
-    const onCheckedChange = vi.fn(
-      (checked: boolean, event: ChangeEvent<HTMLInputElement>) => {
-        order.push("checked");
-        expect(event.currentTarget.checked).toBe(checked);
-        expect(event.currentTarget.type).toBe("checkbox");
-      },
-    );
+    const onCheckedChange = vi.fn((checked: boolean) => {
+      order.push("checked");
+      expect(checked).toBe(true);
+    });
     render(
       <Checkbox
         aria-label="Updates"

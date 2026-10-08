@@ -29,13 +29,13 @@ The repository already enforces the same quality contracts intended for the matu
 
 The public docs app is a real consumer of the public library, not just a health dashboard. Explore the original Flux icon set, a local release-room demo, the collection lab, component customization, theme/accent presets, Ctrl/Cmd+K search, and dedicated component pages with live previews, copyable source, API notes and measured size information.
 
-The component catalog does not mount every demo. Individual examples load on demand; the displayed code is imported from the same TSX source as the rendered preview. Search uses Flux Dialog; persistent documentation navigation uses the public non-modal Sidebar. It pushes content on wider screens and stacks above it on narrow screens, without closing on route changes. Drawer remains available for temporary modal tasks. Component pages use Breadcrumbs, Toggle and IconButton; loading examples use Skeleton and Spinner, and keyboard shortcuts remain available through Ctrl/Cmd+K. Existing health, size, performance, install and token deep links remain available; the legacy rules route opens Engineering.
+The component catalog does not mount every demo. Individual examples load on demand; the displayed code is imported from the same TSX source as the rendered preview. Search uses Flux Dialog. At 48rem and above, persistent documentation navigation uses the public non-modal Sidebar and keeps its desktop open preference across route changes. Below 48rem, the same semantic navigation is composed inside the public Drawer, closes on navigation, and follows the Drawer focus/escape contract. Component pages use Breadcrumbs, Toggle and IconButton; loading examples use Skeleton and Spinner, and keyboard shortcuts remain available through Ctrl/Cmd+K. Existing health, size, performance, install and token deep links remain available; the legacy rules route opens Engineering.
 
 Demos do not deploy anything or send messages. Only theme and accent preferences persist locally. Size figures are committed measurements, not live CI results; newly added components show **Pending baseline** until measured.
 
 See [`docs/workshop.md`](docs/workshop.md) for routes, source conventions, scope, and browser verification.
 
-The default examples and docs compose public layout, typography, surfaces, scoped themes, and native-backed controls. [`docs/dogfooding.md`](docs/dogfooding.md) describes the ownership guardrail, constrained semantic APIs, and deliberate artwork/performance exceptions. This is not a zero-CSS claim or a replacement for browser validation.
+The default examples and docs compose public layout, typography, surfaces, scoped themes, and native-backed controls. `pnpm flux check dogfood` audits every regular docs source file and every docs stylesheet; whole-source exceptions are restricted to isolated native performance fixtures, while artwork and shell-integration CSS remain exact, reviewed ownership contracts. [`docs/dogfooding.md`](docs/dogfooding.md) describes the guardrail and what “100% Flux” means. This is not a zero-CSS claim or a replacement for browser validation.
 
 ## Clone and run
 
@@ -269,16 +269,20 @@ The docs homepage introduces the design language and live product examples. New
 routes make the engineering inspectable without shipping a charting library in
 the component package:
 
-| Route                    | What it shows                                                                                                                                      |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `#lab`                   | Opt-in Button/Grid native-React comparisons; bounded instance counts, alternating sample pairs, scaling sweeps, stop controls and raw JSON export. |
-| `#engineering`           | Token/component architecture, contribution conventions, API escape hatches, measurement scope and explicit limitations.                            |
-| `#trust`                 | Same-build CI receipts when available, raw reports, hashes, security workflow links and honest external-enrollment status.                         |
-| `#accessibility`         | On-demand, locally bundled axe scanning of a demo, an intentional missing-name defect, repair and real findings/export.                            |
-| `#size` / `#performance` | Searchable compression-aware bundle bars and native/Flux timing charts alongside the existing budgets and detailed tables.                         |
+| Route                    | What it shows                                                                                                                                                           |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `#lab`                   | Opt-in browser workloads for every public component: matched Button/Grid comparisons, bounded dedicated workloads, and representative public-preview fallbacks.         |
+| `#engineering`           | Token/component architecture, contribution conventions, API escape hatches, measurement scope and explicit limitations.                                                 |
+| `#trust`                 | Same-build CI receipts when available, raw reports, hashes, security workflow links and honest external-enrollment status.                                              |
+| `#accessibility`         | On-demand, locally bundled axe scanning of a demo, an intentional missing-name defect, repair and real findings/export.                                                 |
+| `#size` / `#performance` | Component-wide bundle measurements plus runtime evidence for every component, while keeping accepted comparison baselines distinct from device-local preview workloads. |
 
-Local measurements are not committed CI baselines. Baselines are not live
-measurements. Passing checks are not independent certification. Component graph
+Live-lab measurements are device-local and are not the committed benchmark
+baseline. Components without a dedicated performance fixture use one copy of
+their default public docs preview as a representative mount/update/unmount
+workload; that is composition evidence, not isolated component cost or native
+equivalence. The committed Chromium baseline is the CI regression contract, not
+a live measurement or independent certification. Component graph
 sizes exclude externals and overlap; do not sum them into an application bundle.
 The live lab and axe engine load on demand; benchmark and scan results stay local.
 

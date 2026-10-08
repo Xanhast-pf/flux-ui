@@ -7,8 +7,9 @@ emitted-package budgets and first-baseline checks still apply.
 
 ## CodeBlock: plain text first, optional highlighting
 
-Plain `CodeBlock` renders immediately without a language engine. Add the optional
-`tokenizeCode` export for bounded lexical coloring:
+Plain `CodeBlock` renders immediately without a language engine. The supported
+`tokenizeCode` utility provides bounded lexical coloring, while `codeLanguages`
+exports the built-in language identifiers used by that tokenizer:
 
 ```tsx
 import { useMemo } from "react";
@@ -177,7 +178,7 @@ mounted outside that window, with spacer rows preserving geometry. Caption and
 header height are measured on scroll instead of being mistaken for data rows.
 Sorting state is controlled with `sorting`/`onSortingChange`, or initialized with
 `defaultSorting`; controlled selection likewise pairs `selectedRowIds` with
-`onSelectionChange`, while `defaultSelectedRowIds` initializes local selection.
+`onSelectedRowIdsChange`, while `defaultSelectedRowIds` initializes local selection.
 
 For server ordering, set `manualSorting` with `onSortingChange` and fetch a new
 loaded window in response to sorting changes. `totalRows` is informational: it neither fabricates unloaded

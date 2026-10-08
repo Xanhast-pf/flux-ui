@@ -2,7 +2,11 @@
   "name": "ColorSwatch",
   "slug": "color-swatch",
   "category": "Display",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Decorative color sample for composition inside named selection controls.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "ColorSwatch": ["data-selected"]
+  }
 }

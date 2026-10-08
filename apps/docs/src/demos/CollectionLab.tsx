@@ -154,7 +154,7 @@ export function CollectionLab() {
       <Inline justify="between" wrap>
         <Stack gap="md">
           <Text as="p" variant="eyebrow" tone="muted">
-            A little shelf of possibilities
+            Interactive collection
           </Text>
           <Heading level={2} size="lg">
             Collection lab
@@ -165,15 +165,14 @@ export function CollectionLab() {
         </StatusBadge>
       </Inline>
       <Text as="p" variant="body" tone="muted">
-        Search, save, change the layout, and explore another page. This is
-        sample content in memory—not a backend or a real loading request.
+        Search, save, and change layout. All data stays on this page.
       </Text>
       <Inline wrap gap="md">
         <Input
           type="search"
           aria-label="Search the collection"
           value={query}
-          placeholder="Find a project or team…"
+          placeholder="Search projects or teams…"
           onChange={(event) => {
             setQuery(event.currentTarget.value);
             setPage(1);

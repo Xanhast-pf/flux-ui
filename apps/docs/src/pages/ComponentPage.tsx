@@ -50,7 +50,7 @@ export function ComponentPage({ slug }: { slug: string }) {
           Component not found
         </Heading>
         <Text as="p" variant="body">
-          This URL does not match the current catalog.
+          Check the component name or browse the catalog.
         </Text>
         <Link href="#components">Browse components</Link>
       </Stack>
@@ -61,6 +61,65 @@ export function ComponentPage({ slug }: { slug: string }) {
     </ExampleBoundary>
   );
 }
+
+function PreviewExample({
+  Preview,
+  title,
+  description,
+  previewLayout,
+  previewWidth,
+  compact,
+  resetKey,
+  framed,
+}: {
+  Preview: ComponentExample["Preview"];
+  title: string;
+  description: string | undefined;
+  previewLayout: "center" | "fill";
+  previewWidth: "standard" | "wide";
+  compact: boolean;
+  resetKey: string;
+  framed: boolean;
+}) {
+  const content = (
+    <Container size={compact ? "xs" : previewWidth === "wide" ? "full" : "sm"}>
+      <Stack
+        align={previewLayout === "fill" ? "stretch" : "center"}
+        data-compact={compact || undefined}
+        className="preview-content"
+      >
+        <Preview key={resetKey} />
+      </Stack>
+    </Container>
+  );
+
+  if (!framed) return content;
+
+  return (
+    <Stack gap="sm">
+      <Stack gap={1}>
+        <Text as="strong" weight="medium">
+          {title}
+        </Text>
+        {description === undefined ? null : (
+          <Text as="p" variant="caption" tone="muted">
+            {description}
+          </Text>
+        )}
+      </Stack>
+      <Box
+        surface="default"
+        border="all"
+        radius="md"
+        paddingBlock="lg"
+        paddingInline="md"
+      >
+        {content}
+      </Box>
+    </Stack>
+  );
+}
+
 function ComponentDetail({
   entry,
   example,
@@ -75,7 +134,18 @@ function ComponentDetail({
   const publicContract = publicContracts.find((item) => item.slug === slug);
   if (publicContract === undefined)
     throw new Error(`Missing generated public contract for ${slug}.`);
-  const { Preview, code, props, notes, previewLayout = "center" } = example;
+  const {
+    Preview,
+    code,
+    props,
+    notes,
+    previewLayout = "center",
+    previewWidth = "standard",
+    previewTitle = "Default",
+    previewDescription,
+    variations = [],
+  } = example;
+  const hasVariations = variations.length > 0;
   return (
     <Stack gap="lg">
       <Breadcrumbs.Root>
@@ -119,7 +189,11 @@ function ComponentDetail({
               paddingBlock={3}
             >
               <Inline justify="between" wrap>
-                <Text>Live {entry.name}</Text>
+                <Text>
+                  {hasVariations
+                    ? entry.name + " examples"
+                    : "Live " + entry.name}
+                </Text>
                 <Inline gap="sm" wrap>
                   <Toggle pressed={compact} onPressedChange={setCompact}>
                     Compact preview
@@ -145,23 +219,44 @@ function ComponentDetail({
               paddingInline="md"
               className="preview-stage"
             >
-              <Container
-                size={
-                  compact
-                    ? "xs"
-                    : example.previewWidth === "wide"
-                      ? "full"
-                      : "sm"
-                }
-              >
-                <Stack
-                  align={previewLayout === "fill" ? "stretch" : "center"}
-                  data-compact={compact || undefined}
-                  className="preview-content"
-                >
-                  <Preview key={version} />
+              {hasVariations ? (
+                <Stack gap="xl">
+                  <PreviewExample
+                    Preview={Preview}
+                    title={previewTitle}
+                    description={previewDescription}
+                    previewLayout={previewLayout}
+                    previewWidth={previewWidth}
+                    compact={compact}
+                    resetKey={String(version) + "-primary"}
+                    framed
+                  />
+                  {variations.map((variation, index) => (
+                    <PreviewExample
+                      key={variation.title}
+                      Preview={variation.Preview}
+                      title={variation.title}
+                      description={variation.description}
+                      previewLayout={variation.previewLayout ?? previewLayout}
+                      previewWidth={variation.previewWidth ?? previewWidth}
+                      compact={compact}
+                      resetKey={String(version) + "-" + String(index)}
+                      framed
+                    />
+                  ))}
                 </Stack>
-              </Container>
+              ) : (
+                <PreviewExample
+                  Preview={Preview}
+                  title={previewTitle}
+                  description={previewDescription}
+                  previewLayout={previewLayout}
+                  previewWidth={previewWidth}
+                  compact={compact}
+                  resetKey={String(version)}
+                  framed={false}
+                />
+              )}
             </Box>
           </Box>
         </Tabs.Panel>
@@ -170,8 +265,7 @@ function ComponentDetail({
         </Tabs.Panel>
       </Tabs.Root>
       <Callout tone="info">
-        This preview uses the same public Flux exports as your app. Reset
-        remounts only this example; it does not change your theme.
+        Uses public Flux components. Reset affects only this preview.
       </Callout>
       <Stack as="section" gap="lg">
         <Stack gap="md">
@@ -179,9 +273,24 @@ function ComponentDetail({
             Public contract
           </Heading>
           <Text as="p" variant="body" tone="muted">
-            Generated from the public TypeScript component surface. DOM-backed
-            parts keep the listed escape hatches; controller parts intentionally
-            render no customizable DOM node.
+            Generated from public TypeScript APIs. Controller parts render no
+            DOM.
+          </Text>
+          <Callout tone="info">
+            Lifecycle: <Code>{publicContract.lifecycle}</Code>. This generated
+            inventory lists the public API. Beta APIs may change; stable APIs
+            are the published contract.
+          </Callout>
+          <Text as="p" variant="body" tone="muted">
+            Public TypeScript exports:{" "}
+            <Code>{publicContract.types.join(", ")}</Code>
+            {publicContract.utilities.length === 0 ? null : (
+              <>
+                {" "}
+                · Runtime utilities:{" "}
+                <Code>{publicContract.utilities.join(", ")}</Code>
+              </>
+            )}
           </Text>
           <ScrollArea
             aria-label={`${entry.name} public contract`}
@@ -189,8 +298,7 @@ function ComponentDetail({
           >
             <Table.Root>
               <Table.Caption>
-                Public component parts and customization escape hatches derived
-                from TypeScript.
+                Public parts and customization options.
               </Table.Caption>
               <Table.Header>
                 <Table.Row>
@@ -198,6 +306,7 @@ function ComponentDetail({
                   <Table.ColumnHeader>Customization</Table.ColumnHeader>
                   <Table.ColumnHeader>State model</Table.ColumnHeader>
                   <Table.ColumnHeader>CSS variables</Table.ColumnHeader>
+                  <Table.ColumnHeader>Data attributes</Table.ColumnHeader>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -214,13 +323,20 @@ function ComponentDetail({
                     <Table.Cell>
                       {"stateModels" in part
                         ? part.stateModels.join(" · ")
-                        : "—"}
+                        : "None"}
                     </Table.Cell>
                     <Table.Cell>
                       {part.cssVariables.length === 0 ? (
-                        "—"
+                        "None"
                       ) : (
                         <Code>{part.cssVariables.join(", ")}</Code>
+                      )}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {"dataAttributes" in part ? (
+                        <Code>{part.dataAttributes.join(", ")}</Code>
+                      ) : (
+                        "None"
                       )}
                     </Table.Cell>
                   </Table.Row>
@@ -228,15 +344,55 @@ function ComponentDetail({
               </Table.Body>
             </Table.Root>
           </ScrollArea>
+          {"descendantStates" in publicContract ? (
+            <>
+              <Heading level={3} size="md">
+                Descendant state hooks
+              </Heading>
+              <Text as="p" variant="body" tone="muted">
+                These selectors are styling hooks, not public React parts.
+              </Text>
+              <ScrollArea
+                aria-label={`${entry.name} descendant state hooks`}
+                axis="horizontal"
+              >
+                <Table.Root>
+                  <Table.Caption>
+                    Stable descendant state selectors.
+                  </Table.Caption>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.ColumnHeader>Surface</Table.ColumnHeader>
+                      <Table.ColumnHeader>Stable selector</Table.ColumnHeader>
+                      <Table.ColumnHeader>Data attributes</Table.ColumnHeader>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {publicContract.descendantStates.map((surface) => (
+                      <Table.Row key={surface.name}>
+                        <Table.RowHeader>
+                          <Code>{surface.name}</Code>
+                        </Table.RowHeader>
+                        <Table.Cell>
+                          <Code>{surface.selector}</Code>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Code>{surface.dataAttributes.join(", ")}</Code>
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table.Root>
+              </ScrollArea>
+            </>
+          ) : null}
           <Heading level={2} size="lg">
             API highlights
           </Heading>
           <ScrollArea aria-label={`${entry.name} props`} axis="horizontal">
             <Table.Root>
               <Table.Caption>
-                Curated common props and composition points. The generated
-                public contract above and linked TypeScript source are
-                authoritative.
+                Common props. See the public contract for full details.
               </Table.Caption>
               <Table.Header>
                 <Table.Row>
@@ -263,13 +419,13 @@ function ComponentDetail({
           <Link
             href={`${REPOSITORY_URL}/blob/main/packages/react/src/components/${entry.name}/${entry.name}.types.ts`}
           >
-            Read the full TypeScript API ↗
+            View TypeScript API ↗
           </Link>
         </Stack>
       </Stack>
       <Stack as="section" gap="lg">
         <Heading level={2} size="lg">
-          Usage & accessibility
+          Usage and accessibility
         </Heading>
         <List variant="marker" gap={3}>
           {notes.map((note) => (

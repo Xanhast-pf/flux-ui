@@ -58,7 +58,7 @@ type DataGridSortingProps =
   | {
       sorting: DataGridSort | null;
       defaultSorting?: never;
-      onSortingChange: (sorting: DataGridSort | null) => void;
+      onSortingChange?: ((sorting: DataGridSort | null) => void) | undefined;
     }
   | {
       sorting?: undefined;
@@ -70,12 +70,14 @@ type DataGridSelectionProps =
   | {
       selectedRowIds: readonly string[];
       defaultSelectedRowIds?: never;
-      onSelectionChange: (rowIds: readonly string[]) => void;
+      onSelectedRowIdsChange?:
+        ((rowIds: readonly string[]) => void) | undefined;
     }
   | {
       selectedRowIds?: undefined;
       defaultSelectedRowIds?: readonly string[] | undefined;
-      onSelectionChange?: ((rowIds: readonly string[]) => void) | undefined;
+      onSelectedRowIdsChange?:
+        ((rowIds: readonly string[]) => void) | undefined;
     };
 
 export type DataGridProps<Row> = DataGridBaseProps<Row> &

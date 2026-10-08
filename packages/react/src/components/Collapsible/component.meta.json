@@ -2,7 +2,8 @@
   "name": "Collapsible",
   "slug": "collapsible",
   "category": "Disclosure",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Native details and summary disclosure with no custom keyboard engine.",
   "sizeClass": "primitive"
 }

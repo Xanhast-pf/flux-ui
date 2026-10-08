@@ -63,6 +63,30 @@ describe("PieChart", () => {
     );
   });
 
+  it("keeps automatic slice tones stable when earlier slices are hidden", () => {
+    const implicit = [
+      { id: "first", label: "First", value: 1 },
+      { id: "second", label: "Second", value: 2 },
+    ] as const;
+    render(
+      <ChartLegend items={implicit} toggleVisibility>
+        <PieChart label="Stable tones" data={implicit} />
+      </ChartLegend>,
+    );
+
+    const chart = screen.getByRole("slider");
+    expect(chart.querySelectorAll("svg [data-tone]")[1]).toHaveAttribute(
+      "data-tone",
+      "info",
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "First" }));
+    expect(chart.querySelectorAll("svg [data-tone]")[0]).toHaveAttribute(
+      "data-tone",
+      "info",
+    );
+  });
+
   it("supports both hover and persistent click tooltips while highlighting slices", () => {
     const hover = render(
       <ChartTooltip>

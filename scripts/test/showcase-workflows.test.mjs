@@ -1,122 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  filterTransactions,
-  invitationError,
-  ledgerCsv,
-  ledgerTotals,
-  transactions,
-} from "../../apps/docs/src/showcase/scenes/finance.model.ts";
-import {
-  createStudioSession,
-  sameSession,
-  snapshotSession,
-  studioExport,
-} from "../../apps/docs/src/showcase/scenes/music.model.ts";
-import {
   crc32,
   recipeArchive,
 } from "../../apps/docs/src/showcase/recipeArchive.ts";
 import { floatingPosition } from "../../packages/react/src/internal/floatingPosition.ts";
-test("ledger totals follow workspace, query and status filters", () => {
-  const north = filterTransactions(transactions, "north", "", "all");
-  assert.equal(north.length, 7);
-  assert.deepEqual(ledgerTotals(north), {
-    incoming: 1205000,
-    outgoing: 23000,
-    net: 1182000,
-  });
-  assert.deepEqual(
-    filterTransactions(transactions, "north", " PACKAGING ", "Pending").map(
-      (row) => row.id,
-    ),
-    ["F-1039"],
-  );
-  assert.equal(
-    filterTransactions(transactions, "north", "PACKAGING", "Settled").length,
-    0,
-  );
-  assert.equal(
-    filterTransactions(transactions, "fieldwork", "", "all").length,
-    3,
-  );
-  assert.deepEqual(ledgerTotals([]), { incoming: 0, outgoing: 0, net: 0 });
-});
-test("finance operations do not mutate their fixture inputs", () => {
-  const original = JSON.stringify(transactions);
-  ledgerTotals(transactions);
-  ledgerCsv(transactions);
-  filterTransactions(transactions, "north", "", "all");
-  assert.equal(JSON.stringify(transactions), original);
-});
-test("CSV preserves newlines and escapes quotes and formula-like text", () => {
-  for (const note of [
-    "=SUM(A1:A2)",
-    " +SUM(A1:A2)",
-    "\talert",
-    "\n=1",
-    "@x",
-    "-1",
-  ]) {
-    const csv = ledgerCsv([
-      { ...transactions[0], customer: 'A "quoted", name', note },
-    ]);
-    assert.ok(csv.includes('"A ""quoted"", name"'));
-    assert.ok(csv.includes(`"'${note}"`));
-    assert.ok(csv.includes(",4800.00,"));
-    assert.ok(csv.endsWith("\r\n"));
-  }
-  assert.ok(
-    ledgerCsv([{ ...transactions[0], note: "first\nsecond" }]).includes(
-      '"first\nsecond"',
-    ),
-  );
-});
-test("invitation validation requires valid local fields and rejects case-insensitive duplicates", () => {
-  assert.equal(invitationError(" new@example.test ", "Member", []), null);
-  assert.match(invitationError("broken", "Member", []), /email/);
-  assert.match(invitationError("new@example.test", null, []), /role/);
-  assert.match(invitationError("new@example.test", "Owner", []), /role/);
-  assert.match(
-    invitationError(" EXISTING@example.test ", "Viewer", [
-      "existing@example.test",
-    ]),
-    /already/,
-  );
-});
-test("studio checkpoints deeply isolate channels and normalize mute ordering", () => {
-  const original = createStudioSession();
-  const checkpoint = snapshotSession(original);
-  original.channels.drums.cutoff = 3200;
-  assert.equal(checkpoint.channels.drums.cutoff, 1000);
-  assert.equal(sameSession(original, checkpoint), false);
-  assert.equal(
-    sameSession(createStudioSession(), snapshotSession(createStudioSession())),
-    true,
-  );
-  assert.equal(
-    sameSession(
-      { ...checkpoint, muted: ["bass", "drums", "bass"] },
-      { ...checkpoint, muted: ["drums", "bass"] },
-    ),
-    true,
-  );
-  assert.equal(
-    sameSession(checkpoint, { ...checkpoint, notes: "edited" }),
-    false,
-  );
-});
-test("studio exports settings without claiming audio or mutating the session", () => {
-  const session = createStudioSession();
-  const exported = studioExport(session);
-  assert.equal(exported.producesAudio, false);
-  assert.equal(exported.kind, "flux-studio-ui-simulation");
-  assert.notEqual(exported.session.channels.bass, session.channels.bass);
-  assert.deepEqual(
-    JSON.parse(JSON.stringify(exported)).session,
-    snapshotSession(session),
-  );
-});
+
 test("floating placement flips, respects RTL, clamps and sanitizes offsets", () => {
   const anchor = { left: 100, top: 80, width: 40, height: 20 };
   const popup = { width: 120, height: 60 };
@@ -151,6 +40,7 @@ test("floating placement flips, respects RTL, clamps and sanitizes offsets", () 
     8,
   );
 });
+
 test("floating placement remains finite for tiny viewports and oversized surfaces", () => {
   for (const side of ["top", "right", "bottom", "left"]) {
     const result = floatingPosition(
@@ -164,10 +54,12 @@ test("floating placement remains finite for tiny viewports and oversized surface
     assert.ok(result.maxHeight >= 0);
   }
 });
+
 test("CRC32 matches a standard check value and an empty payload", () => {
   assert.equal(crc32(new TextEncoder().encode("123456789")), 0xcbf43926);
   assert.equal(crc32(new Uint8Array()), 0);
 });
+
 test("ZIP output is deterministic, UTF-8, stored and centrally indexed", () => {
   const files = {
     "src/é.ts": "export const café = 1;\n",
@@ -208,6 +100,7 @@ test("ZIP output is deterministic, UTF-8, stored and centrally indexed", () => {
   }
   assert.equal(cursor, directory);
 });
+
 test("ZIP rejects traversal, absolute paths, control characters and oversized exports", () => {
   for (const path of [
     "",

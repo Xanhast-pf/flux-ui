@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import {
   AlertDialog,
   Button,
+  ColorPicker,
   Combobox,
   DropdownMenu,
   Field,
@@ -23,6 +24,7 @@ function WrappedHelp() {
 function Interactions() {
   const notifyButton = useRef<HTMLButtonElement>(null);
   const [showSelected, setShowSelected] = useState(true);
+  const [color, setColor] = useState("#336699");
   const [selected, setSelected] = useState<string | null>(null);
   const [tag, setTag] = useState(true);
   const [action, setAction] = useState("No menu action");
@@ -46,6 +48,29 @@ function Interactions() {
           </Field.Control>
         </InputGroup.Root>
       </Field.Root>
+      <Stack gap="xs">
+        <Text weight="bold">Consumer brand color</Text>
+        <ColorPicker
+          aria-label="Consumer brand color"
+          value={color}
+          onValueChange={setColor}
+        />
+      </Stack>
+      <form
+        id="consumer-color-reset-form"
+        aria-label="Resettable consumer color form"
+      >
+        <Stack gap="xs">
+          <Text weight="bold">Resettable consumer color</Text>
+          <ColorPicker
+            aria-label="Resettable consumer color"
+            defaultValue="#123456"
+            form="consumer-color-reset-form"
+            name="accent"
+          />
+          <Button type="reset">Reset consumer color</Button>
+        </Stack>
+      </form>
       <Tabs.Root defaultValue="removed">
         <Tabs.List aria-label="Dynamic tabs">
           <Tabs.Tab value="one">Dynamic one</Tabs.Tab>
@@ -116,8 +141,23 @@ function Interactions() {
           <AlertDialog.Description>
             This only changes the fixture.
           </AlertDialog.Description>
-          <AlertDialog.Close>Keep local draft</AlertDialog.Close>
-          <AlertDialog.Close>Remove local draft</AlertDialog.Close>
+          <AlertDialog.Cancel>Keep local draft</AlertDialog.Cancel>
+          <AlertDialog.Action>Remove local draft</AlertDialog.Action>
+          <Tooltip content="Nested alert tooltip">
+            <Button>Nested alert help</Button>
+          </Tooltip>
+          <Popover.Root>
+            <Popover.Trigger>Nested alert popover</Popover.Trigger>
+            <Popover.Popup aria-label="Nested alert popover panel">
+              <Popover.Close>Close nested alert popover</Popover.Close>
+            </Popover.Popup>
+          </Popover.Root>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>Nested alert menu</DropdownMenu.Trigger>
+            <DropdownMenu.Popup aria-label="Nested alert menu">
+              <DropdownMenu.Item>Nested menu item</DropdownMenu.Item>
+            </DropdownMenu.Popup>
+          </DropdownMenu.Root>
         </AlertDialog.Popup>
       </AlertDialog.Root>
       {tag ? (

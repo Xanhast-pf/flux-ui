@@ -2,7 +2,8 @@
   "name": "StatusBadge",
   "slug": "status-badge",
   "category": "Display",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Compact, standalone status labels with semantic tones; not an overlay counter.",
   "sizeClass": "primitive"
 }

@@ -1,16 +1,9 @@
-import type {
-  ChangeEvent,
-  ChangeEventHandler,
-  ComponentPropsWithRef,
-} from "react";
+import type { ChangeEventHandler, ComponentPropsWithRef } from "react";
 import type { AccessibleName } from "../../internal/accessibility.types.js";
 
 export type RatingValue = number | null;
 
-export type RatingValueChangeHandler = (
-  value: number,
-  event: ChangeEvent<HTMLInputElement>,
-) => void;
+export type RatingValueChangeHandler = (value: number) => void;
 
 type RatingRootProps = Omit<
   ComponentPropsWithRef<"fieldset">,
@@ -44,7 +37,7 @@ type RatingValueState =
   | {
       value: RatingValue;
       defaultValue?: never;
-      onValueChange: RatingValueChangeHandler;
+      onValueChange?: RatingValueChangeHandler | undefined;
     }
   | {
       value?: undefined;

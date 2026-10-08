@@ -34,12 +34,21 @@ describe("Tooltip", () => {
   });
   it("keeps the optional arrow decorative", () => {
     const { rerender } = render(
-      <Tooltip content="Arrow help." defaultOpen arrow>
+      <Tooltip
+        content="Arrow help."
+        defaultOpen
+        arrow
+        side="bottom"
+        align="end"
+      >
         <button type="button">Arrow trigger</button>
       </Tooltip>,
     );
     const tooltip = screen.getByRole("tooltip");
     expect(tooltip).toHaveAttribute("data-arrow", "true");
+    expect(tooltip).toHaveAttribute("data-state", "open");
+    expect(tooltip).toHaveAttribute("data-side", "bottom");
+    expect(tooltip).toHaveAttribute("data-align", "end");
     expect(tooltip.querySelector("[aria-hidden='true']")).toBeInTheDocument();
 
     rerender(
@@ -78,6 +87,22 @@ describe("Tooltip", () => {
     expect(screen.getByRole("tooltip")).toBeVisible();
 
     rerender(renderTooltip(false));
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+  });
+
+  it("accepts forwarded undefined open-state options", () => {
+    render(
+      <Tooltip
+        content="Optional help."
+        open={undefined}
+        defaultOpen={undefined}
+        onOpenChange={undefined}
+        side={undefined}
+        align={undefined}
+      >
+        <button type="button">Optional trigger</button>
+      </Tooltip>,
+    );
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });
 

@@ -6,11 +6,11 @@ import type {
 } from "../../internal/floatingPosition.js";
 export type PopoverRootProps = {
   children?: ReactNode;
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange?: ((open: boolean) => void) | undefined;
 } & (
   | {
-      defaultOpen?: boolean;
-      open?: never;
+      defaultOpen?: boolean | undefined;
+      open?: undefined;
     }
   | {
       defaultOpen?: never;
@@ -23,9 +23,9 @@ export interface PopoverPopupProps extends Omit<
   ComponentPropsWithRef<"div">,
   "popover"
 > {
-  side?: FloatingSide;
-  align?: FloatingAlign;
-  offset?: number;
+  side?: FloatingSide | undefined;
+  align?: FloatingAlign | undefined;
+  offset?: number | undefined;
   /** Explicit focus target; otherwise the first available control receives focus. */
-  initialFocus?: RefObject<HTMLElement | null>;
+  initialFocus?: RefObject<HTMLElement | null> | undefined;
 }

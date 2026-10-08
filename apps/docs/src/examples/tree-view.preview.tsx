@@ -2,7 +2,7 @@ import { TreeView } from "@flux-ui/react";
 
 export default function Preview() {
   return (
-    <TreeView.Root aria-label="Project files" defaultValue={["src"]}>
+    <TreeView.Root aria-label="Project files" defaultExpandedItems={["src"]}>
       <TreeView.Item value="src" label="src">
         <TreeView.Item value="src/components" label="components">
           <TreeView.Item value="src/components/button" label="Button.tsx" />

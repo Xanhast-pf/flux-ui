@@ -14,6 +14,20 @@ const options = [
   { value: "legacy", label: "Engineering legacy", disabled: true },
 ];
 describe("Combobox", () => {
+  it("rejects duplicate option values before they create ambiguous option IDs", () => {
+    expect(() =>
+      render(
+        <Combobox
+          aria-label="Team"
+          options={[
+            { value: "design", label: "Design" },
+            { value: "design", label: "Design archive" },
+          ]}
+        />,
+      ),
+    ).toThrow(/unique/u);
+  });
+
   it("accepts optional application values without conditional-spread workarounds", () => {
     const disabled: boolean | undefined = undefined;
     const listLabel: string | undefined = undefined;
@@ -27,7 +41,9 @@ describe("Combobox", () => {
       <Combobox
         aria-label="Team"
         options={[{ value: "design", label: "Design", disabled }]}
+        value={undefined}
         defaultValue={defaultValue}
+        query={undefined}
         listLabel={listLabel}
         emptyMessage={emptyMessage}
         invalidSelectionMessage={invalidSelectionMessage}
@@ -51,6 +67,8 @@ describe("Combobox", () => {
     );
 
     await user.click(screen.getByRole("combobox"));
+    const listbox = screen.getByRole("listbox");
+    expect(listbox.parentElement).toHaveAttribute("data-state", "open");
     const creative = screen.getByRole("group", { name: "Creative" });
     const engineering = screen.getByRole("group", { name: "Engineering" });
     expect(within(creative).getAllByRole("option")).toHaveLength(2);
@@ -101,6 +119,30 @@ describe("Combobox", () => {
       />,
     );
     expect(input).toHaveValue("Engineering");
+  });
+
+  it("keeps committed selection separate from keyboard highlight", async () => {
+    const user = userEvent.setup();
+    render(
+      <Combobox aria-label="Team" options={options} defaultValue="design" />,
+    );
+
+    const input = screen.getByRole("combobox", { name: "Team" });
+    await user.click(input);
+    const design = screen.getByRole("option", { name: "Design" });
+    const engineering = screen.getByRole("option", { name: "Engineering" });
+    expect(design).toHaveAttribute("aria-selected", "true");
+    expect(engineering).toHaveAttribute("aria-selected", "false");
+
+    await user.keyboard("{ArrowDown}");
+    expect(input).toHaveAttribute("aria-activedescendant", engineering.id);
+    expect(design).toHaveAttribute("aria-selected", "true");
+    expect(engineering).toHaveAttribute("aria-selected", "false");
+
+    await user.keyboard("{Enter}");
+    await user.click(input);
+    expect(design).toHaveAttribute("aria-selected", "false");
+    expect(engineering).toHaveAttribute("aria-selected", "true");
   });
 
   it("announces loading without replacing the listbox or its current options", async () => {
@@ -179,6 +221,26 @@ describe("Combobox", () => {
     expect(changed).toHaveBeenCalledWith("engineering");
     expect(screen.getByRole("combobox")).toHaveValue("Design");
   });
+  it("preserves a committed disabled option as display and form state", () => {
+    render(
+      <form aria-label="Team form">
+        <Combobox
+          aria-label="Team"
+          options={options}
+          value="legacy"
+          name="team"
+        />
+      </form>,
+    );
+
+    expect(screen.getByRole("combobox", { name: "Team" })).toHaveValue(
+      "Engineering legacy",
+    );
+    expect(
+      new FormData(screen.getByRole<HTMLFormElement>("form")).get("team"),
+    ).toBe("legacy");
+  });
+
   it("resets an uncontrolled form and hides the active descendant when disabled", async () => {
     const user = userEvent.setup();
     const view = render(
@@ -210,6 +272,43 @@ describe("Combobox", () => {
     );
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
   });
+  it("closes on an outside pointer target in the combobox owner document", () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const ownerDocument = iframe.contentDocument;
+    if (ownerDocument === null) throw new Error("Missing iframe document.");
+    const container = ownerDocument.createElement("div");
+    ownerDocument.body.append(container);
+    const rendered = render(
+      <>
+        <Combobox aria-label="Realm team" options={options} />
+        <p data-testid="realm-outside">Outside</p>
+      </>,
+      { container },
+    );
+
+    try {
+      const input =
+        container.querySelector<HTMLInputElement>('[role="combobox"]');
+      const outside = container.querySelector<HTMLElement>(
+        '[data-testid="realm-outside"]',
+      );
+      if (input === null || outside === null)
+        throw new Error("Missing combobox realm targets.");
+      fireEvent.focus(input);
+      const listbox = container.querySelector<HTMLElement>('[role="listbox"]');
+      const surface = listbox?.parentElement;
+      if (surface === null || surface === undefined)
+        throw new Error("Missing combobox popup.");
+      expect(surface).not.toHaveAttribute("hidden");
+      fireEvent.pointerDown(outside);
+      expect(surface).toHaveAttribute("hidden");
+    } finally {
+      rendered.unmount();
+      iframe.remove();
+    }
+  });
+
   it("closes on a non-focusable outside pointer target", async () => {
     const user = userEvent.setup();
     render(

@@ -2,7 +2,11 @@
   "name": "ThemeScope",
   "slug": "theme-scope",
   "category": "Layout",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Scoped semantic theme application with optional container queries.",
-  "sizeClass": "primitive"
+  "sizeClass": "primitive",
+  "publicDataAttributes": {
+    "ThemeScope": ["data-query"]
+  }
 }

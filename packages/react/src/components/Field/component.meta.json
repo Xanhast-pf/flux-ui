@@ -2,8 +2,12 @@
   "name": "Field",
   "slug": "field",
   "category": "Inputs",
-  "status": "beta",
+  "status": "stable",
+  "stableSince": "0.2.0",
   "description": "Accessible form-field composition that wires labels, descriptions, errors, and shared control state.",
   "sizeClass": "primitive",
-  "nonDomParts": ["Field.Control"]
+  "nonDomParts": ["Field.Control"],
+  "publicDataAttributes": {
+    "Field.Root": ["data-disabled", "data-invalid"]
+  }
 }
