@@ -26,13 +26,56 @@ test("CI evidence is short-lived and avoids browser-trace uploads", () => {
 
 test("release artifacts expire within seven days without removing handoffs", () => {
   const release = workflow("release.yml");
-  assert.deepEqual(retentions(release), [7, 1, 7, 7]);
-  assert.match(release, /Preserve executed check evidence\s+if: failure\(\)/u);
+  const rerunsQuality = release.includes(
+    "node tooling/trust/run-checks.mjs quality",
+  );
+  const rerunsBrowser = release.includes(
+    "node tooling/trust/run-checks.mjs browser",
+  );
+  assert.equal(
+    rerunsQuality,
+    rerunsBrowser,
+    "Release must either reuse existing CI evidence or execute both quality and browser gates.",
+  );
+
+  for (const step of [
+    "Upload immutable tarballs and manifest",
+    "Preserve package-scoped inventory",
+    "Preserve verification bundles",
+  ])
+    assert.ok(
+      release.includes(`- name: ${step}`),
+      `Missing release handoff: ${step}`,
+    );
+
+  assert.deepEqual(
+    retentions(release),
+    rerunsQuality ? [7, 1, 7, 7] : [7, 7, 7],
+  );
+  if (rerunsQuality) {
+    assert.match(
+      release,
+      /Preserve executed check evidence\s+if: failure\(\)/u,
+    );
+  } else {
+    assert.doesNotMatch(release, /Preserve executed check evidence/u);
+    const preflight = release.indexOf(
+      "run: node tooling/release/preflight.mjs --require-ci",
+    );
+    const pack = release.indexOf("run: node tooling/release/pack.mjs");
+    assert.ok(
+      preflight !== -1 && pack !== -1 && preflight < pack,
+      "Fast releases must verify exact-commit CI evidence before packing.",
+    );
+  }
   assert.equal(
     (release.match(/actions\/download-artifact@/gu) ?? []).length,
     3,
   );
-  assert.equal((release.match(/actions\/upload-artifact@/gu) ?? []).length, 4);
+  assert.equal(
+    (release.match(/actions\/upload-artifact@/gu) ?? []).length,
+    rerunsQuality ? 4 : 3,
+  );
 });
 
 test("Scorecard publishes findings without another artifact", () => {
