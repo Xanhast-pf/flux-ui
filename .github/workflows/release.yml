@@ -11,7 +11,7 @@ on:
         description: alpha for prereleases; latest for stable versions
         type: choice
         options: [alpha, latest]
-        default: alpha
+        default: latest
         required: true
 permissions:
   contents: read
@@ -24,36 +24,56 @@ jobs:
     if: github.repository == 'Xanhast-pf/flux-ui' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 45
+
+    permissions:
+      contents: read
+      actions: read
+
     outputs:
       matrix: ${{ steps.pack.outputs.matrix }}
+
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+
       - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
         with:
           version: 10.34.5
+
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
           package-manager-cache: false
-      - run: pnpm install --frozen-lockfile
-      - name: Install Playwright browsers
-        run: pnpm --fail-if-no-match --filter @varua/docs run playwright:install:compat
-      - name: Full quality and browser gates
-        run: |
-          node tooling/trust/run-checks.mjs quality
-          node tooling/trust/run-checks.mjs browser
-          node tooling/trust/generate.mjs --require-ci
-      - name: Fail on high or critical dependency advisories
+
+      # Verify versions and reuse successful CI evidence for this exact commit.
+      - name: Verify release readiness
+        env:
+          FLUX_RELEASE_TAG: ${{ inputs.npm_tag }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node tooling/release/preflight.mjs --require-ci
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Dependency security audit
         run: pnpm audit --audit-level=high
+
+      - name: Build release packages
+        run: node tooling/terminal/tasks.mjs build:packages
+
       - name: Pack public workspaces once
         id: pack
         env:
           FLUX_RELEASE_TAG: ${{ inputs.npm_tag }}
         run: node tooling/release/pack.mjs
+
+      - name: Install Playwright browsers for packed consumers
+        run: pnpm --fail-if-no-match --filter @varua/docs run playwright:install:compat
+
       - name: Verify packed consumers across browser engines
         run: pnpm flux release consumer
+
       - name: Upload immutable tarballs and manifest
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -62,16 +82,6 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 7
-      - name: Preserve executed check evidence
-        if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: release-checks-${{ github.run_id }}-${{ github.run_attempt }}
-          path: .cache/trust/
-          include-hidden-files: true
-          if-no-files-found: warn
-          retention-days: 1
-
   inventory:
     name: Inventory (${{ matrix.package.name }})
     needs: prepare
