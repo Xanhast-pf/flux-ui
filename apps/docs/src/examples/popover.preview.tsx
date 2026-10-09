@@ -1,4 +1,4 @@
-import { Field, Popover, Stack, Switch } from "@flux-ui/react";
+import { Field, Popover, Stack, Switch } from "@varua/flux-ui";
 export default function Example() {
   return (
     <Popover.Root>

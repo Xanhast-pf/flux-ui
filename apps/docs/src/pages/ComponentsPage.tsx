@@ -11,7 +11,7 @@ import {
   Stack,
   Tabs,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 import { useComponentSearch } from "../lib/componentSearch.js";
 import { catalog } from "../lib/examples.js";

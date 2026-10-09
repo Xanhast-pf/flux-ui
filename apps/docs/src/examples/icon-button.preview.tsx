@@ -1,4 +1,4 @@
-import { IconButton, Inline, Text } from "@flux-ui/react";
+import { IconButton, Inline, Text } from "@varua/flux-ui";
 import { useState } from "react";
 
 export default function InteractiveIconButtons() {

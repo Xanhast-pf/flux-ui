@@ -1,4 +1,4 @@
-import { Avatar, Button, Inline, Stack, Text } from "@flux-ui/react";
+import { Avatar, Button, Inline, Stack, Text } from "@varua/flux-ui";
 import { useState } from "react";
 
 const illustration =

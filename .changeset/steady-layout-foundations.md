@@ -1,5 +1,5 @@
 ---
-"@flux-ui/react": patch
+"@varua/flux-ui": patch
 ---
 
 Restore predictable surface padding and consumer CSS overrides. Serialize sparse

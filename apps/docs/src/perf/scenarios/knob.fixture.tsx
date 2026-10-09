@@ -1,4 +1,4 @@
-import { Box, Knob } from "@flux-ui/react";
+import { Box, Knob } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 const ignoreChange = () => {};

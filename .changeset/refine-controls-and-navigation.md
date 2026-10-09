@@ -1,5 +1,5 @@
 ---
-"@flux-ui/react": minor
+"@varua/flux-ui": minor
 ---
 
 Add vertical/customizable Slider rendering, double-click reset for Slider and

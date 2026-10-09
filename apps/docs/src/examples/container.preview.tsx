@@ -1,4 +1,4 @@
-import { Box, Card, Container, Text } from "@flux-ui/react";
+import { Box, Card, Container, Text } from "@varua/flux-ui";
 export default function Example() {
   return (
     <Box surface="subtle" paddingBlock="md">

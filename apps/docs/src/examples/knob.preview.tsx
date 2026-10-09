@@ -8,7 +8,7 @@ import {
   Select,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 export default function Preview() {
   const [cutoff, setCutoff] = useState(1000);
   const [size, setSize] = useState<"sm" | "md" | "lg">("md");

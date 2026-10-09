@@ -1,4 +1,4 @@
-import { DownloadIcon } from "@flux-ui/icons";
+import { DownloadIcon } from "@varua/icons";
 import {
   Avatar,
   Breadcrumbs,
@@ -26,7 +26,7 @@ import {
   Text,
   ToggleGroup,
   type DataColumn,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { SceneHeader, SceneStatus } from "../SceneParts.js";
 

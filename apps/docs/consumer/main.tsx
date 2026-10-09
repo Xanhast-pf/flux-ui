@@ -1,7 +1,7 @@
 // Intentionally no docs aliases, docs CSS, source-relative Flux imports, or VE plugin.
-import "@flux-ui/tokens/theme.css";
-import "@flux-ui/tokens/reset.css";
-import { FluxMarkIcon } from "@flux-ui/icons";
+import "@varua/tokens/theme.css";
+import "@varua/tokens/reset.css";
+import { FluxMarkIcon } from "@varua/icons";
 import {
   Avatar,
   AspectRatio,
@@ -36,7 +36,7 @@ import {
   Stack,
   Tabs,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ConsumerInteractions } from "./interactions.js";

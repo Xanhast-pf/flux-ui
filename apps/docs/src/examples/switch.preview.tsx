@@ -1,4 +1,4 @@
-import { Field, Inline, Switch } from "@flux-ui/react";
+import { Field, Inline, Switch } from "@varua/flux-ui";
 import { useState } from "react";
 
 export default function Example() {

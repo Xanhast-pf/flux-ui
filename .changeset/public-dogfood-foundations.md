@@ -1,6 +1,6 @@
 ---
-"@flux-ui/react": minor
-"@flux-ui/tokens": minor
+"@varua/flux-ui": minor
+"@varua/tokens": minor
 ---
 
 Add public layout, typography, scoped-theme, overflow, and content-composition

@@ -1,4 +1,4 @@
-import { Stack, Tabs, Text } from "@flux-ui/react";
+import { Stack, Tabs, Text } from "@varua/flux-ui";
 import { useState } from "react";
 import { ButtonLab } from "../demos/ButtonLab.js";
 import { CollectionLab } from "../demos/CollectionLab.js";

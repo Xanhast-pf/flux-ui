@@ -1,4 +1,4 @@
-import { Inline, Link } from "@flux-ui/react";
+import { Inline, Link } from "@varua/flux-ui";
 
 export default function LinkTextTreatments() {
   return (

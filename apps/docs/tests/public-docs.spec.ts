@@ -41,7 +41,7 @@ test("getting-started consumer and contributor guidance preserves content and sp
   }
   await expect(
     page.getByRole("region", { name: "Consumer candidate setup", exact: true }),
-  ).toContainText("pnpm add ./vendor/flux-ui-react.tgz");
+  ).toContainText("pnpm add ./vendor/varua-flux-ui.tgz");
   await expect(
     page.getByRole("region", {
       name: "Repository contributor setup",

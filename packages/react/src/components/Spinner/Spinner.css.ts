@@ -1,4 +1,4 @@
-import { cssVars } from "@flux-ui/tokens";
+import { cssVars } from "@varua/tokens";
 import { keyframes, style } from "@vanilla-extract/css";
 const turn = keyframes({ to: { transform: "rotate(360deg)" } });
 export const spinner = style({

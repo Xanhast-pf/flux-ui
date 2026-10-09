@@ -9,7 +9,7 @@ import {
   PageHeader,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { REPOSITORY_URL } from "../lib/format.js";
 import { CodeBlock } from "../ui/CodeBlock.js";
 const contracts = [

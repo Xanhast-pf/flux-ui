@@ -1,4 +1,4 @@
-import { Field, Fieldset, Input } from "@flux-ui/react";
+import { Field, Fieldset, Input } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

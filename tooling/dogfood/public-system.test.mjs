@@ -97,7 +97,7 @@ test("regular docs UI has no ownership escape and consumer build cannot silently
   assert.match(config, /Consumer bypassed a public built export/u);
   const entry = await source("apps/docs/consumer/main.tsx");
   assert.doesNotMatch(entry, /from ["']\.\.\//u);
-  assert.match(entry, /@flux-ui\/tokens\/reset\.css/u);
+  assert.match(entry, /@varua\/tokens\/reset\.css/u);
 });
 test("consumer runs in the full gate and standalone icon checks cannot read stale builds", async () => {
   assert.ok(
@@ -109,7 +109,7 @@ test("consumer runs in the full gate and standalone icon checks cannot read stal
     assert.deepEqual(commands[name][0], [
       "pnpm",
       "--filter",
-      "@flux-ui/icons",
+      "@varua/icons",
       "build",
     ]);
     assert.equal(commands[name][1][1], "tooling/icons/check.mjs");

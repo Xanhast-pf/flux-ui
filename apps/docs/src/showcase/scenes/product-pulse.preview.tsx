@@ -1,4 +1,4 @@
-import { SaveIcon } from "@flux-ui/icons";
+import { SaveIcon } from "@varua/icons";
 import {
   Accordion,
   Button,
@@ -30,7 +30,7 @@ import {
   ToggleGroup,
   Tooltip,
   type RatingValue,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 import { SceneHeader, SceneStatus } from "../SceneParts.js";
 

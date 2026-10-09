@@ -54,7 +54,7 @@ pnpm flux perf accept  # intentionally record a new baseline
 Playwright Chromium must be installed once:
 
 ```bash
-pnpm --filter @flux-ui/docs exec playwright install chromium
+pnpm --filter @varua/docs exec playwright install chromium
 ```
 
 The committed baseline lives at `tooling/perf/baseline.json`.

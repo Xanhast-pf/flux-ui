@@ -1,4 +1,4 @@
-import { Stack, Text, ToggleGroup } from "@flux-ui/react";
+import { Stack, Text, ToggleGroup } from "@varua/flux-ui";
 import { useState } from "react";
 export default function Example() {
   const [formats, setFormats] = useState<readonly string[]>(["bold"]);

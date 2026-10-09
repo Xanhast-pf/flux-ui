@@ -1,7 +1,7 @@
 ---
-"@flux-ui/react": patch
-"@flux-ui/tokens": patch
-"@flux-ui/icons": patch
+"@varua/flux-ui": patch
+"@varua/tokens": patch
+"@varua/icons": patch
 ---
 
 Add public repository/license/provenance metadata and distribute the MIT license

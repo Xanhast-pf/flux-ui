@@ -1,4 +1,4 @@
-import { Stack, Text } from "@flux-ui/react";
+import { Stack, Text } from "@varua/flux-ui";
 
 export default function TextRoles() {
   return (

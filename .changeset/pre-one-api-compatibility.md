@@ -1,5 +1,5 @@
 ---
-"@flux-ui/react": minor
+"@varua/flux-ui": minor
 ---
 
 Normalize the pre-1.0 public API before the first stable compatibility freeze.

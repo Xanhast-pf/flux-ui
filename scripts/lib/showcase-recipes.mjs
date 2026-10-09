@@ -10,7 +10,7 @@ import { dirname, isAbsolute, relative, resolve, sep } from "node:path";
 import ts from "typescript";
 import projectPackage from "../../package.json" with { type: "json" };
 const allowedBare =
-  /^(?:react(?:\/(?:jsx-runtime|jsx-dev-runtime))?|react-dom(?:\/(?:client|server))?|@flux-ui\/(?:react|icons)|@flux-ui\/tokens\/(?:theme|reset|presets)\.css)$/u;
+  /^(?:react(?:\/(?:jsx-runtime|jsx-dev-runtime))?|react-dom(?:\/(?:client|server))?|@varua\/(?:flux-ui|icons)|@varua\/tokens\/(?:theme|reset|presets)\.css)$/u;
 function confined(root, path) {
   const part = relative(root, path);
   if (
@@ -144,9 +144,9 @@ export function recipeProject(
   if (!/^[a-z]+(?:-[a-z]+)*$/u.test(scene))
     throw new Error("Unsafe recipe scene name.");
   const flux = Object.fromEntries(
-    ["react", "tokens", "icons"].map((name) => [
-      `@flux-ui/${name}`,
-      `file:./vendor/flux-ui-${name}.tgz`,
+    ["flux-ui", "tokens", "icons"].map((name) => [
+      `@varua/${name}`,
+      `file:./vendor/varua-${name}.tgz`,
     ]),
   );
   const pkg = {
@@ -179,8 +179,8 @@ export function recipeProject(
     "tsconfig.json": `${JSON.stringify({ compilerOptions: { target: "ES2022", lib: ["ES2023", "DOM", "DOM.Iterable"], module: "ESNext", moduleResolution: "Bundler", jsx: "react-jsx", strict: true, exactOptionalPropertyTypes: true, noUncheckedIndexedAccess: true, skipLibCheck: true, noEmit: true, types: ["vite/client"] }, include: ["src"] }, null, 2)}\n`,
     "index.html":
       '<!doctype html>\n<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Flux application recipe</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>\n',
-    "src/main.tsx": `import "@flux-ui/tokens/theme.css";\nimport "@flux-ui/tokens/reset.css";\nimport { Container, Stack } from "@flux-ui/react";\nimport { createRoot } from "react-dom/client";\nimport Scene from "./showcase/scenes/${scene}.preview.js";\nfunction App() {\n  return <Container as="main" size="full" query><Stack gap="lg" padding="md"><Scene /></Stack></Container>;\n}\nconst root = document.getElementById("root");\nif (root === null) throw new Error("Missing application root.");\ncreateRoot(root).render(<App />);\n`,
-    "README.md": `# ${scene}: Flux UI recipe\n\nThis local UI demo includes source, artwork, and a Vite project. It has no backend, audio processing, or credentials.\n\n## Install approved packages\n\nFlux may be unpublished. Copy the approved archives to \`vendor/flux-ui-react.tgz\`, \`vendor/flux-ui-tokens.tgz\`, and \`vendor/flux-ui-icons.tgz\`. Renaming does not change their contents. The package manifest uses these archives for direct and transitive Flux dependencies.\n\nWith Node ${toolchain.engines.node.replace(/^>=/u, "")} and pnpm ${toolchain.packageManager.replace(/^pnpm@/u, "")}, run \`pnpm install\`, then \`pnpm dev\` or \`pnpm build\`. No lockfile is included. Verify the resulting install and build.\n\nThe interface uses public Flux components. Local styles, if any, are artwork only. Reloading resets the demo.\n\nThis recipe is not a release attestation or proof of browser compatibility.\n\n## License\n\nSee LICENSE for the original Flux UI MIT notice.\n`,
+    "src/main.tsx": `import "@varua/tokens/theme.css";\nimport "@varua/tokens/reset.css";\nimport { Container, Stack } from "@varua/flux-ui";\nimport { createRoot } from "react-dom/client";\nimport Scene from "./showcase/scenes/${scene}.preview.js";\nfunction App() {\n  return <Container as="main" size="full" query><Stack gap="lg" padding="md"><Scene /></Stack></Container>;\n}\nconst root = document.getElementById("root");\nif (root === null) throw new Error("Missing application root.");\ncreateRoot(root).render(<App />);\n`,
+    "README.md": `# ${scene}: Flux UI recipe\n\nThis local UI demo includes source, artwork, and a Vite project. It has no backend, audio processing, or credentials.\n\n## Install approved packages\n\nFlux may be unpublished. Copy the approved archives to \`vendor/varua-flux-ui.tgz\`, \`vendor/varua-tokens.tgz\`, and \`vendor/varua-icons.tgz\`. Renaming does not change their contents. The package manifest uses these archives for direct and transitive Flux dependencies.\n\nWith Node ${toolchain.engines.node.replace(/^>=/u, "")} and pnpm ${toolchain.packageManager.replace(/^pnpm@/u, "")}, run \`pnpm install\`, then \`pnpm dev\` or \`pnpm build\`. No lockfile is included. Verify the resulting install and build.\n\nThe interface uses public Flux components. Local styles, if any, are artwork only. Reloading resets the demo.\n\nThis recipe is not a release attestation or proof of browser compatibility.\n\n## License\n\nSee LICENSE for the original Flux UI MIT notice.\n`,
     LICENSE: license,
   };
 }

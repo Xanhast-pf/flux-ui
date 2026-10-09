@@ -1,5 +1,5 @@
 ---
-"@flux-ui/react": minor
+"@varua/flux-ui": minor
 ---
 
 Remove the experimental public Overflow component before 1.0. Tabs now automatically keeps the selected tab visible and presents hidden tabs in a Flux DropdownMenu. Remove `<Overflow>` and render ordinary Tabs; no migration wrapper or new overflow props are needed.

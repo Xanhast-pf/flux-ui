@@ -12,7 +12,7 @@ import {
   PageHeader,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import type { AxeResults } from "axe-core";
 import { useEffect, useRef, useState } from "react";
 import { downloadJson } from "../lib/download.js";

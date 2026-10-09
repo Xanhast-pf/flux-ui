@@ -1,4 +1,4 @@
-import { DateTimePicker, Field } from "@flux-ui/react";
+import { DateTimePicker, Field } from "@varua/flux-ui";
 
 export default function Example() {
   return (

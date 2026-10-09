@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@flux-ui/icons";
+import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@varua/icons";
 import {
   StatusBadge,
   Box,
@@ -18,7 +18,7 @@ import {
   Tabs,
   Text,
   Toggle,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { lazy, Suspense, useState, type ReactElement } from "react";
 import { publicContracts } from "../generated/contracts.js";
 import { health } from "../generated/health.js";

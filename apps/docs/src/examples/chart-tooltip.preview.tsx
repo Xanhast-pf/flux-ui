@@ -7,7 +7,7 @@ import {
   Select,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 
 const series = [
   {

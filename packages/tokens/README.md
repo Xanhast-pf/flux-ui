@@ -1,4 +1,4 @@
-# @flux-ui/tokens
+# @varua/tokens
 
 Public design tokens and CSS foundations for Flux UI. The package provides
 semantic CSS variables, light/dark theme values, optional palette presets, the
@@ -7,15 +7,15 @@ public reset, and JavaScript constants for the exported variable names.
 ## Install
 
 ```bash
-pnpm add @flux-ui/tokens
+pnpm add @varua/tokens
 ```
 
 Import the foundations your application needs:
 
 ```ts
-import "@flux-ui/tokens/reset.css";
-import "@flux-ui/tokens/theme.css";
-import "@flux-ui/tokens/presets.css"; // Optional palette mapping.
+import "@varua/tokens/reset.css";
+import "@varua/tokens/theme.css";
+import "@varua/tokens/presets.css"; // Optional palette mapping.
 ```
 
 Apply theme and optional palette attributes at the application or scoped theme
@@ -39,7 +39,7 @@ variable-name references.
 - forced-colors behavior lives in the shared token layer;
 - spacing uses the Flux quarter-rem scale;
 - no bundled webfont and no runtime CSS-in-JS engine;
-- component-specific styling remains in `@flux-ui/react`, not this package.
+- component-specific styling remains in `@varua/flux-ui`, not this package.
 
 Documentation: https://flux.varua.ca/#tokens
 

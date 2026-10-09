@@ -1,4 +1,4 @@
-import { Stepper } from "@flux-ui/react";
+import { Stepper } from "@varua/flux-ui";
 
 export default function Example() {
   return (

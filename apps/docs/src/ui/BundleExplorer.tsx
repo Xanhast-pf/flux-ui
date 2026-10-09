@@ -11,7 +11,7 @@ import {
   Select,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 import { health } from "../generated/health.js";
 import { formatBytes } from "../lib/format.js";

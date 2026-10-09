@@ -1,4 +1,4 @@
-import { Field, InputGroup, NumberField, Stack, Text } from "@flux-ui/react";
+import { Field, InputGroup, NumberField, Stack, Text } from "@varua/flux-ui";
 import { useState } from "react";
 export default function Preview() {
   const [amount, setAmount] = useState<number | null>(120);

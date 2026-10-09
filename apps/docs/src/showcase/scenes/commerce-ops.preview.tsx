@@ -23,7 +23,7 @@ import {
   Switch,
   Text,
   type RatingValue,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { SceneHeader, SceneStatus } from "../SceneParts.js";
 

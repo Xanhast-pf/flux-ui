@@ -1,4 +1,4 @@
-import { Box, Slider } from "@flux-ui/react";
+import { Box, Slider } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 const ignoreChange = () => {};

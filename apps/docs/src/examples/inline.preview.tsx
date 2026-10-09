@@ -1,4 +1,4 @@
-import { Button, Card, Inline, Text } from "@flux-ui/react";
+import { Button, Card, Inline, Text } from "@varua/flux-ui";
 
 export default function Example() {
   return (

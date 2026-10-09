@@ -1,14 +1,14 @@
 {
-  "name": "@flux-ui/docs",
+  "name": "@varua/docs",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "dependencies": {
-    "@flux-ui/react": "workspace:*",
-    "@flux-ui/tokens": "workspace:*",
+    "@varua/flux-ui": "workspace:*",
+    "@varua/tokens": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "@flux-ui/icons": "workspace:*",
+    "@varua/icons": "workspace:*",
     "axe-core": "4.13.0"
   },
   "devDependencies": {

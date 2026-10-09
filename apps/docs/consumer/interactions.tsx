@@ -17,7 +17,7 @@ import {
   Toast,
   Tooltip,
   useToast,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 function WrappedHelp() {
   return <Field.Description>Wrapped helper is associated.</Field.Description>;
 }

@@ -16,7 +16,7 @@ import {
   StatusBadge,
   Table,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 import { components } from "../generated/components.js";
 import { health } from "../generated/health.js";

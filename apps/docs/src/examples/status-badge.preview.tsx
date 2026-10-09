@@ -1,4 +1,4 @@
-import { StatusBadge, Inline } from "@flux-ui/react";
+import { StatusBadge, Inline } from "@varua/flux-ui";
 
 export default function Example() {
   return (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DataGrid } from "@flux-ui/react";
+import { DataGrid } from "@varua/flux-ui";
 
 interface Position {
   id: string;

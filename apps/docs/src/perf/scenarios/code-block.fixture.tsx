@@ -1,4 +1,4 @@
-import { Box, CodeBlock, tokenizeCode } from "@flux-ui/react";
+import { Box, CodeBlock, tokenizeCode } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 export default function Fixture({ count, revision }: ScenarioProps) {

@@ -167,13 +167,13 @@ importers:
 
   apps/docs:
     dependencies:
-      "@flux-ui/icons":
+      "@varua/icons":
         specifier: workspace:*
         version: link:../../packages/icons
-      "@flux-ui/react":
+      "@varua/flux-ui":
         specifier: workspace:*
         version: link:../../packages/react
-      "@flux-ui/tokens":
+      "@varua/tokens":
         specifier: workspace:*
         version: link:../../packages/tokens
       axe-core:
@@ -289,10 +289,10 @@ importers:
 
   packages/react:
     dependencies:
-      "@flux-ui/icons":
+      "@varua/icons":
         specifier: workspace:^
         version: link:../icons
-      "@flux-ui/tokens":
+      "@varua/tokens":
         specifier: workspace:^
         version: link:../tokens
     devDependencies:

@@ -18,7 +18,7 @@ pnpm flux perf
 ```
 
 `node tooling/terminal/tasks.mjs format` normalizes source formatting; the check pipeline remains strict
-and non-mutating. Install Chromium, Firefox and WebKit with `pnpm --filter @flux-ui/docs run
+and non-mutating. Install Chromium, Firefox and WebKit with `pnpm --filter @varua/docs run
 playwright:install:compat` on Linux when needed. Commit generated or
 formatting changes before running the receipt wrapper's clean-tree check.
 
@@ -57,9 +57,9 @@ publishing job: Scorecard validates supported workflow structure.
 
 ## 3. Set up npm OIDC for each public package
 
-Confirm you control the `@flux-ui` npm scope and the actual package names. The
+Confirm you control the `@varua` npm organization and the actual package names. The
 pack step discovers every non-private workspace under `packages/`; currently
-these are `@flux-ui/tokens`, `@flux-ui/icons`, and `@flux-ui/react`.
+these are `@varua/tokens`, `@varua/icons`, and `@varua/flux-ui`.
 
 Create a GitHub environment named **npm**, allow only protected `main`, require
 maintainer approval where available, and review who can bypass protection. For
@@ -137,8 +137,8 @@ Obtain the tarball and verification bundles from the successful workflow artifac
 or fetch the published package. Verify with an up-to-date GitHub CLI:
 
 ```sh
-gh attestation verify flux-ui-react-VERSION.tgz --repo Xanhast-pf/flux-ui
-gh attestation verify flux-ui-react-VERSION.tgz --repo Xanhast-pf/flux-ui \
+gh attestation verify varua-flux-ui-VERSION.tgz --repo Xanhast-pf/flux-ui
+gh attestation verify varua-flux-ui-VERSION.tgz --repo Xanhast-pf/flux-ui \
   --predicate-type https://spdx.dev/Document
 ```
 

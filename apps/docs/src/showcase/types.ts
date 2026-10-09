@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { IconProps } from "@flux-ui/icons";
+import type { IconProps } from "@varua/icons";
 import type { ComponentMeta } from "../generated/components.js";
 export interface SceneDefinition {
   order: number;

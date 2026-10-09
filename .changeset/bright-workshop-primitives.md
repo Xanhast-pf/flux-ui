@@ -1,5 +1,5 @@
 ---
-"@flux-ui/react": minor
+"@varua/flux-ui": minor
 ---
 
 Add Badge, Callout, Card, Collapsible, Progress, Select, Separator, Slider, Switch, and Table.

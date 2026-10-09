@@ -1,4 +1,4 @@
-import { UsersIcon } from "@flux-ui/icons";
+import { UsersIcon } from "@varua/icons";
 import type { SceneDefinition } from "../types.js";
 
 export default {

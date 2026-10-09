@@ -94,7 +94,7 @@ test("bundles CSS and dynamic imports, externalizes peers, and writes no output"
     "entry.js": `
       import { createElement } from "react";
       import { jsx } from "react/jsx-runtime";
-      export { StarIcon } from "@flux-ui/icons";
+      export { StarIcon } from "@varua/icons";
       export { createPortal } from "react-dom";
       import "./entry.css";
       export const Component = () => createElement("div", null, jsx("span", {}));
@@ -115,7 +115,7 @@ test("bundles CSS and dynamic imports, externalizes peers, and writes no output"
   assert.ok(first.outputs.js.raw > 0);
   assert.ok(first.outputs.css.raw > 0);
   assert.deepEqual(first.externalImports, [
-    "@flux-ui/icons",
+    "@varua/icons",
     "react",
     "react-dom",
     "react/jsx-runtime",

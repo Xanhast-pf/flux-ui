@@ -1,4 +1,4 @@
-import { Button, Tooltip } from "@flux-ui/react";
+import { Button, Tooltip } from "@varua/flux-ui";
 
 export default function Example() {
   return (

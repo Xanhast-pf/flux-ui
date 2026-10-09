@@ -34,7 +34,7 @@ test("recipe source closure includes relative helpers, type imports and artwork 
   const root = resolve(directory, "src");
   await writeFile(
     resolve(root, "entry.tsx"),
-    'import { Text } from "@flux-ui/react"; import { value } from "./model.js"; import "./art.css"; export default function Scene(){return <Text>{value}</Text>;}',
+    'import { Text } from "@varua/flux-ui"; import { value } from "./model.js"; import "./art.css"; export default function Scene(){return <Text>{value}</Text>;}',
   );
   await writeFile(
     resolve(root, "model.ts"),
@@ -71,8 +71,8 @@ test("recipe traversal, symlink escape, missing helpers and undeclared dependenc
   );
   for (const specifier of [
     "private-runtime",
-    "@flux-ui/react/internal",
-    "@flux-ui/icons/private",
+    "@varua/flux-ui/internal",
+    "@varua/icons/private",
   ]) {
     await writeFile(entry, `import "${specifier}";`);
     await assert.rejects(collectRecipeSources(root, "entry.ts"), /undeclared/);
@@ -99,14 +99,14 @@ test("recipe generation rejects computed imports, unsupported CSS assets and inv
 test("recipe consumer setup points to exact local Flux artifacts and includes the MIT notice", () => {
   const files = recipeProject("finance", catalog, "Test MIT notice");
   const pkg = JSON.parse(files["package.json"]);
-  for (const name of ["react", "tokens", "icons"]) {
+  for (const name of ["flux-ui", "tokens", "icons"]) {
     assert.equal(
-      pkg.dependencies[`@flux-ui/${name}`],
-      `file:./vendor/flux-ui-${name}.tgz`,
+      pkg.dependencies[`@varua/${name}`],
+      `file:./vendor/varua-${name}.tgz`,
     );
     assert.equal(
-      pkg.dependencies[`@flux-ui/${name}`],
-      pkg.pnpm.overrides[`@flux-ui/${name}`],
+      pkg.dependencies[`@varua/${name}`],
+      pkg.pnpm.overrides[`@varua/${name}`],
     );
   }
   assert.equal(files.LICENSE, "Test MIT notice");

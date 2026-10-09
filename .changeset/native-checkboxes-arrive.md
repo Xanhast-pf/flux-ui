@@ -1,5 +1,5 @@
 ---
-"@flux-ui/react": minor
+"@varua/flux-ui": minor
 ---
 
 Add a native Checkbox primitive with checked/defaultChecked, a controlled

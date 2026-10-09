@@ -1,4 +1,4 @@
-import { Button, PageHeader, Text } from "@flux-ui/react";
+import { Button, PageHeader, Text } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

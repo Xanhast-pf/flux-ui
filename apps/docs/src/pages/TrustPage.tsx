@@ -10,7 +10,7 @@ import {
   PageHeader,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useEffect, useState } from "react";
 import { parseEvidence, type Evidence } from "../lib/evidence.js";
 import { REPOSITORY_URL, formatBytes } from "../lib/format.js";

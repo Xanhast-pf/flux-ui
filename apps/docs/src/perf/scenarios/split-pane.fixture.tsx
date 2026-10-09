@@ -1,4 +1,4 @@
-import { Box, SplitPane, Text } from "@flux-ui/react";
+import { Box, SplitPane, Text } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 const ignoreValueChange = () => {};

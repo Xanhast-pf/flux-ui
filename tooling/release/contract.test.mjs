@@ -8,12 +8,12 @@ import {
   REPOSITORY_URL,
 } from "./contract.mjs";
 const pkg = {
-  name: "@flux-ui/react",
+  name: "@varua/flux-ui",
   version: "0.1.0-alpha.0",
   license: "MIT",
   repository: { url: REPOSITORY_URL },
   publishConfig: { access: "public", provenance: true },
-  dependencies: { "@flux-ui/tokens": "^0.1.0-alpha.0" },
+  dependencies: { "@varua/tokens": "^0.1.0-alpha.0" },
 };
 test("release versions and dist-tags cannot silently publish placeholders or prereleases as latest", () => {
   assertVersion("0.1.0-alpha.0", "alpha");
@@ -33,13 +33,22 @@ test("release versions and dist-tags cannot silently publish placeholders or pre
 test("release archive names are confined to the Flux package namespace", () => {
   assert.equal(
     archiveName(pkg.name, pkg.version),
-    "flux-ui-react-0.1.0-alpha.0.tgz",
+    "varua-flux-ui-0.1.0-alpha.0.tgz",
+  );
+  assert.equal(
+    archiveName("@varua/icons", pkg.version),
+    "varua-icons-0.1.0-alpha.0.tgz",
+  );
+  assert.equal(
+    archiveName("@varua/tokens", pkg.version),
+    "varua-tokens-0.1.0-alpha.0.tgz",
   );
   for (const name of [
     "@other/react",
+    "@flux-ui/react", // The retired scope must never be accepted for release.
     "../../evil",
-    "@flux-ui/../../evil",
-    "@flux-ui/react;echo",
+    "@varua/../../evil",
+    "@varua/flux-ui;echo",
     "react",
   ])
     assert.throws(() => archiveName(name, pkg.version));
@@ -51,7 +60,7 @@ test("packed metadata cannot hide wrong identity, private packages or local depe
       p.private = true;
     },
     (p) => {
-      p.name = "@flux-ui/not-react";
+      p.name = "@varua/not-react";
     },
     (p) => {
       p.publishConfig.provenance = false;

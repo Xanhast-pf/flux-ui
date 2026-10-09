@@ -1,5 +1,5 @@
-import { Card, Grid, Text, ThemeScope } from "@flux-ui/react";
-import "@flux-ui/tokens/presets.css";
+import { Card, Grid, Text, ThemeScope } from "@varua/flux-ui";
+import "@varua/tokens/presets.css";
 
 export default function Preview() {
   return (

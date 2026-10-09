@@ -1,5 +1,5 @@
 {
-  "name": "@flux-ui/storybook",
+  "name": "@varua/storybook",
   "version": "0.0.0",
   "private": true,
   "type": "module",

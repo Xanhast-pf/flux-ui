@@ -1,4 +1,4 @@
-import { Button, Inline } from "@flux-ui/react";
+import { Button, Inline } from "@varua/flux-ui";
 
 export default function ButtonVariants() {
   return (

@@ -1,4 +1,4 @@
-import { Card, Grid, Meter, Stack, Text } from "@flux-ui/react";
+import { Card, Grid, Meter, Stack, Text } from "@varua/flux-ui";
 import { formatMs } from "../lib/format.js";
 export function ComparisonBars({
   label,

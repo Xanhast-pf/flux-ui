@@ -1,5 +1,5 @@
 import { useId, useRef } from "react";
-import { Box, Heading, SkipLink, Stack, Text } from "@flux-ui/react";
+import { Box, Heading, SkipLink, Stack, Text } from "@varua/flux-ui";
 
 export default function Preview() {
   const id = useId();

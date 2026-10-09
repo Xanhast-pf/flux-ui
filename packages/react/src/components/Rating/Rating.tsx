@@ -1,4 +1,4 @@
-import { StarEmptyIcon, StarFilledIcon, StarHalfIcon } from "@flux-ui/icons";
+import { StarEmptyIcon, StarFilledIcon, StarHalfIcon } from "@varua/icons";
 import {
   useId,
   type ChangeEvent,
@@ -72,14 +72,15 @@ export function Rating({
 
   function handleScrub(event: ReactPointerEvent<HTMLSpanElement>): void {
     if (event.buttons !== 1) return;
-    const input = event.currentTarget.ownerDocument
+    const currentTarget = event.currentTarget;
+    const input = currentTarget.ownerDocument
       .elementFromPoint(event.clientX, event.clientY)
       ?.closest("label")
       ?.querySelector<HTMLInputElement>("input");
     if (
       input &&
       !input.checked &&
-      event.currentTarget.parentElement?.contains(input)
+      currentTarget.parentElement?.contains(input)
     ) {
       input.click();
     }

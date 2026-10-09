@@ -1,4 +1,4 @@
-import { Stat } from "@flux-ui/react";
+import { Stat } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

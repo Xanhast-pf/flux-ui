@@ -1,4 +1,4 @@
-import { Callout, Link } from "@flux-ui/react";
+import { Callout, Link } from "@varua/flux-ui";
 import { health } from "../generated/health.js";
 import { REPOSITORY_URL } from "../lib/format.js";
 function isPending(value: number | null): boolean {

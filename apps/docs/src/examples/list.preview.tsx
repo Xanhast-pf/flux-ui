@@ -1,4 +1,4 @@
-import { List } from "@flux-ui/react";
+import { List } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

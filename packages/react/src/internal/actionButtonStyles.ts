@@ -1,4 +1,4 @@
-import { cssVars } from "@flux-ui/tokens";
+import { cssVars } from "@varua/tokens";
 import { createVar, keyframes, type StyleRule } from "@vanilla-extract/css";
 
 // Build-time-only composition: invoke from a component .css.ts file. Each action

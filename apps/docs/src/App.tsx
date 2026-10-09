@@ -1,4 +1,4 @@
-import { MenuIcon } from "@flux-ui/icons";
+import { MenuIcon } from "@varua/icons";
 import {
   Box,
   Container,
@@ -11,7 +11,7 @@ import {
   Sidebar,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import {
   lazy,
   Suspense,

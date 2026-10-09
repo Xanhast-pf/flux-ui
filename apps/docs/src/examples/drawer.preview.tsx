@@ -1,4 +1,4 @@
-import { Drawer } from "@flux-ui/react";
+import { Drawer } from "@varua/flux-ui";
 
 export default function Example() {
   return (

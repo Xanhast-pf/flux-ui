@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon } from "@flux-ui/icons";
+import { ArrowUpRightIcon } from "@varua/icons";
 import {
   Collapsible,
   Heading,
@@ -7,7 +7,7 @@ import {
   PageHeader,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { lazy, Suspense, useId, useState } from "react";
 import { ProductShowcase } from "../showcase/ProductShowcase.js";
 import { ExampleBoundary } from "../ui/ExampleBoundary.js";

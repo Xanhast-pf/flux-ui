@@ -1,4 +1,4 @@
-import { Pagination, Stack, Text } from "@flux-ui/react";
+import { Pagination, Stack, Text } from "@varua/flux-ui";
 import { useState } from "react";
 
 export default function Example() {

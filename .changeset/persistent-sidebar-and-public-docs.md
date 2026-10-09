@@ -1,6 +1,6 @@
 ---
-"@flux-ui/react": minor
-"@flux-ui/tokens": patch
+"@varua/flux-ui": minor
+"@varua/tokens": patch
 ---
 
 Add a persistent, non-modal Sidebar with controlled/uncontrolled state, in-flow

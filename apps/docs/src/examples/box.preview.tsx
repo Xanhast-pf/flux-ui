@@ -1,4 +1,4 @@
-import { Box, Text } from "@flux-ui/react";
+import { Box, Text } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Field, NumberField, Stack, Text } from "@flux-ui/react";
+import { Field, NumberField, Stack, Text } from "@varua/flux-ui";
 export default function Preview() {
   const [tempo, setTempo] = useState<number | null>(120);
   return (

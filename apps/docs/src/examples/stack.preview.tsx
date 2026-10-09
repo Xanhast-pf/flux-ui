@@ -1,4 +1,4 @@
-import { Card, Stack, Text } from "@flux-ui/react";
+import { Card, Stack, Text } from "@varua/flux-ui";
 export default function Example() {
   return (
     <Card padding={3}>

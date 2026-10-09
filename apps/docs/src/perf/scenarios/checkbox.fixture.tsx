@@ -1,4 +1,4 @@
-import { Box, Checkbox } from "@flux-ui/react";
+import { Box, Checkbox } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 const ignoreChange = () => undefined;
 

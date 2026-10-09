@@ -1,4 +1,4 @@
-import { Field, TimePicker } from "@flux-ui/react";
+import { Field, TimePicker } from "@varua/flux-ui";
 
 export default function Example() {
   return (

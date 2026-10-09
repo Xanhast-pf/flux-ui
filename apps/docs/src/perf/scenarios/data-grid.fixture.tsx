@@ -1,4 +1,4 @@
-import { Box, DataGrid } from "@flux-ui/react";
+import { Box, DataGrid } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 interface Row {

@@ -1,6 +1,6 @@
 ---
-"@flux-ui/react": minor
-"@flux-ui/tokens": minor
+"@varua/flux-ui": minor
+"@varua/tokens": minor
 ---
 
 Add alpha Popover, DropdownMenu, Combobox, Tooltip, Toast, AlertDialog,

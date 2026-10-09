@@ -7,7 +7,7 @@ import {
   Stack,
   Stat,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { components } from "../generated/components.js";
 import { health } from "../generated/health.js";
 import { readiness } from "../generated/readiness.js";

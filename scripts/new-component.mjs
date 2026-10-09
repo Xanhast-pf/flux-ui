@@ -67,7 +67,7 @@ for (const [name, content] of Object.entries(files)) {
 // A demo is discovered by filename, not registered in an unrelated app module.
 const exampleDir = resolve(root, "apps/docs/src/examples");
 await mkdir(exampleDir, { recursive: true });
-const previewCode = `import { ${rawName} } from "@flux-ui/react";\n\nexport default function Preview() {\n  return <${rawName}>Example</${rawName}>;\n}\n`;
+const previewCode = `import { ${rawName} } from "@varua/flux-ui";\n\nexport default function Preview() {\n  return <${rawName}>Example</${rawName}>;\n}\n`;
 await writeFile(
   resolve(exampleDir, `${slug}.preview.tsx`),
   previewCode,

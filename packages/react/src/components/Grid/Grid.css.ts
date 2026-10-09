@@ -1,4 +1,4 @@
-import { breakpoints } from "@flux-ui/tokens";
+import { breakpoints } from "@varua/tokens";
 import { style } from "@vanilla-extract/css";
 import { responsiveStyle } from "../../internal/responsive.css.js";
 

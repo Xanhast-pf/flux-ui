@@ -4,13 +4,13 @@ Flux UI keeps its visual identity in the same monorepo as the component system. 
 
 ## Typography
 
-Flux UI does not ship, fetch, or require a custom webfont. Ordinary interface text uses the existing semantic font stacks from `@flux-ui/tokens`; code-related surfaces continue to use the dedicated monospace stack.
+Flux UI does not ship, fetch, or require a custom webfont. Ordinary interface text uses the existing semantic font stacks from `@varua/tokens`; code-related surfaces continue to use the dedicated monospace stack.
 
 This keeps typography native to the consumer environment, avoids a font download/runtime dependency, and preserves the current layout/performance contract. Any future bundled or hosted font should be treated as a separate design, licensing, size, and browser-rendering decision rather than an implicit theme change.
 
 ## Flux Icons
 
-`@flux-ui/icons` is the public icon package. The generated icon set covers navigation, actions, status, theme, layout, content, communication, developer tooling and the Flux mark.
+`@varua/icons` is the public icon package. The generated icon set covers navigation, actions, status, theme, layout, content, communication, developer tooling and the Flux mark.
 
 Design contract:
 

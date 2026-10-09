@@ -1,5 +1,5 @@
 ---
-"@flux-ui/react": patch
+"@varua/flux-ui": patch
 ---
 
 Keep Tabs focused on semantic panel selection, native scrolling, keyboard navigation

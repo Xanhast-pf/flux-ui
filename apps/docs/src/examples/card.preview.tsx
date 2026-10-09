@@ -6,7 +6,7 @@ import {
   Inline,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 
 export default function Example() {

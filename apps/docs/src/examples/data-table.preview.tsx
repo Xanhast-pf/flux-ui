@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
   type DataColumn,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 interface Row {
   id: string;
   name: string;

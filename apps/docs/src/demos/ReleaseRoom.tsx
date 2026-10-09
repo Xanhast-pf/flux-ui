@@ -19,7 +19,7 @@ import {
   Stack,
   Switch,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useId, useRef, useState, type FormEvent } from "react";
 const initialTasks = [
   {

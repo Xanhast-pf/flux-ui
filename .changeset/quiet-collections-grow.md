@@ -1,5 +1,5 @@
 ---
-"@flux-ui/react": minor
+"@varua/flux-ui": minor
 ---
 
 Add Accordion, AspectRatio, Avatar, Breadcrumbs, IconButton, Kbd, Pagination,

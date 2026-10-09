@@ -1,4 +1,4 @@
-import { Tabs } from "@flux-ui/react";
+import { Tabs } from "@varua/flux-ui";
 const sections = [
   ["overview", "Overview"],
   ["activity", "Activity"],

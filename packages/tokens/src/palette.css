@@ -1,4 +1,4 @@
-/* Optional raw color ramps. Import @flux-ui/tokens/palette.css explicitly.
+/* Optional raw color ramps. Import @varua/tokens/palette.css explicitly.
  * Semantic components continue to consume --flux-color-* roles; these values are
  * for theme authoring, data visualization, and deliberate brand composition.
  */

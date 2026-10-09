@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Rating, Stack, Text, type RatingValue } from "@flux-ui/react";
+import { Box, Rating, Stack, Text, type RatingValue } from "@varua/flux-ui";
 
 export default function Preview() {
   const [value, setValue] = useState<RatingValue>(3.5);

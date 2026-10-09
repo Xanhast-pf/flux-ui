@@ -1,4 +1,4 @@
-import { CloseIcon } from "@flux-ui/icons";
+import { CloseIcon } from "@varua/icons";
 import {
   Box,
   Drawer,
@@ -10,7 +10,7 @@ import {
   List,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 import { useComponentSearch } from "../lib/componentSearch.js";
 import { navigationGroups } from "../lib/routing.js";

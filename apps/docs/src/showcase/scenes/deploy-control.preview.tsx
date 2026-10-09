@@ -1,4 +1,4 @@
-import { CodeIcon, RefreshIcon } from "@flux-ui/icons";
+import { CodeIcon, RefreshIcon } from "@varua/icons";
 import {
   Button,
   Callout,
@@ -31,7 +31,7 @@ import {
   Text,
   Toggle,
   Tooltip,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 import { SceneHeader, SceneStatus } from "../SceneParts.js";
 

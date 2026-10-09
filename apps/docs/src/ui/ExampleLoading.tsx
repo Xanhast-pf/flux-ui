@@ -1,4 +1,4 @@
-import { Box, Inline, Skeleton, Spinner, Stack, Text } from "@flux-ui/react";
+import { Box, Inline, Skeleton, Spinner, Stack, Text } from "@varua/flux-ui";
 export function ExampleLoading() {
   return (
     <Stack gap="lg">

@@ -1,4 +1,4 @@
-import { cssVars } from "@flux-ui/tokens";
+import { cssVars } from "@varua/tokens";
 import { style } from "@vanilla-extract/css";
 
 export const colorPicker = style({

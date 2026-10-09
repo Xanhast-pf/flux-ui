@@ -1,6 +1,6 @@
 // Compile against emitted declarations, never packages/*/src aliases.
 import { createRef } from "react";
-import { Sidebar, Text, AspectRatio, Container } from "@flux-ui/react";
+import { Sidebar, Text, AspectRatio, Container } from "@varua/flux-ui";
 const panelRef = createRef<HTMLElement>();
 const toggleRef = createRef<HTMLButtonElement>();
 export const publicDeclarations = (

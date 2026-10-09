@@ -156,7 +156,7 @@ test("disk inspection measures bytes and rejects unaccounted emitted JavaScript"
 test("normal and full quality builds enforce docs budgets after Vite succeeds", async () => {
   const { commands, taskCommand } = await import("../terminal/commands.mjs");
   assert.deepEqual(commands["build:docs"], [
-    ["pnpm", "--filter", "@flux-ui/docs", "build"],
+    ["pnpm", "--filter", "@varua/docs", "build"],
     ["node", "tooling/size/docs-chunks.mjs"],
   ]);
   assert.ok(

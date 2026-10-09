@@ -1,9 +1,9 @@
-import { FluxMarkIcon, SearchIcon } from "@flux-ui/icons";
+import { FluxMarkIcon, SearchIcon } from "@varua/icons";
 import {
   iconCatalog,
   type IconCatalogEntry,
   type IconCategory,
-} from "@flux-ui/icons/catalog";
+} from "@varua/icons/catalog";
 import {
   StatusBadge,
   Box,
@@ -20,7 +20,7 @@ import {
   Text,
   Toggle,
   ToggleGroup,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { createElement, useEffect, useMemo, useRef, useState } from "react";
 import { CodeBlock } from "../ui/CodeBlock.js";
 const iconSizes = [16, 20, 24, 32] as const;
@@ -79,7 +79,7 @@ export function IconsPage() {
   return (
     <Stack gap="xl">
       <Inline wrap justify="between" gap="lg">
-        <PageHeader title={<>Icons</>} eyebrow={<>@flux-ui/icons</>}>
+        <PageHeader title={<>Icons</>} eyebrow={<>@varua/icons</>}>
           <Text as="p" variant="lead" tone="muted">
             {iconCatalog.length} icons on a 20 × 20 grid. Search and copy an
             import.
@@ -222,11 +222,11 @@ export function IconsPage() {
                 </Inline>
                 <CodeBlock
                   label={`${selectedEntry.name} import`}
-                  code={`import { ${selectedEntry.name} } from "@flux-ui/icons";\n\n<${selectedEntry.name} aria-hidden="true" />`}
+                  code={`import { ${selectedEntry.name} } from "@varua/icons";\n\n<${selectedEntry.name} aria-hidden="true" />`}
                 />
                 <CodeBlock
                   label={`${selectedEntry.name} direct import`}
-                  code={`import { ${selectedEntry.name} } from "@flux-ui/icons/${selectedEntry.name}";`}
+                  code={`import { ${selectedEntry.name} } from "@varua/icons/${selectedEntry.name}";`}
                 />
               </Stack>
             </Card>

@@ -1,4 +1,4 @@
-import { Box, PieChart } from "@flux-ui/react";
+import { Box, PieChart } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 export default function Fixture({ count, revision }: ScenarioProps) {
