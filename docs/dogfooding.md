@@ -24,7 +24,7 @@ eyebrow, lead, metric, or display role deliberately. `numeric` enables tabular
 numerals. Form labels belong to `Field.Label`, not `Text`.
 
 ```tsx
-import { Card, Heading, Stack, Text } from "@flux-ui/react";
+import { Card, Heading, Stack, Text } from "@varua/flux-ui";
 
 export function Summary() {
   return (
@@ -62,9 +62,9 @@ container on `Container` or `ThemeScope`, then select the container scope on
 responsive descendants:
 
 ```tsx
-import { Card, Grid, ThemeScope } from "@flux-ui/react";
-import "@flux-ui/tokens/theme.css";
-import "@flux-ui/tokens/presets.css";
+import { Card, Grid, ThemeScope } from "@varua/flux-ui";
+import "@varua/tokens/theme.css";
+import "@varua/tokens/presets.css";
 
 export function EmbeddedPreview() {
   return (
@@ -90,8 +90,8 @@ choices. A surface is not a button merely because it has a click handler.
 
 ## Themes and density
 
-`@flux-ui/tokens/theme.css` remains the base light/dark contract. The separate,
-optional `@flux-ui/tokens/presets.css` maps the public color ramps onto semantic
+`@varua/tokens/theme.css` remains the base light/dark contract. The separate,
+optional `@varua/tokens/presets.css` maps the public color ramps onto semantic
 roles when `data-flux-palette` is present. Palette presets do not change the body
 font stack or invent another light/dark mode. `ThemeScope` changes only its own
 subtree and does not remount child state.

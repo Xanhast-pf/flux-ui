@@ -1,4 +1,4 @@
-import type { ThemeScopeColorOverrides } from "@flux-ui/react";
+import type { ThemeScopeColorOverrides } from "@varua/flux-ui";
 import type {
   PalettePreset,
   SecondaryPalettePreset,
@@ -481,7 +481,7 @@ export function exportThemeCss(
 
   return [
     "/* Flux UI theme override.",
-    " * Load after @flux-ui/tokens/theme.css, palette.css, and presets.css.",
+    " * Load after @varua/tokens/theme.css, palette.css, and presets.css.",
     ` * Apply class="flux-custom-theme" with data-flux-theme and data-flux-palette="${primary}".`,
     ` * Configurator palettes: primary=${primary}, secondary=${secondaryLabel}.`,
     " */",

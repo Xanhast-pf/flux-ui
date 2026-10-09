@@ -5,11 +5,11 @@ Flux is a pnpm workspace with intentionally few layers. The architecture is desi
 ## Runtime package layers
 
 ```text
-@flux-ui/tokens          @flux-ui/icons
+@varua/tokens          @varua/icons
       ↓                        ↓
 semantic CSS variables   tree-shakeable SVG iconography
       ↓                        ↓
-@flux-ui/react ────────────────┘
+@varua/flux-ui ────────────────┘
       ↓ components + component-local static CSS
 consumer application
 ```
@@ -52,7 +52,7 @@ Component CSS is generated statically. Vanilla Extract provides build-time, loca
 
 ### Vite library mode
 
-`@flux-ui/react` uses Vite/Rolldown multi-entry library output. Each public component has an emitted entry, allowing the size checker to measure the actual runtime graph a consumer pulls in. `@flux-ui/icons` uses the same multi-entry idea: every icon has its own public entry and is measured together with the shared SVG base so a one-icon import never silently pays for the whole set.
+`@varua/flux-ui` uses Vite/Rolldown multi-entry library output. Each public component has an emitted entry, allowing the size checker to measure the actual runtime graph a consumer pulls in. `@varua/icons` uses the same multi-entry idea: every icon has its own public entry and is measured together with the shared SVG base so a one-icon import never silently pays for the whole set.
 
 `vite-plugin-lib-inject-css` associates emitted component chunks with static CSS imports rather than injecting styles into the DOM at runtime.
 

@@ -1,4 +1,4 @@
-import { ColorSwatch, Inline, Text } from "@flux-ui/react";
+import { ColorSwatch, Inline, Text } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

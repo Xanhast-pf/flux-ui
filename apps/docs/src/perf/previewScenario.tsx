@@ -1,4 +1,4 @@
-import { Box } from "@flux-ui/react";
+import { Box } from "@varua/flux-ui";
 import type { ComponentType } from "react";
 import type { ScenarioModule, ScenarioProps } from "./scenario.types.js";
 

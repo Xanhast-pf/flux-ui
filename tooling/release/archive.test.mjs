@@ -18,7 +18,7 @@ async function fixture(callback) {
     await mkdir(join(root, "package/dist"), { recursive: true });
     await writeFile(
       join(root, "package/package.json"),
-      JSON.stringify({ name: "@flux-ui/react", version: "0.1.0-alpha.0" }),
+      JSON.stringify({ name: "@varua/flux-ui", version: "0.1.0-alpha.0" }),
     );
     await writeFile(
       join(root, "package/dist/index.js"),
@@ -35,7 +35,7 @@ test(
   async () => {
     await fixture(async (root, archive) => {
       run("tar", ["-czf", archive, "-C", root, "package"]);
-      assert.equal(inspectArchive(archive).name, "@flux-ui/react");
+      assert.equal(inspectArchive(archive).name, "@varua/flux-ui");
     });
   },
 );

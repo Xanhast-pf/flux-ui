@@ -1,6 +1,6 @@
 {
-  "name": "@flux-ui/tokens",
-  "version": "0.0.0",
+  "name": "@varua/tokens",
+  "version": "0.1.0",
   "type": "module",
   "sideEffects": [
     "**/*.css"

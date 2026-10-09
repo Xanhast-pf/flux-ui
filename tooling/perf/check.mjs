@@ -12,7 +12,7 @@ const mode = isUpdate ? "update" : isSmoke ? "smoke" : "full";
 const [executable, args, platformOptions] = executableCommand([
   "pnpm",
   "--filter",
-  "@flux-ui/docs",
+  "@varua/docs",
   "exec",
   "playwright",
   "test",

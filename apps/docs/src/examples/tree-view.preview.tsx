@@ -1,4 +1,4 @@
-import { TreeView } from "@flux-ui/react";
+import { TreeView } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

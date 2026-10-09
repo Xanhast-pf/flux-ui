@@ -13,7 +13,7 @@ import {
   type ButtonSize,
   type ButtonTone,
   type ButtonVariant,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 import { CodeBlock } from "../ui/CodeBlock.js";
 const variants = ["solid", "soft", "outline", "ghost"] as const;
@@ -27,7 +27,7 @@ export function ButtonLab() {
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [clicks, setClicks] = useState(0);
-  const code = `import { Button } from "@flux-ui/react";
+  const code = `import { Button } from "@varua/flux-ui";
 
 <Button variant="${variant}" tone="${tone}" size="${size}"${disabled ? " disabled" : ""}${loading ? " loading" : ""}>
   {${JSON.stringify(label || "Button")}}

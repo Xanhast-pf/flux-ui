@@ -115,7 +115,7 @@
     {
       "file": "apps/docs/src/pages/IconsPage.tsx",
       "expressions": ["entry.component", "selectedEntry.component"],
-      "reason": "Renders components from the public @flux-ui/icons/catalog, whose original paths and exports are generated and verified."
+      "reason": "Renders components from the public @varua/icons/catalog, whose original paths and exports are generated and verified."
     }
   ],
   "inlineGeometry": [

@@ -33,7 +33,7 @@ export function assertVersion(version, tag) {
 export function archiveName(name, version) {
   if (
     typeof name !== "string" ||
-    !/^@flux-ui\/[a-z][a-z0-9-]*$/u.test(name) ||
+    !/^@varua\/[a-z][a-z0-9-]*$/u.test(name) ||
     typeof version !== "string" ||
     !versionPattern.test(version)
   ) {

@@ -1,4 +1,4 @@
-import { EmptyState, Link } from "@flux-ui/react";
+import { EmptyState, Link } from "@varua/flux-ui";
 export default function Preview() {
   return (
     <EmptyState

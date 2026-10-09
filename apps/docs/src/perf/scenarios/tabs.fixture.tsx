@@ -1,4 +1,4 @@
-import { Stack, Tabs } from "@flux-ui/react";
+import { Stack, Tabs } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 const sections = ["Overview", "Activity", "Members", "Settings", "History"];

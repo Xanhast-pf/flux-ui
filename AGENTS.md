@@ -273,11 +273,11 @@ implementation before proposing a justified baseline change.
 
 \`\`\`text
 
-@flux-ui/tokens
+@varua/tokens
 
       ↓ semantic CSS variables
 
-@flux-ui/react
+@varua/flux-ui
 
       ↓
 
@@ -515,8 +515,8 @@ If the answer points away from a prop, do not add the prop.
 
 ## Iconography and identity
 
-- Flux icons live in \`@flux-ui/icons\`, not inside
-  \`@flux-ui/react\`. Keep the package independently tree-shakeable.
+- Flux icons live in \`@varua/icons\`, not inside
+  \`@varua/flux-ui\`. Keep the package independently tree-shakeable.
 
 - \`packages/icons/icons.json\` is the canonical icon manifest. Run
   \`pnpm flux maintain generate\` after editing it; do not hand-maintain generated
@@ -545,7 +545,7 @@ If the answer points away from a prop, do not add the prop.
   Raise that budget only through an explicit architecture decision.
 
 - Flux UI does not ship a custom typeface. Product UI continues to use the
-  existing semantic body and monospace font stacks from \`@flux-ui/tokens\`.
+  existing semantic body and monospace font stacks from \`@varua/tokens\`.
   Adding a bundled or hosted font requires an explicit design, licensing,
   delivery-size and browser-rendering decision.
 
@@ -562,7 +562,7 @@ If the answer points away from a prop, do not add the prop.
   system to core packages.
 
 - Shared design decisions use semantic CSS variables from
-  \`@flux-ui/tokens\`.
+  \`@varua/tokens\`.
 
 - Reusable spatial values follow the Flux quarter-rem contract:
   explicit \`rem\` values, exact multiples of \`0.25rem\`, with

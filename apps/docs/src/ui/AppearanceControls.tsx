@@ -1,4 +1,4 @@
-import { MoonIcon, SunIcon } from "@flux-ui/icons";
+import { MoonIcon, SunIcon } from "@varua/icons";
 import {
   Accordion,
   Button,
@@ -23,7 +23,7 @@ import {
   Text,
   ThemeScope,
   ToggleGroup,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useEffect, useId, useMemo, useState } from "react";
 import {
   isPalettePreset,

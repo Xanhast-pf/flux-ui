@@ -1,4 +1,4 @@
-import { Button, Field, Inline, Select, Stack, Text } from "@flux-ui/react";
+import { Button, Field, Inline, Select, Stack, Text } from "@varua/flux-ui";
 import { useState } from "react";
 import { downloadBytes } from "../lib/download.js";
 import { CodeBlock } from "../ui/CodeBlock.js";

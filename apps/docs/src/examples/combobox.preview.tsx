@@ -1,4 +1,4 @@
-import { Combobox, Field } from "@flux-ui/react";
+import { Combobox, Field } from "@varua/flux-ui";
 import { useState } from "react";
 const options = [
   { value: "design", label: "Design", group: "Product" },

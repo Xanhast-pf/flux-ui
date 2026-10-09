@@ -1,4 +1,4 @@
-import { Inline, Separator, Stack, Text } from "@flux-ui/react";
+import { Inline, Separator, Stack, Text } from "@varua/flux-ui";
 
 export default function Example() {
   return (

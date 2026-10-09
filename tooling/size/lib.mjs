@@ -21,7 +21,7 @@ import {
 // explicit, independently measured packaging contract.
 import ts from "typescript";
 const allowedPeers = new Set([
-  "@flux-ui/icons",
+  "@varua/icons",
   "react",
   "react/jsx-runtime",
   "react/jsx-dev-runtime",

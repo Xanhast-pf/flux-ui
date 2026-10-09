@@ -1,5 +1,5 @@
 {
-  "dev": [["pnpm", "--filter", "@flux-ui/docs", "dev"]],
+  "dev": [["pnpm", "--filter", "@varua/docs", "dev"]],
   "generate": [
     ["node", "scripts/generate-icons.mjs"],
     ["node", "scripts/generate-brand.mjs"],
@@ -81,13 +81,13 @@
     ["node", "tooling/terminal/tasks.mjs", "safety:test"],
     ["node", "tooling/terminal/tasks.mjs", "feature:test"]
   ],
-  "test:e2e": [["pnpm", "--filter", "@flux-ui/docs", "test:e2e"]],
+  "test:e2e": [["pnpm", "--filter", "@varua/docs", "test:e2e"]],
   "test:compat": [
     ["node", "tooling/terminal/tasks.mjs", "build:packages"],
-    ["pnpm", "--filter", "@flux-ui/docs", "test:compat"]
+    ["pnpm", "--filter", "@varua/docs", "test:compat"]
   ],
-  "test:a11y": [["pnpm", "--filter", "@flux-ui/docs", "test:a11y"]],
-  "bench": [["pnpm", "--filter", "@flux-ui/react", "bench"]],
+  "test:a11y": [["pnpm", "--filter", "@varua/docs", "test:a11y"]],
+  "bench": [["pnpm", "--filter", "@varua/flux-ui", "bench"]],
   "size": [
     ["node", "tooling/size/check.mjs"],
     ["node", "tooling/terminal/tasks.mjs", "icons:size"]
@@ -173,13 +173,13 @@
     ]
   ],
   "build:packages": [
-    ["pnpm", "--filter", "@flux-ui/tokens", "build"],
-    ["pnpm", "--filter", "@flux-ui/icons", "build"],
-    ["pnpm", "--filter", "@flux-ui/identity", "build"],
-    ["pnpm", "--filter", "@flux-ui/react", "build:package"]
+    ["pnpm", "--filter", "@varua/tokens", "build"],
+    ["pnpm", "--filter", "@varua/icons", "build"],
+    ["pnpm", "--filter", "@varua/identity", "build"],
+    ["pnpm", "--filter", "@varua/flux-ui", "build:package"]
   ],
-  "storybook": [["pnpm", "--filter", "@flux-ui/storybook", "dev"]],
-  "storybook:build": [["pnpm", "--filter", "@flux-ui/storybook", "build"]],
+  "storybook": [["pnpm", "--filter", "@varua/storybook", "dev"]],
+  "storybook:build": [["pnpm", "--filter", "@varua/storybook", "build"]],
   "perf": [["node", "tooling/perf/check.mjs"]],
   "perf:update": [
     ["node", "tooling/perf/check.mjs", "--update-baseline"],
@@ -200,7 +200,7 @@
     ["node", "tooling/terminal/tasks.mjs", "drift:test"]
   ],
   "icons:size": [
-    ["pnpm", "--filter", "@flux-ui/icons", "build"],
+    ["pnpm", "--filter", "@varua/icons", "build"],
     ["node", "tooling/icons/check.mjs"]
   ],
   "icons:test": [
@@ -212,7 +212,7 @@
     ]
   ],
   "icons:size:update": [
-    ["pnpm", "--filter", "@flux-ui/icons", "build"],
+    ["pnpm", "--filter", "@varua/icons", "build"],
     ["node", "tooling/icons/check.mjs", "--update-baseline"]
   ],
   "trust:test": [
@@ -247,7 +247,7 @@
     [
       "pnpm",
       "--filter",
-      "@flux-ui/docs",
+      "@varua/docs",
       "exec",
       "tsc",
       "-p",
@@ -256,7 +256,7 @@
     [
       "pnpm",
       "--filter",
-      "@flux-ui/docs",
+      "@varua/docs",
       "exec",
       "playwright",
       "test",
@@ -291,7 +291,7 @@
   ],
   "doctor": [["node", "tooling/doctor/cli.mjs"]],
   "build:docs": [
-    ["pnpm", "--filter", "@flux-ui/docs", "build"],
+    ["pnpm", "--filter", "@varua/docs", "build"],
     ["node", "tooling/size/docs-chunks.mjs"]
   ],
   "drift:check": [["node", "tooling/drift/check.mjs"]],

@@ -1,4 +1,4 @@
-import { SearchIcon } from "@flux-ui/icons";
+import { SearchIcon } from "@varua/icons";
 import {
   Dialog,
   EmptyState,
@@ -9,7 +9,7 @@ import {
   ScrollArea,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useEffect, useState } from "react";
 import { useComponentSearch } from "../lib/componentSearch.js";
 import { sections } from "../lib/routing.js";

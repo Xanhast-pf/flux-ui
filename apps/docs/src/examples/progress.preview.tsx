@@ -1,4 +1,4 @@
-import { Button, Inline, Progress, Stack, Text } from "@flux-ui/react";
+import { Button, Inline, Progress, Stack, Text } from "@varua/flux-ui";
 import { useState } from "react";
 
 export default function DeterminateProgress() {

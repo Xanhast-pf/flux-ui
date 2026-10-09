@@ -23,10 +23,10 @@ pnpm flux dev
 Install Chromium, Firefox, and WebKit before running browser/full checks:
 
 ```bash
-pnpm --filter @flux-ui/docs exec playwright install chromium firefox webkit
+pnpm --filter @varua/docs exec playwright install chromium firefox webkit
 ```
 
-On Linux, use `pnpm --filter @flux-ui/docs run playwright:install:compat` if Playwright reports missing system libraries.
+On Linux, use `pnpm --filter @varua/docs run playwright:install:compat` if Playwright reports missing system libraries.
 
 ## Before changing public API or architecture
 
@@ -49,7 +49,7 @@ New components default to the strict `primitive` size class. Choose a larger cla
 
 ## Documentation examples
 
-Component scaffolding creates `apps/docs/src/examples/{slug}.preview.tsx` and `{slug}.example.tsx` automatically. Use public `@flux-ui/react` exports in the preview. The metadata imports that exact TSX file with `?raw` for the copyable code tab, and supplies focused API and accessibility notes. New component pages and search links are discovered from metadata; do not edit a central catalog list.
+Component scaffolding creates `apps/docs/src/examples/{slug}.preview.tsx` and `{slug}.example.tsx` automatically. Use public `@varua/flux-ui` exports in the preview. The metadata imports that exact TSX file with `?raw` for the copyable code tab, and supplies focused API and accessibility notes. New component pages and search links are discovered from metadata; do not edit a central catalog list.
 
 Run `pnpm flux check docs` for coverage and `pnpm flux test docs` for the dependency-free catalog contract tests. Both are included in the ordinary quality pipeline. A public component without an example, or an orphaned example without a public component, is an error.
 

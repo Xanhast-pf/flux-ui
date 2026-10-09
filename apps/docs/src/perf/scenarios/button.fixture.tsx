@@ -1,4 +1,4 @@
-import { Button } from "@flux-ui/react";
+import { Button } from "@varua/flux-ui";
 import type { PerfVariant } from "../scenario.types.js";
 export default function ButtonScenario({
   count,

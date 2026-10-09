@@ -1,4 +1,4 @@
-import { Inline, LevelMeter, Stack, Text } from "@flux-ui/react";
+import { Inline, LevelMeter, Stack, Text } from "@varua/flux-ui";
 export default function Preview() {
   return (
     <Stack gap="md">

@@ -16,21 +16,21 @@ const config: StorybookConfig = {
       resolve: {
         alias: [
           {
-            find: "@flux-ui/tokens/presets.css",
+            find: "@varua/tokens/presets.css",
             replacement: resolve(
               import.meta.dirname,
               "../../../packages/tokens/src/presets.css",
             ),
           },
           {
-            find: "@flux-ui/tokens/theme.css",
+            find: "@varua/tokens/theme.css",
             replacement: resolve(
               import.meta.dirname,
               "../../../packages/tokens/src/theme.css",
             ),
           },
           {
-            find: "@flux-ui/tokens",
+            find: "@varua/tokens",
             replacement: resolve(
               import.meta.dirname,
               "../../../packages/tokens/src/index.ts",

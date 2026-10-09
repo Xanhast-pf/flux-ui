@@ -1,4 +1,4 @@
-import { Box, DataTable } from "@flux-ui/react";
+import { Box, DataTable } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 interface Row {
   id: string;

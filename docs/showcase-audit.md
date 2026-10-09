@@ -151,7 +151,7 @@ Use the project's Node 24+ and pinned pnpm. After application/formatting:
 ```bash
 pnpm docs:check
 pnpm docs:test
-pnpm --filter @flux-ui/docs exec playwright test tests/showcase.spec.ts tests/showcase-a11y.spec.ts
+pnpm --filter @varua/docs exec playwright test tests/showcase.spec.ts tests/showcase-a11y.spec.ts
 pnpm check:full
 ```
 

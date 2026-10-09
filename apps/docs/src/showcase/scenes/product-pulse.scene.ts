@@ -1,4 +1,4 @@
-import { SparkIcon } from "@flux-ui/icons";
+import { SparkIcon } from "@varua/icons";
 import type { SceneDefinition } from "../types.js";
 
 export default {

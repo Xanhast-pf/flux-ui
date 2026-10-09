@@ -2,7 +2,7 @@ import {
   CodeBlock as FluxCodeBlock,
   tokenizeCode,
   type CodeBlockProps,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useMemo } from "react";
 type DocsCodeProps = Pick<
   CodeBlockProps,

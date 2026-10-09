@@ -30,7 +30,7 @@ test("icons stay a standalone tree-shakeable package", () => {
   assert.deepEqual(Object.keys(pkg.peerDependencies), ["react"]);
   assert.match(iconBase, /stroke = "currentColor"/u);
   assert.match(iconBase, /aria-hidden/u);
-  assert.doesNotMatch(iconBase, /@flux-ui\/react/u);
+  assert.doesNotMatch(iconBase, /@varua\/flux-ui/u);
 });
 
 test("the root size contract measures icons", () => {

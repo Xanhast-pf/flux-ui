@@ -1,4 +1,4 @@
-import { Button, Stack, Text, Toast, useToast } from "@flux-ui/react";
+import { Button, Stack, Text, Toast, useToast } from "@varua/flux-ui";
 import { useState } from "react";
 function SaveExample() {
   const { notify } = useToast();

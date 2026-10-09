@@ -1,4 +1,4 @@
-import "@flux-ui/tokens/theme.css";
+import "@varua/tokens/theme.css";
 import { createRoot } from "react-dom/client";
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("#root is missing");
@@ -11,9 +11,9 @@ if (isPerfRoute) {
   const [{ StrictMode }, { App }] = await Promise.all([
     import("react"),
     import("./App.js"),
-    import("@flux-ui/tokens/reset.css"),
-    import("@flux-ui/tokens/palette.css"),
-    import("@flux-ui/tokens/presets.css"),
+    import("@varua/tokens/reset.css"),
+    import("@varua/tokens/palette.css"),
+    import("@varua/tokens/presets.css"),
     import("./styles.css"),
   ]);
   createRoot(rootElement).render(

@@ -1,9 +1,9 @@
 import projectPackage from "../../package.json" with { type: "json" };
 import { archiveName, assertVersion, REPOSITORY } from "./contract.mjs";
 export const consumerPackages = [
-  "@flux-ui/icons",
-  "@flux-ui/react",
-  "@flux-ui/tokens",
+  "@varua/icons",
+  "@varua/flux-ui",
+  "@varua/tokens",
 ];
 /** This is a consumer test input check, never a substitute for publisher verification. */
 export function assertConsumerManifest(manifest, env = process.env) {

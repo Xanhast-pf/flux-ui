@@ -1,4 +1,4 @@
-import { Button, Card, Inline, Skeleton, Stack, Text } from "@flux-ui/react";
+import { Button, Card, Inline, Skeleton, Stack, Text } from "@varua/flux-ui";
 import { useState } from "react";
 export default function Example() {
   const [loaded, setLoaded] = useState(false);

@@ -1,4 +1,4 @@
-import { Kbd, Stack, Text } from "@flux-ui/react";
+import { Kbd, Stack, Text } from "@varua/flux-ui";
 export default function Example() {
   return (
     <Stack gap="md">

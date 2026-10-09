@@ -1,4 +1,4 @@
-/* Optional color palette presets. Import @flux-ui/tokens/presets.css explicitly.
+/* Optional color palette presets. Import @varua/tokens/presets.css explicitly.
  * Combine data-flux-palette with data-flux-theme=light|dark. Product-specific
  * layout density belongs to components/compositions rather than color presets.
  */

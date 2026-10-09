@@ -1,4 +1,4 @@
-import { Chart, Box } from "@flux-ui/react";
+import { Chart, Box } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 export default function Fixture({ count, revision }: ScenarioProps) {

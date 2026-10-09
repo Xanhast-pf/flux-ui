@@ -1,4 +1,4 @@
-import { Breadcrumbs } from "@flux-ui/react";
+import { Breadcrumbs } from "@varua/flux-ui";
 
 export default function Example() {
   return (

@@ -1,4 +1,4 @@
-import { Collapsible, Link, Text } from "@flux-ui/react";
+import { Collapsible, Link, Text } from "@varua/flux-ui";
 
 export default function Example() {
   return (

@@ -1,4 +1,4 @@
-import { Button, Inline, Text, VisuallyHidden } from "@flux-ui/react";
+import { Button, Inline, Text, VisuallyHidden } from "@varua/flux-ui";
 import { useState } from "react";
 export default function Example() {
   const [count, setCount] = useState(0);

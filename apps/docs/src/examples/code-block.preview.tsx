@@ -5,7 +5,7 @@ import {
   Stack,
   codeLanguages,
   tokenizeCode,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useMemo, useState } from "react";
 type Language = (typeof codeLanguages)[number];
 const samples: Record<Language, string> = {

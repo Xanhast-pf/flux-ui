@@ -1,4 +1,4 @@
-import { Stack, Text, Toggle } from "@flux-ui/react";
+import { Stack, Text, Toggle } from "@varua/flux-ui";
 import { useState } from "react";
 export default function Example() {
   const [saved, setSaved] = useState(false);

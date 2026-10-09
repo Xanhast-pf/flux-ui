@@ -7,7 +7,7 @@ import {
   Link,
   Text,
   Stack,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { lazy, Suspense, useState } from "react";
 import { components } from "../generated/components.js";
 import { REPOSITORY_URL } from "../lib/format.js";

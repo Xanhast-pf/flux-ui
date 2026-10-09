@@ -1,4 +1,4 @@
-import { Button, Field, Stack, Textarea } from "@flux-ui/react";
+import { Button, Field, Stack, Textarea } from "@varua/flux-ui";
 
 export default function Example() {
   return (

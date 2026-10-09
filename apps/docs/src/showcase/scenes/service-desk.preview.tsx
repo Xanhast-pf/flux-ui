@@ -1,4 +1,4 @@
-import { SaveIcon } from "@flux-ui/icons";
+import { SaveIcon } from "@varua/icons";
 import {
   Accordion,
   AlertDialog,
@@ -25,7 +25,7 @@ import {
   Toolbar,
   TreeView,
   useToast,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 import { SceneHeader, SceneStatus } from "../SceneParts.js";
 

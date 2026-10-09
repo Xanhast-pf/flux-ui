@@ -1,4 +1,4 @@
-import { DropdownMenu, Stack, Text } from "@flux-ui/react";
+import { DropdownMenu, Stack, Text } from "@varua/flux-ui";
 import { useState } from "react";
 export default function Example() {
   const [action, setAction] = useState("No action selected.");

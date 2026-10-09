@@ -1,4 +1,4 @@
-import { Callout, Heading, PageHeader, Stack, Text } from "@flux-ui/react";
+import { Callout, Heading, PageHeader, Stack, Text } from "@varua/flux-ui";
 import { CodeBlock } from "../ui/CodeBlock.js";
 export function InstallPage() {
   return (
@@ -16,6 +16,14 @@ export function InstallPage() {
           Use Flux in your app
         </Heading>
         <Text as="p">
+          Once an approved version is published, install it from npm:
+        </Text>
+        <CodeBlock
+          language="bash"
+          label="Published package"
+          code={`pnpm add @varua/flux-ui`}
+        />
+        <Text as="p">
           Use React 19.2 and Node 24+ for builds. Copy the three approved
           candidate archives into your app.
         </Text>
@@ -24,7 +32,7 @@ export function InstallPage() {
           label="Consumer candidate setup"
           code={`# Use the same immutable candidate for components, tokens and icons.
 # Rename the approved archives to these local filenames without altering their bytes.
-pnpm add ./vendor/flux-ui-react.tgz ./vendor/flux-ui-tokens.tgz ./vendor/flux-ui-icons.tgz
+pnpm add ./vendor/varua-flux-ui.tgz ./vendor/varua-tokens.tgz ./vendor/varua-icons.tgz
 
 # Also use package.json pnpm.overrides for transitive Flux dependencies.
 # The complete recipe downloads already include this configuration.`}
@@ -35,9 +43,9 @@ pnpm add ./vendor/flux-ui-react.tgz ./vendor/flux-ui-tokens.tgz ./vendor/flux-ui
           code={`{
   "pnpm": {
     "overrides": {
-      "@flux-ui/react": "file:./vendor/flux-ui-react.tgz",
-      "@flux-ui/tokens": "file:./vendor/flux-ui-tokens.tgz",
-      "@flux-ui/icons": "file:./vendor/flux-ui-icons.tgz"
+      "@varua/flux-ui": "file:./vendor/varua-flux-ui.tgz",
+      "@varua/tokens": "file:./vendor/varua-tokens.tgz",
+      "@varua/icons": "file:./vendor/varua-icons.tgz"
     }
   }
 }`}
@@ -49,10 +57,10 @@ pnpm add ./vendor/flux-ui-react.tgz ./vendor/flux-ui-tokens.tgz ./vendor/flux-ui
         <CodeBlock
           language="tsx"
           label="First public Flux interface"
-          code={`import "@flux-ui/tokens/theme.css";
-import "@flux-ui/tokens/reset.css";
-import "@flux-ui/tokens/presets.css"; // Optional color palette presets.
-import { Button, Container, Field, Input, Stack } from "@flux-ui/react";
+          code={`import "@varua/tokens/theme.css";
+import "@varua/tokens/reset.css";
+import "@varua/tokens/presets.css"; // Optional color palette presets.
+import { Button, Container, Field, Input, Stack } from "@varua/flux-ui";
 
 export function App() {
   return (

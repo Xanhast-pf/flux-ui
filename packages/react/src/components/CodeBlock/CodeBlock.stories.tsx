@@ -9,6 +9,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: "Install Flux UI",
-    code: "pnpm add @flux-ui/react @flux-ui/tokens",
+    code: "pnpm add @varua/flux-ui @varua/tokens",
   },
 };

@@ -19,7 +19,7 @@ export const bundledEntryMethod = {
   splitting: false,
   minify: true,
   external: [
-    "@flux-ui/icons",
+    "@varua/icons",
     "react",
     "react/jsx-runtime",
     "react/jsx-dev-runtime",

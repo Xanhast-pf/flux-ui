@@ -5,7 +5,7 @@ import {
   Stack,
   Table,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { health } from "../generated/health.js";
 import { budgetUsage, formatBytes } from "../lib/format.js";
 import { BundleExplorer } from "../ui/BundleExplorer.js";

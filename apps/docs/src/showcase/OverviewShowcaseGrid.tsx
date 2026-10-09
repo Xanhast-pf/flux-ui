@@ -6,7 +6,7 @@ import {
   UserPlusIcon,
   MoreHorizontalIcon,
   UsersIcon,
-} from "@flux-ui/icons";
+} from "@varua/icons";
 import {
   Avatar,
   Button,
@@ -25,7 +25,7 @@ import {
   StatusBadge,
   Switch,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useId, useState } from "react";
 
 const members = [

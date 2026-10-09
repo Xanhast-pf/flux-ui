@@ -6,7 +6,7 @@ import {
   Sidebar,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useCallback, useRef, useState } from "react";
 function ExampleLinks({
   page,

@@ -13,7 +13,7 @@ exports the built-in language identifiers used by that tokenizer:
 
 ```tsx
 import { useMemo } from "react";
-import { CodeBlock, tokenizeCode } from "@flux-ui/react";
+import { CodeBlock, tokenizeCode } from "@varua/flux-ui";
 
 export function Source({ code }: { code: string }) {
   const tokens = useMemo(() => tokenizeCode(code, "typescript"), [code]);
@@ -45,7 +45,7 @@ this implementation.
 ## Charts and sparklines
 
 ```tsx
-import { Chart } from "@flux-ui/react";
+import { Chart } from "@varua/flux-ui";
 
 const income = [
   { x: 1, y: 120 },
@@ -102,7 +102,7 @@ steals wheel input or starts an audio engine.
 `Knob` is a named slider for numeric interaction:
 
 ```tsx
-import { Knob } from "@flux-ui/react";
+import { Knob } from "@varua/flux-ui";
 
 export function Frequency() {
   return (
@@ -139,7 +139,7 @@ The existing `Table` stays a lightweight native composition. `DataTable` adds a
 fixed-row-height window, stable identity, optional selection, and sorting:
 
 ```tsx
-import { DataTable, type DataColumn } from "@flux-ui/react";
+import { DataTable, type DataColumn } from "@varua/flux-ui";
 
 interface Invoice {
   id: string;

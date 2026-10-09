@@ -1,4 +1,4 @@
-import { Box, Field, Input } from "@flux-ui/react";
+import { Box, Field, Input } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 export default function Fixture({ count, revision }: ScenarioProps) {

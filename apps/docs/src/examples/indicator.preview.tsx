@@ -1,4 +1,4 @@
-import { Button, Indicator } from "@flux-ui/react";
+import { Button, Indicator } from "@varua/flux-ui";
 
 export default function Example() {
   return (

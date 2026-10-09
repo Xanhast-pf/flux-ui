@@ -5,7 +5,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   resolve: {
     alias: {
-      "@flux-ui/tokens": resolve(import.meta.dirname, "../tokens/src/index.ts"),
+      "@varua/tokens": resolve(import.meta.dirname, "../tokens/src/index.ts"),
     },
   },
   plugins: [vanillaExtractPlugin()],

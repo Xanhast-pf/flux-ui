@@ -9,7 +9,7 @@ Create a pair under `scenes/`: `support-desk.scene.ts` and
 `support-desk.preview.tsx`. Use lowercase words separated by single hyphens.
 
 ```ts
-import { UsersIcon } from "@flux-ui/icons";
+import { UsersIcon } from "@varua/icons";
 import type { SceneDefinition } from "../types.js";
 
 export default {

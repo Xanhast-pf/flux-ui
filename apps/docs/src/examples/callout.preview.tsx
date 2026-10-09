@@ -1,4 +1,4 @@
-import { Button, Callout, Stack } from "@flux-ui/react";
+import { Button, Callout, Stack } from "@varua/flux-ui";
 import { useState } from "react";
 
 export default function StaticCallouts() {

@@ -18,7 +18,7 @@ import {
   Toggle,
   ToggleGroup,
   Toolbar,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useRef, useState } from "react";
 const projects = [
   {

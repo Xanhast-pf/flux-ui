@@ -1,4 +1,4 @@
-import { Footer, Inline, Link, Stack, Text } from "@flux-ui/react";
+import { Footer, Inline, Link, Stack, Text } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

@@ -1,4 +1,4 @@
-import { Button, Callout, Heading, Link, Stack, Text } from "@flux-ui/react";
+import { Button, Callout, Heading, Link, Stack, Text } from "@varua/flux-ui";
 import * as React from "react";
 /** A stale deployment chunk must not take down the whole documentation shell. */
 export class ExampleBoundary extends React.Component<

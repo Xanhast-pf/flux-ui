@@ -6,7 +6,7 @@ import {
   Switch,
   Text,
   Toolbar,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 export default function Example() {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">(

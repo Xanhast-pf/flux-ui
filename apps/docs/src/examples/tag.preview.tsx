@@ -1,4 +1,4 @@
-import { Button, Inline, Tag, Text } from "@flux-ui/react";
+import { Button, Inline, Tag, Text } from "@varua/flux-ui";
 import { useRef, useState } from "react";
 
 export default function PassiveTags() {

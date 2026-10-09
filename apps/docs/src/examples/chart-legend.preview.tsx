@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Chart, ChartLegend, ChartTooltip, Stack, Text } from "@flux-ui/react";
+import { Chart, ChartLegend, ChartTooltip, Stack, Text } from "@varua/flux-ui";
 
 const series = [
   {

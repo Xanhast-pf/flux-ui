@@ -1,4 +1,4 @@
-import { GaugeIcon } from "@flux-ui/icons";
+import { GaugeIcon } from "@varua/icons";
 import type { SceneDefinition } from "../types.js";
 
 export default {

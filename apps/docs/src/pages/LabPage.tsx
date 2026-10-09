@@ -15,7 +15,7 @@ import {
   Stack,
   Table,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useEffect, useRef, useState } from "react";
 import { runLab, type LabReport } from "../lab/runner.js";
 import {

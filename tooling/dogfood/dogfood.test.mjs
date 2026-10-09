@@ -81,13 +81,13 @@ test("allows only named file-local artwork and never waives raw controls", () =>
 });
 test("rejects private source imports, including re-exports", () => {
   for (const source of [
-    'import { Button } from "@flux-ui/react/src/components/Button";',
+    'import { Button } from "@varua/flux-ui/src/components/Button";',
     'export * from "../../../../packages/react/src/index.js";',
   ]) {
     assert.equal(auditSource(source, file, policy).length, 1);
   }
   assert.equal(
-    auditSource('import { Button } from "@flux-ui/react";', file, policy)
+    auditSource('import { Button } from "@varua/flux-ui";', file, policy)
       .length,
     0,
   );

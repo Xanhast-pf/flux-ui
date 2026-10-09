@@ -91,7 +91,7 @@ test("build boundaries use the declared package total", async () => {
   assert.deepEqual(
     commandProgress(
       "build:packages",
-      ["pnpm", "--filter", "@flux-ui/react", "build:package"],
+      ["pnpm", "--filter", "@varua/flux-ui", "build:package"],
       3,
       4,
     ),
@@ -99,7 +99,7 @@ test("build boundaries use the declared package total", async () => {
       current: 3,
       total: 4,
       unit: "packages",
-      item: "--filter @flux-ui/react build:package",
+      item: "--filter @varua/flux-ui build:package",
     },
   );
 });

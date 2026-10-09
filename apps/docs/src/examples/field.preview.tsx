@@ -1,4 +1,4 @@
-import { Field, Input, Stack } from "@flux-ui/react";
+import { Field, Input, Stack } from "@varua/flux-ui";
 
 export default function Example() {
   return (

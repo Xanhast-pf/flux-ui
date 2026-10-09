@@ -1,4 +1,4 @@
-import { Heading, Stack, Text } from "@flux-ui/react";
+import { Heading, Stack, Text } from "@varua/flux-ui";
 
 export default function HeadingSemantics() {
   return (

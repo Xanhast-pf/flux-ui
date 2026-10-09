@@ -1,9 +1,9 @@
-# @flux-ui/icons
+# @varua/icons
 
 Original Flux UI iconography built on a 20 × 20 grid. The current set contains 67 icons across navigation, actions, status, theme, layout, content, communication, developer tooling, and brand.
 
 ```tsx
-import { SearchIcon, SparkIcon } from "@flux-ui/icons";
+import { SearchIcon, SparkIcon } from "@varua/icons";
 
 <SearchIcon aria-label="Search" />
 <SparkIcon aria-hidden="true" size={24} />
@@ -29,4 +29,4 @@ The rating-specific `StarEmptyIcon`, `StarHalfIcon`, and `StarFilledIcon`
 also use filled compound paths so all three states share exact geometry and
 the half state has a deterministic vertical split. These optical exceptions
 still inherit `currentColor`. The color-gradient branding asset is an SVG in
-`@flux-ui/identity/brand/flux-mark.svg`, not extra runtime in the icon package.
+`@varua/identity/brand/flux-mark.svg`, not extra runtime in the icon package.

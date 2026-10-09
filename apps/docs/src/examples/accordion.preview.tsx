@@ -1,4 +1,4 @@
-import { Accordion } from "@flux-ui/react";
+import { Accordion } from "@varua/flux-ui";
 export default function Example() {
   return (
     <Accordion.Root>

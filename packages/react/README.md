@@ -1,4 +1,4 @@
-# @flux-ui/react
+# @varua/flux-ui
 
 Pre-stable React components for Flux UI. The package targets React 19 and keeps
 the common API small while preserving native props, composition, refs,
@@ -11,7 +11,7 @@ Install the component package and the public token foundations directly in your
 application:
 
 ```bash
-pnpm add @flux-ui/react @flux-ui/tokens
+pnpm add @varua/flux-ui @varua/tokens
 ```
 
 React and React DOM are peer dependencies and must satisfy the package manifest
@@ -21,11 +21,11 @@ Import the shared foundations once at the application entry. Palette presets are
 optional:
 
 ```tsx
-import "@flux-ui/tokens/reset.css";
-import "@flux-ui/tokens/theme.css";
-import "@flux-ui/tokens/presets.css";
+import "@varua/tokens/reset.css";
+import "@varua/tokens/theme.css";
+import "@varua/tokens/presets.css";
 
-import { Button, Container, Stack, Text } from "@flux-ui/react";
+import { Button, Container, Stack, Text } from "@varua/flux-ui";
 
 export function App() {
   return (

@@ -1,4 +1,4 @@
-import { Meter, Stack, Text } from "@flux-ui/react";
+import { Meter, Stack, Text } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

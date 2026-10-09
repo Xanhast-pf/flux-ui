@@ -85,7 +85,7 @@ function fixture() {
     files.set(
       `packages/${name}/package.json`,
       json({
-        name: `@flux-ui/${name}`,
+        name: name === "react" ? "@varua/flux-ui" : `@varua/${name}`,
         version: "0.0.0",
         type: "module",
         license: "MIT",
@@ -629,7 +629,7 @@ test("workflow scanning accepts a quoted immutable action", () => {
 test("internal workspace dependencies cannot silently resolve from the registry", () => {
   const files = fixture();
   updateJson(files, "packages/react/package.json", (pkg) => {
-    pkg.dependencies = { "@flux-ui/tokens": "^0.2.0" };
+    pkg.dependencies = { "@varua/tokens": "^0.2.0" };
   });
   expectRule(files, "PACKAGE_DEPENDENCY");
 });
@@ -683,7 +683,7 @@ test("new public packages must join the packed-consumer release contract", () =>
   files.set(
     "packages/extra/package.json",
     JSON.stringify({
-      name: "@flux-ui/extra",
+      name: "@varua/extra",
       version: "0.0.0",
       type: "module",
       license: "MIT",
@@ -708,13 +708,13 @@ test("public packages cannot depend at runtime on private workspace packages", (
   files.set(
     "packages/identity/package.json",
     JSON.stringify({
-      name: "@flux-ui/identity",
+      name: "@varua/identity",
       private: true,
       version: "0.0.0",
     }),
   );
   updateJson(files, "packages/react/package.json", (pkg) => {
-    pkg.dependencies = { "@flux-ui/identity": "workspace:*" };
+    pkg.dependencies = { "@varua/identity": "workspace:*" };
   });
   expectRule(files, "PACKAGE_DEPENDENCY");
 });
@@ -722,7 +722,7 @@ test("public packages cannot depend at runtime on private workspace packages", (
 test("root references to workspace packages must use the workspace protocol", () => {
   const files = fixture();
   updateJson(files, "package.json", (pkg) => {
-    pkg.devDependencies["@flux-ui/react"] = "^0.2.0";
+    pkg.devDependencies["@varua/flux-ui"] = "^0.2.0";
   });
   expectRule(files, "PACKAGE_DEPENDENCY");
 });
@@ -750,7 +750,7 @@ test("private workspaces cannot hide install-time hooks", () => {
   files.set(
     "packages/identity/package.json",
     JSON.stringify({
-      name: "@flux-ui/identity",
+      name: "@varua/identity",
       private: true,
       version: "0.0.0",
       scripts: { postinstall: "node setup.mjs" },

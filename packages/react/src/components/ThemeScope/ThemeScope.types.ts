@@ -1,4 +1,4 @@
-import type { cssVars } from "@flux-ui/tokens";
+import type { cssVars } from "@varua/tokens";
 import type {
   LayoutElement,
   SemanticProps,

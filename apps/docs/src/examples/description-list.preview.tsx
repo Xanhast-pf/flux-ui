@@ -1,4 +1,4 @@
-import { DescriptionList } from "@flux-ui/react";
+import { DescriptionList } from "@varua/flux-ui";
 
 export default function Preview() {
   return (

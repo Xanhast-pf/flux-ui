@@ -6,7 +6,7 @@ import {
   PieChart,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 
 const data = [
   { id: "core", label: "Core", value: 52 },

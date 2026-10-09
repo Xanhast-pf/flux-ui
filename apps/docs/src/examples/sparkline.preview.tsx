@@ -1,4 +1,4 @@
-import { Card, Grid, Sparkline, Stack, Text } from "@flux-ui/react";
+import { Card, Grid, Sparkline, Stack, Text } from "@varua/flux-ui";
 export default function Preview() {
   return (
     <Grid columns={{ base: 1, md: 2 }} gap="md">

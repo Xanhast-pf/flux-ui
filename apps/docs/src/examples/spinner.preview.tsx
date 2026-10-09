@@ -1,4 +1,4 @@
-import { Inline, Spinner, Text } from "@flux-ui/react";
+import { Inline, Spinner, Text } from "@varua/flux-ui";
 
 export default function NamedSpinner() {
   return (

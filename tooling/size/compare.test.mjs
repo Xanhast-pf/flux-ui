@@ -127,10 +127,10 @@ test("comparison CLI isolates snapshots, emits aggregates and refuses toolchain 
     await mkdir(dirname(join(fixture, path)), { recursive: true });
     await writeFile(join(fixture, path), content);
   }
-  await mkdir(join(fixture, "node_modules/@flux-ui"), { recursive: true });
+  await mkdir(join(fixture, "node_modules/@varua"), { recursive: true });
   await symlink(
     join(fixture, "packages/react"),
-    join(fixture, "node_modules/@flux-ui/react"),
+    join(fixture, "node_modules/@varua/flux-ui"),
   );
   const archive = join(root, "base.tar");
   const packed = spawnSync("tar", ["-cf", archive, ...Object.keys(contents)], {
@@ -151,13 +151,13 @@ import assert from "node:assert/strict";
 import { realpathSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 assert.equal(process.argv[2], "--filter");
-assert.ok(["@flux-ui/tokens", "@flux-ui/icons", "@flux-ui/identity", "@flux-ui/react"].includes(process.argv[3]));
+assert.ok(["@varua/tokens", "@varua/icons", "@varua/identity", "@varua/flux-ui"].includes(process.argv[3]));
 assert.equal(
   process.argv[4],
-  process.argv[3] === "@flux-ui/react" ? "build:package" : "build",
+  process.argv[3] === "@varua/flux-ui" ? "build:package" : "build",
 );
 assert.notEqual(process.cwd(), ${JSON.stringify(fixture)});
-assert.equal(realpathSync("node_modules/@flux-ui/react"), join(process.cwd(), "packages/react"));
+assert.equal(realpathSync("node_modules/@varua/flux-ui"), join(process.cwd(), "packages/react"));
 writeFileSync("build-cache-marker", "isolated");
 `;
   for (const [name, source] of [

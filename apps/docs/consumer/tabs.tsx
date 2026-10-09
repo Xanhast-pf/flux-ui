@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Stack, Tabs } from "@flux-ui/react";
+import { Button, Stack, Tabs } from "@varua/flux-ui";
 const labels = [
   "Overview",
   "Activity",

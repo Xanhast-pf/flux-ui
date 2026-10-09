@@ -1,5 +1,5 @@
-import { FluxMarkIcon } from "@flux-ui/icons";
-import { Inline, Stat, Text } from "@flux-ui/react";
+import { FluxMarkIcon } from "@varua/icons";
+import { Inline, Stat, Text } from "@varua/flux-ui";
 import type { ReactNode } from "react";
 export function SceneHeader({
   brand,

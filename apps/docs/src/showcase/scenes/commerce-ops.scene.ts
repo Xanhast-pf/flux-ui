@@ -1,4 +1,4 @@
-import { ShoppingBagIcon } from "@flux-ui/icons";
+import { ShoppingBagIcon } from "@varua/icons";
 import type { SceneDefinition } from "../types.js";
 
 export default {

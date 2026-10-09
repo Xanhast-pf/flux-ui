@@ -1,5 +1,5 @@
-import { HomeIcon, SearchIcon, UserIcon } from "@flux-ui/icons";
-import { BottomNavigation } from "@flux-ui/react";
+import { HomeIcon, SearchIcon, UserIcon } from "@varua/icons";
+import { BottomNavigation } from "@varua/flux-ui";
 
 export default function Example() {
   return (

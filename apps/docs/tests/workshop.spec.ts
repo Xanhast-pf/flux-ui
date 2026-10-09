@@ -30,7 +30,7 @@ for (const component of components) {
         name: `${component.name} example`,
         exact: true,
       }),
-    ).toContainText("@flux-ui/react");
+    ).toContainText("@varua/flux-ui");
     expect(errors).toEqual([]);
   });
 }

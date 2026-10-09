@@ -1,4 +1,4 @@
-import { Heading, List, Stack, Text } from "@flux-ui/react";
+import { Heading, List, Stack, Text } from "@varua/flux-ui";
 export function EngineeringRules() {
   return (
     <Stack as="section" aria-label="Engineering rules" gap="lg">

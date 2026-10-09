@@ -1,4 +1,4 @@
-import { LayersIcon } from "@flux-ui/icons";
+import { LayersIcon } from "@varua/icons";
 import type { SceneDefinition } from "../types.js";
 
 export default {

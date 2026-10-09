@@ -17,8 +17,8 @@ import {
   Switch,
   Text,
   Tooltip,
-} from "@flux-ui/react";
-import { cssVars, paletteVars, primitiveTokens } from "@flux-ui/tokens";
+} from "@varua/flux-ui";
+import { cssVars, paletteVars, primitiveTokens } from "@varua/tokens";
 import { useState } from "react";
 import { useColorValue } from "../lib/appearance.js";
 import { AppearanceControls } from "../ui/AppearanceControls.js";

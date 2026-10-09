@@ -15,7 +15,7 @@ Use a semantic `header`, Flux layout primitives, and `Toolbar` when the
 actions form a keyboard-navigable command group.
 
 ```tsx
-import { Box, Heading, Inline, Toolbar } from "@flux-ui/react";
+import { Box, Heading, Inline, Toolbar } from "@varua/flux-ui";
 
 export function ApplicationHeader() {
   return (
@@ -52,7 +52,7 @@ Use `Grid` for layout, `AspectRatio` for stable geometry, and native
 `figure`, `img`, and `figcaption` semantics.
 
 ```tsx
-import { AspectRatio, Box, Grid, Stack, Text } from "@flux-ui/react";
+import { AspectRatio, Box, Grid, Stack, Text } from "@varua/flux-ui";
 
 const images = [
   { id: "one", src: "/one.jpg", alt: "Mountain lake", caption: "North shore" },
@@ -97,7 +97,7 @@ import {
   Inline,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 
 export function TransferList({
   available,
@@ -196,7 +196,7 @@ Prefer an ordered list. Use native `time` values for machine-readable dates;
 visual connectors are decoration, not semantics.
 
 ```tsx
-import { List, Stack, Text } from "@flux-ui/react";
+import { List, Stack, Text } from "@varua/flux-ui";
 
 const events = [
   { id: "created", at: "2026-10-01T09:00:00-04:00", label: "Order created" },
@@ -231,8 +231,8 @@ Use `Button` or `IconButton`; positioning belongs to the application shell.
 Do not make fixed positioning part of a reusable button contract.
 
 ```tsx
-import { PlusIcon } from "@flux-ui/icons";
-import { Box, IconButton } from "@flux-ui/react";
+import { PlusIcon } from "@varua/icons";
+import { Box, IconButton } from "@varua/flux-ui";
 
 export function FloatingCreateAction() {
   return (
@@ -263,7 +263,7 @@ Prefer local busy state first. Mark the affected region `aria-busy`, keep its
 content present when useful, and pair a single status message with `Spinner`.
 
 ```tsx
-import { Box, Inline, Spinner, Text } from "@flux-ui/react";
+import { Box, Inline, Spinner, Text } from "@varua/flux-ui";
 import type { ReactNode } from "react";
 
 export function LoadingRegion({

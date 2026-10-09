@@ -1,4 +1,4 @@
-import { Grid } from "@flux-ui/react";
+import { Grid } from "@varua/flux-ui";
 import type { PerfVariant } from "../scenario.types.js";
 export default function GridScenario({
   count,

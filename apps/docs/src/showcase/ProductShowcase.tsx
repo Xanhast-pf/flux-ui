@@ -1,4 +1,4 @@
-import { CodeIcon, LinkIcon, RefreshIcon } from "@flux-ui/icons";
+import { CodeIcon, LinkIcon, RefreshIcon } from "@varua/icons";
 import {
   Box,
   Button,
@@ -11,7 +11,7 @@ import {
   Tabs,
   Text,
   ThemeScope,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { lazy, Suspense, useId, useState } from "react";
 import {
   usePalettePreset,

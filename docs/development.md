@@ -18,10 +18,10 @@ and `pnpm flux maintain --help` for focused discovery. Invoke from the repositor
 For browser/full checks, install Chromium, Firefox, and WebKit separately:
 
 ```bash
-pnpm --filter @flux-ui/docs exec playwright install chromium firefox webkit
+pnpm --filter @varua/docs exec playwright install chromium firefox webkit
 ```
 
-On Linux, use `pnpm --filter @flux-ui/docs run playwright:install:compat` if system libraries are missing.
+On Linux, use `pnpm --filter @varua/docs run playwright:install:compat` if system libraries are missing.
 Doctor checks versions, workspace files, dependencies and the optional Playwright browser prerequisites without
 network access, installation or source writes. It is not a quality gate.
 

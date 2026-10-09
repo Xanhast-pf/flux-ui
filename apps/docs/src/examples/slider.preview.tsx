@@ -1,4 +1,4 @@
-import { Button, Field, Inline, Slider, Stack, Text } from "@flux-ui/react";
+import { Button, Field, Inline, Slider, Stack, Text } from "@varua/flux-ui";
 import { useState } from "react";
 
 const volumeMarks = [

@@ -6,7 +6,7 @@ import {
   SplitPane,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 
 const narrowQuery = "(max-width: 48rem)";
 

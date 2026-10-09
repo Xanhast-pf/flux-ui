@@ -1,4 +1,4 @@
-import { Table } from "@flux-ui/react";
+import { Table } from "@varua/flux-ui";
 
 export default function Example() {
   return (

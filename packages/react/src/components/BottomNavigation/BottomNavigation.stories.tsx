@@ -1,4 +1,4 @@
-import { HomeIcon, SearchIcon, UserIcon } from "@flux-ui/icons";
+import { HomeIcon, SearchIcon, UserIcon } from "@varua/icons";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { BottomNavigation } from "./BottomNavigation.js";
 

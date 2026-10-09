@@ -1,4 +1,4 @@
-import { Card, Grid, Text } from "@flux-ui/react";
+import { Card, Grid, Text } from "@varua/flux-ui";
 export default function Example() {
   return (
     <Card padding={3}>

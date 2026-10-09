@@ -6,7 +6,7 @@ import {
   RadioGroup,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { useState } from "react";
 const initialEnvironment = "staging";
 function RadioOption({

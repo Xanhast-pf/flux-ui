@@ -1,6 +1,6 @@
 {
-  "name": "@flux-ui/react",
-  "version": "0.1.25",
+  "name": "@varua/flux-ui",
+  "version": "0.2.0",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -19,8 +19,8 @@
     "react-dom": ">=19 <20"
   },
   "dependencies": {
-    "@flux-ui/icons": "workspace:^",
-    "@flux-ui/tokens": "workspace:^"
+    "@varua/icons": "workspace:^",
+    "@varua/tokens": "workspace:^"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "catalog:",
@@ -41,7 +41,7 @@
     "@storybook/react-vite": "catalog:"
   },
   "scripts": {
-    "build": "pnpm --filter @flux-ui/tokens build && pnpm --filter @flux-ui/icons build && pnpm run build:package",
+    "build": "pnpm --filter @varua/tokens build && pnpm --filter @varua/icons build && pnpm run build:package",
     "build:package": "node ../../scripts/check-portable-paths.mjs && node ../../scripts/clean.mjs packages/react/dist && vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

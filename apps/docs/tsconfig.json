@@ -3,11 +3,11 @@
   "compilerOptions": {
     "types": ["vite/client"],
     "paths": {
-      "@flux-ui/react": ["../../packages/react/src/index.ts"],
-      "@flux-ui/tokens": ["../../packages/tokens/src/index.ts"],
-      "@flux-ui/tokens/*": ["../../packages/tokens/src/*"],
-      "@flux-ui/icons": ["../../packages/icons/src/index.ts"],
-      "@flux-ui/icons/*": ["../../packages/icons/src/*.ts"]
+      "@varua/flux-ui": ["../../packages/react/src/index.ts"],
+      "@varua/tokens": ["../../packages/tokens/src/index.ts"],
+      "@varua/tokens/*": ["../../packages/tokens/src/*"],
+      "@varua/icons": ["../../packages/icons/src/index.ts"],
+      "@varua/icons/*": ["../../packages/icons/src/*.ts"]
     }
   },
   "include": [

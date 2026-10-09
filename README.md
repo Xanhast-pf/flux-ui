@@ -64,14 +64,14 @@ pnpm flux dev
 For browser, accessibility, compatibility, and runtime-performance checks, install the supported Playwright engines once:
 
 ```bash
-pnpm --filter @flux-ui/docs exec playwright install chromium firefox webkit
+pnpm --filter @varua/docs exec playwright install chromium firefox webkit
 pnpm flux check full
 ```
 
 On Linux, if Playwright reports missing system libraries, use:
 
 ```bash
-pnpm --filter @flux-ui/docs run playwright:install:compat
+pnpm --filter @varua/docs run playwright:install:compat
 ```
 
 ## Development
@@ -197,11 +197,11 @@ See [`docs/radio-group.md`](docs/radio-group.md) for RadioGroup fieldset semanti
 Flux includes an original icon package alongside the React component package:
 
 ```bash
-pnpm add @flux-ui/react @flux-ui/icons
+pnpm add @varua/flux-ui @varua/icons
 ```
 
 ```tsx
-import { SearchIcon, SparkIcon } from "@flux-ui/icons";
+import { SearchIcon, SparkIcon } from "@varua/icons";
 
 <SearchIcon aria-label="Search" />
 <SparkIcon aria-hidden="true" size={24} />
@@ -209,7 +209,7 @@ import { SearchIcon, SparkIcon } from "@flux-ui/icons";
 
 Icons are generated from `packages/icons/icons.json`, use `currentColor`, and are decorative by default unless labelled. The dedicated `#icons` docs route browses the complete icon catalog by name, category, or intent metadata. `pnpm flux size icons` enforces a strict per-icon runtime budget.
 
-Flux UI does not ship a custom typeface. Product typography continues to use the existing semantic font stacks from `@flux-ui/tokens`, so consumers do not download a Flux webfont.
+Flux UI does not ship a custom typeface. Product typography continues to use the existing semantic font stacks from `@varua/tokens`, so consumers do not download a Flux webfont.
 
 See [`docs/identity.md`](docs/identity.md) and [`docs/icons.md`](docs/icons.md).
 

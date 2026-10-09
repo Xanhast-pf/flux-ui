@@ -55,56 +55,56 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: "@flux-ui/icons/catalog",
+        find: "@varua/icons/catalog",
         replacement: resolve(
           import.meta.dirname,
           "../../packages/icons/src/catalog.ts",
         ),
       },
       {
-        find: "@flux-ui/icons",
+        find: "@varua/icons",
         replacement: resolve(
           import.meta.dirname,
           "../../packages/icons/src/index.ts",
         ),
       },
       {
-        find: "@flux-ui/react",
+        find: "@varua/flux-ui",
         replacement: resolve(
           import.meta.dirname,
           "../../packages/react/src/index.ts",
         ),
       },
       {
-        find: "@flux-ui/tokens/palette.css",
+        find: "@varua/tokens/palette.css",
         replacement: resolve(
           import.meta.dirname,
           "../../packages/tokens/src/palette.css",
         ),
       },
       {
-        find: "@flux-ui/tokens/presets.css",
+        find: "@varua/tokens/presets.css",
         replacement: resolve(
           import.meta.dirname,
           "../../packages/tokens/src/presets.css",
         ),
       },
       {
-        find: "@flux-ui/tokens/theme.css",
+        find: "@varua/tokens/theme.css",
         replacement: resolve(
           import.meta.dirname,
           "../../packages/tokens/src/theme.css",
         ),
       },
       {
-        find: "@flux-ui/tokens/reset.css",
+        find: "@varua/tokens/reset.css",
         replacement: resolve(
           import.meta.dirname,
           "../../packages/tokens/src/reset.css",
         ),
       },
       {
-        find: "@flux-ui/tokens",
+        find: "@varua/tokens",
         replacement: resolve(
           import.meta.dirname,
           "../../packages/tokens/src/index.ts",

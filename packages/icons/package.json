@@ -1,6 +1,6 @@
 {
-  "name": "@flux-ui/icons",
-  "version": "0.0.0",
+  "name": "@varua/icons",
+  "version": "0.1.0",
   "type": "module",
   "sideEffects": false,
   "files": [

@@ -4,7 +4,7 @@ import {
   CodeIcon,
   GaugeIcon,
   ShieldCheckIcon,
-} from "@flux-ui/icons";
+} from "@varua/icons";
 import {
   Card,
   Collapsible,
@@ -16,7 +16,7 @@ import {
   Separator,
   Stack,
   Text,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 import { components } from "../generated/components.js";
 import { health } from "../generated/health.js";
 import { formatBytes } from "../lib/format.js";

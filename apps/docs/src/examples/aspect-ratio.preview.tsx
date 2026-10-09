@@ -1,4 +1,4 @@
-import { AspectRatio, Card, Field, Select, Stack, Text } from "@flux-ui/react";
+import { AspectRatio, Card, Field, Select, Stack, Text } from "@varua/flux-ui";
 import { useState } from "react";
 export default function Example() {
   const [ratio, setRatio] = useState(16 / 9);

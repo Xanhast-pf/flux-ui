@@ -1,4 +1,4 @@
-import { Sidebar, Stack, Text } from "@flux-ui/react";
+import { Sidebar, Stack, Text } from "@varua/flux-ui";
 import type { ScenarioProps } from "../scenario.types.js";
 
 const ignoreOpenChange = () => {};

@@ -15,7 +15,7 @@ import {
   Tabs,
   Text,
   Textarea,
-} from "@flux-ui/react";
+} from "@varua/flux-ui";
 interface Row {
   id: string;
   label: string;

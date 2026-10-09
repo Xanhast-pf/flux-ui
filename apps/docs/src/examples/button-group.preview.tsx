@@ -1,5 +1,5 @@
-import { DownloadIcon, SaveIcon, ShareIcon } from "@flux-ui/icons";
-import { Button, ButtonGroup } from "@flux-ui/react";
+import { DownloadIcon, SaveIcon, ShareIcon } from "@varua/icons";
+import { Button, ButtonGroup } from "@varua/flux-ui";
 
 export default function Example() {
   return (

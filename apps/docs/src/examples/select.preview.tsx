@@ -1,4 +1,4 @@
-import { Field, Select } from "@flux-ui/react";
+import { Field, Select } from "@varua/flux-ui";
 import { useState } from "react";
 
 export default function Example() {
