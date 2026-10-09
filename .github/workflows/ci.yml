@@ -173,7 +173,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: pnpm --filter @flux-ui/docs run playwright:install:compat
+        run: pnpm --fail-if-no-match --filter @varua/docs run playwright:install:compat
 
       - name: Run browser checks and record receipts
         run: node tooling/trust/run-checks.mjs browser
