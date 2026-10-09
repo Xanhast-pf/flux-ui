@@ -39,7 +39,10 @@ test("branch CI verifies local full checks while heavy CI stays main-only", asyn
 
   const browser = source.split("\n  browser:")[1].split("\n  required:")[0];
   assert.match(browser, /if: github\.ref == 'refs\/heads\/main'/u);
-  assert.match(browser, /run playwright:install:compat/u);
+  assert.match(
+    browser,
+    /pnpm --fail-if-no-match --filter @varua\/docs run playwright:install:compat/u,
+  );
   assert.match(browser, /tooling\/trust\/run-checks\.mjs browser/u);
   // The compatibility task is checked in evidence.test.mjs; Pages needs the receipt.
   assert.match(browser, /name: evidence-browser-\$\{\{ github\.run_id \}\}/u);
@@ -124,7 +127,10 @@ test("release scanning stays outside the signing job and dry-run is the default"
   assert.match(publish, /needs: \[prepare, inventory\]/u);
   assert.match(publish, /trust|release\/verify\.mjs/u);
   const prepare = source.split("\n  prepare:")[1].split("\n  inventory:")[0];
-  assert.match(prepare, /run playwright:install:compat/u);
+  assert.match(
+    prepare,
+    /pnpm --fail-if-no-match --filter @varua\/docs run playwright:install:compat/u,
+  );
   const pack = prepare.indexOf("run: node tooling/release/pack.mjs");
   const consumer = prepare.indexOf("run: pnpm flux release consumer");
   const upload = prepare.indexOf(

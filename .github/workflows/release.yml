@@ -39,7 +39,7 @@ jobs:
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
       - name: Install Playwright browsers
-        run: pnpm --filter @flux-ui/docs run playwright:install:compat
+        run: pnpm --fail-if-no-match --filter @varua/docs run playwright:install:compat
       - name: Full quality and browser gates
         run: |
           node tooling/trust/run-checks.mjs quality
