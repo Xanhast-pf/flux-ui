@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "**"
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -24,6 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
 
       - name: Setup Node.js
@@ -35,7 +39,9 @@ jobs:
         run: git fetch --no-tags origin refs/notes/flux-full-check:refs/notes/flux-full-check
 
       - name: Verify local full-check attestation
-        run: node tooling/attest/verify.mjs "$GITHUB_SHA" --allow-tree-match
+        env:
+          ATTESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node tooling/attest/verify.mjs "$ATTESTED_SHA" --allow-tree-match
 
   quality:
     name: Quality
