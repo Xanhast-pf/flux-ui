@@ -24,7 +24,8 @@ test("external actions remain immutable except the dedicated Coding Bible main c
 test("branch CI verifies local full checks while heavy CI stays main-only", async () => {
   const source = await readFile(new URL("ci.yml", workflows), "utf8");
   assert.match(source, /push:\s+branches:\s+- "\*\*"/u);
-  assert.doesNotMatch(source, /pull_request:|merge_group:/u);
+  assert.match(source, /pull_request:\s+branches:\s+- main/u);
+  assert.doesNotMatch(source, /merge_group:/u);
 
   const attestation = source
     .split("\n  attestation:")[1]
