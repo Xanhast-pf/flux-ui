@@ -136,6 +136,7 @@ try {
       const [executable, args, platformOptions] = executableCommand(command);
       execFileSync(executable, args, {
         ...platformOptions,
+        shell: false,
         cwd: copy,
         stdio: ["ignore", 2, 2],
       });
