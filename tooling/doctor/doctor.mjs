@@ -14,6 +14,7 @@ export function probeVersion(program, platform = process.platform) {
   );
   const result = spawnSync(executable, args, {
     ...platformOptions,
+    shell: false,
     encoding: "utf8",
     timeout: 5000,
   });

@@ -65,6 +65,7 @@ for (const check of selected) {
   const started = performance.now();
   const result = spawnSync(executable, args, {
     ...platformOptions,
+    shell: false,
     stdio: check.output ? ["ignore", "pipe", "inherit"] : "inherit",
     encoding: "utf8",
     maxBuffer: 16 * 1024 * 1024,

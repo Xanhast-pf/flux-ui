@@ -24,6 +24,7 @@ const [executable, args, platformOptions] = executableCommand([
 ]);
 const result = spawnSync(executable, args, {
   ...platformOptions,
+  shell: false,
   cwd: process.cwd(),
   env: { ...process.env, FLUX_PERF_MODE: mode },
   stdio: "inherit",

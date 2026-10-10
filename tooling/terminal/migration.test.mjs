@@ -93,6 +93,22 @@ test("size selection reaches only measurement; other focused task arguments surv
   assert.equal(commandLabel(taskCommand("bible:check")), "Coding Bible");
 });
 
+test("tooling command launchers explicitly disable shell interpretation", async () => {
+  for (const path of [
+    "tooling/trust/run-checks.mjs",
+    "tooling/terminal/runner.mjs",
+    "tooling/size/compare.mjs",
+    "tooling/perf/check.mjs",
+    "tooling/doctor/doctor.mjs",
+  ]) {
+    assert.match(
+      await read(path),
+      /(?:spawn|spawnSync|execFileSync)\(executable, args, \{\s+\.\.\.platformOptions,\s+shell: false,/u,
+      path,
+    );
+  }
+});
+
 test("Windows pnpm execution uses fixed executable names and escaped argv", () => {
   assert.deepEqual(executableCommand(["pnpm", "exec", "tsc"], "win32"), [
     "cmd.exe",

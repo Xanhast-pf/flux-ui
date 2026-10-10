@@ -58,6 +58,35 @@ for (const noColor of [undefined, ""]) {
     }
   });
 }
+test("task arguments and environment shell metacharacters remain literal data", async (t) => {
+  const { readFile } = await import("node:fs/promises");
+  const directory = await mkdtemp(join(tmpdir(), "flux-argv-literal-"));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const destination = join(directory, "captured.json");
+  const payload =
+    'space ; & | "quoted" %PATH% !env! $(echo injected) `echo injected`';
+  const sink = capture();
+  const result = await runTask(
+    [
+      "node",
+      "-e",
+      'require("node:fs").writeFileSync(process.argv[1], JSON.stringify({ argument: process.argv[2], environment: process.env.FLUX_TEST_PAYLOAD }))',
+      destination,
+      payload,
+    ],
+    {
+      output: sink.output,
+      label: "Literal arguments",
+      env: { ...process.env, FLUX_TEST_PAYLOAD: payload },
+    },
+  );
+  assert.equal(result.status, 0);
+  assert.deepEqual(JSON.parse(await readFile(destination, "utf8")), {
+    argument: payload,
+    environment: payload,
+  });
+});
+
 test("failure preserves stdout, stderr and actual exit status", async () => {
   const sink = capture();
   const result = await runTask(

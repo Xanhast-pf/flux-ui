@@ -49,6 +49,7 @@ export async function runTask(
   const [executable, args, platformOptions] = executableCommand(command);
   const child = spawn(executable, args, {
     ...platformOptions,
+    shell: false,
     cwd,
     env: {
       ...terminalChildEnv({ raw, parentEnv: env }),
